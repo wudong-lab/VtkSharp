@@ -43,7 +43,7 @@ VtkSharp native C ABI shim
     v
 VtkSharp managed thin wrapper
     |
-    +--> optional WPF integration
+    +--> future WPF integration
     +--> future Avalonia integration
 ```
 
@@ -82,6 +82,67 @@ C# managed assembly
 - 第三方许可声明更直观。
 
 静态链接 VTK 作为后续高级构建和商业产品分发选项保留，不作为第一阶段目标。
+
+## VTK 模块化与裁剪
+
+完整 VTK 体量很大，但实际工程项目通常只需要其中部分模块。VTK 自身的 DLL 和 CMake target 也是模块化的，因此 VtkSharp 从 MVP 开始就应具备模块意识，但不在 MVP 中拆分产物。
+
+策略：
+
+```text
+模块意识前置
+模块拆分后置
+```
+
+MVP 必须做到：
+
+```text
+TypeGraph 记录 class -> VTK module；
+manifest 记录 module；
+Resolved Binding Model 记录模块依赖；
+CMake COMPONENTS 由 profile / manifest 推导；
+native 只 link 实际需要的 VTK modules；
+引入 profile 表达 API 裁剪范围。
+```
+
+MVP 暂不做：
+
+```text
+不拆多个 managed assemblies；
+不拆多个 native DLL；
+不拆多个 NuGet packages；
+不做复杂 VTK runtime dependency pruning。
+```
+
+第一阶段产物仍保持：
+
+```text
+VtkSharp.dll
+vtksharp_native.dll
+```
+
+但 native CMake 应只链接当前 profile 需要的 VTK module targets。例如第一批 `mvp-data` profile：
+
+```cmake
+find_package(VTK CONFIG REQUIRED COMPONENTS
+  CommonCore
+  CommonDataModel
+)
+
+target_link_libraries(vtksharp_native
+  PRIVATE
+    VTK::CommonCore
+    VTK::CommonDataModel
+)
+```
+
+后续可以在不推翻 manifest 和生成器模型的前提下演进为：
+
+```text
+单 managed/native 产物 + 不同 profile 裁剪
+或
+VtkSharp.CommonCore / VtkSharp.CommonDataModel / VtkSharp.RenderingCore 等分包
+```
 
 ## Native 构建系统
 
@@ -146,13 +207,133 @@ InteropBackend = DllImport;LibraryImport
 
 生成器内部应将目标框架和 interop 后端建模为显式选项，不把 `netstandard2.0` 和 `DllImport` 写死到绑定模型中。
 
+## 第一阶段 MVP 范围
+
+第一阶段 MVP 暂不考虑 WPF、Avalonia、WinForms 或其他 UI 宿主集成。MVP 的目标是先证明核心绑定层、native C ABI shim、工程几何数据构造、对象生命周期和最小 VTK data model/pipeline 能稳定工作。
+
+MVP 重点不是运行一个窗口示例，而是让 C# 工程软件能够把自己的点、线、面数据可靠写入 VTK 数据结构，并能通过 smoke test 验证数据正确性。
+
+MVP done 条件：
+
+```text
+C# 通过 VtkSharp 创建 vtkPoints / vtkCellArray / vtkPolyData
+能检查 point count / cell count / bounds
+能正确表达 owned / borrowed wrapper 和 Dispose 语义
+不要求 WPF
+不要求窗口渲染
+不要求截图像素验证
+```
+
+MVP API 覆盖分三层。
+
+第一层是对象和数据模型，必须优先覆盖：
+
+```text
+vtkObjectBase
+vtkObject
+vtkAlgorithm
+vtkAlgorithmOutput
+vtkDataObject
+vtkDataSet
+vtkPointSet
+vtkPolyData
+vtkPoints
+vtkCellArray
+```
+
+第二层是最小 pipeline，范围收紧，只用于验证数据能够接入 VTK pipeline：
+
+```text
+vtkPolyDataMapper
+vtkActor
+vtkProperty
+vtkRenderer
+vtkRenderWindow
+vtkCamera
+```
+
+`vtkRenderWindowInteractor` 不进入 MVP，避免窗口消息循环、宿主程序线程模型和 UI 集成问题过早进入核心绑定阶段。
+
+第三层是示例数据源，可选但建议少量覆盖，用于 smoke test 和示例：
+
+```text
+vtkSphereSource
+vtkCubeSource
+vtkLineSource
+```
+
+MVP 的核心示例应以手工构造 `vtkPolyData` 为主，而不是以 source 类 demo 为中心。VtkSharp 的第一阶段价值是让工程软件中的自有几何数据进入 VTK，而不是只复现一个 sphere 示例。
+
+第一批实际实现进一步压缩为 triangle `vtkPolyData` native smoke test，不包含 rendering pipeline。
+
+第一批类型：
+
+```text
+vtkObjectBase
+vtkObject
+vtkDataObject
+vtkDataSet
+vtkPointSet
+vtkPolyData
+vtkAbstractCellArray
+vtkCellArray
+vtkPoints
+VtkSharpBounds3
+```
+
+第一批方法：
+
+```text
+vtkObjectBase:
+  Register
+  UnRegister
+  GetReferenceCount
+
+vtkObject:
+  GetMTime
+  Modified
+
+vtkPoints:
+  New
+  GetNumberOfPoints
+  FromArray(double[] xyz)
+
+vtkCellArray:
+  New
+  GetNumberOfCells
+  FromTriangles(long[] ids)
+  FromTriangles(int[] ids)
+
+vtkPolyData:
+  New
+  SetPoints(vtkPoints points)
+  SetPolys(vtkCellArray polys)
+  GetNumberOfPoints
+  GetNumberOfCells
+  GetBounds() -> VtkSharpBounds3
+```
+
+第一批暂不包含：
+
+```text
+vtkAlgorithm
+vtkPolyDataMapper
+vtkActor
+vtkRenderer
+vtkRenderWindow
+vtkCamera
+lines / polyline API
+WPF / UI
+rendering smoke test
+```
+
 ## UI 分层
 
 核心库不依赖任何 UI 框架。
 
-第一阶段 UI 集成优先支持 WPF，后续预留 Avalonia 支持。
+第一阶段 MVP 暂不实现 UI 集成。WPF 是后续优先考虑的桌面 UI 集成方向，Avalonia 作为更远期的跨平台 UI 集成方向预留。
 
-推荐分层：
+长期推荐分层：
 
 ```text
 VtkSharp
@@ -160,7 +341,7 @@ VtkSharp
   VTK 对象绑定、pipeline、rendering/data model API
 
 VtkSharp.Wpf
-  net48 first
+  future net48 first
   future net9.0-windows
   WPF HwndHost / D3DImage / Windows rendering host
 
@@ -171,15 +352,15 @@ VtkSharp.Avalonia
 
 WPF、Avalonia、WinForms 等具体 UI 类型不得出现在核心库公共 API 中。
 
-第一阶段不为 Avalonia 过度抽象 UI 宿主，只保证核心层 UI 无关、native 层 CMake 化、WPF 层独立包。
+MVP 只保证核心层 UI 无关、native 层 CMake 化。WPF 层独立包和 Avalonia 层均不作为 MVP 交付项。
 
 ## AutoCAD 与旧版插件兼容
 
 AutoCAD 老插件常见运行环境是 .NET Framework 4.8。核心层选择 `netstandard2.0` 后，AutoCAD 插件可以直接引用 VtkSharp 核心绑定层。
 
-如果 VTK 窗口运行在 AutoCAD 进程内，即使是独立顶层窗口，也仍需要可被 .NET Framework 4.8 加载的托管程序集。因此 WPF 包第一阶段应考虑 `net48`。
+如果未来需要让 VTK 窗口运行在 AutoCAD 进程内，即使是独立顶层窗口，也仍需要可被 .NET Framework 4.8 加载的托管程序集。因此后续 WPF 包应优先考虑 `net48`。
 
-如果未来需要现代 .NET Viewer 独立进程，可采用文件交换、Named Pipe、MemoryMappedFile 等 IPC 方案，但这不是第一阶段核心绑定项目的必要前提。
+如果未来需要现代 .NET Viewer 独立进程，可采用文件交换、Named Pipe、MemoryMappedFile 等 IPC 方案，但这不是 MVP 核心绑定项目的必要前提。
 
 ## API 风格
 
@@ -220,6 +401,68 @@ public partial class vtkSphereSource
 }
 ```
 
+## 工程几何数据输入
+
+MVP 对工程几何数据构造采用“VTK 原始 API + 少量 C# 便利 API”的策略。
+
+公共 API 原则：
+
+```text
+1. 保留 VTK 原始语义和命名；
+2. 对工程几何数据构造补少量 C# 便利 API；
+3. 便利 API 只做数据搬运和形状表达，不隐藏 VTK pipeline 语义。
+```
+
+`vtkCellArray` 应保留贴近 VTK 的逐步构造方式：
+
+```csharp
+cells.InsertNextCell(3);
+cells.InsertCellPoint(0);
+cells.InsertCellPoint(1);
+cells.InsertCellPoint(2);
+```
+
+同时可通过 `partial class` 提供少量常用便利方法：
+
+```csharp
+cells.InsertTriangle(0, 1, 2);
+cells.InsertQuad(0, 1, 2, 3);
+cells.InsertPolyline(pointIds);
+```
+
+批量构造 API 第一阶段保持克制，优先服务工程软件中常见的点、线段、三角面和四边形面：
+
+```csharp
+using var points = vtkPoints.FromArray(xyz);
+using var polys = vtkCellArray.FromTriangles(triangles);
+using var lines = vtkCellArray.FromLines(lineSegments);
+
+using var polyData = vtkPolyData.New();
+polyData.SetPoints(points);
+polyData.SetPolys(polys);
+polyData.SetLines(lines);
+```
+
+MVP 用户侧便利 API 采用简单扁平数组表达：
+
+```text
+points:    [x, y, z, x, y, z, ...]
+triangles: [p0, p1, p2, p0, p1, p2, ...]
+lines:     [p0, p1, p0, p1, ...]
+```
+
+底层设计应保留 VTK 9 `vtkCellArray` 的 offsets + connectivity 模型扩展口，后续支持 polygon、polyline、mixed cells 时不推翻设计。但 MVP 不要求把 offsets + connectivity 作为主要用户入口。
+
+MVP 所有托管数组输入均采用 copy semantics：
+
+```text
+调用返回后，用户可以安全修改或释放原始 C# 数组；
+VtkSharp 不持有托管数组引用；
+VtkSharp 不在 MVP 中暴露零拷贝或外部内存引用 API。
+```
+
+零拷贝路径后续可作为显式高级 API 单独设计，例如命名中明确包含 `External` 或 `Unsafe`，并独立处理 pin、内存归属、VTK array ownership 和线程模型问题。
+
 ## 补充类型命名规则
 
 为避免与 VTK 原生类型混淆，命名规则固定为：
@@ -254,6 +497,26 @@ VtkSharp 补充类型：
 - 不使用容易误认为 VTK 类型的 `VtkPoint3D`；
 - 默认数值精度使用 `double`；
 - 如后续需要 `float`，使用显式后缀，例如 `VtkSharpPoint3F`。
+
+## vtkIdType 映射
+
+VTK 的 point id、cell id 和通用 id 语义应映射到 `vtkIdType`。MVP 中 C# public API 使用 `long` 表达 VTK id：
+
+```text
+native: vtkIdType
+C ABI: int64_t 或项目内明确 typedef
+C#: long
+```
+
+便利 API 主要接受 `long[]`，可额外提供 `int[]` 重载以方便小规模示例和常见工程数据输入，内部统一转换到 `long` / `vtkIdType`。
+
+C ABI 不应让 C# 侧猜测 `vtkIdType` 的大小。第一阶段 Windows x64 + 常规 VTK 构建下可使用构建期校验：
+
+```cpp
+static_assert(sizeof(vtkIdType) == sizeof(int64_t));
+```
+
+如果未来支持特殊 VTK 配置或非 64-bit `vtkIdType`，需要在 native shim 层增加适配，而不是改变 C# public API 的 id 语义。
 
 ## 对象生命周期与所有权
 
@@ -293,6 +556,36 @@ Dispose()   -> 释放当前 wrapper 持有的 VTK reference
 - 文档要求用户对 owned wrapper 使用 `using` 或显式 `Dispose()`。
 
 原因是 VTK 对象可能关联 OpenGL context、UI 线程和特定销毁顺序。由 finalizer 线程异步释放 VTK 对象存在潜在风险。
+
+`Dispose()` 行为按 wrapper 自身 ownership 决定：
+
+```text
+owned wrapper Dispose:
+  释放当前 wrapper 持有的 VTK reference
+  标记当前 wrapper disposed
+
+borrowed wrapper Dispose:
+  不释放 native object
+  只标记当前 wrapper disposed
+
+Dispose 后调用 public 方法:
+  抛 ObjectDisposedException
+```
+
+实现上 wrapper 应有显式 disposed 状态，不只依赖 `NativePointer == IntPtr.Zero` 推断。
+
+对象输入参数默认按 borrowed input 处理：
+
+```text
+SetXxx(vtkObject*) / AddXxx(vtkObject*) / InsertXxx(vtkObject*)
+  不转移 C# wrapper ownership
+  调用后参数 wrapper 的 OwnsReference 不变
+  VTK 内部是否 Register 由 VTK API 自己负责
+```
+
+manifest 可为未来保留 `ownership: transfer` 概念，但 MVP 不支持对象参数所有权转移。
+
+MVP 不做 wrapper identity cache。同一个 native pointer 可以对应多个 C# wrapper 实例，每个 wrapper 只管理自身的 owned reference 或 borrowed 状态。
 
 ## 返回值所有权与 marshal 规则
 
@@ -369,11 +662,84 @@ VTKSHARP_API void vtkCamera_GetPosition(vtkCamera* self, double* values)
 }
 ```
 
+对于 `double* GetBounds()`、`void GetBounds(double bounds[6])` 这类固定长度数组或内部指针 API，public API 应使用语义化 `VtkSharp*` 值类型；raw P/Invoke 只作为 internal 细节存在。
+
+推荐结构：
+
+```text
+C++ 原始危险 API:
+  不直接导出为 public C# API
+
+native copy shim:
+  exported C ABI
+  internal P/Invoke
+
+C# 语义 API:
+  public
+  使用 VtkSharpBounds3 / VtkSharpPoint3 / VtkSharpColor3 等值类型
+```
+
+示例：
+
+```cpp
+VTKSHARP_API void vtkDataSet_GetBounds_copy(vtkDataSet* self, double* bounds)
+{
+    self->GetBounds(bounds);
+}
+```
+
+```csharp
+public VtkSharpBounds3 GetBounds()
+{
+    var values = new double[6];
+    NativeMethods.vtkDataSet_GetBounds_copy(NativePointer, values);
+    return VtkSharpBounds3.FromArray(values);
+}
+```
+
+除了 `vtkObjectBase` 派生的引用计数对象外，VTK API 中还会出现非引用计数类型，例如 struct、enum、typedef、模板值类型和轻量 helper。生成器模型应区分：
+
+```text
+VtkObjectType:
+  vtkObjectBase 派生
+  引用计数
+  C# wrapper class + IDisposable
+
+VtkValueType:
+  非引用计数
+  by-value / by-ref / fixed-array marshal
+  C# readonly struct 或 VtkSharp 补充类型
+
+VtkEnumType:
+  enum 映射
+
+UnsupportedNativeType:
+  需要 manifest 决策，默认跳过或报诊断
+```
+
+MVP 不大规模导出 VTK 原生非引用计数类型。优先把稳定、简单、值语义明确的概念映射为 `VtkSharp*` 补充类型，例如 `VtkSharpBounds3`、`VtkSharpPoint3`、`VtkSharpVector3`、`VtkSharpColor3`、`VtkSharpColor4`。复杂模板、iterator、range、`std::vector`、`std::map`、`std::function`、`vtkSmartPointer<T>` 和内部 detail 类型默认不导出。
+
 ## Manifest 与生成器
 
 API 覆盖范围由 manifest 控制，不从生成代码反推。
 
 manifest 是项目 API 覆盖的事实来源，用于记录需要绑定的 VTK 类、方法、所有权规则、marshal 规则和必要的 nullable 标注。
+
+生成器输入模型分三层：
+
+```text
+Hierarchy Model:
+  来自 VTK hierarchy 文件
+  解决类、基类、header、module、WRAPEXCLUDE、模板跳过
+
+API Manifest Model:
+  来自 bindings/*.yaml
+  解决哪些类/方法导出、marshal、ownership、visibility、overloadId
+
+Resolved Binding Model:
+  由生成器合并前两者得到
+  解决实际生成哪些 C# 类型、native shim、public/internal 方法和 VTK module dependencies
+```
 
 推荐目录：
 
@@ -383,8 +749,98 @@ bindings/
     core.yaml
     rendering.yaml
     data-model.yaml
-    wpf.yaml
 ```
+
+`bindings/vtk-9.6/` 是 manifest 基线目录。CMake 构建不在 MVP 中硬编码 VTK patch 版本，采用 `find_package(VTK CONFIG REQUIRED)` 查找本地 VTK；但代码和 smoke test 以 VTK 9.6 开发环境验证。其他 VTK 9.x 暂视为 best effort，不作为 MVP 兼容性承诺。
+
+Manifest 应支持 profile 概念，用于表达裁剪范围、生成输入集合、CMake VTK components 和测试范围。
+
+第一批 profile：
+
+```yaml
+profiles:
+  mvp-data:
+    modules:
+      - CommonCore
+      - CommonDataModel
+    classes:
+      - vtkObjectBase
+      - vtkObject
+      - vtkDataObject
+      - vtkDataSet
+      - vtkPointSet
+      - vtkPolyData
+      - vtkAbstractCellArray
+      - vtkCellArray
+      - vtkPoints
+```
+
+后续 rendering profile 示例：
+
+```yaml
+profiles:
+  rendering-basic:
+    modules:
+      - CommonCore
+      - CommonDataModel
+      - CommonExecutionModel
+      - RenderingCore
+      - RenderingOpenGL2
+```
+
+生成器应校验 profile 中声明的 module 与 hierarchy/manifest 中解析出的 class module 一致。CMake 的 VTK `COMPONENTS` 应由选定 profile 的 resolved module dependencies 推导，而不是手写完整 VTK 依赖集合。
+
+TypeGraph 主来源采用 VTK 安装目录下的 hierarchy 文件：
+
+```text
+<VTK_INSTALL>/lib/vtk-<version>/hierarchy/VTK/*-hierarchy.txt
+```
+
+该目录路径不应写死，生成器通过配置或命令行参数接收：
+
+```text
+VtkHierarchyDir
+```
+
+hierarchy 解析规则：
+
+```text
+class line:
+  vtkPolyData : vtkPointSet ; vtkPolyData.h ; vtkCommonDataModel
+
+root class line:
+  vtkObjectBase ; vtkObjectBase.h ; vtkCommonCore
+
+ignore:
+  WRAPEXCLUDE
+  nested symbols with ::
+  template symbols with <...>
+  typedef/value aliases with =
+  enum lines
+  RealSuperclass by default
+```
+
+`::Superclass = ...` 可作为校验或模板折叠兜底，不作为首选数据源。多个 module hierarchy 文件会重复列出依赖类，生成器应按类名去重，并校验去重后的 base/header/module 一致。
+
+模板基类处理规则：
+
+```text
+优先使用普通 class line 的 base class；
+如果 base class 是模板类型，查找同类的 ::Superclass = X；
+如果 X 是非模板 vtk 类型，则使用 X；
+如果 X 仍是模板或不存在，则继续跳过模板基类；
+找不到可导出的非模板基类时，该类型作为无 C# 基类或报诊断。
+```
+
+导出闭包规则：
+
+```text
+manifest 中显式导出的类为 explicit export；
+为保持继承关系自动补齐的基类为 required export；
+导出 A 类时，自动补齐 A 的所有可导出非模板基类。
+```
+
+required export 只意味着生成类型骨架和生命周期基础，不意味着自动导出该基类的全部 API。基类方法仍需在该基类 manifest 中显式声明。
 
 示例：
 
@@ -404,6 +860,72 @@ classes:
           ownership: borrowed
           nullable: false
 ```
+
+MVP manifest 采用中等 schema，只覆盖当前阶段必要信息。
+
+必须表达：
+
+```text
+class:
+  name
+  module
+  baseType
+
+method:
+  name
+  nativeName
+  visibility
+  overloadId
+  customShim
+  declaredOn
+  exposeOn
+  reason
+  parameters
+  returns
+
+parameter:
+  name
+  type
+  direction
+  marshal
+  lengthFrom / fixedLength / multipleOf
+
+returns:
+  type
+  ownership
+  nullable
+  marshal
+  managedType
+```
+
+暂不表达：
+
+```text
+大规模 API 版本范围
+自动文档生成
+overload 排序策略
+平台条件矩阵
+泛型或复杂 C# 类型系统映射
+```
+
+manifest 条目应明确区分直接绑定 VTK 原方法和 VtkSharp 自定义 shim：
+
+```yaml
+- name: GetNumberOfPoints
+  returns:
+    type: vtkIdType
+
+- name: SetDataFromArray
+  customShim: true
+  parameters:
+    - name: xyz
+      type: double[]
+      marshal: array
+      direction: in
+      multipleOf: 3
+```
+
+`customShim: true` 表示该 API 是 VtkSharp 为 C# 互操作或工程数据输入提供的补充入口，不应被误认为 VTK C++ 原生方法。
 
 生成器内部建议分为两层：
 
@@ -438,6 +960,119 @@ InteropBackend = LibraryImport
 Span / ReadOnlySpan 便利重载
 NativeLibrary resolver
 ```
+
+MVP 生成器边界：
+
+```text
+输入 manifest
+输出 C# P/Invoke 声明
+输出 C# thin wrapper
+输出 ownership / Dispose 基础代码
+支持 customShim 方法声明
+```
+
+MVP native 边界：
+
+```text
+C ABI shim 先手写
+custom array copy shim 先手写
+native declarations / dispatch 自动生成后置
+```
+
+也就是说，第一阶段生成器先覆盖 C# 侧重复度最高的 wrapper 和 P/Invoke 声明。native 侧在规则稳定前保持手写，避免过早引入 C++ 头文件解析、overload 消歧、宏和模板处理复杂度。
+
+### 方法归属
+
+方法默认只在实际声明类上生成，派生类通过 C# 继承获得基类 API。
+
+```text
+manifest 当前 class 默认就是 declaredOn；
+方法应写在真实声明类下；
+MVP 不完整自动推断 declaring class；
+轻量 header scanner 只做 best-effort 诊断；
+特殊暴露必须显式 declaredOn / exposeOn / reason。
+```
+
+如果 manifest 把继承方法写到派生类下，生成器默认报错，而不是自动修正：
+
+```text
+Method vtkPolyData.GetMTime is inherited from vtkObject.
+Move it to vtkObject, or add explicit exposeOn override if this is intentional.
+```
+
+特殊 API 例如派生类重新声明、协变返回值或 VTK 常见 `GetOutput()` 模式，可用显式规则表达：
+
+```yaml
+- name: GetOutput
+  declaredOn: vtkAlgorithm
+  exposeOn: vtkPolyDataAlgorithm
+  reason: covariant-return
+```
+
+### 函数重载
+
+VTK C++ API 中存在大量函数重载。C# public API 可以保留安全重载，但 manifest 中每个 overload 必须有稳定唯一标识，生成器不能只靠方法名匹配。
+
+推荐 manifest：
+
+```yaml
+- name: SetColor
+  overloadId: rgb-scalars
+  parameters:
+    - { name: r, type: double }
+    - { name: g, type: double }
+    - { name: b, type: double }
+
+- name: SetColor
+  overloadId: rgb-array3
+  visibility: internal
+  parameters:
+    - name: rgb
+      type: double*
+      marshal: fixedArray
+      fixedLength: 3
+```
+
+C ABI 函数名必须消除重载，例如：
+
+```cpp
+VTKSHARP_API void vtkProperty_SetColor_rgb_scalars(vtkProperty* self, double r, double g, double b);
+VTKSHARP_API void vtkProperty_SetColor_rgb_array3(vtkProperty* self, const double* rgb);
+```
+
+生成器内部方法 identity 至少包含：
+
+```text
+class
+nativeName
+normalized parameter types
+const/ref/pointer qualifiers
+overloadId
+```
+
+primitive pointer、内部数组指针、复杂 C++ 参数等 overload 必须有 marshal rule；否则跳过或报诊断，不生成危险 public API。
+
+### 错误处理与前置条件
+
+public wrapper 做最小前置条件校验，internal P/Invoke 不重复校验，native shim 不做复杂异常转换。
+
+默认异常约定：
+
+```text
+null array:
+  ArgumentNullException
+
+数组长度不满足 fixedLength / multipleOf:
+  ArgumentException
+
+Dispose 后调用 public 方法:
+  ObjectDisposedException
+
+New() / factory 返回 IntPtr.Zero:
+  InvalidOperationException
+```
+
+native shim 可使用 `assert` 表达前置条件。MVP 不做复杂 C++ 异常捕获和跨 ABI 异常转换。
 
 ## AI 辅助生成策略
 
@@ -478,6 +1113,56 @@ git diff --exit-code
 
 确保 manifest、生成器和生成代码一致。
 
+## 测试策略
+
+MVP 测试优先验证核心绑定和数据模型，不把窗口渲染或 UI 集成作为硬门槛。
+
+第一类是 managed API 单元测试：
+
+```text
+验证托管 wrapper 基础行为
+验证 ownership / Dispose 约定
+验证数组便利 API 的基本前置条件
+```
+
+第二类是 native smoke test，作为 MVP 必须项：
+
+```text
+C# 创建 vtkPoints / vtkCellArray / vtkPolyData
+写入点、线段、三角面数据
+检查 point count / cell count / bounds
+验证 owned wrapper 可以按 using / Dispose 释放
+```
+
+第三类是 rendering smoke test，作为后续小步：
+
+```text
+可考虑 offscreen rendering 生成小图
+检查输出非空或基础像素
+不作为最早 MVP 的完成条件
+```
+
+Windows CI 中 OpenGL、offscreen rendering、GPU/软件渲染环境可能引入额外不确定性。MVP 先用数据构造和 bounds/cell count 检查建立稳定闭环。
+
+MVP 开发和测试阶段的 native runtime 查找策略保持简单：
+
+```text
+vtksharp_native.dll 复制到 test output；
+VTK runtime DLL 依赖 PATH 或测试启动脚本设置 PATH；
+VtkSharp 托管核心只负责 P/Invoke 到 vtksharp_native.dll；
+MVP 不实现复杂 NativeLibrary resolver；
+MVP 不解决 NuGet runtime assets 分发。
+```
+
+本机测试可通过脚本设置 VTK bin 路径：
+
+```powershell
+$env:PATH = "C:\Program Files\VTK\bin;$env:PATH"
+dotnet test
+```
+
+后续 NuGet 分发阶段再讨论 `runtimes/win-x64/native/`、VTK runtime DLL 打包、resolver 和 PATH fallback 的组合策略。
+
 ## 推荐仓库结构
 
 当前仓库仍处于初始状态。后续推荐逐步演进为：
@@ -493,7 +1178,7 @@ VtkSharp/
 
   src/
     VtkSharp/
-    VtkSharp.Wpf/
+    VtkSharp.Wpf/               # future
 
   native/
     CMakeLists.txt
@@ -513,11 +1198,11 @@ VtkSharp/
   tests/
     VtkSharp.Tests/
     VtkSharp.NativeSmokeTests/
-    VtkSharp.Wpf.Tests/
+    VtkSharp.Wpf.Tests/         # future
 
   samples/
     Console/
-    Wpf/
+    Wpf/                        # future
 
   docs/
     design/
@@ -530,13 +1215,12 @@ VtkSharp/
 
 以下内容尚未完整定稿，后续需要继续讨论：
 
-- 第一阶段 MVP API 覆盖清单；
-- manifest schema 的精确定义；
 - CMake 与 .NET build 的编排方式；
 - native DLL 与 VTK runtime DLL 的 NuGet 分发策略；
+- 完整 C++ header parser 或 VTK wrapping metadata 的引入时机；
 - WPF render host 的具体实现路线；
-- 单元测试、native smoke test 和 UI smoke test 策略；
-- VTK 版本选择和升级策略；
+- offscreen rendering smoke test 是否进入第二小步；
+- VTK 版本升级策略和跨 9.x 兼容策略；
 - 示例转换工具是否作为正式项目组件；
 - CI 构建矩阵；
 - 文档站点和示例组织方式。
