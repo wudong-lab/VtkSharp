@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="TestConsole/TestConsole.csproj" Id="c32d0239-1f75-4816-aaa0-caa188070741" />
   <Project Path="VtkSharp/VtkSharp.csproj" />
 </Solution>
