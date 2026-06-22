@@ -8,6 +8,9 @@ find_package(VTK CONFIG REQUIRED COMPONENTS
   CommonExecutionModel
   FiltersSources
   RenderingCore
+  RenderingOpenGL2
+  InteractionStyle
+  RenderingUI
 )
 
 file(GLOB_RECURSE LIB_SRC CONFIGURE_DEPENDS
@@ -32,4 +35,20 @@ target_link_libraries(vtksharp_native
     VTK::CommonExecutionModel
     VTK::FiltersSources
     VTK::RenderingCore
+    VTK::RenderingOpenGL2
+    VTK::InteractionStyle
+    VTK::RenderingUI
+)
+
+vtk_module_autoinit(
+  TARGETS vtksharp_native
+  MODULES
+    VTK::CommonCore
+    VTK::CommonDataModel
+    VTK::CommonExecutionModel
+    VTK::FiltersSources
+    VTK::RenderingCore
+    VTK::RenderingOpenGL2
+    VTK::InteractionStyle
+    VTK::RenderingUI
 )

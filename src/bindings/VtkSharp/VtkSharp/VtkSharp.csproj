@@ -8,4 +8,16 @@
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
+  <PropertyGroup>
+    <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\..\native\out\build\windows-x64\Release\vtksharp_native.dll</VtkSharpNativeDllPath>
+  </PropertyGroup>
+
+  <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
+    <None Include="$(VtkSharpNativeDllPath)"
+          Link="vtksharp_native.dll"
+          TargetPath="vtksharp_native.dll"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
