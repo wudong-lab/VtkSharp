@@ -530,7 +530,7 @@ manualBindingClasses:
 *_export.cpp
 ```
 
-第一阶段不默认创建手写扩展空壳。除 `manualBindingClasses` 等特殊类型外，自动生成的 VTK wrapper 类只生成 `vtkXxx_gen.cs` 和 `vtkXxx_export_gen.cpp`。
+第一阶段不默认创建手写扩展空壳。除 `manualBindingClasses` 等特殊类型外，自动生成的 VTK wrapper 类只生成 `vtkXxx_gen.cs` 和 `vtkXxx_export_gen.cpp`。C# 侧 `vtkXxx.cs` 与 native 侧 `vtkXxx_export.cpp` 的自动创建都放到后续阶段。
 
 成熟版本的生成器应支持自动创建扩展空壳：凡是生成器自动添加/生成 wrapper 的类型，都可以在文件不存在时创建对应的 `vtkXxx.cs` 和 `vtkXxx_export.cpp`。已存在的扩展文件永不覆盖。
 
@@ -856,6 +856,16 @@ src/native/src/**/*_export_gen.cpp
 7. round-trip 稳定后再切换到正式输出目录。
 
 第一阶段不导入旧项目 110 个类 / 545 个函数的完整覆盖范围。旧白名单只能作为签名和迁移参考，不能作为第一版自动生成范围。
+
+第一阶段类型和 API 支持范围也以当前已有绑定代码为边界。若反推白名单或生成过程中遇到当前代码之外的类型规则，先报错并记录为后续示例驱动扩展项，不在第一版中临时扩大规则。
+
+当前已有代码已经可以跑通一个完整 VTK 程序，验证样本位于：
+
+```text
+src/bindings/VtkSharp/TestConsole
+```
+
+`TestConsole` 当前覆盖了 `vtkConeSource`、`vtkPolyDataMapper`、`vtkActor`、`vtkRenderer`、`vtkRenderWindow` 和 `vtkRenderWindowInteractor` 的基础 pipeline，可作为第一阶段 round-trip 后的 smoke test 样本。
 
 ## 风险和取舍
 
