@@ -2,22 +2,33 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-
-	  <RootNamespace>VtkSharp</RootNamespace>
-
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	</PropertyGroup>
+
+    <RootNamespace>VtkSharp</RootNamespace>
+  </PropertyGroup>
 
   <PropertyGroup>
     <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\..\native\out\build\windows-x64\Release\vtksharp_native.dll</VtkSharpNativeDllPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <NoWarn>1701;1702;CS0109</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0|AnyCPU'">
+    <NoWarn>1701;1702;CS0109</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <NoWarn>1701;1702;CS0109</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0|AnyCPU'">
+    <NoWarn>1701;1702;CS0109</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
-    <None Include="$(VtkSharpNativeDllPath)"
-          Link="vtksharp_native.dll"
-          TargetPath="vtksharp_native.dll"
-          CopyToOutputDirectory="PreserveNewest"
-          CopyToPublishDirectory="PreserveNewest" />
+    <None Include="$(VtkSharpNativeDllPath)" Link="vtksharp_native.dll" TargetPath="vtksharp_native.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
