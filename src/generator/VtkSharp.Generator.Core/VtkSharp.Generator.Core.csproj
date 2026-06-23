@@ -1,0 +1,8 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="CppAst" Version="0.25.0" />
+    <PackageReference Include="YamlDotNet" Version="18.0.0" />
+  </ItemGroup>
+
+</Project>

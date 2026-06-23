@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VtkSharp Generator Config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["vtk", "binding", "paths", "generation"],
+  "properties": {
+    "vtk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "modulePrefix"],
+      "properties": {
+        "version": { "type": "string" },
+        "modulePrefix": { "type": "string" },
+        "rootDirectory": { "type": "string" },
+        "includeDirectory": { "type": "string" },
+        "hierarchyDirectory": { "type": "string" }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["namespace", "nativeLibraryName", "manualBindingClasses"],
+      "properties": {
+        "namespace": { "type": "string" },
+        "nativeLibraryName": { "type": "string" },
+        "manualBindingClasses": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["whitelistDirectory", "managedOutputDirectory", "nativeOutputDirectory", "nativeModulesFile"],
+      "properties": {
+        "whitelistDirectory": { "type": "string" },
+        "managedOutputDirectory": { "type": "string" },
+        "nativeOutputDirectory": { "type": "string" },
+        "nativeModulesFile": { "type": "string" }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createManualExtensionFiles", "overwriteGeneratedFiles", "deleteOrphanGeneratedFiles"],
+      "properties": {
+        "createManualExtensionFiles": { "type": "boolean" },
+        "overwriteGeneratedFiles": { "type": "boolean" },
+        "deleteOrphanGeneratedFiles": { "type": "boolean" }
+      }
+    }
+  }
+}

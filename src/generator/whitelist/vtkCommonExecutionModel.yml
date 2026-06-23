@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkCommonExecutionModel
+classes:
+  - name: vtkAlgorithm
+    header: vtkAlgorithm.h
+    functions:
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(vtkAlgorithmOutput* input)"
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput* GetOutputPort()"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters: []
+      - name: Update
+        cppSignature: "void Update()"
+        return:
+          type: void
+        parameters: []
+  - name: vtkAlgorithmOutput
+    header: vtkAlgorithmOutput.h
+    functions: []
+  - name: vtkPolyDataAlgorithm
+    header: vtkPolyDataAlgorithm.h
+    functions: []

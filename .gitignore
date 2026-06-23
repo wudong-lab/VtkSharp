@@ -430,3 +430,8 @@ FodyWeavers.xsd
 
 # Local Codex/Superpowers worktrees
 .worktrees/
+
+# VtkSharp generator local configuration and scratch output
+src/generator/config/vtksharp.generator.local.yml
+src/generator/out/
+src/generator/.scratch/

@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkRenderingCore
+classes:
+  - name: vtkActor
+    header: vtkActor.h
+    functions:
+      - name: SetMapper
+        cppSignature: "void SetMapper(vtkMapper* mapper)"
+        return:
+          type: void
+        parameters:
+          - type: vtkMapper*
+            name: mapper
+  - name: vtkMapper
+    header: vtkMapper.h
+    functions: []
+  - name: vtkPolyDataMapper
+    header: vtkPolyDataMapper.h
+    functions:
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(vtkAlgorithmOutput* input)"
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: input
+  - name: vtkRenderer
+    header: vtkRenderer.h
+    functions:
+      - name: AddActor
+        cppSignature: "void AddActor(vtkProp* p)"
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: p
+  - name: vtkRenderWindow
+    header: vtkRenderWindow.h
+    functions:
+      - name: AddRenderer
+        cppSignature: "void AddRenderer(vtkRenderer* renderer)"
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderer*
+            name: renderer
+  - name: vtkRenderWindowInteractor
+    header: vtkRenderWindowInteractor.h
+    functions:
+      - name: SetRenderWindow
+        cppSignature: "void SetRenderWindow(vtkRenderWindow* aren)"
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderWindow*
+            name: aren
+      - name: Start
+        cppSignature: "void Start()"
+        return:
+          type: void
+        parameters: []
+  - name: vtkProp
+    header: vtkProp.h
+    functions: []
+  - name: vtkProp3D
+    header: vtkProp3D.h
+    functions: []

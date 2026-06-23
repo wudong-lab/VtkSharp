@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VtkSharp Whitelist",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["module", "classes"],
+  "properties": {
+    "module": { "type": "string" },
+    "classes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "header", "functions"],
+        "properties": {
+          "name": { "type": "string" },
+          "header": { "type": "string" },
+          "functions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "cppSignature", "return", "parameters"],
+              "properties": {
+                "name": { "type": "string" },
+                "cppSignature": { "type": "string" },
+                "return": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["type"],
+                  "properties": {
+                    "type": { "type": "string" },
+                    "ownership": { "type": "string", "enum": ["owned", "borrowed"] }
+                  }
+                },
+                "parameters": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["type", "name"],
+                    "properties": {
+                      "type": { "type": "string" },
+                      "name": { "type": "string" },
+                      "direction": { "type": "string", "enum": ["in", "out", "inout"] },
+                      "length": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": ["kind"],
+                        "properties": {
+                          "kind": { "type": "string", "enum": ["fixed", "parameter"] },
+                          "value": { "type": "integer" },
+                          "name": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

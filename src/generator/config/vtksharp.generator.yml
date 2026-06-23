@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../schemas/vtksharp.generator.schema.json
+
+vtk:
+  version: "9.5"
+  modulePrefix: vtk
+
+binding:
+  namespace: VtkSharp
+  nativeLibraryName: vtksharp_native
+  manualBindingClasses:
+    - vtkObjectBase
+    - vtkObject
+
+paths:
+  whitelistDirectory: ../whitelist
+  managedOutputDirectory: ../../bindings/VtkSharp/VtkSharp
+  nativeOutputDirectory: ../../native/src
+  nativeModulesFile: ../../native/vtksharp.modules.generated.cmake
+
+generation:
+  createManualExtensionFiles: false
+  overwriteGeneratedFiles: true
+  deleteOrphanGeneratedFiles: false

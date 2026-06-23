@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkCommonCore
+classes:
+  - name: vtkWindow
+    header: vtkWindow.h
+    functions:
+      - name: SetSize
+        cppSignature: "void SetSize(int width, int height)"
+        return:
+          type: void
+        parameters:
+          - { type: int, name: width }
+          - { type: int, name: height }
+      - name: Render
+        cppSignature: "void Render()"
+        return:
+          type: void
+        parameters: []

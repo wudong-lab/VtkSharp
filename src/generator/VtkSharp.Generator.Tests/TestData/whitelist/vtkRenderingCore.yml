@@ -1,0 +1,12 @@
+module: vtkRenderingCore
+classes:
+  - name: vtkActor
+    header: vtkActor.h
+    functions:
+      - name: SetMapper
+        cppSignature: "void SetMapper(vtkMapper* mapper)"
+        return:
+          type: void
+        parameters:
+          - type: vtkMapper*
+            name: mapper

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VtkSharp Whitelist Candidate",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["status", "source", "requirements"],
+  "properties": {
+    "status": { "type": "string", "enum": ["proposed"] },
+    "source": { "type": "object" },
+    "requirements": { "type": "array" }
+  }
+}

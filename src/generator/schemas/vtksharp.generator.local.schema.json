@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VtkSharp Generator Local Config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["vtk"],
+  "properties": {
+    "vtk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rootDirectory"],
+      "properties": {
+        "rootDirectory": { "type": "string" },
+        "includeDirectory": { "type": "string" },
+        "hierarchyDirectory": { "type": "string" }
+      }
+    }
+  }
+}
