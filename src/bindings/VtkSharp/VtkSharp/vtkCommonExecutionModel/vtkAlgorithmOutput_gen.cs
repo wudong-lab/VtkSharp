@@ -7,9 +7,6 @@ namespace VtkSharp;
 
 public unsafe partial class vtkAlgorithmOutput : vtkObject
 {
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkAlgorithmOutput_New();
-
     protected vtkAlgorithmOutput(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkAlgorithmOutput New() => new(vtkAlgorithmOutput_New(), ownsReference: true);
     public new static vtkAlgorithmOutput WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
@@ -20,4 +17,9 @@ public unsafe partial class vtkAlgorithmOutput : vtkObject
         target.Register();
         return target;
     }
+
+    #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAlgorithmOutput_New();
+    #endregion
 }

@@ -7,18 +7,6 @@ namespace VtkSharp;
 
 public unsafe partial class vtkAlgorithm : vtkObject
 {
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkAlgorithm_New();
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAlgorithm_SetInputConnection(nint self, nint input);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkAlgorithm_GetOutputPort(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAlgorithm_Update(nint self);
-
     protected vtkAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkAlgorithm New() => new(vtkAlgorithm_New(), ownsReference: true);
     public new static vtkAlgorithm WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
@@ -44,4 +32,18 @@ public unsafe partial class vtkAlgorithm : vtkObject
     {
         vtkAlgorithm_Update(this.NativePointer);
     }
+
+    #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAlgorithm_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAlgorithm_SetInputConnection(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAlgorithm_GetOutputPort(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAlgorithm_Update(nint self);
+    #endregion
 }
