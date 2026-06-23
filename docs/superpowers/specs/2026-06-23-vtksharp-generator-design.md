@@ -64,6 +64,57 @@ src/native/vtksharp.modules.generated.cmake
 
 `vtksharp.generator.yml` 提交到仓库，保存命名空间、输出路径、白名单目录、native library 名称等公共配置。`vtksharp.generator.local.yml` 不提交，保存本机 VTK 安装路径。也允许通过环境变量覆盖本机路径。
 
+配置分为公共配置和本机配置：
+
+```yaml
+# src/generator/config/vtksharp.generator.yml
+vtk:
+  version: "9.5"
+  modulePrefix: vtk
+
+binding:
+  namespace: VtkSharp
+  nativeLibraryName: vtksharp_native
+  manualBindingClasses:
+    - vtkObjectBase
+    - vtkObject
+
+paths:
+  whitelistDirectory: ../whitelist
+  managedOutputDirectory: ../../bindings/VtkSharp/VtkSharp
+  nativeOutputDirectory: ../../native/src
+  nativeModulesFile: ../../native/vtksharp.modules.generated.cmake
+
+generation:
+  createManualExtensionFiles: true
+  overwriteGeneratedFiles: true
+  deleteOrphanGeneratedFiles: false
+```
+
+```yaml
+# src/generator/config/vtksharp.generator.local.yml
+vtk:
+  rootDirectory: "C:/Program Files/VTK"
+```
+
+路径解析规则：
+
+- 公共配置中的相对路径，以 `vtksharp.generator.yml` 所在目录为基准。
+- local 配置只保存机器相关路径，不提交到仓库。
+- `vtk.includeDirectory` 和 `vtk.hierarchyDirectory` 默认由 `rootDirectory + version` 推导，但允许 CLI、环境变量或 local 配置显式覆盖。
+
+配置优先级：
+
+```text
+CLI 参数
+> 环境变量
+> vtksharp.generator.local.yml
+> vtksharp.generator.yml
+> 默认值
+```
+
+环境变量 `VTK_ROOT` 可覆盖 `vtk.rootDirectory`。
+
 ## 生成器形态
 
 生成器分为三个层次：
@@ -127,6 +178,45 @@ CLI 命令按职责分为三组：
 
 第一阶段优先完成最小可用集，其他命令在示例驱动流程稳定后再补。
 
+第一阶段命令行为：
+
+`validate-whitelist`：
+
+- 读取公共配置、local 配置和覆盖参数。
+- 读取所有模块白名单。
+- 解析 VTK hierarchy。
+- 解析白名单涉及的 headers。
+- 校验 module、class、header 是否一致。
+- 校验函数结构化签名能唯一匹配。
+- 校验类型都受支持，或已在白名单中补齐必要元数据。
+- 不写任何输出文件。
+
+`inspect-class`：
+
+- 解析指定 VTK 类。
+- 输出 public 候选函数列表。
+- 支持 `--format text|json`。
+- 输出 canonical signature、`cppSignature`、参数名、返回类型、是否支持自动生成、依赖类。
+
+`normalize-whitelist`：
+
+- 排序模块、类和函数。
+- 补齐依赖类和基类链。
+- 标准化 type 字符串。
+- 可更新 `cppSignature` 的格式，但不覆盖人工参数名。
+- 写回白名单文件，必须通过 Git diff 供人工审核。
+
+`generate`：
+
+- 默认先执行 `validate-whitelist`。
+- 覆盖 `*_gen.cs` 和 `*_export_gen.cpp`。
+- 首次创建 `*.cs` 和 `*_export.cpp`，已有文件不覆盖。
+- 生成 `vtksharp.modules.generated.cmake`。
+- 不修改白名单。
+- 第一阶段不删除 orphan generated files。
+
+`generate --check` 和 orphan 清理放到后续增强，不作为第一版必须项。
+
 ## 白名单设计
 
 白名单按 VTK module 拆分：
@@ -141,14 +231,17 @@ src/generator/whitelist/
 每个文件只描述一个 VTK module：
 
 ```yaml
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
 module: vtkRenderingCore
 classes:
   - name: vtkActor
     header: vtkActor.h
     functions:
       - name: SetMapper
-        cppSignature: "void SetMapper(vtkMapper*)"
-        returnType: void
+        cppSignature: "void SetMapper(vtkMapper* mapper)"
+        return:
+          type: void
         parameters:
           - type: vtkMapper*
             name: mapper
@@ -157,7 +250,7 @@ classes:
 函数使用结构化签名匹配：
 
 - `name`
-- `returnType`
+- `return.type`
 - `parameters[].type`
 
 参数名不参与匹配，只用于生成 C# API。`cppSignature` 保留 VTK 头文件或 CppAst 看到的原始/近似原始签名，用于人工审核和追溯。若原始签名有形参名，`cppSignature` 应保留形参名；若头文件缺少形参名，则 `cppSignature` 保持缺失状态，`parameters[].name` 由 AI 或人工补齐。
@@ -167,7 +260,8 @@ classes:
 ```yaml
 - name: SetPosition
   cppSignature: "void SetPosition(double x, double y, double z)"
-  returnType: void
+  return:
+    type: void
   parameters:
     - { type: double, name: x }
     - { type: double, name: y }
@@ -179,9 +273,56 @@ classes:
 ```yaml
 - name: Update
   cppSignature: "void Update()"
-  returnType: void
+  return:
+    type: void
   parameters: []
 ```
+
+返回 VTK 对象：
+
+```yaml
+- name: GetProperty
+  cppSignature: "vtkProperty* GetProperty()"
+  return:
+    type: vtkProperty*
+  parameters: []
+```
+
+返回值使用对象式 schema。`return.type` 第一阶段必须有，后续可以扩展所有权等信息：
+
+```yaml
+return:
+  type: vtkLight*
+  ownership: owned
+```
+
+字段约束：
+
+- `module`：必须有，值为 `vtkRenderingCore` 这种 VTK module 名。
+- `classes[].name`：必须有。
+- `classes[].header`：必须有，便于不用每次从 hierarchy 推断。
+- `classes[].functions`：必须有，可以为空数组。
+- `functions[].name`：必须有。
+- `functions[].cppSignature`：必须有，用于审核；若原始函数签名中有形参名，必须保留形参名。
+- `functions[].return.type`：必须有。
+- `functions[].parameters`：必须有，可以为空数组。
+- `parameters[].type`：必须有。
+- `parameters[].name`：必须有。
+- `parameters[].direction`：普通标量和 `vtkClass*` 可省略，指针/数组需要时填写。
+- `parameters[].length`：仅 `T*` 或数组参数需要。
+- 不在正式白名单里放 `status/reviewStatus/reason`。
+
+正式白名单、候选白名单和生成器配置都应配套 JSON Schema，便于 VS Code 通过 YAML Language Server 自动补全和合法性校验：
+
+```text
+src/generator/schemas/
+  vtksharp.whitelist.schema.json
+  vtksharp.whitelist-candidate.schema.json
+  vtksharp.generator.schema.json
+  vtksharp.generator.local.schema.json
+```
+
+JSON Schema 应约束必填字段、枚举值和未知字段。例如 `direction` 只允许 `in | out | inout`，`length.kind` 只允许 `fixed | parameter`。
 
 ## 白名单契约
 
@@ -286,6 +427,65 @@ const/ref/pointer/array/fixed-length 信息
 ```
 
 hash 输入不包含参数名和头文件中的声明顺序。禁止使用 CppAst 函数索引号作为重载命名后缀，因为索引会随 VTK 版本、头文件顺序和过滤规则变化而变化。
+
+## CppAst 类型规范化
+
+生成器内部应建立 `TypeCanonicalizer`，把 CppAst 读到的不同 C++ 类型写法统一成白名单使用的 canonical type 字符串。白名单匹配只使用 canonical type，不直接使用 CppAst 原始 `FullName`。
+
+白名单 canonical type 采用紧凑 C++ 风格：
+
+```text
+void
+bool
+vtkTypeBool
+int
+unsigned int
+long long
+unsigned long long
+vtkIdType
+float
+double
+vtkMapper*
+const vtkMapper*
+const char*
+char*
+void*
+double[3]
+const double[3]
+int[2]
+HWND
+HDC
+HGLRC
+```
+
+规范化规则：
+
+| CppAst / C++ spelling | canonical type |
+| --- | --- |
+| `vtkMapper *` | `vtkMapper*` |
+| `vtkMapper*` | `vtkMapper*` |
+| `vtkMapper const *` | `const vtkMapper*` |
+| `const vtkMapper *` | `const vtkMapper*` |
+| `char const *` | `const char*` |
+| `const char *` | `const char*` |
+| `double const[3]` | `const double[3]` |
+| `const double[3]` | `const double[3]` |
+| `double [3]` | `double[3]` |
+| `HWND__ *` | `HWND` |
+| `HDC__ *` | `HDC` |
+| `HGLRC__ *` | `HGLRC` |
+
+参数名、空格和 `const` 位置不影响匹配。数组统一为 `T[N]` 或 `const T[N]`。指针统一为 `T*` 或 `const T*`。
+
+`unsigned long` 不默认映射为 `uint`，因为它的平台宽度不稳定。若某个 API 必须支持 `unsigned long`，应通过配置或显式类型别名处理，例如：
+
+```yaml
+typeAliases:
+  unsigned long:
+    windows-x64: uint
+```
+
+第一阶段如果遇到没有明确映射的 `unsigned long`，生成器应报错或要求人工决策，而不是隐式假定为 32 位。
 
 ## 手写基础类
 
@@ -421,7 +621,8 @@ public void SetName(string name)
 ```yaml
 - name: SetArray
   cppSignature: "void SetArray(double* values, vtkIdType count)"
-  returnType: void
+  return:
+    type: void
   parameters:
     - type: double*
       name: values
@@ -438,7 +639,8 @@ public void SetName(string name)
 ```yaml
 - name: SetPosition
   cppSignature: "void SetPosition(double* position)"
-  returnType: void
+  return:
+    type: void
   parameters:
     - type: double*
       name: position
@@ -546,7 +748,8 @@ requirements:
     functions:
       - name: SetHeight
         cppSignature: "void SetHeight(double _arg)"
-        returnType: void
+        return:
+          type: void
         parameters:
           - { type: double, name: height }
         reason: "Used by Cone example"
@@ -603,6 +806,27 @@ dotnet run --project examples/Cone/Cone.csproj
 
 第一阶段示例验证以 smoke test 为主，不做严格图像回归。
 
+## 初始白名单来源
+
+第一版白名单不从零手写，也不直接导入旧 BrdiVtkNet 的全量白名单。初始白名单应从当前 VtkSharp 已有绑定代码反推，优先实现当前代码的 round-trip：
+
+```text
+src/bindings/VtkSharp/VtkSharp/**/*_gen.cs
+src/native/src/**/*_export_gen.cpp
+```
+
+初始流程：
+
+1. 读取当前已有 C# 和 C++ 绑定样本。
+2. 结合 VTK headers 和旧项目 `vtkExportConfig.json` 辅助确认函数签名。
+3. 整理当前项目已有类和函数对应的最小白名单。
+4. 先生成到临时目录。
+5. 与当前已有代码做人工 diff。
+6. 逐步让生成结果接近当前项目风格。
+7. round-trip 稳定后再切换到正式输出目录。
+
+第一阶段不导入旧项目 110 个类 / 545 个函数的完整覆盖范围。旧白名单只能作为签名和迁移参考，不能作为第一版自动生成范围。
+
 ## 风险和取舍
 
 - 白名单增长必须人工审核，避免 AI 自动扩大 API 面。
@@ -622,3 +846,23 @@ dotnet run --project examples/Cone/Cone.csproj
 - 能创建但不覆盖手写扩展文件。
 - 能通过 managed 和 native 构建。
 - 能通过至少一个简单 VTK 示例 smoke test。
+
+第一阶段实现验收以“临时目录生成 + 人工 diff + 当前已有 API round-trip”为主：
+
+```bash
+vtksharp-gen validate-whitelist
+vtksharp-gen inspect-class vtkActor --format text
+vtksharp-gen generate --output-root <temp-dir>
+```
+
+第一版 `generate` 应支持将生成结果输出到临时目录，避免一开始覆盖当前项目已有绑定代码。待 round-trip 结果稳定后，再使用正式输出路径。
+
+第一阶段不要求：
+
+- 自动解析 build log。
+- 自动翻译示例。
+- `generate --check`。
+- 删除 orphan generated files。
+- 支持旧 BrdiVtkNet 全量白名单。
+- 支持所有复杂 pointer / ownership 规则。
+- 完整 CI。
