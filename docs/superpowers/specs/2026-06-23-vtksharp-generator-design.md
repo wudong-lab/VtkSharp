@@ -86,7 +86,7 @@ paths:
   nativeModulesFile: ../../native/vtksharp.modules.generated.cmake
 
 generation:
-  createManualExtensionFiles: true
+  createManualExtensionFiles: false
   overwriteGeneratedFiles: true
   deleteOrphanGeneratedFiles: false
 ```
@@ -210,7 +210,7 @@ CLI 命令按职责分为三组：
 
 - 默认先执行 `validate-whitelist`。
 - 覆盖 `*_gen.cs` 和 `*_export_gen.cpp`。
-- 首次创建 `*.cs` 和 `*_export.cpp`，已有文件不覆盖。
+- 第一阶段不默认创建 `*.cs` 和 `*_export.cpp` 扩展空壳。
 - 生成 `vtksharp.modules.generated.cmake`。
 - 不修改白名单。
 - 第一阶段不删除 orphan generated files。
@@ -530,7 +530,11 @@ manualBindingClasses:
 *_export.cpp
 ```
 
-生成器首次发现某个类时创建空壳，之后永不覆盖。C# 文件只包含必要 namespace 和 partial class：
+第一阶段不默认创建手写扩展空壳。除 `manualBindingClasses` 等特殊类型外，自动生成的 VTK wrapper 类只生成 `vtkXxx_gen.cs` 和 `vtkXxx_export_gen.cpp`。
+
+成熟版本的生成器应支持自动创建扩展空壳：凡是生成器自动添加/生成 wrapper 的类型，都可以在文件不存在时创建对应的 `vtkXxx.cs` 和 `vtkXxx_export.cpp`。已存在的扩展文件永不覆盖。
+
+C# 扩展空壳只包含必要 namespace 和 partial class：
 
 ```csharp
 namespace VtkSharp;
@@ -538,7 +542,7 @@ namespace VtkSharp;
 public unsafe partial class vtkActor { }
 ```
 
-C++ 文件只包含必要 include：
+C++ 扩展空壳只包含必要 include：
 
 ```cpp
 #include "vtksharp_api.h"
@@ -869,7 +873,7 @@ src/native/src/**/*_export_gen.cpp
 - 能生成当前项目风格的 C# wrapper 和 C++ export 文件。
 - 能跳过 `manualBindingClasses` 中的 `vtkObjectBase`、`vtkObject`。
 - 能生成 `vtksharp.modules.generated.cmake`。
-- 能创建但不覆盖手写扩展文件。
+- 第一阶段不自动创建手写扩展空壳；如果扩展文件已存在，生成器不覆盖。
 - 能通过 managed 和 native 构建。
 - 能通过至少一个简单 VTK 示例 smoke test。
 
