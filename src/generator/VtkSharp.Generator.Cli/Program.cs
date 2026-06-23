@@ -100,6 +100,7 @@ static void Generate(string configPath, string outputRoot)
     var csharpEmitter = new CSharpBindingEmitter();
     var cppEmitter = new CppExportEmitter();
     var cmakeEmitter = new CMakeModulesEmitter();
+    var nativeProjectEmitter = new NativeProjectEmitter();
     var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
 
     foreach (var document in documents)
@@ -121,6 +122,9 @@ static void Generate(string configPath, string outputRoot)
 
     var modulesPath = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
     WriteText(modulesPath, cmakeEmitter.Emit(documents.Select(document => document.Module).ToList()));
+    WriteText(Path.Combine(outputRoot, "native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(config.Binding.NativeLibraryName));
+    WriteText(Path.Combine(outputRoot, "native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
+    WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
 
     Console.WriteLine($"Generated files will be written to: {Path.GetFullPath(outputRoot)}");
 }
