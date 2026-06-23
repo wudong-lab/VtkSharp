@@ -113,10 +113,13 @@ static void Generate(string configPath, string outputRoot)
             var baseClassName = ResolveMvpBaseClass(whitelistClass.Name);
             var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
             var nativePath = Path.Combine(outputRoot, "native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
-            var includeClassNames = GetIncludeClassNames(whitelistClass).Where(name => name != whitelistClass.Name).ToList();
+            var includeClassNames = GetIncludeClassNames(whitelistClass)
+                .Where(name => name != whitelistClass.Name)
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
 
             WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, whitelistClass.Functions));
-            WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames));
+            WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, whitelistClass.Functions));
         }
     }
 

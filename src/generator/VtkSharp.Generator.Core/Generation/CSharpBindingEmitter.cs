@@ -21,11 +21,109 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine($"    public new static {className} New() => new({className}_New(), ownsReference: true);");
         sb.AppendLine($"    public new static {className} WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);");
         sb.AppendLine();
+        sb.AppendLine($"    public new static {className} Register({className} sourceObject)");
+        sb.AppendLine("    {");
+        sb.AppendLine($"        var target = new {className}(sourceObject.NativePointer, true);");
+        sb.AppendLine("        target.Register();");
+        sb.AppendLine("        return target;");
+        sb.AppendLine("    }");
+        sb.AppendLine();
+        foreach (var function in functions)
+        {
+            EmitPublicMethod(sb, className, function);
+            sb.AppendLine();
+        }
         sb.AppendLine("    #region Interop");
         sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
         sb.AppendLine($"    private static extern nint {className}_New();");
+        foreach (var function in functions)
+        {
+            sb.AppendLine();
+            EmitInteropMethod(sb, className, function);
+        }
         sb.AppendLine("    #endregion");
         sb.AppendLine("}");
         return sb.ToString();
+    }
+
+    private static void EmitPublicMethod(StringBuilder sb, string className, WhitelistFunction function)
+    {
+        var returnType = ToPublicType(function.Return.Type);
+        var parameters = string.Join(", ", function.Parameters.Select(parameter => $"{ToPublicType(parameter.Type)} {parameter.Name}"));
+        sb.AppendLine($"    public new {returnType} {function.Name}({parameters})");
+        sb.AppendLine("    {");
+
+        var callArguments = new[] { "this.NativePointer" }
+            .Concat(function.Parameters.Select(ToInteropArgument));
+        var call = $"{className}_{function.Name}({string.Join(", ", callArguments)})";
+
+        if (function.Return.Type == "void")
+        {
+            sb.AppendLine($"        {call};");
+        }
+        else if (TryGetVtkClassName(function.Return.Type, out var returnClassName))
+        {
+            sb.AppendLine($"        return {returnClassName}.WeakReference({call});");
+        }
+        else
+        {
+            sb.AppendLine($"        return {call};");
+        }
+
+        sb.AppendLine("    }");
+    }
+
+    private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function)
+    {
+        var returnType = ToInteropType(function.Return.Type);
+        var parameters = new[] { "nint self" }
+            .Concat(function.Parameters.Select(parameter => $"{ToInteropType(parameter.Type)} {parameter.Name}"));
+        sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
+        sb.AppendLine($"    private static extern {returnType} {className}_{function.Name}({string.Join(", ", parameters)});");
+    }
+
+    private static string ToPublicType(string type)
+    {
+        if (TryGetVtkClassName(type, out var className))
+            return className;
+
+        return type switch
+        {
+            "void" => "void",
+            "int" => "int",
+            _ => throw new NotSupportedException($"C# public type '{type}' is not supported by the MVP emitter."),
+        };
+    }
+
+    private static string ToInteropType(string type)
+    {
+        if (TryGetVtkClassName(type, out _))
+            return "nint";
+
+        return type switch
+        {
+            "void" => "void",
+            "int" => "int",
+            _ => throw new NotSupportedException($"C# interop type '{type}' is not supported by the MVP emitter."),
+        };
+    }
+
+    private static string ToInteropArgument(WhitelistParameter parameter)
+        => TryGetVtkClassName(parameter.Type, out _) ? $"{parameter.Name}.NativePointer" : parameter.Name;
+
+    private static bool TryGetVtkClassName(string type, out string className)
+    {
+        var normalized = type.Replace("const", "", StringComparison.Ordinal)
+            .Replace("*", "", StringComparison.Ordinal)
+            .Trim();
+
+        if (normalized.StartsWith("vtk", StringComparison.Ordinal))
+        {
+            className = normalized;
+            return true;
+        }
+
+        className = "";
+        return false;
     }
 }
