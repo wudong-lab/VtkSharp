@@ -5,7 +5,8 @@ namespace VtkSharp.Generator.Core.Inspection;
 
 public sealed record InspectedClass(
     string Name,
-    IReadOnlyList<InspectedFunction> Functions);
+    IReadOnlyList<InspectedFunction> Functions,
+    bool HasStaticNew = false);
 
 public sealed record InspectedFunction(
     string Name,
@@ -57,6 +58,13 @@ public sealed class VtkClassInspector
         var cppClass = compilation.Classes.FirstOrDefault(item => item.Name == className)
             ?? throw new InvalidOperationException($"Class '{className}' was not found in '{headerFileName}'.");
 
+        var hasStaticNew = cppClass.Functions.Any(function =>
+            function.Visibility == CppVisibility.Public &&
+            function.Name == "New" &&
+            function.StorageQualifier == CppStorageQualifier.Static &&
+            function.Parameters.Count == 0 &&
+            function.ReturnType.FullName.Contains(className, StringComparison.Ordinal));
+
         var functions = cppClass.Functions
             .Where(static function =>
                 function.Visibility == CppVisibility.Public &&
@@ -83,6 +91,6 @@ public sealed class VtkClassInspector
             })
             .ToList();
 
-        return new InspectedClass(className, functions);
+        return new InspectedClass(className, functions, hasStaticNew);
     }
 }

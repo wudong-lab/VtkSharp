@@ -102,6 +102,8 @@ static void Generate(string configPath, string outputRoot)
     var cmakeEmitter = new CMakeModulesEmitter();
     var nativeProjectEmitter = new NativeProjectEmitter();
     var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
+    var inspector = new VtkClassInspector();
+    var includeDirectory = ResolveIncludeDirectory(config);
 
     foreach (var document in documents)
     {
@@ -117,9 +119,10 @@ static void Generate(string configPath, string outputRoot)
                 .Where(name => name != whitelistClass.Name)
                 .Distinct(StringComparer.Ordinal)
                 .ToList();
+            var hasStaticNew = includeDirectory is not null && TryInspectHasStaticNew(inspector, includeDirectory, whitelistClass);
 
-            WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, whitelistClass.Functions));
-            WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, whitelistClass.Functions));
+            WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, hasStaticNew, whitelistClass.Functions));
+            WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, hasStaticNew, whitelistClass.Functions));
         }
     }
 
@@ -180,4 +183,28 @@ static string? ExtractVtkClassName(string typeName)
         .Trim();
 
     return normalized.StartsWith("vtk", StringComparison.Ordinal) ? normalized : null;
+}
+
+static string? ResolveIncludeDirectory(GeneratorConfig config)
+{
+    var candidates = new[]
+    {
+        config.Vtk.IncludeDirectory,
+        config.Vtk.RootDirectory is null ? null : Path.Combine(config.Vtk.RootDirectory, "include", $"vtk-{config.Vtk.Version}"),
+        config.Vtk.RootDirectory is null ? null : Path.Combine(config.Vtk.RootDirectory, "include"),
+    };
+
+    return candidates.FirstOrDefault(path => path is not null && Directory.Exists(path));
+}
+
+static bool TryInspectHasStaticNew(VtkClassInspector inspector, string includeDirectory, WhitelistClass whitelistClass)
+{
+    try
+    {
+        return inspector.InspectHeader(includeDirectory, whitelistClass.Header, whitelistClass.Name).HasStaticNew;
+    }
+    catch (Exception ex) when (ex is IOException or InvalidOperationException)
+    {
+        return false;
+    }
 }

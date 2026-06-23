@@ -10,7 +10,7 @@ public sealed class BindingEmitterFunctionTests
     {
         var emitter = new CSharpBindingEmitter();
 
-        var text = emitter.Emit("VtkSharp", "vtkAlgorithm", "vtkObject",
+        var text = emitter.Emit("VtkSharp", "vtkAlgorithm", "vtkObject", hasStaticNew: true,
         [
             new WhitelistFunction
             {
@@ -33,7 +33,7 @@ public sealed class BindingEmitterFunctionTests
     {
         var emitter = new CSharpBindingEmitter();
 
-        var text = emitter.Emit("VtkSharp", "vtkAlgorithm", "vtkObject",
+        var text = emitter.Emit("VtkSharp", "vtkAlgorithm", "vtkObject", hasStaticNew: true,
         [
             new WhitelistFunction
             {
@@ -54,7 +54,7 @@ public sealed class BindingEmitterFunctionTests
     {
         var emitter = new CSharpBindingEmitter();
 
-        var text = emitter.Emit("VtkSharp", "vtkWindow", "vtkObject",
+        var text = emitter.Emit("VtkSharp", "vtkWindow", "vtkObject", hasStaticNew: false,
         [
             new WhitelistFunction
             {
@@ -70,6 +70,8 @@ public sealed class BindingEmitterFunctionTests
         ]);
 
         Assert.Contains("public new void SetSize(int width, int height)", text);
+        Assert.DoesNotContain("public new static vtkWindow New()", text);
+        Assert.DoesNotContain("vtkWindow_New", text);
         Assert.Contains("vtkWindow_SetSize(this.NativePointer, width, height);", text);
         Assert.Contains("private static extern void vtkWindow_SetSize(nint self, int width, int height);", text);
     }
@@ -79,7 +81,7 @@ public sealed class BindingEmitterFunctionTests
     {
         var emitter = new CppExportEmitter();
 
-        var text = emitter.Emit("vtkAlgorithm", ["vtkAlgorithmOutput"],
+        var text = emitter.Emit("vtkAlgorithm", ["vtkAlgorithmOutput"], hasStaticNew: true,
         [
             new WhitelistFunction
             {
@@ -104,11 +106,31 @@ public sealed class BindingEmitterFunctionTests
     }
 
     [Fact]
+    public void CppEmitter_SkipsNewWhenClassHasNoStaticNew()
+    {
+        var emitter = new CppExportEmitter();
+
+        var text = emitter.Emit("vtkWindow", [], hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "Render",
+                CppSignature = "void Render()",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters = [],
+            },
+        ]);
+
+        Assert.DoesNotContain("vtkWindow_New", text);
+        Assert.Contains("VTKSHARP_API void vtkWindow_Render(vtkWindow* self)", text);
+    }
+
+    [Fact]
     public void CppEmitter_EmitsDistinctIncludes()
     {
         var emitter = new CppExportEmitter();
 
-        var text = emitter.Emit("vtkAlgorithm", ["vtkAlgorithmOutput", "vtkAlgorithmOutput"],
+        var text = emitter.Emit("vtkAlgorithm", ["vtkAlgorithmOutput", "vtkAlgorithmOutput"], hasStaticNew: true,
         [
             new WhitelistFunction
             {
