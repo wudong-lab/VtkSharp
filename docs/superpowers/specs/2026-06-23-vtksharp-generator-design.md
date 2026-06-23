@@ -18,6 +18,25 @@ VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 
 
 第一阶段不追求全量自动绑定 VTK，也不追求自动理解所有 C++ 类型语义。
 
+## 已确认设计决策摘要
+
+本设计是 VtkSharp 源代码生成器的专项事实来源。若早期总体设计文档中的生成器、manifest 或 API 发现流程与本文冲突，以本文为准。
+
+本轮讨论确认以下原则：
+
+- 采用函数级白名单；类只是组织单位，真正决定是否生成绑定的是具体函数签名。
+- 白名单按 VTK module 拆分为 YAML 文件。
+- 函数条目同时保留 `cppSignature` 和结构化签名；匹配只使用函数名、返回类型和参数类型，不使用参数名。
+- `cppSignature` 尽量保留 VTK 头文件中的原始签名；原始签名有形参名时必须保留。
+- `parameters[].name` 始终用于生成 C# API。头文件缺少形参名时，由 AI 或人工补齐，生成器也可按位置生成 `_arg1`、`_arg2` 作为兜底。
+- 白名单是强契约，匹配失败、类型不支持或依赖无法解析时默认报错并停止生成。
+- 依赖类和基类链由生成器自动发现；依赖类可由 `normalize-whitelist` 写回白名单，通常 `functions: []`。
+- 所有被生成 wrapper 的 VTK 类，只要存在 `static New()`，就生成 `New()` 和对应 native 导出。
+- `vtkObjectBase`、`vtkObject` 等 `manualBindingClasses` 由人工维护，生成器视为已存在并跳过。
+- 生成器优先生成低层稳定绑定；工程友好 API 通过手写 partial 或后续专门规则补充。
+- Codex 负责编排分析流程，CLI 提供确定性查询、校验和生成能力。
+- 示例翻译产生候选白名单，候选由人工审核后再合并到正式白名单。
+
 ## 项目结构
 
 生成器放在 `src/generator` 下：
@@ -84,6 +103,29 @@ vtksharp-gen merge-candidate examples/Cone/whitelist-candidate.yml
 ```
 
 CLI 做确定性工作：扫描 VTK、输出候选、校验白名单、生成绑定、输出诊断和报告。Codex 负责示例翻译、编译错误分析、调用 CLI 查询候选、生成候选白名单 patch、组织验证流程。
+
+CLI 命令按职责分为三组：
+
+```text
+查询类：
+  inspect-class
+  inspect-function / suggest-api
+  list-modules
+  list-classes
+
+白名单类：
+  validate-whitelist
+  normalize-whitelist
+  diff-whitelist
+  create-candidate
+
+生成类：
+  generate
+  clean-generated
+  report
+```
+
+第一阶段优先完成最小可用集，其他命令在示例驱动流程稳定后再补。
 
 ## 白名单设计
 
@@ -165,7 +207,85 @@ classes:
 
 依赖类会被生成 wrapper 壳，但不会自动导出它的成员函数。依赖类可由 `normalize-whitelist` 写回对应模块白名单，下次扫描时成为显式类，通常 `functions: []`。
 
+`generate` 命令不应静默修改正式白名单。规范化、排序、补齐依赖类、补齐基类链等会改变白名单内容的操作应由 `normalize-whitelist` 或专门命令执行，并通过 Git diff 供人工审核。
+
 凡是生成器解析到并生成 wrapper 的 VTK 类，只要存在 `static New()`，就生成 `New()` 和对应 native 导出。
+
+## C ABI 导出命名
+
+C++ 支持函数重载，但 C ABI 导出函数名必须唯一。生成器应自动确定 P/Invoke 导出函数名，不要求人工指定。
+
+基础规则：
+
+1. 同一类中同名导出函数只有一个时，导出名为 `ClassName_MethodName`。
+2. 同一类中同名导出函数存在多个重载时，导出名为 `ClassName_MethodName_NormalizedParameterTypeList`。
+3. 返回值不参与常规导出名。C++ 不能仅按返回值重载；返回值只参与冲突兜底 hash。
+4. 参数名不参与导出名。
+5. 如果规范化后的导出名仍冲突，追加稳定短 hash。
+
+示例：
+
+```text
+vtkActor::SetMapper(vtkMapper*)
+  -> vtkActor_SetMapper
+
+vtkActor::SetPosition(double x, double y, double z)
+  -> vtkActor_SetPosition_double_double_double
+
+vtkActor::SetPosition(double position[3])
+  -> vtkActor_SetPosition_doubleArray3
+
+vtkTransform::SetMatrix(vtkMatrix4x4*)
+  -> vtkTransform_SetMatrix_vtkMatrix4x4Ptr
+
+vtkTransform::SetMatrix(double const[16])
+  -> vtkTransform_SetMatrix_doubleConstArray16
+```
+
+参数类型后缀由 canonical type 生成。第一阶段推荐规范化规则：
+
+| C++ parameter type | suffix |
+| --- | --- |
+| `double` | `double` |
+| `float` | `float` |
+| `int` | `int` |
+| `unsigned int` | `uint` |
+| `long long` | `long` |
+| `unsigned long long` | `ulong` |
+| `vtkIdType` | `vtkIdType` |
+| `bool` | `bool` |
+| `vtkTypeBool` | `vtkTypeBool` |
+| `vtkMapper*` | `vtkMapperPtr` |
+| `vtkMapper const*` / `const vtkMapper*` | `vtkMapperConstPtr` |
+| `const char*` / `char const*` | `constCharPtr` |
+| `char*` | `charPtr` |
+| `void*` | `voidPtr` |
+| `double[3]` | `doubleArray3` |
+| `double const[3]` / `const double[3]` | `doubleConstArray3` |
+| `int[2]` | `intArray2` |
+| `HWND__*` | `hwnd` |
+| `HDC__*` | `hdc` |
+| `HGLRC__*` | `hglrc` |
+
+非固定长度 `T*` 参数若通过白名单声明了 `length.kind: fixed`，可使用 `TArrayN` 后缀；否则使用 `TPtr` 后缀。方向 `in` / `out` / `inout` 不参与后缀，除非不参与会导致冲突。
+
+稳定 hash 只在冲突时追加，格式建议为 `_hxxxxxx`，例如：
+
+```text
+vtkFoo_Bar_intPtr_h1a2b3c
+```
+
+hash 输入使用 canonical signature，至少包含：
+
+```text
+class name
+method name
+return canonical type
+parameter canonical types
+const/ref/pointer/array/fixed-length 信息
+```
+
+hash 输入不包含参数名和头文件中的声明顺序。禁止使用 CppAst 函数索引号作为重载命名后缀，因为索引会随 VTK 版本、头文件顺序和过滤规则变化而变化。
 
 ## 手写基础类
 
@@ -233,19 +353,26 @@ C++ 文件只包含必要 include：
 
 第一阶段支持：
 
-```text
-void
-bool
-vtkTypeBool
-char
-int / unsigned int / long long / unsigned long long / vtkIdType
-float / double
-vtkClass*
-const char* / char const*
-void*
-HWND / HDC / HGLRC
-固定长度数组参数
-```
+| C++ type | C# import type | C# public wrapper |
+| --- | --- | --- |
+| `void` | `void` | `void` |
+| `bool` | `bool` + `[MarshalAs(UnmanagedType.U1)]` | `bool` |
+| `vtkTypeBool` | `bool` + `[MarshalAs(UnmanagedType.U4)]` | `bool` |
+| `char` | `char` | `char` |
+| `int` | `int` | `int` |
+| `unsigned int` | `uint` | `uint` |
+| `long long` | `long` | `long` |
+| `unsigned long long` | `ulong` | `ulong` |
+| `vtkIdType` | `long` | `long` |
+| `float` | `float` | `float` |
+| `double` | `double` | `double` |
+| `vtkClass*` | `nint` | `vtkClass` wrapper |
+| `const char*` / `char const*` 参数 | TFM 条件导入，见字符串规则 | `string` 参数 |
+| `char*` / `const char*` 返回值 | `nint` | `string`，通过 `VtkString.FromUtf8Pointer(...)` 解码 |
+| `void*` | `nint` | `nint` |
+| `HWND` / `HDC` / `HGLRC` | `nint` | `nint` |
+| `T[N]` 参数 | pointer 或 TFM 条件导入 | `Span<T>` / `ReadOnlySpan<T>` |
+| `T*` 返回值，非 `vtkClass*` / 字符串 | `T*` | `internal *_Internal()` |
 
 不支持类型默认报错。
 
@@ -437,6 +564,18 @@ requirements:
 8. 执行 normalize、validate、generate、build 和 smoke test。
 
 正式白名单不记录审核状态。进入正式白名单即视为已审核。
+
+### AI 自动化边界
+
+第一阶段不要求生成器自动解析完整 `dotnet build` 日志并自动修改白名单。推荐先采用 Codex 编排流程：
+
+1. Codex 翻译示例并运行构建。
+2. Codex 从编译错误中识别缺失类或成员。
+3. Codex 调用 CLI 的 `inspect-class` / `suggest-api` 查询候选 VTK 签名。
+4. Codex 生成按示例组织的候选白名单。
+5. 人工审核候选后，再合并到正式模块白名单。
+
+后续可以新增 `suggest-from-build-log` 一类命令，把稳定下来的人工流程工具化。但即使有该命令，也只应生成候选白名单或审核报告，不直接修改正式白名单。
 
 ## 验证策略
 
