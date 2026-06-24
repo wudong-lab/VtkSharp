@@ -6,9 +6,16 @@ namespace VtkSharp.Generator.Core.Inspection;
 public sealed class VtkClassInspector
 {
     private readonly TypeCanonicalizer _canonicalizer = new();
+    private readonly Dictionary<string, InspectedClass> _cache = new(StringComparer.Ordinal);
 
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
-        => this.InspectHeader(includeDirectory, headerFileName, className, []);
+    {
+        var cacheKey = CreateCacheKey(includeDirectory, headerFileName, className);
+        if (this._cache.TryGetValue(cacheKey, out var inspectedClass))
+            return inspectedClass;
+
+        return this.InspectHeader(includeDirectory, headerFileName, className, []);
+    }
 
     private InspectedClass InspectHeader(
         string includeDirectory,
@@ -16,6 +23,10 @@ public sealed class VtkClassInspector
         string className,
         HashSet<string> visitedClassNames)
     {
+        var cacheKey = CreateCacheKey(includeDirectory, headerFileName, className);
+        if (this._cache.TryGetValue(cacheKey, out var cachedClass))
+            return cachedClass;
+
         if (!visitedClassNames.Add(className))
             return new InspectedClass(className, []);
 
@@ -96,8 +107,13 @@ public sealed class VtkClassInspector
         }
 
         var directBaseClassName = GetBaseClassNames(cppClass).FirstOrDefault();
-        return new InspectedClass(className, functions, hasStaticNew, directBaseClassName, GetClassDependencies(functions));
+        var result = new InspectedClass(className, functions, hasStaticNew, directBaseClassName, GetClassDependencies(functions));
+        this._cache[cacheKey] = result;
+        return result;
     }
+
+    private static string CreateCacheKey(string includeDirectory, string headerFileName, string className)
+        => $"{Path.GetFullPath(includeDirectory)}|{headerFileName}|{className}";
 
     private static IEnumerable<string> GetBaseClassNames(CppClass cppClass)
     {

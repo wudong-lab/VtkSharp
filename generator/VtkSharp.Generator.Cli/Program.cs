@@ -160,16 +160,13 @@ internal class Program
 
     private static int Generate(string configPath, string outputRoot)
     {
-        var validationExitCode = ValidateWhitelist(configPath);
+        var context = CreateGeneratorRunContext(configPath);
+        if (context is null)
+            return 1;
+
+        var validationExitCode = ValidateWhitelist(context);
         if (validationExitCode != 0)
             return validationExitCode;
-
-        var configDirectory = Path.GetDirectoryName(configPath)
-                              ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
-
-        var config = LoadConfig(configPath);
-        var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
-        var documents = new WhitelistLoader().LoadDirectory(whitelistDirectory);
 
         Directory.CreateDirectory(outputRoot);
 
@@ -178,41 +175,38 @@ internal class Program
         var cmakeEmitter = new CMakeModulesEmitter();
         var nativeProjectEmitter = new NativeProjectEmitter();
 
-        var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
+        var manualClasses = context.Config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
 
-        var inspector = new VtkClassInspector();
-        var includeDirectory = ResolveIncludeDirectory(config);
-        var hierarchyResolver = LoadHierarchyResolver(config);
-
-        foreach (var document in documents)
+        foreach (var document in context.Documents)
         {
             foreach (var whitelistClass in document.Classes)
             {
                 if (manualClasses.Contains(whitelistClass.Name))
                     continue;
 
-                var baseClassName = hierarchyResolver.GetBaseClassName(whitelistClass.Name);
+                var baseClassName = context.HierarchyResolver.GetBaseClassName(whitelistClass.Name);
                 var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
                 var nativePath = Path.Combine(outputRoot, "native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
                 var includeClassNames = GetIncludeClassNames(whitelistClass)
                     .Where(name => name != whitelistClass.Name)
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
-                var hasStaticNew = includeDirectory is not null && TryInspectHasStaticNew(inspector, includeDirectory, whitelistClass);
+                var hasStaticNew = context.InspectedClasses.TryGetValue(whitelistClass.Name, out var inspectedClass) &&
+                                   inspectedClass.HasStaticNew;
 
-                WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, hasStaticNew, whitelistClass.Functions));
+                WriteText(managedPath, csharpEmitter.Emit(context.Config.Binding.Namespace, whitelistClass.Name, baseClassName, hasStaticNew, whitelistClass.Functions));
                 WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, hasStaticNew, whitelistClass.Functions));
             }
         }
 
         var modulesPath = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
-        var vtkModules = documents
+        var vtkModules = context.Documents
             .Select(document => document.Module)
-            .Concat(config.Vtk.RuntimeModules)
+            .Concat(context.Config.Vtk.RuntimeModules)
             .Distinct(StringComparer.Ordinal)
             .ToList();
         WriteText(modulesPath, cmakeEmitter.Emit(vtkModules));
-        WriteText(Path.Combine(outputRoot, "native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(config.Binding.NativeLibraryName));
+        WriteText(Path.Combine(outputRoot, "native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(context.Config.Binding.NativeLibraryName));
         WriteText(Path.Combine(outputRoot, "native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
         WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
 
@@ -350,19 +344,33 @@ internal class Program
         return new GeneratorConfigLoader().Load(configPath, localConfigPath);
     }
 
-    private static bool TryInspectHasStaticNew(VtkClassInspector inspector, string includeDirectory, WhitelistClass whitelistClass)
+    private static int ValidateWhitelist(string configPath)
     {
-        try
-        {
-            return inspector.InspectHeader(includeDirectory, whitelistClass.Header, whitelistClass.Name).HasStaticNew;
-        }
-        catch (Exception ex) when (ex is IOException or InvalidOperationException or ArgumentException)
-        {
-            return false;
-        }
+        var context = CreateGeneratorRunContext(configPath);
+        return context is null ? 1 : ValidateWhitelist(context);
     }
 
-    private static int ValidateWhitelist(string configPath)
+    private static int ValidateWhitelist(GeneratorRunContext context)
+    {
+        var diagnostics = new List<ValidationDiagnostic>(context.InspectionDiagnostics);
+
+        var validator = new WhitelistValidator();
+        foreach (var document in context.Documents)
+            diagnostics.AddRange(validator.Validate(document, context.InspectedClasses).Diagnostics);
+
+        if (diagnostics.Count == 0)
+        {
+            Console.WriteLine("Whitelist validation succeeded.");
+            return 0;
+        }
+
+        foreach (var diagnostic in diagnostics)
+            Console.Error.WriteLine(diagnostic.Message);
+
+        return 1;
+    }
+
+    private static GeneratorRunContext? CreateGeneratorRunContext(string configPath)
     {
         var configDirectory = Path.GetDirectoryName(configPath)
                               ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
@@ -373,7 +381,7 @@ internal class Program
         if (includeDirectory is null)
         {
             Console.Error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
-            return 1;
+            return null;
         }
 
         var documents = new WhitelistLoader().LoadDirectory(whitelistDirectory);
@@ -393,19 +401,18 @@ internal class Program
             }
         }
 
-        var validator = new WhitelistValidator();
-        foreach (var document in documents)
-            diagnostics.AddRange(validator.Validate(document, inspectedClasses).Diagnostics);
-
-        if (diagnostics.Count == 0)
-        {
-            Console.WriteLine("Whitelist validation succeeded.");
-            return 0;
-        }
-
-        foreach (var diagnostic in diagnostics)
-            Console.Error.WriteLine(diagnostic.Message);
-
-        return 1;
+        return new GeneratorRunContext(
+            config,
+            documents,
+            LoadHierarchyResolver(config),
+            inspectedClasses,
+            diagnostics);
     }
+
+    private sealed record GeneratorRunContext(
+        GeneratorConfig Config,
+        IReadOnlyList<WhitelistDocument> Documents,
+        VtkHierarchyResolver HierarchyResolver,
+        IReadOnlyDictionary<string, InspectedClass> InspectedClasses,
+        IReadOnlyList<ValidationDiagnostic> InspectionDiagnostics);
 }
