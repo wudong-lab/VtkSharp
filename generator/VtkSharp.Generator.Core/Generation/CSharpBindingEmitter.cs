@@ -23,7 +23,10 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine("{");
         sb.AppendLine($"    protected {className}(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) {{ }}");
         if (hasStaticNew)
+        {
             sb.AppendLine($"    public new static {className} New() => new({className}_New(), ownsReference: true);");
+        }
+
         sb.AppendLine($"    public new static {className} WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);");
         sb.AppendLine();
         sb.AppendLine($"    public new static {className} Register({className} sourceObject)");
@@ -33,11 +36,13 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine("        return target;");
         sb.AppendLine("    }");
         sb.AppendLine();
+
         foreach (var function in functions)
         {
             this.EmitPublicMethod(sb, className, function, exportNames[function]);
             sb.AppendLine();
         }
+
         sb.AppendLine("    #region Interop");
         if (hasStaticNew)
         {
@@ -52,6 +57,7 @@ public sealed class CSharpBindingEmitter
         }
         sb.AppendLine("    #endregion");
         sb.AppendLine("}");
+
         return sb.ToString();
     }
 
@@ -62,6 +68,7 @@ public sealed class CSharpBindingEmitter
         var visibility = isInternalPointerReturn ? "internal" : "public";
         var returnType = ToPublicType(function.Return.Type);
         var parameters = string.Join(", ", function.Parameters.Select(parameter => $"{ToPublicType(parameter.Type)} {parameter.Name}"));
+
         sb.AppendLine($"    {visibility} new {returnType} {methodName}({parameters})");
         sb.AppendLine("    {");
 
@@ -106,12 +113,15 @@ public sealed class CSharpBindingEmitter
     private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
         var returnType = ToInteropType(function.Return.Type);
-        var parameters = new[] { "nint self" }
-            .Concat(function.Parameters.Select(ToInteropParameter));
+        var parameters = new[] { "nint self" }.Concat(function.Parameters.Select(ToInteropParameter));
+
         sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
         var returnMarshal = ToReturnMarshalAttribute(function.Return.Type);
         if (returnMarshal is not null)
+        {
             sb.AppendLine($"    {returnMarshal}");
+        }
+
         sb.AppendLine($"    private static extern {returnType} {exportName}({string.Join(", ", parameters)});");
     }
 

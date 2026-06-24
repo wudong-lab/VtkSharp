@@ -177,7 +177,9 @@ internal class Program
         var cppEmitter = new CppExportEmitter();
         var cmakeEmitter = new CMakeModulesEmitter();
         var nativeProjectEmitter = new NativeProjectEmitter();
+
         var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
+
         var inspector = new VtkClassInspector();
         var includeDirectory = ResolveIncludeDirectory(config);
         var hierarchyResolver = LoadHierarchyResolver(config);

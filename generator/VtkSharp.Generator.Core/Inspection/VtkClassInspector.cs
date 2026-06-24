@@ -8,8 +8,7 @@ public sealed class VtkClassInspector
     private readonly TypeCanonicalizer _canonicalizer = new();
 
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
-        =>
-            this.InspectHeader(includeDirectory, headerFileName, className, []);
+        => this.InspectHeader(includeDirectory, headerFileName, className, []);
 
     private InspectedClass InspectHeader(
         string includeDirectory,
