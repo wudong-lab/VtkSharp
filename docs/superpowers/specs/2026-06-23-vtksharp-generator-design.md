@@ -827,6 +827,7 @@ dotnet run --project examples/Cone/Cone.csproj
 后续增强：
 
 - `vtksharp-gen generate --check`：临时生成并与当前生成文件 diff，确保生成结果最新。
+- CppAst 解析性能优化：当前第一阶段可以接受按类/按 header 逐次解析，优先打通 validate、generate、round-trip diff、build 和 smoke test 的整体闭环；后续应改为对本轮需要分析的类进行批量解析，并缓存 header/module 解析结果，避免 `validate-whitelist` 和 `generate` 重复解析同一批 VTK 头文件。
 - native 导出符号检查。
 - 引用计数测试。
 - 字符串 UTF-8 测试。
@@ -875,6 +876,7 @@ src/bindings/TestConsole
 - `manualBindingClasses` 允许特殊基础类型绕过生成器，保持主规则简单。
 - 生成器默认失败即停止，减少隐性缺失 API。
 - CLI 提供确定性能力，Codex 负责探索和编排，这是项目中 AI 协作工程化的核心模式。
+- CppAst 解析 VTK header 成本较高。第一阶段不为性能优化打断整体流程，允许 CLI 较慢；一旦 round-trip 和 smoke test 稳定，应优先引入批量解析、解析结果缓存和跨命令复用的 inspection model。
 
 ## 第一阶段验收标准
 
