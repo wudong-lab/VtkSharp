@@ -54,7 +54,7 @@ public sealed class NativeProjectEmitter
              MODULES
                ${VTKSHARP_VTK_TARGETS}
            )
-           """;
+           """ + "\n";
 
     public string EmitCMakePresets()
         => """

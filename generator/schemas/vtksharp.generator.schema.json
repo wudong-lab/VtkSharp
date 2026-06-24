@@ -38,11 +38,12 @@
     "paths": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["whitelistDirectory", "managedOutputDirectory", "nativeOutputDirectory", "nativeModulesFile"],
+      "required": ["whitelistDirectory", "managedOutputDirectory", "nativeOutputDirectory", "nativeProjectFile", "nativeModulesFile"],
       "properties": {
         "whitelistDirectory": { "type": "string" },
         "managedOutputDirectory": { "type": "string" },
         "nativeOutputDirectory": { "type": "string" },
+        "nativeProjectFile": { "type": "string" },
         "nativeModulesFile": { "type": "string" }
       }
     },

@@ -26,6 +26,19 @@ public sealed class GeneratedOutputComparerTests
         Assert.Empty(differences);
     }
 
+    [Fact]
+    public void CompareFiles_TreatsLineEndingOnlyDifferenceAsEqual()
+    {
+        var expected = Path.Combine(CreateDirectory(), "CMakeLists.txt");
+        var actual = Path.Combine(CreateDirectory(), "CMakeLists.txt");
+        File.WriteAllText(expected, "line1\r\nline2\r\n", new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+        File.WriteAllText(actual, "line1\nline2\n", new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+
+        var differences = new GeneratedOutputComparer().CompareFiles(expected, actual, "native/CMakeLists.txt");
+
+        Assert.Empty(differences);
+    }
+
     private static string CreateDirectory()
     {
         var directory = Path.Combine(Path.GetTempPath(), "VtkSharp.Generator.Tests", Guid.NewGuid().ToString("N"));

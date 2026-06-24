@@ -245,14 +245,17 @@ internal class Program
         var config = LoadConfig(configPath);
         var currentManagedDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.ManagedOutputDirectory));
         var currentNativeDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.NativeOutputDirectory));
+        var currentNativeProjectFile = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.NativeProjectFile));
         var currentModulesFile = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.NativeModulesFile));
         var generatedManagedDirectory = Path.Combine(outputRoot, "bindings", "VtkSharp");
         var generatedNativeDirectory = Path.Combine(outputRoot, "native", "src");
+        var generatedNativeProjectFile = Path.Combine(outputRoot, "native", "CMakeLists.txt");
         var generatedModulesFile = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
 
         var comparer = new GeneratedOutputComparer();
         var differences = comparer.CompareDirectories(currentManagedDirectory, generatedManagedDirectory, "*_gen.cs")
             .Concat(comparer.CompareDirectories(currentNativeDirectory, generatedNativeDirectory, "*_export_gen.cpp"))
+            .Concat(comparer.CompareFiles(currentNativeProjectFile, generatedNativeProjectFile, "native/CMakeLists.txt"))
             .Concat(comparer.CompareFiles(currentModulesFile, generatedModulesFile, "native/vtksharp.modules.generated.cmake"))
             .ToList();
 

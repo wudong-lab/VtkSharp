@@ -16,6 +16,7 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("target_link_libraries(vtksharp_native", text);
         Assert.Contains("${VTKSHARP_VTK_TARGETS}", text);
         Assert.Contains("vtk_module_autoinit(", text);
+        Assert.EndsWith("\n", text);
     }
 
     [Fact]

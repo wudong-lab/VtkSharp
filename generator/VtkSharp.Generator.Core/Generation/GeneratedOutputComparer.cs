@@ -18,8 +18,8 @@ public sealed class GeneratedOutputComparer
 
         foreach (var relativePath in expectedFiles.Keys.Intersect(actualFiles.Keys, StringComparer.Ordinal))
         {
-            var expected = File.ReadAllText(expectedFiles[relativePath]);
-            var actual = File.ReadAllText(actualFiles[relativePath]);
+            var expected = ReadComparableText(expectedFiles[relativePath]);
+            var actual = ReadComparableText(actualFiles[relativePath]);
             if (!string.Equals(expected, actual, StringComparison.Ordinal))
                 differences.Add(new GeneratedOutputDifference(relativePath, "Content differs."));
         }
@@ -40,8 +40,8 @@ public sealed class GeneratedOutputComparer
         if (!File.Exists(actualPath))
             return [new GeneratedOutputDifference(relativePath, "Missing from generated output.")];
 
-        var expected = File.ReadAllText(expectedPath);
-        var actual = File.ReadAllText(actualPath);
+        var expected = ReadComparableText(expectedPath);
+        var actual = ReadComparableText(actualPath);
         return string.Equals(expected, actual, StringComparison.Ordinal)
             ? []
             : [new GeneratedOutputDifference(relativePath, "Content differs.")];
@@ -57,5 +57,11 @@ public sealed class GeneratedOutputComparer
                 path => Path.GetRelativePath(directory, path).Replace('\\', '/'),
                 path => path,
                 StringComparer.Ordinal);
+    }
+
+    private static string ReadComparableText(string path)
+    {
+        var text = File.ReadAllText(path);
+        return text.Replace("\r\n", "\n").Replace("\r", "\n");
     }
 }

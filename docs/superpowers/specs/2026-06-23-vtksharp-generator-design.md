@@ -88,6 +88,7 @@ paths:
   whitelistDirectory: ../whitelist
   managedOutputDirectory: ../../src/bindings/VtkSharp
   nativeOutputDirectory: ../../src/native/src
+  nativeProjectFile: ../../src/native/CMakeLists.txt
   nativeModulesFile: ../../src/native/vtksharp.modules.generated.cmake
 
 generation:
