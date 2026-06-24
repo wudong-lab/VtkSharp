@@ -827,7 +827,7 @@ vtksharp-gen generate
 cmake --build src/native/out/build/windows-x64 --config Release
 
 dotnet build src/bindings/VtkSharp.slnx
-dotnet run --project examples/Cone/Cone.csproj
+dotnet run --project src/bindings/TestConsole/TestConsole.csproj -- --smoke
 ```
 
 后续增强：

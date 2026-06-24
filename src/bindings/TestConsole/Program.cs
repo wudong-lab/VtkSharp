@@ -7,6 +7,8 @@ internal class Program
 {
     static void Main(string[] args)
     {
+        var smoke = Array.Exists(args, arg => string.Equals(arg, "--smoke", StringComparison.OrdinalIgnoreCase));
+
         using var cone = vtkConeSource.New();
 
         using var mapper = vtkPolyDataMapper.New();
@@ -26,8 +28,9 @@ internal class Program
         interactor.SetRenderWindow(window);
 
         window.Render();
-        interactor.Start();
+        if (!smoke)
+            interactor.Start();
 
-        Console.WriteLine("Done!");
+        Console.WriteLine(smoke ? "Smoke test completed." : "Done!");
     }
 }
