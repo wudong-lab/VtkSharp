@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\..\native\out\build\windows-x64\Release\vtksharp_native.dll</VtkSharpNativeDllPath>
+    <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64\Release\vtksharp_native.dll</VtkSharpNativeDllPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">

@@ -432,6 +432,6 @@ FodyWeavers.xsd
 .worktrees/
 
 # VtkSharp generator local configuration and scratch output
-src/generator/config/vtksharp.generator.local.yml
-src/generator/out/
-src/generator/.scratch/
+generator/config/vtksharp.generator.local.yml
+generator/out/
+generator/.scratch/

@@ -39,10 +39,10 @@ VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 
 
 ## 项目结构
 
-生成器放在 `src/generator` 下：
+生成器放在仓库根目录 `generator` 下：
 
 ```text
-src/generator/
+generator/
   VtkSharp.Generator.Core/
   VtkSharp.Generator.Cli/
   VtkSharp.Generator.slnx
@@ -57,7 +57,7 @@ src/generator/
 输出目录：
 
 ```text
-src/bindings/VtkSharp/VtkSharp/
+src/bindings/VtkSharp/
 src/native/src/
 src/native/vtksharp.modules.generated.cmake
 ```
@@ -67,7 +67,7 @@ src/native/vtksharp.modules.generated.cmake
 配置分为公共配置和本机配置：
 
 ```yaml
-# src/generator/config/vtksharp.generator.yml
+# generator/config/vtksharp.generator.yml
 vtk:
   version: "9.5"
   modulePrefix: vtk
@@ -81,9 +81,9 @@ binding:
 
 paths:
   whitelistDirectory: ../whitelist
-  managedOutputDirectory: ../../bindings/VtkSharp/VtkSharp
-  nativeOutputDirectory: ../../native/src
-  nativeModulesFile: ../../native/vtksharp.modules.generated.cmake
+  managedOutputDirectory: ../../src/bindings/VtkSharp
+  nativeOutputDirectory: ../../src/native/src
+  nativeModulesFile: ../../src/native/vtksharp.modules.generated.cmake
 
 generation:
   createManualExtensionFiles: false
@@ -92,7 +92,7 @@ generation:
 ```
 
 ```yaml
-# src/generator/config/vtksharp.generator.local.yml
+# generator/config/vtksharp.generator.local.yml
 vtk:
   rootDirectory: "C:/Program Files/VTK"
 ```
@@ -222,7 +222,7 @@ CLI 命令按职责分为三组：
 白名单按 VTK module 拆分：
 
 ```text
-src/generator/whitelist/
+generator/whitelist/
   vtkCommonCore.yml
   vtkCommonDataModel.yml
   vtkRenderingCore.yml
@@ -315,7 +315,7 @@ return:
 正式白名单、候选白名单和生成器配置都应配套 JSON Schema，便于 VS Code 通过 YAML Language Server 自动补全和合法性校验：
 
 ```text
-src/generator/schemas/
+generator/schemas/
   vtksharp.whitelist.schema.json
   vtksharp.whitelist-candidate.schema.json
   vtksharp.generator.schema.json
@@ -820,7 +820,7 @@ vtksharp-gen generate
 
 cmake --build src/native/out/build/windows-x64 --config Release
 
-dotnet build src/bindings/VtkSharp/VtkSharp.slnx
+dotnet build src/bindings/VtkSharp.slnx
 dotnet run --project examples/Cone/Cone.csproj
 ```
 
@@ -841,7 +841,7 @@ dotnet run --project examples/Cone/Cone.csproj
 第一版白名单不从零手写，也不直接导入旧 BrdiVtkNet 的全量白名单。初始白名单应从当前 VtkSharp 已有绑定代码反推，优先实现当前代码的 round-trip：
 
 ```text
-src/bindings/VtkSharp/VtkSharp/**/*_gen.cs
+src/bindings/VtkSharp/**/*_gen.cs
 src/native/src/**/*_export_gen.cpp
 ```
 
@@ -862,7 +862,7 @@ src/native/src/**/*_export_gen.cpp
 当前已有代码已经可以跑通一个完整 VTK 程序，验证样本位于：
 
 ```text
-src/bindings/VtkSharp/TestConsole
+src/bindings/TestConsole
 ```
 
 `TestConsole` 当前覆盖了 `vtkConeSource`、`vtkPolyDataMapper`、`vtkActor`、`vtkRenderer`、`vtkRenderWindow` 和 `vtkRenderWindowInteractor` 的基础 pipeline，可作为第一阶段 round-trip 后的 smoke test 样本。

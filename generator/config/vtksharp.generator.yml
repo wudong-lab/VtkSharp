@@ -13,9 +13,9 @@ binding:
 
 paths:
   whitelistDirectory: ../whitelist
-  managedOutputDirectory: ../../bindings/VtkSharp/VtkSharp
-  nativeOutputDirectory: ../../native/src
-  nativeModulesFile: ../../native/vtksharp.modules.generated.cmake
+  managedOutputDirectory: ../../src/bindings/VtkSharp
+  nativeOutputDirectory: ../../src/native/src
+  nativeModulesFile: ../../src/native/vtksharp.modules.generated.cmake
 
 generation:
   createManualExtensionFiles: false

@@ -53,7 +53,7 @@ var validateCommand = new Command("validate-whitelist", "Validate whitelist")
 validateCommand.SetAction(parseResult =>
 {
     var configPath = parseResult.GetValue(configOption)?.FullName
-        ?? Path.GetFullPath(Path.Combine("src", "generator", "config", "vtksharp.generator.yml"));
+        ?? GetDefaultConfigPath();
 
     return ValidateWhitelist(configPath);
 });
@@ -75,7 +75,7 @@ generateCommand.SetAction(parseResult =>
         ?? throw new InvalidOperationException("--output-root is required for the first MVP.");
 
     var configPath = parseResult.GetValue(configOption)?.FullName
-        ?? Path.GetFullPath(Path.Combine("src", "generator", "config", "vtksharp.generator.yml"));
+        ?? GetDefaultConfigPath();
 
     Generate(configPath, outputRoot.FullName);
 });
@@ -88,6 +88,9 @@ var rootCommand = new RootCommand("VtkSharp binding generator")
 };
 
 return rootCommand.Parse(args).Invoke();
+
+static string GetDefaultConfigPath()
+    => Path.GetFullPath(Path.Combine("generator", "config", "vtksharp.generator.yml"));
 
 static void Generate(string configPath, string outputRoot)
 {
