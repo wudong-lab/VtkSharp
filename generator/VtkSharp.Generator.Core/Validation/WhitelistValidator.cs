@@ -1,14 +1,7 @@
-using VtkSharp.Generator.Core.Inspection;
+﻿using VtkSharp.Generator.Core.Inspection;
 using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Core.Validation;
-
-public sealed record ValidationDiagnostic(string Message);
-
-public sealed record ValidationResult(IReadOnlyList<ValidationDiagnostic> Diagnostics)
-{
-    public bool Success => Diagnostics.Count == 0;
-}
 
 public sealed class WhitelistValidator
 {

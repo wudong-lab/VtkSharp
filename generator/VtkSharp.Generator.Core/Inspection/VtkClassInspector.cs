@@ -1,34 +1,15 @@
-using CppAst;
+﻿using CppAst;
 using VtkSharp.Generator.Core.Types;
 
 namespace VtkSharp.Generator.Core.Inspection;
-
-public sealed record InspectedClass(
-    string Name,
-    IReadOnlyList<InspectedFunction> Functions,
-    bool HasStaticNew = false,
-    string? BaseClassName = null,
-    IReadOnlyList<string>? Dependencies = null);
-
-public sealed record InspectedFunction(
-    string Name,
-    string CppSignature,
-    string ReturnType,
-    IReadOnlyList<InspectedParameter> Parameters,
-    bool IsSupported,
-    string? CanonicalSignature = null,
-    IReadOnlyList<string>? DependencyTypes = null);
-
-public sealed record InspectedParameter(
-    string Type,
-    string Name);
 
 public sealed class VtkClassInspector
 {
     private readonly TypeCanonicalizer _canonicalizer = new();
 
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
-        => InspectHeader(includeDirectory, headerFileName, className, []);
+        =>
+            this.InspectHeader(includeDirectory, headerFileName, className, []);
 
     private InspectedClass InspectHeader(
         string includeDirectory,
@@ -81,9 +62,9 @@ public sealed class VtkClassInspector
                                 ")";
 
                 var parameters = rawParameters
-                    .Select(parameter => new InspectedParameter(_canonicalizer.Canonicalize(parameter.Type).Text, parameter.Name))
+                    .Select(parameter => new InspectedParameter(this._canonicalizer.Canonicalize(parameter.Type).Text, parameter.Name))
                     .ToList();
-                var returnType = _canonicalizer.Canonicalize(rawReturnType).Text;
+                var returnType = this._canonicalizer.Canonicalize(rawReturnType).Text;
                 var canonicalSignature = $"{returnType} {function.Name}(" +
                                          string.Join(", ", parameters.Select(parameter => $"{parameter.Type} {parameter.Name}")) +
                                          ")";
@@ -107,7 +88,7 @@ public sealed class VtkClassInspector
             if (!File.Exists(baseHeaderPath))
                 continue;
 
-            var baseClass = InspectHeader(includeDirectory, baseHeaderFileName, baseClassName, visitedClassNames);
+            var baseClass = this.InspectHeader(includeDirectory, baseHeaderFileName, baseClassName, visitedClassNames);
             foreach (var function in baseClass.Functions)
             {
                 if (!functions.Any(item => HasSameSignature(item, function)))

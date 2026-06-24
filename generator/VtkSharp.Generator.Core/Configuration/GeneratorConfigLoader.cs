@@ -1,4 +1,4 @@
-using YamlDotNet.Serialization;
+﻿using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
 namespace VtkSharp.Generator.Core.Configuration;
@@ -12,10 +12,10 @@ public sealed class GeneratorConfigLoader
 
     public GeneratorConfig Load(string configPath, string? localConfigPath = null, string? vtkRootOverride = null)
     {
-        var config = ReadRequired<GeneratorConfig>(configPath);
+        var config = this.ReadRequired<GeneratorConfig>(configPath);
         var local = localConfigPath is not null && File.Exists(localConfigPath)
-            ? ReadRequired<LocalGeneratorConfig>(localConfigPath)
-            : null;
+            ? this.ReadRequired<LocalGeneratorConfig>(localConfigPath)
+            : null; 
 
         var vtkRoot = vtkRootOverride
             ?? Environment.GetEnvironmentVariable("VTK_ROOT")
@@ -35,7 +35,7 @@ public sealed class GeneratorConfigLoader
     private T ReadRequired<T>(string path)
     {
         using var reader = File.OpenText(path);
-        return _deserializer.Deserialize<T>(reader);
+        return this._deserializer.Deserialize<T>(reader);
     }
 
     private sealed record LocalGeneratorConfig

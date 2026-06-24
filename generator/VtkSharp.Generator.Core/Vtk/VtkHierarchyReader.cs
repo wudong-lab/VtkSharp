@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace VtkSharp.Generator.Core.Vtk;
 
@@ -9,7 +9,7 @@ public sealed partial class VtkHierarchyReader
         var result = new Dictionary<string, VtkHierarchyEntry>(StringComparer.Ordinal);
         foreach (var file in Directory.GetFiles(directory, "vtk*-hierarchy.txt", SearchOption.TopDirectoryOnly))
         {
-            foreach (var entry in ReadFile(file))
+            foreach (var entry in this.ReadFile(file))
             {
                 result.TryAdd(entry.ClassName, entry);
             }

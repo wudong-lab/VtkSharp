@@ -1,4 +1,4 @@
-namespace VtkSharp.Generator.Core.Vtk;
+﻿namespace VtkSharp.Generator.Core.Vtk;
 
 public sealed class VtkHierarchyResolver
 {
@@ -6,16 +6,16 @@ public sealed class VtkHierarchyResolver
 
     public VtkHierarchyResolver(IReadOnlyDictionary<string, VtkHierarchyEntry> entries)
     {
-        _entries = entries;
+        this._entries = entries;
     }
 
     public string GetBaseClassName(string className)
-        => _entries.TryGetValue(className, out var entry) && !string.IsNullOrWhiteSpace(entry.BaseClassName)
+        => this._entries.TryGetValue(className, out var entry) && !string.IsNullOrWhiteSpace(entry.BaseClassName)
             ? entry.BaseClassName
             : "vtkObject";
 
     public string GetHeader(string className)
-        => _entries.TryGetValue(className, out var entry) && !string.IsNullOrWhiteSpace(entry.Header)
+        => this._entries.TryGetValue(className, out var entry) && !string.IsNullOrWhiteSpace(entry.Header)
             ? entry.Header
             : $"{className}.h";
 }
