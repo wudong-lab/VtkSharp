@@ -3,6 +3,7 @@ using System.Text.Json;
 using VtkSharp.Generator.Core.Configuration;
 using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Inspection;
+using VtkSharp.Generator.Core.Validation;
 using VtkSharp.Generator.Core.Whitelist;
 
 var classArgument = new Argument<string>("class-name");
@@ -49,9 +50,12 @@ var validateCommand = new Command("validate-whitelist", "Validate whitelist")
     configOption,
 };
 
-validateCommand.SetAction(_ =>
+validateCommand.SetAction(parseResult =>
 {
-    Console.WriteLine("Whitelist validation command is available.");
+    var configPath = parseResult.GetValue(configOption)?.FullName
+        ?? Path.GetFullPath(Path.Combine("src", "generator", "config", "vtksharp.generator.yml"));
+
+    return ValidateWhitelist(configPath);
 });
 
 var outputRootOption = new Option<DirectoryInfo>("--output-root")
@@ -203,8 +207,56 @@ static bool TryInspectHasStaticNew(VtkClassInspector inspector, string includeDi
     {
         return inspector.InspectHeader(includeDirectory, whitelistClass.Header, whitelistClass.Name).HasStaticNew;
     }
-    catch (Exception ex) when (ex is IOException or InvalidOperationException)
+    catch (Exception ex) when (ex is IOException or InvalidOperationException or ArgumentException)
     {
         return false;
     }
+}
+
+static int ValidateWhitelist(string configPath)
+{
+    var configDirectory = Path.GetDirectoryName(configPath)
+        ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
+
+    var localConfigPath = Path.Combine(configDirectory, "vtksharp.generator.local.yml");
+    var config = new GeneratorConfigLoader().Load(configPath, localConfigPath);
+    var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
+    var includeDirectory = ResolveIncludeDirectory(config);
+    if (includeDirectory is null)
+    {
+        Console.Error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
+        return 1;
+    }
+
+    var documents = new WhitelistLoader().LoadDirectory(whitelistDirectory);
+    var inspector = new VtkClassInspector();
+    var inspectedClasses = new Dictionary<string, InspectedClass>(StringComparer.Ordinal);
+    var diagnostics = new List<ValidationDiagnostic>();
+
+    foreach (var whitelistClass in documents.SelectMany(document => document.Classes))
+    {
+        try
+        {
+            inspectedClasses[whitelistClass.Name] = inspector.InspectHeader(includeDirectory, whitelistClass.Header, whitelistClass.Name);
+        }
+        catch (Exception ex) when (ex is IOException or InvalidOperationException or ArgumentException)
+        {
+            diagnostics.Add(new ValidationDiagnostic($"Class '{whitelistClass.Name}' could not be inspected from '{whitelistClass.Header}': {ex.Message}"));
+        }
+    }
+
+    var validator = new WhitelistValidator();
+    foreach (var document in documents)
+        diagnostics.AddRange(validator.Validate(document, inspectedClasses).Diagnostics);
+
+    if (diagnostics.Count == 0)
+    {
+        Console.WriteLine("Whitelist validation succeeded.");
+        return 0;
+    }
+
+    foreach (var diagnostic in diagnostics)
+        Console.Error.WriteLine(diagnostic.Message);
+
+    return 1;
 }

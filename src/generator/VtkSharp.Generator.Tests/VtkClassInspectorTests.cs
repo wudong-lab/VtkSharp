@@ -40,6 +40,32 @@ public sealed class VtkClassInspectorTests
         Assert.False(inspected.HasStaticNew);
     }
 
+    [Fact]
+    public void InspectHeader_IncludesBaseClassFunctions()
+    {
+        var directory = CreateHeader("""
+            class vtkBase
+            {
+            public:
+                void Update();
+            };
+            """, "vtkBase.h");
+        File.WriteAllText(Path.Combine(directory, "vtkDerived.h"), """
+            #include "vtkBase.h"
+            class vtkDerived : public vtkBase
+            {
+            public:
+                void Render();
+            };
+            """);
+        var inspector = new VtkClassInspector();
+
+        var inspected = inspector.InspectHeader(directory, "vtkDerived.h", "vtkDerived");
+
+        Assert.Contains(inspected.Functions, function => function.Name == "Render");
+        Assert.Contains(inspected.Functions, function => function.Name == "Update");
+    }
+
     private static string CreateHeader(string text, string fileName = "vtkThing.h")
     {
         var directory = Path.Combine(Path.GetTempPath(), "VtkSharp.Generator.Tests", Guid.NewGuid().ToString("N"));

@@ -45,7 +45,17 @@ public sealed class VtkClassInspector
     }
 
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
+        => InspectHeader(includeDirectory, headerFileName, className, []);
+
+    private InspectedClass InspectHeader(
+        string includeDirectory,
+        string headerFileName,
+        string className,
+        HashSet<string> visitedClassNames)
     {
+        if (!visitedClassNames.Add(className))
+            return new InspectedClass(className, []);
+
         var options = new CppParserOptions();
         options.ConfigureForWindowsMsvc(CppTargetCpu.X86_64, CppVisualStudioVersion.VS2022);
         options.IncludeFolders.Add(includeDirectory);
@@ -61,7 +71,7 @@ public sealed class VtkClassInspector
         var hasStaticNew = cppClass.Functions.Any(function =>
             function.Visibility == CppVisibility.Public &&
             function.Name == "New" &&
-            function.StorageQualifier == CppStorageQualifier.Static &&
+            function.IsStatic &&
             function.Parameters.Count == 0 &&
             function.ReturnType.FullName.Contains(className, StringComparison.Ordinal));
 
@@ -70,8 +80,8 @@ public sealed class VtkClassInspector
                 function.Visibility == CppVisibility.Public &&
                 !function.IsConstructor &&
                 !function.IsDestructor &&
-                function.StorageQualifier != CppStorageQualifier.Static &&
-                function.TemplateParameters.Count == 0)
+                !function.IsStatic &&
+                !function.IsFunctionTemplate)
             .Select(function =>
             {
                 var parameters = function.Parameters
@@ -91,6 +101,40 @@ public sealed class VtkClassInspector
             })
             .ToList();
 
+        foreach (var baseClassName in GetBaseClassNames(cppClass))
+        {
+            var baseHeaderFileName = $"{baseClassName}.h";
+            var baseHeaderPath = Path.Combine(includeDirectory, baseHeaderFileName);
+            if (!File.Exists(baseHeaderPath))
+                continue;
+
+            var baseClass = InspectHeader(includeDirectory, baseHeaderFileName, baseClassName, visitedClassNames);
+            foreach (var function in baseClass.Functions)
+            {
+                if (!functions.Any(item => HasSameSignature(item, function)))
+                    functions.Add(function);
+            }
+        }
+
         return new InspectedClass(className, functions, hasStaticNew);
     }
+
+    private static IEnumerable<string> GetBaseClassNames(CppClass cppClass)
+    {
+        foreach (var baseType in cppClass.BaseTypes)
+        {
+            var name = baseType.Type.FullName
+                .Split("::", StringSplitOptions.RemoveEmptyEntries)
+                .LastOrDefault()
+                ?.Trim();
+
+            if (!string.IsNullOrWhiteSpace(name) && name.StartsWith("vtk", StringComparison.Ordinal))
+                yield return name;
+        }
+    }
+
+    private static bool HasSameSignature(InspectedFunction left, InspectedFunction right)
+        => left.Name == right.Name &&
+           left.ReturnType == right.ReturnType &&
+           left.Parameters.Select(parameter => parameter.Type).SequenceEqual(right.Parameters.Select(parameter => parameter.Type));
 }
