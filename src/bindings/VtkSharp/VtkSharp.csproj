@@ -31,4 +31,13 @@
     <None Include="$(VtkSharpNativeDllPath)" Link="vtksharp_native.dll" TargetPath="vtksharp_native.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="TestConsole\**\*.cs" />
+    <Compile Remove="VtkSharp\**\*.cs" />
+    <EmbeddedResource Remove="TestConsole\**\*" />
+    <EmbeddedResource Remove="VtkSharp\**\*" />
+    <None Remove="TestConsole\**\*" />
+    <None Remove="VtkSharp\**\*" />
+  </ItemGroup>
+
 </Project>
