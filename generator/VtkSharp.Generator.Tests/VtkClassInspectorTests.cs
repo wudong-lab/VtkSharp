@@ -66,6 +66,34 @@ public sealed class VtkClassInspectorTests
         Assert.Contains(inspected.Functions, function => function.Name == "Update");
     }
 
+    [Fact]
+    public void InspectHeader_ReportsCanonicalSignaturesAndDependencyTypes()
+    {
+        var directory = CreateHeader("""
+            class vtkMapper;
+            class vtkProperty;
+            class vtkActor
+            {
+            public:
+                void SetMapper(vtkMapper * mapper);
+                vtkProperty * GetProperty();
+            };
+            """, "vtkActor.h");
+        var inspector = new VtkClassInspector();
+
+        var inspected = inspector.InspectHeader(directory, "vtkActor.h", "vtkActor");
+
+        Assert.Equal(["vtkMapper", "vtkProperty"], inspected.Dependencies);
+        Assert.Contains(inspected.Functions, function =>
+            function.Name == "SetMapper" &&
+            function.CanonicalSignature == "void SetMapper(vtkMapper* mapper)" &&
+            function.DependencyTypes!.SequenceEqual(["vtkMapper"]));
+        Assert.Contains(inspected.Functions, function =>
+            function.Name == "GetProperty" &&
+            function.CanonicalSignature == "vtkProperty* GetProperty()" &&
+            function.DependencyTypes!.SequenceEqual(["vtkProperty"]));
+    }
+
     private static string CreateHeader(string text, string fileName = "vtkThing.h")
     {
         var directory = Path.Combine(Path.GetTempPath(), "VtkSharp.Generator.Tests", Guid.NewGuid().ToString("N"));

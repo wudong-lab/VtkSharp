@@ -6,14 +6,18 @@ namespace VtkSharp.Generator.Core.Inspection;
 public sealed record InspectedClass(
     string Name,
     IReadOnlyList<InspectedFunction> Functions,
-    bool HasStaticNew = false);
+    bool HasStaticNew = false,
+    string? BaseClassName = null,
+    IReadOnlyList<string>? Dependencies = null);
 
 public sealed record InspectedFunction(
     string Name,
     string CppSignature,
     string ReturnType,
     IReadOnlyList<InspectedParameter> Parameters,
-    bool IsSupported);
+    bool IsSupported,
+    string? CanonicalSignature = null,
+    IReadOnlyList<string>? DependencyTypes = null);
 
 public sealed record InspectedParameter(
     string Type,
@@ -22,27 +26,6 @@ public sealed record InspectedParameter(
 public sealed class VtkClassInspector
 {
     private readonly TypeCanonicalizer _canonicalizer = new();
-
-    public InspectedClass InspectSynthetic(
-        string className,
-        IReadOnlyList<(string Name, string ReturnType, IReadOnlyList<(string Type, string Name)> Parameters)> functions)
-    {
-        var inspected = functions.Select(function =>
-        {
-            var parameters = function.Parameters
-                .Select(parameter => new InspectedParameter(_canonicalizer.Canonicalize(parameter.Type).Text, parameter.Name))
-                .ToList();
-
-            var returnType = _canonicalizer.Canonicalize(function.ReturnType).Text;
-            var signature = $"{returnType} {function.Name}(" +
-                            string.Join(", ", parameters.Select(parameter => $"{parameter.Type} {parameter.Name}")) +
-                            ")";
-
-            return new InspectedFunction(function.Name, signature, returnType, parameters, IsSupported: true);
-        }).ToList();
-
-        return new InspectedClass(className, inspected);
-    }
 
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
         => InspectHeader(includeDirectory, headerFileName, className, []);
@@ -84,20 +67,36 @@ public sealed class VtkClassInspector
                 !function.IsFunctionTemplate)
             .Select(function =>
             {
-                var parameters = function.Parameters
+                var rawParameters = function.Parameters
                     .Select((parameter, index) =>
                     {
                         var name = string.IsNullOrWhiteSpace(parameter.Name) ? $"_arg{index + 1}" : parameter.Name;
-                        return new InspectedParameter(_canonicalizer.Canonicalize(parameter.Type.FullName).Text, name);
+                        return new InspectedParameter(parameter.Type.FullName, name);
                     })
                     .ToList();
 
-                var returnType = _canonicalizer.Canonicalize(function.ReturnType.FullName).Text;
-                var signature = $"{returnType} {function.Name}(" +
-                                string.Join(", ", parameters.Select(parameter => $"{parameter.Type} {parameter.Name}")) +
+                var rawReturnType = function.ReturnType.FullName;
+                var signature = $"{rawReturnType} {function.Name}(" +
+                                string.Join(", ", rawParameters.Select(parameter => $"{parameter.Type} {parameter.Name}")) +
                                 ")";
 
-                return new InspectedFunction(function.Name, signature, returnType, parameters, IsSupported: true);
+                var parameters = rawParameters
+                    .Select(parameter => new InspectedParameter(_canonicalizer.Canonicalize(parameter.Type).Text, parameter.Name))
+                    .ToList();
+                var returnType = _canonicalizer.Canonicalize(rawReturnType).Text;
+                var canonicalSignature = $"{returnType} {function.Name}(" +
+                                         string.Join(", ", parameters.Select(parameter => $"{parameter.Type} {parameter.Name}")) +
+                                         ")";
+                var dependencies = GetDependencyTypes([returnType, .. parameters.Select(parameter => parameter.Type)], className);
+
+                return new InspectedFunction(
+                    function.Name,
+                    signature,
+                    returnType,
+                    parameters,
+                    IsSupported: true,
+                    CanonicalSignature: canonicalSignature,
+                    DependencyTypes: dependencies);
             })
             .ToList();
 
@@ -116,7 +115,8 @@ public sealed class VtkClassInspector
             }
         }
 
-        return new InspectedClass(className, functions, hasStaticNew);
+        var directBaseClassName = GetBaseClassNames(cppClass).FirstOrDefault();
+        return new InspectedClass(className, functions, hasStaticNew, directBaseClassName, GetClassDependencies(functions));
     }
 
     private static IEnumerable<string> GetBaseClassNames(CppClass cppClass)
@@ -137,4 +137,35 @@ public sealed class VtkClassInspector
         => left.Name == right.Name &&
            left.ReturnType == right.ReturnType &&
            left.Parameters.Select(parameter => parameter.Type).SequenceEqual(right.Parameters.Select(parameter => parameter.Type));
+
+    private static IReadOnlyList<string> GetClassDependencies(IEnumerable<InspectedFunction> functions)
+        => functions
+            .SelectMany(function => function.DependencyTypes ?? [])
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToList();
+
+    private static IReadOnlyList<string> GetDependencyTypes(IEnumerable<string> typeNames, string className)
+        => typeNames
+            .Select(ExtractVtkClassName)
+            .Where(typeName => typeName is not null && typeName != className)
+            .Select(typeName => typeName!)
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToList();
+
+    private static string? ExtractVtkClassName(string typeName)
+    {
+        var text = typeName
+            .Replace("const", "", StringComparison.Ordinal)
+            .Replace("*", "", StringComparison.Ordinal)
+            .Replace("&", "", StringComparison.Ordinal)
+            .Trim();
+
+        var nestedTypeSeparator = text.IndexOf("::", StringComparison.Ordinal);
+        if (nestedTypeSeparator >= 0)
+            text = text[..nestedTypeSeparator];
+
+        return text.StartsWith("vtk", StringComparison.Ordinal) ? text : null;
+    }
 }

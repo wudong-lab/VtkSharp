@@ -4,6 +4,7 @@ using VtkSharp.Generator.Core.Configuration;
 using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Inspection;
 using VtkSharp.Generator.Core.Validation;
+using VtkSharp.Generator.Core.Vtk;
 using VtkSharp.Generator.Core.Whitelist;
 
 var classArgument = new Argument<string>("class-name");
@@ -12,38 +13,27 @@ var formatOption = new Option<string>("--format")
     Description = "Output format: text or json",
     DefaultValueFactory = _ => "text",
 };
+var configOption = new Option<FileInfo>("--config")
+{
+    Description = "Generator config file",
+};
 
 var inspectClassCommand = new Command("inspect-class", "Inspect a VTK class")
 {
     classArgument,
     formatOption,
+    configOption,
 };
 
 inspectClassCommand.SetAction(parseResult =>
 {
     var className = parseResult.GetValue(classArgument)!;
     var format = parseResult.GetValue(formatOption)!;
-    var inspector = new VtkClassInspector();
-    var inspected = inspector.InspectSynthetic(className,
-    [
-        ("SetMapper", "void", [("vtkMapper *", "mapper")]),
-    ]);
+    var configPath = parseResult.GetValue(configOption)?.FullName
+        ?? GetDefaultConfigPath();
 
-    if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
-    {
-        Console.WriteLine(JsonSerializer.Serialize(inspected, new JsonSerializerOptions { WriteIndented = true }));
-        return;
-    }
-
-    Console.WriteLine(inspected.Name);
-    foreach (var function in inspected.Functions)
-        Console.WriteLine($"  {function.CppSignature}");
+    return InspectClass(configPath, className, format);
 });
-
-var configOption = new Option<FileInfo>("--config")
-{
-    Description = "Generator config file",
-};
 
 var validateCommand = new Command("validate-whitelist", "Validate whitelist")
 {
@@ -58,32 +48,58 @@ validateCommand.SetAction(parseResult =>
     return ValidateWhitelist(configPath);
 });
 
+var normalizeCommand = new Command("normalize-whitelist", "Normalize whitelist files")
+{
+    configOption,
+};
+
+normalizeCommand.SetAction(parseResult =>
+{
+    var configPath = parseResult.GetValue(configOption)?.FullName
+        ?? GetDefaultConfigPath();
+
+    return NormalizeWhitelist(configPath);
+});
+
 var outputRootOption = new Option<DirectoryInfo>("--output-root")
 {
     Description = "Temporary output root",
+};
+var checkOption = new Option<bool>("--check")
+{
+    Description = "Generate to a temporary directory and compare with current generated files",
 };
 
 var generateCommand = new Command("generate", "Generate bindings")
 {
     configOption,
     outputRootOption,
+    checkOption,
 };
 
 generateCommand.SetAction(parseResult =>
 {
-    var outputRoot = parseResult.GetValue(outputRootOption)
-        ?? throw new InvalidOperationException("--output-root is required for the first MVP.");
-
+    var check = parseResult.GetValue(checkOption);
+    var outputRoot = parseResult.GetValue(outputRootOption);
     var configPath = parseResult.GetValue(configOption)?.FullName
         ?? GetDefaultConfigPath();
+    var outputRootPath = outputRoot?.FullName
+        ?? (check
+            ? Path.Combine(Path.GetTempPath(), "VtkSharp.Generator", "check", Guid.NewGuid().ToString("N"))
+            : throw new InvalidOperationException("--output-root is required unless --check is specified."));
 
-    Generate(configPath, outputRoot.FullName);
+    var exitCode = Generate(configPath, outputRootPath);
+    if (exitCode != 0)
+        return exitCode;
+
+    return check ? CheckGeneratedOutput(configPath, outputRootPath) : 0;
 });
 
 var rootCommand = new RootCommand("VtkSharp binding generator")
 {
     inspectClassCommand,
     validateCommand,
+    normalizeCommand,
     generateCommand,
 };
 
@@ -92,13 +108,61 @@ return rootCommand.Parse(args).Invoke();
 static string GetDefaultConfigPath()
     => Path.GetFullPath(Path.Combine("generator", "config", "vtksharp.generator.yml"));
 
-static void Generate(string configPath, string outputRoot)
+static int InspectClass(string configPath, string className, string format)
 {
+    var config = LoadConfig(configPath);
+    var includeDirectory = ResolveIncludeDirectory(config);
+    if (includeDirectory is null)
+    {
+        Console.Error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
+        return 1;
+    }
+
+    var hierarchyResolver = LoadHierarchyResolver(config);
+    var header = hierarchyResolver.GetHeader(className);
+    var inspected = new VtkClassInspector().InspectHeader(includeDirectory, header, className) with
+    {
+        BaseClassName = hierarchyResolver.GetBaseClassName(className),
+    };
+
+    if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
+    {
+        Console.WriteLine(JsonSerializer.Serialize(inspected, new JsonSerializerOptions { WriteIndented = true }));
+        return 0;
+    }
+
+    if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
+    {
+        Console.Error.WriteLine("--format must be 'text' or 'json'.");
+        return 1;
+    }
+
+    Console.WriteLine(inspected.Name);
+    Console.WriteLine($"  Header: {header}");
+    Console.WriteLine($"  BaseClass: {inspected.BaseClassName}");
+    Console.WriteLine($"  HasStaticNew: {inspected.HasStaticNew}");
+    Console.WriteLine($"  Dependencies: {string.Join(", ", inspected.Dependencies ?? [])}");
+    foreach (var function in inspected.Functions)
+    {
+        Console.WriteLine($"  {function.Name}");
+        Console.WriteLine($"    Cpp: {function.CppSignature}");
+        Console.WriteLine($"    Canonical: {function.CanonicalSignature}");
+        Console.WriteLine($"    Dependencies: {string.Join(", ", function.DependencyTypes ?? [])}");
+    }
+
+    return 0;
+}
+
+static int Generate(string configPath, string outputRoot)
+{
+    var validationExitCode = ValidateWhitelist(configPath);
+    if (validationExitCode != 0)
+        return validationExitCode;
+
     var configDirectory = Path.GetDirectoryName(configPath)
         ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
 
-    var localConfigPath = Path.Combine(configDirectory, "vtksharp.generator.local.yml");
-    var config = new GeneratorConfigLoader().Load(configPath, localConfigPath);
+    var config = LoadConfig(configPath);
     var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
     var documents = new WhitelistLoader().LoadDirectory(whitelistDirectory);
 
@@ -111,6 +175,7 @@ static void Generate(string configPath, string outputRoot)
     var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
     var inspector = new VtkClassInspector();
     var includeDirectory = ResolveIncludeDirectory(config);
+    var hierarchyResolver = LoadHierarchyResolver(config);
 
     foreach (var document in documents)
     {
@@ -119,7 +184,7 @@ static void Generate(string configPath, string outputRoot)
             if (manualClasses.Contains(whitelistClass.Name))
                 continue;
 
-            var baseClassName = ResolveMvpBaseClass(whitelistClass.Name);
+            var baseClassName = hierarchyResolver.GetBaseClassName(whitelistClass.Name);
             var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
             var nativePath = Path.Combine(outputRoot, "native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
             var includeClassNames = GetIncludeClassNames(whitelistClass)
@@ -140,6 +205,62 @@ static void Generate(string configPath, string outputRoot)
     WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
 
     Console.WriteLine($"Generated files will be written to: {Path.GetFullPath(outputRoot)}");
+    return 0;
+}
+
+static int NormalizeWhitelist(string configPath)
+{
+    var configDirectory = Path.GetDirectoryName(configPath)
+        ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
+
+    var config = LoadConfig(configPath);
+    var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
+    var hierarchyEntries = LoadHierarchyEntries(config);
+    if (hierarchyEntries.Count == 0)
+    {
+        Console.Error.WriteLine("VTK hierarchy directory was not found or contains no hierarchy entries. Set VTK_ROOT or vtk.hierarchyDirectory in local config.");
+        return 1;
+    }
+
+    var documents = new WhitelistLoader().LoadDirectory(whitelistDirectory);
+    var normalized = new WhitelistNormalizer().Normalize(documents, hierarchyEntries, config.Binding.ManualBindingClasses);
+    new WhitelistWriter().WriteDirectory(whitelistDirectory, normalized);
+
+    Console.WriteLine($"Whitelist files normalized under: {whitelistDirectory}");
+    Console.WriteLine("Review the changes with git diff before committing.");
+    return 0;
+}
+
+static int CheckGeneratedOutput(string configPath, string outputRoot)
+{
+    var configDirectory = Path.GetDirectoryName(configPath)
+        ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
+
+    var config = LoadConfig(configPath);
+    var currentManagedDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.ManagedOutputDirectory));
+    var currentNativeDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.NativeOutputDirectory));
+    var currentModulesFile = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.NativeModulesFile));
+    var generatedManagedDirectory = Path.Combine(outputRoot, "bindings", "VtkSharp");
+    var generatedNativeDirectory = Path.Combine(outputRoot, "native", "src");
+    var generatedModulesFile = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
+
+    var comparer = new GeneratedOutputComparer();
+    var differences = comparer.CompareDirectories(currentManagedDirectory, generatedManagedDirectory, "*_gen.cs")
+        .Concat(comparer.CompareDirectories(currentNativeDirectory, generatedNativeDirectory, "*_export_gen.cpp"))
+        .Concat(comparer.CompareFiles(currentModulesFile, generatedModulesFile, "native/vtksharp.modules.generated.cmake"))
+        .ToList();
+
+    if (differences.Count == 0)
+    {
+        Console.WriteLine("Generated output is up to date.");
+        return 0;
+    }
+
+    Console.Error.WriteLine("Generated output differs from current files:");
+    foreach (var difference in differences)
+        Console.Error.WriteLine($"  {difference.RelativePath}: {difference.Message}");
+    Console.Error.WriteLine($"Generated output root: {Path.GetFullPath(outputRoot)}");
+    return 1;
 }
 
 static void WriteText(string path, string content)
@@ -150,25 +271,6 @@ static void WriteText(string path, string content)
     Directory.CreateDirectory(directory);
     File.WriteAllText(path, content);
 }
-
-static string ResolveMvpBaseClass(string className)
-    => className switch
-    {
-        "vtkAlgorithm" => "vtkObject",
-        "vtkAlgorithmOutput" => "vtkObject",
-        "vtkPolyDataAlgorithm" => "vtkAlgorithm",
-        "vtkConeSource" => "vtkPolyDataAlgorithm",
-        "vtkWindow" => "vtkObject",
-        "vtkProp" => "vtkObject",
-        "vtkProp3D" => "vtkProp",
-        "vtkActor" => "vtkProp3D",
-        "vtkMapper" => "vtkObject",
-        "vtkPolyDataMapper" => "vtkMapper",
-        "vtkRenderer" => "vtkObject",
-        "vtkRenderWindow" => "vtkWindow",
-        "vtkRenderWindowInteractor" => "vtkObject",
-        _ => "vtkObject",
-    };
 
 static IEnumerable<string> GetIncludeClassNames(WhitelistClass whitelistClass)
 {
@@ -204,6 +306,38 @@ static string? ResolveIncludeDirectory(GeneratorConfig config)
     return candidates.FirstOrDefault(path => path is not null && Directory.Exists(path));
 }
 
+static string? ResolveHierarchyDirectory(GeneratorConfig config)
+{
+    var candidates = new[]
+    {
+        config.Vtk.HierarchyDirectory,
+        config.Vtk.RootDirectory is null ? null : Path.Combine(config.Vtk.RootDirectory, "lib", $"vtk-{config.Vtk.Version}", "hierarchy", "VTK"),
+        config.Vtk.RootDirectory is null ? null : Path.Combine(config.Vtk.RootDirectory, "lib", $"vtk-{config.Vtk.Version}", "hierarchy"),
+    };
+
+    return candidates.FirstOrDefault(path => path is not null && Directory.Exists(path));
+}
+
+static VtkHierarchyResolver LoadHierarchyResolver(GeneratorConfig config)
+    => new(LoadHierarchyEntries(config));
+
+static IReadOnlyDictionary<string, VtkHierarchyEntry> LoadHierarchyEntries(GeneratorConfig config)
+{
+    var hierarchyDirectory = ResolveHierarchyDirectory(config);
+    return hierarchyDirectory is null
+        ? new Dictionary<string, VtkHierarchyEntry>(StringComparer.Ordinal)
+        : new VtkHierarchyReader().ReadDirectory(hierarchyDirectory);
+}
+
+static GeneratorConfig LoadConfig(string configPath)
+{
+    var configDirectory = Path.GetDirectoryName(configPath)
+        ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
+
+    var localConfigPath = Path.Combine(configDirectory, "vtksharp.generator.local.yml");
+    return new GeneratorConfigLoader().Load(configPath, localConfigPath);
+}
+
 static bool TryInspectHasStaticNew(VtkClassInspector inspector, string includeDirectory, WhitelistClass whitelistClass)
 {
     try
@@ -221,8 +355,7 @@ static int ValidateWhitelist(string configPath)
     var configDirectory = Path.GetDirectoryName(configPath)
         ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
 
-    var localConfigPath = Path.Combine(configDirectory, "vtksharp.generator.local.yml");
-    var config = new GeneratorConfigLoader().Load(configPath, localConfigPath);
+    var config = LoadConfig(configPath);
     var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
     var includeDirectory = ResolveIncludeDirectory(config);
     if (includeDirectory is null)

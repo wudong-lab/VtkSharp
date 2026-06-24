@@ -5,20 +5,20 @@ classes:
   - name: vtkAlgorithm
     header: vtkAlgorithm.h
     functions:
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput* GetOutputPort()
+        return:
+          type: vtkAlgorithmOutput*
+        parameters: []
       - name: SetInputConnection
-        cppSignature: "void SetInputConnection(vtkAlgorithmOutput* input)"
+        cppSignature: void SetInputConnection(vtkAlgorithmOutput* input)
         return:
           type: void
         parameters:
           - type: vtkAlgorithmOutput*
             name: input
-      - name: GetOutputPort
-        cppSignature: "vtkAlgorithmOutput* GetOutputPort()"
-        return:
-          type: vtkAlgorithmOutput*
-        parameters: []
       - name: Update
-        cppSignature: "void Update()"
+        cppSignature: void Update()
         return:
           type: void
         parameters: []

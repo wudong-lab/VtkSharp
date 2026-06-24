@@ -2,11 +2,17 @@
 
 module: vtkRenderingCore
 classes:
+  - name: vtkAbstractMapper
+    header: vtkAbstractMapper.h
+    functions: []
+  - name: vtkAbstractMapper3D
+    header: vtkAbstractMapper3D.h
+    functions: []
   - name: vtkActor
     header: vtkActor.h
     functions:
       - name: SetMapper
-        cppSignature: "void SetMapper(vtkMapper* mapper)"
+        cppSignature: void SetMapper(vtkMapper* mapper)
         return:
           type: void
         parameters:
@@ -19,27 +25,23 @@ classes:
     header: vtkPolyDataMapper.h
     functions:
       - name: SetInputConnection
-        cppSignature: "void SetInputConnection(vtkAlgorithmOutput* input)"
+        cppSignature: void SetInputConnection(vtkAlgorithmOutput* input)
         return:
           type: void
         parameters:
           - type: vtkAlgorithmOutput*
             name: input
-  - name: vtkRenderer
-    header: vtkRenderer.h
-    functions:
-      - name: AddActor
-        cppSignature: "void AddActor(vtkProp* p)"
-        return:
-          type: void
-        parameters:
-          - type: vtkProp*
-            name: p
+  - name: vtkProp
+    header: vtkProp.h
+    functions: []
+  - name: vtkProp3D
+    header: vtkProp3D.h
+    functions: []
   - name: vtkRenderWindow
     header: vtkRenderWindow.h
     functions:
       - name: AddRenderer
-        cppSignature: "void AddRenderer(vtkRenderer* renderer)"
+        cppSignature: void AddRenderer(vtkRenderer* renderer)
         return:
           type: void
         parameters:
@@ -49,20 +51,27 @@ classes:
     header: vtkRenderWindowInteractor.h
     functions:
       - name: SetRenderWindow
-        cppSignature: "void SetRenderWindow(vtkRenderWindow* aren)"
+        cppSignature: void SetRenderWindow(vtkRenderWindow* aren)
         return:
           type: void
         parameters:
           - type: vtkRenderWindow*
             name: aren
       - name: Start
-        cppSignature: "void Start()"
+        cppSignature: void Start()
         return:
           type: void
         parameters: []
-  - name: vtkProp
-    header: vtkProp.h
-    functions: []
-  - name: vtkProp3D
-    header: vtkProp3D.h
+  - name: vtkRenderer
+    header: vtkRenderer.h
+    functions:
+      - name: AddActor
+        cppSignature: void AddActor(vtkProp* p)
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: p
+  - name: vtkViewport
+    header: vtkViewport.h
     functions: []
