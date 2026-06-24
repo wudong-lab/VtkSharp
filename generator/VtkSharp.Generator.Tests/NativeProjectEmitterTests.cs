@@ -19,6 +19,28 @@ public sealed class NativeProjectEmitterTests
     }
 
     [Fact]
+    public void CMakeModulesEmitter_EmitsSortedDistinctComponentsAndTargets()
+    {
+        var emitter = new CMakeModulesEmitter();
+
+        var text = emitter.Emit(
+        [
+            "vtkRenderingCore",
+            "vtkCommonCore",
+            "vtkRenderingOpenGL2",
+            "vtkRenderingCore",
+        ]);
+
+        Assert.Contains("  CommonCore", text);
+        Assert.Contains("  RenderingCore", text);
+        Assert.Contains("  RenderingOpenGL2", text);
+        Assert.Contains("  VTK::RenderingOpenGL2", text);
+        var lines = text.Split(["\r\n", "\n"], StringSplitOptions.None);
+        Assert.Equal(1, lines.Count(line => line == "  RenderingCore"));
+        Assert.Equal(1, lines.Count(line => line == "  VTK::RenderingCore"));
+    }
+
+    [Fact]
     public void EmitCMakePresets_ProvidesVisualStudioPresets()
     {
         var emitter = new NativeProjectEmitter();
@@ -43,4 +65,5 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("#define VTKSHARP_API extern \"C\" __declspec(dllexport)", text);
         Assert.Contains("__attribute__((visibility(\"default\")))", text);
     }
+
 }

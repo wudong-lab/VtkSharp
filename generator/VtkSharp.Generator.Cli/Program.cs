@@ -206,7 +206,12 @@ internal class Program
         }
 
         var modulesPath = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
-        WriteText(modulesPath, cmakeEmitter.Emit(documents.Select(document => document.Module).ToList()));
+        var vtkModules = documents
+            .Select(document => document.Module)
+            .Concat(config.Vtk.RuntimeModules)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        WriteText(modulesPath, cmakeEmitter.Emit(vtkModules));
         WriteText(Path.Combine(outputRoot, "native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(config.Binding.NativeLibraryName));
         WriteText(Path.Combine(outputRoot, "native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
         WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());

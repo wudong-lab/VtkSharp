@@ -71,6 +71,11 @@ src/native/vtksharp.modules.generated.cmake
 vtk:
   version: "9.5"
   modulePrefix: vtk
+  runtimeModules:
+    - vtkCommonDataModel
+    - vtkRenderingOpenGL2
+    - vtkInteractionStyle
+    - vtkRenderingUI
 
 binding:
   namespace: VtkSharp

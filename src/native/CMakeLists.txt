@@ -1,17 +1,10 @@
-﻿cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.25)
 
 project(vtksharp_native LANGUAGES CXX)
 
-find_package(VTK CONFIG REQUIRED COMPONENTS
-  CommonCore
-  CommonDataModel
-  CommonExecutionModel
-  FiltersSources
-  RenderingCore
-  RenderingOpenGL2
-  InteractionStyle
-  RenderingUI
-)
+include(${CMAKE_CURRENT_SOURCE_DIR}/vtksharp.modules.generated.cmake)
+
+find_package(VTK CONFIG REQUIRED COMPONENTS ${VTKSHARP_VTK_COMPONENTS})
 
 file(GLOB_RECURSE LIB_SRC CONFIGURE_DEPENDS
     "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
@@ -47,25 +40,11 @@ target_include_directories(vtksharp_native
 
 target_link_libraries(vtksharp_native
   PRIVATE
-    VTK::CommonCore
-    VTK::CommonDataModel
-    VTK::CommonExecutionModel
-    VTK::FiltersSources
-    VTK::RenderingCore
-    VTK::RenderingOpenGL2
-    VTK::InteractionStyle
-    VTK::RenderingUI
+    ${VTKSHARP_VTK_TARGETS}
 )
 
 vtk_module_autoinit(
   TARGETS vtksharp_native
   MODULES
-    VTK::CommonCore
-    VTK::CommonDataModel
-    VTK::CommonExecutionModel
-    VTK::FiltersSources
-    VTK::RenderingCore
-    VTK::RenderingOpenGL2
-    VTK::InteractionStyle
-    VTK::RenderingUI
+    ${VTKSHARP_VTK_TARGETS}
 )

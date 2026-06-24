@@ -7,4 +7,5 @@ public sealed record VtkConfig
     public string? RootDirectory { get; init; }
     public string? IncludeDirectory { get; init; }
     public string? HierarchyDirectory { get; init; }
+    public List<string> RuntimeModules { get; init; } = [];
 }

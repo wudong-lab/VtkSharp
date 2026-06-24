@@ -8,6 +8,7 @@ public sealed class CMakeModulesEmitter
     {
         var components = vtkModules
             .Select(static module => module.StartsWith("vtk", StringComparison.Ordinal) ? module[3..] : module)
+            .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToList();
 

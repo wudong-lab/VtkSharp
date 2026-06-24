@@ -14,7 +14,12 @@
         "modulePrefix": { "type": "string" },
         "rootDirectory": { "type": "string" },
         "includeDirectory": { "type": "string" },
-        "hierarchyDirectory": { "type": "string" }
+        "hierarchyDirectory": { "type": "string" },
+        "runtimeModules": {
+          "type": "array",
+          "items": { "type": "string" },
+          "uniqueItems": true
+        }
       }
     },
     "binding": {
