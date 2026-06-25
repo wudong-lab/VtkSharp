@@ -78,6 +78,41 @@ internal class Program
             return SuggestApi(configPath, className, functionName, format);
         });
 
+        var listModulesCommand = new Command("list-modules", "List VTK modules in the hierarchy")
+        {
+            configOption,
+        };
+
+        listModulesCommand.SetAction(parseResult =>
+        {
+            var configPath = parseResult.GetValue(configOption)?.FullName
+                             ?? GetDefaultConfigPath();
+
+            return ListModules(configPath);
+        });
+
+        var moduleArgument = new Option<string>("--module")
+        {
+            Description = "Filter classes by VTK module name",
+        };
+
+        var listClassesCommand = new Command("list-classes", "List VTK classes from hierarchy")
+        {
+            moduleArgument,
+            formatOption,
+            configOption,
+        };
+
+        listClassesCommand.SetAction(parseResult =>
+        {
+            var module = parseResult.GetValue(moduleArgument);
+            var format = parseResult.GetValue(formatOption)!;
+            var configPath = parseResult.GetValue(configOption)?.FullName
+                             ?? GetDefaultConfigPath();
+
+            return ListClasses(configPath, module, format);
+        });
+
         var validateCommand = new Command("validate-whitelist", "Validate whitelist")
         {
             configOption,
@@ -143,6 +178,8 @@ internal class Program
             inspectClassCommand,
             suggestApiCommand,
             inspectFunctionCommand,
+            listModulesCommand,
+            listClassesCommand,
             validateCommand,
             normalizeCommand,
             generateCommand,
@@ -212,6 +249,73 @@ internal class Program
                 Console.WriteLine($"      - type: {parameter.Type}");
                 Console.WriteLine($"        name: {parameter.Name}");
             }
+            Console.WriteLine();
+        }
+
+        return 0;
+    }
+
+    private static int ListModules(string configPath)
+    {
+        var hierarchyEntries = LoadHierarchyEntries(LoadConfig(configPath));
+        if (hierarchyEntries.Count == 0)
+        {
+            Console.Error.WriteLine("VTK hierarchy directory was not found. Set VTK_ROOT or vtk.hierarchyDirectory in local config.");
+            return 1;
+        }
+
+        var modules = hierarchyEntries.Values
+            .Select(entry => entry.Module)
+            .Where(entry => !string.IsNullOrWhiteSpace(entry))
+            .Distinct(StringComparer.Ordinal)
+            .Order(StringComparer.Ordinal)
+            .ToList();
+
+        foreach (var module in modules)
+            Console.WriteLine(module);
+
+        return 0;
+    }
+
+    private static int ListClasses(string configPath, string? moduleFilter, string format)
+    {
+        var hierarchyEntries = LoadHierarchyEntries(LoadConfig(configPath));
+        if (hierarchyEntries.Count == 0)
+        {
+            Console.Error.WriteLine("VTK hierarchy directory was not found. Set VTK_ROOT or vtk.hierarchyDirectory in local config.");
+            return 1;
+        }
+
+        var query = hierarchyEntries.Values.AsEnumerable();
+        if (!string.IsNullOrWhiteSpace(moduleFilter))
+            query = query.Where(entry => entry.Module.Equals(moduleFilter, StringComparison.OrdinalIgnoreCase));
+
+        var groups = query
+            .GroupBy(entry => entry.Module, StringComparer.Ordinal)
+            .OrderBy(group => group.Key, StringComparer.Ordinal);
+
+        if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
+        {
+            var result = groups.Select(group => new
+            {
+                module = group.Key,
+                classes = group.Select(entry => entry.ClassName).Order(StringComparer.Ordinal).ToList(),
+            }).ToList();
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
+            return 0;
+        }
+
+        if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.Error.WriteLine("--format must be 'text' or 'json'.");
+            return 1;
+        }
+
+        foreach (var group in groups)
+        {
+            Console.WriteLine(group.Key);
+            foreach (var entry in group.OrderBy(entry => entry.ClassName, StringComparer.Ordinal))
+                Console.WriteLine($"  {entry.ClassName}");
             Console.WriteLine();
         }
 
