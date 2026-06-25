@@ -50,14 +50,15 @@ Key translation rules:
 - `->` method calls → `.` method calls
 - `vtkSmartPointer` / raw pointers → no wrapping needed, `New()` returns a managed wrapper
 - Wrap every VTK object in `using var` (implements `IDisposable`)
-- vtkNamedColors is available: use `GetColorRGB(name, stackalloc double[3])` or `GetColor(name, stackalloc double[4])` with `Span<double>`. Example:
+- vtkNamedColors is available. Preferred approach is `GetColor3d(name)` which returns a `VtkSharpColor3d` struct with R/G/B properties. For RGBA use `GetColor(name, stackalloc double[4])` with `Span<double>`. Examples:
   ```csharp
   using var colors = vtkNamedColors.New();
-  Span<double> rgb = stackalloc double[3];
-  colors.GetColorRGB("Tomato", rgb);
-  actor.GetProperty().SetColor(rgb[0], rgb[1], rgb[2]);
+  var bg = colors.GetColor3d("DarkGreen");
+  renderer.SetBackground(bg.R, bg.G, bg.B);
+
+  Span<double> rgba = stackalloc double[4];
+  colors.GetColor("Tomato", rgba);
   ```
-  The value-type overloads (`GetColor3d` returning `vtkColor3d`) are not bound; use the fixed-array overloads instead.
 - For other unsupported types (returning non-vtkObject pointers, `int&` out params, `std::string&`, etc.), work around them and document the deviation in porting-notes.md.
 - Do NOT add example code to TestConsole at this stage — the example file in `examples/<Name>/` is the canonical port.
 

@@ -887,7 +887,13 @@ internal class Program
             .Replace("*", "", StringComparison.Ordinal)
             .Trim();
 
-        return normalized.StartsWith("vtk", StringComparison.Ordinal) ? normalized : null;
+        if (!normalized.StartsWith("vtk", StringComparison.Ordinal))
+            return null;
+        if (normalized is "vtkTypeBool" or "vtkIdType" or "vtkMTimeType")
+            return null;
+        if (TypeClassifier.IsVtkValueStruct(normalized))
+            return null;
+        return normalized;
     }
 
     private static string? ResolveIncludeDirectory(GeneratorConfig config)

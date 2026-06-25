@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using VtkSharp.Generator.Core.Types;
 using VtkSharp.Generator.Core.Whitelist;
 
@@ -64,6 +64,7 @@ public sealed class CSharpBindingEmitter
     private void EmitPublicMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
         var isInternalPointerReturn = IsPrimitivePointer(function.Return.Type);
+        var isValueStructReturn = TypeClassifier.IsVtkValueStruct(function.Return.Type);
         var methodName = isInternalPointerReturn ? $"{function.Name}_Internal" : function.Name;
         var visibility = isInternalPointerReturn ? "internal" : "public";
         var returnType = ToPublicType(function.Return.Type);
@@ -71,6 +72,13 @@ public sealed class CSharpBindingEmitter
             .Select(p => (PublicType: GetPublicParameterType(p), p.Name))
             .ToList();
         var parameters = string.Join(", ", parameterEntries.Select(e => $"{e.PublicType} {e.Name}"));
+
+        string? outVarName = null;
+        if (isValueStructReturn)
+        {
+            var componentCount = TypeClassifier.GetValueStructComponentCount(function.Return.Type);
+            outVarName = $"__out{function.Name}";
+        }
 
         sb.AppendLine($"    {visibility} new {returnType} {methodName}({parameters})");
         sb.AppendLine("    {");
@@ -84,23 +92,29 @@ public sealed class CSharpBindingEmitter
             indent += "    ";
         }
 
+        if (isValueStructReturn)
+        {
+            var componentCount = TypeClassifier.GetValueStructComponentCount(function.Return.Type);
+            sb.AppendLine($"{indent}double* {outVarName} = stackalloc double[{componentCount}];");
+        }
+
         var hasStringParameter = function.Parameters.Any(p => IsStringPointer(p.Type));
 
         if (hasStringParameter)
         {
             sb.AppendLine($"{indent}#if NET10_0_OR_GREATER");
-            var call10 = FormatCall(exportName, function.Parameters, p => ToInteropArgument(p));
-            EmitCall(sb, indent, function.Return.Type, call10);
+            var call10 = FormatCall(exportName, function.Parameters, p => ToInteropArgument(p), outVarName);
+            EmitCall(sb, indent, function.Return.Type, call10, outVarName);
             sb.AppendLine($"{indent}#else");
             var call20 = FormatCall(exportName, function.Parameters, p =>
-                IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({p.Name})" : ToInteropArgument(p));
-            EmitCall(sb, indent, function.Return.Type, call20);
+                IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({p.Name})" : ToInteropArgument(p), outVarName);
+            EmitCall(sb, indent, function.Return.Type, call20, outVarName);
             sb.AppendLine($"{indent}#endif");
         }
         else
         {
-            var call = FormatCall(exportName, function.Parameters, ToInteropArgument);
-            EmitCall(sb, indent, function.Return.Type, call);
+            var call = FormatCall(exportName, function.Parameters, ToInteropArgument, outVarName);
+            EmitCall(sb, indent, function.Return.Type, call, outVarName);
         }
 
         for (var i = fixedParameters.Count - 1; i >= 0; i--)
@@ -112,14 +126,27 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine("    }");
     }
 
-    private static string FormatCall(string exportName, IReadOnlyList<WhitelistParameter> parameters, Func<WhitelistParameter, string> argumentSelector)
+    private static string FormatCall(string exportName, IReadOnlyList<WhitelistParameter> parameters, Func<WhitelistParameter, string> argumentSelector, string? extraArg = null)
     {
-        var args = string.Join(", ", new[] { "this.NativePointer" }.Concat(parameters.Select(argumentSelector)));
-        return $"{exportName}({args})";
+        var args = new List<string> { "this.NativePointer" };
+        args.AddRange(parameters.Select(argumentSelector));
+        if (extraArg is not null)
+            args.Add(extraArg);
+        return $"{exportName}({string.Join(", ", args)})";
     }
 
-    private static void EmitCall(StringBuilder sb, string indent, string returnType, string call)
+    private static void EmitCall(StringBuilder sb, string indent, string returnType, string call, string? outVarName = null)
     {
+        if (TypeClassifier.IsVtkValueStruct(returnType))
+        {
+            var csTypeName = TypeClassifier.GetValueStructCSharpName(returnType);
+            var componentCount = TypeClassifier.GetValueStructComponentCount(returnType);
+            sb.AppendLine($"{indent}{call};");
+            var ctorArgs = string.Join(", ", Enumerable.Range(0, componentCount).Select(i => $"{outVarName}[{i}]"));
+            sb.AppendLine($"{indent}return new {csTypeName}({ctorArgs});");
+            return;
+        }
+
         if (returnType == "void")
         {
             sb.AppendLine($"{indent}{call};");
@@ -140,9 +167,16 @@ public sealed class CSharpBindingEmitter
 
     private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
-        var returnType = ToInteropType(function.Return.Type);
-        var returnMarshal = ToReturnMarshalAttribute(function.Return.Type);
+        var isValueStructReturn = TypeClassifier.IsVtkValueStruct(function.Return.Type);
+        var interopReturnType = isValueStructReturn ? "void" : ToInteropType(function.Return.Type);
+        var returnMarshal = isValueStructReturn ? null : ToReturnMarshalAttribute(function.Return.Type);
         var hasStringParameter = function.Parameters.Any(p => IsStringPointer(p.Type));
+
+        string extraParam = "";
+        if (isValueStructReturn)
+        {
+            extraParam = $", double* __out{function.Name}";
+        }
 
         if (hasStringParameter)
         {
@@ -153,8 +187,8 @@ public sealed class CSharpBindingEmitter
             var net10Params = string.Join(", ", new[] { "nint self" }.Concat(
                 function.Parameters.Select(p => IsStringPointer(p.Type)
                     ? $"string {p.Name}"
-                    : ToInteropParameter(p))));
-            sb.AppendLine($"    private static partial {returnType} {exportName}({net10Params});");
+                    : ToInteropParameter(p)))) + extraParam;
+            sb.AppendLine($"    private static partial {interopReturnType} {exportName}({net10Params});");
             sb.AppendLine("#else");
             sb.AppendLine($"    [DllImport(InteropInfo.NativeLibraryName)]");
             if (returnMarshal is not null)
@@ -162,8 +196,8 @@ public sealed class CSharpBindingEmitter
             var ns20Params = string.Join(", ", new[] { "nint self" }.Concat(
                 function.Parameters.Select(p => IsStringPointer(p.Type)
                     ? $"byte[] {p.Name}"
-                    : ToInteropParameter(p))));
-            sb.AppendLine($"    private static extern {returnType} {exportName}({ns20Params});");
+                    : ToInteropParameter(p)))) + extraParam;
+            sb.AppendLine($"    private static extern {interopReturnType} {exportName}({ns20Params});");
             sb.AppendLine("#endif");
         }
         else
@@ -171,8 +205,8 @@ public sealed class CSharpBindingEmitter
             sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
-            var parameters = string.Join(", ", new[] { "nint self" }.Concat(function.Parameters.Select(ToInteropParameter)));
-            sb.AppendLine($"    private static extern {returnType} {exportName}({parameters});");
+            var parameters = string.Join(", ", new[] { "nint self" }.Concat(function.Parameters.Select(ToInteropParameter))) + extraParam;
+            sb.AppendLine($"    private static extern {interopReturnType} {exportName}({parameters});");
         }
     }
 
@@ -180,6 +214,9 @@ public sealed class CSharpBindingEmitter
     {
         if (TryGetVtkClassName(type, out var className))
             return className;
+
+        if (TypeClassifier.IsVtkValueStruct(type))
+            return TypeClassifier.GetValueStructCSharpName(type);
 
         return type switch
         {
@@ -207,6 +244,9 @@ public sealed class CSharpBindingEmitter
     {
         if (TryGetVtkClassName(type, out _))
             return "nint";
+
+        if (TypeClassifier.IsVtkValueStruct(type))
+            return "void";
 
         return type switch
         {

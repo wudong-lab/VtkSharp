@@ -51,6 +51,18 @@ public unsafe partial class vtkNamedColors : vtkObject
         }
     }
 
+    public new VtkSharpColor3d GetColor3d(string name)
+    {
+        double* __outGetColor3d = stackalloc double[3];
+        #if NET10_0_OR_GREATER
+        vtkNamedColors_GetColor3d(this.NativePointer, name, __outGetColor3d);
+        return new VtkSharpColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
+        #else
+        vtkNamedColors_GetColor3d(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), __outGetColor3d);
+        return new VtkSharpColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
+        #endif
+    }
+
     public new int GetNumberOfColors()
     {
         return vtkNamedColors_GetNumberOfColors(this.NativePointer);
@@ -110,6 +122,14 @@ public unsafe partial class vtkNamedColors : vtkObject
 #else
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_GetColorRGB(nint self, byte[] name, double* rgb);
+#endif
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkNamedColors_GetColor3d(nint self, string name, double* __outGetColor3d);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkNamedColors_GetColor3d(nint self, byte[] name, double* __outGetColor3d);
 #endif
 
     [DllImport(InteropInfo.NativeLibraryName)]

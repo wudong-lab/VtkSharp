@@ -25,16 +25,14 @@ internal class Circle
         using var actor = vtkActor.New();
         actor.SetMapper(mapper);
 
-        Span<double> cornsilk = stackalloc double[3];
-        colors.GetColorRGB("Cornsilk", cornsilk);
-        actor.GetProperty().SetColor(cornsilk[0], cornsilk[1], cornsilk[2]);
+        var cornsilk = colors.GetColor3d("Cornsilk");
+        actor.GetProperty().SetColor(cornsilk.R, cornsilk.G, cornsilk.B);
 
-        Span<double> darkGreen = stackalloc double[3];
-        colors.GetColorRGB("DarkGreen", darkGreen);
+        var darkGreen = colors.GetColor3d("DarkGreen");
 
         using var renderer = vtkRenderer.New();
         renderer.AddActor(actor);
-        renderer.SetBackground(darkGreen[0], darkGreen[1], darkGreen[2]);
+        renderer.SetBackground(darkGreen.R, darkGreen.G, darkGreen.B);
 
         using var renderWindow = vtkRenderWindow.New();
         renderWindow.AddRenderer(renderer);

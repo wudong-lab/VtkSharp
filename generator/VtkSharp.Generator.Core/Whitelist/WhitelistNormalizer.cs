@@ -1,3 +1,4 @@
+using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Types;
 using VtkSharp.Generator.Core.Vtk;
 
@@ -185,6 +186,7 @@ public sealed class WhitelistNormalizer
 
         return normalized.StartsWith("vtk", StringComparison.Ordinal) &&
                normalized is not "vtkTypeBool" and not "vtkIdType" and not "vtkMTimeType"
+               && !TypeClassifier.IsVtkValueStruct(normalized)
             ? normalized
             : null;
     }

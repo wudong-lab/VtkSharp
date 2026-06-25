@@ -1,3 +1,4 @@
+using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Inspection;
 using VtkSharp.Generator.Core.Vtk;
 using VtkSharp.Generator.Core.Whitelist;
@@ -112,6 +113,8 @@ public sealed class WhitelistValidator
                 $"unsupported fixed-array element type '{GetArrayElementType(type)}' in '{type}'",
             _ when PrimitivePointerTypes.Contains(type) =>
                 "primitive pointer — add direction and length metadata to the parameter entry",
+            _ when TypeClassifier.IsVtkValueStruct(type) =>
+                $"vtk value struct '{type}' requires emitter support (out-pointer bridge)",
             _ when type.StartsWith("vtk", StringComparison.Ordinal) && !type.EndsWith('*') =>
                 $"vtk class name '{type}' without pointer — did you mean '{type}*'?",
             _ => $"unsupported type '{type}'",
@@ -123,6 +126,9 @@ public sealed class WhitelistValidator
     public static bool IsSupportedType(string type)
     {
         if (SupportedScalarTypes.Contains(type))
+            return true;
+
+        if (TypeClassifier.IsVtkValueStruct(type))
             return true;
 
         if (IsVtkClassPointer(type))
