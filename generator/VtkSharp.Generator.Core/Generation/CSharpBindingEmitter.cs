@@ -133,7 +133,11 @@ public sealed class CSharpBindingEmitter
         return type switch
         {
             "void" => "void",
+            "char" => "char",
             "int" => "int",
+            "unsigned int" => "uint",
+            "long long" => "long",
+            "unsigned long long" => "ulong",
             "double" => "double",
             "float" => "float",
             "bool" => "bool",
@@ -155,7 +159,11 @@ public sealed class CSharpBindingEmitter
         return type switch
         {
             "void" => "void",
+            "char" => "char",
             "int" => "int",
+            "unsigned int" => "uint",
+            "long long" => "long",
+            "unsigned long long" => "ulong",
             "double" => "double",
             "float" => "float",
             "bool" => "bool",

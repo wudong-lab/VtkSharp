@@ -49,6 +49,7 @@ public sealed class ExportNameGenerator
 
         return text switch
         {
+            "char" => "char",
             "unsigned int" => "uint",
             "long long" => "long",
             "unsigned long long" => "ulong",

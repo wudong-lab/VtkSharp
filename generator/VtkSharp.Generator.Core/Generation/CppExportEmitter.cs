@@ -47,7 +47,11 @@ public sealed class CppExportEmitter
         => type switch
         {
             "void" => "void",
+            "char" => "char",
             "int" => "int",
+            "unsigned int" => "unsigned int",
+            "long long" => "long long",
+            "unsigned long long" => "unsigned long long",
             "double" => "double",
             "float" => "float",
             "bool" => "bool",
