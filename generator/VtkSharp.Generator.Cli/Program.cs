@@ -181,6 +181,84 @@ internal class Program
             return check ? CheckGeneratedOutput(configPath, outputRootPath) : 0;
         });
 
+        var candidatePathArgument = new Argument<FileInfo>("candidate-path")
+        {
+            Description = "Path to candidate whitelist YAML file",
+        };
+
+        var diffWhitelistCommand = new Command("diff-whitelist", "Diff a candidate whitelist against the formal whitelist")
+        {
+            candidatePathArgument,
+            formatOption,
+            configOption,
+        };
+
+        diffWhitelistCommand.SetAction(parseResult =>
+        {
+            var candidatePath = parseResult.GetValue(candidatePathArgument)!.FullName;
+            var format = parseResult.GetValue(formatOption)!;
+            var configPath = parseResult.GetValue(configOption)?.FullName
+                             ?? GetDefaultConfigPath();
+
+            return DiffWhitelist(configPath, candidatePath, format);
+        });
+
+        var outputArgument = new Argument<FileInfo>("output-path")
+        {
+            Description = "Output path for the candidate YAML file",
+        };
+        var sourceKindOption = new Option<string>("--source-kind")
+        {
+            Description = "Source kind: vtk-example, manual, etc.",
+            DefaultValueFactory = _ => "manual",
+        };
+        var sourceNameOption = new Option<string>("--source-name")
+        {
+            Description = "Source name (e.g. example name)",
+        };
+        var sourceOriginalOption = new Option<string>("--source-original")
+        {
+            Description = "Original C++ source path",
+        };
+
+        var createCandidateCommand = new Command("create-candidate", "Create a candidate whitelist from VTK inspection")
+        {
+            classArgument,
+            outputArgument,
+            sourceKindOption,
+            sourceNameOption,
+            sourceOriginalOption,
+            configOption,
+        };
+
+        createCandidateCommand.SetAction(parseResult =>
+        {
+            var className = parseResult.GetValue(classArgument)!;
+            var outputPath = parseResult.GetValue(outputArgument)!.FullName;
+            var sourceKind = parseResult.GetValue(sourceKindOption)!;
+            var sourceName = parseResult.GetValue(sourceNameOption);
+            var sourceOriginal = parseResult.GetValue(sourceOriginalOption);
+            var configPath = parseResult.GetValue(configOption)?.FullName
+                             ?? GetDefaultConfigPath();
+
+            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal);
+        });
+
+        var mergeCandidateCommand = new Command("merge-candidate", "Merge a candidate whitelist into the formal whitelist")
+        {
+            candidatePathArgument,
+            configOption,
+        };
+
+        mergeCandidateCommand.SetAction(parseResult =>
+        {
+            var candidatePath = parseResult.GetValue(candidatePathArgument)!.FullName;
+            var configPath = parseResult.GetValue(configOption)?.FullName
+                             ?? GetDefaultConfigPath();
+
+            return MergeCandidate(configPath, candidatePath);
+        });
+
         var rootCommand = new RootCommand("VtkSharp binding generator")
         {
             inspectClassCommand,
@@ -190,6 +268,9 @@ internal class Program
             listClassesCommand,
             validateCommand,
             normalizeCommand,
+            diffWhitelistCommand,
+            createCandidateCommand,
+            mergeCandidateCommand,
             generateCommand,
         };
 
@@ -261,6 +342,243 @@ internal class Program
         }
 
         return 0;
+    }
+
+    private static int DiffWhitelist(string configPath, string candidatePath, string format)
+    {
+        var configDirectory = Path.GetDirectoryName(configPath)
+                              ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
+
+        var config = LoadConfig(configPath);
+        var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
+        var formal = new WhitelistLoader().LoadDirectory(whitelistDirectory);
+        var candidate = LoadCandidateFile(candidatePath);
+
+        var formalFingerprints = BuildFingerprints(formal);
+        var candidateFingerprints = BuildCandidateFingerprints(candidate);
+
+        var added = candidateFingerprints.Keys.Except(formalFingerprints, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToList();
+        var unchanged = candidateFingerprints.Keys.Intersect(formalFingerprints, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToList();
+
+        if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
+        {
+            var result = new
+            {
+                added = added.Select(FingerprintToJson),
+                unchanged = unchanged.Select(FingerprintToJson),
+            };
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
+            return 0;
+        }
+
+        if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.Error.WriteLine("--format must be 'text' or 'json'.");
+            return 1;
+        }
+
+        Console.WriteLine($"Candidate: {candidatePath}");
+        Console.WriteLine($"Formal:    {whitelistDirectory}");
+        Console.WriteLine();
+        Console.WriteLine($"Added ({added.Count}):");
+        foreach (var entry in added)
+            Console.WriteLine($"  + {entry}");
+        Console.WriteLine();
+        Console.WriteLine($"Already present ({unchanged.Count}):");
+        foreach (var entry in unchanged)
+            Console.WriteLine($"    {entry}");
+
+        return 0;
+    }
+
+    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal)
+    {
+        var config = LoadConfig(configPath);
+        var includeDirectory = ResolveIncludeDirectory(config);
+        if (includeDirectory is null)
+        {
+            Console.Error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
+            return 1;
+        }
+
+        var hierarchyResolver = LoadHierarchyResolver(config);
+        var header = hierarchyResolver.GetHeader(className);
+
+        // Determine module from hierarchy
+        var entries = LoadHierarchyEntries(config);
+        var hierarchyModule = entries.TryGetValue(className, out var entry) ? entry.Module : "";
+        if (string.IsNullOrWhiteSpace(hierarchyModule))
+        {
+            Console.Error.WriteLine($"Class '{className}' was not found in the VTK hierarchy.");
+            return 1;
+        }
+
+        var inspected = new VtkClassInspector().InspectHeader(includeDirectory, header, className);
+
+        using var writer = new StringWriter();
+        writer.WriteLine("# yaml-language-server: $schema=../schemas/vtksharp.whitelist-candidate.schema.json");
+        writer.WriteLine();
+        writer.WriteLine("status: proposed");
+        writer.WriteLine("source:");
+        writer.WriteLine($"  kind: {sourceKind}");
+        if (!string.IsNullOrWhiteSpace(sourceName))
+            writer.WriteLine($"  name: {sourceName}");
+        if (!string.IsNullOrWhiteSpace(sourceOriginal))
+            writer.WriteLine($"  original: \"{sourceOriginal}\"");
+        writer.WriteLine();
+        writer.WriteLine("requirements:");
+        writer.WriteLine($"  - module: {hierarchyModule}");
+        writer.WriteLine($"    class: {className}");
+        writer.WriteLine($"    header: {header}");
+        writer.WriteLine("    functions:");
+
+        if (inspected.Functions.Count == 0)
+        {
+            writer.WriteLine("      []");
+        }
+        else
+        {
+            foreach (var function in inspected.Functions)
+            {
+                writer.WriteLine($"      - name: {function.Name}");
+                writer.WriteLine($"        cppSignature: \"{EscapeYaml(function.CppSignature)}\"");
+                writer.WriteLine($"        return:");
+                writer.WriteLine($"          type: {function.ReturnType}");
+                writer.WriteLine($"        parameters:");
+                if (function.Parameters.Count == 0)
+                {
+                    writer.WriteLine("          []");
+                }
+                else
+                {
+                    foreach (var parameter in function.Parameters)
+                        writer.WriteLine($"          - {{ type: \"{EscapeYaml(parameter.Type)}\", name: {parameter.Name} }}");
+                }
+            }
+        }
+
+        var directory = Path.GetDirectoryName(outputPath);
+        if (directory is not null)
+            Directory.CreateDirectory(directory);
+
+        File.WriteAllText(outputPath, writer.ToString(), System.Text.Encoding.UTF8);
+        Console.WriteLine($"Candidate written to: {Path.GetFullPath(outputPath)}");
+        return 0;
+    }
+
+    private static int MergeCandidate(string configPath, string candidatePath)
+    {
+        var configDirectory = Path.GetDirectoryName(configPath)
+                              ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
+
+        var config = LoadConfig(configPath);
+        var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
+        var formal = new WhitelistLoader().LoadDirectory(whitelistDirectory);
+        var candidate = LoadCandidateFile(candidatePath);
+
+        var documentsByModule = formal.ToDictionary(d => d.Module, StringComparer.Ordinal);
+        var formalFingerprints = BuildFingerprints(formal);
+        var addedCount = 0;
+
+        foreach (var requirement in candidate.Requirements)
+        {
+            if (!documentsByModule.TryGetValue(requirement.Module, out var document))
+            {
+                document = new WhitelistDocument { Module = requirement.Module, Classes = [] };
+                documentsByModule.Add(requirement.Module, document);
+            }
+
+            var whitelistClass = document.Classes.FirstOrDefault(c => c.Name == requirement.Class);
+            if (whitelistClass is null)
+            {
+                whitelistClass = new WhitelistClass { Name = requirement.Class, Header = requirement.Header, Functions = [] };
+                document.Classes.Add(whitelistClass);
+            }
+
+            foreach (var function in requirement.Functions)
+            {
+                var fingerprint = MakeFingerprint(requirement.Module, requirement.Class, function);
+                if (formalFingerprints.Contains(fingerprint))
+                    continue;
+
+                whitelistClass.Functions.Add(function);
+                formalFingerprints.Add(fingerprint);
+                addedCount++;
+            }
+        }
+
+        if (addedCount == 0)
+        {
+            Console.WriteLine("No new entries to merge.");
+            return 0;
+        }
+
+        new WhitelistWriter().WriteDirectory(whitelistDirectory, documentsByModule.Values.ToList());
+
+        // Auto-normalize after merge.
+        var hierarchyEntries = LoadHierarchyEntries(config);
+        if (hierarchyEntries.Count > 0)
+        {
+            var normalized = new WhitelistNormalizer().Normalize(documentsByModule.Values.ToList(), hierarchyEntries, config.Binding.ManualBindingClasses);
+            new WhitelistWriter().WriteDirectory(whitelistDirectory, normalized);
+        }
+
+        Console.WriteLine($"Merged {addedCount} function(s) from candidate into formal whitelist.");
+        Console.WriteLine("Review the changes with git diff before committing.");
+        return 0;
+    }
+
+    private static CandidateDocument LoadCandidateFile(string path)
+    {
+        using var reader = File.OpenText(path);
+        var deserializer = new YamlDotNet.Serialization.DeserializerBuilder()
+            .WithNamingConvention(YamlDotNet.Serialization.NamingConventions.CamelCaseNamingConvention.Instance)
+            .IgnoreUnmatchedProperties()
+            .Build();
+        return deserializer.Deserialize<CandidateDocument>(reader);
+    }
+
+    private static HashSet<string> BuildFingerprints(IReadOnlyList<WhitelistDocument> documents)
+    {
+        var set = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var document in documents)
+            foreach (var whitelistClass in document.Classes)
+                foreach (var function in whitelistClass.Functions)
+                    set.Add(MakeFingerprint(document.Module, whitelistClass.Name, function));
+        return set;
+    }
+
+    private static Dictionary<string, string> BuildCandidateFingerprints(CandidateDocument candidate)
+    {
+        var dict = new Dictionary<string, string>(StringComparer.Ordinal);
+        foreach (var requirement in candidate.Requirements)
+            foreach (var function in requirement.Functions)
+            {
+                var fingerprint = MakeFingerprint(requirement.Module, requirement.Class, function);
+                dict[fingerprint] = requirement.Class;
+            }
+        return dict;
+    }
+
+    private static string MakeFingerprint(string module, string className, WhitelistFunction function)
+    {
+        var paramTypes = string.Join(",", function.Parameters.Select(p => p.Type));
+        return $"{module}/{className}::{function.Name}({paramTypes})->{function.Return.Type}";
+    }
+
+    private static object FingerprintToJson(string fingerprint)
+    {
+        var parts = fingerprint.Split("::", 2);
+        var path = parts[0];
+        var signature = parts.Length > 1 ? parts[1] : "";
+        return new { path, signature };
+    }
+
+    private static string EscapeYaml(string text)
+    {
+        if (text.Contains('"'))
+            return text.Replace("\"", "\\\"");
+        return text;
     }
 
     private static int ListModules(string configPath)
