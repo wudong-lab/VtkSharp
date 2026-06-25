@@ -493,6 +493,13 @@ typeAliases:
 
 第一阶段如果遇到没有明确映射的 `unsigned long`，生成器应报错或要求人工决策，而不是隐式假定为 32 位。
 
+> **2026-06-25 决策**：`typeAliases` YAML 配置机制暂不实现。理由：
+> 1. 当前场景只面向 Windows（MSVC），`unsigned long` 恒为 32-bit，不存在平台宽度分歧。
+> 2. VTK 9.5 公共 API 中 `unsigned long` 极少出现（VTK 用 `vtkIdType` 做索引，用 `int`/`unsigned int` 做标志位）。
+> 3. `WhitelistValidator` 遇到不支持类型时已正确报错，报错本身就驱动人工显式确认。
+>
+> 等实际遇到需要 `unsigned long` 的 API 时再评估是否只需在对应白名单条目中写 `uint` 即可，无需引入配置层的抽象。
+
 ## 手写基础类
 
 生成器支持 `manualBindingClasses` 配置：

@@ -221,6 +221,11 @@ internal class Program
             Description = "Original C++ source path",
         };
 
+        var supportedOnlyOption = new Option<bool>("--supported-only")
+        {
+            Description = "Only include functions whose types are all supported (filters out unsigned long, basic_ostream, int&, etc.)",
+        };
+
         var createCandidateCommand = new Command("create-candidate", "Create a candidate whitelist from VTK inspection")
         {
             classArgument,
@@ -228,6 +233,7 @@ internal class Program
             sourceKindOption,
             sourceNameOption,
             sourceOriginalOption,
+            supportedOnlyOption,
             configOption,
         };
 
@@ -238,10 +244,11 @@ internal class Program
             var sourceKind = parseResult.GetValue(sourceKindOption)!;
             var sourceName = parseResult.GetValue(sourceNameOption);
             var sourceOriginal = parseResult.GetValue(sourceOriginalOption);
+            var supportedOnly = parseResult.GetValue(supportedOnlyOption);
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
 
-            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal);
+            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal, supportedOnly);
         });
 
         var mergeCandidateCommand = new Command("merge-candidate", "Merge a candidate whitelist into the formal whitelist")
@@ -391,7 +398,7 @@ internal class Program
         return 0;
     }
 
-    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal)
+    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal, bool supportedOnly = false)
     {
         var config = LoadConfig(configPath);
         var includeDirectory = ResolveIncludeDirectory(config);
@@ -432,13 +439,17 @@ internal class Program
         writer.WriteLine($"    header: {header}");
         writer.WriteLine("    functions:");
 
-        if (inspected.Functions.Count == 0)
+        var functions = supportedOnly
+            ? inspected.Functions.Where(IsAllTypesSupported).ToList()
+            : inspected.Functions;
+
+        if (functions.Count == 0)
         {
             writer.WriteLine("      []");
         }
         else
         {
-            foreach (var function in inspected.Functions)
+            foreach (var function in functions)
             {
                 writer.WriteLine($"      - name: {function.Name}");
                 writer.WriteLine($"        cppSignature: \"{EscapeYaml(function.CppSignature)}\"");
@@ -572,6 +583,12 @@ internal class Program
         var path = parts[0];
         var signature = parts.Length > 1 ? parts[1] : "";
         return new { path, signature };
+    }
+
+    private static bool IsAllTypesSupported(InspectedFunction function)
+    {
+        var types = function.Parameters.Select(p => p.Type).Append(function.ReturnType);
+        return types.All(WhitelistValidator.IsSupportedType);
     }
 
     private static string EscapeYaml(string text)

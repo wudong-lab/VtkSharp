@@ -120,7 +120,7 @@ public sealed class WhitelistValidator
         return [new ValidationDiagnostic($"Type '{className}.{functionName}' {role}: {hint}.")];
     }
 
-    internal static bool IsSupportedType(string type)
+    public static bool IsSupportedType(string type)
     {
         if (SupportedScalarTypes.Contains(type))
             return true;

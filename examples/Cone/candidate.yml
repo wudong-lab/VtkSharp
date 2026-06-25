@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=../../generator/schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: Cone
+  original: "VTK/Examples/GeometricObjects/Cxx/Cone.cxx"
+
+requirements:
+  - module: vtkFiltersSources
+    class: vtkConeSource
+    header: vtkConeSource.h
+    functions:
+      - name: SetHeight
+        cppSignature: "void SetHeight(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: height }
+      - name: SetRadius
+        cppSignature: "void SetRadius(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: radius }
+      - name: SetResolution
+        cppSignature: "void SetResolution(int _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: resolution }
