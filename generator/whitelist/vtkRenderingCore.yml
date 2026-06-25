@@ -23,6 +23,16 @@ classes:
         parameters:
           - type: vtkMapper*
             name: mapper
+  - name: vtkCamera
+    header: vtkCamera.h
+    functions:
+      - name: Zoom
+        cppSignature: void Zoom(double factor)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: factor
   - name: vtkMapper
     header: vtkMapper.h
     functions: []
@@ -41,7 +51,21 @@ classes:
     functions: []
   - name: vtkProp3D
     header: vtkProp3D.h
-    functions: []
+    functions:
+      - name: RotateX
+        cppSignature: void RotateX(double _arg1)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+      - name: RotateY
+        cppSignature: void RotateY(double _arg1)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
   - name: vtkProperty
     header: vtkProperty.h
     functions:
@@ -66,6 +90,13 @@ classes:
         parameters:
           - type: vtkRenderer*
             name: renderer
+      - name: SetWindowName
+        cppSignature: void SetWindowName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
   - name: vtkRenderWindowInteractor
     header: vtkRenderWindowInteractor.h
     functions:
@@ -91,6 +122,16 @@ classes:
         parameters:
           - type: vtkProp*
             name: p
+      - name: GetActiveCamera
+        cppSignature: vtkCamera * GetActiveCamera()
+        return:
+          type: vtkCamera*
+        parameters: []
+      - name: ResetCamera
+        cppSignature: void ResetCamera()
+        return:
+          type: void
+        parameters: []
   - name: vtkViewport
     header: vtkViewport.h
     functions:

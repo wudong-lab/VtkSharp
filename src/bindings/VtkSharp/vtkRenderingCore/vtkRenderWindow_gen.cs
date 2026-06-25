@@ -23,11 +23,28 @@ public unsafe partial class vtkRenderWindow : vtkWindow
         vtkRenderWindow_AddRenderer(this.NativePointer, renderer.NativePointer);
     }
 
+    public new void SetWindowName(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkRenderWindow_SetWindowName(this.NativePointer, _arg);
+        #else
+        vtkRenderWindow_SetWindowName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderWindow_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_AddRenderer(nint self, nint renderer);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkRenderWindow_SetWindowName(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_SetWindowName(nint self, byte[] _arg);
+#endif
     #endregion
 }

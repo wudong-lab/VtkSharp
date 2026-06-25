@@ -17,6 +17,21 @@ public unsafe partial class vtkProp3D : vtkProp
         return target;
     }
 
+    public new void RotateX(double _arg1)
+    {
+        vtkProp3D_RotateX(this.NativePointer, _arg1);
+    }
+
+    public new void RotateY(double _arg1)
+    {
+        vtkProp3D_RotateY(this.NativePointer, _arg1);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp3D_RotateX(nint self, double _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp3D_RotateY(nint self, double _arg1);
     #endregion
 }

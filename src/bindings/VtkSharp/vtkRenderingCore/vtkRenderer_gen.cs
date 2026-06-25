@@ -23,11 +23,27 @@ public unsafe partial class vtkRenderer : vtkViewport
         vtkRenderer_AddActor(this.NativePointer, p.NativePointer);
     }
 
+    public new vtkCamera GetActiveCamera()
+    {
+        return vtkCamera.WeakReference(vtkRenderer_GetActiveCamera(this.NativePointer));
+    }
+
+    public new void ResetCamera()
+    {
+        vtkRenderer_ResetCamera(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderer_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_AddActor(nint self, nint p);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderer_GetActiveCamera(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ResetCamera(nint self);
     #endregion
 }

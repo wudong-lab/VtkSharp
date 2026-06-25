@@ -50,3 +50,53 @@ requirements:
           - { type: "double", name: _arg1 }
           - { type: "double", name: _arg2 }
           - { type: "double", name: _arg3 }
+  - module: vtkRenderingCore
+    class: vtkProp3D
+    header: vtkProp3D.h
+    functions:
+      - name: RotateX
+        cppSignature: "void RotateX(double _arg1)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg1 }
+      - name: RotateY
+        cppSignature: "void RotateY(double _arg1)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg1 }
+  - module: vtkRenderingCore
+    class: vtkRenderer
+    header: vtkRenderer.h
+    functions:
+      - name: ResetCamera
+        cppSignature: "void ResetCamera()"
+        return:
+          type: void
+        parameters: []
+      - name: GetActiveCamera
+        cppSignature: "vtkCamera * GetActiveCamera()"
+        return:
+          type: vtkCamera*
+        parameters: []
+  - module: vtkRenderingCore
+    class: vtkCamera
+    header: vtkCamera.h
+    functions:
+      - name: Zoom
+        cppSignature: "void Zoom(double factor)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: factor }
+  - module: vtkRenderingCore
+    class: vtkRenderWindow
+    header: vtkRenderWindow.h
+    functions:
+      - name: SetWindowName
+        cppSignature: "void SetWindowName(char const * _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "const char*", name: _arg }

@@ -2,3 +2,6 @@
 #include "vtksharp_api.h"
 #include <vtkProp3D.h>
 
+VTKSHARP_API void vtkProp3D_RotateX(vtkProp3D* self, double _arg1) { self->RotateX(_arg1); }
+
+VTKSHARP_API void vtkProp3D_RotateY(vtkProp3D* self, double _arg1) { self->RotateY(_arg1); }

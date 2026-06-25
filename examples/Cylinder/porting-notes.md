@@ -9,12 +9,13 @@
 | Class | Module | Status |
 |-------|--------|--------|
 | vtkCylinderSource | vtkFiltersSources | ✅ newly whitelisted (SetResolution) |
-| vtkPolyDataMapper | vtkRenderingCore | ✅ already whitelisted (SetInputConnection) |
-| vtkActor | vtkRenderingCore | ✅ added GetProperty() → vtkProperty* |
+| vtkPolyDataMapper | vtkRenderingCore | ✅ already whitelisted |
+| vtkActor (→ vtkProp3D) | vtkRenderingCore | ✅ added GetProperty, inherited RotateX/RotateY from vtkProp3D |
 | vtkProperty | vtkRenderingCore | ✅ newly whitelisted (SetColor) |
-| vtkRenderer → vtkViewport | vtkRenderingCore | ✅ added SetBackground on vtkViewport |
-| vtkRenderWindow | vtkRenderingCore | ✅ already whitelisted (AddRenderer; SetSize/Render via vtkWindow base) |
-| vtkRenderWindowInteractor | vtkRenderingCore | ✅ already whitelisted (SetRenderWindow, Start) |
+| vtkRenderer | vtkRenderingCore | ✅ added ResetCamera, GetActiveCamera; SetBackground via vtkViewport base |
+| vtkCamera | vtkRenderingCore | ✅ newly whitelisted (Zoom) |
+| vtkRenderWindow | vtkRenderingCore | ✅ added SetWindowName; AddRenderer/SetSize/Render already available |
+| vtkRenderWindowInteractor | vtkRenderingCore | ✅ already whitelisted |
 
 ## Added API
 
@@ -22,9 +23,14 @@
 - vtkActor::GetProperty() → vtkProperty*
 - vtkProperty::SetColor(double, double, double)
 - vtkViewport::SetBackground(double, double, double) — inherited by vtkRenderer
+- vtkProp3D::RotateX(double), RotateY(double) — inherited by vtkActor
+- vtkRenderer::ResetCamera(), GetActiveCamera() → vtkCamera*
+- vtkCamera::Zoom(double)
+- vtkRenderWindow::SetWindowName(const char*)
 
-## Notes
+## Deviations from C++ original
 
-- SetBackground is declared on vtkViewport (vtkRenderer's base), so it was added there.
-- vtkProperty is a new class; only SetColor is whitelisted for this example.
-- The C++ example uses tomato color (1.0, 0.388, 0.278) and dark blue background (0.1, 0.2, 0.4).
+- **vtkNamedColors** not bound; color values are inlined directly:
+  - Tomato = (1.0, 0.388, 0.278)
+  - BkgColor = (26/255 ≈ 0.102, 51/255 = 0.2, 102/255 = 0.4)
+- Window title "Cylinder" set via SetWindowName (vtkNamedColors is a named-color registry, not essential to the example).
