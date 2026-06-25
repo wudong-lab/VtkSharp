@@ -21,6 +21,13 @@ classes:
             name: name
           - type: double[4]
             name: rgba
+      - name: GetColor3d
+        cppSignature: vtkColor3d GetColor3d(const char* name)
+        return:
+          type: vtkColor3d
+        parameters:
+          - type: const char*
+            name: name
       - name: GetColorRGB
         cppSignature: void GetColorRGB(const char* name, double rgb[3])
         return:
@@ -30,13 +37,6 @@ classes:
             name: name
           - type: double[3]
             name: rgb
-      - name: GetColor3d
-        cppSignature: "vtkColor3d GetColor3d(const char* name)"
-        return:
-          type: vtkColor3d
-        parameters:
-          - type: const char*
-            name: name
       - name: GetNumberOfColors
         cppSignature: int GetNumberOfColors()
         return:

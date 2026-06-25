@@ -1,0 +1,96 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: PolyLine
+  original: "https://examples.vtk.org/site/Cxx/GeometricObjects/PolyLine/"
+
+requirements:
+  - module: vtkCommonCore
+    class: vtkPoints
+    header: vtkPoints.h
+    functions:
+      - name: InsertNextPoint
+        cppSignature: "vtkIdType InsertNextPoint(double x, double y, double z)"
+        return:
+          type: vtkIdType
+        parameters:
+          - { type: "double", name: x }
+          - { type: "double", name: y }
+          - { type: "double", name: z }
+  - module: vtkCommonCore
+    class: vtkIdList
+    header: vtkIdList.h
+    functions:
+      - name: SetNumberOfIds
+        cppSignature: "void SetNumberOfIds(vtkIdType number)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkIdType", name: number }
+      - name: SetId
+        cppSignature: "void SetId(vtkIdType i, vtkIdType vtkid)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkIdType", name: i }
+          - { type: "vtkIdType", name: vtkid }
+  - module: vtkCommonDataModel
+    class: vtkCell
+    header: vtkCell.h
+    functions:
+      - name: GetPointIds
+        cppSignature: "vtkIdList * GetPointIds()"
+        return:
+          type: vtkIdList*
+        parameters: []
+  - module: vtkCommonDataModel
+    class: vtkPolyLine
+    header: vtkPolyLine.h
+    functions: []
+  - module: vtkCommonDataModel
+    class: vtkCellArray
+    header: vtkCellArray.h
+    functions:
+      - name: InsertNextCell
+        cppSignature: "vtkIdType InsertNextCell(vtkCell * cell)"
+        return:
+          type: vtkIdType
+        parameters:
+          - { type: "vtkCell*", name: cell }
+  - module: vtkCommonDataModel
+    class: vtkPolyData
+    header: vtkPolyData.h
+    functions:
+      - name: SetPoints
+        cppSignature: "void SetPoints(vtkPoints * _arg1)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkPoints*", name: _arg1 }
+      - name: SetLines
+        cppSignature: "void SetLines(vtkCellArray * l)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkCellArray*", name: l }
+  - module: vtkRenderingCore
+    class: vtkPolyDataMapper
+    header: vtkPolyDataMapper.h
+    functions:
+      - name: SetInputData
+        cppSignature: "void SetInputData(vtkPolyData * in)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkPolyData*", name: in }
+  - module: vtkRenderingCore
+    class: vtkRenderWindow
+    header: vtkRenderWindow.h
+    functions:
+      - name: Render
+        cppSignature: "void Render()"
+        return:
+          type: void
+        parameters: []

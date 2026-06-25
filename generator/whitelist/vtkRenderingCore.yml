@@ -46,6 +46,13 @@ classes:
         parameters:
           - type: vtkAlgorithmOutput*
             name: input
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkPolyData * in)
+        return:
+          type: void
+        parameters:
+          - type: vtkPolyData*
+            name: in
   - name: vtkProp
     header: vtkProp.h
     functions: []
@@ -90,6 +97,11 @@ classes:
         parameters:
           - type: vtkRenderer*
             name: renderer
+      - name: Render
+        cppSignature: void Render()
+        return:
+          type: void
+        parameters: []
       - name: SetWindowName
         cppSignature: void SetWindowName(char const * _arg)
         return:

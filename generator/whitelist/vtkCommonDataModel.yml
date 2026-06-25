@@ -1,0 +1,54 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkCommonDataModel
+classes:
+  - name: vtkAbstractCellArray
+    header: vtkAbstractCellArray.h
+    functions: []
+  - name: vtkCell
+    header: vtkCell.h
+    functions:
+      - name: GetPointIds
+        cppSignature: vtkIdList * GetPointIds()
+        return:
+          type: vtkIdList*
+        parameters: []
+  - name: vtkCellArray
+    header: vtkCellArray.h
+    functions:
+      - name: InsertNextCell
+        cppSignature: vtkIdType InsertNextCell(vtkCell * cell)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: vtkCell*
+            name: cell
+  - name: vtkDataObject
+    header: vtkDataObject.h
+    functions: []
+  - name: vtkDataSet
+    header: vtkDataSet.h
+    functions: []
+  - name: vtkPointSet
+    header: vtkPointSet.h
+    functions: []
+  - name: vtkPolyData
+    header: vtkPolyData.h
+    functions:
+      - name: SetLines
+        cppSignature: void SetLines(vtkCellArray * l)
+        return:
+          type: void
+        parameters:
+          - type: vtkCellArray*
+            name: l
+      - name: SetPoints
+        cppSignature: void SetPoints(vtkPoints * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkPoints*
+            name: _arg1
+  - name: vtkPolyLine
+    header: vtkPolyLine.h
+    functions: []

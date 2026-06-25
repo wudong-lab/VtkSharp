@@ -7,4 +7,6 @@ VTKSHARP_API vtkRenderWindow* vtkRenderWindow_New() { return vtkRenderWindow::Ne
 
 VTKSHARP_API void vtkRenderWindow_AddRenderer(vtkRenderWindow* self, vtkRenderer* renderer) { self->AddRenderer(renderer); }
 
+VTKSHARP_API void vtkRenderWindow_Render(vtkRenderWindow* self) { self->Render(); }
+
 VTKSHARP_API void vtkRenderWindow_SetWindowName(vtkRenderWindow* self, const char* _arg) { self->SetWindowName(_arg); }

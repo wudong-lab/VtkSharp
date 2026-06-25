@@ -2,6 +2,39 @@
 
 module: vtkCommonCore
 classes:
+  - name: vtkIdList
+    header: vtkIdList.h
+    functions:
+      - name: SetId
+        cppSignature: void SetId(vtkIdType i, vtkIdType vtkid)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: i
+          - type: vtkIdType
+            name: vtkid
+      - name: SetNumberOfIds
+        cppSignature: void SetNumberOfIds(vtkIdType number)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: number
+  - name: vtkPoints
+    header: vtkPoints.h
+    functions:
+      - name: InsertNextPoint
+        cppSignature: vtkIdType InsertNextPoint(double x, double y, double z)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
   - name: vtkWindow
     header: vtkWindow.h
     functions:

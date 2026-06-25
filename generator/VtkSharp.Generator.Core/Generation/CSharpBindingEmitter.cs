@@ -61,6 +61,21 @@ public sealed class CSharpBindingEmitter
         return sb.ToString();
     }
 
+    private static readonly HashSet<string> CSharpKeywords = new(StringComparer.Ordinal)
+    {
+        "abstract","as","base","bool","break","byte","case","catch","char","checked",
+        "class","const","continue","decimal","default","delegate","do","double","else",
+        "enum","event","explicit","extern","false","finally","fixed","float","for",
+        "foreach","goto","if","implicit","in","int","interface","internal","is","lock",
+        "long","namespace","new","null","object","operator","out","override","params",
+        "private","protected","public","readonly","ref","return","sbyte","sealed","short",
+        "sizeof","stackalloc","static","string","struct","switch","this","throw","true",
+        "try","typeof","uint","ulong","unchecked","unsafe","ushort","using","virtual",
+        "void","volatile","while",
+    };
+
+    private static string EscapeIdentifier(string name) => CSharpKeywords.Contains(name) ? "@" + name : name;
+
     private void EmitPublicMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
         var isInternalPointerReturn = IsPrimitivePointer(function.Return.Type);
@@ -69,7 +84,7 @@ public sealed class CSharpBindingEmitter
         var visibility = isInternalPointerReturn ? "internal" : "public";
         var returnType = ToPublicType(function.Return.Type);
         var parameterEntries = function.Parameters
-            .Select(p => (PublicType: GetPublicParameterType(p), p.Name))
+            .Select(p => (PublicType: GetPublicParameterType(p), Name: EscapeIdentifier(p.Name)))
             .ToList();
         var parameters = string.Join(", ", parameterEntries.Select(e => $"{e.PublicType} {e.Name}"));
 
@@ -87,7 +102,8 @@ public sealed class CSharpBindingEmitter
         var indent = "        ";
         foreach (var parameter in fixedParameters)
         {
-            sb.AppendLine($"{indent}fixed ({GetSpanElementType(parameter.Type)}* {parameter.Name}Ptr = {parameter.Name})");
+            var escapedName = EscapeIdentifier(parameter.Name);
+            sb.AppendLine($"{indent}fixed ({GetSpanElementType(parameter.Type)}* {parameter.Name}Ptr = {escapedName})");
             sb.AppendLine($"{indent}{{");
             indent += "    ";
         }
@@ -107,7 +123,7 @@ public sealed class CSharpBindingEmitter
             EmitCall(sb, indent, function.Return.Type, call10, outVarName);
             sb.AppendLine($"{indent}#else");
             var call20 = FormatCall(exportName, function.Parameters, p =>
-                IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({p.Name})" : ToInteropArgument(p), outVarName);
+                IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({EscapeIdentifier(p.Name)})" : ToInteropArgument(p), outVarName);
             EmitCall(sb, indent, function.Return.Type, call20, outVarName);
             sb.AppendLine($"{indent}#endif");
         }
@@ -186,7 +202,7 @@ public sealed class CSharpBindingEmitter
                 sb.AppendLine($"    {returnMarshal}");
             var net10Params = string.Join(", ", new[] { "nint self" }.Concat(
                 function.Parameters.Select(p => IsStringPointer(p.Type)
-                    ? $"string {p.Name}"
+                    ? $"string {EscapeIdentifier(p.Name)}"
                     : ToInteropParameter(p)))) + extraParam;
             sb.AppendLine($"    private static partial {interopReturnType} {exportName}({net10Params});");
             sb.AppendLine("#else");
@@ -195,7 +211,7 @@ public sealed class CSharpBindingEmitter
                 sb.AppendLine($"    {returnMarshal}");
             var ns20Params = string.Join(", ", new[] { "nint self" }.Concat(
                 function.Parameters.Select(p => IsStringPointer(p.Type)
-                    ? $"byte[] {p.Name}"
+                    ? $"byte[] {EscapeIdentifier(p.Name)}"
                     : ToInteropParameter(p)))) + extraParam;
             sb.AppendLine($"    private static extern {interopReturnType} {exportName}({ns20Params});");
             sb.AppendLine("#endif");
@@ -272,20 +288,21 @@ public sealed class CSharpBindingEmitter
 
     private static string ToInteropArgument(WhitelistParameter parameter)
     {
+        var name = EscapeIdentifier(parameter.Name);
         if (TryGetVtkClassName(parameter.Type, out _))
-            return $"{parameter.Name}.NativePointer";
+            return $"{name}.NativePointer";
 
         if (IsSpanParameter(parameter))
             return $"{parameter.Name}Ptr";
 
-        return parameter.Name;
+        return name;
     }
 
     private static string ToInteropParameter(WhitelistParameter parameter)
     {
         var marshal = ToParameterMarshalAttribute(parameter.Type);
         var prefix = marshal is null ? "" : $"{marshal} ";
-        return $"{prefix}{ToInteropParameterType(parameter.Type)} {parameter.Name}";
+        return $"{prefix}{ToInteropParameterType(parameter.Type)} {EscapeIdentifier(parameter.Name)}";
     }
 
     private static string ToInteropParameterType(string type)

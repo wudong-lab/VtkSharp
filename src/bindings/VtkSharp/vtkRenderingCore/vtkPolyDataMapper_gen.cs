@@ -23,11 +23,19 @@ public unsafe partial class vtkPolyDataMapper : vtkMapper
         vtkPolyDataMapper_SetInputConnection(this.NativePointer, input.NativePointer);
     }
 
+    public new void SetInputData(vtkPolyData @in)
+    {
+        vtkPolyDataMapper_SetInputData(this.NativePointer, @in.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyDataMapper_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyDataMapper_SetInputConnection(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataMapper_SetInputData(nint self, nint @in);
     #endregion
 }

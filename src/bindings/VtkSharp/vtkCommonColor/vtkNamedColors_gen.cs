@@ -39,18 +39,6 @@ public unsafe partial class vtkNamedColors : vtkObject
         }
     }
 
-    public new void GetColorRGB(string name, Span<double> rgb)
-    {
-        fixed (double* rgbPtr = rgb)
-        {
-            #if NET10_0_OR_GREATER
-            vtkNamedColors_GetColorRGB(this.NativePointer, name, rgbPtr);
-            #else
-            vtkNamedColors_GetColorRGB(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), rgbPtr);
-            #endif
-        }
-    }
-
     public new VtkSharpColor3d GetColor3d(string name)
     {
         double* __outGetColor3d = stackalloc double[3];
@@ -61,6 +49,18 @@ public unsafe partial class vtkNamedColors : vtkObject
         vtkNamedColors_GetColor3d(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), __outGetColor3d);
         return new VtkSharpColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
         #endif
+    }
+
+    public new void GetColorRGB(string name, Span<double> rgb)
+    {
+        fixed (double* rgbPtr = rgb)
+        {
+            #if NET10_0_OR_GREATER
+            vtkNamedColors_GetColorRGB(this.NativePointer, name, rgbPtr);
+            #else
+            vtkNamedColors_GetColorRGB(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), rgbPtr);
+            #endif
+        }
     }
 
     public new int GetNumberOfColors()
@@ -118,18 +118,18 @@ public unsafe partial class vtkNamedColors : vtkObject
 
 #if NET10_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
-    private static partial void vtkNamedColors_GetColorRGB(nint self, string name, double* rgb);
-#else
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkNamedColors_GetColorRGB(nint self, byte[] name, double* rgb);
-#endif
-
-#if NET10_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColor3d(nint self, string name, double* __outGetColor3d);
 #else
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_GetColor3d(nint self, byte[] name, double* __outGetColor3d);
+#endif
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkNamedColors_GetColorRGB(nint self, string name, double* rgb);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkNamedColors_GetColorRGB(nint self, byte[] name, double* rgb);
 #endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
