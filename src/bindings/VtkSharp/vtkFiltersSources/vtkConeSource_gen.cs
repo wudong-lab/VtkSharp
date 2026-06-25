@@ -23,11 +23,35 @@ public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
         vtkConeSource_SetCenter(this.NativePointer, _arg1, _arg2, _arg3);
     }
 
+    public new void SetHeight(double height)
+    {
+        vtkConeSource_SetHeight(this.NativePointer, height);
+    }
+
+    public new void SetRadius(double radius)
+    {
+        vtkConeSource_SetRadius(this.NativePointer, radius);
+    }
+
+    public new void SetResolution(int resolution)
+    {
+        vtkConeSource_SetResolution(this.NativePointer, resolution);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkConeSource_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkConeSource_SetCenter(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkConeSource_SetHeight(nint self, double height);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkConeSource_SetRadius(nint self, double radius);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkConeSource_SetResolution(nint self, int resolution);
     #endregion
 }

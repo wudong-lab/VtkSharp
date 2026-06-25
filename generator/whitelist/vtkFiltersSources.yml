@@ -16,3 +16,24 @@ classes:
             name: _arg2
           - type: double
             name: _arg3
+      - name: SetHeight
+        cppSignature: void SetHeight(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: height
+      - name: SetRadius
+        cppSignature: void SetRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: radius
+      - name: SetResolution
+        cppSignature: void SetResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: resolution
