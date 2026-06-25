@@ -216,6 +216,11 @@ internal class Program
         {
             Description = "Only include functions whose types are all supported (filters out unsigned long, basic_ostream, int&, etc.)",
         };
+        var methodsOption = new Option<string[]>("--methods")
+        {
+            Description = "Only include the specified method names (e.g. --methods SetResolution SetHeight). If omitted, all methods are included.",
+            AllowMultipleArgumentsPerToken = true,
+        };
 
         var createCandidateCommand = new Command("create-candidate", "Create a candidate whitelist from VTK inspection")
         {
@@ -225,6 +230,7 @@ internal class Program
             sourceNameOption,
             sourceOriginalOption,
             supportedOnlyOption,
+            methodsOption,
             configOption,
         };
 
@@ -236,10 +242,11 @@ internal class Program
             var sourceName = parseResult.GetValue(sourceNameOption);
             var sourceOriginal = parseResult.GetValue(sourceOriginalOption);
             var supportedOnly = parseResult.GetValue(supportedOnlyOption);
+            var methods = parseResult.GetValue(methodsOption);
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
 
-            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal, supportedOnly);
+            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal, supportedOnly, methods);
         });
 
         var mergeCandidateCommand = new Command("merge-candidate", "Merge a candidate whitelist into the formal whitelist")
@@ -376,7 +383,7 @@ internal class Program
         return 0;
     }
 
-    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal, bool supportedOnly = false)
+    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal, bool supportedOnly = false, IReadOnlyList<string>? methods = null)
     {
         var config = LoadConfig(configPath);
         var includeDirectory = ResolveIncludeDirectory(config);
@@ -420,6 +427,19 @@ internal class Program
         var functions = supportedOnly
             ? inspected.Functions.Where(IsAllTypesSupported).ToList()
             : inspected.Functions;
+
+        if (methods is { Count: > 0 })
+        {
+            var methodSet = methods.ToHashSet(StringComparer.OrdinalIgnoreCase);
+            var matched = functions.Where(f => methodSet.Contains(f.Name)).ToList();
+            var notFound = methodSet.Where(m => !functions.Any(f => f.Name.Equals(m, StringComparison.OrdinalIgnoreCase))).ToList();
+            if (notFound.Count > 0)
+            {
+                Console.Error.WriteLine($"Method(s) not found on '{className}': {string.Join(", ", notFound)}");
+                return 1;
+            }
+            functions = matched;
+        }
 
         if (functions.Count == 0)
         {

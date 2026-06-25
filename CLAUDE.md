@@ -32,12 +32,14 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- list-classes [--module 
 
 ### 白名单
 ```
-dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx -o examples/<Example>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original "path/to/original.cxx"
+dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx -o examples/<Example>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original "path/to/original.cxx" [--methods Method1 Method2 ...]
 dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist examples/<Example>/candidate.yml [--format json]
 dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/<Example>/candidate.yml
 dotnet run --project generator/VtkSharp.Generator.Cli -- validate-whitelist [--continue-on-error] [--format json]
 dotnet run --project generator/VtkSharp.Generator.Cli -- normalize-whitelist
 ```
+
+`--methods` 可指定只输出需要的方法名（空格分隔），不传则输出类的全部方法；若指定了不存在的方法名会报错退出。
 
 ### 生成
 ```
