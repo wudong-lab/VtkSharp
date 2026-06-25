@@ -113,9 +113,15 @@ internal class Program
             return ListClasses(configPath, module, format);
         });
 
+        var continueOnErrorOption = new Option<bool>("--continue-on-error")
+        {
+            Description = "Collect all errors instead of stopping on first failure. Useful for AI batch analysis of candidate APIs.",
+        };
+
         var validateCommand = new Command("validate-whitelist", "Validate whitelist")
         {
             configOption,
+            continueOnErrorOption,
         };
 
         validateCommand.SetAction(parseResult =>
@@ -153,12 +159,14 @@ internal class Program
             configOption,
             outputRootOption,
             checkOption,
+            continueOnErrorOption,
         };
 
         generateCommand.SetAction(parseResult =>
         {
             var check = parseResult.GetValue(checkOption);
             var outputRoot = parseResult.GetValue(outputRootOption);
+            var continueOnError = parseResult.GetValue(continueOnErrorOption);
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
             var outputRootPath = outputRoot?.FullName
@@ -166,7 +174,7 @@ internal class Program
                                      ? Path.Combine(Path.GetTempPath(), "VtkSharp.Generator", "check", Guid.NewGuid().ToString("N"))
                                      : throw new InvalidOperationException("--output-root is required unless --check is specified."));
 
-            var exitCode = Generate(configPath, outputRootPath);
+            var exitCode = Generate(configPath, outputRootPath, continueOnError);
             if (exitCode != 0)
                 return exitCode;
 
@@ -367,15 +375,15 @@ internal class Program
         return 0;
     }
 
-    private static int Generate(string configPath, string outputRoot)
+    private static int Generate(string configPath, string outputRoot, bool continueOnError = false)
     {
         var context = CreateGeneratorRunContext(configPath);
         if (context is null)
             return 1;
 
-        var validationExitCode = ValidateWhitelist(context);
-        if (validationExitCode != 0)
-            return validationExitCode;
+        var validationResult = RunValidation(context);
+        if (validationResult != 0 && !continueOnError)
+            return validationResult;
 
         Directory.CreateDirectory(outputRoot);
 
@@ -385,6 +393,7 @@ internal class Program
         var nativeProjectEmitter = new NativeProjectEmitter();
 
         var manualClasses = context.Config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
+        var skippedCount = 0;
 
         foreach (var document in context.Documents)
         {
@@ -393,6 +402,18 @@ internal class Program
                 if (manualClasses.Contains(whitelistClass.Name))
                     continue;
 
+                if (!context.InspectedClasses.TryGetValue(whitelistClass.Name, out var inspectedClass))
+                {
+                    if (continueOnError)
+                    {
+                        skippedCount++;
+                        continue;
+                    }
+
+                    Console.Error.WriteLine($"Class '{whitelistClass.Name}' could not be inspected.");
+                    return 1;
+                }
+
                 var baseClassName = context.HierarchyResolver.GetBaseClassName(whitelistClass.Name);
                 var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
                 var nativePath = Path.Combine(outputRoot, "native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
@@ -400,11 +421,9 @@ internal class Program
                     .Where(name => name != whitelistClass.Name)
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
-                var hasStaticNew = context.InspectedClasses.TryGetValue(whitelistClass.Name, out var inspectedClass) &&
-                                   inspectedClass.HasStaticNew;
 
-                WriteText(managedPath, csharpEmitter.Emit(context.Config.Binding.Namespace, whitelistClass.Name, baseClassName, hasStaticNew, whitelistClass.Functions));
-                WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, hasStaticNew, whitelistClass.Functions));
+                WriteText(managedPath, csharpEmitter.Emit(context.Config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions));
+                WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions));
             }
         }
 
@@ -419,8 +438,31 @@ internal class Program
         WriteText(Path.Combine(outputRoot, "native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
         WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
 
+        if (continueOnError && skippedCount > 0)
+            Console.WriteLine($"Skipped {skippedCount} class(es) due to inspection/validation failures.");
+
         Console.WriteLine($"Generated files will be written to: {Path.GetFullPath(outputRoot)}");
         return 0;
+    }
+
+    private static int RunValidation(GeneratorRunContext context)
+    {
+        var diagnostics = new List<ValidationDiagnostic>(context.InspectionDiagnostics);
+
+        var validator = new WhitelistValidator();
+        foreach (var document in context.Documents)
+            diagnostics.AddRange(validator.Validate(document, context.InspectedClasses).Diagnostics);
+
+        if (diagnostics.Count == 0)
+        {
+            Console.WriteLine("Whitelist validation succeeded.");
+            return 0;
+        }
+
+        foreach (var diagnostic in diagnostics)
+            Console.Error.WriteLine(diagnostic.Message);
+
+        return 1;
     }
 
     private static int NormalizeWhitelist(string configPath)
@@ -559,27 +601,7 @@ internal class Program
     private static int ValidateWhitelist(string configPath)
     {
         var context = CreateGeneratorRunContext(configPath);
-        return context is null ? 1 : ValidateWhitelist(context);
-    }
-
-    private static int ValidateWhitelist(GeneratorRunContext context)
-    {
-        var diagnostics = new List<ValidationDiagnostic>(context.InspectionDiagnostics);
-
-        var validator = new WhitelistValidator();
-        foreach (var document in context.Documents)
-            diagnostics.AddRange(validator.Validate(document, context.InspectedClasses).Diagnostics);
-
-        if (diagnostics.Count == 0)
-        {
-            Console.WriteLine("Whitelist validation succeeded.");
-            return 0;
-        }
-
-        foreach (var diagnostic in diagnostics)
-            Console.Error.WriteLine(diagnostic.Message);
-
-        return 1;
+        return context is null ? 1 : RunValidation(context);
     }
 
     private static GeneratorRunContext? CreateGeneratorRunContext(string configPath)
