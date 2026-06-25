@@ -488,6 +488,7 @@ internal class Program
         var documentsByModule = formal.ToDictionary(d => d.Module, StringComparer.Ordinal);
         var formalFingerprints = BuildFingerprints(formal);
         var addedCount = 0;
+        var newClassCount = 0;
 
         foreach (var requirement in candidate.Requirements)
         {
@@ -502,6 +503,7 @@ internal class Program
             {
                 whitelistClass = new WhitelistClass { Name = requirement.Class, Header = requirement.Header, Functions = [] };
                 document.Classes.Add(whitelistClass);
+                newClassCount++;
             }
 
             foreach (var function in requirement.Functions)
@@ -516,7 +518,7 @@ internal class Program
             }
         }
 
-        if (addedCount == 0)
+        if (addedCount == 0 && newClassCount == 0)
         {
             Console.WriteLine("No new entries to merge.");
             return 0;
@@ -532,7 +534,10 @@ internal class Program
             new WhitelistWriter().WriteDirectory(whitelistDirectory, normalized);
         }
 
-        Console.WriteLine($"Merged {addedCount} function(s) from candidate into formal whitelist.");
+        var parts = new List<string>();
+        if (newClassCount > 0) parts.Add($"{newClassCount} class(es)");
+        if (addedCount > 0) parts.Add($"{addedCount} function(s)");
+        Console.WriteLine($"Merged {string.Join(", ", parts)} from candidate into formal whitelist.");
         Console.WriteLine("Review the changes with git diff before committing.");
         return 0;
     }

@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: Arrow
+  original: "VTK/Examples/GeometricObjects/Cxx/Arrow.cxx"
+
+requirements:
+  - module: vtkFiltersSources
+    class: vtkArrowSource
+    header: vtkArrowSource.h
+    functions: []

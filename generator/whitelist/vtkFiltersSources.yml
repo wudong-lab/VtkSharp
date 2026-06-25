@@ -2,6 +2,9 @@
 
 module: vtkFiltersSources
 classes:
+  - name: vtkArrowSource
+    header: vtkArrowSource.h
+    functions: []
   - name: vtkConeSource
     header: vtkConeSource.h
     functions:
