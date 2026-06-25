@@ -39,6 +39,45 @@ internal class Program
             return InspectClass(configPath, className, format);
         });
 
+        var functionArgument = new Argument<string>("function-name");
+        var suggestApiCommand = new Command("suggest-api", "Suggest whitelist entries for a VTK method")
+        {
+            classArgument,
+            functionArgument,
+            formatOption,
+            configOption,
+        };
+
+        suggestApiCommand.SetAction(parseResult =>
+        {
+            var className = parseResult.GetValue(classArgument)!;
+            var functionName = parseResult.GetValue(functionArgument)!;
+            var format = parseResult.GetValue(formatOption)!;
+            var configPath = parseResult.GetValue(configOption)?.FullName
+                             ?? GetDefaultConfigPath();
+
+            return SuggestApi(configPath, className, functionName, format);
+        });
+
+        var inspectFunctionCommand = new Command("inspect-function", "Inspect a VTK method (alias for suggest-api)")
+        {
+            classArgument,
+            functionArgument,
+            formatOption,
+            configOption,
+        };
+
+        inspectFunctionCommand.SetAction(parseResult =>
+        {
+            var className = parseResult.GetValue(classArgument)!;
+            var functionName = parseResult.GetValue(functionArgument)!;
+            var format = parseResult.GetValue(formatOption)!;
+            var configPath = parseResult.GetValue(configOption)?.FullName
+                             ?? GetDefaultConfigPath();
+
+            return SuggestApi(configPath, className, functionName, format);
+        });
+
         var validateCommand = new Command("validate-whitelist", "Validate whitelist")
         {
             configOption,
@@ -102,6 +141,8 @@ internal class Program
         var rootCommand = new RootCommand("VtkSharp binding generator")
         {
             inspectClassCommand,
+            suggestApiCommand,
+            inspectFunctionCommand,
             validateCommand,
             normalizeCommand,
             generateCommand,
@@ -112,6 +153,70 @@ internal class Program
 
     private static string GetDefaultConfigPath()
         => Path.GetFullPath(Path.Combine("generator", "config", "vtksharp.generator.yml"));
+
+    private static int SuggestApi(string configPath, string className, string functionName, string format)
+    {
+        var config = LoadConfig(configPath);
+        var includeDirectory = ResolveIncludeDirectory(config);
+        if (includeDirectory is null)
+        {
+            Console.Error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
+            return 1;
+        }
+
+        var hierarchyResolver = LoadHierarchyResolver(config);
+        var header = hierarchyResolver.GetHeader(className);
+        var inspected = new VtkClassInspector().InspectHeader(includeDirectory, header, className);
+
+        var matches = inspected.Functions
+            .Where(f => f.Name.Equals(functionName, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        if (matches.Count == 0)
+        {
+            Console.Error.WriteLine($"No public method '{functionName}' found on class '{className}'.");
+            return 1;
+        }
+
+        if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine(JsonSerializer.Serialize(new { className, matches }, new JsonSerializerOptions { WriteIndented = true }));
+            return 0;
+        }
+
+        if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.Error.WriteLine("--format must be 'text' or 'json'.");
+            return 1;
+        }
+
+        Console.WriteLine($"{className}::{functionName} ({matches.Count} overload(s))");
+        Console.WriteLine($"  Header: {header}");
+        Console.WriteLine();
+        foreach (var match in matches)
+        {
+            Console.WriteLine($"  {functionName}");
+            Console.WriteLine($"    Cpp:       {match.CppSignature}");
+            Console.WriteLine($"    Canonical: {match.CanonicalSignature}");
+            Console.WriteLine($"    Supported: {match.IsSupported}");
+            Console.WriteLine($"    Dependencies: {string.Join(", ", match.DependencyTypes ?? [])}");
+            Console.WriteLine();
+            Console.WriteLine("  # whitelist entry:");
+            Console.WriteLine($"  - name: {match.Name}");
+            Console.WriteLine($"    cppSignature: \"{match.CppSignature}\"");
+            Console.WriteLine($"    return:");
+            Console.WriteLine($"      type: {match.ReturnType}");
+            Console.WriteLine($"    parameters:");
+            foreach (var parameter in match.Parameters)
+            {
+                Console.WriteLine($"      - type: {parameter.Type}");
+                Console.WriteLine($"        name: {parameter.Name}");
+            }
+            Console.WriteLine();
+        }
+
+        return 0;
+    }
 
     private static int InspectClass(string configPath, string className, string format)
     {
