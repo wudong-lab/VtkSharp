@@ -50,7 +50,15 @@ Key translation rules:
 - `->` method calls → `.` method calls
 - `vtkSmartPointer` / raw pointers → no wrapping needed, `New()` returns a managed wrapper
 - Wrap every VTK object in `using var` (implements `IDisposable`)
-- For unsupported utility classes like `vtkNamedColors`, inline the actual constant values in a comment. Look up RGB values: Tomato is (1.0, 0.388, 0.278), etc. Document these in porting-notes.md.
+- vtkNamedColors is available: use `GetColorRGB(name, stackalloc double[3])` or `GetColor(name, stackalloc double[4])` with `Span<double>`. Example:
+  ```csharp
+  using var colors = vtkNamedColors.New();
+  Span<double> rgb = stackalloc double[3];
+  colors.GetColorRGB("Tomato", rgb);
+  actor.GetProperty().SetColor(rgb[0], rgb[1], rgb[2]);
+  ```
+  The value-type overloads (`GetColor3d` returning `vtkColor3d`) are not bound; use the fixed-array overloads instead.
+- For other unsupported types (returning non-vtkObject pointers, `int&` out params, `std::string&`, etc.), work around them and document the deviation in porting-notes.md.
 - Do NOT add example code to TestConsole at this stage — the example file in `examples/<Name>/` is the canonical port.
 
 ## 2. Build and identify missing symbols

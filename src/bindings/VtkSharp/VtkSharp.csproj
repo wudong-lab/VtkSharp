@@ -27,6 +27,10 @@
     <NoWarn>1701;1702;CS0109</NoWarn>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Memory" Version="4.5.5" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+  </ItemGroup>
+
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
     <None Include="$(VtkSharpNativeDllPath)" Link="vtksharp_native.dll" TargetPath="vtksharp_native.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>

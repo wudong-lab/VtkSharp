@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkCommonColor
+classes:
+  - name: vtkNamedColors
+    header: vtkNamedColors.h
+    functions:
+      - name: ColorExists
+        cppSignature: bool ColorExists(const char* name)
+        return:
+          type: bool
+        parameters:
+          - type: const char*
+            name: name
+      - name: GetColor
+        cppSignature: void GetColor(const char* name, double rgba[4])
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: name
+          - type: double[4]
+            name: rgba
+      - name: GetColorRGB
+        cppSignature: void GetColorRGB(const char* name, double rgb[3])
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: name
+          - type: double[3]
+            name: rgb
+      - name: GetNumberOfColors
+        cppSignature: int GetNumberOfColors()
+        return:
+          type: int
+        parameters: []
+      - name: ResetColors
+        cppSignature: void ResetColors()
+        return:
+          type: void
+        parameters: []
+      - name: SetColor
+        cppSignature: void SetColor(const char* name, const char* htmlString)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: name
+          - type: const char*
+            name: htmlString
+      - name: SetColor
+        cppSignature: void SetColor(const char* name, const double rgba[4])
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: name
+          - type: const double[4]
+            name: rgba

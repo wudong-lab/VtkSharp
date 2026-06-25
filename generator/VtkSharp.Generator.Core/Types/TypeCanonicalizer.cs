@@ -8,6 +8,7 @@ public sealed partial class TypeCanonicalizer
     {
         var text = NormalizeWhitespace(typeName);
         text = NormalizeWin32Handle(text);
+        text = NormalizeVtkStdString(text);
         text = NormalizeArray(text);
         text = NormalizePointer(text);
         text = NormalizeConstPointer(text);
@@ -44,6 +45,9 @@ public sealed partial class TypeCanonicalizer
         var match = ConstArrayRegex().Match(text);
         return match.Success ? $"const {match.Groups["type"].Value}[{match.Groups["count"].Value}]" : text;
     }
+
+    private static string NormalizeVtkStdString(string text)
+        => text == "vtkStdString const&" ? "const char*" : text;
 
     [GeneratedRegex(@"\s+")]
     private static partial Regex WhitespaceRegex();
