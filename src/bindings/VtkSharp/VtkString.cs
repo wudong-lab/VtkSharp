@@ -7,7 +7,7 @@ internal static class VtkString
 {
     public static unsafe string FromUtf8Pointer(nint ptr)
     {
-        if (ptr == nint.Zero)
+        if (ptr == IntPtr.Zero)
             return string.Empty;
         var p = (byte*)ptr;
         var length = 0;
@@ -19,10 +19,11 @@ internal static class VtkString
     public static byte[] ToNullTerminatedUtf8(string? value)
     {
         if (string.IsNullOrEmpty(value))
-            return [0];
-        var byteCount = Encoding.UTF8.GetByteCount(value);
+            return new byte[1];
+        var s = value!;
+        var byteCount = Encoding.UTF8.GetByteCount(s);
         var bytes = new byte[byteCount + 1];
-        Encoding.UTF8.GetBytes(value, 0, value.Length, bytes, 0);
+        Encoding.UTF8.GetBytes(s, 0, s.Length, bytes, 0);
         return bytes;
     }
 }
