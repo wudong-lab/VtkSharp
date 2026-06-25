@@ -81,24 +81,23 @@ public sealed class CSharpBindingEmitter
             indent += "    ";
         }
 
-        var callArguments = new[] { "this.NativePointer" }.Concat(function.Parameters.Select(ToInteropArgument));
-        var call = $"{exportName}({string.Join(", ", callArguments)})";
+        var hasStringParameter = function.Parameters.Any(p => IsStringPointer(p.Type));
 
-        if (function.Return.Type == "void")
+        if (hasStringParameter)
         {
-            sb.AppendLine($"{indent}{call};");
-        }
-        else if (TryGetVtkClassName(function.Return.Type, out var returnClassName))
-        {
-            sb.AppendLine($"{indent}return {returnClassName}.WeakReference({call});");
-        }
-        else if (IsStringPointer(function.Return.Type))
-        {
-            sb.AppendLine($"{indent}return Marshal.PtrToStringUTF8({call}) ?? string.Empty;");
+            sb.AppendLine($"{indent}#if NET10_0_OR_GREATER");
+            var call10 = FormatCall(exportName, function.Parameters, p => ToInteropArgument(p));
+            EmitCall(sb, indent, function.Return.Type, call10);
+            sb.AppendLine($"{indent}#else");
+            var call20 = FormatCall(exportName, function.Parameters, p =>
+                IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({p.Name})" : ToInteropArgument(p));
+            EmitCall(sb, indent, function.Return.Type, call20);
+            sb.AppendLine($"{indent}#endif");
         }
         else
         {
-            sb.AppendLine($"{indent}return {call};");
+            var call = FormatCall(exportName, function.Parameters, ToInteropArgument);
+            EmitCall(sb, indent, function.Return.Type, call);
         }
 
         for (var i = fixedArrayParameters.Count - 1; i >= 0; i--)
@@ -110,19 +109,68 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine("    }");
     }
 
+    private static string FormatCall(string exportName, IReadOnlyList<WhitelistParameter> parameters, Func<WhitelistParameter, string> argumentSelector)
+    {
+        var args = string.Join(", ", new[] { "this.NativePointer" }.Concat(parameters.Select(argumentSelector)));
+        return $"{exportName}({args})";
+    }
+
+    private static void EmitCall(StringBuilder sb, string indent, string returnType, string call)
+    {
+        if (returnType == "void")
+        {
+            sb.AppendLine($"{indent}{call};");
+        }
+        else if (TryGetVtkClassName(returnType, out var returnClassName))
+        {
+            sb.AppendLine($"{indent}return {returnClassName}.WeakReference({call});");
+        }
+        else if (IsStringPointer(returnType))
+        {
+            sb.AppendLine($"{indent}return VtkString.FromUtf8Pointer({call});");
+        }
+        else
+        {
+            sb.AppendLine($"{indent}return {call};");
+        }
+    }
+
     private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
         var returnType = ToInteropType(function.Return.Type);
-        var parameters = new[] { "nint self" }.Concat(function.Parameters.Select(ToInteropParameter));
-
-        sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
         var returnMarshal = ToReturnMarshalAttribute(function.Return.Type);
-        if (returnMarshal is not null)
-        {
-            sb.AppendLine($"    {returnMarshal}");
-        }
+        var hasStringParameter = function.Parameters.Any(p => IsStringPointer(p.Type));
 
-        sb.AppendLine($"    private static extern {returnType} {exportName}({string.Join(", ", parameters)});");
+        if (hasStringParameter)
+        {
+            sb.AppendLine("#if NET10_0_OR_GREATER");
+            sb.AppendLine($"    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]");
+            if (returnMarshal is not null)
+                sb.AppendLine($"    {returnMarshal}");
+            var net10Params = string.Join(", ", new[] { "nint self" }.Concat(
+                function.Parameters.Select(p => IsStringPointer(p.Type)
+                    ? $"string {p.Name}"
+                    : ToInteropParameter(p))));
+            sb.AppendLine($"    private static partial {returnType} {exportName}({net10Params});");
+            sb.AppendLine("#else");
+            sb.AppendLine($"    [DllImport(InteropInfo.NativeLibraryName)]");
+            if (returnMarshal is not null)
+                sb.AppendLine($"    {returnMarshal}");
+            var ns20Params = string.Join(", ", new[] { "nint self" }.Concat(
+                function.Parameters.Select(p => IsStringPointer(p.Type)
+                    ? $"byte[] {p.Name}"
+                    : ToInteropParameter(p))));
+            sb.AppendLine($"    private static extern {returnType} {exportName}({ns20Params});");
+            sb.AppendLine("#endif");
+        }
+        else
+        {
+            sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
+            if (returnMarshal is not null)
+                sb.AppendLine($"    {returnMarshal}");
+            var parameters = string.Join(", ", new[] { "nint self" }.Concat(function.Parameters.Select(ToInteropParameter)));
+            sb.AppendLine($"    private static extern {returnType} {exportName}({parameters});");
+        }
     }
 
     private static string ToPublicType(string type)
@@ -243,7 +291,6 @@ public sealed class CSharpBindingEmitter
         {
             "bool" => "[MarshalAs(UnmanagedType.U1)]",
             "vtkTypeBool" => "[MarshalAs(UnmanagedType.U4)]",
-            "const char*" or "char*" => "[MarshalAs(UnmanagedType.LPUTF8Str)]",
             _ => null,
         };
 

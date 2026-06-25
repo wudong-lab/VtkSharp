@@ -241,9 +241,16 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("public new bool HasViewProp()", text);
         Assert.Contains("public new long GetId()", text);
         Assert.Contains("public new void SetName(string name)", text);
-        Assert.Contains("[MarshalAs(UnmanagedType.LPUTF8Str)] string name", text);
+        Assert.Contains("[LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]", text);
+        Assert.Contains("private static partial void vtkThing_SetName(nint self, string name)", text);
+        Assert.Contains("[DllImport(InteropInfo.NativeLibraryName)]", text);
+        Assert.Contains("private static extern void vtkThing_SetName(nint self, byte[] name)", text);
+        Assert.Contains("VtkString.ToNullTerminatedUtf8(name)", text);
         Assert.Contains("public new string GetName()", text);
-        Assert.Contains("return Marshal.PtrToStringUTF8(vtkThing_GetName(this.NativePointer)) ?? string.Empty;", text);
+        Assert.Contains("return VtkString.FromUtf8Pointer(vtkThing_GetName(this.NativePointer))", text);
+        Assert.Contains("#if NET10_0_OR_GREATER", text);
+        Assert.Contains("#else", text);
+        Assert.Contains("#endif", text);
         Assert.Contains("public new nint GetData()", text);
         Assert.Contains("public new void SetOrigin(ReadOnlySpan<double> origin)", text);
         Assert.Contains("fixed (double* originPtr = origin)", text);
