@@ -2,7 +2,7 @@
 
 ## 背景
 
-VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 AI 工具在工程开发中的协作方式，包括 vibe coding、Codex skills、示例翻译和渐进式 API 补全。
+VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 AI 工具在工程开发中的协作方式，包括 vibe coding、AI agent skills、示例翻译和渐进式 API 补全。
 
 旧项目 `D:\Code\SVN\BrdiVtkNet\src\VtkNetSourceGenerator` 已经验证了一条可行路径：读取 VTK hierarchy 文件和头文件，通过人工维护的 API 白名单生成 C# wrapper 与 C++ C ABI 导出层。当前项目会以此为基础重构生成器，但生成器形态、配置格式和输出规则需要适配 VtkSharp 当前结构。
 
@@ -13,7 +13,7 @@ VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 
 - 通过函数级 YAML 白名单声明需要导出的 VTK API。
 - 用 CppAst 解析 VTK 头文件并匹配白名单中的结构化函数签名。
 - 生成当前项目风格的 C# 绑定代码和 C++ 导出代码。
-- 支持 Codex 调用 CLI 查询候选 API，驱动示例翻译和白名单补全。
+- 支持 AI 调用 CLI 查询候选 API，驱动示例翻译和白名单补全。
 - 保持生成规则简单、稳定、可审核，特殊 API 允许人工补充。
 
 第一阶段不追求全量自动绑定 VTK，也不追求自动理解所有 C++ 类型语义。
@@ -34,7 +34,7 @@ VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 
 - 所有被生成 wrapper 的 VTK 类，只要存在 `static New()`，就生成 `New()` 和对应 native 导出。
 - `vtkObjectBase`、`vtkObject` 等 `manualBindingClasses` 由人工维护，生成器视为已存在并跳过。
 - 生成器优先生成低层稳定绑定；工程友好 API 通过手写 partial 或后续专门规则补充。
-- Codex 负责编排分析流程，CLI 提供确定性查询、校验和生成能力。
+- AI 负责编排分析流程，CLI 提供确定性查询、校验和生成能力。
 - 示例翻译产生候选白名单，候选由人工审核后再合并到正式白名单。
 
 ## 项目结构
@@ -126,7 +126,7 @@ CLI 参数
 生成器分为三个层次：
 
 - `VtkSharp.Generator.Core`：解析、模型、匹配、类型映射、代码生成。
-- `VtkSharp.Generator.Cli`：命令行入口，供人工、脚本、Codex 和 CI 调用。
+- `VtkSharp.Generator.Cli`：命令行入口，供人工、脚本、AI 和 CI 调用。
 - 未来可选 `VtkSharp.Generator.App`：基于 Avalonia 的白名单浏览和审核 UI。
 
 第一阶段只实现 Core 和 CLI，不引入 WPF/DevExpress。
@@ -154,19 +154,19 @@ vtksharp-gen generate
 ```bash
 vtksharp-gen list-modules
 vtksharp-gen list-classes
-vtksharp-gen suggest-api vtkRenderer SetBackground
-vtksharp-gen generate --check
+vtksharp-gen inspect-function vtkRenderer SetBackground
+vtksharp-gen generate-bindings --check
 vtksharp-gen merge-candidate examples/Cone/whitelist-candidate.yml
 ```
 
-CLI 做确定性工作：扫描 VTK、输出候选、校验白名单、生成绑定、输出诊断和报告。Codex 负责示例翻译、编译错误分析、调用 CLI 查询候选、生成候选白名单 patch、组织验证流程。
+CLI 做确定性工作：扫描 VTK、输出候选、校验白名单、生成绑定、输出诊断和报告。AI 负责示例翻译、编译错误分析、调用 CLI 查询候选、生成候选白名单 patch、组织验证流程。
 
 CLI 命令按职责分为三组：
 
 ```text
 查询类：
   inspect-class
-  inspect-function / suggest-api
+  inspect-function
   list-modules
   list-classes
 
@@ -175,11 +175,10 @@ CLI 命令按职责分为三组：
   normalize-whitelist
   diff-whitelist
   create-candidate
+  merge-candidate
 
 生成类：
-  generate
-  clean-generated
-  report
+  generate-bindings
 ```
 
 第一阶段优先完成最小可用集，其他命令在示例驱动流程稳定后再补。
@@ -340,7 +339,7 @@ JSON Schema 应约束必填字段、枚举值和未知字段。例如 `direction
 - 依赖 VTK 类无法解析，生成失败。
 - 同一结构化签名匹配到多个函数，生成失败。
 
-生成器应输出清晰诊断，便于人工和 Codex 修复。例如列出白名单条目、匹配失败原因、候选函数列表和建议。
+生成器应输出清晰诊断，便于人工和 AI 修复。例如列出白名单条目、匹配失败原因、候选函数列表和建议。
 
 可提供探索模式，例如 `--continue-on-error`，用于 AI 批量分析候选 API，但正式生成默认失败即停止。
 
@@ -800,25 +799,25 @@ requirements:
 
 流程：
 
-1. Codex 翻译 VTK C++ 示例到 C#。
+1. AI 翻译 VTK C++ 示例到 C#。
 2. 构建或运行示例。
-3. Codex 解析缺失类和缺失成员错误。
-4. Codex 调用 `vtksharp-gen inspect-class` 或 `suggest-api` 查询候选签名。
-5. Codex 生成 `whitelist-candidate.yml`，不直接修改正式白名单。
+3. AI 解析缺失类和缺失成员错误。
+4. AI 调用 `vtksharp-gen inspect-class` 或 `inspect-function` 查询候选签名。
+5. AI 生成 `whitelist-candidate.yml`，不直接修改正式白名单。
 6. 人工审核候选白名单。
 7. 审核通过后合并到正式模块白名单。
-8. 执行 normalize、validate、generate、build 和 smoke test。
+8. 执行 normalize、validate、generate-bindings、build 和 smoke test。
 
 正式白名单不记录审核状态。进入正式白名单即视为已审核。
 
 ### AI 自动化边界
 
-第一阶段不要求生成器自动解析完整 `dotnet build` 日志并自动修改白名单。推荐先采用 Codex 编排流程：
+第一阶段不要求生成器自动解析完整 `dotnet build` 日志并自动修改白名单。推荐先采用 AI 编排流程：
 
-1. Codex 翻译示例并运行构建。
-2. Codex 从编译错误中识别缺失类或成员。
-3. Codex 调用 CLI 的 `inspect-class` / `suggest-api` 查询候选 VTK 签名。
-4. Codex 生成按示例组织的候选白名单。
+1. AI 翻译示例并运行构建。
+2. AI 从编译错误中识别缺失类或成员。
+3. AI 调用 CLI 的 `inspect-class` / `inspect-function` 查询候选 VTK 签名。
+4. AI 生成按示例组织的候选白名单。
 5. 人工审核候选后，再合并到正式模块白名单。
 
 后续可以新增 `suggest-from-build-log` 一类命令，把稳定下来的人工流程工具化。但即使有该命令，也只应生成候选白名单或审核报告，不直接修改正式白名单。
@@ -829,7 +828,7 @@ requirements:
 
 ```bash
 vtksharp-gen validate-whitelist
-vtksharp-gen generate
+vtksharp-gen generate-bindings --check
 
 cmake --build src/native/out/build/windows-x64 --config Release
 
@@ -888,7 +887,7 @@ src/bindings/TestConsole
 - 高级几何语义 API 暂时手写，避免生成器过早复杂化。
 - `manualBindingClasses` 允许特殊基础类型绕过生成器，保持主规则简单。
 - 生成器默认失败即停止，减少隐性缺失 API。
-- CLI 提供确定性能力，Codex 负责探索和编排，这是项目中 AI 协作工程化的核心模式。
+- CLI 提供确定性能力，AI 负责探索和编排，这是项目中 AI 协作工程化的核心模式。
 - CppAst 解析 VTK header 成本较高。第一阶段不为性能优化打断整体流程，允许 CLI 较慢；一旦 round-trip 和 smoke test 稳定，应优先引入批量解析、解析结果缓存和跨命令复用的 inspection model。
 
 ## 第一阶段验收标准

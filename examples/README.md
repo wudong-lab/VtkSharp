@@ -16,10 +16,10 @@ examples/
 
 1. 找到 VTK C++ 示例源码（`VTK_ROOT/Examples/...`）
 2. 写 C# 翻译版 `examples/<Name>/<Name>.cs`
-3. 构建 → 编译错误 → `create-candidate` + `suggest-api` 查缺失 API
+3. 构建 → 编译错误 → `create-candidate` + `inspect-function` 查缺失 API
 4. 把缺失 API 写成 `candidate.yml`
 5. `diff-whitelist` 审查 → `merge-candidate` 合并
-6. `validate` → `generate --check` → build → smoke
+6. `validate-whitelist` → `generate-bindings --check` → build → smoke
 
 ## 示例选择优先级
 

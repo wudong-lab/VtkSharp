@@ -6,7 +6,7 @@
 
 ```
 generator/                        # 绑定生成器（你操作的主要入口）
-  VtkSharp.Generator.Cli/         # CLI 入口，供人工和 Codex 调用
+  VtkSharp.Generator.Cli/         # CLI 入口，供人工和 AI 调用
   VtkSharp.Generator.Core/        # 解析 / 校验 / 类型映射 / 代码生成
   whitelist/                      # 正式白名单（按 VTK module 拆分 YAML）
   config/                         # 公共配置 + 本机路径
@@ -53,7 +53,7 @@ cp src/native/out/build/windows-x64-vs2022/Release/vtksharp_native.dll src/bindi
 PATH="C:/Program Files/VTK/bin:$PATH" dotnet run --project src/bindings/TestConsole -- --smoke
 ```
 
-## Codex 示例翻译流程（8 步）
+## AI 示例翻译流程（8 步）
 
 设计文档: `docs/superpowers/specs/2026-06-23-vtksharp-generator-design.md` 行 801-811。
 
