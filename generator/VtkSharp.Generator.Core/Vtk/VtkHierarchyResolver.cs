@@ -14,6 +14,11 @@ public sealed class VtkHierarchyResolver
             ? entry.BaseClassName
             : "vtkObject";
 
+    public string GetModule(string className)
+        => this._entries.TryGetValue(className, out var entry) && !string.IsNullOrWhiteSpace(entry.Module)
+            ? entry.Module
+            : "";
+
     public string GetHeader(string className)
         => this._entries.TryGetValue(className, out var entry) && !string.IsNullOrWhiteSpace(entry.Header)
             ? entry.Header

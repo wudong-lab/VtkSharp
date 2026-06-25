@@ -1,5 +1,6 @@
 using VtkSharp.Generator.Core.Inspection;
 using VtkSharp.Generator.Core.Validation;
+using VtkSharp.Generator.Core.Vtk;
 using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
@@ -282,5 +283,108 @@ public sealed class WhitelistValidatorTests
         var result = validator.Validate(document, inspectedClasses);
 
         Assert.Contains(result.Diagnostics, d => d.Message.Contains("return") && d.Message.Contains(type));
+    }
+
+    [Fact]
+    public void Validate_ReportsModuleMismatch()
+    {
+        var document = new WhitelistDocument
+        {
+            Module = "vtkCommonCore",
+            Classes =
+            [
+                new WhitelistClass
+                {
+                    Name = "vtkActor",
+                    Header = "vtkActor.h",
+                    Functions = [],
+                },
+            ],
+        };
+        var inspectedClasses = new Dictionary<string, InspectedClass>
+        {
+            ["vtkActor"] = new("vtkActor", []),
+        };
+        var hierarchy = new Dictionary<string, VtkHierarchyEntry>(StringComparer.Ordinal)
+        {
+            ["vtkActor"] = new("vtkActor", "vtkProp3D", "vtkActor.h", "vtkRenderingCore"),
+        };
+        var resolver = new VtkHierarchyResolver(hierarchy);
+        var validator = new WhitelistValidator();
+
+        var result = validator.Validate(document, inspectedClasses, resolver);
+
+        Assert.Contains(result.Diagnostics, d => d.Message.Contains("belongs to module 'vtkRenderingCore'"));
+    }
+
+    [Fact]
+    public void Validate_ReportsHeaderMismatch()
+    {
+        var document = new WhitelistDocument
+        {
+            Module = "vtkRenderingCore",
+            Classes =
+            [
+                new WhitelistClass
+                {
+                    Name = "vtkActor",
+                    Header = "vtkFooBar.h",
+                    Functions = [],
+                },
+            ],
+        };
+        var inspectedClasses = new Dictionary<string, InspectedClass>
+        {
+            ["vtkActor"] = new("vtkActor", []),
+        };
+        var hierarchy = new Dictionary<string, VtkHierarchyEntry>(StringComparer.Ordinal)
+        {
+            ["vtkActor"] = new("vtkActor", "vtkProp3D", "vtkActor.h", "vtkRenderingCore"),
+        };
+        var resolver = new VtkHierarchyResolver(hierarchy);
+        var validator = new WhitelistValidator();
+
+        var result = validator.Validate(document, inspectedClasses, resolver);
+
+        Assert.Contains(result.Diagnostics, d => d.Message.Contains("header") && d.Message.Contains("vtkFooBar.h"));
+    }
+
+    [Fact]
+    public void Validate_NoModuleDiagnosticsWithoutResolver()
+    {
+        // When no hierarchy resolver is passed, module/header checks are skipped.
+        var document = new WhitelistDocument
+        {
+            Module = "vtkCommonCore",
+            Classes =
+            [
+                new WhitelistClass
+                {
+                    Name = "vtkActor",
+                    Header = "vtkFooBar.h",
+                    Functions =
+                    [
+                        new WhitelistFunction
+                        {
+                            Name = "SetMapper",
+                            CppSignature = "void SetMapper(vtkMapper* mapper)",
+                            Return = new WhitelistReturn { Type = "void" },
+                            Parameters = [new WhitelistParameter { Type = "vtkMapper*", Name = "mapper" }],
+                        },
+                    ],
+                },
+            ],
+        };
+        var inspectedClasses = new Dictionary<string, InspectedClass>
+        {
+            ["vtkActor"] = new("vtkActor", [
+                new InspectedFunction("SetMapper", "", "void", [new InspectedParameter("vtkMapper*", "mapper")], IsSupported: true),
+            ]),
+        };
+        var validator = new WhitelistValidator();
+
+        var result = validator.Validate(document, inspectedClasses);
+
+        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("module") || d.Message.Contains("header"));
     }
 }

@@ -1,4 +1,5 @@
 using VtkSharp.Generator.Core.Inspection;
+using VtkSharp.Generator.Core.Vtk;
 using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Core.Validation;
@@ -27,7 +28,7 @@ public sealed class WhitelistValidator
         "double*", "float*", "int*",
     };
 
-    public ValidationResult Validate(WhitelistDocument document, IReadOnlyDictionary<string, InspectedClass> inspectedClasses)
+    public ValidationResult Validate(WhitelistDocument document, IReadOnlyDictionary<string, InspectedClass> inspectedClasses, VtkHierarchyResolver? hierarchyResolver = null)
     {
         var diagnostics = new List<ValidationDiagnostic>();
 
@@ -37,6 +38,19 @@ public sealed class WhitelistValidator
             {
                 diagnostics.Add(new ValidationDiagnostic($"Class '{whitelistClass.Name}' was not inspected."));
                 continue;
+            }
+
+            if (hierarchyResolver is not null)
+            {
+                var hierarchyModule = hierarchyResolver.GetModule(whitelistClass.Name);
+                if (!string.IsNullOrWhiteSpace(hierarchyModule) && !hierarchyModule.Equals(document.Module, StringComparison.Ordinal))
+                    diagnostics.Add(new ValidationDiagnostic(
+                        $"Class '{whitelistClass.Name}' belongs to module '{hierarchyModule}' in hierarchy but is declared in '{document.Module}' whitelist."));
+
+                var hierarchyHeader = hierarchyResolver.GetHeader(whitelistClass.Name);
+                if (!hierarchyHeader.Equals(whitelistClass.Header, StringComparison.Ordinal))
+                    diagnostics.Add(new ValidationDiagnostic(
+                        $"Class '{whitelistClass.Name}' has header '{hierarchyHeader}' in hierarchy but whitelist declares '{whitelistClass.Header}'."));
             }
 
             foreach (var function in whitelistClass.Functions)

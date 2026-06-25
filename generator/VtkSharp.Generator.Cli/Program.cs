@@ -769,7 +769,7 @@ internal class Program
 
         var validator = new WhitelistValidator();
         foreach (var document in context.Documents)
-            diagnostics.AddRange(validator.Validate(document, context.InspectedClasses).Diagnostics);
+            diagnostics.AddRange(validator.Validate(document, context.InspectedClasses, context.HierarchyResolver).Diagnostics);
 
         if (diagnostics.Count == 0)
         {
