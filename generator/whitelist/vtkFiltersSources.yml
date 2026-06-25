@@ -37,3 +37,13 @@ classes:
         parameters:
           - type: int
             name: resolution
+  - name: vtkCylinderSource
+    header: vtkCylinderSource.h
+    functions:
+      - name: SetResolution
+        cppSignature: void SetResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg

@@ -2,3 +2,4 @@
 #include "vtksharp_api.h"
 #include <vtkViewport.h>
 
+VTKSHARP_API void vtkViewport_SetBackground(vtkViewport* self, double _arg1, double _arg2, double _arg3) { self->SetBackground(_arg1, _arg2, _arg3); }

@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: Cylinder
+  original: "VTK/Examples/GeometricObjects/Cxx/CylinderExample.cxx"
+
+requirements:
+  - module: vtkFiltersSources
+    class: vtkCylinderSource
+    header: vtkCylinderSource.h
+    functions:
+      - name: SetResolution
+        cppSignature: "void SetResolution(int _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: _arg }
+  - module: vtkRenderingCore
+    class: vtkActor
+    header: vtkActor.h
+    functions:
+      - name: GetProperty
+        cppSignature: "vtkProperty * GetProperty()"
+        return:
+          type: vtkProperty*
+        parameters: []
+  - module: vtkRenderingCore
+    class: vtkProperty
+    header: vtkProperty.h
+    functions:
+      - name: SetColor
+        cppSignature: "void SetColor(double r, double g, double b)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: r }
+          - { type: "double", name: g }
+          - { type: "double", name: b }
+  - module: vtkRenderingCore
+    class: vtkViewport
+    header: vtkViewport.h
+    functions:
+      - name: SetBackground
+        cppSignature: "void SetBackground(double _arg1, double _arg2, double _arg3)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg1 }
+          - { type: "double", name: _arg2 }
+          - { type: "double", name: _arg3 }

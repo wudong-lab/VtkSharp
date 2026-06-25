@@ -17,6 +17,13 @@ public unsafe partial class vtkViewport : vtkObject
         return target;
     }
 
+    public new void SetBackground(double _arg1, double _arg2, double _arg3)
+    {
+        vtkViewport_SetBackground(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_SetBackground(nint self, double _arg1, double _arg2, double _arg3);
     #endregion
 }

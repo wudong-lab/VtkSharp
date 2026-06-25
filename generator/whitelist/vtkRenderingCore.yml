@@ -11,6 +11,11 @@ classes:
   - name: vtkActor
     header: vtkActor.h
     functions:
+      - name: GetProperty
+        cppSignature: vtkProperty * GetProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
       - name: SetMapper
         cppSignature: void SetMapper(vtkMapper* mapper)
         return:
@@ -37,6 +42,20 @@ classes:
   - name: vtkProp3D
     header: vtkProp3D.h
     functions: []
+  - name: vtkProperty
+    header: vtkProperty.h
+    functions:
+      - name: SetColor
+        cppSignature: void SetColor(double r, double g, double b)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: r
+          - type: double
+            name: g
+          - type: double
+            name: b
   - name: vtkRenderWindow
     header: vtkRenderWindow.h
     functions:
@@ -74,4 +93,15 @@ classes:
             name: p
   - name: vtkViewport
     header: vtkViewport.h
-    functions: []
+    functions:
+      - name: SetBackground
+        cppSignature: void SetBackground(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
