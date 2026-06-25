@@ -1,0 +1,3 @@
+# CMake out-of-source build directories for one-off tools
+*/build/
+*/build_check/
