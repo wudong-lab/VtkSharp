@@ -1,0 +1,45 @@
+﻿# yaml-language-server: $schema=../schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: Circle
+  original: "VTK/Examples/GeometricObjects/Cxx/Circle.cxx"
+
+requirements:
+  - module: vtkFiltersSources
+    class: vtkRegularPolygonSource
+    header: vtkRegularPolygonSource.h
+    functions:
+      - name: SetNumberOfSides
+        cppSignature: "void SetNumberOfSides(int _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: _arg }
+      - name: SetCenter
+        cppSignature: "void SetCenter(double _arg1, double _arg2, double _arg3)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg1 }
+          - { type: "double", name: _arg2 }
+          - { type: "double", name: _arg3 }
+      - name: SetCenter
+        cppSignature: "void SetCenter(double const[3] _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "const double[3]", name: _arg }
+      - name: SetRadius
+        cppSignature: "void SetRadius(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+      - name: GeneratePolygonOff
+        cppSignature: "void GeneratePolygonOff()"
+        return:
+          type: void
+        parameters:
+          []
