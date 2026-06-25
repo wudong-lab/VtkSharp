@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using VtkSharp.Generator.Core.Types;
 
@@ -25,7 +25,7 @@ public sealed class ExportNameGenerator
             .ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal);
 
         var names = functions
-            .Select(f => (f.Key, Name: Create(className, f.MethodName, f.ParameterTypes, overloadCounts[f.MethodName] > 1)))
+            .Select(f => (f.Key, Name: this.Create(className, f.MethodName, f.ParameterTypes, overloadCounts[f.MethodName] > 1)))
             .ToList();
 
         var collisions = names
@@ -40,11 +40,11 @@ public sealed class ExportNameGenerator
         var result = new Dictionary<TKey, string>();
         foreach (var (key, name) in names)
         {
-            if (collisions.Any(c => c.Key!.Equals(key)))
+            if (collisions.Any(c => c.Key.Equals(key)))
             {
-                var func = functions.First(f => f.Key!.Equals(key));
+                var func = functions.First(f => f.Key.Equals(key));
                 var canonical = string.Join(",", func.ParameterTypes.Select(t => t.Text));
-                result[key] = CreateWithHash(className, func.MethodName, canonical);
+                result[key] = this.CreateWithHash(className, func.MethodName, canonical);
             }
             else
             {
