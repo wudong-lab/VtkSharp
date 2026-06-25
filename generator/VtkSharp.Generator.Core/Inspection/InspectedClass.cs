@@ -5,4 +5,5 @@ public sealed record InspectedClass(
     IReadOnlyList<InspectedFunction> Functions,
     bool HasStaticNew = false,
     string? BaseClassName = null,
-    IReadOnlyList<string>? Dependencies = null);
+    IReadOnlyList<string>? Dependencies = null,
+    IReadOnlyList<string>? BaseClassNames = null);

@@ -1,4 +1,4 @@
-﻿using CppAst;
+using CppAst;
 using VtkSharp.Generator.Core.Types;
 
 namespace VtkSharp.Generator.Core.Inspection;
@@ -11,43 +11,98 @@ public sealed class VtkClassInspector
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
     {
         var cacheKey = CreateCacheKey(includeDirectory, headerFileName, className);
-        if (this._cache.TryGetValue(cacheKey, out var inspectedClass))
-            return inspectedClass;
+        if (this._cache.TryGetValue(cacheKey, out var cachedClass))
+            return cachedClass;
 
-        return this.InspectHeader(includeDirectory, headerFileName, className, []);
+        return this.BuildClass(includeDirectory, headerFileName, className, []);
     }
 
-    private InspectedClass InspectHeader(
+    public IReadOnlyDictionary<string, InspectedClass> InspectFile(string includeDirectory, string headerFileName)
+    {
+        var fullIncludeDir = Path.GetFullPath(includeDirectory);
+        var options = new CppParserOptions();
+        options.ConfigureForWindowsMsvc(CppTargetCpu.X86_64, CppVisualStudioVersion.VS2022);
+        options.IncludeFolders.Add(fullIncludeDir);
+
+        var headerPath = Path.Combine(fullIncludeDir, headerFileName);
+        var compilation = CppParser.ParseFile(headerPath, options);
+        if (compilation.HasErrors)
+            throw new InvalidOperationException(string.Join(Environment.NewLine, compilation.Diagnostics));
+
+        var result = new Dictionary<string, InspectedClass>(StringComparer.Ordinal);
+        foreach (var cppClass in compilation.Classes)
+        {
+            if (!cppClass.Name.StartsWith("vtk", StringComparison.Ordinal))
+                continue;
+
+            var cacheKey = CreateCacheKey(fullIncludeDir, headerFileName, cppClass.Name);
+            if (this._cache.ContainsKey(cacheKey))
+                continue;
+
+            var baseClassNames = GetCppBaseClassNames(cppClass);
+            var rawClass = BuildRawClass(cppClass, baseClassNames, this._canonicalizer);
+            this._cache[cacheKey] = rawClass;
+            result[cppClass.Name] = rawClass;
+        }
+
+        return result;
+    }
+
+    private InspectedClass BuildClass(
         string includeDirectory,
         string headerFileName,
         string className,
         HashSet<string> visitedClassNames)
     {
         var cacheKey = CreateCacheKey(includeDirectory, headerFileName, className);
-        if (this._cache.TryGetValue(cacheKey, out var cachedClass))
+        if (this._cache.TryGetValue(cacheKey, out var cachedClass) &&
+            cachedClass.BaseClassNames is null)
             return cachedClass;
 
         if (!visitedClassNames.Add(className))
-            return new InspectedClass(className, []);
+        {
+            var empty = new InspectedClass(className, []);
+            this._cache[cacheKey] = empty;
+            return empty;
+        }
 
-        var options = new CppParserOptions();
-        options.ConfigureForWindowsMsvc(CppTargetCpu.X86_64, CppVisualStudioVersion.VS2022);
-        options.IncludeFolders.Add(includeDirectory);
+        this.InspectFile(includeDirectory, headerFileName);
 
-        var headerPath = Path.Combine(includeDirectory, headerFileName);
-        var compilation = CppParser.ParseFile(headerPath, options);
-        if (compilation.HasErrors)
-            throw new InvalidOperationException(string.Join(Environment.NewLine, compilation.Diagnostics));
+        var raw = this._cache.TryGetValue(cacheKey, out var rawClass)
+            ? rawClass
+            : throw new InvalidOperationException($"Class '{className}' was not found in '{headerFileName}'.");
 
-        var cppClass = compilation.Classes.FirstOrDefault(item => item.Name == className)
-            ?? throw new InvalidOperationException($"Class '{className}' was not found in '{headerFileName}'.");
+        var functions = raw.Functions.ToList();
 
+        foreach (var baseClassName in raw.BaseClassNames ?? [])
+        {
+            var baseHeaderFileName = $"{baseClassName}.h";
+            var baseHeaderPath = Path.Combine(includeDirectory, baseHeaderFileName);
+            if (!File.Exists(baseHeaderPath))
+                continue;
+
+            var baseClass = this.BuildClass(includeDirectory, baseHeaderFileName, baseClassName, visitedClassNames);
+            foreach (var function in baseClass.Functions)
+            {
+                if (!functions.Any(item => HasSameSignature(item, function)))
+                    functions.Add(function);
+            }
+        }
+
+        var directBaseClassName = (raw.BaseClassNames ?? []).FirstOrDefault();
+        var result = new InspectedClass(className, functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(functions));
+        this._cache[cacheKey] = result;
+        return result;
+    }
+
+    private static InspectedClass BuildRawClass(CppClass cppClass, IReadOnlyList<string> baseClassNames, TypeCanonicalizer canonicalizer)
+    {
         var hasStaticNew = cppClass.Functions.Any(function =>
             function.Visibility == CppVisibility.Public &&
             function.Name == "New" &&
             function.IsStatic &&
             function.Parameters.Count == 0 &&
-            function.ReturnType.FullName.Contains(className, StringComparison.Ordinal));
+            function.ReturnType.FullName.Contains(cppClass.Name, StringComparison.Ordinal));
 
         var functions = cppClass.Functions
             .Where(static function =>
@@ -68,17 +123,14 @@ public sealed class VtkClassInspector
 
                 var rawReturnType = function.ReturnType.FullName;
                 var signature = $"{rawReturnType} {function.Name}(" +
-                                string.Join(", ", rawParameters.Select(parameter => $"{parameter.Type} {parameter.Name}")) +
+                                string.Join(", ", rawParameters.Select(p => $"{p.Type} {p.Name}")) +
                                 ")";
 
                 var parameters = rawParameters
-                    .Select(parameter => new InspectedParameter(this._canonicalizer.Canonicalize(parameter.Type).Text, parameter.Name))
+                    .Select(p => new InspectedParameter(canonicalizer.Canonicalize(p.Type).Text, p.Name))
                     .ToList();
-                var returnType = this._canonicalizer.Canonicalize(rawReturnType).Text;
-                var canonicalSignature = $"{returnType} {function.Name}(" +
-                                         string.Join(", ", parameters.Select(parameter => $"{parameter.Type} {parameter.Name}")) +
-                                         ")";
-                var dependencies = GetDependencyTypes([returnType, .. parameters.Select(parameter => parameter.Type)], className);
+                var returnType = canonicalizer.Canonicalize(rawReturnType).Text;
+                var deps = GetDependencyTypes([returnType, .. parameters.Select(p => p.Type)], cppClass.Name);
 
                 return new InspectedFunction(
                     function.Name,
@@ -86,48 +138,29 @@ public sealed class VtkClassInspector
                     returnType,
                     parameters,
                     IsSupported: true,
-                    CanonicalSignature: canonicalSignature,
-                    DependencyTypes: dependencies);
+                    CanonicalSignature: $"{returnType} {function.Name}(" +
+                                        string.Join(", ", parameters.Select(p => $"{p.Type} {p.Name}")) +
+                                        ")",
+                    DependencyTypes: deps);
             })
             .ToList();
 
-        foreach (var baseClassName in GetBaseClassNames(cppClass))
-        {
-            var baseHeaderFileName = $"{baseClassName}.h";
-            var baseHeaderPath = Path.Combine(includeDirectory, baseHeaderFileName);
-            if (!File.Exists(baseHeaderPath))
-                continue;
+        return new InspectedClass(cppClass.Name, functions, hasStaticNew, BaseClassNames: baseClassNames);
+    }
 
-            var baseClass = this.InspectHeader(includeDirectory, baseHeaderFileName, baseClassName, visitedClassNames);
-            foreach (var function in baseClass.Functions)
-            {
-                if (!functions.Any(item => HasSameSignature(item, function)))
-                    functions.Add(function);
-            }
-        }
-
-        var directBaseClassName = GetBaseClassNames(cppClass).FirstOrDefault();
-        var result = new InspectedClass(className, functions, hasStaticNew, directBaseClassName, GetClassDependencies(functions));
-        this._cache[cacheKey] = result;
-        return result;
+    private static IReadOnlyList<string> GetCppBaseClassNames(CppClass cppClass)
+    {
+        return cppClass.BaseTypes
+            .Select(baseType => baseType.Type.FullName
+                .Split("::", StringSplitOptions.RemoveEmptyEntries)
+                .LastOrDefault())
+            .Where(name => !string.IsNullOrWhiteSpace(name) && name.StartsWith("vtk", StringComparison.Ordinal))
+            .Select(name => name!)
+            .ToList();
     }
 
     private static string CreateCacheKey(string includeDirectory, string headerFileName, string className)
         => $"{Path.GetFullPath(includeDirectory)}|{headerFileName}|{className}";
-
-    private static IEnumerable<string> GetBaseClassNames(CppClass cppClass)
-    {
-        foreach (var baseType in cppClass.BaseTypes)
-        {
-            var name = baseType.Type.FullName
-                .Split("::", StringSplitOptions.RemoveEmptyEntries)
-                .LastOrDefault()
-                ?.Trim();
-
-            if (!string.IsNullOrWhiteSpace(name) && name.StartsWith("vtk", StringComparison.Ordinal))
-                yield return name;
-        }
-    }
 
     private static bool HasSameSignature(InspectedFunction left, InspectedFunction right)
         => left.Name == right.Name &&
