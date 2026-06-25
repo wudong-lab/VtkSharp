@@ -67,16 +67,19 @@ public sealed class CSharpBindingEmitter
         var methodName = isInternalPointerReturn ? $"{function.Name}_Internal" : function.Name;
         var visibility = isInternalPointerReturn ? "internal" : "public";
         var returnType = ToPublicType(function.Return.Type);
-        var parameters = string.Join(", ", function.Parameters.Select(parameter => $"{ToPublicType(parameter.Type)} {parameter.Name}"));
+        var parameterEntries = function.Parameters
+            .Select(p => (PublicType: GetPublicParameterType(p), p.Name))
+            .ToList();
+        var parameters = string.Join(", ", parameterEntries.Select(e => $"{e.PublicType} {e.Name}"));
 
         sb.AppendLine($"    {visibility} new {returnType} {methodName}({parameters})");
         sb.AppendLine("    {");
 
-        var fixedArrayParameters = function.Parameters.Where(parameter => IsFixedArray(parameter.Type)).ToList();
+        var fixedParameters = function.Parameters.Where(IsSpanParameter).ToList();
         var indent = "        ";
-        foreach (var parameter in fixedArrayParameters)
+        foreach (var parameter in fixedParameters)
         {
-            sb.AppendLine($"{indent}fixed ({GetArrayElementType(parameter.Type)}* {parameter.Name}Ptr = {parameter.Name})");
+            sb.AppendLine($"{indent}fixed ({GetSpanElementType(parameter.Type)}* {parameter.Name}Ptr = {parameter.Name})");
             sb.AppendLine($"{indent}{{");
             indent += "    ";
         }
@@ -100,7 +103,7 @@ public sealed class CSharpBindingEmitter
             EmitCall(sb, indent, function.Return.Type, call);
         }
 
-        for (var i = fixedArrayParameters.Count - 1; i >= 0; i--)
+        for (var i = fixedParameters.Count - 1; i >= 0; i--)
         {
             indent = indent[..^4];
             sb.AppendLine($"{indent}}}");
@@ -230,7 +233,7 @@ public sealed class CSharpBindingEmitter
         if (TryGetVtkClassName(parameter.Type, out _))
             return $"{parameter.Name}.NativePointer";
 
-        if (IsFixedArray(parameter.Type))
+        if (IsSpanParameter(parameter))
             return $"{parameter.Name}Ptr";
 
         return parameter.Name;
@@ -316,5 +319,37 @@ public sealed class CSharpBindingEmitter
         var bracketIndex = type.IndexOf('[', StringComparison.Ordinal);
         var elementType = type[..bracketIndex].Replace("const ", "", StringComparison.Ordinal).Trim();
         return elementType;
+    }
+
+    private static bool IsSpanParameter(WhitelistParameter parameter)
+        => IsFixedArray(parameter.Type) ||
+           (IsPrimitivePointer(parameter.Type) && HasPointerMetadata(parameter));
+
+    private static bool HasPointerMetadata(WhitelistParameter parameter)
+        => parameter.Direction is not null && parameter.Length is not null;
+
+    private static string GetPublicParameterType(WhitelistParameter parameter)
+    {
+        if (IsSpanParameter(parameter))
+            return GetSpanPublicType(parameter);
+        return ToPublicType(parameter.Type);
+    }
+
+    private static string GetSpanPublicType(WhitelistParameter parameter)
+    {
+        var elementType = GetSpanElementType(parameter.Type);
+        var isReadOnly = IsFixedArray(parameter.Type)
+            ? parameter.Type.StartsWith("const ", StringComparison.Ordinal)
+            : parameter.Direction == "in";
+        return isReadOnly ? $"ReadOnlySpan<{elementType}>" : $"Span<{elementType}>";
+    }
+
+    private static string GetSpanElementType(string type)
+    {
+        if (IsFixedArray(type))
+            return GetArrayElementType(type);
+        if (IsPrimitivePointer(type))
+            return type.TrimEnd('*');
+        throw new ArgumentException($"Cannot get span element type from '{type}'.", nameof(type));
     }
 }

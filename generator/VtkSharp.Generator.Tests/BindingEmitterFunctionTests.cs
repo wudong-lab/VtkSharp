@@ -289,6 +289,203 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VTKSHARP_API vtkIdType vtkThing_GetId(vtkThing* self)", text);
     }
 
+    [Fact]
+    public void CSharpEmitter_EmitsReadOnlySpanForPointerWithInDirectionAndFixedLength()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "SetPosition",
+                CppSignature = "void SetPosition(double* position)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter
+                    {
+                        Type = "double*",
+                        Name = "position",
+                        Direction = "in",
+                        Length = new WhitelistLength { Kind = "fixed", Value = 3 },
+                    },
+                ],
+            },
+        ]);
+
+        Assert.Contains("public new void SetPosition(ReadOnlySpan<double> position)", text);
+        Assert.Contains("fixed (double* positionPtr = position)", text);
+        Assert.Contains("vtkFoo_SetPosition(this.NativePointer, positionPtr);", text);
+        Assert.Contains("private static extern void vtkFoo_SetPosition(nint self, double* position);", text);
+    }
+
+    [Fact]
+    public void CSharpEmitter_EmitsSpanForPointerWithOutDirection()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "GetBounds",
+                CppSignature = "void GetBounds(double* bounds)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter
+                    {
+                        Type = "double*",
+                        Name = "bounds",
+                        Direction = "out",
+                        Length = new WhitelistLength { Kind = "fixed", Value = 6 },
+                    },
+                ],
+            },
+        ]);
+
+        Assert.Contains("public new void GetBounds(Span<double> bounds)", text);
+        Assert.Contains("fixed (double* boundsPtr = bounds)", text);
+    }
+
+    [Fact]
+    public void CSharpEmitter_EmitsReadOnlySpanForPointerWithParameterLength()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "SetArray",
+                CppSignature = "void SetArray(double* values, vtkIdType count)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter
+                    {
+                        Type = "double*",
+                        Name = "values",
+                        Direction = "in",
+                        Length = new WhitelistLength { Kind = "parameter", Name = "count" },
+                    },
+                    new WhitelistParameter { Type = "vtkIdType", Name = "count" },
+                ],
+            },
+        ]);
+
+        Assert.Contains("public new void SetArray(ReadOnlySpan<double> values, long count)", text);
+        Assert.Contains("fixed (double* valuesPtr = values)", text);
+        Assert.Contains("vtkFoo_SetArray(this.NativePointer, valuesPtr, count);", text);
+    }
+
+    [Fact]
+    public void CSharpEmitter_KeepsRawPointerForPointerWithoutMetadata()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "GetData",
+                CppSignature = "double* GetData()",
+                Return = new WhitelistReturn { Type = "double*" },
+                Parameters = [],
+            },
+        ]);
+
+        Assert.Contains("internal new double* GetData_Internal()", text);
+    }
+
+    [Fact]
+    public void CppEmitter_EmitsPrimitivePointerType()
+    {
+        var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "SetPosition",
+                CppSignature = "void SetPosition(double* position)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter
+                    {
+                        Type = "double*",
+                        Name = "position",
+                        Direction = "in",
+                        Length = new WhitelistLength { Kind = "fixed", Value = 3 },
+                    },
+                ],
+            },
+        ]);
+
+        Assert.Contains("VTKSHARP_API void vtkFoo_SetPosition(vtkFoo* self, double* position)", text);
+        Assert.Contains("self->SetPosition(position);", text);
+    }
+
+    [Fact]
+    public void CppEmitter_EmitsPrimitivePointerWithOtherParameters()
+    {
+        var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "SetArray",
+                CppSignature = "void SetArray(double* values, vtkIdType count)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter
+                    {
+                        Type = "double*",
+                        Name = "values",
+                        Direction = "in",
+                        Length = new WhitelistLength { Kind = "parameter", Name = "count" },
+                    },
+                    new WhitelistParameter { Type = "vtkIdType", Name = "count" },
+                ],
+            },
+        ]);
+
+        Assert.Contains("VTKSHARP_API void vtkFoo_SetArray(vtkFoo* self, double* values, vtkIdType count)", text);
+    }
+
+    [Fact]
+    public void ExportNameGenerator_UsesDoublePtrSuffixForOverload()
+    {
+        var functions = new[]
+        {
+            new WhitelistFunction
+            {
+                Name = "SetPosition",
+                CppSignature = "void SetPosition(double x, double y, double z)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter { Type = "double", Name = "x" },
+                    new WhitelistParameter { Type = "double", Name = "y" },
+                    new WhitelistParameter { Type = "double", Name = "z" },
+                ],
+            },
+            new WhitelistFunction
+            {
+                Name = "SetPosition",
+                CppSignature = "void SetPosition(double* position)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter
+                    {
+                        Type = "double*",
+                        Name = "position",
+                        Direction = "in",
+                        Length = new WhitelistLength { Kind = "fixed", Value = 3 },
+                    },
+                ],
+            },
+        };
+
+        var csharp = new CSharpBindingEmitter().Emit("VtkSharp", "vtkActor", "vtkProp3D", hasStaticNew: false, functions);
+
+        Assert.Contains("vtkActor_SetPosition_double_double_double(this.NativePointer, x, y, z);", csharp);
+        Assert.Contains("vtkActor_SetPosition_doublePtr(this.NativePointer, positionPtr);", csharp);
+    }
+
     private static int CountOccurrences(string text, string value)
     {
         var count = 0;

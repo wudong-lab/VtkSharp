@@ -60,6 +60,7 @@ public sealed class CppExportEmitter
             "const char*" => "const char*",
             "char*" => "char*",
             "void*" => "void*",
+            "double*" or "float*" or "int*" => type,
             _ when IsFixedArray(type) => ToCppArrayPointerType(type),
             _ when IsVtkPointer(type) => type,
             _ => throw new NotSupportedException($"C++ type '{type}' is not supported by the MVP emitter."),
