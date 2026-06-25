@@ -11,12 +11,16 @@ internal class Program
 {
     public static int Main(string[] args)
     {
-        var classArgument = new Argument<string>("class-name");
+        var classArgument = new Argument<string>("class-name")
+        {
+            Description = "VTK class name (e.g. vtkActor)",
+        };
         var formatOption = new Option<string>("--format")
         {
             Description = "Output format: text or json",
             DefaultValueFactory = _ => "text",
         };
+        formatOption.AcceptOnlyFromAmong("text", "json");
         var configOption = new Option<FileInfo>("--config")
         {
             Description = "Generator config file",
@@ -40,26 +44,7 @@ internal class Program
         });
 
         var functionArgument = new Argument<string>("function-name");
-        var suggestApiCommand = new Command("suggest-api", "Suggest whitelist entries for a VTK method")
-        {
-            classArgument,
-            functionArgument,
-            formatOption,
-            configOption,
-        };
-
-        suggestApiCommand.SetAction(parseResult =>
-        {
-            var className = parseResult.GetValue(classArgument)!;
-            var functionName = parseResult.GetValue(functionArgument)!;
-            var format = parseResult.GetValue(formatOption)!;
-            var configPath = parseResult.GetValue(configOption)?.FullName
-                             ?? GetDefaultConfigPath();
-
-            return SuggestApi(configPath, className, functionName, format);
-        });
-
-        var inspectFunctionCommand = new Command("inspect-function", "Inspect a VTK method (alias for suggest-api)")
+        var inspectFunctionCommand = new Command("inspect-function", "Inspect a VTK method and show suggested whitelist entry")
         {
             classArgument,
             functionArgument,
@@ -75,7 +60,7 @@ internal class Program
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
 
-            return SuggestApi(configPath, className, functionName, format);
+            return InspectFunction(configPath, className, functionName, format);
         });
 
         var listModulesCommand = new Command("list-modules", "List VTK modules in the hierarchy")
@@ -115,21 +100,24 @@ internal class Program
 
         var continueOnErrorOption = new Option<bool>("--continue-on-error")
         {
-            Description = "Collect all errors instead of stopping on first failure. Useful for AI batch analysis of candidate APIs.",
+            Description = "Collect all errors instead of stopping on first failure.",
         };
 
-        var validateCommand = new Command("validate-whitelist", "Validate whitelist")
+        var validateCommand = new Command("validate-whitelist", "Validate whitelist against VTK headers")
         {
             configOption,
             continueOnErrorOption,
+            formatOption,
         };
 
         validateCommand.SetAction(parseResult =>
         {
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
+            var continueOnError = parseResult.GetValue(continueOnErrorOption);
+            var format = parseResult.GetValue(formatOption)!;
 
-            return ValidateWhitelist(configPath);
+            return ValidateWhitelist(configPath, continueOnError, format);
         });
 
         var normalizeCommand = new Command("normalize-whitelist", "Normalize whitelist files")
@@ -147,14 +135,14 @@ internal class Program
 
         var outputRootOption = new Option<DirectoryInfo>("--output-root")
         {
-            Description = "Temporary output root",
+            Description = "Output root directory for generated files",
         };
         var checkOption = new Option<bool>("--check")
         {
             Description = "Generate to a temporary directory and compare with current generated files",
         };
 
-        var generateCommand = new Command("generate", "Generate bindings")
+        var generateCommand = new Command("generate-bindings", "Generate C# and C++ bindings from the whitelist")
         {
             configOption,
             outputRootOption,
@@ -203,15 +191,18 @@ internal class Program
             return DiffWhitelist(configPath, candidatePath, format);
         });
 
-        var outputArgument = new Argument<FileInfo>("output-path")
+        var outputOption = new Option<FileInfo>("--output")
         {
             Description = "Output path for the candidate YAML file",
+            Required = true,
         };
+        outputOption.Aliases.Add("-o");
         var sourceKindOption = new Option<string>("--source-kind")
         {
-            Description = "Source kind: vtk-example, manual, etc.",
-            DefaultValueFactory = _ => "manual",
+            Description = "Source kind: vtk-example or manual",
+            Required = true,
         };
+        sourceKindOption.AcceptOnlyFromAmong("vtk-example", "manual");
         var sourceNameOption = new Option<string>("--source-name")
         {
             Description = "Source name (e.g. example name)",
@@ -229,7 +220,7 @@ internal class Program
         var createCandidateCommand = new Command("create-candidate", "Create a candidate whitelist from VTK inspection")
         {
             classArgument,
-            outputArgument,
+            outputOption,
             sourceKindOption,
             sourceNameOption,
             sourceOriginalOption,
@@ -240,7 +231,7 @@ internal class Program
         createCandidateCommand.SetAction(parseResult =>
         {
             var className = parseResult.GetValue(classArgument)!;
-            var outputPath = parseResult.GetValue(outputArgument)!.FullName;
+            var outputPath = parseResult.GetValue(outputOption)!.FullName;
             var sourceKind = parseResult.GetValue(sourceKindOption)!;
             var sourceName = parseResult.GetValue(sourceNameOption);
             var sourceOriginal = parseResult.GetValue(sourceOriginalOption);
@@ -269,7 +260,6 @@ internal class Program
         var rootCommand = new RootCommand("VtkSharp binding generator")
         {
             inspectClassCommand,
-            suggestApiCommand,
             inspectFunctionCommand,
             listModulesCommand,
             listClassesCommand,
@@ -287,7 +277,7 @@ internal class Program
     private static string GetDefaultConfigPath()
         => Path.GetFullPath(Path.Combine("generator", "config", "vtksharp.generator.yml"));
 
-    private static int SuggestApi(string configPath, string className, string functionName, string format)
+    private static int InspectFunction(string configPath, string className, string functionName, string format)
     {
         var config = LoadConfig(configPath);
         var includeDirectory = ResolveIncludeDirectory(config);
@@ -315,12 +305,6 @@ internal class Program
         {
             Console.WriteLine(JsonSerializer.Serialize(new { className, matches }, new JsonSerializerOptions { WriteIndented = true }));
             return 0;
-        }
-
-        if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
-        {
-            Console.Error.WriteLine("--format must be 'text' or 'json'.");
-            return 1;
         }
 
         Console.WriteLine($"{className}::{functionName} ({matches.Count} overload(s))");
@@ -376,12 +360,6 @@ internal class Program
             };
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
             return 0;
-        }
-
-        if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
-        {
-            Console.Error.WriteLine("--format must be 'text' or 'json'.");
-            return 1;
         }
 
         Console.WriteLine($"Candidate: {candidatePath}");
@@ -648,12 +626,6 @@ internal class Program
             return 0;
         }
 
-        if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
-        {
-            Console.Error.WriteLine("--format must be 'text' or 'json'.");
-            return 1;
-        }
-
         foreach (var group in groups)
         {
             Console.WriteLine(group.Key);
@@ -688,12 +660,6 @@ internal class Program
             return 0;
         }
 
-        if (!format.Equals("text", StringComparison.OrdinalIgnoreCase))
-        {
-            Console.Error.WriteLine("--format must be 'text' or 'json'.");
-            return 1;
-        }
-
         Console.WriteLine(inspected.Name);
         Console.WriteLine($"  Header: {header}");
         Console.WriteLine($"  BaseClass: {inspected.BaseClassName}");
@@ -716,7 +682,7 @@ internal class Program
         if (context is null)
             return 1;
 
-        var validationResult = RunValidation(context);
+        var validationResult = RunValidation(context, continueOnError, "text");
         if (validationResult != 0 && !continueOnError)
             return validationResult;
 
@@ -780,7 +746,7 @@ internal class Program
         return 0;
     }
 
-    private static int RunValidation(GeneratorRunContext context)
+    private static int RunValidation(GeneratorRunContext context, bool continueOnError, string format)
     {
         var diagnostics = new List<ValidationDiagnostic>(context.InspectionDiagnostics);
 
@@ -790,14 +756,24 @@ internal class Program
 
         if (diagnostics.Count == 0)
         {
-            Console.WriteLine("Whitelist validation succeeded.");
+            if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
+                Console.WriteLine(JsonSerializer.Serialize(new { ok = true, errors = Array.Empty<string>() }, new JsonSerializerOptions { WriteIndented = true }));
+            else
+                Console.WriteLine("Whitelist validation succeeded.");
             return 0;
         }
 
-        foreach (var diagnostic in diagnostics)
-            Console.Error.WriteLine(diagnostic.Message);
+        if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
+        {
+            Console.WriteLine(JsonSerializer.Serialize(new { ok = false, errors = diagnostics.Select(d => d.Message) }, new JsonSerializerOptions { WriteIndented = true }));
+        }
+        else
+        {
+            foreach (var diagnostic in diagnostics)
+                Console.Error.WriteLine(diagnostic.Message);
+        }
 
-        return 1;
+        return continueOnError ? 0 : 1;
     }
 
     private static int NormalizeWhitelist(string configPath)
@@ -933,10 +909,12 @@ internal class Program
         return new GeneratorConfigLoader().Load(configPath, localConfigPath);
     }
 
-    private static int ValidateWhitelist(string configPath)
+    private static int ValidateWhitelist(string configPath, bool continueOnError, string format)
     {
         var context = CreateGeneratorRunContext(configPath);
-        return context is null ? 1 : RunValidation(context);
+        if (context is null)
+            return 1;
+        return RunValidation(context, continueOnError, format);
     }
 
     private static GeneratorRunContext? CreateGeneratorRunContext(string configPath)

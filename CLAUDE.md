@@ -25,24 +25,24 @@ examples/                         # 示例翻译案例
 ### 查询
 ```
 dotnet run --project generator/VtkSharp.Generator.Cli -- inspect-class vtkActor [--format json]
-dotnet run --project generator/VtkSharp.Generator.Cli -- suggest-api vtkRenderer SetBackground [--format json]
+dotnet run --project generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground [--format json]
 dotnet run --project generator/VtkSharp.Generator.Cli -- list-modules
 dotnet run --project generator/VtkSharp.Generator.Cli -- list-classes [--module vtkFiltersSources] [--format json]
 ```
 
 ### 白名单
 ```
-dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx examples/<Example>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original "path/to/original.cxx"
+dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx -o examples/<Example>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original "path/to/original.cxx"
 dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist examples/<Example>/candidate.yml [--format json]
 dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/<Example>/candidate.yml
-dotnet run --project generator/VtkSharp.Generator.Cli -- validate-whitelist [--continue-on-error]
+dotnet run --project generator/VtkSharp.Generator.Cli -- validate-whitelist [--continue-on-error] [--format json]
 dotnet run --project generator/VtkSharp.Generator.Cli -- normalize-whitelist
 ```
 
 ### 生成
 ```
-dotnet run --project generator/VtkSharp.Generator.Cli -- generate --check
-dotnet run --project generator/VtkSharp.Generator.Cli -- generate --output-root <temp-dir> [--continue-on-error]
+dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --check
+dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root <dir> [--continue-on-error]
 ```
 
 ### 构建
@@ -60,11 +60,11 @@ PATH="C:/Program Files/VTK/bin:$PATH" dotnet run --project src/bindings/TestCons
 1. 选择 VTK C++ 示例，翻译到 C#，放入 `examples/<Name>/`
 2. 构建并运行示例：`dotnet build src/bindings/VtkSharp.slnx`
 3. 解析缺失类/成员（编译错误）
-4. 对每个缺失类调 CLI 查询：`create-candidate vtkXxx ... --supported-only`
+4. 对每个缺失类调 CLI 查询：`create-candidate vtkXxx -o examples/<Example>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original <path>`
 5. 生成候选白名单到 `examples/<Name>/candidate.yml`
 6. 人工审核 candidate.yml
 7. `merge-candidate examples/<Name>/candidate.yml`（自动 normalize）
-8. `generate --check` → cmake build → dotnet build → smoke test
+8. `generate-bindings --check` → cmake build → dotnet build → smoke test
 
 ## 约束
 
