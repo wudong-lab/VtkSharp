@@ -60,6 +60,7 @@ public sealed class CppExportEmitter
             "const char*" => "const char*",
             "char*" => "char*",
             "void*" => "void*",
+            "HWND" or "HDC" or "HGLRC" => "void*",
             "double*" or "float*" or "int*" => type,
             _ when IsFixedArray(type) => ToCppArrayPointerType(type),
             _ when IsVtkPointer(type) => type,
@@ -74,17 +75,8 @@ public sealed class CppExportEmitter
 
     private Dictionary<WhitelistFunction, string> CreateExportNames(string className, IReadOnlyList<WhitelistFunction> functions)
     {
-        var overloadCounts = functions
-            .GroupBy(function => function.Name, StringComparer.Ordinal)
-            .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
-
-        return functions.ToDictionary(
-            function => function,
-            function => this._exportNameGenerator.Create(
-                className,
-                function.Name,
-                function.Parameters.Select(parameter => new CanonicalType(parameter.Type)).ToList(),
-                overloadCounts[function.Name] > 1));
+        return this._exportNameGenerator.CreateAll(className,
+            functions.Select(f => (f, f.Name, (IReadOnlyList<CanonicalType>)f.Parameters.Select(p => new CanonicalType(p.Type)).ToList())).ToList());
     }
 
     private static bool IsFixedArray(string type)

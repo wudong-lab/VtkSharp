@@ -196,6 +196,7 @@ public sealed class CSharpBindingEmitter
             "vtkIdType" => "long",
             "const char*" or "char*" => "string",
             "void*" => "nint",
+            "HWND" or "HDC" or "HGLRC" => "nint",
             _ when IsPrimitivePointer(type) => type,
             _ when IsFixedArray(type) => ToPublicArrayType(type),
             _ => throw new NotSupportedException($"C# public type '{type}' is not supported by the MVP emitter."),
@@ -222,6 +223,7 @@ public sealed class CSharpBindingEmitter
             "vtkIdType" => "long",
             "const char*" or "char*" => "nint",
             "void*" => "nint",
+            "HWND" or "HDC" or "HGLRC" => "nint",
             _ when IsPrimitivePointer(type) => type,
             _ when IsFixedArray(type) => $"{GetArrayElementType(type)}*",
             _ => throw new NotSupportedException($"C# interop type '{type}' is not supported by the MVP emitter."),
@@ -268,17 +270,8 @@ public sealed class CSharpBindingEmitter
 
     private Dictionary<WhitelistFunction, string> CreateExportNames(string className, IReadOnlyList<WhitelistFunction> functions)
     {
-        var overloadCounts = functions
-            .GroupBy(function => function.Name, StringComparer.Ordinal)
-            .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
-
-        return functions.ToDictionary(
-            function => function,
-            function => this._exportNameGenerator.Create(
-                className,
-                function.Name,
-                function.Parameters.Select(parameter => new CanonicalType(parameter.Type)).ToList(),
-                overloadCounts[function.Name] > 1));
+        return this._exportNameGenerator.CreateAll(className,
+            functions.Select(f => (f, f.Name, (IReadOnlyList<CanonicalType>)f.Parameters.Select(p => new CanonicalType(p.Type)).ToList())).ToList());
     }
 
     private static string? ToReturnMarshalAttribute(string type)

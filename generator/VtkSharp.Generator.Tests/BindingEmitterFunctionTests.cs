@@ -486,6 +486,47 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("vtkActor_SetPosition_doublePtr(this.NativePointer, positionPtr);", csharp);
     }
 
+    [Theory]
+    [InlineData("HWND")]
+    [InlineData("HDC")]
+    [InlineData("HGLRC")]
+    public void CSharpEmitter_MapsWin32HandlesToNint(string type)
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "SetHandle",
+                CppSignature = $"void SetHandle({type} h)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters = [new WhitelistParameter { Type = type, Name = "h" }],
+            },
+        ]);
+
+        Assert.Contains($"public new void SetHandle(nint h)", text);
+        Assert.Contains($"private static extern void vtkFoo_SetHandle(nint self, nint h);", text);
+    }
+
+    [Theory]
+    [InlineData("HWND")]
+    [InlineData("HDC")]
+    [InlineData("HGLRC")]
+    public void CppEmitter_MapsWin32HandlesToVoidPointer(string type)
+    {
+        var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "SetHandle",
+                CppSignature = $"void SetHandle({type} h)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters = [new WhitelistParameter { Type = type, Name = "h" }],
+            },
+        ]);
+
+        Assert.Contains($"VTKSHARP_API void vtkFoo_SetHandle(vtkFoo* self, void* h)", text);
+    }
+
     private static int CountOccurrences(string text, string value)
     {
         var count = 0;
