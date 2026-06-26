@@ -4,4 +4,14 @@
 
 VTKSHARP_API vtkProperty* vtkProperty_New() { return vtkProperty::New(); }
 
+VTKSHARP_API void vtkProperty_SetAmbient(vtkProperty* self, double _arg) { self->SetAmbient(_arg); }
+
 VTKSHARP_API void vtkProperty_SetColor(vtkProperty* self, double r, double g, double b) { self->SetColor(r, g, b); }
+
+VTKSHARP_API void vtkProperty_SetDiffuse(vtkProperty* self, double _arg) { self->SetDiffuse(_arg); }
+
+VTKSHARP_API void vtkProperty_SetSpecular(vtkProperty* self, double _arg) { self->SetSpecular(_arg); }
+
+VTKSHARP_API void vtkProperty_SetSpecularColor(vtkProperty* self, double _arg1, double _arg2, double _arg3) { self->SetSpecularColor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkProperty_SetSpecularPower(vtkProperty* self, double _arg) { self->SetSpecularPower(_arg); }

@@ -1,0 +1,280 @@
+# yaml-language-server: $schema=../../generator/schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: DelaunayMesh
+  original: "VTK/Examples/Modelling/Cxx/DelaunayMesh.cxx"
+
+requirements:
+  # ===== New Classes =====
+  - module: vtkCommonCore
+    class: vtkMinimalStandardRandomSequence
+    header: vtkMinimalStandardRandomSequence.h
+    functions:
+      - name: SetSeed
+        cppSignature: "void SetSeed(int value)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: value }
+      - name: GetValue
+        cppSignature: "double GetValue()"
+        return:
+          type: double
+        parameters:
+          []
+      - name: Next
+        cppSignature: "void Next()"
+        return:
+          type: void
+        parameters:
+          []
+
+  - module: vtkFiltersCore
+    class: vtkDelaunay2D
+    header: vtkDelaunay2D.h
+    functions:
+      - name: SetTolerance
+        cppSignature: "void SetTolerance(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+      - name: SetInputData
+        cppSignature: "void SetInputData(vtkDataObject * _arg1)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkDataObject*", name: _arg1 }
+      - name: SetInputData
+        cppSignature: "void SetInputData(int _arg1, vtkDataObject * _arg2)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: _arg1 }
+          - { type: "vtkDataObject*", name: _arg2 }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort(int index)"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - { type: "int", name: index }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort()"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          []
+
+  - module: vtkFiltersCore
+    class: vtkExtractEdges
+    header: vtkExtractEdges.h
+    functions:
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(int port, vtkAlgorithmOutput * input)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: port }
+          - { type: "vtkAlgorithmOutput*", name: input }
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(vtkAlgorithmOutput * input)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkAlgorithmOutput*", name: input }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort(int index)"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - { type: "int", name: index }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort()"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          []
+
+  - module: vtkFiltersCore
+    class: vtkGlyph3D
+    header: vtkGlyph3D.h
+    functions:
+      - name: SetSourceConnection
+        cppSignature: "void SetSourceConnection(int id, vtkAlgorithmOutput * algOutput)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: id }
+          - { type: "vtkAlgorithmOutput*", name: algOutput }
+      - name: SetSourceConnection
+        cppSignature: "void SetSourceConnection(vtkAlgorithmOutput * algOutput)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkAlgorithmOutput*", name: algOutput }
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(int port, vtkAlgorithmOutput * input)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: port }
+          - { type: "vtkAlgorithmOutput*", name: input }
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(vtkAlgorithmOutput * input)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkAlgorithmOutput*", name: input }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort(int index)"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - { type: "int", name: index }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort()"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          []
+
+  - module: vtkFiltersCore
+    class: vtkTubeFilter
+    header: vtkTubeFilter.h
+    functions:
+      - name: SetRadius
+        cppSignature: "void SetRadius(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+      - name: SetNumberOfSides
+        cppSignature: "void SetNumberOfSides(int _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: _arg }
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(int port, vtkAlgorithmOutput * input)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: port }
+          - { type: "vtkAlgorithmOutput*", name: input }
+      - name: SetInputConnection
+        cppSignature: "void SetInputConnection(vtkAlgorithmOutput * input)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkAlgorithmOutput*", name: input }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort(int index)"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - { type: "int", name: index }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort()"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          []
+
+  - module: vtkFiltersSources
+    class: vtkSphereSource
+    header: vtkSphereSource.h
+    functions:
+      - name: SetRadius
+        cppSignature: "void SetRadius(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+      - name: SetThetaResolution
+        cppSignature: "void SetThetaResolution(int _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: _arg }
+      - name: SetPhiResolution
+        cppSignature: "void SetPhiResolution(int _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: _arg }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort(int index)"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - { type: "int", name: index }
+      - name: GetOutputPort
+        cppSignature: "vtkAlgorithmOutput * GetOutputPort()"
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          []
+
+  # ===== Additional methods on existing classes =====
+  - module: vtkCommonCore
+    class: vtkPoints
+    header: vtkPoints.h
+    functions:
+      - name: InsertPoint
+        cppSignature: "void InsertPoint(vtkIdType id, double x, double y, double z)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkIdType", name: id }
+          - { type: "double", name: x }
+          - { type: "double", name: y }
+          - { type: "double", name: z }
+
+  - module: vtkRenderingCore
+    class: vtkProperty
+    header: vtkProperty.h
+    functions:
+      - name: SetAmbient
+        cppSignature: "void SetAmbient(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+      - name: SetDiffuse
+        cppSignature: "void SetDiffuse(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+      - name: SetSpecular
+        cppSignature: "void SetSpecular(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+      - name: SetSpecularColor
+        cppSignature: "void SetSpecularColor(double _arg1, double _arg2, double _arg3)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg1 }
+          - { type: "double", name: _arg2 }
+          - { type: "double", name: _arg3 }
+      - name: SetSpecularPower
+        cppSignature: "void SetSpecularPower(double _arg)"
+        return:
+          type: void
+        parameters:
+          - { type: "double", name: _arg }
+
+  - module: vtkRenderingCore
+    class: vtkRenderWindowInteractor
+    header: vtkRenderWindowInteractor.h
+    functions:
+      - name: Initialize
+        cppSignature: "void Initialize()"
+        return:
+          type: void
+        parameters: []

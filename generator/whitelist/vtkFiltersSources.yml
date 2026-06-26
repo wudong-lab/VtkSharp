@@ -90,3 +90,39 @@ classes:
         parameters:
           - type: double
             name: _arg
+  - name: vtkSphereSource
+    header: vtkSphereSource.h
+    functions:
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort()
+        return:
+          type: vtkAlgorithmOutput*
+        parameters: []
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - type: int
+            name: index
+      - name: SetPhiResolution
+        cppSignature: void SetPhiResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetRadius
+        cppSignature: void SetRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetThetaResolution
+        cppSignature: void SetThetaResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg

@@ -21,6 +21,26 @@ classes:
         parameters:
           - type: vtkIdType
             name: number
+  - name: vtkMinimalStandardRandomSequence
+    header: vtkMinimalStandardRandomSequence.h
+    functions:
+      - name: GetValue
+        cppSignature: double GetValue()
+        return:
+          type: double
+        parameters: []
+      - name: Next
+        cppSignature: void Next()
+        return:
+          type: void
+        parameters: []
+      - name: SetSeed
+        cppSignature: void SetSeed(int value)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: value
   - name: vtkPoints
     header: vtkPoints.h
     functions:
@@ -35,6 +55,22 @@ classes:
             name: y
           - type: double
             name: z
+      - name: InsertPoint
+        cppSignature: void InsertPoint(vtkIdType id, double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+  - name: vtkRandomSequence
+    header: vtkRandomSequence.h
+    functions: []
   - name: vtkWindow
     header: vtkWindow.h
     functions:

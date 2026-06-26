@@ -5,3 +5,5 @@
 VTKSHARP_API vtkPoints* vtkPoints_New() { return vtkPoints::New(); }
 
 VTKSHARP_API vtkIdType vtkPoints_InsertNextPoint(vtkPoints* self, double x, double y, double z) { return self->InsertNextPoint(x, y, z); }
+
+VTKSHARP_API void vtkPoints_InsertPoint(vtkPoints* self, vtkIdType id, double x, double y, double z) { self->InsertPoint(id, x, y, z); }

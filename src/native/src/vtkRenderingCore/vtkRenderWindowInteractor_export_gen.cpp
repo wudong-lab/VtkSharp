@@ -5,6 +5,8 @@
 
 VTKSHARP_API vtkRenderWindowInteractor* vtkRenderWindowInteractor_New() { return vtkRenderWindowInteractor::New(); }
 
+VTKSHARP_API void vtkRenderWindowInteractor_Initialize(vtkRenderWindowInteractor* self) { self->Initialize(); }
+
 VTKSHARP_API void vtkRenderWindowInteractor_SetRenderWindow(vtkRenderWindowInteractor* self, vtkRenderWindow* aren) { self->SetRenderWindow(aren); }
 
 VTKSHARP_API void vtkRenderWindowInteractor_Start(vtkRenderWindowInteractor* self) { self->Start(); }

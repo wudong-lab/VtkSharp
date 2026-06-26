@@ -76,6 +76,13 @@ classes:
   - name: vtkProperty
     header: vtkProperty.h
     functions:
+      - name: SetAmbient
+        cppSignature: void SetAmbient(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
       - name: SetColor
         cppSignature: void SetColor(double r, double g, double b)
         return:
@@ -87,6 +94,38 @@ classes:
             name: g
           - type: double
             name: b
+      - name: SetDiffuse
+        cppSignature: void SetDiffuse(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetSpecular
+        cppSignature: void SetSpecular(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetSpecularColor
+        cppSignature: void SetSpecularColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetSpecularPower
+        cppSignature: void SetSpecularPower(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
   - name: vtkRenderWindow
     header: vtkRenderWindow.h
     functions:
@@ -112,6 +151,11 @@ classes:
   - name: vtkRenderWindowInteractor
     header: vtkRenderWindowInteractor.h
     functions:
+      - name: Initialize
+        cppSignature: void Initialize()
+        return:
+          type: void
+        parameters: []
       - name: SetRenderWindow
         cppSignature: void SetRenderWindow(vtkRenderWindow* aren)
         return:

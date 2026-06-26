@@ -23,11 +23,19 @@ public unsafe partial class vtkPoints : vtkObject
         return vtkPoints_InsertNextPoint(this.NativePointer, x, y, z);
     }
 
+    public new void InsertPoint(long id, double x, double y, double z)
+    {
+        vtkPoints_InsertPoint(this.NativePointer, id, x, y, z);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPoints_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkPoints_InsertNextPoint(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_InsertPoint(nint self, long id, double x, double y, double z);
     #endregion
 }

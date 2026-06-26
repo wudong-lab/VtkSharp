@@ -18,9 +18,34 @@ public unsafe partial class vtkProperty : vtkObject
         return target;
     }
 
+    public new void SetAmbient(double _arg)
+    {
+        vtkProperty_SetAmbient(this.NativePointer, _arg);
+    }
+
     public new void SetColor(double r, double g, double b)
     {
         vtkProperty_SetColor(this.NativePointer, r, g, b);
+    }
+
+    public new void SetDiffuse(double _arg)
+    {
+        vtkProperty_SetDiffuse(this.NativePointer, _arg);
+    }
+
+    public new void SetSpecular(double _arg)
+    {
+        vtkProperty_SetSpecular(this.NativePointer, _arg);
+    }
+
+    public new void SetSpecularColor(double _arg1, double _arg2, double _arg3)
+    {
+        vtkProperty_SetSpecularColor(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetSpecularPower(double _arg)
+    {
+        vtkProperty_SetSpecularPower(this.NativePointer, _arg);
     }
 
     #region Interop
@@ -28,6 +53,21 @@ public unsafe partial class vtkProperty : vtkObject
     private static extern nint vtkProperty_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetAmbient(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProperty_SetColor(nint self, double r, double g, double b);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetDiffuse(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSpecular(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSpecularColor(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSpecularPower(nint self, double _arg);
     #endregion
 }

@@ -4,6 +4,7 @@ set(VTKSHARP_VTK_COMPONENTS
   CommonCore
   CommonDataModel
   CommonExecutionModel
+  FiltersCore
   FiltersSources
   InteractionStyle
   RenderingCore
@@ -16,6 +17,7 @@ set(VTKSHARP_VTK_TARGETS
   VTK::CommonCore
   VTK::CommonDataModel
   VTK::CommonExecutionModel
+  VTK::FiltersCore
   VTK::FiltersSources
   VTK::InteractionStyle
   VTK::RenderingCore

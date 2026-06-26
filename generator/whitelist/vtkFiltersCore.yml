@@ -1,0 +1,165 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkFiltersCore
+classes:
+  - name: vtkDelaunay2D
+    header: vtkDelaunay2D.h
+    functions:
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort()
+        return:
+          type: vtkAlgorithmOutput*
+        parameters: []
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - type: int
+            name: index
+      - name: SetInputData
+        cppSignature: void SetInputData(int _arg1, vtkDataObject * _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: vtkDataObject*
+            name: _arg2
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataObject * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: _arg1
+      - name: SetTolerance
+        cppSignature: void SetTolerance(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+  - name: vtkExtractEdges
+    header: vtkExtractEdges.h
+    functions:
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort()
+        return:
+          type: vtkAlgorithmOutput*
+        parameters: []
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - type: int
+            name: index
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(int port, vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: port
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: input
+  - name: vtkGlyph3D
+    header: vtkGlyph3D.h
+    functions:
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort()
+        return:
+          type: vtkAlgorithmOutput*
+        parameters: []
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - type: int
+            name: index
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(int port, vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: port
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetSourceConnection
+        cppSignature: void SetSourceConnection(int id, vtkAlgorithmOutput * algOutput)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: id
+          - type: vtkAlgorithmOutput*
+            name: algOutput
+      - name: SetSourceConnection
+        cppSignature: void SetSourceConnection(vtkAlgorithmOutput * algOutput)
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: algOutput
+  - name: vtkTubeFilter
+    header: vtkTubeFilter.h
+    functions:
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort()
+        return:
+          type: vtkAlgorithmOutput*
+        parameters: []
+      - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - type: int
+            name: index
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(int port, vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: port
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetNumberOfSides
+        cppSignature: void SetNumberOfSides(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetRadius
+        cppSignature: void SetRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
