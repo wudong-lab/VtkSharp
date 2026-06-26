@@ -22,23 +22,23 @@ First obtain the C++ source. Try in order:
 
 Identify all VTK classes and methods used. Note any types that are likely unsupported (pointer returns to non-vtkObject types, references, `std::array`, `vtkVariant`, etc.) — these will need inline value substitution.
 
-## 1. Write the C# translation
+## 1. Determine category and write the C# translation
 
-Create `examples/<Name>/<Name>.cs`. Follow the pattern from existing examples (see `examples/Cone/Cone.cs`, `examples/Cylinder/Cylinder.cs`):
+Determine the appropriate category directory under `examples/ExampleBrowser/Examples/`. Existing categories: `GeometricObjects`, `Modelling`. The category typically maps to the VTK example's parent directory (e.g. `VTK/Examples/GeometricObjects/Cxx/Cone.cxx` → `GeometricObjects`).
+
+Create `examples/ExampleBrowser/Examples/<Category>/<Name>/<Name>.cs`. Follow the pattern from existing examples (see `examples/ExampleBrowser/Examples/GeometricObjects/Cone/Cone.cs`, `examples/ExampleBrowser/Examples/Modelling/DelaunayMesh/DelaunayMesh.cs`):
 
 ```csharp
-using System;
 using VtkSharp;
 
-namespace VtkSharp.Examples;
+namespace VtkSharp.ExampleBrowser.Examples;
 
-// Port of <original-path>
-// <one-line description of what the example does>
-// <note any deviations here, e.g. vtkNamedColors values inlined>
-
-internal class <Name>
+[Example("<Name>", "<Category>",
+    Description = "<one-line description of what the example does>",
+    SourceFiles = new[] { "Examples/<Category>/<Name>/<Name>.cs" })]
+internal class <Name> : IExample
 {
-    static void Main()
+    public void Run()
     {
         // C# translation here
     }
@@ -60,12 +60,11 @@ Key translation rules:
   colors.GetColor("Tomato", rgba);
   ```
 - For other unsupported types (returning non-vtkObject pointers, `int&` out params, `std::string&`, etc.), work around them and document the deviation in porting-notes.md.
-- Do NOT add example code to TestConsole at this stage — the example file in `examples/<Name>/` is the canonical port.
 
 ## 2. Build and identify missing symbols
 
 ```bash
-dotnet build src/bindings/VtkSharp.slnx
+dotnet build examples/ExampleBrowser/ExampleBrowser.csproj
 ```
 
 Parse compilation errors to identify exactly which classes and methods are missing. Collect a list of `<ClassName>::<MethodName>` pairs needed.
@@ -78,7 +77,7 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- inspect-function <Class
 
 ## 3. Build the candidate whitelist
 
-Create `examples/<Name>/candidate.yml`. There are two approaches:
+Create `examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`. There are two approaches:
 
 **Approach A (recommended for new examples): targeted build**
 
@@ -92,7 +91,7 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate <NewCl
   --methods Method1 Method2 ...
 ```
 
-Then assemble all requirements into a single `examples/<Name>/candidate.yml`. Look at `examples/Cylinder/candidate.yml` for the exact format.
+Then assemble all requirements into a single `examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`. Look at `examples/ExampleBrowser/Examples/GeometricObjects/Cylinder/candidate.yml` for the exact format.
 
 For existing classes that need additional methods (e.g. adding `GetProperty` to `vtkActor`), inspect the exact signature with `inspect-function` and add the entry directly to the candidate YAML manually — the candidate format supports adding methods to already-whitelisted classes.
 
@@ -104,14 +103,14 @@ If you need many methods from one class, use `create-candidate` without `--metho
 
 Before merging, verify with `diff-whitelist`:
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist examples/<Name>/candidate.yml
+dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
 ```
 Check that only the expected methods are listed as "Added".
 
 ## 4. Merge candidate and regenerate
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/<Name>/candidate.yml
+dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
 dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src/
 ```
 
@@ -120,28 +119,22 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --out
 ## 5. Build native and managed code
 
 ```bash
-cmake --build src/native/out/build/windows-x64-vs2022 --config Release
+cmake --build src/native/out/build/windows-x64 --config Release
 dotnet build src/bindings/VtkSharp.slnx
+dotnet build examples/ExampleBrowser/ExampleBrowser.csproj
 ```
 
 If there are compilation errors in generated code, diagnose the type mapping issue rather than editing generated files directly.
 
 ## 6. Smoke test
 
-Copy the native DLL and temporarily put the example code in `src/bindings/TestConsole/Program.cs` to run it:
+The native DLL is automatically copied to output via `VtkSharp.csproj` (it references `src/native/out/build/windows-x64/Release/vtksharp_native.dll` with `CopyToOutputDirectory`). Run ExampleBrowser to verify the example works:
+
 ```bash
-cp src/native/out/build/windows-x64-vs2022/Release/vtksharp_native.dll src/bindings/TestConsole/bin/Debug/net48/
-PATH="C:/Program Files/VTK/bin:$PATH" dotnet run --project src/bindings/TestConsole -- --smoke
+dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
 ```
 
-`--smoke` renders one frame and exits without starting the interactor event loop (the test calls `Render()` and prints a message but skips `Start()`). Confirm "Smoke test completed." appears with exit code 0.
-
-After smoke test, restore TestConsole to its original state:
-```bash
-git checkout src/bindings/TestConsole/Program.cs
-```
-
-Do NOT commit TestConsole changes with the example.
+Select the new example from the list and confirm it renders correctly.
 
 ## 7. Verify generation is clean
 
@@ -153,7 +146,7 @@ This must print "Generated output is up to date." If it reports differences, reg
 
 ## 8. Write porting notes
 
-Create `examples/<Name>/porting-notes.md` following the pattern in `examples/Cylinder/porting-notes.md`. Include:
+Create `examples/ExampleBrowser/Examples/<Category>/<Name>/porting-notes.md` following the pattern in `examples/ExampleBrowser/Examples/GeometricObjects/Cone/porting-notes.md`. Include:
 - Original source path
 - All VTK classes used and their whitelist status
 - All APIs added (with module and class)
@@ -169,7 +162,6 @@ Review changes with `git status` and `git diff`. Commit message format:
 ## Rules
 
 - **Never edit formal whitelist files directly.** Always go through candidate + merge-candidate.
-- **Never commit changes to TestConsole/Program.cs.** It should always be restored after smoke testing.
 - **Always use `--supported-only`** with create-candidate to filter out unsupported signatures.
 - **Always fetch actual source** — do not translate from memory or examples.vtk.org screenshots.
 - **Method goes on the declaring class** (use `inspect-function` to find where it's defined if the inheritance is unclear).

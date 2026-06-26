@@ -34,5 +34,5 @@ dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
 ## 示例选择优先级
 
 - 优先选 **VTK SDK 自带示例**（`Cone`, `Cylinder`, `Sphere` 等）
-- 优先选 **已有的 TestConsole 覆盖不到的 API**
+- 优先选 **ExampleBrowser 中尚未覆盖的 API**
 - 第一次走通流程后再挑战复杂示例

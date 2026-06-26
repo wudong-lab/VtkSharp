@@ -50,8 +50,6 @@ public sealed class NativeProjectEmitterTests
 
         Assert.Contains("\"version\": 6", text);
         Assert.Contains("\"windows-x64\"", text);
-        Assert.Contains("\"Visual Studio 18 2026\"", text);
-        Assert.Contains("\"windows-x64-vs2022\"", text);
         Assert.Contains("\"Visual Studio 17 2022\"", text);
     }
 

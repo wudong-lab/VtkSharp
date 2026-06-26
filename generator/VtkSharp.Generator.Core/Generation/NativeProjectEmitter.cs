@@ -64,27 +64,15 @@ public sealed class NativeProjectEmitter
                {
                  "name": "windows-x64",
                  "displayName": "Windows x64",
-                 "generator": "Visual Studio 18 2026",
-                 "architecture": "x64",
-                 "binaryDir": "${sourceDir}/out/build/windows-x64"
-               },
-               {
-                 "name": "windows-x64-vs2022",
-                 "displayName": "Windows x64 (Visual Studio 2022)",
                  "generator": "Visual Studio 17 2022",
                  "architecture": "x64",
-                 "binaryDir": "${sourceDir}/out/build/windows-x64-vs2022"
+                 "binaryDir": "${sourceDir}/out/build/windows-x64"
                }
              ],
              "buildPresets": [
                {
                  "name": "windows-x64",
                  "configurePreset": "windows-x64",
-                 "configuration": "Release"
-               },
-               {
-                 "name": "windows-x64-vs2022",
-                 "configurePreset": "windows-x64-vs2022",
                  "configuration": "Release"
                }
              ]
