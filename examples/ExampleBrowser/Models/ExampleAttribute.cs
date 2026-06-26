@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace VtkSharp.ExampleBrowser;
 
@@ -13,7 +13,7 @@ public class ExampleAttribute : Attribute
 
     public ExampleAttribute(string name, string category)
     {
-        Name = name;
-        Category = category;
+        this.Name = name;
+        this.Category = category;
     }
 }

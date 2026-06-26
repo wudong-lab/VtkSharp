@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Threading;
 using AvaloniaEdit.Highlighting;
@@ -15,25 +10,25 @@ public partial class MainWindow : Window
     private static readonly string ExamplesRoot = Path.Combine(
         AppContext.BaseDirectory, "..", "..", "..", "..", "..", "examples", "ExampleBrowser");
 
-    private Dictionary<string, List<ExampleInfo>> _examples = null!;
+    private readonly Dictionary<string, List<ExampleInfo>> _examples = null!;
     private ExampleInfo? _selectedExample;
 
     public MainWindow()
     {
-        InitializeComponent();
+        this.InitializeComponent();
 
-        CodeEditor.Text = "// Select an example from the tree to view its source code.";
-        CodeEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
-        CodeEditor.IsReadOnly = true;
-        CodeEditor.ShowLineNumbers = true;
+        this.CodeEditor.Text = "// Select an example from the tree to view its source code.";
+        this.CodeEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinition("C#");
+        this.CodeEditor.IsReadOnly = true;
+        this.CodeEditor.ShowLineNumbers = true;
 
-        _examples = ExampleDiscovery.DiscoverAll();
-        PopulateTreeView();
+        this._examples = ExampleDiscovery.DiscoverAll();
+        this.PopulateTreeView();
     }
 
     private void PopulateTreeView()
     {
-        foreach (var (category, examples) in _examples.OrderBy(kv => kv.Key))
+        foreach (var (category, examples) in this._examples.OrderBy(kv => kv.Key))
         {
             var categoryNode = new TreeViewItem { Header = category };
 
@@ -47,7 +42,7 @@ public partial class MainWindow : Window
                 categoryNode.Items.Add(exampleNode);
             }
 
-            ExampleTreeView.Items.Add(categoryNode);
+            this.ExampleTreeView.Items.Add(categoryNode);
         }
     }
 
@@ -55,76 +50,76 @@ public partial class MainWindow : Window
     {
         base.OnLoaded(e);
 
-        ExampleTreeView.SelectionChanged += OnTreeSelectionChanged;
-        FileListBox.SelectionChanged += OnFileListSelectionChanged;
-        RunButton.Click += OnRunClick;
+        this.ExampleTreeView.SelectionChanged += this.OnTreeSelectionChanged;
+        this.FileListBox.SelectionChanged += this.OnFileListSelectionChanged;
+        this.RunButton.Click += this.OnRunClick;
     }
 
     private void OnTreeSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (ExampleTreeView.SelectedItem is not TreeViewItem { Tag: ExampleInfo info })
+        if (this.ExampleTreeView.SelectedItem is not TreeViewItem { Tag: ExampleInfo info })
         {
-            _selectedExample = null;
-            FileListBox.ItemsSource = null;
-            RunButton.IsEnabled = false;
+            this._selectedExample = null;
+            this.FileListBox.ItemsSource = null;
+            this.RunButton.IsEnabled = false;
             return;
         }
 
-        _selectedExample = info;
-        RunButton.IsEnabled = true;
+        this._selectedExample = info;
+        this.RunButton.IsEnabled = true;
 
         var fileNames = info.SourceFiles.Select(Path.GetFileName).ToList();
-        FileListBox.ItemsSource = fileNames;
+        this.FileListBox.ItemsSource = fileNames;
 
         if (fileNames.Count > 0 && fileNames[0] is { } firstFile)
         {
-            FileListBox.SelectedIndex = 0;
-            LoadSourceFile(firstFile);
+            this.FileListBox.SelectedIndex = 0;
+            this.LoadSourceFile(firstFile);
         }
     }
 
     private void OnFileListSelectionChanged(object? sender, SelectionChangedEventArgs e)
     {
-        if (FileListBox.SelectedItem is string fileName)
+        if (this.FileListBox.SelectedItem is string fileName)
         {
-            LoadSourceFile(fileName);
+            this.LoadSourceFile(fileName);
         }
     }
 
     private void LoadSourceFile(string fileName)
     {
-        if (_selectedExample is null)
+        if (this._selectedExample is null)
             return;
 
-        var index = Array.IndexOf(_selectedExample.SourceFiles.Select(Path.GetFileName).ToArray(), fileName);
+        var index = Array.IndexOf(this._selectedExample.SourceFiles.Select(Path.GetFileName).ToArray(), fileName);
         if (index < 0)
             return;
 
         // Read from disk (development mode — source files are on disk)
-        var relativePath = _selectedExample.SourceFiles[index];
+        var relativePath = this._selectedExample.SourceFiles[index];
         var filePath = Path.GetFullPath(Path.Combine(ExamplesRoot, relativePath));
 
         if (!File.Exists(filePath))
         {
-            CodeEditor.Text = $"// File not found: {filePath}";
-            StatusText.Text = $"Failed to load: {fileName}";
+            this.CodeEditor.Text = $"// File not found: {filePath}";
+            this.StatusText.Text = $"Failed to load: {fileName}";
             return;
         }
 
         var code = File.ReadAllText(filePath);
-        CodeEditor.Text = code;
-        StatusText.Text = $"{_selectedExample.Name} — {fileName}";
+        this.CodeEditor.Text = code;
+        this.StatusText.Text = $"{this._selectedExample.Name} — {fileName}";
     }
 
     private void OnRunClick(object? sender, RoutedEventArgs e)
     {
-        if (_selectedExample is null)
+        if (this._selectedExample is null)
             return;
 
-        RunButton.IsEnabled = false;
-        StatusText.Text = $"Running {_selectedExample.Name}...";
+        this.RunButton.IsEnabled = false;
+        this.StatusText.Text = $"Running {this._selectedExample.Name}...";
 
-        var example = (IExample)Activator.CreateInstance(_selectedExample.ExampleType)!;
+        var example = (IExample)Activator.CreateInstance(this._selectedExample.ExampleType)!;
 
         Task.Run(() =>
         {
@@ -134,14 +129,14 @@ public partial class MainWindow : Window
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"Example '{_selectedExample.Name}' failed: {ex}");
+                Console.Error.WriteLine($"Example '{this._selectedExample.Name}' failed: {ex}");
             }
             finally
             {
                 Dispatcher.UIThread.Post(() =>
                 {
-                    RunButton.IsEnabled = true;
-                    StatusText.Text = $"{_selectedExample.Name} — Finished";
+                    this.RunButton.IsEnabled = true;
+                    this.StatusText.Text = $"{this._selectedExample.Name} — Finished";
                 });
             }
         });
