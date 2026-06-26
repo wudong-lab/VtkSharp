@@ -39,15 +39,15 @@ public unsafe partial class vtkNamedColors : vtkObject
         }
     }
 
-    public new VtkSharpColor3d GetColor3d(string name)
+    public new VtkColor3d GetColor3d(string name)
     {
         double* __outGetColor3d = stackalloc double[3];
         #if NET10_0_OR_GREATER
         vtkNamedColors_GetColor3d(this.NativePointer, name, __outGetColor3d);
-        return new VtkSharpColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
+        return new VtkColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
         #else
         vtkNamedColors_GetColor3d(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), __outGetColor3d);
-        return new VtkSharpColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
+        return new VtkColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
         #endif
     }
 

@@ -9,7 +9,7 @@ public static class TypeClassifier
 
     private static readonly Dictionary<string, (int Count, string CSharpName, string CppHeader)> ValueStructInfo = new()
     {
-        ["vtkColor3d"] = (3, "VtkSharpColor3d", "vtkColor"),
+        ["vtkColor3d"] = (3, "VtkColor3d", "vtkColor"),
     };
 
     public static bool IsVtkValueStruct(string type) => VtkValueStructs.Contains(type);

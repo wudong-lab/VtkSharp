@@ -28,4 +28,4 @@ None — all types used were already supported.
 
 ## Deviations from C++ Original
 
-- `colors->GetColor3d("Banana").GetData()` → `colors.GetColor3d("Banana")` with `.R/.G/.B` property access. The C# binding returns a `VtkSharpColor3d` value type struct instead of a pointer, so `.GetData()` is unnecessary.
+- `colors->GetColor3d("Banana").GetData()` → `colors.GetColor3d("Banana")` with `.R/.G/.B` property access. The C# binding returns a `VtkColor3d` value type struct instead of a pointer, so `.GetData()` is unnecessary.

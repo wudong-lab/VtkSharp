@@ -44,5 +44,5 @@
 
 ## Deviations from C++ original
 
-- vtkNamedColors color lookups use `GetColor3d()` which returns `VtkSharpColor3d` with `.R`/`.G`/`.B` properties, instead of the C++ `.GetData()` pattern that passes `double*` to `SetColor`. Functionally equivalent.
+- vtkNamedColors color lookups use `GetColor3d()` which returns `VtkColor3d` with `.R`/`.G`/`.B` properties, instead of the C++ `.GetData()` pattern that passes `double*` to `SetColor`. Functionally equivalent.
 - vtkIdType renders as C# `long` (int64), which is compatible with the C++ `vtkIdType`.

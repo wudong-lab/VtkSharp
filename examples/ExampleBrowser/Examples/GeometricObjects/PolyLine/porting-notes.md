@@ -45,5 +45,5 @@
 
 - **No `double[3]` stack arrays**: C++ code declares `double origin[3] = {0,0,0}` and passes arrays to `InsertNextPoint(origin)`. The C# port uses the scalar overload `InsertNextPoint(x, y, z)` instead.
 - **`GetPointIds()` not wrapped in `using`**: `polyLine->GetPointIds()` returns a non-owned `vtkIdList*` (borrowed reference); it must not be disposed by the caller. The returned object is used directly without a `using` statement.
-- **Color access via `VtkSharpColor3d` struct**: C++ code uses `colors->GetColor3d("Tomato").GetData()` (returns `const double*`). C# uses the `VtkSharpColor3d` value type returned by `GetColor3d(name)` and accesses `.R/.G/.B` properties directly.
+- **Color access via `VtkColor3d` struct**: C++ code uses `colors->GetColor3d("Tomato").GetData()` (returns `const double*`). C# uses the `VtkColor3d` value type returned by `GetColor3d(name)` and accesses `.R/.G/.B` properties directly.
 - **`EXIT_SUCCESS` → implicit return**: C# `Main()` has `void` return type; no explicit return value needed.

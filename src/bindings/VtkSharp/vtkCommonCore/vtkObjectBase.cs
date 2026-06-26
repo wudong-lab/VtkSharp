@@ -16,7 +16,7 @@ public class vtkObjectBase : IDisposable
     public nint NativePointer { get; protected set; }
     public bool OwnsReference { get; }
 
-    public void Delete()
+    public virtual void Delete()
     {
         if (!this.OwnsReference || this.NativePointer == IntPtr.Zero) return;
 
