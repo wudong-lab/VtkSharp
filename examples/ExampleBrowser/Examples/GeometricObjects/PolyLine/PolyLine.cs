@@ -1,14 +1,13 @@
-using System;
 using VtkSharp;
 
-namespace VtkSharp.Examples;
+namespace VtkSharp.ExampleBrowser.Examples;
 
-// Port of https://examples.vtk.org/site/Cxx/GeometricObjects/PolyLine/
-// Creates a polyline connecting five 3D points and renders it as a Tomato-colored line.
-
-internal class PolyLine
+[Example("PolyLine", "GeometricObjects",
+    Description = "Creates a polyline connecting five 3D points and renders it as a Tomato-colored line.",
+    SourceFiles = new[] { "Examples/GeometricObjects/PolyLine/PolyLine.cs" })]
+internal class PolyLine : IExample
 {
-    static void Main()
+    public void Run()
     {
         using var colors = vtkNamedColors.New();
 

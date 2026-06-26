@@ -1,17 +1,13 @@
-using System;
 using VtkSharp;
 
-namespace VtkSharp.Examples;
+namespace VtkSharp.ExampleBrowser.Examples;
 
-// Port of VTK/Examples/GeometricObjects/Cxx/CylinderExample.cxx
-// Creates a cylinder, colors it tomato, rotates it, and renders with a dark blue background.
-// vtkNamedColors is not bound; color values are inlined directly.
-//   Tomato   = (1.0, 0.388, 0.278)
-//   BkgColor = (26/255 ≈ 0.102, 51/255 = 0.2, 102/255 = 0.4)
-
-internal class Cylinder
+[Example("Cylinder", "GeometricObjects",
+    Description = "Creates a cylinder, colors it tomato, rotates it, and renders with a dark blue background.",
+    SourceFiles = new[] { "Examples/GeometricObjects/Cylinder/Cylinder.cs" })]
+internal class Cylinder : IExample
 {
-    static void Main()
+    public void Run()
     {
         using var cylinder = vtkCylinderSource.New();
         cylinder.SetResolution(8);

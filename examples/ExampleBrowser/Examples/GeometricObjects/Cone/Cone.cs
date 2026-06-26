@@ -1,14 +1,13 @@
-using System;
 using VtkSharp;
 
-namespace VtkSharp.Examples;
+namespace VtkSharp.ExampleBrowser.Examples;
 
-// Port of VTK/Examples/GeometricObjects/Cxx/Cone.cxx
-// Creates a cone with custom height/radius/resolution and renders it.
-
-internal class Cone
+[Example("Cone", "GeometricObjects",
+    Description = "Creates a cone with custom height/radius/resolution and renders it.",
+    SourceFiles = new[] { "Examples/GeometricObjects/Cone/Cone.cs" })]
+internal class Cone : IExample
 {
-    static void Main()
+    public void Run()
     {
         using var cone = vtkConeSource.New();
         cone.SetHeight(3.0);

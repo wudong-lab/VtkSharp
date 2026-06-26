@@ -1,15 +1,13 @@
-using System;
 using VtkSharp;
 
-namespace VtkSharp.Examples;
+namespace VtkSharp.ExampleBrowser.Examples;
 
-// Port of VTK/Examples/GeometricObjects/Cxx/Circle.cxx
-// Creates a circle (outline polygon with 50 sides) using vtkRegularPolygonSource
-// and renders it in cornsilk color on a dark green background.
-
-internal class Circle
+[Example("Circle", "GeometricObjects",
+    Description = "Creates a circle using vtkRegularPolygonSource and renders it in cornsilk color on a dark green background.",
+    SourceFiles = new[] { "Examples/GeometricObjects/Circle/Circle.cs" })]
+internal class Circle : IExample
 {
-    static void Main()
+    public void Run()
     {
         using var colors = vtkNamedColors.New();
 

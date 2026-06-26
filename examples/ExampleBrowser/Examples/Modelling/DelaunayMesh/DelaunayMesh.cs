@@ -1,14 +1,13 @@
-using System;
 using VtkSharp;
 
-namespace VtkSharp.Examples;
+namespace VtkSharp.ExampleBrowser.Examples;
 
-// Port of VTK/Examples/Modelling/Cxx/DelaunayMesh.cxx
-// Demonstrates 2D Delaunay triangulation with tube-wrapped edges and sphere glyphs at points.
-
-internal class DelaunayMesh
+[Example("DelaunayMesh", "Modelling",
+    Description = "Demonstrates 2D Delaunay triangulation with tube-wrapped edges and sphere glyphs at points.",
+    SourceFiles = new[] { "Examples/Modelling/DelaunayMesh/DelaunayMesh.cs" })]
+internal class DelaunayMesh : IExample
 {
-    static void Main()
+    public void Run()
     {
         using var colors = vtkNamedColors.New();
 
@@ -94,6 +93,7 @@ internal class DelaunayMesh
         iren.SetRenderWindow(renWin);
 
         // Add the actors to the renderer, set the background and size.
+        ren.AddActor(meshActor);
         ren.AddActor(ballActor);
         ren.AddActor(edgeActor);
         var aliceBlue = colors.GetColor3d("AliceBlue");
@@ -105,7 +105,6 @@ internal class DelaunayMesh
         ren.GetActiveCamera().Zoom(1.3);
 
         // Interact with the data.
-        iren.Initialize();
         renWin.Render();
         iren.Start();
     }

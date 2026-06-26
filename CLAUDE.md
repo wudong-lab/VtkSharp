@@ -15,7 +15,11 @@ src/bindings/VtkSharp/            # C# 绑定输出目录（含手写 partial）
 src/native/src/                   # C++ export 输出目录
 src/bindings/TestConsole/         # smoke test 项目
 docs/superpowers/specs/           # 设计文档
-examples/                         # 示例翻译案例
+examples/
+  ExampleBrowser/                 # 示例浏览器（Avalonia 桌面应用）
+    Examples/                     # 示例翻译案例（按 VTK 分类）
+      GeometricObjects/           # 几何对象类示例
+      Modelling/                  # 建模类示例
 ```
 
 ## CLI 命令速查
@@ -32,9 +36,9 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- list-classes [--module 
 
 ### 白名单
 ```
-dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx -o examples/<Example>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original "path/to/original.cxx" [--methods Method1 Method2 ...]
-dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist examples/<Example>/candidate.yml [--format json]
-dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/<Example>/candidate.yml
+dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx -o examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original "path/to/original.cxx" [--methods Method1 Method2 ...]
+dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml [--format json]
+dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
 dotnet run --project generator/VtkSharp.Generator.Cli -- validate-whitelist [--continue-on-error] [--format json]
 dotnet run --project generator/VtkSharp.Generator.Cli -- normalize-whitelist
 ```
@@ -55,17 +59,23 @@ cp src/native/out/build/windows-x64-vs2022/Release/vtksharp_native.dll src/bindi
 PATH="C:/Program Files/VTK/bin:$PATH" dotnet run --project src/bindings/TestConsole -- --smoke
 ```
 
+### 示例浏览器
+```
+dotnet build examples/ExampleBrowser/ExampleBrowser.csproj
+dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
+```
+
 ## AI 示例翻译流程（8 步）
 
 设计文档: `docs/superpowers/specs/2026-06-23-vtksharp-generator-design.md` 行 801-811。
 
-1. 选择 VTK C++ 示例，翻译到 C#，放入 `examples/<Name>/`
-2. 构建并运行示例：`dotnet build src/bindings/VtkSharp.slnx`
-3. 解析缺失类/成员（编译错误）
-4. 对每个缺失类调 CLI 查询：`create-candidate vtkXxx -o examples/<Example>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original <path>`
-5. 生成候选白名单到 `examples/<Name>/candidate.yml`
+1. 选择 VTK C++ 示例，翻译到 C#，放入 `examples/ExampleBrowser/Examples/<Category>/<Name>/`
+2. 实现 `IExample` 接口，标注 `[Example]` Attribute（含 Name、Category、Description、SourceFiles）
+3. 构建：`dotnet build examples/ExampleBrowser/ExampleBrowser.csproj`
+4. 解析缺失类/成员（编译错误）
+5. 对每个缺失类调 CLI 查询：`create-candidate vtkXxx -o examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original <path>`
 6. 人工审核 candidate.yml
-7. `merge-candidate examples/<Name>/candidate.yml`（自动 normalize）
+7. `merge-candidate examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`（自动 normalize）
 8. `generate-bindings --check` → cmake build → dotnet build → smoke test
 
 ## 约束
