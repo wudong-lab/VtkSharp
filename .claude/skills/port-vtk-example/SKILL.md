@@ -9,7 +9,7 @@ tools: Bash, Read, Write, Edit, Grep, Glob
 
 Follow this workflow exactly to translate a VTK C++ example to C# and extend the VtkSharp bindings as needed.
 
-All commands run from repository root: `D:\Code\wudong-lab\VtkSharp`. Use `--` after `--project` to pass arguments to the CLI.
+All commands run from repository root. Use `--` after `--project` to pass arguments to the CLI.
 
 CLI binary: `dotnet run --project generator/VtkSharp.Generator.Cli --`
 

@@ -84,7 +84,7 @@ The generator must emit into a temporary output root first.
 Run:
 
 ```powershell
-Set-Location D:\Code\wudong-lab\VtkSharp
+Set-Location <repo-root>
 New-Item -ItemType Directory -Force src\generator | Out-Null
 dotnet new sln -n VtkSharp.Generator -o src\generator
 dotnet new classlib -n VtkSharp.Generator.Core -o src\generator\VtkSharp.Generator.Core

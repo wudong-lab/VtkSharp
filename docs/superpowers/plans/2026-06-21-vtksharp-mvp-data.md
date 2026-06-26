@@ -1760,7 +1760,7 @@ Run:
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/test.ps1 `
   -VtkBin "C:\Program Files\VTK\bin" `
-  -NativeBuildDir "D:\Code\wudong-lab\VtkSharp\native\out\build\windows-x64"
+  -NativeBuildDir "<repo-root>\native\out\build\windows-x64"
 ```
 
 Expected: managed tests and native smoke tests pass.
@@ -1816,7 +1816,7 @@ Run:
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/test.ps1 `
   -VtkBin "C:\Program Files\VTK\bin" `
-  -NativeBuildDir "D:\Code\wudong-lab\VtkSharp\native\out\build\windows-x64"
+  -NativeBuildDir "<repo-root>\native\out\build\windows-x64"
 ```
 
 Expected: all tests pass.

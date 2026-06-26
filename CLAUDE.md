@@ -25,7 +25,7 @@ examples/
 
 ## CLI 命令速查
 
-从仓库根目录运行。`cd D:\Code\wudong-lab\VtkSharp`。
+从仓库根目录运行。
 
 ### 查询
 ```
