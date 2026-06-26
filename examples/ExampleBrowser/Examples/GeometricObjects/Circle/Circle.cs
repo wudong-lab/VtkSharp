@@ -1,3 +1,4 @@
+﻿using System.Diagnostics;
 using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
@@ -40,7 +41,7 @@ internal class Circle : IExample
 
         renderWindow.SetWindowName("Circle");
         renderWindow.Render();
-        Console.WriteLine("Circle example running. Close the window to exit.");
+        Debug.WriteLine("Circle example running. Close the window to exit.");
         renderWindowInteractor.Start();
     }
 }

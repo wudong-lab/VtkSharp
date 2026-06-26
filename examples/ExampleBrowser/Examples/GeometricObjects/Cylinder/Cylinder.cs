@@ -1,3 +1,4 @@
+﻿using System.Diagnostics;
 using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
@@ -36,7 +37,7 @@ internal class Cylinder : IExample
         renderWindowInteractor.SetRenderWindow(renderWindow);
 
         renderWindow.Render();
-        Console.WriteLine("Cylinder example running. Close the window to exit.");
+        Debug.WriteLine("Cylinder example running. Close the window to exit.");
         renderWindowInteractor.Start();
     }
 }

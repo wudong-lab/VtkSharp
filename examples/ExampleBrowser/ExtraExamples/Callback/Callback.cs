@@ -3,17 +3,22 @@ using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
 
-[Example("Cone", "GeometricObjects",
-    Description = "Creates a cone with custom height/radius/resolution and renders it.",
-    SourceFiles = new[] { "Examples/GeometricObjects/Cone/Cone.cs" })]
-internal class Cone : IExample
+[Example("Callback", "ExtraExamples",
+    Description = "Registers a ModifiedEvent observer and renders a cone.",
+    SourceFiles = new[] { "ExtraExamples/Callback/Callback.cs" })]
+internal class Callback : IExample
 {
     public void Run()
     {
         using var cone = vtkConeSource.New();
+
+        using var observer = cone.AddObserver(VtkCommandEventIds.ModifiedEvent, ObjectEventHandler);
+
         cone.SetHeight(3.0);
         cone.SetRadius(1.0);
-        cone.SetResolution(10);
+        cone.SetResolution(16);
+
+        Debug.WriteLine($"Observer tag: {observer.Tag}");
 
         using var mapper = vtkPolyDataMapper.New();
         mapper.SetInputConnection(cone.GetOutputPort());
@@ -32,7 +37,15 @@ internal class Cone : IExample
         interactor.SetRenderWindow(window);
 
         window.Render();
-        Debug.WriteLine("Cone example running. Close the window to exit.");
+        Debug.WriteLine("Callback example running. Modify events were printed before rendering.");
         interactor.Start();
+    }
+
+    private int _modifiedCount = 0;
+
+    private void ObjectEventHandler(vtkObject caller, uint eventId)
+    {
+        this._modifiedCount++;
+        Debug.WriteLine($"ModifiedEvent #{this._modifiedCount}: caller={caller.GetType().Name}, eventId={eventId}");
     }
 }

@@ -1,3 +1,4 @@
+﻿using System.Diagnostics;
 using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
@@ -30,7 +31,7 @@ internal class Arrow : IExample
         renderWindowInteractor.SetRenderWindow(renderWindow);
 
         renderWindow.Render();
-        Console.WriteLine("Arrow example running. Close the window to exit.");
+        Debug.WriteLine("Arrow example running. Close the window to exit.");
         renderWindowInteractor.Start();
     }
 }

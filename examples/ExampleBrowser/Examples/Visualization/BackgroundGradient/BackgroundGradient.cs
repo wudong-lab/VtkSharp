@@ -1,3 +1,4 @@
+﻿using System.Diagnostics;
 using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
@@ -36,7 +37,7 @@ internal class BackgroundGradient : IExample
         renderer.SetBackground2(tomato.R, tomato.G, tomato.B);
 
         renderWindow.Render();
-        Console.WriteLine("BackgroundGradient example running. Close the window to exit.");
+        Debug.WriteLine("BackgroundGradient example running. Close the window to exit.");
         renderWindowInteractor.Start();
     }
 }

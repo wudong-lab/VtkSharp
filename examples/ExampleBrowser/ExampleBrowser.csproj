@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Examples\**\*.cs" />
+    <EmbeddedResource Include="ExtraExamples\**\*.cs" />
   </ItemGroup>
 
   <PropertyGroup>

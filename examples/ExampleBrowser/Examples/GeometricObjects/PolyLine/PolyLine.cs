@@ -1,3 +1,4 @@
+﻿using System.Diagnostics;
 using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
@@ -62,7 +63,7 @@ internal class PolyLine : IExample
         renderer.SetBackground(bg.R, bg.G, bg.B);
 
         renderWindow.Render();
-        Console.WriteLine("PolyLine example running. Close the window to exit.");
+        Debug.WriteLine("PolyLine example running. Close the window to exit.");
         renderWindowInteractor.Start();
     }
 }
