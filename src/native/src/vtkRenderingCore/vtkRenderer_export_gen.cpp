@@ -10,4 +10,10 @@ VTKSHARP_API void vtkRenderer_AddActor(vtkRenderer* self, vtkProp* p) { self->Ad
 
 VTKSHARP_API vtkCamera* vtkRenderer_GetActiveCamera(vtkRenderer* self) { return self->GetActiveCamera(); }
 
+VTKSHARP_API void vtkRenderer_GradientBackgroundOn(vtkRenderer* self) { self->GradientBackgroundOn(); }
+
 VTKSHARP_API void vtkRenderer_ResetCamera(vtkRenderer* self) { self->ResetCamera(); }
+
+VTKSHARP_API void vtkRenderer_SetBackground2_double_double_double(vtkRenderer* self, double _arg1, double _arg2, double _arg3) { self->SetBackground2(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkRenderer_SetBackground2_doubleConstArray3(vtkRenderer* self, const double* _arg) { self->SetBackground2(_arg); }

@@ -28,9 +28,27 @@ public unsafe partial class vtkRenderer : vtkViewport
         return vtkCamera.WeakReference(vtkRenderer_GetActiveCamera(this.NativePointer));
     }
 
+    public new void GradientBackgroundOn()
+    {
+        vtkRenderer_GradientBackgroundOn(this.NativePointer);
+    }
+
     public new void ResetCamera()
     {
         vtkRenderer_ResetCamera(this.NativePointer);
+    }
+
+    public new void SetBackground2(double _arg1, double _arg2, double _arg3)
+    {
+        vtkRenderer_SetBackground2_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetBackground2(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkRenderer_SetBackground2_doubleConstArray3(this.NativePointer, _argPtr);
+        }
     }
 
     #region Interop
@@ -44,6 +62,15 @@ public unsafe partial class vtkRenderer : vtkViewport
     private static extern nint vtkRenderer_GetActiveCamera(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_GradientBackgroundOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_ResetCamera(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SetBackground2_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SetBackground2_doubleConstArray3(nint self, double* _arg);
     #endregion
 }

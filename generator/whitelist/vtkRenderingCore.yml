@@ -183,11 +183,34 @@ classes:
         return:
           type: vtkCamera*
         parameters: []
+      - name: GradientBackgroundOn
+        cppSignature: void GradientBackgroundOn()
+        return:
+          type: void
+        parameters: []
       - name: ResetCamera
         cppSignature: void ResetCamera()
         return:
           type: void
         parameters: []
+      - name: SetBackground2
+        cppSignature: void SetBackground2(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetBackground2
+        cppSignature: void SetBackground2(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
   - name: vtkViewport
     header: vtkViewport.h
     functions:
