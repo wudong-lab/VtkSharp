@@ -2,13 +2,9 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
-	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <RootNamespace>VtkSharp</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64\Release\vtksharp_native.dll</VtkSharpNativeDllPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -31,17 +27,12 @@
     <PackageReference Include="System.Memory" Version="4.5.5" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64\Release\vtksharp_native.dll</VtkSharpNativeDllPath>
+  </PropertyGroup>
+
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
     <None Include="$(VtkSharpNativeDllPath)" Link="vtksharp_native.dll" TargetPath="vtksharp_native.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="TestConsole\**\*.cs" />
-    <Compile Remove="VtkSharp\**\*.cs" />
-    <EmbeddedResource Remove="TestConsole\**\*" />
-    <EmbeddedResource Remove="VtkSharp\**\*" />
-    <None Remove="TestConsole\**\*" />
-    <None Remove="VtkSharp\**\*" />
   </ItemGroup>
 
 </Project>
