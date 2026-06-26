@@ -29,6 +29,7 @@ Determine the appropriate category directory under `examples/ExampleBrowser/Exam
 Create `examples/ExampleBrowser/Examples/<Category>/<Name>/<Name>.cs`. Follow the pattern from existing examples (see `examples/ExampleBrowser/Examples/GeometricObjects/Cone/Cone.cs`, `examples/ExampleBrowser/Examples/Modelling/DelaunayMesh/DelaunayMesh.cs`):
 
 ```csharp
+using System.Diagnostics;
 using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
@@ -50,6 +51,7 @@ Key translation rules:
 - `->` method calls → `.` method calls
 - `vtkSmartPointer` / raw pointers → no wrapping needed, `New()` returns a managed wrapper
 - Wrap every VTK object in `using var` (implements `IDisposable`)
+- Console output (`std::cout`, `printf`, etc.) → `Debug.WriteLine()`. Always add `using System.Diagnostics;` at the top. Do NOT use `Console.WriteLine`.
 - vtkNamedColors is available. Preferred approach is `GetColor3d(name)` which returns a `VtkSharpColor3d` struct with R/G/B properties. For RGBA use `GetColor(name, stackalloc double[4])` with `Span<double>`. Examples:
   ```csharp
   using var colors = vtkNamedColors.New();
@@ -59,6 +61,16 @@ Key translation rules:
   Span<double> rgba = stackalloc double[4];
   colors.GetColor("Tomato", rgba);
   ```
+- Callback functions (vtk observers / command callbacks) are supported via `AddObserver`. See `examples/ExampleBrowser/ExtraExamples/Callback/Callback.cs` for the pattern:
+  ```csharp
+  using var observer = obj.AddObserver(VtkCommandEventIds.ModifiedEvent, EventHandler);
+
+  private void EventHandler(vtkObject caller, uint eventId)
+  {
+      Debug.WriteLine($"Event {eventId} on {caller.GetType().Name}");
+  }
+  ```
+  The event handler signature is `void (vtkObject caller, uint eventId)`. Use `VtkCommandEventIds` to reference VTK event constants.
 - For other unsupported types (returning non-vtkObject pointers, `int&` out params, `std::string&`, etc.), work around them and document the deviation in porting-notes.md.
 
 ## 2. Build and identify missing symbols
