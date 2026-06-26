@@ -26,6 +26,31 @@ public sealed class VtkObjectObserverTests
     }
 
     [Fact]
+    public unsafe void AddObserver_PassesClientDataAndCallDataToManagedCallback()
+    {
+        using var points = vtkPoints.New();
+        var expectedClientData = new ObserverClientData("test-client");
+        var callDataValue = 42;
+        object? observedClientData = null;
+        nint observedCallData = 0;
+
+        using var observer = points.AddObserver(
+            VtkCommandEventIds.UserEvent,
+            (caller, eventId, clientData, callData) =>
+            {
+                observedClientData = clientData;
+                observedCallData = callData;
+            },
+            expectedClientData);
+
+        points.InvokeEvent(VtkCommandEventIds.UserEvent, (nint)(&callDataValue));
+
+        Assert.Same(expectedClientData, observedClientData);
+        Assert.Equal((nint)(&callDataValue), observedCallData);
+        Assert.Equal(42, *(int*)observedCallData);
+    }
+
+    [Fact]
     public void ObserverDispose_RemovesObserver()
     {
         using var points = vtkPoints.New();
@@ -50,4 +75,6 @@ public sealed class VtkObjectObserverTests
 
         Assert.Equal(0, points.NativePointer);
     }
+
+    private sealed record ObserverClientData(string Name);
 }

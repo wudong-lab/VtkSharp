@@ -1,24 +1,43 @@
 ﻿using System.Diagnostics;
+using System.Runtime.InteropServices;
 using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
 
 [Example("Callback", "ExtraExamples",
-    Description = "Registers a ModifiedEvent observer and renders a cone.",
+    Description = "Registers observers and renders a cone.",
     SourceFiles = new[] { "ExtraExamples/Callback/Callback.cs" })]
 internal class Callback : IExample
 {
+    private int _modifiedCount = 0;
+
     public void Run()
     {
         using var cone = vtkConeSource.New();
 
-        using var observer = cone.AddObserver(VtkCommandEventIds.ModifiedEvent, ObjectEventHandler);
+        using var observer = cone.AddObserver(VtkCommandEventIds.ModifiedEvent, this.ObjectEventHandler);
 
         cone.SetHeight(3.0);
         cone.SetRadius(1.0);
         cone.SetResolution(16);
 
         Debug.WriteLine($"Observer tag: {observer.Tag}");
+
+        using var dataObserver = cone.AddObserver(
+            VtkCommandEventIds.UserEvent,
+            ObjectEventDataHandler,
+            clientData: "managed client data");
+
+        var callData = Marshal.AllocHGlobal(sizeof(int));
+        try
+        {
+            Marshal.WriteInt32(callData, 42);
+            cone.InvokeEvent(VtkCommandEventIds.UserEvent, callData);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(callData);
+        }
 
         using var mapper = vtkPolyDataMapper.New();
         mapper.SetInputConnection(cone.GetOutputPort());
@@ -41,11 +60,15 @@ internal class Callback : IExample
         interactor.Start();
     }
 
-    private int _modifiedCount = 0;
-
     private void ObjectEventHandler(vtkObject caller, uint eventId)
     {
         this._modifiedCount++;
         Debug.WriteLine($"ModifiedEvent #{this._modifiedCount}: caller={caller.GetType().Name}, eventId={eventId}");
+    }
+
+    private static void ObjectEventDataHandler(vtkObject caller, uint eventId, object? clientData, nint callData)
+    {
+        var value = callData == 0 ? 0 : Marshal.ReadInt32(callData);
+        Debug.WriteLine($"UserEvent: caller={caller.GetType().Name}, eventId={eventId}, clientData={clientData}, callData={value}");
     }
 }

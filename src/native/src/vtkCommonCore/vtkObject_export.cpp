@@ -5,7 +5,12 @@
 
 VTKSHARP_API void vtkObject_Modified(vtkObject* self) { self->Modified(); }
 
-using VtkSharpObserverCallback = void (*)(vtkObject* caller, uint32_t eventId, void* clientData);
+VTKSHARP_API void vtkObject_InvokeEvent(vtkObject* self, uint32_t eventId, void* callData)
+{
+    self->InvokeEvent(static_cast<unsigned long>(eventId), callData);
+}
+
+using VtkSharpObserverCallback = void (*)(vtkObject* caller, uint32_t eventId, void* clientData, void* callData);
 
 struct VtkSharpObserverContext
 {
@@ -27,9 +32,8 @@ VTKSHARP_API uint64_t vtkObject_AddObserverCallback(
         delete static_cast<VtkSharpObserverContext*>(data);
     });
     command->SetCallback([](vtkObject* caller, unsigned long eid, void* callbackClientData, void* callData) {
-        (void)callData;
         auto context = static_cast<VtkSharpObserverContext*>(callbackClientData);
-        context->Callback(caller, static_cast<uint32_t>(eid), context->ClientData);
+        context->Callback(caller, static_cast<uint32_t>(eid), context->ClientData, callData);
     });
 
     auto tag = self->AddObserver(static_cast<unsigned long>(eventId), command, priority);

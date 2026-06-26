@@ -1,7 +1,22 @@
 namespace VtkSharp;
 
-internal sealed class VtkObserverState(vtkObject owner, VtkObjectEventHandler callback)
+internal sealed class VtkObserverState
 {
-    public vtkObject Owner { get; } = owner;
-    public VtkObjectEventHandler Callback { get; } = callback;
+    public VtkObserverState(vtkObject owner, VtkObjectEventHandler callback)
+    {
+        this.Owner = owner;
+        this.Callback = callback;
+    }
+
+    public VtkObserverState(vtkObject owner, VtkObjectEventDataHandler dataCallback, object? clientData)
+    {
+        this.Owner = owner;
+        this.DataCallback = dataCallback;
+        this.ClientData = clientData;
+    }
+
+    public vtkObject Owner { get; }
+    public VtkObjectEventHandler? Callback { get; }
+    public VtkObjectEventDataHandler? DataCallback { get; }
+    public object? ClientData { get; }
 }

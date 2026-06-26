@@ -24,11 +24,33 @@ public class vtkObject : vtkObjectBase
         vtkObject_Modified(this.NativePointer);
     }
 
+    public void InvokeEvent(uint eventId, nint callData = 0)
+    {
+        vtkObject_InvokeEvent(this.NativePointer, eventId, callData);
+    }
+
     public VtkObserverHandle AddObserver(uint eventId, VtkObjectEventHandler callback, float priority = 0.0f)
     {
         if (callback is null) throw new ArgumentNullException(nameof(callback));
 
         var state = new VtkObserverState(this, callback);
+        return this.AddObserverCore(eventId, state, priority);
+    }
+
+    public VtkObserverHandle AddObserver(
+        uint eventId,
+        VtkObjectEventDataHandler callback,
+        object? clientData = null,
+        float priority = 0.0f)
+    {
+        if (callback is null) throw new ArgumentNullException(nameof(callback));
+
+        var state = new VtkObserverState(this, callback, clientData);
+        return this.AddObserverCore(eventId, state, priority);
+    }
+
+    private VtkObserverHandle AddObserverCore(uint eventId, VtkObserverState state, float priority)
+    {
         var stateHandle = GCHandle.Alloc(state);
 
         try
@@ -83,21 +105,30 @@ public class vtkObject : vtkObjectBase
         }
     }
 
-    private static void OnObserverCallback(nint caller, uint eventId, nint clientData)
+    private static void OnObserverCallback(nint caller, uint eventId, nint clientData, nint callData)
     {
         var stateHandle = GCHandle.FromIntPtr(clientData);
         if (stateHandle.Target is VtkObserverState state)
         {
-            state.Callback(state.Owner, eventId);
+            if (state.DataCallback is not null)
+            {
+                state.DataCallback(state.Owner, eventId, state.ClientData, callData);
+                return;
+            }
+
+            state.Callback?.Invoke(state.Owner, eventId);
         }
     }
 
     #region Interop
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    private delegate void VtkObserverNativeCallback(nint caller, uint eventId, nint clientData);
+    private delegate void VtkObserverNativeCallback(nint caller, uint eventId, nint clientData, nint callData);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkObject_Modified(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkObject_InvokeEvent(nint self, uint eventId, nint callData);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern ulong vtkObject_AddObserverCallback(nint self, uint eventId, nint callback, nint clientData, float priority);
