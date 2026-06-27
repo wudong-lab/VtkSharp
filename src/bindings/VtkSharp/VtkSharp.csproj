@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64\Release\vtksharp_native.dll</VtkSharpNativeDllPath>
+    <VtkSharpNativeDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64\$(Configuration)\vtksharp_native.dll</VtkSharpNativeDllPath>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">

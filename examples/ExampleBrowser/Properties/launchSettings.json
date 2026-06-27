@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ExampleBrowser": {
+      "commandName": "Project",
+      "debugEngines": "managed"
+    }
+  }
+}
