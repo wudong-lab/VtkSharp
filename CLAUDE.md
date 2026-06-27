@@ -63,7 +63,12 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --out
 > | `-c Release` | `--config Release` | `/MD` |
 
 ```
-cmake --build src/native/out/build/windows-x64 --config Release
+# Debug
+cmake --build --preset windows-x64-debug
+dotnet build src/bindings/VtkSharp.slnx --configuration Debug
+
+# Release
+cmake --build --preset windows-x64
 dotnet build src/bindings/VtkSharp.slnx
 ```
 
