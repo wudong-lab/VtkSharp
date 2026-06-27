@@ -1,6 +1,6 @@
 ﻿namespace VtkSharp;
 
-public static class vtkCommand
+public partial class vtkCommand
 {
     public const uint NoEvent = 0;
     public const uint AnyEvent = 1;
