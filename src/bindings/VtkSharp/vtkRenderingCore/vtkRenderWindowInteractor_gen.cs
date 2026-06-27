@@ -18,6 +18,46 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         return target;
     }
 
+    public new int GetAltKey()
+    {
+        return vtkRenderWindowInteractor_GetAltKey(this.NativePointer);
+    }
+
+    public new int GetControlKey()
+    {
+        return vtkRenderWindowInteractor_GetControlKey(this.NativePointer);
+    }
+
+    internal new int* GetEventPosition_Internal()
+    {
+        return vtkRenderWindowInteractor_GetEventPosition(this.NativePointer);
+    }
+
+    public new char GetKeyCode()
+    {
+        return (char)vtkRenderWindowInteractor_GetKeyCode(this.NativePointer);
+    }
+
+    public new string GetKeySym()
+    {
+        return VtkString.FromUtf8Pointer(vtkRenderWindowInteractor_GetKeySym(this.NativePointer));
+    }
+
+    internal new int* GetLastEventPosition_Internal()
+    {
+        return vtkRenderWindowInteractor_GetLastEventPosition(this.NativePointer);
+    }
+
+    public new int GetRepeatCount()
+    {
+        return vtkRenderWindowInteractor_GetRepeatCount(this.NativePointer);
+    }
+
+    public new int GetShiftKey()
+    {
+        return vtkRenderWindowInteractor_GetShiftKey(this.NativePointer);
+    }
+
     public new void Initialize()
     {
         vtkRenderWindowInteractor_Initialize(this.NativePointer);
@@ -36,6 +76,30 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderWindowInteractor_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetAltKey(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetControlKey(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int* vtkRenderWindowInteractor_GetEventPosition(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern byte vtkRenderWindowInteractor_GetKeyCode(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderWindowInteractor_GetKeySym(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int* vtkRenderWindowInteractor_GetLastEventPosition(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetRepeatCount(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetShiftKey(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_Initialize(nint self);

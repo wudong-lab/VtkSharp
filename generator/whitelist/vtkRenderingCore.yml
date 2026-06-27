@@ -151,6 +151,46 @@ classes:
   - name: vtkRenderWindowInteractor
     header: vtkRenderWindowInteractor.h
     functions:
+      - name: GetAltKey
+        cppSignature: int GetAltKey()
+        return:
+          type: int
+        parameters: []
+      - name: GetControlKey
+        cppSignature: int GetControlKey()
+        return:
+          type: int
+        parameters: []
+      - name: GetEventPosition
+        cppSignature: int* GetEventPosition()
+        return:
+          type: int*
+        parameters: []
+      - name: GetKeyCode
+        cppSignature: char GetKeyCode()
+        return:
+          type: char
+        parameters: []
+      - name: GetKeySym
+        cppSignature: char* GetKeySym()
+        return:
+          type: char*
+        parameters: []
+      - name: GetLastEventPosition
+        cppSignature: int* GetLastEventPosition()
+        return:
+          type: int*
+        parameters: []
+      - name: GetRepeatCount
+        cppSignature: int GetRepeatCount()
+        return:
+          type: int
+        parameters: []
+      - name: GetShiftKey
+        cppSignature: int GetShiftKey()
+        return:
+          type: int
+        parameters: []
       - name: Initialize
         cppSignature: void Initialize()
         return:

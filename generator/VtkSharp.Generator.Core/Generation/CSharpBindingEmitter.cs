@@ -175,6 +175,10 @@ public sealed class CSharpBindingEmitter
         {
             sb.AppendLine($"{indent}return VtkString.FromUtf8Pointer({call});");
         }
+        else if (returnType == "char")
+        {
+            sb.AppendLine($"{indent}return (char){call};");
+        }
         else
         {
             sb.AppendLine($"{indent}return {call};");
@@ -184,7 +188,7 @@ public sealed class CSharpBindingEmitter
     private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
         var isValueStructReturn = TypeClassifier.IsVtkValueStruct(function.Return.Type);
-        var interopReturnType = isValueStructReturn ? "void" : ToInteropType(function.Return.Type);
+        var interopReturnType = isValueStructReturn ? "void" : ToInteropReturnType(function.Return.Type);
         var returnMarshal = isValueStructReturn ? null : ToReturnMarshalAttribute(function.Return.Type);
         var hasStringParameter = function.Parameters.Any(p => IsStringPointer(p.Type));
 
@@ -285,6 +289,9 @@ public sealed class CSharpBindingEmitter
             _ => throw new NotSupportedException($"C# interop type '{type}' is not supported by the MVP emitter."),
         };
     }
+
+    private static string ToInteropReturnType(string type)
+        => type == "char" ? "byte" : ToInteropType(type);
 
     private static string ToInteropArgument(WhitelistParameter parameter)
     {

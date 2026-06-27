@@ -221,6 +221,13 @@ public sealed class BindingEmitterFunctionTests
             },
             new WhitelistFunction
             {
+                Name = "GetKeyCode",
+                CppSignature = "char GetKeyCode()",
+                Return = new WhitelistReturn { Type = "char" },
+                Parameters = [],
+            },
+            new WhitelistFunction
+            {
                 Name = "GetData",
                 CppSignature = "void* GetData()",
                 Return = new WhitelistReturn { Type = "void*" },
@@ -248,6 +255,9 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VtkString.ToNullTerminatedUtf8(name)", text);
         Assert.Contains("public new string GetName()", text);
         Assert.Contains("return VtkString.FromUtf8Pointer(vtkThing_GetName(this.NativePointer))", text);
+        Assert.Contains("public new char GetKeyCode()", text);
+        Assert.Contains("return (char)vtkThing_GetKeyCode(this.NativePointer)", text);
+        Assert.Contains("private static extern byte vtkThing_GetKeyCode(nint self);", text);
         Assert.Contains("#if NET10_0_OR_GREATER", text);
         Assert.Contains("#else", text);
         Assert.Contains("#endif", text);

@@ -5,6 +5,22 @@
 
 VTKSHARP_API vtkRenderWindowInteractor* vtkRenderWindowInteractor_New() { return vtkRenderWindowInteractor::New(); }
 
+VTKSHARP_API int vtkRenderWindowInteractor_GetAltKey(vtkRenderWindowInteractor* self) { return self->GetAltKey(); }
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetControlKey(vtkRenderWindowInteractor* self) { return self->GetControlKey(); }
+
+VTKSHARP_API int* vtkRenderWindowInteractor_GetEventPosition(vtkRenderWindowInteractor* self) { return self->GetEventPosition(); }
+
+VTKSHARP_API char vtkRenderWindowInteractor_GetKeyCode(vtkRenderWindowInteractor* self) { return self->GetKeyCode(); }
+
+VTKSHARP_API char* vtkRenderWindowInteractor_GetKeySym(vtkRenderWindowInteractor* self) { return self->GetKeySym(); }
+
+VTKSHARP_API int* vtkRenderWindowInteractor_GetLastEventPosition(vtkRenderWindowInteractor* self) { return self->GetLastEventPosition(); }
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetRepeatCount(vtkRenderWindowInteractor* self) { return self->GetRepeatCount(); }
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetShiftKey(vtkRenderWindowInteractor* self) { return self->GetShiftKey(); }
+
 VTKSHARP_API void vtkRenderWindowInteractor_Initialize(vtkRenderWindowInteractor* self) { self->Initialize(); }
 
 VTKSHARP_API void vtkRenderWindowInteractor_SetRenderWindow(vtkRenderWindowInteractor* self, vtkRenderWindow* aren) { self->SetRenderWindow(aren); }

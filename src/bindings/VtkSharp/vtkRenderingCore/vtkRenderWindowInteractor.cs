@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.InteropServices;
 
 namespace VtkSharp;
 
@@ -7,26 +6,17 @@ public unsafe partial class vtkRenderWindowInteractor
 {
     public void GetEventPosition(out int x, out int y)
     {
-        int* position = stackalloc int[2];
-        vtkRenderWindowInteractor_GetEventPosition(this.NativePointer, position);
+        var position = this.GetEventPosition_Internal();
         x = position[0];
         y = position[1];
     }
 
     public void GetLastEventPosition(out int x, out int y)
     {
-        int* position = stackalloc int[2];
-        vtkRenderWindowInteractor_GetLastEventPosition(this.NativePointer, position);
+        var position = this.GetLastEventPosition_Internal();
         x = position[0];
         y = position[1];
     }
-
-    public bool GetControlKey() => vtkRenderWindowInteractor_GetControlKey(this.NativePointer) != 0;
-    public bool GetShiftKey() => vtkRenderWindowInteractor_GetShiftKey(this.NativePointer) != 0;
-    public bool GetAltKey() => vtkRenderWindowInteractor_GetAltKey(this.NativePointer) != 0;
-    public char GetKeyCode() => (char)vtkRenderWindowInteractor_GetKeyCode(this.NativePointer);
-    public string GetKeySym() => VtkString.FromUtf8Pointer(vtkRenderWindowInteractor_GetKeySym(this.NativePointer));
-    public int GetRepeatCount() => vtkRenderWindowInteractor_GetRepeatCount(this.NativePointer);
 
     public VtkObserverHandle AddMouseMoveEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
@@ -91,9 +81,9 @@ public unsafe partial class vtkRenderWindowInteractor
                     y,
                     lastX,
                     lastY,
-                    this.GetControlKey(),
-                    this.GetShiftKey(),
-                    this.GetAltKey()));
+                    this.IsControlKeyPressed(),
+                    this.IsShiftKeyPressed(),
+                    this.IsAltKeyPressed()));
             },
             priority: priority);
     }
@@ -113,34 +103,14 @@ public unsafe partial class vtkRenderWindowInteractor
                     this.GetKeyCode(),
                     this.GetKeySym(),
                     this.GetRepeatCount(),
-                    this.GetControlKey(),
-                    this.GetShiftKey(),
-                    this.GetAltKey()));
+                    this.IsControlKeyPressed(),
+                    this.IsShiftKeyPressed(),
+                    this.IsAltKeyPressed()));
             },
             priority: priority);
     }
 
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_GetEventPosition(nint self, int* position);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_GetLastEventPosition(nint self, int* position);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetControlKey(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetShiftKey(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetAltKey(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern byte vtkRenderWindowInteractor_GetKeyCode(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkRenderWindowInteractor_GetKeySym(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetRepeatCount(nint self);
+    private bool IsControlKeyPressed() => this.GetControlKey() != 0;
+    private bool IsShiftKeyPressed() => this.GetShiftKey() != 0;
+    private bool IsAltKeyPressed() => this.GetAltKey() != 0;
 }
