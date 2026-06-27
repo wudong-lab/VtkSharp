@@ -37,11 +37,7 @@ public class vtkObject : vtkObjectBase
         return this.AddObserverCore(eventId, state, priority);
     }
 
-    public VtkObserverHandle AddObserver(
-        uint eventId,
-        VtkObjectEventDataHandler callback,
-        object? clientData = null,
-        float priority = 0.0f)
+    public VtkObserverHandle AddObserver(uint eventId, VtkObjectEventDataHandler callback, object? clientData = null, float priority = 0.0f)
     {
         if (callback is null) throw new ArgumentNullException(nameof(callback));
 
