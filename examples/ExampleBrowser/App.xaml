@@ -1,0 +1,57 @@
+<Application x:Class="VtkSharp.ExampleBrowser.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="AppBackgroundBrush" Color="#1B1F24" />
+        <SolidColorBrush x:Key="PanelBackgroundBrush" Color="#20262E" />
+        <SolidColorBrush x:Key="CodeBackgroundBrush" Color="#0D1117" />
+        <SolidColorBrush x:Key="BorderBrush" Color="#30363D" />
+        <SolidColorBrush x:Key="TextBrush" Color="#E6EDF3" />
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#8B949E" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#3B82F6" />
+        <SolidColorBrush x:Key="HoverBrush" Color="#2A323D" />
+        <SolidColorBrush x:Key="SelectedBrush" Color="#264F78" />
+
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="{StaticResource AppBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#2F363F" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12,5" />
+        </Style>
+
+        <Style TargetType="TreeView">
+            <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="TreeViewItem">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="Padding" Value="4,2" />
+        </Style>
+
+        <Style TargetType="ListBox">
+            <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+    </Application.Resources>
+</Application>

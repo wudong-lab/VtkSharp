@@ -2,7 +2,6 @@
 
   <Project Path="VtkSharp/VtkSharp.csproj" />
   <Project Path="VtkSharp.Wpf/VtkSharp.Wpf.csproj" />
-  <Project Path="../../examples/WpfViewportExample/WpfViewportExample.csproj" />
   <Project Path="VtkSharp.Tests/VtkSharp.Tests.csproj" />
   <Project Path="../../examples/ExampleBrowser/ExampleBrowser.csproj" />
 </Solution>

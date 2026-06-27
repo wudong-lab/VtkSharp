@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace VtkSharp.WpfViewportExample;
+namespace VtkSharp.ExampleBrowser;
 
 public partial class App : Application
 {
