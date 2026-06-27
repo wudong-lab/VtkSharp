@@ -1,10 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
     <RootNamespace>VtkSharp</RootNamespace>
+
+    <!-- NuGet package identity -->
+    <PackageId>VtkSharp</PackageId>
+    <Title>VtkSharp — VTK .NET Bindings</Title>
+    <Description>
+      VtkSharp is an unofficial open-source .NET binding for VTK (Visualization Toolkit).
+      Uses a C ABI shim and C# P/Invoke approach. Targets netstandard2.0 and net10.0.
+      Not affiliated with or endorsed by Kitware.
+    </Description>
+    <PackageTags>VTK;visualization;graphics;rendering;netstandard;cross-platform</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -27,6 +38,11 @@
     <PackageReference Include="System.Memory" Version="4.5.5" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 
+  <!--
+    Native DLL resolution for local development builds.
+    Tries VS2026 output first, falls back to VS2022.
+    The selected DLL is copied to the output directory.
+  -->
   <PropertyGroup>
     <VtkSharpNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64-vs2026\$(Configuration)\vtksharp_native.dll</VtkSharpNativeDefaultDllPath>
     <VtkSharpNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64-vs2022\$(Configuration)\vtksharp_native.dll</VtkSharpNativeVs2022DllPath>
@@ -36,6 +52,22 @@
 
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
     <None Include="$(VtkSharpNativeDllPath)" Link="vtksharp_native.dll" TargetPath="vtksharp_native.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!--
+    Native DLL bundling for NuGet package.
+    Placed under runtimes/win-x64/native/ so the .NET runtime automatically
+    resolves it via native library probing when the consumer's RID is win-x64.
+  -->
+  <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
+    <Content Include="$(VtkSharpNativeDllPath)"
+             PackagePath="runtimes/win-x64/native/vtksharp_native.dll"
+             Visible="false" />
+  </ItemGroup>
+
+  <!-- Package README -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

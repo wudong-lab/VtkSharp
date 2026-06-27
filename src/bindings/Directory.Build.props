@@ -3,4 +3,24 @@
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>
+
+  <!-- Common NuGet metadata for all packages under src/bindings/ -->
+  <PropertyGroup>
+    <Authors>wudong</Authors>
+    <Company>wudong</Company>
+    <Copyright>Copyright (c) 2026 wudong</Copyright>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/wudong-lab/VtkSharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/wudong-lab/VtkSharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <!-- MinVer: derive NuGet version from git tags (tag prefix: "v") -->
+  <PropertyGroup>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="All" />
+  </ItemGroup>
 </Project>

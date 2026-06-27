@@ -22,8 +22,8 @@ public sealed class VtkRenderHost : HwndHost
     protected override HandleRef BuildWindowCore(HandleRef hwndParent)
     {
         this.InitializeVtk(hwndParent.Handle);
-        this._hostHandle = this.RenderWindow?.GetWindowId() ?? nint.Zero;
-        if (this._hostHandle == nint.Zero) throw new Win32Exception("VTK did not create a Win32 render window.");
+        this._hostHandle = this.RenderWindow?.GetWindowId() ?? IntPtr.Zero;
+        if (this._hostHandle == IntPtr.Zero) throw new Win32Exception("VTK did not create a Win32 render window.");
 
         this.Dispatcher.BeginInvoke(this.UpdateHostSizeAndRender, DispatcherPriority.Loaded);
         return new HandleRef(this, this._hostHandle);
@@ -32,14 +32,14 @@ public sealed class VtkRenderHost : HwndHost
     protected override void DestroyWindowCore(HandleRef hwnd)
     {
         this.DisposeVtkObjects();
-        this._hostHandle = nint.Zero;
+        this._hostHandle = IntPtr.Zero;
     }
 
     protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
     {
         base.OnRenderSizeChanged(sizeInfo);
 
-        if (this._hostHandle == nint.Zero) return;
+        if (this._hostHandle == IntPtr.Zero) return;
 
         this.UpdateHostSizeAndRender();
     }
@@ -70,7 +70,7 @@ public sealed class VtkRenderHost : HwndHost
 
     private void UpdateHostSizeAndRender()
     {
-        if (this._hostHandle == nint.Zero) return;
+        if (this._hostHandle == IntPtr.Zero) return;
 
         var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));
 

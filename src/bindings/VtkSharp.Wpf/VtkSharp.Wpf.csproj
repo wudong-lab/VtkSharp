@@ -1,13 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0-windows</TargetFramework>
+    <TargetFrameworks>net48;net10.0-windows</TargetFrameworks>
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>VtkSharp.Wpf</RootNamespace>
+
+    <!-- NuGet package identity -->
+    <PackageId>VtkSharp.Wpf</PackageId>
+    <Title>VtkSharp.Wpf — WPF Integration for VtkSharp</Title>
+    <Description>
+      WPF integration (VtkRenderHost) for VtkSharp. Provides an HwndHost-based
+      VTK render window for WPF applications. Windows-only.
+    </Description>
+    <PackageTags>VTK;visualization;WPF;desktop;windows</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\VtkSharp\VtkSharp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!-- Package README -->
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
