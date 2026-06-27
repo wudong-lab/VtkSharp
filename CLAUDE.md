@@ -89,7 +89,7 @@ dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
 5. 对每个缺失类调 CLI 查询：`create-candidate vtkXxx -o examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original <path>`
 6. 人工审核 candidate.yml
 7. `merge-candidate examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`（自动 normalize）
-8. `generate-bindings --check` → cmake build → dotnet build → smoke test
+8. `generate-bindings --check` → `.\tools\build-native.ps1` → `dotnet build` → smoke test
 
 ## 约束
 

@@ -150,10 +150,19 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --out
 
 ## 5. Build native and managed code
 
+> **⚠ CRT 匹配要求**：native DLL 与 VTK DLL 必须使用相同的 CRT（`/MD` 对 Release、`/MDd` 对 Debug）。在 VtkSharp.csproj 中，`$(Configuration)` 会自动选择对应版本的 `vtksharp_native.dll`。
+
 ```bash
-cmake --build src/native/out/build/windows-x64 --config Release
+.\tools\build-native.ps1 -Configuration Release
 dotnet build src/bindings/VtkSharp.slnx
 dotnet build examples/ExampleBrowser/ExampleBrowser.csproj
+```
+
+`build-native.ps1` 自动完成 cmake configure + build，优先尝试 VS2026，回退到 VS2022。
+
+如果 `generate-bindings` 后只需增量编译 native 代码（build 目录已存在），可直接用：
+```bash
+cmake --build src/native/out/build/windows-x64 --config Release
 ```
 
 If there are compilation errors in generated code, diagnose the type mapping issue rather than editing generated files directly.

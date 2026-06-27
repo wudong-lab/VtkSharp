@@ -29,7 +29,7 @@ dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
 4. 构建 → 编译错误 → `create-candidate` + `inspect-function` 查缺失 API
 5. 把缺失 API 写成 `candidate.yml`
 6. `diff-whitelist` 审查 → `merge-candidate` 合并
-7. `validate-whitelist` → `generate-bindings --check` → cmake build → dotnet build
+7. `validate-whitelist` → `generate-bindings --check` → `.\tools\build-native.ps1` → dotnet build
 
 ## 示例选择优先级
 
