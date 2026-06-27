@@ -51,12 +51,8 @@ public class vtkObject : vtkObjectBase
 
         try
         {
-            var tag = vtkObject_AddObserverCallback(
-                this.NativePointer,
-                eventId,
-                ObserverCallbackPointer,
-                GCHandle.ToIntPtr(stateHandle),
-                priority);
+            var tag = vtkObject_AddObserverCallback(this.NativePointer, eventId, ObserverCallbackPointer,
+                GCHandle.ToIntPtr(stateHandle), priority);
 
             var observer = new VtkObserverHandle(this, tag, stateHandle);
             this.AddObserverHandle(observer);
