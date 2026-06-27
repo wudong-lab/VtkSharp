@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace VtkSharp;
 
@@ -9,7 +9,7 @@ public static class VtkObjectObserverExtensions
         Action<VtkEventArgs> callback,
         float priority = 0.0f)
     {
-        return AddEventObserver(source, VtkCommandEventIds.ModifiedEvent, callback, priority);
+        return AddEventObserver(source, vtkCommand.ModifiedEvent, callback, priority);
     }
 
     public static VtkObserverHandle AddStartEventObserver(
@@ -17,7 +17,7 @@ public static class VtkObjectObserverExtensions
         Action<VtkEventArgs> callback,
         float priority = 0.0f)
     {
-        return AddEventObserver(source, VtkCommandEventIds.StartEvent, callback, priority);
+        return AddEventObserver(source, vtkCommand.StartEvent, callback, priority);
     }
 
     public static VtkObserverHandle AddEndEventObserver(
@@ -25,7 +25,7 @@ public static class VtkObjectObserverExtensions
         Action<VtkEventArgs> callback,
         float priority = 0.0f)
     {
-        return AddEventObserver(source, VtkCommandEventIds.EndEvent, callback, priority);
+        return AddEventObserver(source, vtkCommand.EndEvent, callback, priority);
     }
 
     public static unsafe VtkObserverHandle AddProgressEventObserver(
@@ -36,7 +36,7 @@ public static class VtkObjectObserverExtensions
         if (callback is null) throw new ArgumentNullException(nameof(callback));
 
         return source.AddObserver(
-            VtkCommandEventIds.ProgressEvent,
+            vtkCommand.ProgressEvent,
             (caller, eventId, _, callData) =>
             {
                 var progress = callData == 0 ? 0.0 : *(double*)callData;
@@ -50,7 +50,7 @@ public static class VtkObjectObserverExtensions
         Action<VtkMessageEventArgs> callback,
         float priority = 0.0f)
     {
-        return AddMessageObserver(source, VtkCommandEventIds.ErrorEvent, callback, priority);
+        return AddMessageObserver(source, vtkCommand.ErrorEvent, callback, priority);
     }
 
     public static VtkObserverHandle AddWarningEventObserver(
@@ -58,7 +58,7 @@ public static class VtkObjectObserverExtensions
         Action<VtkMessageEventArgs> callback,
         float priority = 0.0f)
     {
-        return AddMessageObserver(source, VtkCommandEventIds.WarningEvent, callback, priority);
+        return AddMessageObserver(source, vtkCommand.WarningEvent, callback, priority);
     }
 
     public static unsafe VtkObserverHandle AddTimerEventObserver(
@@ -69,7 +69,7 @@ public static class VtkObjectObserverExtensions
         if (callback is null) throw new ArgumentNullException(nameof(callback));
 
         return source.AddObserver(
-            VtkCommandEventIds.TimerEvent,
+            vtkCommand.TimerEvent,
             (caller, eventId, _, callData) =>
             {
                 var timerId = callData == 0 ? 0 : *(int*)callData;

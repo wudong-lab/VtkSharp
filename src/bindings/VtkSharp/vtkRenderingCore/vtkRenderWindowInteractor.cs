@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace VtkSharp;
 
@@ -20,47 +20,47 @@ public unsafe partial class vtkRenderWindowInteractor
 
     public VtkObserverHandle AddMouseMoveEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddMouseObserver(VtkCommandEventIds.MouseMoveEvent, callback, priority);
+        return this.AddMouseObserver(vtkCommand.MouseMoveEvent, callback, priority);
     }
 
     public VtkObserverHandle AddLeftButtonPressEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddMouseObserver(VtkCommandEventIds.LeftButtonPressEvent, callback, priority);
+        return this.AddMouseObserver(vtkCommand.LeftButtonPressEvent, callback, priority);
     }
 
     public VtkObserverHandle AddLeftButtonReleaseEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddMouseObserver(VtkCommandEventIds.LeftButtonReleaseEvent, callback, priority);
+        return this.AddMouseObserver(vtkCommand.LeftButtonReleaseEvent, callback, priority);
     }
 
     public VtkObserverHandle AddRightButtonPressEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddMouseObserver(VtkCommandEventIds.RightButtonPressEvent, callback, priority);
+        return this.AddMouseObserver(vtkCommand.RightButtonPressEvent, callback, priority);
     }
 
     public VtkObserverHandle AddRightButtonReleaseEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddMouseObserver(VtkCommandEventIds.RightButtonReleaseEvent, callback, priority);
+        return this.AddMouseObserver(vtkCommand.RightButtonReleaseEvent, callback, priority);
     }
 
     public VtkObserverHandle AddMouseWheelForwardEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddMouseObserver(VtkCommandEventIds.MouseWheelForwardEvent, callback, priority);
+        return this.AddMouseObserver(vtkCommand.MouseWheelForwardEvent, callback, priority);
     }
 
     public VtkObserverHandle AddMouseWheelBackwardEventObserver(Action<VtkMouseEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddMouseObserver(VtkCommandEventIds.MouseWheelBackwardEvent, callback, priority);
+        return this.AddMouseObserver(vtkCommand.MouseWheelBackwardEvent, callback, priority);
     }
 
     public VtkObserverHandle AddKeyPressEventObserver(Action<VtkKeyEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddKeyObserver(VtkCommandEventIds.KeyPressEvent, callback, priority);
+        return this.AddKeyObserver(vtkCommand.KeyPressEvent, callback, priority);
     }
 
     public VtkObserverHandle AddKeyReleaseEventObserver(Action<VtkKeyEventArgs> callback, float priority = 0.0f)
     {
-        return this.AddKeyObserver(VtkCommandEventIds.KeyReleaseEvent, callback, priority);
+        return this.AddKeyObserver(vtkCommand.KeyReleaseEvent, callback, priority);
     }
 
     private VtkObserverHandle AddMouseObserver(uint eventId, Action<VtkMouseEventArgs> callback, float priority)

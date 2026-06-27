@@ -1,4 +1,4 @@
-namespace VtkSharp.Tests;
+﻿namespace VtkSharp.Tests;
 
 public sealed class VtkObjectObserverTests
 {
@@ -10,7 +10,7 @@ public sealed class VtkObjectObserverTests
         vtkObject? observedCaller = null;
         uint observedEventId = 0;
 
-        using var observer = points.AddObserver(VtkCommandEventIds.ModifiedEvent, (caller, eventId) =>
+        using var observer = points.AddObserver(vtkCommand.ModifiedEvent, (caller, eventId) =>
         {
             callbackCount++;
             observedCaller = caller;
@@ -21,7 +21,7 @@ public sealed class VtkObjectObserverTests
 
         Assert.Equal(1, callbackCount);
         Assert.Same(points, observedCaller);
-        Assert.Equal(VtkCommandEventIds.ModifiedEvent, observedEventId);
+        Assert.Equal(vtkCommand.ModifiedEvent, observedEventId);
         Assert.True(observer.Tag > 0);
     }
 
@@ -35,7 +35,7 @@ public sealed class VtkObjectObserverTests
         nint observedCallData = 0;
 
         using var observer = points.AddObserver(
-            VtkCommandEventIds.UserEvent,
+            vtkCommand.UserEvent,
             (caller, eventId, clientData, callData) =>
             {
                 observedClientData = clientData;
@@ -43,7 +43,7 @@ public sealed class VtkObjectObserverTests
             },
             expectedClientData);
 
-        points.InvokeEvent(VtkCommandEventIds.UserEvent, (nint)(&callDataValue));
+        points.InvokeEvent(vtkCommand.UserEvent, (nint)(&callDataValue));
 
         Assert.Same(expectedClientData, observedClientData);
         Assert.Equal((nint)(&callDataValue), observedCallData);
@@ -56,7 +56,7 @@ public sealed class VtkObjectObserverTests
         using var points = vtkPoints.New();
         var callbackCount = 0;
 
-        var observer = points.AddObserver(VtkCommandEventIds.ModifiedEvent, (_, _) => callbackCount++);
+        var observer = points.AddObserver(vtkCommand.ModifiedEvent, (_, _) => callbackCount++);
         observer.Dispose();
 
         points.Modified();
@@ -68,7 +68,7 @@ public sealed class VtkObjectObserverTests
     public void OwnerDispose_ReleasesObserverHandle()
     {
         var points = vtkPoints.New();
-        var observer = points.AddObserver(VtkCommandEventIds.ModifiedEvent, (_, _) => { });
+        var observer = points.AddObserver(vtkCommand.ModifiedEvent, (_, _) => { });
 
         points.Dispose();
         observer.Dispose();

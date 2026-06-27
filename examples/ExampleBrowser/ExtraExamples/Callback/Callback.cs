@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
-using VtkSharp;
 
 namespace VtkSharp.ExampleBrowser.Examples;
 
@@ -15,7 +14,7 @@ internal class Callback : IExample
     {
         using var cone = vtkConeSource.New();
 
-        using var observer = cone.AddObserver(VtkCommandEventIds.ModifiedEvent, this.ObjectEventHandler);
+        using var observer = cone.AddObserver(vtkCommand.ModifiedEvent, this.ObjectEventHandler);
 
         cone.SetHeight(3.0);
         cone.SetRadius(1.0);
@@ -24,7 +23,7 @@ internal class Callback : IExample
         Debug.WriteLine($"Observer tag: {observer.Tag}");
 
         using var dataObserver = cone.AddObserver(
-            VtkCommandEventIds.UserEvent,
+            vtkCommand.UserEvent,
             ObjectEventDataHandler,
             clientData: "managed client data");
 
@@ -32,7 +31,7 @@ internal class Callback : IExample
         try
         {
             Marshal.WriteInt32(callData, 42);
-            cone.InvokeEvent(VtkCommandEventIds.UserEvent, callData);
+            cone.InvokeEvent(vtkCommand.UserEvent, callData);
         }
         finally
         {
