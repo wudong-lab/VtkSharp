@@ -24,7 +24,7 @@ Identify all VTK classes and methods used. Note any types that are likely unsupp
 
 ## 1. Determine category and write the C# translation
 
-Determine the appropriate category directory under `examples/ExampleBrowser/Examples/`. Existing categories: `GeometricObjects`, `Modelling`. The category typically maps to the VTK example's parent directory (e.g. `VTK/Examples/GeometricObjects/Cxx/Cone.cxx` → `GeometricObjects`).
+Determine the appropriate category directory under `examples/ExampleBrowser/Examples/`. Existing categories: `GeometricObjects`, `Interaction`, `Modelling`. The category typically maps to the VTK example's parent directory (e.g. `VTK/Examples/GeometricObjects/Cxx/Cone.cxx` → `GeometricObjects`).
 
 Create `examples/ExampleBrowser/Examples/<Category>/<Name>/<Name>.cs`. Follow the pattern from existing examples (see `examples/ExampleBrowser/Examples/GeometricObjects/Cone/Cone.cs`, `examples/ExampleBrowser/Examples/Modelling/DelaunayMesh/DelaunayMesh.cs`):
 
@@ -61,16 +61,36 @@ Key translation rules:
   Span<double> rgba = stackalloc double[4];
   colors.GetColor("Tomato", rgba);
   ```
-- Callback functions (vtk observers / command callbacks) are supported via `AddObserver`. See `examples/ExampleBrowser/ExtraExamples/Callback/Callback.cs` for the pattern:
+- Callback functions (vtk observers / command callbacks) are supported via `AddObserver`. See `examples/ExampleBrowser/ExtraExamples/Callback/Callback.cs` for the pattern. VtkSharp provides **two overloads**:
+
+  **Simple observer** (no client data):
   ```csharp
-  using var observer = obj.AddObserver(VtkCommandEventIds.ModifiedEvent, EventHandler);
+  using var observer = obj.AddObserver(vtkCommand.ModifiedEvent, EventHandler);
+  // delegate: void VtkObjectEventHandler(vtkObject caller, uint eventId)
 
   private void EventHandler(vtkObject caller, uint eventId)
   {
       Debug.WriteLine($"Event {eventId} on {caller.GetType().Name}");
   }
   ```
-  The event handler signature is `void (vtkObject caller, uint eventId)`. Use `VtkCommandEventIds` to reference VTK event constants.
+
+  **Observer with client data** (replaces C++ `vtkCallbackCommand` + `SetClientData`):
+  ```csharp
+  interactor.AddObserver(
+      vtkCommand.KeyPressEvent,
+      KeypressHandler,
+      clientData: sphereSource);   // any managed object
+  // delegate: void VtkObjectEventDataHandler(vtkObject caller, uint eventId, object? clientData, nint callData)
+
+  private static void KeypressHandler(vtkObject caller, uint eventId, object? clientData, nint callData)
+  {
+      var source = (vtkSphereSource)clientData!;
+      Debug.WriteLine($"Radius is {source.GetRadius()}");
+  }
+  ```
+
+- **Event constants**: use `vtkCommand.<EventName>` (static class, `const uint` fields), e.g. `vtkCommand.ModifiedEvent`, `vtkCommand.KeyPressEvent`, `vtkCommand.UserEvent`. There is **no** `VtkCommandEventIds` class.
+- **NEVER use `vtkCallbackCommand` directly** (`SetCallback` / `SetClientData`). The managed `AddObserver` + `clientData` parameter fully replaces this C++ pattern. If the C++ example uses `vtkCallbackCommand`, translate it to the `VtkObjectEventDataHandler` overload above.
 - For other unsupported types (returning non-vtkObject pointers, `int&` out params, `std::string&`, etc.), work around them and document the deviation in porting-notes.md.
 
 ## 2. Build and identify missing symbols
@@ -179,3 +199,5 @@ Review changes with `git status` and `git diff`. Commit message format:
 - **Method goes on the declaring class** (use `inspect-function` to find where it's defined if the inheritance is unclear).
 - Revert whitespace-only changes to `src/native/CMakeLists.txt`, `CMakePresets.json`, `vtksharp_api.h` caused by regeneration — these are line-ending artifacts.
 - If a type is unsupported (e.g. returns a non-vtkObject pointer, uses `int&` out parameters, `std::string&`, etc.), do NOT add it to the whitelist. Instead, work around it in the C# port and document the deviation in porting-notes.md.
+- **NEVER use `vtkCallbackCommand` directly.** C++ examples that pass client data via `vtkCallbackCommand::SetClientData()` + `SetCallback()` must be translated to the managed `AddObserver(uint eventId, VtkObjectEventDataHandler, object? clientData)` overload. Do NOT whitelist `vtkCallbackCommand` methods.
+- **Event constants live on `vtkCommand`** (static class, `const uint`). There is no `VtkCommandEventIds` class. Reference events as `vtkCommand.KeyPressEvent`, `vtkCommand.ModifiedEvent`, etc.
