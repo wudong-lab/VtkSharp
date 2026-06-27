@@ -33,7 +33,7 @@ public sealed class VtkObserverHandle : IDisposable
         if (this._disposed) return;
 
         if (this._owner.NativePointer != IntPtr.Zero)
-            this._owner.RemoveObserver(this.Tag);
+            this._owner.RemoveObserverNative(this.Tag);
 
         if (this._stateHandle.IsAllocated)
             this._stateHandle.Free();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace VtkSharp;
@@ -12,6 +13,8 @@ public class vtkObject : vtkObjectBase
     private List<VtkObserverHandle>? _observerHandles;
 
     protected vtkObject(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+
+    public static vtkObject WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
 
     public override void Delete()
     {
@@ -71,6 +74,21 @@ public class vtkObject : vtkObjectBase
 
     public void RemoveObserver(ulong tag)
     {
+        if (this._observerHandles is not null)
+        {
+            var observer = this._observerHandles.Find(x => x.Tag == tag);
+            if (observer is not null)
+            {
+                observer.Dispose();
+                return;
+            }
+        }
+
+        this.RemoveObserverNative(tag);
+    }
+
+    internal void RemoveObserverNative(ulong tag)
+    {
         vtkObject_RemoveObserver(this.NativePointer, tag);
     }
 
@@ -102,13 +120,25 @@ public class vtkObject : vtkObjectBase
         var stateHandle = GCHandle.FromIntPtr(clientData);
         if (stateHandle.Target is VtkObserverState state)
         {
-            if (state.DataCallback is not null)
+            try
             {
-                state.DataCallback(state.Owner, eventId, state.ClientData, callData);
-                return;
-            }
+                var callerObject = caller == state.Owner.NativePointer
+                    ? state.Owner
+                    : WeakReference(caller);
 
-            state.Callback?.Invoke(state.Owner, eventId);
+                if (state.DataCallback is not null)
+                {
+                    state.DataCallback(callerObject, eventId, state.ClientData, callData);
+                    return;
+                }
+
+                state.Callback?.Invoke(callerObject, eventId);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError($"Unhandled exception in VTK observer callback: {ex}");
+                Debug.Fail("Unhandled exception in VTK observer callback.", ex.ToString());
+            }
         }
     }
 
