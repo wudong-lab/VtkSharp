@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkRenderingUI
+classes:
+  - name: vtkWin32RenderWindowInteractor
+    header: vtkWin32RenderWindowInteractor.h
+    functions: []

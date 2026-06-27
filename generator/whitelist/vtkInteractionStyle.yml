@@ -2,6 +2,9 @@
 
 module: vtkInteractionStyle
 classes:
+  - name: vtkInteractorStyleTrackballCamera
+    header: vtkInteractorStyleTrackballCamera.h
+    functions: []
   - name: vtkInteractorStyleTerrain
     header: vtkInteractorStyleTerrain.h
     functions:

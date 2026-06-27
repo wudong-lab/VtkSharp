@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkRenderingOpenGL2
+classes:
+  - name: vtkOpenGLRenderWindow
+    header: vtkOpenGLRenderWindow.h
+    functions: []
+  - name: vtkWin32OpenGLRenderWindow
+    header: vtkWin32OpenGLRenderWindow.h
+    functions:
+      - name: GetWindowId
+        cppSignature: HWND__ * GetWindowId()
+        return:
+          type: HWND
+        parameters: []
+      - name: SetParentId
+        cppSignature: void SetParentId(HWND__ * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: HWND
+            name: _arg1
+      - name: ShowWindowOff
+        cppSignature: void ShowWindowOff()
+        return:
+          type: void
+        parameters: []
