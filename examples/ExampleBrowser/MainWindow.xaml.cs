@@ -117,17 +117,18 @@ public partial class MainWindow : Window
 
         foreach (var color in highlighting.NamedHighlightingColors)
         {
+            color.Background = null;
             color.Foreground = color.Name switch
             {
                 "Comment" => Brush("#8B949E"),
-                "String" or "Char" => Brush("#A5D6FF"),
+                "String" or "StringInterpolation" or "Char" => Brush("#A5D6FF"),
                 "Preprocessor" => Brush("#FFA657"),
                 "NumberLiteral" or "Number" => Brush("#79C0FF"),
-                "Keywords" or "ValueTypeKeywords" or "ReferenceTypeKeywords" or "NullOrValueKeywords" => Brush("#FF7B72"),
+                "Keywords" or "ValueTypeKeywords" or "ReferenceTypeKeywords" or "NullOrValueKeywords" or "Modifiers" => Brush("#FF7B72"),
                 "ThisOrBaseReference" => Brush("#D2A8FF"),
                 "MethodCall" => Brush("#D2A8FF"),
                 "TypeKeywords" => Brush("#FFA657"),
-                _ => color.Foreground
+                _ => Brush("#E6EDF3")
             };
         }
 
