@@ -63,6 +63,11 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         vtkRenderWindowInteractor_Initialize(this.NativePointer);
     }
 
+    public new void SetInteractorStyle(vtkInteractorObserver _arg1)
+    {
+        vtkRenderWindowInteractor_SetInteractorStyle(this.NativePointer, _arg1.NativePointer);
+    }
+
     public new void SetRenderWindow(vtkRenderWindow aren)
     {
         vtkRenderWindowInteractor_SetRenderWindow(this.NativePointer, aren.NativePointer);
@@ -103,6 +108,9 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_Initialize(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetInteractorStyle(nint self, nint _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_SetRenderWindow(nint self, nint aren);

@@ -2,6 +2,12 @@
 
 module: vtkCommonCore
 classes:
+  - name: vtkAbstractArray
+    header: vtkAbstractArray.h
+    functions: []
+  - name: vtkEventData
+    header: vtkEventData.h
+    functions: []
   - name: vtkIdList
     header: vtkIdList.h
     functions:
@@ -70,6 +76,9 @@ classes:
             name: z
   - name: vtkRandomSequence
     header: vtkRandomSequence.h
+    functions: []
+  - name: vtkStringArray
+    header: vtkStringArray.h
     functions: []
   - name: vtkWindow
     header: vtkWindow.h

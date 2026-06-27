@@ -18,6 +18,16 @@ public unsafe partial class vtkCamera : vtkObject
         return target;
     }
 
+    public new void Azimuth(double angle)
+    {
+        vtkCamera_Azimuth(this.NativePointer, angle);
+    }
+
+    public new void Elevation(double angle)
+    {
+        vtkCamera_Elevation(this.NativePointer, angle);
+    }
+
     public new void Zoom(double factor)
     {
         vtkCamera_Zoom(this.NativePointer, factor);
@@ -26,6 +36,12 @@ public unsafe partial class vtkCamera : vtkObject
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCamera_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_Azimuth(nint self, double angle);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_Elevation(nint self, double angle);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCamera_Zoom(nint self, double factor);

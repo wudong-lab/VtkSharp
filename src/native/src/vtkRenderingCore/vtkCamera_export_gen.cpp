@@ -4,4 +4,8 @@
 
 VTKSHARP_API vtkCamera* vtkCamera_New() { return vtkCamera::New(); }
 
+VTKSHARP_API void vtkCamera_Azimuth(vtkCamera* self, double angle) { self->Azimuth(angle); }
+
+VTKSHARP_API void vtkCamera_Elevation(vtkCamera* self, double angle) { self->Elevation(angle); }
+
 VTKSHARP_API void vtkCamera_Zoom(vtkCamera* self, double factor) { self->Zoom(factor); }

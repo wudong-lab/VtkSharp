@@ -23,9 +23,26 @@ classes:
         parameters:
           - type: vtkMapper*
             name: mapper
+  - name: vtkActor2D
+    header: vtkActor2D.h
+    functions: []
   - name: vtkCamera
     header: vtkCamera.h
     functions:
+      - name: Azimuth
+        cppSignature: void Azimuth(double angle)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
+      - name: Elevation
+        cppSignature: void Elevation(double angle)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
       - name: Zoom
         cppSignature: void Zoom(double factor)
         return:
@@ -33,6 +50,12 @@ classes:
         parameters:
           - type: double
             name: factor
+  - name: vtkInteractorObserver
+    header: vtkInteractorObserver.h
+    functions: []
+  - name: vtkInteractorStyle
+    header: vtkInteractorStyle.h
+    functions: []
   - name: vtkMapper
     header: vtkMapper.h
     functions: []
@@ -196,6 +219,13 @@ classes:
         return:
           type: void
         parameters: []
+      - name: SetInteractorStyle
+        cppSignature: void SetInteractorStyle(vtkInteractorObserver * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkInteractorObserver*
+            name: _arg1
       - name: SetRenderWindow
         cppSignature: void SetRenderWindow(vtkRenderWindow* aren)
         return:
@@ -251,6 +281,9 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+  - name: vtkTDxInteractorStyle
+    header: vtkTDxInteractorStyle.h
+    functions: []
   - name: vtkViewport
     header: vtkViewport.h
     functions:
