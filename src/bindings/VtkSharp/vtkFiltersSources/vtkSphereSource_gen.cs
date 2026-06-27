@@ -28,6 +28,24 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
         return vtkAlgorithmOutput.WeakReference(vtkSphereSource_GetOutputPort_int(this.NativePointer, index));
     }
 
+    public new double GetRadius()
+    {
+        return vtkSphereSource_GetRadius(this.NativePointer);
+    }
+
+    public new void SetCenter(double _arg1, double _arg2, double _arg3)
+    {
+        vtkSphereSource_SetCenter_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetCenter(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkSphereSource_SetCenter_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
     public new void SetPhiResolution(int _arg)
     {
         vtkSphereSource_SetPhiResolution(this.NativePointer, _arg);
@@ -52,6 +70,15 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkSphereSource_GetOutputPort_int(nint self, int index);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkSphereSource_GetRadius(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_SetCenter_doubleConstArray3(nint self, double* _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetPhiResolution(nint self, int _arg);

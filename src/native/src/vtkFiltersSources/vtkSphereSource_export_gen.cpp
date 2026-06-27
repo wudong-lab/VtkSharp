@@ -9,6 +9,12 @@ VTKSHARP_API vtkAlgorithmOutput* vtkSphereSource_GetOutputPort_(vtkSphereSource*
 
 VTKSHARP_API vtkAlgorithmOutput* vtkSphereSource_GetOutputPort_int(vtkSphereSource* self, int index) { return self->GetOutputPort(index); }
 
+VTKSHARP_API double vtkSphereSource_GetRadius(vtkSphereSource* self) { return self->GetRadius(); }
+
+VTKSHARP_API void vtkSphereSource_SetCenter_double_double_double(vtkSphereSource* self, double _arg1, double _arg2, double _arg3) { self->SetCenter(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkSphereSource_SetCenter_doubleConstArray3(vtkSphereSource* self, const double* _arg) { self->SetCenter(_arg); }
+
 VTKSHARP_API void vtkSphereSource_SetPhiResolution(vtkSphereSource* self, int _arg) { self->SetPhiResolution(_arg); }
 
 VTKSHARP_API void vtkSphereSource_SetRadius(vtkSphereSource* self, double _arg) { self->SetRadius(_arg); }
