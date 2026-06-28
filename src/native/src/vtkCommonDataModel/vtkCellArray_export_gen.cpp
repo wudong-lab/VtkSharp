@@ -5,4 +5,6 @@
 
 VTKSHARP_API vtkCellArray* vtkCellArray_New() { return vtkCellArray::New(); }
 
+VTKSHARP_API void vtkCellArray_InsertCellPoint(vtkCellArray* self, vtkIdType id) { self->InsertCellPoint(id); }
+
 VTKSHARP_API vtkIdType vtkCellArray_InsertNextCell(vtkCellArray* self, vtkCell* cell) { return self->InsertNextCell(cell); }

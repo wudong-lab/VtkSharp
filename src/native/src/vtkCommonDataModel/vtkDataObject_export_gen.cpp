@@ -3,3 +3,5 @@
 #include <vtkDataObject.h>
 
 VTKSHARP_API vtkDataObject* vtkDataObject_New() { return vtkDataObject::New(); }
+
+VTKSHARP_API void vtkDataObject_ShallowCopy(vtkDataObject* self, vtkDataObject* src) { self->ShallowCopy(src); }

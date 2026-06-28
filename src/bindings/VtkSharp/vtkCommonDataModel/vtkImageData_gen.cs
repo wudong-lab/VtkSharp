@@ -18,8 +18,24 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
         return target;
     }
 
+    public new int GetScalarSize()
+    {
+        return vtkImageData_GetScalarSize_(this.NativePointer);
+    }
+
+    public new int GetScalarSize(vtkInformation meta_data)
+    {
+        return vtkImageData_GetScalarSize_vtkInformationPtr(this.NativePointer, meta_data.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageData_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkImageData_GetScalarSize_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkImageData_GetScalarSize_vtkInformationPtr(nint self, nint meta_data);
     #endregion
 }

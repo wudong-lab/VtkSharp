@@ -7,7 +7,34 @@ classes:
     functions: []
   - name: vtkCartesianGrid
     header: vtkCartesianGrid.h
-    functions: []
+    functions:
+      - name: GetDataDimension
+        cppSignature: int GetDataDimension()
+        return:
+          type: int
+        parameters: []
+      - name: GetDimensions
+        cppSignature: int * GetDimensions()
+        return:
+          type: int*
+        parameters: []
+      - name: GetDimensions
+        cppSignature: void GetDimensions(int[3] dims)
+        return:
+          type: void
+        parameters:
+          - type: int[3]
+            name: dims
+      - name: GetNumberOfScalarComponents
+        cppSignature: int GetNumberOfScalarComponents()
+        return:
+          type: int
+        parameters: []
+      - name: GetScalarType
+        cppSignature: int GetScalarType()
+        return:
+          type: int
+        parameters: []
   - name: vtkCell
     header: vtkCell.h
     functions:
@@ -19,6 +46,13 @@ classes:
   - name: vtkCellArray
     header: vtkCellArray.h
     functions:
+      - name: InsertCellPoint
+        cppSignature: void InsertCellPoint(vtkIdType id)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
       - name: InsertNextCell
         cppSignature: vtkIdType InsertNextCell(vtkCell * cell)
         return:
@@ -28,19 +62,50 @@ classes:
             name: cell
   - name: vtkDataObject
     header: vtkDataObject.h
-    functions: []
+    functions:
+      - name: ShallowCopy
+        cppSignature: void ShallowCopy(vtkDataObject * src)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: src
   - name: vtkDataSet
     header: vtkDataSet.h
-    functions: []
+    functions:
+      - name: GetPointData
+        cppSignature: vtkPointData * GetPointData()
+        return:
+          type: vtkPointData*
+        parameters: []
   - name: vtkDataSetAttributes
     header: vtkDataSetAttributes.h
-    functions: []
+    functions:
+      - name: SetScalars
+        cppSignature: int SetScalars(vtkDataArray * da)
+        return:
+          type: int
+        parameters:
+          - type: vtkDataArray*
+            name: da
   - name: vtkFieldData
     header: vtkFieldData.h
     functions: []
   - name: vtkImageData
     header: vtkImageData.h
-    functions: []
+    functions:
+      - name: GetScalarSize
+        cppSignature: int GetScalarSize()
+        return:
+          type: int
+        parameters: []
+      - name: GetScalarSize
+        cppSignature: int GetScalarSize(vtkInformation * meta_data)
+        return:
+          type: int
+        parameters:
+          - type: vtkInformation*
+            name: meta_data
   - name: vtkLine
     header: vtkLine.h
     functions: []
@@ -49,7 +114,14 @@ classes:
     functions: []
   - name: vtkPointSet
     header: vtkPointSet.h
-    functions: []
+    functions:
+      - name: SetPoints
+        cppSignature: void SetPoints(vtkPoints * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkPoints*
+            name: _arg1
   - name: vtkPolyData
     header: vtkPolyData.h
     functions:
@@ -67,6 +139,13 @@ classes:
         parameters:
           - type: vtkPoints*
             name: _arg1
+      - name: SetPolys
+        cppSignature: void SetPolys(vtkCellArray * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkCellArray*
+            name: p
   - name: vtkPolyLine
     header: vtkPolyLine.h
     functions: []

@@ -18,8 +18,16 @@ public unsafe partial class vtkDataObject : vtkObject
         return target;
     }
 
+    public new void ShallowCopy(vtkDataObject src)
+    {
+        vtkDataObject_ShallowCopy(this.NativePointer, src.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataObject_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataObject_ShallowCopy(nint self, nint src);
     #endregion
 }

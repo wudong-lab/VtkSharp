@@ -17,6 +17,48 @@ public unsafe partial class vtkCartesianGrid : vtkDataSet
         return target;
     }
 
+    public new int GetDataDimension()
+    {
+        return vtkCartesianGrid_GetDataDimension(this.NativePointer);
+    }
+
+    internal new int* GetDimensions_Internal()
+    {
+        return vtkCartesianGrid_GetDimensions_(this.NativePointer);
+    }
+
+    public new void GetDimensions(Span<int> dims)
+    {
+        fixed (int* dimsPtr = dims)
+        {
+            vtkCartesianGrid_GetDimensions_intArray3(this.NativePointer, dimsPtr);
+        }
+    }
+
+    public new int GetNumberOfScalarComponents()
+    {
+        return vtkCartesianGrid_GetNumberOfScalarComponents(this.NativePointer);
+    }
+
+    public new int GetScalarType()
+    {
+        return vtkCartesianGrid_GetScalarType(this.NativePointer);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkCartesianGrid_GetDataDimension(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int* vtkCartesianGrid_GetDimensions_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCartesianGrid_GetDimensions_intArray3(nint self, int* dims);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkCartesianGrid_GetNumberOfScalarComponents(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkCartesianGrid_GetScalarType(nint self);
     #endregion
 }

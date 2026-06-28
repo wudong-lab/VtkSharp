@@ -9,3 +9,5 @@ VTKSHARP_API vtkPolyData* vtkPolyData_New() { return vtkPolyData::New(); }
 VTKSHARP_API void vtkPolyData_SetLines(vtkPolyData* self, vtkCellArray* l) { self->SetLines(l); }
 
 VTKSHARP_API void vtkPolyData_SetPoints(vtkPolyData* self, vtkPoints* _arg1) { self->SetPoints(_arg1); }
+
+VTKSHARP_API void vtkPolyData_SetPolys(vtkPolyData* self, vtkCellArray* p) { self->SetPolys(p); }

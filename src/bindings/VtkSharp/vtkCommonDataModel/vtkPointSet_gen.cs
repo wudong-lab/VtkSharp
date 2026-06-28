@@ -18,8 +18,16 @@ public unsafe partial class vtkPointSet : vtkDataSet
         return target;
     }
 
+    public new void SetPoints(vtkPoints _arg1)
+    {
+        vtkPointSet_SetPoints(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointSet_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPointSet_SetPoints(nint self, nint _arg1);
     #endregion
 }

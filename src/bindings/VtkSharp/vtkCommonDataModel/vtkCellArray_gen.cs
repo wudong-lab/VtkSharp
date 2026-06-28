@@ -18,6 +18,11 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
         return target;
     }
 
+    public new void InsertCellPoint(long id)
+    {
+        vtkCellArray_InsertCellPoint(this.NativePointer, id);
+    }
+
     public new long InsertNextCell(vtkCell cell)
     {
         return vtkCellArray_InsertNextCell(this.NativePointer, cell.NativePointer);
@@ -26,6 +31,9 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCellArray_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCellArray_InsertCellPoint(nint self, long id);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkCellArray_InsertNextCell(nint self, nint cell);

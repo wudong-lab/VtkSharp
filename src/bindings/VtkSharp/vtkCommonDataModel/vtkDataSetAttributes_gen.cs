@@ -18,8 +18,16 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
         return target;
     }
 
+    public new int SetScalars(vtkDataArray da)
+    {
+        return vtkDataSetAttributes_SetScalars(this.NativePointer, da.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataSetAttributes_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkDataSetAttributes_SetScalars(nint self, nint da);
     #endregion
 }

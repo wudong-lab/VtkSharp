@@ -2,3 +2,12 @@
 #include "vtksharp_api.h"
 #include <vtkCartesianGrid.h>
 
+VTKSHARP_API int vtkCartesianGrid_GetDataDimension(vtkCartesianGrid* self) { return self->GetDataDimension(); }
+
+VTKSHARP_API int* vtkCartesianGrid_GetDimensions_(vtkCartesianGrid* self) { return self->GetDimensions(); }
+
+VTKSHARP_API void vtkCartesianGrid_GetDimensions_intArray3(vtkCartesianGrid* self, int* dims) { self->GetDimensions(dims); }
+
+VTKSHARP_API int vtkCartesianGrid_GetNumberOfScalarComponents(vtkCartesianGrid* self) { return self->GetNumberOfScalarComponents(); }
+
+VTKSHARP_API int vtkCartesianGrid_GetScalarType(vtkCartesianGrid* self) { return self->GetScalarType(); }

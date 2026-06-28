@@ -17,6 +17,13 @@ public unsafe partial class vtkDataSet : vtkDataObject
         return target;
     }
 
+    public new vtkPointData GetPointData()
+    {
+        return vtkPointData.WeakReference(vtkDataSet_GetPointData(this.NativePointer));
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkDataSet_GetPointData(nint self);
     #endregion
 }

@@ -5,6 +5,9 @@ classes:
   - name: vtkAbstractArray
     header: vtkAbstractArray.h
     functions: []
+  - name: vtkDataArray
+    header: vtkDataArray.h
+    functions: []
   - name: vtkEventData
     header: vtkEventData.h
     functions: []
@@ -27,6 +30,9 @@ classes:
         parameters:
           - type: vtkIdType
             name: number
+  - name: vtkInformation
+    header: vtkInformation.h
+    functions: []
   - name: vtkMinimalStandardRandomSequence
     header: vtkMinimalStandardRandomSequence.h
     functions:
