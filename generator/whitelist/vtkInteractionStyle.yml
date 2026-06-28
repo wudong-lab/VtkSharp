@@ -2,6 +2,21 @@
 
 module: vtkInteractionStyle
 classes:
+  - name: vtkInteractorStyleJoystickCamera
+    header: vtkInteractorStyleJoystickCamera.h
+    functions: []
+  - name: vtkInteractorStyleRubberBand2D
+    header: vtkInteractorStyleRubberBand2D.h
+    functions: []
+  - name: vtkInteractorStyleRubberBandPick
+    header: vtkInteractorStyleRubberBandPick.h
+    functions: []
+  - name: vtkInteractorStyleRubberBandZoom
+    header: vtkInteractorStyleRubberBandZoom.h
+    functions: []
+  - name: vtkInteractorStyleSwitch
+    header: vtkInteractorStyleSwitch.h
+    functions: []
   - name: vtkInteractorStyleTrackballCamera
     header: vtkInteractorStyleTrackballCamera.h
     functions: []

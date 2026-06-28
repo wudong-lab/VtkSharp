@@ -6,4 +6,6 @@ public sealed record InspectedClass(
     bool HasStaticNew = false,
     string? BaseClassName = null,
     IReadOnlyList<string>? Dependencies = null,
-    IReadOnlyList<string>? BaseClassNames = null);
+    IReadOnlyList<string>? BaseClassNames = null,
+    string? Module = null,
+    string? Header = null);

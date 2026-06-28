@@ -677,6 +677,8 @@ internal class Program
         var inspected = new VtkClassInspector().InspectHeader(includeDirectory, header, className) with
         {
             BaseClassName = hierarchyResolver.GetBaseClassName(className),
+            Module = hierarchyResolver.GetModule(className),
+            Header = header,
         };
 
         if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
