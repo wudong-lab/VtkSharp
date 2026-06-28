@@ -67,6 +67,72 @@ public sealed class VtkClassInspectorTests
     }
 
     [Fact]
+    public void InspectHeader_DoesNotIncludeHiddenBaseOverloads()
+    {
+        var directory = CreateHeader("""
+            class vtkDataObject {};
+            class vtkPolyData {};
+            class vtkBase
+            {
+            public:
+                void AddInputData(vtkDataObject*);
+                void AddInputData(int, vtkDataObject*);
+                void Update();
+            };
+            """, "vtkBase.h");
+        File.WriteAllText(Path.Combine(directory, "vtkDerived.h"), """
+            #include "vtkBase.h"
+            class vtkDerived : public vtkBase
+            {
+            public:
+                void AddInputData(vtkPolyData*);
+            };
+            """);
+        var inspector = new VtkClassInspector();
+
+        var inspected = inspector.InspectHeader(directory, "vtkDerived.h", "vtkDerived");
+
+        Assert.Contains(inspected.Functions, function =>
+            function.Name == "AddInputData" &&
+            function.Parameters.SequenceEqual([new InspectedParameter("vtkPolyData*", "_arg1")]));
+        Assert.DoesNotContain(inspected.Functions, function =>
+            function.Name == "AddInputData" &&
+            function.Parameters.Any(parameter => parameter.Type == "vtkDataObject*"));
+        Assert.Contains(inspected.Functions, function => function.Name == "Update");
+    }
+
+    [Fact]
+    public void InspectHeader_PrivateDeclarationHidesBaseOverloads()
+    {
+        var directory = CreateHeader("""
+            class vtkDataObject {};
+            class vtkBase
+            {
+            public:
+                void AddInputData(vtkDataObject*);
+                void Update();
+            };
+            """, "vtkBase.h");
+        File.WriteAllText(Path.Combine(directory, "vtkDerived.h"), """
+            #include "vtkBase.h"
+            class vtkDerived : public vtkBase
+            {
+            public:
+                void Render();
+            private:
+                void AddInputData(vtkDataObject*);
+            };
+            """);
+        var inspector = new VtkClassInspector();
+
+        var inspected = inspector.InspectHeader(directory, "vtkDerived.h", "vtkDerived");
+
+        Assert.DoesNotContain(inspected.Functions, function => function.Name == "AddInputData");
+        Assert.Contains(inspected.Functions, function => function.Name == "Render");
+        Assert.Contains(inspected.Functions, function => function.Name == "Update");
+    }
+
+    [Fact]
     public void InspectHeader_ReportsCanonicalSignaturesAndDependencyTypes()
     {
         var directory = CreateHeader("""

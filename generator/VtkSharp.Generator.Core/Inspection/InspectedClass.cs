@@ -7,5 +7,6 @@ public sealed record InspectedClass(
     string? BaseClassName = null,
     IReadOnlyList<string>? Dependencies = null,
     IReadOnlyList<string>? BaseClassNames = null,
+    IReadOnlySet<string>? DeclaredFunctionNames = null,
     string? Module = null,
     string? Header = null);

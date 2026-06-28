@@ -73,6 +73,7 @@ public sealed class VtkClassInspector
             : throw new InvalidOperationException($"Class '{className}' was not found in '{headerFileName}'.");
 
         var functions = raw.Functions.ToList();
+        var declaredFunctionNames = raw.DeclaredFunctionNames ?? new HashSet<string>(StringComparer.Ordinal);
 
         foreach (var baseClassName in raw.BaseClassNames ?? [])
         {
@@ -84,6 +85,9 @@ public sealed class VtkClassInspector
             var baseClass = this.BuildClass(includeDirectory, baseHeaderFileName, baseClassName, visitedClassNames);
             foreach (var function in baseClass.Functions)
             {
+                if (declaredFunctionNames.Contains(function.Name))
+                    continue;
+
                 if (!functions.Any(item => HasSameSignature(item, function)))
                     functions.Add(function);
             }
@@ -103,6 +107,11 @@ public sealed class VtkClassInspector
             function.IsStatic &&
             function.Parameters.Count == 0 &&
             function.ReturnType.FullName.Contains(cppClass.Name, StringComparison.Ordinal));
+
+        var declaredFunctionNames = cppClass.Functions
+            .Where(static function => !function.IsConstructor && !function.IsDestructor)
+            .Select(static function => function.Name)
+            .ToHashSet(StringComparer.Ordinal);
 
         var functions = cppClass.Functions
             .Where(static function =>
@@ -145,7 +154,7 @@ public sealed class VtkClassInspector
             })
             .ToList();
 
-        return new InspectedClass(cppClass.Name, functions, hasStaticNew, BaseClassNames: baseClassNames);
+        return new InspectedClass(cppClass.Name, functions, hasStaticNew, BaseClassNames: baseClassNames, DeclaredFunctionNames: declaredFunctionNames);
     }
 
     private static IReadOnlyList<string> GetCppBaseClassNames(CppClass cppClass)
