@@ -216,6 +216,10 @@ internal class Program
         {
             Description = "Only include functions whose types are all supported (filters out unsigned long, basic_ostream, int&, etc.)",
         };
+        var skipMissingMethodsOption = new Option<bool>("--skip-missing-methods")
+        {
+            Description = "Skip methods that are not found instead of failing",
+        };
         var methodsOption = new Option<string[]>("--methods")
         {
             Description = "Only include the specified method names (e.g. --methods SetResolution SetHeight). If omitted, all methods are included.",
@@ -231,6 +235,7 @@ internal class Program
             sourceOriginalOption,
             supportedOnlyOption,
             methodsOption,
+            skipMissingMethodsOption,
             configOption,
         };
 
@@ -243,10 +248,11 @@ internal class Program
             var sourceOriginal = parseResult.GetValue(sourceOriginalOption);
             var supportedOnly = parseResult.GetValue(supportedOnlyOption);
             var methods = parseResult.GetValue(methodsOption);
+            var skipMissingMethods = parseResult.GetValue(skipMissingMethodsOption);
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
 
-            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal, supportedOnly, methods);
+            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal, supportedOnly, methods, skipMissingMethods);
         });
 
         var mergeCandidateCommand = new Command("merge-candidate", "Merge a candidate whitelist into the formal whitelist")
@@ -383,7 +389,7 @@ internal class Program
         return 0;
     }
 
-    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal, bool supportedOnly = false, IReadOnlyList<string>? methods = null)
+    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal, bool supportedOnly = false, IReadOnlyList<string>? methods = null, bool skipMissingMethods = false)
     {
         var config = LoadConfig(configPath);
         var includeDirectory = ResolveIncludeDirectory(config);
@@ -435,8 +441,16 @@ internal class Program
             var notFound = methodSet.Where(m => !functions.Any(f => f.Name.Equals(m, StringComparison.OrdinalIgnoreCase))).ToList();
             if (notFound.Count > 0)
             {
-                Console.Error.WriteLine($"Method(s) not found on '{className}': {string.Join(", ", notFound)}");
-                return 1;
+                if (skipMissingMethods)
+                {
+                    foreach (var name in notFound)
+                        Console.Error.WriteLine($"Warning: method '{name}' not found on '{className}' — skipped.");
+                }
+                else
+                {
+                    Console.Error.WriteLine($"Method(s) not found on '{className}': {string.Join(", ", notFound)}");
+                    return 1;
+                }
             }
             functions = matched;
         }

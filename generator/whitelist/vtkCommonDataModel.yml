@@ -5,6 +5,9 @@ classes:
   - name: vtkAbstractCellArray
     header: vtkAbstractCellArray.h
     functions: []
+  - name: vtkCartesianGrid
+    header: vtkCartesianGrid.h
+    functions: []
   - name: vtkCell
     header: vtkCell.h
     functions:
@@ -29,6 +32,21 @@ classes:
   - name: vtkDataSet
     header: vtkDataSet.h
     functions: []
+  - name: vtkDataSetAttributes
+    header: vtkDataSetAttributes.h
+    functions: []
+  - name: vtkFieldData
+    header: vtkFieldData.h
+    functions: []
+  - name: vtkImageData
+    header: vtkImageData.h
+    functions: []
+  - name: vtkLine
+    header: vtkLine.h
+    functions: []
+  - name: vtkPointData
+    header: vtkPointData.h
+    functions: []
   - name: vtkPointSet
     header: vtkPointSet.h
     functions: []
@@ -51,4 +69,13 @@ classes:
             name: _arg1
   - name: vtkPolyLine
     header: vtkPolyLine.h
+    functions: []
+  - name: vtkPolygon
+    header: vtkPolygon.h
+    functions: []
+  - name: vtkQuad
+    header: vtkQuad.h
+    functions: []
+  - name: vtkTriangle
+    header: vtkTriangle.h
     functions: []

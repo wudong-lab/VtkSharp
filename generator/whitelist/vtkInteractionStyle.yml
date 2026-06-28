@@ -17,9 +17,6 @@ classes:
   - name: vtkInteractorStyleSwitch
     header: vtkInteractorStyleSwitch.h
     functions: []
-  - name: vtkInteractorStyleTrackballCamera
-    header: vtkInteractorStyleTrackballCamera.h
-    functions: []
   - name: vtkInteractorStyleTerrain
     header: vtkInteractorStyleTerrain.h
     functions:
@@ -952,3 +949,6 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkInteractorStyleTrackballCamera
+    header: vtkInteractorStyleTrackballCamera.h
+    functions: []
