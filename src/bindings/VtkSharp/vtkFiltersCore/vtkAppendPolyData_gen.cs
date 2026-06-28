@@ -18,19 +18,9 @@ public unsafe partial class vtkAppendPolyData : vtkPolyDataAlgorithm
         return target;
     }
 
-    public new void AddInputData(int _arg1, vtkDataObject _arg2)
-    {
-        vtkAppendPolyData_AddInputData_int_vtkDataObjectPtr(this.NativePointer, _arg1, _arg2.NativePointer);
-    }
-
-    public new void AddInputData(vtkDataObject _arg1)
-    {
-        vtkAppendPolyData_AddInputData_vtkDataObjectPtr(this.NativePointer, _arg1.NativePointer);
-    }
-
     public new void AddInputData(vtkPolyData _arg1)
     {
-        vtkAppendPolyData_AddInputData_vtkPolyDataPtr(this.NativePointer, _arg1.NativePointer);
+        vtkAppendPolyData_AddInputData(this.NativePointer, _arg1.NativePointer);
     }
 
     public new void SetInputDataByNumber(int num, vtkPolyData ds)
@@ -48,13 +38,7 @@ public unsafe partial class vtkAppendPolyData : vtkPolyDataAlgorithm
     private static extern nint vtkAppendPolyData_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAppendPolyData_AddInputData_int_vtkDataObjectPtr(nint self, int _arg1, nint _arg2);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAppendPolyData_AddInputData_vtkDataObjectPtr(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAppendPolyData_AddInputData_vtkPolyDataPtr(nint self, nint _arg1);
+    private static extern void vtkAppendPolyData_AddInputData(nint self, nint _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAppendPolyData_SetInputDataByNumber(nint self, int num, nint ds);

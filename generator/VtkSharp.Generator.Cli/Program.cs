@@ -876,13 +876,7 @@ internal class Program
     }
 
     private static void WriteText(string path, string content)
-    {
-        var directory = Path.GetDirectoryName(path)
-                        ?? throw new InvalidOperationException($"Output path '{path}' does not have a directory.");
-
-        Directory.CreateDirectory(directory);
-        File.WriteAllText(path, content);
-    }
+        => GeneratedFileWriter.WriteIfChanged(path, content);
 
     private static IEnumerable<string> GetIncludeClassNames(WhitelistClass whitelistClass)
     {

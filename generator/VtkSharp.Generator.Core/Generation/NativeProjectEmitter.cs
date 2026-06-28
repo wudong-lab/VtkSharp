@@ -99,7 +99,7 @@ public sealed class NativeProjectEmitter
                }
              ]
            }
-           """;
+           """ + "\n";
 
     public string EmitApiHeader()
         => """

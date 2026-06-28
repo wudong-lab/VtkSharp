@@ -6,22 +6,6 @@ classes:
     header: vtkAppendPolyData.h
     functions:
       - name: AddInputData
-        cppSignature: void AddInputData(int _arg1, vtkDataObject * _arg2)
-        return:
-          type: void
-        parameters:
-          - type: int
-            name: _arg1
-          - type: vtkDataObject*
-            name: _arg2
-      - name: AddInputData
-        cppSignature: void AddInputData(vtkDataObject * _arg1)
-        return:
-          type: void
-        parameters:
-          - type: vtkDataObject*
-            name: _arg1
-      - name: AddInputData
         cppSignature: void AddInputData(vtkPolyData * _arg1)
         return:
           type: void
