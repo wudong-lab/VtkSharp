@@ -1,0 +1,86 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkCommonMath
+classes:
+  - name: vtkMatrix4x4
+    header: vtkMatrix4x4.h
+    functions:
+      - name: GetData
+        cppSignature: double * GetData()
+        return:
+          type: double*
+        parameters: []
+      - name: GetElement
+        cppSignature: double GetElement(int i, int j)
+        return:
+          type: double
+        parameters:
+          - type: int
+            name: i
+          - type: int
+            name: j
+      - name: Invert
+        cppSignature: void Invert()
+        return:
+          type: void
+        parameters: []
+      - name: MultiplyPoint
+        cppSignature: double * MultiplyPoint(double const[4] in)
+        return:
+          type: double*
+        parameters:
+          - type: const double[4]
+            name: in
+      - name: MultiplyPoint
+        cppSignature: float * MultiplyPoint(float const[4] in)
+        return:
+          type: float*
+        parameters:
+          - type: const float[4]
+            name: in
+      - name: MultiplyPoint
+        cppSignature: void MultiplyPoint(double const[4] in, double[4] out)
+        return:
+          type: void
+        parameters:
+          - type: const double[4]
+            name: in
+          - type: double[4]
+            name: out
+      - name: MultiplyPoint
+        cppSignature: void MultiplyPoint(float const[4] in, float[4] out)
+        return:
+          type: void
+        parameters:
+          - type: const float[4]
+            name: in
+          - type: float[4]
+            name: out
+      - name: SetData
+        cppSignature: void SetData(double const[16] data)
+        return:
+          type: void
+        parameters:
+          - type: const double[16]
+            name: data
+      - name: SetElement
+        cppSignature: void SetElement(int i, int j, double value)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: i
+          - type: int
+            name: j
+          - type: double
+            name: value
+      - name: Transpose
+        cppSignature: void Transpose()
+        return:
+          type: void
+        parameters: []
+      - name: Zero
+        cppSignature: void Zero()
+        return:
+          type: void
+        parameters: []
