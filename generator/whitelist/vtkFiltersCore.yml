@@ -2,6 +2,12 @@
 
 module: vtkFiltersCore
 classes:
+  - name: vtkAppendPolyData
+    header: vtkAppendPolyData.h
+    functions: []
+  - name: vtkCellCenters
+    header: vtkCellCenters.h
+    functions: []
   - name: vtkDelaunay2D
     header: vtkDelaunay2D.h
     functions:
@@ -71,6 +77,9 @@ classes:
         parameters:
           - type: vtkAlgorithmOutput*
             name: input
+  - name: vtkGenerateIds
+    header: vtkGenerateIds.h
+    functions: []
   - name: vtkGlyph3D
     header: vtkGlyph3D.h
     functions:

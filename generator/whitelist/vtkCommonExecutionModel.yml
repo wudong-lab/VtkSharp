@@ -25,6 +25,15 @@ classes:
   - name: vtkAlgorithmOutput
     header: vtkAlgorithmOutput.h
     functions: []
+  - name: vtkImageAlgorithm
+    header: vtkImageAlgorithm.h
+    functions: []
+  - name: vtkPassInputTypeAlgorithm
+    header: vtkPassInputTypeAlgorithm.h
+    functions: []
   - name: vtkPolyDataAlgorithm
     header: vtkPolyDataAlgorithm.h
+    functions: []
+  - name: vtkThreadedImageAlgorithm
+    header: vtkThreadedImageAlgorithm.h
     functions: []

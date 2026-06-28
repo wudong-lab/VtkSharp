@@ -5,8 +5,14 @@ classes:
   - name: vtkAbstractArray
     header: vtkAbstractArray.h
     functions: []
+  - name: vtkCollection
+    header: vtkCollection.h
+    functions: []
   - name: vtkDataArray
     header: vtkDataArray.h
+    functions: []
+  - name: vtkDoubleArray
+    header: vtkDoubleArray.h
     functions: []
   - name: vtkEventData
     header: vtkEventData.h
@@ -85,6 +91,9 @@ classes:
     functions: []
   - name: vtkStringArray
     header: vtkStringArray.h
+    functions: []
+  - name: vtkUnsignedCharArray
+    header: vtkUnsignedCharArray.h
     functions: []
   - name: vtkWindow
     header: vtkWindow.h

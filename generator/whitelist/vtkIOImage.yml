@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkIOImage
+classes:
+  - name: vtkImageWriter
+    header: vtkImageWriter.h
+    functions: []
+  - name: vtkJPEGWriter
+    header: vtkJPEGWriter.h
+    functions: []
+  - name: vtkPNGWriter
+    header: vtkPNGWriter.h
+    functions: []

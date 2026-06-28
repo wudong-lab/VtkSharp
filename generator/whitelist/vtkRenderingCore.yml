@@ -26,6 +26,15 @@ classes:
   - name: vtkActor2D
     header: vtkActor2D.h
     functions: []
+  - name: vtkActor2DCollection
+    header: vtkActor2DCollection.h
+    functions: []
+  - name: vtkActorCollection
+    header: vtkActorCollection.h
+    functions: []
+  - name: vtkAssemblyPath
+    header: vtkAssemblyPath.h
+    functions: []
   - name: vtkCamera
     header: vtkCamera.h
     functions:
@@ -50,6 +59,15 @@ classes:
         parameters:
           - type: double
             name: factor
+  - name: vtkCoordinate
+    header: vtkCoordinate.h
+    functions: []
+  - name: vtkImageActor
+    header: vtkImageActor.h
+    functions: []
+  - name: vtkImageSlice
+    header: vtkImageSlice.h
+    functions: []
   - name: vtkInteractorObserver
     header: vtkInteractorObserver.h
     functions: []
@@ -59,8 +77,14 @@ classes:
   - name: vtkInteractorStyleSwitchBase
     header: vtkInteractorStyleSwitchBase.h
     functions: []
+  - name: vtkLight
+    header: vtkLight.h
+    functions: []
   - name: vtkMapper
     header: vtkMapper.h
+    functions: []
+  - name: vtkMapper2D
+    header: vtkMapper2D.h
     functions: []
   - name: vtkPolyDataMapper
     header: vtkPolyDataMapper.h
@@ -79,6 +103,9 @@ classes:
         parameters:
           - type: vtkPolyData*
             name: in
+  - name: vtkPolyDataMapper2D
+    header: vtkPolyDataMapper2D.h
+    functions: []
   - name: vtkProp
     header: vtkProp.h
     functions: []
@@ -99,6 +126,9 @@ classes:
         parameters:
           - type: double
             name: _arg1
+  - name: vtkPropCollection
+    header: vtkPropCollection.h
+    functions: []
   - name: vtkProperty
     header: vtkProperty.h
     functions:
@@ -152,6 +182,9 @@ classes:
         parameters:
           - type: double
             name: _arg
+  - name: vtkProperty2D
+    header: vtkProperty2D.h
+    functions: []
   - name: vtkRenderWindow
     header: vtkRenderWindow.h
     functions:
@@ -284,8 +317,23 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+  - name: vtkSelectVisiblePoints
+    header: vtkSelectVisiblePoints.h
+    functions: []
   - name: vtkTDxInteractorStyle
     header: vtkTDxInteractorStyle.h
+    functions: []
+  - name: vtkTextActor
+    header: vtkTextActor.h
+    functions: []
+  - name: vtkTextMapper
+    header: vtkTextMapper.h
+    functions: []
+  - name: vtkTextProperty
+    header: vtkTextProperty.h
+    functions: []
+  - name: vtkTexturedActor2D
+    header: vtkTexturedActor2D.h
     functions: []
   - name: vtkViewport
     header: vtkViewport.h
@@ -301,3 +349,6 @@ classes:
             name: _arg2
           - type: double
             name: _arg3
+  - name: vtkWindowToImageFilter
+    header: vtkWindowToImageFilter.h
+    functions: []

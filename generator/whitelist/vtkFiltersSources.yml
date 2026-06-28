@@ -40,6 +40,9 @@ classes:
         parameters:
           - type: int
             name: resolution
+  - name: vtkCubeSource
+    header: vtkCubeSource.h
+    functions: []
   - name: vtkCylinderSource
     header: vtkCylinderSource.h
     functions:
@@ -50,6 +53,15 @@ classes:
         parameters:
           - type: int
             name: _arg
+  - name: vtkLineSource
+    header: vtkLineSource.h
+    functions: []
+  - name: vtkParametricFunctionSource
+    header: vtkParametricFunctionSource.h
+    functions: []
+  - name: vtkPlaneSource
+    header: vtkPlaneSource.h
+    functions: []
   - name: vtkRegularPolygonSource
     header: vtkRegularPolygonSource.h
     functions:

@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkRenderingAnnotation
+classes:
+  - name: vtkAxesActor
+    header: vtkAxesActor.h
+    functions: []
+  - name: vtkAxisActor2D
+    header: vtkAxisActor2D.h
+    functions: []
+  - name: vtkCaptionActor2D
+    header: vtkCaptionActor2D.h
+    functions: []
+  - name: vtkLegendScaleActor
+    header: vtkLegendScaleActor.h
+    functions: []

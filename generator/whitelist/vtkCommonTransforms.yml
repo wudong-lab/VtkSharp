@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkCommonTransforms
+classes:
+  - name: vtkAbstractTransform
+    header: vtkAbstractTransform.h
+    functions: []
+  - name: vtkHomogeneousTransform
+    header: vtkHomogeneousTransform.h
+    functions: []
+  - name: vtkLinearTransform
+    header: vtkLinearTransform.h
+    functions: []
+  - name: vtkTransform
+    header: vtkTransform.h
+    functions: []

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkFiltersGeneral
+classes:
+  - name: vtkTransformPolyDataFilter
+    header: vtkTransformPolyDataFilter.h
+    functions: []
+  - name: vtkVertexGlyphFilter
+    header: vtkVertexGlyphFilter.h
+    functions: []
