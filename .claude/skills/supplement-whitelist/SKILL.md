@@ -213,6 +213,38 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --out
 This outputs:
 - C# binding files → `src/bindings/VtkSharp/<Module>/<ClassName>_gen.cs`
 - C++ export files → `src/native/src/<Module>/<ClassName>_export_gen.cpp`
+- CMake modules file → `src/native/vtksharp.modules.generated.cmake`
+- Native project files → `src/native/CMakeLists.txt`, `CMakePresets.json`
+
+### 8a. Verify CMake modules file
+
+After generation, check that `src/native/vtksharp.modules.generated.cmake` lists every module from the whitelist. The generator builds this file from `generator/whitelist/` + `runtimeModules` config. If new whitelist modules were added (step 4), the cmake file must include them.
+
+**Naming convention** — the cmake file uses VTK naming without module prefix/suffix:
+
+| Whitelist module name | CMake COMPONENTS | CMake TARGETS |
+|---|---|---|
+| `vtkCommonColor` | `CommonColor` | `VTK::CommonColor` |
+| `vtkInteractionWidgets` | `InteractionWidgets` | `VTK::InteractionWidgets` |
+
+Rule: strip `vtk` prefix → COMPONENTS; wrap with `VTK::` prefix → TARGETS.
+
+**Verification:** compare whitelist modules against cmake COMPONENTS:
+
+```bash
+# List all whitelist modules
+grep "^module:" generator/whitelist/*.yml | sed 's/.*module: //' | sed 's/^vtk//' | sort > /tmp/wl_modules.txt
+
+# List cmake COMPONENTS
+grep -E "^  [A-Z]" src/native/vtksharp.modules.generated.cmake | grep -v "^  VTK::" | sed 's/^  //' | sort > /tmp/cmake_modules.txt
+
+# Diff should be empty
+diff /tmp/wl_modules.txt /tmp/cmake_modules.txt
+```
+
+If modules are missing from the cmake file, add them to both `VTKSHARP_VTK_COMPONENTS` and `VTKSHARP_VTK_TARGETS` sections, following the naming convention above. Also ensure `VTK_MODULES` and `VTK_MODULE_TARGETS` in `CMakeLists.txt` match (these are derived from the generated cmake file).
+
+> **Note:** `CMakeLists.txt` and `CMakePresets.json` are generated once but NOT overwritten on subsequent runs if they already exist (generator `overwriteGeneratedFiles: false`). New modules may need to be added manually to `CMakeLists.txt` in the `VTK_MODULES` and `VTK_MODULE_TARGETS` lists. After manual edits, revert any line-ending artifacts in these two files that regeneration may have introduced.
 
 ## 9. Build and resolve inheritance gaps
 
@@ -287,4 +319,5 @@ Report:
 - **`validate-whitelist` is the authority** for module placement and signature correctness.
 - **If build fails due to missing base class**, process the base class through the same create-candidate + merge-candidate flow.
 - **Temporary candidate files** go to `/tmp/` (outside the repo). Clean up after step 7.
+- **Verify CMake modules file** — after regeneration, confirm `vtksharp.modules.generated.cmake` lists every whitelist module. COMPONENTS strip `vtk` prefix; TARGETS wrap with `VTK::` prefix. Missing modules break native linking.
 - Do NOT modify `generator/whitelist/` files directly.
