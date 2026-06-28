@@ -2,3 +2,14 @@
 #include "vtksharp_api.h"
 #include <vtkDataArray.h>
 
+VTKSHARP_API void vtkDataArray_InsertNextTuple1(vtkDataArray* self, double value) { self->InsertNextTuple1(value); }
+
+VTKSHARP_API void vtkDataArray_InsertNextTuple2(vtkDataArray* self, double val0, double val1) { self->InsertNextTuple2(val0, val1); }
+
+VTKSHARP_API void vtkDataArray_InsertNextTuple3(vtkDataArray* self, double val0, double val1, double val2) { self->InsertNextTuple3(val0, val1, val2); }
+
+VTKSHARP_API void vtkDataArray_InsertNextTuple4(vtkDataArray* self, double val0, double val1, double val2, double val3) { self->InsertNextTuple4(val0, val1, val2, val3); }
+
+VTKSHARP_API void vtkDataArray_InsertNextTuple6(vtkDataArray* self, double val0, double val1, double val2, double val3, double val4, double val5) { self->InsertNextTuple6(val0, val1, val2, val3, val4, val5); }
+
+VTKSHARP_API void vtkDataArray_InsertNextTuple9(vtkDataArray* self, double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8) { self->InsertNextTuple9(val0, val1, val2, val3, val4, val5, val6, val7, val8); }

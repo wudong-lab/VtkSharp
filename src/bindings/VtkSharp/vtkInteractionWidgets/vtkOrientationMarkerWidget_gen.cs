@@ -18,8 +18,51 @@ public unsafe partial class vtkOrientationMarkerWidget : vtkInteractorObserver
         return target;
     }
 
+    public new void InteractiveOff()
+    {
+        vtkOrientationMarkerWidget_InteractiveOff(this.NativePointer);
+    }
+
+    public new void InteractiveOn()
+    {
+        vtkOrientationMarkerWidget_InteractiveOn(this.NativePointer);
+    }
+
+    public new void SetOrientationMarker(vtkProp prop)
+    {
+        vtkOrientationMarkerWidget_SetOrientationMarker(this.NativePointer, prop.NativePointer);
+    }
+
+    public new void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)
+    {
+        vtkOrientationMarkerWidget_SetViewport_double_double_double_double(this.NativePointer, _arg1, _arg2, _arg3, _arg4);
+    }
+
+    public new void SetViewport(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkOrientationMarkerWidget_SetViewport_doubleConstArray4(this.NativePointer, _argPtr);
+        }
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkOrientationMarkerWidget_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkOrientationMarkerWidget_InteractiveOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkOrientationMarkerWidget_InteractiveOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkOrientationMarkerWidget_SetOrientationMarker(nint self, nint prop);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkOrientationMarkerWidget_SetViewport_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkOrientationMarkerWidget_SetViewport_doubleConstArray4(nint self, double* _arg);
     #endregion
 }

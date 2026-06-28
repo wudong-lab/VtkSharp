@@ -3,3 +3,21 @@
 #include <vtkJPEGWriter.h>
 
 VTKSHARP_API vtkJPEGWriter* vtkJPEGWriter_New() { return vtkJPEGWriter::New(); }
+
+VTKSHARP_API int vtkJPEGWriter_GetQuality(vtkJPEGWriter* self) { return self->GetQuality(); }
+
+VTKSHARP_API int vtkJPEGWriter_GetQualityMaxValue(vtkJPEGWriter* self) { return self->GetQualityMaxValue(); }
+
+VTKSHARP_API int vtkJPEGWriter_GetQualityMinValue(vtkJPEGWriter* self) { return self->GetQualityMinValue(); }
+
+VTKSHARP_API void vtkJPEGWriter_ProgressiveOff(vtkJPEGWriter* self) { self->ProgressiveOff(); }
+
+VTKSHARP_API void vtkJPEGWriter_ProgressiveOn(vtkJPEGWriter* self) { self->ProgressiveOn(); }
+
+VTKSHARP_API void vtkJPEGWriter_SetQuality(vtkJPEGWriter* self, int _arg) { self->SetQuality(_arg); }
+
+VTKSHARP_API void vtkJPEGWriter_Write(vtkJPEGWriter* self) { self->Write(); }
+
+VTKSHARP_API void vtkJPEGWriter_WriteToMemoryOff(vtkJPEGWriter* self) { self->WriteToMemoryOff(); }
+
+VTKSHARP_API void vtkJPEGWriter_WriteToMemoryOn(vtkJPEGWriter* self) { self->WriteToMemoryOn(); }

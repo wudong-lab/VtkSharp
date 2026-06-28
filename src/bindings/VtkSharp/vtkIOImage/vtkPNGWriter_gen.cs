@@ -18,8 +18,64 @@ public unsafe partial class vtkPNGWriter : vtkImageWriter
         return target;
     }
 
+    public new int GetCompressionLevel()
+    {
+        return vtkPNGWriter_GetCompressionLevel(this.NativePointer);
+    }
+
+    public new int GetCompressionLevelMaxValue()
+    {
+        return vtkPNGWriter_GetCompressionLevelMaxValue(this.NativePointer);
+    }
+
+    public new int GetCompressionLevelMinValue()
+    {
+        return vtkPNGWriter_GetCompressionLevelMinValue(this.NativePointer);
+    }
+
+    public new void SetCompressionLevel(int _arg)
+    {
+        vtkPNGWriter_SetCompressionLevel(this.NativePointer, _arg);
+    }
+
+    public new void Write()
+    {
+        vtkPNGWriter_Write(this.NativePointer);
+    }
+
+    public new void WriteToMemoryOff()
+    {
+        vtkPNGWriter_WriteToMemoryOff(this.NativePointer);
+    }
+
+    public new void WriteToMemoryOn()
+    {
+        vtkPNGWriter_WriteToMemoryOn(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPNGWriter_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkPNGWriter_GetCompressionLevel(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkPNGWriter_GetCompressionLevelMaxValue(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkPNGWriter_GetCompressionLevelMinValue(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPNGWriter_SetCompressionLevel(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPNGWriter_Write(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPNGWriter_WriteToMemoryOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPNGWriter_WriteToMemoryOn(nint self);
     #endregion
 }

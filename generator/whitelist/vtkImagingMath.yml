@@ -4,4 +4,215 @@ module: vtkImagingMath
 classes:
   - name: vtkImageMathematics
     header: vtkImageMathematics.h
-    functions: []
+    functions:
+      - name: DivideByZeroToCOff
+        cppSignature: void DivideByZeroToCOff()
+        return:
+          type: void
+        parameters: []
+      - name: DivideByZeroToCOn
+        cppSignature: void DivideByZeroToCOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetConstantC
+        cppSignature: double GetConstantC()
+        return:
+          type: double
+        parameters: []
+      - name: GetConstantK
+        cppSignature: double GetConstantK()
+        return:
+          type: double
+        parameters: []
+      - name: GetInput
+        cppSignature: vtkDataObject * GetInput()
+        return:
+          type: vtkDataObject*
+        parameters: []
+      - name: GetInput
+        cppSignature: vtkDataObject * GetInput(int idx)
+        return:
+          type: vtkDataObject*
+        parameters:
+          - type: int
+            name: idx
+      - name: GetNumberOfInputs
+        cppSignature: int GetNumberOfInputs()
+        return:
+          type: int
+        parameters: []
+      - name: ReplaceNthInputConnection
+        cppSignature: void ReplaceNthInputConnection(int idx, vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: idx
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetConstantC
+        cppSignature: void SetConstantC(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetConstantK
+        cppSignature: void SetConstantK(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetInput1Data
+        cppSignature: void SetInput1Data(vtkDataObject * in)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: in
+      - name: SetInput2Data
+        cppSignature: void SetInput2Data(vtkDataObject * in)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: in
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(int idx, vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: idx
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: input
+      - name: SetInputData
+        cppSignature: void SetInputData(int idx, vtkDataObject * input)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: idx
+          - type: vtkDataObject*
+            name: input
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataObject * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: input
+      - name: SetOperationToATAN
+        cppSignature: void SetOperationToATAN()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToATAN2
+        cppSignature: void SetOperationToATAN2()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToAbsoluteValue
+        cppSignature: void SetOperationToAbsoluteValue()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToAdd
+        cppSignature: void SetOperationToAdd()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToAddConstant
+        cppSignature: void SetOperationToAddConstant()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToComplexMultiply
+        cppSignature: void SetOperationToComplexMultiply()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToConjugate
+        cppSignature: void SetOperationToConjugate()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToCos
+        cppSignature: void SetOperationToCos()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToDivide
+        cppSignature: void SetOperationToDivide()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToExp
+        cppSignature: void SetOperationToExp()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToInvert
+        cppSignature: void SetOperationToInvert()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToLog
+        cppSignature: void SetOperationToLog()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToMax
+        cppSignature: void SetOperationToMax()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToMin
+        cppSignature: void SetOperationToMin()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToMultiply
+        cppSignature: void SetOperationToMultiply()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToMultiplyByK
+        cppSignature: void SetOperationToMultiplyByK()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToReplaceCByK
+        cppSignature: void SetOperationToReplaceCByK()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToSin
+        cppSignature: void SetOperationToSin()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToSquare
+        cppSignature: void SetOperationToSquare()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToSquareRoot
+        cppSignature: void SetOperationToSquareRoot()
+        return:
+          type: void
+        parameters: []
+      - name: SetOperationToSubtract
+        cppSignature: void SetOperationToSubtract()
+        return:
+          type: void
+        parameters: []

@@ -18,8 +18,33 @@ public unsafe partial class vtkTextMapper : vtkMapper2D
         return target;
     }
 
+    public new vtkTextProperty GetTextProperty()
+    {
+        return vtkTextProperty.WeakReference(vtkTextMapper_GetTextProperty(this.NativePointer));
+    }
+
+    public new void SetInput(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkTextMapper_SetInput(this.NativePointer, _arg);
+        #else
+        vtkTextMapper_SetInput(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTextMapper_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkTextMapper_GetTextProperty(nint self);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkTextMapper_SetInput(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextMapper_SetInput(nint self, byte[] _arg);
+#endif
     #endregion
 }

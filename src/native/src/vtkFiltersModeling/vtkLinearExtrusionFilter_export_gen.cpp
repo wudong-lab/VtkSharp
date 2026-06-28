@@ -3,3 +3,33 @@
 #include <vtkLinearExtrusionFilter.h>
 
 VTKSHARP_API vtkLinearExtrusionFilter* vtkLinearExtrusionFilter_New() { return vtkLinearExtrusionFilter::New(); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_CappingOff(vtkLinearExtrusionFilter* self) { self->CappingOff(); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_CappingOn(vtkLinearExtrusionFilter* self) { self->CappingOn(); }
+
+VTKSHARP_API double* vtkLinearExtrusionFilter_GetExtrusionPoint_(vtkLinearExtrusionFilter* self) { return self->GetExtrusionPoint(); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_GetExtrusionPoint_doubleArray3(vtkLinearExtrusionFilter* self, double* data) { self->GetExtrusionPoint(data); }
+
+VTKSHARP_API double vtkLinearExtrusionFilter_GetScaleFactor(vtkLinearExtrusionFilter* self) { return self->GetScaleFactor(); }
+
+VTKSHARP_API double* vtkLinearExtrusionFilter_GetVector_(vtkLinearExtrusionFilter* self) { return self->GetVector(); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_GetVector_doubleArray3(vtkLinearExtrusionFilter* self, double* data) { self->GetVector(data); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetExtrusionPoint_double_double_double(vtkLinearExtrusionFilter* self, double _arg1, double _arg2, double _arg3) { self->SetExtrusionPoint(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetExtrusionPoint_doubleConstArray3(vtkLinearExtrusionFilter* self, const double* _arg) { self->SetExtrusionPoint(_arg); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetExtrusionTypeToNormalExtrusion(vtkLinearExtrusionFilter* self) { self->SetExtrusionTypeToNormalExtrusion(); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetExtrusionTypeToPointExtrusion(vtkLinearExtrusionFilter* self) { self->SetExtrusionTypeToPointExtrusion(); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetExtrusionTypeToVectorExtrusion(vtkLinearExtrusionFilter* self) { self->SetExtrusionTypeToVectorExtrusion(); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetScaleFactor(vtkLinearExtrusionFilter* self, double _arg) { self->SetScaleFactor(_arg); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetVector_double_double_double(vtkLinearExtrusionFilter* self, double _arg1, double _arg2, double _arg3) { self->SetVector(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkLinearExtrusionFilter_SetVector_doubleConstArray3(vtkLinearExtrusionFilter* self, const double* _arg) { self->SetVector(_arg); }

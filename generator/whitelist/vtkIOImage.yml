@@ -4,10 +4,147 @@ module: vtkIOImage
 classes:
   - name: vtkImageWriter
     header: vtkImageWriter.h
-    functions: []
+    functions:
+      - name: DeleteFiles
+        cppSignature: void DeleteFiles()
+        return:
+          type: void
+        parameters: []
+      - name: GetFileDimensionality
+        cppSignature: int GetFileDimensionality()
+        return:
+          type: int
+        parameters: []
+      - name: GetFileName
+        cppSignature: char * GetFileName()
+        return:
+          type: char*
+        parameters: []
+      - name: GetFilePattern
+        cppSignature: char * GetFilePattern()
+        return:
+          type: char*
+        parameters: []
+      - name: GetFilePrefix
+        cppSignature: char * GetFilePrefix()
+        return:
+          type: char*
+        parameters: []
+      - name: SetFileDimensionality
+        cppSignature: void SetFileDimensionality(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetFileName
+        cppSignature: void SetFileName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetFilePattern
+        cppSignature: void SetFilePattern(char const * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg1
+      - name: SetFilePrefix
+        cppSignature: void SetFilePrefix(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
   - name: vtkJPEGWriter
     header: vtkJPEGWriter.h
-    functions: []
+    functions:
+      - name: GetQuality
+        cppSignature: int GetQuality()
+        return:
+          type: int
+        parameters: []
+      - name: GetQualityMaxValue
+        cppSignature: int GetQualityMaxValue()
+        return:
+          type: int
+        parameters: []
+      - name: GetQualityMinValue
+        cppSignature: int GetQualityMinValue()
+        return:
+          type: int
+        parameters: []
+      - name: ProgressiveOff
+        cppSignature: void ProgressiveOff()
+        return:
+          type: void
+        parameters: []
+      - name: ProgressiveOn
+        cppSignature: void ProgressiveOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetQuality
+        cppSignature: void SetQuality(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: Write
+        cppSignature: void Write()
+        return:
+          type: void
+        parameters: []
+      - name: WriteToMemoryOff
+        cppSignature: void WriteToMemoryOff()
+        return:
+          type: void
+        parameters: []
+      - name: WriteToMemoryOn
+        cppSignature: void WriteToMemoryOn()
+        return:
+          type: void
+        parameters: []
   - name: vtkPNGWriter
     header: vtkPNGWriter.h
-    functions: []
+    functions:
+      - name: GetCompressionLevel
+        cppSignature: int GetCompressionLevel()
+        return:
+          type: int
+        parameters: []
+      - name: GetCompressionLevelMaxValue
+        cppSignature: int GetCompressionLevelMaxValue()
+        return:
+          type: int
+        parameters: []
+      - name: GetCompressionLevelMinValue
+        cppSignature: int GetCompressionLevelMinValue()
+        return:
+          type: int
+        parameters: []
+      - name: SetCompressionLevel
+        cppSignature: void SetCompressionLevel(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: Write
+        cppSignature: void Write()
+        return:
+          type: void
+        parameters: []
+      - name: WriteToMemoryOff
+        cppSignature: void WriteToMemoryOff()
+        return:
+          type: void
+        parameters: []
+      - name: WriteToMemoryOn
+        cppSignature: void WriteToMemoryOn()
+        return:
+          type: void
+        parameters: []

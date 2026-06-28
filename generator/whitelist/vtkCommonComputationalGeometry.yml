@@ -2,9 +2,6 @@
 
 module: vtkCommonComputationalGeometry
 classes:
-  - name: vtkParametricEnneper
-    header: vtkParametricEnneper.h
-    functions: []
   - name: vtkParametricFunction
     header: vtkParametricFunction.h
     functions: []

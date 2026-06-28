@@ -6,6 +6,64 @@ VTKSHARP_API vtkCamera* vtkCamera_New() { return vtkCamera::New(); }
 
 VTKSHARP_API void vtkCamera_Azimuth(vtkCamera* self, double angle) { self->Azimuth(angle); }
 
+VTKSHARP_API void vtkCamera_ComputeViewPlaneNormal(vtkCamera* self) { self->ComputeViewPlaneNormal(); }
+
 VTKSHARP_API void vtkCamera_Elevation(vtkCamera* self, double angle) { self->Elevation(angle); }
+
+VTKSHARP_API double vtkCamera_GetDistance(vtkCamera* self) { return self->GetDistance(); }
+
+VTKSHARP_API double vtkCamera_GetFocalDistance(vtkCamera* self) { return self->GetFocalDistance(); }
+
+VTKSHARP_API double* vtkCamera_GetFocalPoint_(vtkCamera* self) { return self->GetFocalPoint(); }
+
+VTKSHARP_API void vtkCamera_GetFocalPoint_doubleArray3(vtkCamera* self, double* _arg) { self->GetFocalPoint(_arg); }
+
+VTKSHARP_API double vtkCamera_GetFocalPointScale(vtkCamera* self) { return self->GetFocalPointScale(); }
+
+VTKSHARP_API double vtkCamera_GetParallelScale(vtkCamera* self) { return self->GetParallelScale(); }
+
+VTKSHARP_API double* vtkCamera_GetPosition_(vtkCamera* self) { return self->GetPosition(); }
+
+VTKSHARP_API void vtkCamera_GetPosition_doubleArray3(vtkCamera* self, double* _arg) { self->GetPosition(_arg); }
+
+VTKSHARP_API double vtkCamera_GetRoll(vtkCamera* self) { return self->GetRoll(); }
+
+VTKSHARP_API double vtkCamera_GetThickness(vtkCamera* self) { return self->GetThickness(); }
+
+VTKSHARP_API double vtkCamera_GetViewAngle(vtkCamera* self) { return self->GetViewAngle(); }
+
+VTKSHARP_API double* vtkCamera_GetViewPlaneNormal_(vtkCamera* self) { return self->GetViewPlaneNormal(); }
+
+VTKSHARP_API void vtkCamera_GetViewPlaneNormal_doubleArray3(vtkCamera* self, double* _arg) { self->GetViewPlaneNormal(_arg); }
+
+VTKSHARP_API double* vtkCamera_GetViewUp_(vtkCamera* self) { return self->GetViewUp(); }
+
+VTKSHARP_API void vtkCamera_GetViewUp_doubleArray3(vtkCamera* self, double* _arg) { self->GetViewUp(_arg); }
+
+VTKSHARP_API double* vtkCamera_GetWindowCenter_(vtkCamera* self) { return self->GetWindowCenter(); }
+
+VTKSHARP_API void vtkCamera_GetWindowCenter_doubleArray2(vtkCamera* self, double* _arg) { self->GetWindowCenter(_arg); }
+
+VTKSHARP_API void vtkCamera_ParallelProjectionOff(vtkCamera* self) { self->ParallelProjectionOff(); }
+
+VTKSHARP_API void vtkCamera_ParallelProjectionOn(vtkCamera* self) { self->ParallelProjectionOn(); }
+
+VTKSHARP_API void vtkCamera_SetFocalPoint_doubleConstArray3(vtkCamera* self, const double* a) { self->SetFocalPoint(a); }
+
+VTKSHARP_API void vtkCamera_SetFocalPoint_double_double_double(vtkCamera* self, double x, double y, double z) { self->SetFocalPoint(x, y, z); }
+
+VTKSHARP_API void vtkCamera_SetParallelScale(vtkCamera* self, double scale) { self->SetParallelScale(scale); }
+
+VTKSHARP_API void vtkCamera_SetPosition_doubleConstArray3(vtkCamera* self, const double* a) { self->SetPosition(a); }
+
+VTKSHARP_API void vtkCamera_SetPosition_double_double_double(vtkCamera* self, double x, double y, double z) { self->SetPosition(x, y, z); }
+
+VTKSHARP_API void vtkCamera_SetViewUp_doubleConstArray3(vtkCamera* self, const double* a) { self->SetViewUp(a); }
+
+VTKSHARP_API void vtkCamera_SetViewUp_double_double_double(vtkCamera* self, double vx, double vy, double vz) { self->SetViewUp(vx, vy, vz); }
+
+VTKSHARP_API void vtkCamera_UseHorizontalViewAngleOff(vtkCamera* self) { self->UseHorizontalViewAngleOff(); }
+
+VTKSHARP_API void vtkCamera_UseHorizontalViewAngleOn(vtkCamera* self) { self->UseHorizontalViewAngleOn(); }
 
 VTKSHARP_API void vtkCamera_Zoom(vtkCamera* self, double factor) { self->Zoom(factor); }

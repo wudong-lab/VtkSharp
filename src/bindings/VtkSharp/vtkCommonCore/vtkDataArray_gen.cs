@@ -17,6 +17,53 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
         return target;
     }
 
+    public new void InsertNextTuple1(double value)
+    {
+        vtkDataArray_InsertNextTuple1(this.NativePointer, value);
+    }
+
+    public new void InsertNextTuple2(double val0, double val1)
+    {
+        vtkDataArray_InsertNextTuple2(this.NativePointer, val0, val1);
+    }
+
+    public new void InsertNextTuple3(double val0, double val1, double val2)
+    {
+        vtkDataArray_InsertNextTuple3(this.NativePointer, val0, val1, val2);
+    }
+
+    public new void InsertNextTuple4(double val0, double val1, double val2, double val3)
+    {
+        vtkDataArray_InsertNextTuple4(this.NativePointer, val0, val1, val2, val3);
+    }
+
+    public new void InsertNextTuple6(double val0, double val1, double val2, double val3, double val4, double val5)
+    {
+        vtkDataArray_InsertNextTuple6(this.NativePointer, val0, val1, val2, val3, val4, val5);
+    }
+
+    public new void InsertNextTuple9(double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8)
+    {
+        vtkDataArray_InsertNextTuple9(this.NativePointer, val0, val1, val2, val3, val4, val5, val6, val7, val8);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_InsertNextTuple1(nint self, double value);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_InsertNextTuple2(nint self, double val0, double val1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_InsertNextTuple3(nint self, double val0, double val1, double val2);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_InsertNextTuple4(nint self, double val0, double val1, double val2, double val3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_InsertNextTuple6(nint self, double val0, double val1, double val2, double val3, double val4, double val5);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_InsertNextTuple9(nint self, double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8);
     #endregion
 }

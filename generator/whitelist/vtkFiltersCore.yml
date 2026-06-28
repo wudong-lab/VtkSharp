@@ -4,10 +4,79 @@ module: vtkFiltersCore
 classes:
   - name: vtkAppendPolyData
     header: vtkAppendPolyData.h
-    functions: []
+    functions:
+      - name: AddInputData
+        cppSignature: void AddInputData(int _arg1, vtkDataObject * _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: vtkDataObject*
+            name: _arg2
+      - name: AddInputData
+        cppSignature: void AddInputData(vtkDataObject * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: _arg1
+      - name: AddInputData
+        cppSignature: void AddInputData(vtkPolyData * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkPolyData*
+            name: _arg1
+      - name: SetInputDataByNumber
+        cppSignature: void SetInputDataByNumber(int num, vtkPolyData * ds)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: num
+          - type: vtkPolyData*
+            name: ds
+      - name: SetNumberOfInputs
+        cppSignature: void SetNumberOfInputs(int num)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: num
   - name: vtkCellCenters
     header: vtkCellCenters.h
-    functions: []
+    functions:
+      - name: ConvertGhostCellsToGhostPointsOff
+        cppSignature: void ConvertGhostCellsToGhostPointsOff()
+        return:
+          type: void
+        parameters: []
+      - name: ConvertGhostCellsToGhostPointsOn
+        cppSignature: void ConvertGhostCellsToGhostPointsOn()
+        return:
+          type: void
+        parameters: []
+      - name: CopyArraysOff
+        cppSignature: void CopyArraysOff()
+        return:
+          type: void
+        parameters: []
+      - name: CopyArraysOn
+        cppSignature: void CopyArraysOn()
+        return:
+          type: void
+        parameters: []
+      - name: VertexCellsOff
+        cppSignature: void VertexCellsOff()
+        return:
+          type: void
+        parameters: []
+      - name: VertexCellsOn
+        cppSignature: void VertexCellsOn()
+        return:
+          type: void
+        parameters: []
   - name: vtkDelaunay2D
     header: vtkDelaunay2D.h
     functions:
@@ -79,7 +148,37 @@ classes:
             name: input
   - name: vtkGenerateIds
     header: vtkGenerateIds.h
-    functions: []
+    functions:
+      - name: CellIdsOff
+        cppSignature: void CellIdsOff()
+        return:
+          type: void
+        parameters: []
+      - name: CellIdsOn
+        cppSignature: void CellIdsOn()
+        return:
+          type: void
+        parameters: []
+      - name: FieldDataOff
+        cppSignature: void FieldDataOff()
+        return:
+          type: void
+        parameters: []
+      - name: FieldDataOn
+        cppSignature: void FieldDataOn()
+        return:
+          type: void
+        parameters: []
+      - name: PointIdsOff
+        cppSignature: void PointIdsOff()
+        return:
+          type: void
+        parameters: []
+      - name: PointIdsOn
+        cppSignature: void PointIdsOn()
+        return:
+          type: void
+        parameters: []
   - name: vtkGlyph3D
     header: vtkGlyph3D.h
     functions:

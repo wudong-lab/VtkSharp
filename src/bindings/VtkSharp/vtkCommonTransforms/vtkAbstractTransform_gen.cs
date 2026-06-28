@@ -17,6 +17,52 @@ public unsafe partial class vtkAbstractTransform : vtkObject
         return target;
     }
 
+    internal new double* TransformPoint_Internal(ReadOnlySpan<double> point)
+    {
+        fixed (double* pointPtr = point)
+        {
+            return vtkAbstractTransform_TransformPoint_doubleConstArray3(this.NativePointer, pointPtr);
+        }
+    }
+
+    internal new double* TransformPoint_Internal(double x, double y, double z)
+    {
+        return vtkAbstractTransform_TransformPoint_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void TransformPoint(ReadOnlySpan<double> @in, Span<double> @out)
+    {
+        fixed (double* inPtr = @in)
+        {
+            fixed (double* outPtr = @out)
+            {
+                vtkAbstractTransform_TransformPoint_doubleConstArray3_doubleArray3(this.NativePointer, inPtr, outPtr);
+            }
+        }
+    }
+
+    public new void TransformPoint(ReadOnlySpan<float> @in, Span<float> @out)
+    {
+        fixed (float* inPtr = @in)
+        {
+            fixed (float* outPtr = @out)
+            {
+                vtkAbstractTransform_TransformPoint_floatConstArray3_floatArray3(this.NativePointer, inPtr, outPtr);
+            }
+        }
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkAbstractTransform_TransformPoint_doubleConstArray3(nint self, double* point);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkAbstractTransform_TransformPoint_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAbstractTransform_TransformPoint_doubleConstArray3_doubleArray3(nint self, double* @in, double* @out);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAbstractTransform_TransformPoint_floatConstArray3_floatArray3(nint self, float* @in, float* @out);
     #endregion
 }

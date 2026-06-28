@@ -18,8 +18,122 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    internal new double* GetCenter_Internal()
+    {
+        return vtkPlaneSource_GetCenter_(this.NativePointer);
+    }
+
+    public new void GetCenter(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkPlaneSource_GetCenter_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    internal new double* GetNormal_Internal()
+    {
+        return vtkPlaneSource_GetNormal_(this.NativePointer);
+    }
+
+    public new void GetNormal(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkPlaneSource_GetNormal_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    internal new double* GetOrigin_Internal()
+    {
+        return vtkPlaneSource_GetOrigin_(this.NativePointer);
+    }
+
+    public new void GetOrigin(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkPlaneSource_GetOrigin_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    public new void SetCenter(double x, double y, double z)
+    {
+        vtkPlaneSource_SetCenter_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetCenter(Span<double> center)
+    {
+        fixed (double* centerPtr = center)
+        {
+            vtkPlaneSource_SetCenter_doubleArray3(this.NativePointer, centerPtr);
+        }
+    }
+
+    public new void SetNormal(double nx, double ny, double nz)
+    {
+        vtkPlaneSource_SetNormal_double_double_double(this.NativePointer, nx, ny, nz);
+    }
+
+    public new void SetNormal(Span<double> n)
+    {
+        fixed (double* nPtr = n)
+        {
+            vtkPlaneSource_SetNormal_doubleArray3(this.NativePointer, nPtr);
+        }
+    }
+
+    public new void SetOrigin(double _arg1, double _arg2, double _arg3)
+    {
+        vtkPlaneSource_SetOrigin_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetOrigin(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkPlaneSource_SetOrigin_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPlaneSource_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkPlaneSource_GetCenter_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_GetCenter_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkPlaneSource_GetNormal_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_GetNormal_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkPlaneSource_GetOrigin_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_GetOrigin_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetCenter_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetCenter_doubleArray3(nint self, double* center);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetNormal_double_double_double(nint self, double nx, double ny, double nz);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetNormal_doubleArray3(nint self, double* n);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetOrigin_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetOrigin_doubleConstArray3(nint self, double* _arg);
     #endregion
 }

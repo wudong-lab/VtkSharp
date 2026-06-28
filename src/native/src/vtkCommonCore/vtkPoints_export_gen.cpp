@@ -4,6 +4,50 @@
 
 VTKSHARP_API vtkPoints* vtkPoints_New() { return vtkPoints::New(); }
 
-VTKSHARP_API vtkIdType vtkPoints_InsertNextPoint(vtkPoints* self, double x, double y, double z) { return self->InsertNextPoint(x, y, z); }
+VTKSHARP_API vtkIdType vtkPoints_GetNumberOfPoints(vtkPoints* self) { return self->GetNumberOfPoints(); }
 
-VTKSHARP_API void vtkPoints_InsertPoint(vtkPoints* self, vtkIdType id, double x, double y, double z) { self->InsertPoint(id, x, y, z); }
+VTKSHARP_API vtkIdType vtkPoints_InsertNextPoint_doubleConstArray3(vtkPoints* self, const double* x) { return self->InsertNextPoint(x); }
+
+VTKSHARP_API vtkIdType vtkPoints_InsertNextPoint_double_double_double(vtkPoints* self, double x, double y, double z) { return self->InsertNextPoint(x, y, z); }
+
+VTKSHARP_API vtkIdType vtkPoints_InsertNextPoint_floatConstArray3(vtkPoints* self, const float* x) { return self->InsertNextPoint(x); }
+
+VTKSHARP_API void vtkPoints_InsertPoint_vtkIdType_doubleConstArray3(vtkPoints* self, vtkIdType id, const double* x) { self->InsertPoint(id, x); }
+
+VTKSHARP_API void vtkPoints_InsertPoint_vtkIdType_double_double_double(vtkPoints* self, vtkIdType id, double x, double y, double z) { self->InsertPoint(id, x, y, z); }
+
+VTKSHARP_API void vtkPoints_InsertPoint_vtkIdType_floatConstArray3(vtkPoints* self, vtkIdType id, const float* x) { self->InsertPoint(id, x); }
+
+VTKSHARP_API void vtkPoints_Modified(vtkPoints* self) { self->Modified(); }
+
+VTKSHARP_API vtkTypeBool vtkPoints_Resize(vtkPoints* self, vtkIdType numPoints) { return self->Resize(numPoints); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToBit(vtkPoints* self) { self->SetDataTypeToBit(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToChar(vtkPoints* self) { self->SetDataTypeToChar(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToDouble(vtkPoints* self) { self->SetDataTypeToDouble(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToFloat(vtkPoints* self) { self->SetDataTypeToFloat(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToInt(vtkPoints* self) { self->SetDataTypeToInt(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToLong(vtkPoints* self) { self->SetDataTypeToLong(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToShort(vtkPoints* self) { self->SetDataTypeToShort(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToUnsignedChar(vtkPoints* self) { self->SetDataTypeToUnsignedChar(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToUnsignedInt(vtkPoints* self) { self->SetDataTypeToUnsignedInt(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToUnsignedLong(vtkPoints* self) { self->SetDataTypeToUnsignedLong(); }
+
+VTKSHARP_API void vtkPoints_SetDataTypeToUnsignedShort(vtkPoints* self) { self->SetDataTypeToUnsignedShort(); }
+
+VTKSHARP_API void vtkPoints_SetNumberOfPoints(vtkPoints* self, vtkIdType numPoints) { self->SetNumberOfPoints(numPoints); }
+
+VTKSHARP_API void vtkPoints_SetPoint_vtkIdType_doubleConstArray3(vtkPoints* self, vtkIdType id, const double* x) { self->SetPoint(id, x); }
+
+VTKSHARP_API void vtkPoints_SetPoint_vtkIdType_double_double_double(vtkPoints* self, vtkIdType id, double x, double y, double z) { self->SetPoint(id, x, y, z); }
+
+VTKSHARP_API void vtkPoints_SetPoint_vtkIdType_floatConstArray3(vtkPoints* self, vtkIdType id, const float* x) { self->SetPoint(id, x); }

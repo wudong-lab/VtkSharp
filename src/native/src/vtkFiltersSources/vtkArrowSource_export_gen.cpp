@@ -3,3 +3,19 @@
 #include <vtkArrowSource.h>
 
 VTKSHARP_API vtkArrowSource* vtkArrowSource_New() { return vtkArrowSource::New(); }
+
+VTKSHARP_API void vtkArrowSource_SetArrowOriginToCenter(vtkArrowSource* self) { self->SetArrowOriginToCenter(); }
+
+VTKSHARP_API void vtkArrowSource_SetArrowOriginToDefault(vtkArrowSource* self) { self->SetArrowOriginToDefault(); }
+
+VTKSHARP_API void vtkArrowSource_SetInvert(vtkArrowSource* self, bool _arg) { self->SetInvert(_arg); }
+
+VTKSHARP_API void vtkArrowSource_SetShaftRadius(vtkArrowSource* self, double _arg) { self->SetShaftRadius(_arg); }
+
+VTKSHARP_API void vtkArrowSource_SetShaftResolution(vtkArrowSource* self, int _arg) { self->SetShaftResolution(_arg); }
+
+VTKSHARP_API void vtkArrowSource_SetTipLength(vtkArrowSource* self, double _arg) { self->SetTipLength(_arg); }
+
+VTKSHARP_API void vtkArrowSource_SetTipRadius(vtkArrowSource* self, double _arg) { self->SetTipRadius(_arg); }
+
+VTKSHARP_API void vtkArrowSource_SetTipResolution(vtkArrowSource* self, int _arg) { self->SetTipResolution(_arg); }

@@ -2,6 +2,20 @@
 #include "vtksharp_api.h"
 #include <vtkWindow.h>
 
+VTKSHARP_API char* vtkWindow_GetWindowName(vtkWindow* self) { return self->GetWindowName(); }
+
+VTKSHARP_API void vtkWindow_OffScreenRenderingOff(vtkWindow* self) { self->OffScreenRenderingOff(); }
+
+VTKSHARP_API void vtkWindow_OffScreenRenderingOn(vtkWindow* self) { self->OffScreenRenderingOn(); }
+
 VTKSHARP_API void vtkWindow_Render(vtkWindow* self) { self->Render(); }
 
-VTKSHARP_API void vtkWindow_SetSize(vtkWindow* self, int width, int height) { self->SetSize(width, height); }
+VTKSHARP_API void vtkWindow_SetSize_int_int(vtkWindow* self, int width, int height) { self->SetSize(width, height); }
+
+VTKSHARP_API void vtkWindow_SetSize_intArray2(vtkWindow* self, int* a) { self->SetSize(a); }
+
+VTKSHARP_API void vtkWindow_SetWindowName(vtkWindow* self, const char* _arg) { self->SetWindowName(_arg); }
+
+VTKSHARP_API void vtkWindow_ShowWindowOff(vtkWindow* self) { self->ShowWindowOff(); }
+
+VTKSHARP_API void vtkWindow_ShowWindowOn(vtkWindow* self) { self->ShowWindowOn(); }

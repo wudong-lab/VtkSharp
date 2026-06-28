@@ -18,8 +18,304 @@ public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
         return target;
     }
 
+    public new void DivideByZeroToCOff()
+    {
+        vtkImageMathematics_DivideByZeroToCOff(this.NativePointer);
+    }
+
+    public new void DivideByZeroToCOn()
+    {
+        vtkImageMathematics_DivideByZeroToCOn(this.NativePointer);
+    }
+
+    public new double GetConstantC()
+    {
+        return vtkImageMathematics_GetConstantC(this.NativePointer);
+    }
+
+    public new double GetConstantK()
+    {
+        return vtkImageMathematics_GetConstantK(this.NativePointer);
+    }
+
+    public new vtkDataObject GetInput()
+    {
+        return vtkDataObject.WeakReference(vtkImageMathematics_GetInput_(this.NativePointer));
+    }
+
+    public new vtkDataObject GetInput(int idx)
+    {
+        return vtkDataObject.WeakReference(vtkImageMathematics_GetInput_int(this.NativePointer, idx));
+    }
+
+    public new int GetNumberOfInputs()
+    {
+        return vtkImageMathematics_GetNumberOfInputs(this.NativePointer);
+    }
+
+    public new void ReplaceNthInputConnection(int idx, vtkAlgorithmOutput input)
+    {
+        vtkImageMathematics_ReplaceNthInputConnection(this.NativePointer, idx, input.NativePointer);
+    }
+
+    public new void SetConstantC(double _arg)
+    {
+        vtkImageMathematics_SetConstantC(this.NativePointer, _arg);
+    }
+
+    public new void SetConstantK(double _arg)
+    {
+        vtkImageMathematics_SetConstantK(this.NativePointer, _arg);
+    }
+
+    public new void SetInput1Data(vtkDataObject @in)
+    {
+        vtkImageMathematics_SetInput1Data(this.NativePointer, @in.NativePointer);
+    }
+
+    public new void SetInput2Data(vtkDataObject @in)
+    {
+        vtkImageMathematics_SetInput2Data(this.NativePointer, @in.NativePointer);
+    }
+
+    public new void SetInputConnection(int idx, vtkAlgorithmOutput input)
+    {
+        vtkImageMathematics_SetInputConnection_int_vtkAlgorithmOutputPtr(this.NativePointer, idx, input.NativePointer);
+    }
+
+    public new void SetInputConnection(vtkAlgorithmOutput input)
+    {
+        vtkImageMathematics_SetInputConnection_vtkAlgorithmOutputPtr(this.NativePointer, input.NativePointer);
+    }
+
+    public new void SetInputData(int idx, vtkDataObject input)
+    {
+        vtkImageMathematics_SetInputData_int_vtkDataObjectPtr(this.NativePointer, idx, input.NativePointer);
+    }
+
+    public new void SetInputData(vtkDataObject input)
+    {
+        vtkImageMathematics_SetInputData_vtkDataObjectPtr(this.NativePointer, input.NativePointer);
+    }
+
+    public new void SetOperationToATAN()
+    {
+        vtkImageMathematics_SetOperationToATAN(this.NativePointer);
+    }
+
+    public new void SetOperationToATAN2()
+    {
+        vtkImageMathematics_SetOperationToATAN2(this.NativePointer);
+    }
+
+    public new void SetOperationToAbsoluteValue()
+    {
+        vtkImageMathematics_SetOperationToAbsoluteValue(this.NativePointer);
+    }
+
+    public new void SetOperationToAdd()
+    {
+        vtkImageMathematics_SetOperationToAdd(this.NativePointer);
+    }
+
+    public new void SetOperationToAddConstant()
+    {
+        vtkImageMathematics_SetOperationToAddConstant(this.NativePointer);
+    }
+
+    public new void SetOperationToComplexMultiply()
+    {
+        vtkImageMathematics_SetOperationToComplexMultiply(this.NativePointer);
+    }
+
+    public new void SetOperationToConjugate()
+    {
+        vtkImageMathematics_SetOperationToConjugate(this.NativePointer);
+    }
+
+    public new void SetOperationToCos()
+    {
+        vtkImageMathematics_SetOperationToCos(this.NativePointer);
+    }
+
+    public new void SetOperationToDivide()
+    {
+        vtkImageMathematics_SetOperationToDivide(this.NativePointer);
+    }
+
+    public new void SetOperationToExp()
+    {
+        vtkImageMathematics_SetOperationToExp(this.NativePointer);
+    }
+
+    public new void SetOperationToInvert()
+    {
+        vtkImageMathematics_SetOperationToInvert(this.NativePointer);
+    }
+
+    public new void SetOperationToLog()
+    {
+        vtkImageMathematics_SetOperationToLog(this.NativePointer);
+    }
+
+    public new void SetOperationToMax()
+    {
+        vtkImageMathematics_SetOperationToMax(this.NativePointer);
+    }
+
+    public new void SetOperationToMin()
+    {
+        vtkImageMathematics_SetOperationToMin(this.NativePointer);
+    }
+
+    public new void SetOperationToMultiply()
+    {
+        vtkImageMathematics_SetOperationToMultiply(this.NativePointer);
+    }
+
+    public new void SetOperationToMultiplyByK()
+    {
+        vtkImageMathematics_SetOperationToMultiplyByK(this.NativePointer);
+    }
+
+    public new void SetOperationToReplaceCByK()
+    {
+        vtkImageMathematics_SetOperationToReplaceCByK(this.NativePointer);
+    }
+
+    public new void SetOperationToSin()
+    {
+        vtkImageMathematics_SetOperationToSin(this.NativePointer);
+    }
+
+    public new void SetOperationToSquare()
+    {
+        vtkImageMathematics_SetOperationToSquare(this.NativePointer);
+    }
+
+    public new void SetOperationToSquareRoot()
+    {
+        vtkImageMathematics_SetOperationToSquareRoot(this.NativePointer);
+    }
+
+    public new void SetOperationToSubtract()
+    {
+        vtkImageMathematics_SetOperationToSubtract(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageMathematics_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_DivideByZeroToCOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_DivideByZeroToCOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkImageMathematics_GetConstantC(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkImageMathematics_GetConstantK(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageMathematics_GetInput_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageMathematics_GetInput_int(nint self, int idx);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkImageMathematics_GetNumberOfInputs(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_ReplaceNthInputConnection(nint self, int idx, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetConstantC(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetConstantK(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetInput1Data(nint self, nint @in);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetInput2Data(nint self, nint @in);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int idx, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetInputData_int_vtkDataObjectPtr(nint self, int idx, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetInputData_vtkDataObjectPtr(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToATAN(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToATAN2(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToAbsoluteValue(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToAdd(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToAddConstant(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToComplexMultiply(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToConjugate(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToCos(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToDivide(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToExp(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToInvert(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToLog(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToMax(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToMin(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToMultiply(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToMultiplyByK(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToReplaceCByK(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToSin(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToSquare(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToSquareRoot(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageMathematics_SetOperationToSubtract(nint self);
     #endregion
 }

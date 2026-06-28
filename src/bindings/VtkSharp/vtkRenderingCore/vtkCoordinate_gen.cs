@@ -18,8 +18,91 @@ public unsafe partial class vtkCoordinate : vtkObject
         return target;
     }
 
+    public new void SetCoordinateSystemToDisplay()
+    {
+        vtkCoordinate_SetCoordinateSystemToDisplay(this.NativePointer);
+    }
+
+    public new void SetCoordinateSystemToNormalizedDisplay()
+    {
+        vtkCoordinate_SetCoordinateSystemToNormalizedDisplay(this.NativePointer);
+    }
+
+    public new void SetCoordinateSystemToNormalizedViewport()
+    {
+        vtkCoordinate_SetCoordinateSystemToNormalizedViewport(this.NativePointer);
+    }
+
+    public new void SetCoordinateSystemToPose()
+    {
+        vtkCoordinate_SetCoordinateSystemToPose(this.NativePointer);
+    }
+
+    public new void SetCoordinateSystemToView()
+    {
+        vtkCoordinate_SetCoordinateSystemToView(this.NativePointer);
+    }
+
+    public new void SetCoordinateSystemToViewport()
+    {
+        vtkCoordinate_SetCoordinateSystemToViewport(this.NativePointer);
+    }
+
+    public new void SetCoordinateSystemToWorld()
+    {
+        vtkCoordinate_SetCoordinateSystemToWorld(this.NativePointer);
+    }
+
+    public new void SetValue(double _arg1, double _arg2, double _arg3)
+    {
+        vtkCoordinate_SetValue_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetValue(double a, double b)
+    {
+        vtkCoordinate_SetValue_double_double(this.NativePointer, a, b);
+    }
+
+    public new void SetValue(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCoordinate_SetValue_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCoordinate_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetCoordinateSystemToDisplay(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetCoordinateSystemToNormalizedDisplay(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetCoordinateSystemToNormalizedViewport(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetCoordinateSystemToPose(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetCoordinateSystemToView(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetCoordinateSystemToViewport(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetCoordinateSystemToWorld(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetValue_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetValue_double_double(nint self, double a, double b);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCoordinate_SetValue_doubleConstArray3(nint self, double* _arg);
     #endregion
 }

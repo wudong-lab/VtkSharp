@@ -18,8 +18,122 @@ public unsafe partial class vtkLineSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    internal new double* GetPoint1_Internal()
+    {
+        return vtkLineSource_GetPoint1_(this.NativePointer);
+    }
+
+    public new void GetPoint1(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkLineSource_GetPoint1_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    internal new double* GetPoint2_Internal()
+    {
+        return vtkLineSource_GetPoint2_(this.NativePointer);
+    }
+
+    public new void GetPoint2(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkLineSource_GetPoint2_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    public new int GetResolution()
+    {
+        return vtkLineSource_GetResolution(this.NativePointer);
+    }
+
+    public new void SetPoint1(double _arg1, double _arg2, double _arg3)
+    {
+        vtkLineSource_SetPoint1_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetPoint1(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkLineSource_SetPoint1_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetPoint1(Span<float> _arg1)
+    {
+        fixed (float* _arg1Ptr = _arg1)
+        {
+            vtkLineSource_SetPoint1_floatArray3(this.NativePointer, _arg1Ptr);
+        }
+    }
+
+    public new void SetPoint2(double _arg1, double _arg2, double _arg3)
+    {
+        vtkLineSource_SetPoint2_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetPoint2(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkLineSource_SetPoint2_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetPoint2(Span<float> _arg1)
+    {
+        fixed (float* _arg1Ptr = _arg1)
+        {
+            vtkLineSource_SetPoint2_floatArray3(this.NativePointer, _arg1Ptr);
+        }
+    }
+
+    public new void SetResolution(int _arg)
+    {
+        vtkLineSource_SetResolution(this.NativePointer, _arg);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLineSource_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkLineSource_GetPoint1_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_GetPoint1_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkLineSource_GetPoint2_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_GetPoint2_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkLineSource_GetResolution(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_SetPoint1_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_SetPoint1_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_SetPoint1_floatArray3(nint self, float* _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_SetPoint2_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_SetPoint2_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_SetPoint2_floatArray3(nint self, float* _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLineSource_SetResolution(nint self, int _arg);
     #endregion
 }

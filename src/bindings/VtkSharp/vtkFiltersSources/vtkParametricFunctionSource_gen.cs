@@ -18,8 +18,16 @@ public unsafe partial class vtkParametricFunctionSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void SetParametricFunction(vtkParametricFunction _arg1)
+    {
+        vtkParametricFunctionSource_SetParametricFunction(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkParametricFunctionSource_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkParametricFunctionSource_SetParametricFunction(nint self, nint _arg1);
     #endregion
 }

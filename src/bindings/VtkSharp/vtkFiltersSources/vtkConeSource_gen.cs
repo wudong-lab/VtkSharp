@@ -20,7 +20,15 @@ public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
 
     public new void SetCenter(double _arg1, double _arg2, double _arg3)
     {
-        vtkConeSource_SetCenter(this.NativePointer, _arg1, _arg2, _arg3);
+        vtkConeSource_SetCenter_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetCenter(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkConeSource_SetCenter_doubleConstArray3(this.NativePointer, _argPtr);
+        }
     }
 
     public new void SetHeight(double height)
@@ -43,7 +51,10 @@ public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
     private static extern nint vtkConeSource_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkConeSource_SetCenter(nint self, double _arg1, double _arg2, double _arg3);
+    private static extern void vtkConeSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkConeSource_SetCenter_doubleConstArray3(nint self, double* _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkConeSource_SetHeight(nint self, double height);

@@ -17,6 +17,21 @@ public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
         return target;
     }
 
+    public new vtkImageData GetOutput()
+    {
+        return vtkImageData.WeakReference(vtkImageAlgorithm_GetOutput_(this.NativePointer));
+    }
+
+    public new vtkImageData GetOutput(int _arg1)
+    {
+        return vtkImageData.WeakReference(vtkImageAlgorithm_GetOutput_int(this.NativePointer, _arg1));
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageAlgorithm_GetOutput_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageAlgorithm_GetOutput_int(nint self, int _arg1);
     #endregion
 }

@@ -18,8 +18,51 @@ public unsafe partial class vtkCubeSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void SetCenter(double _arg1, double _arg2, double _arg3)
+    {
+        vtkCubeSource_SetCenter_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetCenter(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCubeSource_SetCenter_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetXLength(double _arg)
+    {
+        vtkCubeSource_SetXLength(this.NativePointer, _arg);
+    }
+
+    public new void SetYLength(double _arg)
+    {
+        vtkCubeSource_SetYLength(this.NativePointer, _arg);
+    }
+
+    public new void SetZLength(double _arg)
+    {
+        vtkCubeSource_SetZLength(this.NativePointer, _arg);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCubeSource_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCubeSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCubeSource_SetCenter_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCubeSource_SetXLength(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCubeSource_SetYLength(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCubeSource_SetZLength(nint self, double _arg);
     #endregion
 }

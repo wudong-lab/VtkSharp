@@ -3,3 +3,23 @@
 #include <vtkCoordinate.h>
 
 VTKSHARP_API vtkCoordinate* vtkCoordinate_New() { return vtkCoordinate::New(); }
+
+VTKSHARP_API void vtkCoordinate_SetCoordinateSystemToDisplay(vtkCoordinate* self) { self->SetCoordinateSystemToDisplay(); }
+
+VTKSHARP_API void vtkCoordinate_SetCoordinateSystemToNormalizedDisplay(vtkCoordinate* self) { self->SetCoordinateSystemToNormalizedDisplay(); }
+
+VTKSHARP_API void vtkCoordinate_SetCoordinateSystemToNormalizedViewport(vtkCoordinate* self) { self->SetCoordinateSystemToNormalizedViewport(); }
+
+VTKSHARP_API void vtkCoordinate_SetCoordinateSystemToPose(vtkCoordinate* self) { self->SetCoordinateSystemToPose(); }
+
+VTKSHARP_API void vtkCoordinate_SetCoordinateSystemToView(vtkCoordinate* self) { self->SetCoordinateSystemToView(); }
+
+VTKSHARP_API void vtkCoordinate_SetCoordinateSystemToViewport(vtkCoordinate* self) { self->SetCoordinateSystemToViewport(); }
+
+VTKSHARP_API void vtkCoordinate_SetCoordinateSystemToWorld(vtkCoordinate* self) { self->SetCoordinateSystemToWorld(); }
+
+VTKSHARP_API void vtkCoordinate_SetValue_double_double_double(vtkCoordinate* self, double _arg1, double _arg2, double _arg3) { self->SetValue(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkCoordinate_SetValue_double_double(vtkCoordinate* self, double a, double b) { self->SetValue(a, b); }
+
+VTKSHARP_API void vtkCoordinate_SetValue_doubleConstArray3(vtkCoordinate* self, const double* _arg) { self->SetValue(_arg); }

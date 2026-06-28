@@ -17,6 +17,38 @@ public unsafe partial class vtkAbstractArray : vtkObject
         return target;
     }
 
+    public new string GetName()
+    {
+        return VtkString.FromUtf8Pointer(vtkAbstractArray_GetName(this.NativePointer));
+    }
+
+    public new void SetName(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkAbstractArray_SetName(this.NativePointer, _arg);
+        #else
+        vtkAbstractArray_SetName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    public new void SetNumberOfComponents(int _arg)
+    {
+        vtkAbstractArray_SetNumberOfComponents(this.NativePointer, _arg);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAbstractArray_GetName(nint self);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkAbstractArray_SetName(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAbstractArray_SetName(nint self, byte[] _arg);
+#endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAbstractArray_SetNumberOfComponents(nint self, int _arg);
     #endregion
 }

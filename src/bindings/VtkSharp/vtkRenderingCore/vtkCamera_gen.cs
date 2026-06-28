@@ -23,9 +23,178 @@ public unsafe partial class vtkCamera : vtkObject
         vtkCamera_Azimuth(this.NativePointer, angle);
     }
 
+    public new void ComputeViewPlaneNormal()
+    {
+        vtkCamera_ComputeViewPlaneNormal(this.NativePointer);
+    }
+
     public new void Elevation(double angle)
     {
         vtkCamera_Elevation(this.NativePointer, angle);
+    }
+
+    public new double GetDistance()
+    {
+        return vtkCamera_GetDistance(this.NativePointer);
+    }
+
+    public new double GetFocalDistance()
+    {
+        return vtkCamera_GetFocalDistance(this.NativePointer);
+    }
+
+    internal new double* GetFocalPoint_Internal()
+    {
+        return vtkCamera_GetFocalPoint_(this.NativePointer);
+    }
+
+    public new void GetFocalPoint(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCamera_GetFocalPoint_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new double GetFocalPointScale()
+    {
+        return vtkCamera_GetFocalPointScale(this.NativePointer);
+    }
+
+    public new double GetParallelScale()
+    {
+        return vtkCamera_GetParallelScale(this.NativePointer);
+    }
+
+    internal new double* GetPosition_Internal()
+    {
+        return vtkCamera_GetPosition_(this.NativePointer);
+    }
+
+    public new void GetPosition(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCamera_GetPosition_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new double GetRoll()
+    {
+        return vtkCamera_GetRoll(this.NativePointer);
+    }
+
+    public new double GetThickness()
+    {
+        return vtkCamera_GetThickness(this.NativePointer);
+    }
+
+    public new double GetViewAngle()
+    {
+        return vtkCamera_GetViewAngle(this.NativePointer);
+    }
+
+    internal new double* GetViewPlaneNormal_Internal()
+    {
+        return vtkCamera_GetViewPlaneNormal_(this.NativePointer);
+    }
+
+    public new void GetViewPlaneNormal(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCamera_GetViewPlaneNormal_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    internal new double* GetViewUp_Internal()
+    {
+        return vtkCamera_GetViewUp_(this.NativePointer);
+    }
+
+    public new void GetViewUp(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCamera_GetViewUp_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    internal new double* GetWindowCenter_Internal()
+    {
+        return vtkCamera_GetWindowCenter_(this.NativePointer);
+    }
+
+    public new void GetWindowCenter(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCamera_GetWindowCenter_doubleArray2(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void ParallelProjectionOff()
+    {
+        vtkCamera_ParallelProjectionOff(this.NativePointer);
+    }
+
+    public new void ParallelProjectionOn()
+    {
+        vtkCamera_ParallelProjectionOn(this.NativePointer);
+    }
+
+    public new void SetFocalPoint(ReadOnlySpan<double> a)
+    {
+        fixed (double* aPtr = a)
+        {
+            vtkCamera_SetFocalPoint_doubleConstArray3(this.NativePointer, aPtr);
+        }
+    }
+
+    public new void SetFocalPoint(double x, double y, double z)
+    {
+        vtkCamera_SetFocalPoint_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetParallelScale(double scale)
+    {
+        vtkCamera_SetParallelScale(this.NativePointer, scale);
+    }
+
+    public new void SetPosition(ReadOnlySpan<double> a)
+    {
+        fixed (double* aPtr = a)
+        {
+            vtkCamera_SetPosition_doubleConstArray3(this.NativePointer, aPtr);
+        }
+    }
+
+    public new void SetPosition(double x, double y, double z)
+    {
+        vtkCamera_SetPosition_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetViewUp(ReadOnlySpan<double> a)
+    {
+        fixed (double* aPtr = a)
+        {
+            vtkCamera_SetViewUp_doubleConstArray3(this.NativePointer, aPtr);
+        }
+    }
+
+    public new void SetViewUp(double vx, double vy, double vz)
+    {
+        vtkCamera_SetViewUp_double_double_double(this.NativePointer, vx, vy, vz);
+    }
+
+    public new void UseHorizontalViewAngleOff()
+    {
+        vtkCamera_UseHorizontalViewAngleOff(this.NativePointer);
+    }
+
+    public new void UseHorizontalViewAngleOn()
+    {
+        vtkCamera_UseHorizontalViewAngleOn(this.NativePointer);
     }
 
     public new void Zoom(double factor)
@@ -41,7 +210,94 @@ public unsafe partial class vtkCamera : vtkObject
     private static extern void vtkCamera_Azimuth(nint self, double angle);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_ComputeViewPlaneNormal(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCamera_Elevation(nint self, double angle);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCamera_GetDistance(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCamera_GetFocalDistance(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkCamera_GetFocalPoint_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_GetFocalPoint_doubleArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCamera_GetFocalPointScale(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCamera_GetParallelScale(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkCamera_GetPosition_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_GetPosition_doubleArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCamera_GetRoll(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCamera_GetThickness(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCamera_GetViewAngle(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkCamera_GetViewPlaneNormal_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_GetViewPlaneNormal_doubleArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkCamera_GetViewUp_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_GetViewUp_doubleArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkCamera_GetWindowCenter_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_GetWindowCenter_doubleArray2(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_ParallelProjectionOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_ParallelProjectionOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_SetFocalPoint_doubleConstArray3(nint self, double* a);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_SetFocalPoint_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_SetParallelScale(nint self, double scale);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_SetPosition_doubleConstArray3(nint self, double* a);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_SetPosition_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_SetViewUp_doubleConstArray3(nint self, double* a);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_SetViewUp_double_double_double(nint self, double vx, double vy, double vz);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_UseHorizontalViewAngleOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCamera_UseHorizontalViewAngleOn(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCamera_Zoom(nint self, double factor);

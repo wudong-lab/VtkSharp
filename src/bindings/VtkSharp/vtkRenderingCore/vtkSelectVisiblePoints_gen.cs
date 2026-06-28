@@ -18,8 +18,67 @@ public unsafe partial class vtkSelectVisiblePoints : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void SelectInvisibleOff()
+    {
+        vtkSelectVisiblePoints_SelectInvisibleOff(this.NativePointer);
+    }
+
+    public new void SelectInvisibleOn()
+    {
+        vtkSelectVisiblePoints_SelectInvisibleOn(this.NativePointer);
+    }
+
+    public new void SelectionWindowOff()
+    {
+        vtkSelectVisiblePoints_SelectionWindowOff(this.NativePointer);
+    }
+
+    public new void SelectionWindowOn()
+    {
+        vtkSelectVisiblePoints_SelectionWindowOn(this.NativePointer);
+    }
+
+    public new void SetRenderer(vtkRenderer ren)
+    {
+        vtkSelectVisiblePoints_SetRenderer(this.NativePointer, ren.NativePointer);
+    }
+
+    public new void SetSelection(int _arg1, int _arg2, int _arg3, int _arg4)
+    {
+        vtkSelectVisiblePoints_SetSelection_int_int_int_int(this.NativePointer, _arg1, _arg2, _arg3, _arg4);
+    }
+
+    public new void SetSelection(ReadOnlySpan<int> _arg)
+    {
+        fixed (int* _argPtr = _arg)
+        {
+            vtkSelectVisiblePoints_SetSelection_intConstArray4(this.NativePointer, _argPtr);
+        }
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkSelectVisiblePoints_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSelectVisiblePoints_SelectInvisibleOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSelectVisiblePoints_SelectInvisibleOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSelectVisiblePoints_SelectionWindowOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSelectVisiblePoints_SelectionWindowOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSelectVisiblePoints_SetRenderer(nint self, nint ren);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSelectVisiblePoints_SetSelection_int_int_int_int(nint self, int _arg1, int _arg2, int _arg3, int _arg4);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSelectVisiblePoints_SetSelection_intConstArray4(nint self, int* _arg);
     #endregion
 }

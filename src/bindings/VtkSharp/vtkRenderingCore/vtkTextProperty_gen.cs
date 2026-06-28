@@ -18,8 +18,247 @@ public unsafe partial class vtkTextProperty : vtkObject
         return target;
     }
 
+    public new void BoldOff()
+    {
+        vtkTextProperty_BoldOff(this.NativePointer);
+    }
+
+    public new void BoldOn()
+    {
+        vtkTextProperty_BoldOn(this.NativePointer);
+    }
+
+    public new void FrameOff()
+    {
+        vtkTextProperty_FrameOff(this.NativePointer);
+    }
+
+    public new void FrameOn()
+    {
+        vtkTextProperty_FrameOn(this.NativePointer);
+    }
+
+    public new int GetFontSize()
+    {
+        return vtkTextProperty_GetFontSize(this.NativePointer);
+    }
+
+    public new double GetOpacity()
+    {
+        return vtkTextProperty_GetOpacity(this.NativePointer);
+    }
+
+    public new void ItalicOff()
+    {
+        vtkTextProperty_ItalicOff(this.NativePointer);
+    }
+
+    public new void ItalicOn()
+    {
+        vtkTextProperty_ItalicOn(this.NativePointer);
+    }
+
+    public new void SetColor(double _arg1, double _arg2, double _arg3)
+    {
+        vtkTextProperty_SetColor_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetColor(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkTextProperty_SetColor_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetFontFamilyAsString(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkTextProperty_SetFontFamilyAsString(this.NativePointer, _arg);
+        #else
+        vtkTextProperty_SetFontFamilyAsString(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    public new void SetFontFamilyToArial()
+    {
+        vtkTextProperty_SetFontFamilyToArial(this.NativePointer);
+    }
+
+    public new void SetFontFamilyToCourier()
+    {
+        vtkTextProperty_SetFontFamilyToCourier(this.NativePointer);
+    }
+
+    public new void SetFontFamilyToTimes()
+    {
+        vtkTextProperty_SetFontFamilyToTimes(this.NativePointer);
+    }
+
+    public new void SetFontSize(int _arg)
+    {
+        vtkTextProperty_SetFontSize(this.NativePointer, _arg);
+    }
+
+    public new void SetJustificationToCentered()
+    {
+        vtkTextProperty_SetJustificationToCentered(this.NativePointer);
+    }
+
+    public new void SetJustificationToLeft()
+    {
+        vtkTextProperty_SetJustificationToLeft(this.NativePointer);
+    }
+
+    public new void SetJustificationToRight()
+    {
+        vtkTextProperty_SetJustificationToRight(this.NativePointer);
+    }
+
+    public new void SetLineSpacing(double _arg)
+    {
+        vtkTextProperty_SetLineSpacing(this.NativePointer, _arg);
+    }
+
+    public new void SetOpacity(double _arg)
+    {
+        vtkTextProperty_SetOpacity(this.NativePointer, _arg);
+    }
+
+    public new void SetShadowOffset(int _arg1, int _arg2)
+    {
+        vtkTextProperty_SetShadowOffset_int_int(this.NativePointer, _arg1, _arg2);
+    }
+
+    public new void SetShadowOffset(ReadOnlySpan<int> _arg)
+    {
+        fixed (int* _argPtr = _arg)
+        {
+            vtkTextProperty_SetShadowOffset_intConstArray2(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetVerticalJustificationToBottom()
+    {
+        vtkTextProperty_SetVerticalJustificationToBottom(this.NativePointer);
+    }
+
+    public new void SetVerticalJustificationToCentered()
+    {
+        vtkTextProperty_SetVerticalJustificationToCentered(this.NativePointer);
+    }
+
+    public new void SetVerticalJustificationToTop()
+    {
+        vtkTextProperty_SetVerticalJustificationToTop(this.NativePointer);
+    }
+
+    public new void ShadowOff()
+    {
+        vtkTextProperty_ShadowOff(this.NativePointer);
+    }
+
+    public new void ShadowOn()
+    {
+        vtkTextProperty_ShadowOn(this.NativePointer);
+    }
+
+    public new void ShallowCopy(vtkTextProperty tprop)
+    {
+        vtkTextProperty_ShallowCopy(this.NativePointer, tprop.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTextProperty_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_BoldOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_BoldOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_FrameOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_FrameOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkTextProperty_GetFontSize(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkTextProperty_GetOpacity(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_ItalicOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_ItalicOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetColor_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetColor_doubleConstArray3(nint self, double* _arg);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkTextProperty_SetFontFamilyAsString(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetFontFamilyAsString(nint self, byte[] _arg);
+#endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetFontFamilyToArial(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetFontFamilyToCourier(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetFontFamilyToTimes(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetFontSize(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetJustificationToCentered(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetJustificationToLeft(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetJustificationToRight(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetLineSpacing(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetOpacity(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetShadowOffset_int_int(nint self, int _arg1, int _arg2);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetShadowOffset_intConstArray2(nint self, int* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetVerticalJustificationToBottom(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetVerticalJustificationToCentered(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_SetVerticalJustificationToTop(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_ShadowOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_ShadowOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextProperty_ShallowCopy(nint self, nint tprop);
     #endregion
 }

@@ -18,8 +18,40 @@ public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
         return target;
     }
 
+    public new vtkPolyData GetOutput()
+    {
+        return vtkPolyData.WeakReference(vtkPolyDataAlgorithm_GetOutput_(this.NativePointer));
+    }
+
+    public new vtkPolyData GetOutput(int _arg1)
+    {
+        return vtkPolyData.WeakReference(vtkPolyDataAlgorithm_GetOutput_int(this.NativePointer, _arg1));
+    }
+
+    public new void SetInputData(int _arg1, vtkDataObject _arg2)
+    {
+        vtkPolyDataAlgorithm_SetInputData_int_vtkDataObjectPtr(this.NativePointer, _arg1, _arg2.NativePointer);
+    }
+
+    public new void SetInputData(vtkDataObject _arg1)
+    {
+        vtkPolyDataAlgorithm_SetInputData_vtkDataObjectPtr(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyDataAlgorithm_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkPolyDataAlgorithm_GetOutput_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkPolyDataAlgorithm_GetOutput_int(nint self, int _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataAlgorithm_SetInputData_int_vtkDataObjectPtr(nint self, int _arg1, nint _arg2);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataAlgorithm_SetInputData_vtkDataObjectPtr(nint self, nint _arg1);
     #endregion
 }

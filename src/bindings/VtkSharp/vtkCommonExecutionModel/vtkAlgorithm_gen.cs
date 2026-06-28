@@ -18,19 +18,44 @@ public unsafe partial class vtkAlgorithm : vtkObject
         return target;
     }
 
+    public new vtkAlgorithmOutput GetOutputPort(int index)
+    {
+        return vtkAlgorithmOutput.WeakReference(vtkAlgorithm_GetOutputPort_int(this.NativePointer, index));
+    }
+
     public new vtkAlgorithmOutput GetOutputPort()
     {
-        return vtkAlgorithmOutput.WeakReference(vtkAlgorithm_GetOutputPort(this.NativePointer));
+        return vtkAlgorithmOutput.WeakReference(vtkAlgorithm_GetOutputPort_(this.NativePointer));
+    }
+
+    public new void SetInputConnection(int port, vtkAlgorithmOutput input)
+    {
+        vtkAlgorithm_SetInputConnection_int_vtkAlgorithmOutputPtr(this.NativePointer, port, input.NativePointer);
     }
 
     public new void SetInputConnection(vtkAlgorithmOutput input)
     {
-        vtkAlgorithm_SetInputConnection(this.NativePointer, input.NativePointer);
+        vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(this.NativePointer, input.NativePointer);
     }
 
     public new void Update()
     {
-        vtkAlgorithm_Update(this.NativePointer);
+        vtkAlgorithm_Update_(this.NativePointer);
+    }
+
+    public new void Update(int port)
+    {
+        vtkAlgorithm_Update_int(this.NativePointer, port);
+    }
+
+    public new bool Update(int port, vtkInformationVector requests)
+    {
+        return vtkAlgorithm_Update_int_vtkInformationVectorPtr(this.NativePointer, port, requests.NativePointer);
+    }
+
+    public new bool Update(vtkInformation requests)
+    {
+        return vtkAlgorithm_Update_vtkInformationPtr(this.NativePointer, requests.NativePointer);
     }
 
     #region Interop
@@ -38,12 +63,29 @@ public unsafe partial class vtkAlgorithm : vtkObject
     private static extern nint vtkAlgorithm_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkAlgorithm_GetOutputPort(nint self);
+    private static extern nint vtkAlgorithm_GetOutputPort_int(nint self, int index);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAlgorithm_SetInputConnection(nint self, nint input);
+    private static extern nint vtkAlgorithm_GetOutputPort_(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAlgorithm_Update(nint self);
+    private static extern void vtkAlgorithm_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int port, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAlgorithm_Update_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAlgorithm_Update_int(nint self, int port);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    private static extern bool vtkAlgorithm_Update_int_vtkInformationVectorPtr(nint self, int port, nint requests);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    private static extern bool vtkAlgorithm_Update_vtkInformationPtr(nint self, nint requests);
     #endregion
 }

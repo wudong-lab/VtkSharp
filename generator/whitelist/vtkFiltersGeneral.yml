@@ -4,7 +4,14 @@ module: vtkFiltersGeneral
 classes:
   - name: vtkTransformPolyDataFilter
     header: vtkTransformPolyDataFilter.h
-    functions: []
+    functions:
+      - name: SetTransform
+        cppSignature: void SetTransform(vtkAbstractTransform * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkAbstractTransform*
+            name: _arg1
   - name: vtkVertexGlyphFilter
     header: vtkVertexGlyphFilter.h
     functions: []

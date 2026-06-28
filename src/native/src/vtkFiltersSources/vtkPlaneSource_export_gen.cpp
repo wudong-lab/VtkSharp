@@ -3,3 +3,27 @@
 #include <vtkPlaneSource.h>
 
 VTKSHARP_API vtkPlaneSource* vtkPlaneSource_New() { return vtkPlaneSource::New(); }
+
+VTKSHARP_API double* vtkPlaneSource_GetCenter_(vtkPlaneSource* self) { return self->GetCenter(); }
+
+VTKSHARP_API void vtkPlaneSource_GetCenter_doubleArray3(vtkPlaneSource* self, double* data) { self->GetCenter(data); }
+
+VTKSHARP_API double* vtkPlaneSource_GetNormal_(vtkPlaneSource* self) { return self->GetNormal(); }
+
+VTKSHARP_API void vtkPlaneSource_GetNormal_doubleArray3(vtkPlaneSource* self, double* data) { self->GetNormal(data); }
+
+VTKSHARP_API double* vtkPlaneSource_GetOrigin_(vtkPlaneSource* self) { return self->GetOrigin(); }
+
+VTKSHARP_API void vtkPlaneSource_GetOrigin_doubleArray3(vtkPlaneSource* self, double* data) { self->GetOrigin(data); }
+
+VTKSHARP_API void vtkPlaneSource_SetCenter_double_double_double(vtkPlaneSource* self, double x, double y, double z) { self->SetCenter(x, y, z); }
+
+VTKSHARP_API void vtkPlaneSource_SetCenter_doubleArray3(vtkPlaneSource* self, double* center) { self->SetCenter(center); }
+
+VTKSHARP_API void vtkPlaneSource_SetNormal_double_double_double(vtkPlaneSource* self, double nx, double ny, double nz) { self->SetNormal(nx, ny, nz); }
+
+VTKSHARP_API void vtkPlaneSource_SetNormal_doubleArray3(vtkPlaneSource* self, double* n) { self->SetNormal(n); }
+
+VTKSHARP_API void vtkPlaneSource_SetOrigin_double_double_double(vtkPlaneSource* self, double _arg1, double _arg2, double _arg3) { self->SetOrigin(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkPlaneSource_SetOrigin_doubleConstArray3(vtkPlaneSource* self, const double* _arg) { self->SetOrigin(_arg); }

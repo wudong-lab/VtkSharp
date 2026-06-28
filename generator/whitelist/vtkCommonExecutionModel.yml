@@ -6,10 +6,26 @@ classes:
     header: vtkAlgorithm.h
     functions:
       - name: GetOutputPort
+        cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
+        return:
+          type: vtkAlgorithmOutput*
+        parameters:
+          - type: int
+            name: index
+      - name: GetOutputPort
         cppSignature: vtkAlgorithmOutput* GetOutputPort()
         return:
           type: vtkAlgorithmOutput*
         parameters: []
+      - name: SetInputConnection
+        cppSignature: void SetInputConnection(int port, vtkAlgorithmOutput * input)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: port
+          - type: vtkAlgorithmOutput*
+            name: input
       - name: SetInputConnection
         cppSignature: void SetInputConnection(vtkAlgorithmOutput* input)
         return:
@@ -22,18 +38,81 @@ classes:
         return:
           type: void
         parameters: []
+      - name: Update
+        cppSignature: void Update(int port)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: port
+      - name: Update
+        cppSignature: vtkTypeBool Update(int port, vtkInformationVector * requests)
+        return:
+          type: vtkTypeBool
+        parameters:
+          - type: int
+            name: port
+          - type: vtkInformationVector*
+            name: requests
+      - name: Update
+        cppSignature: vtkTypeBool Update(vtkInformation * requests)
+        return:
+          type: vtkTypeBool
+        parameters:
+          - type: vtkInformation*
+            name: requests
   - name: vtkAlgorithmOutput
     header: vtkAlgorithmOutput.h
     functions: []
   - name: vtkImageAlgorithm
     header: vtkImageAlgorithm.h
-    functions: []
+    functions:
+      - name: GetOutput
+        cppSignature: vtkImageData * GetOutput()
+        return:
+          type: vtkImageData*
+        parameters: []
+      - name: GetOutput
+        cppSignature: vtkImageData * GetOutput(int _arg1)
+        return:
+          type: vtkImageData*
+        parameters:
+          - type: int
+            name: _arg1
   - name: vtkPassInputTypeAlgorithm
     header: vtkPassInputTypeAlgorithm.h
     functions: []
   - name: vtkPolyDataAlgorithm
     header: vtkPolyDataAlgorithm.h
-    functions: []
+    functions:
+      - name: GetOutput
+        cppSignature: vtkPolyData * GetOutput()
+        return:
+          type: vtkPolyData*
+        parameters: []
+      - name: GetOutput
+        cppSignature: vtkPolyData * GetOutput(int _arg1)
+        return:
+          type: vtkPolyData*
+        parameters:
+          - type: int
+            name: _arg1
+      - name: SetInputData
+        cppSignature: void SetInputData(int _arg1, vtkDataObject * _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: vtkDataObject*
+            name: _arg2
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataObject * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: _arg1
   - name: vtkThreadedImageAlgorithm
     header: vtkThreadedImageAlgorithm.h
     functions: []

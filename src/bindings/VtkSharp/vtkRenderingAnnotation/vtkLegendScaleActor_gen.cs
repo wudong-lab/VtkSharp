@@ -18,8 +18,48 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
         return target;
     }
 
+    public new vtkProperty2D GetAxesProperty()
+    {
+        return vtkProperty2D.WeakReference(vtkLegendScaleActor_GetAxesProperty(this.NativePointer));
+    }
+
+    public new vtkAxisActor2D GetBottomAxis()
+    {
+        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetBottomAxis(this.NativePointer));
+    }
+
+    public new vtkAxisActor2D GetLeftAxis()
+    {
+        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetLeftAxis(this.NativePointer));
+    }
+
+    public new vtkAxisActor2D GetRightAxis()
+    {
+        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetRightAxis(this.NativePointer));
+    }
+
+    public new vtkAxisActor2D GetTopAxis()
+    {
+        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetTopAxis(this.NativePointer));
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLegendScaleActor_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkLegendScaleActor_GetAxesProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkLegendScaleActor_GetBottomAxis(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkLegendScaleActor_GetLeftAxis(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkLegendScaleActor_GetRightAxis(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkLegendScaleActor_GetTopAxis(nint self);
     #endregion
 }

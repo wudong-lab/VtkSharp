@@ -18,6 +18,16 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void GenerateNormalsOff()
+    {
+        vtkSphereSource_GenerateNormalsOff(this.NativePointer);
+    }
+
+    public new void GenerateNormalsOn()
+    {
+        vtkSphereSource_GenerateNormalsOn(this.NativePointer);
+    }
+
     public new vtkAlgorithmOutput GetOutputPort()
     {
         return vtkAlgorithmOutput.WeakReference(vtkSphereSource_GetOutputPort_(this.NativePointer));
@@ -33,6 +43,16 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
         return vtkSphereSource_GetRadius(this.NativePointer);
     }
 
+    public new void LatLongTessellationOff()
+    {
+        vtkSphereSource_LatLongTessellationOff(this.NativePointer);
+    }
+
+    public new void LatLongTessellationOn()
+    {
+        vtkSphereSource_LatLongTessellationOn(this.NativePointer);
+    }
+
     public new void SetCenter(double _arg1, double _arg2, double _arg3)
     {
         vtkSphereSource_SetCenter_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
@@ -46,6 +66,16 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
         }
     }
 
+    public new void SetEndPhi(double _arg)
+    {
+        vtkSphereSource_SetEndPhi(this.NativePointer, _arg);
+    }
+
+    public new void SetEndTheta(double _arg)
+    {
+        vtkSphereSource_SetEndTheta(this.NativePointer, _arg);
+    }
+
     public new void SetPhiResolution(int _arg)
     {
         vtkSphereSource_SetPhiResolution(this.NativePointer, _arg);
@@ -54,6 +84,16 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
     public new void SetRadius(double _arg)
     {
         vtkSphereSource_SetRadius(this.NativePointer, _arg);
+    }
+
+    public new void SetStartPhi(double _arg)
+    {
+        vtkSphereSource_SetStartPhi(this.NativePointer, _arg);
+    }
+
+    public new void SetStartTheta(double _arg)
+    {
+        vtkSphereSource_SetStartTheta(this.NativePointer, _arg);
     }
 
     public new void SetThetaResolution(int _arg)
@@ -66,6 +106,12 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
     private static extern nint vtkSphereSource_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_GenerateNormalsOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_GenerateNormalsOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkSphereSource_GetOutputPort_(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
@@ -75,16 +121,34 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
     private static extern double vtkSphereSource_GetRadius(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_LatLongTessellationOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_LatLongTessellationOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetCenter_doubleConstArray3(nint self, double* _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_SetEndPhi(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_SetEndTheta(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetPhiResolution(nint self, int _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetRadius(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_SetStartPhi(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkSphereSource_SetStartTheta(nint self, double _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetThetaResolution(nint self, int _arg);

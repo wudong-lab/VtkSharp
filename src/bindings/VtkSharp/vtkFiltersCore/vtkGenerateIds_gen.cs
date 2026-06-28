@@ -18,8 +18,56 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
         return target;
     }
 
+    public new void CellIdsOff()
+    {
+        vtkGenerateIds_CellIdsOff(this.NativePointer);
+    }
+
+    public new void CellIdsOn()
+    {
+        vtkGenerateIds_CellIdsOn(this.NativePointer);
+    }
+
+    public new void FieldDataOff()
+    {
+        vtkGenerateIds_FieldDataOff(this.NativePointer);
+    }
+
+    public new void FieldDataOn()
+    {
+        vtkGenerateIds_FieldDataOn(this.NativePointer);
+    }
+
+    public new void PointIdsOff()
+    {
+        vtkGenerateIds_PointIdsOff(this.NativePointer);
+    }
+
+    public new void PointIdsOn()
+    {
+        vtkGenerateIds_PointIdsOn(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkGenerateIds_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkGenerateIds_CellIdsOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkGenerateIds_CellIdsOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkGenerateIds_FieldDataOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkGenerateIds_FieldDataOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkGenerateIds_PointIdsOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkGenerateIds_PointIdsOn(nint self);
     #endregion
 }

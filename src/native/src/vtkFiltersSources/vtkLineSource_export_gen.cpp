@@ -3,3 +3,27 @@
 #include <vtkLineSource.h>
 
 VTKSHARP_API vtkLineSource* vtkLineSource_New() { return vtkLineSource::New(); }
+
+VTKSHARP_API double* vtkLineSource_GetPoint1_(vtkLineSource* self) { return self->GetPoint1(); }
+
+VTKSHARP_API void vtkLineSource_GetPoint1_doubleArray3(vtkLineSource* self, double* data) { self->GetPoint1(data); }
+
+VTKSHARP_API double* vtkLineSource_GetPoint2_(vtkLineSource* self) { return self->GetPoint2(); }
+
+VTKSHARP_API void vtkLineSource_GetPoint2_doubleArray3(vtkLineSource* self, double* data) { self->GetPoint2(data); }
+
+VTKSHARP_API int vtkLineSource_GetResolution(vtkLineSource* self) { return self->GetResolution(); }
+
+VTKSHARP_API void vtkLineSource_SetPoint1_double_double_double(vtkLineSource* self, double _arg1, double _arg2, double _arg3) { self->SetPoint1(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkLineSource_SetPoint1_doubleConstArray3(vtkLineSource* self, const double* _arg) { self->SetPoint1(_arg); }
+
+VTKSHARP_API void vtkLineSource_SetPoint1_floatArray3(vtkLineSource* self, float* _arg1) { self->SetPoint1(_arg1); }
+
+VTKSHARP_API void vtkLineSource_SetPoint2_double_double_double(vtkLineSource* self, double _arg1, double _arg2, double _arg3) { self->SetPoint2(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkLineSource_SetPoint2_doubleConstArray3(vtkLineSource* self, const double* _arg) { self->SetPoint2(_arg); }
+
+VTKSHARP_API void vtkLineSource_SetPoint2_floatArray3(vtkLineSource* self, float* _arg1) { self->SetPoint2(_arg1); }
+
+VTKSHARP_API void vtkLineSource_SetResolution(vtkLineSource* self, int _arg) { self->SetResolution(_arg); }

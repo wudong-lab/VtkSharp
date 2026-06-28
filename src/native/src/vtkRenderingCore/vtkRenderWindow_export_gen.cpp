@@ -7,6 +7,20 @@ VTKSHARP_API vtkRenderWindow* vtkRenderWindow_New() { return vtkRenderWindow::Ne
 
 VTKSHARP_API void vtkRenderWindow_AddRenderer(vtkRenderWindow* self, vtkRenderer* renderer) { self->AddRenderer(renderer); }
 
+VTKSHARP_API void vtkRenderWindow_LineSmoothingOff(vtkRenderWindow* self) { self->LineSmoothingOff(); }
+
+VTKSHARP_API void vtkRenderWindow_LineSmoothingOn(vtkRenderWindow* self) { self->LineSmoothingOn(); }
+
+VTKSHARP_API void vtkRenderWindow_PointSmoothingOff(vtkRenderWindow* self) { self->PointSmoothingOff(); }
+
+VTKSHARP_API void vtkRenderWindow_PointSmoothingOn(vtkRenderWindow* self) { self->PointSmoothingOn(); }
+
+VTKSHARP_API void vtkRenderWindow_PolygonSmoothingOff(vtkRenderWindow* self) { self->PolygonSmoothingOff(); }
+
+VTKSHARP_API void vtkRenderWindow_PolygonSmoothingOn(vtkRenderWindow* self) { self->PolygonSmoothingOn(); }
+
 VTKSHARP_API void vtkRenderWindow_Render(vtkRenderWindow* self) { self->Render(); }
+
+VTKSHARP_API void vtkRenderWindow_SetMultiSamples(vtkRenderWindow* self, int _arg1) { self->SetMultiSamples(_arg1); }
 
 VTKSHARP_API void vtkRenderWindow_SetWindowName(vtkRenderWindow* self, const char* _arg) { self->SetWindowName(_arg); }

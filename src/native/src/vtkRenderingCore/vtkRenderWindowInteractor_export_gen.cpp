@@ -12,6 +12,8 @@ VTKSHARP_API int vtkRenderWindowInteractor_GetControlKey(vtkRenderWindowInteract
 
 VTKSHARP_API int* vtkRenderWindowInteractor_GetEventPosition(vtkRenderWindowInteractor* self) { return self->GetEventPosition(); }
 
+VTKSHARP_API int vtkRenderWindowInteractor_GetInitialized(vtkRenderWindowInteractor* self) { return self->GetInitialized(); }
+
 VTKSHARP_API char vtkRenderWindowInteractor_GetKeyCode(vtkRenderWindowInteractor* self) { return self->GetKeyCode(); }
 
 VTKSHARP_API char* vtkRenderWindowInteractor_GetKeySym(vtkRenderWindowInteractor* self) { return self->GetKeySym(); }

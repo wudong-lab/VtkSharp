@@ -18,8 +18,140 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void CappingOff()
+    {
+        vtkLinearExtrusionFilter_CappingOff(this.NativePointer);
+    }
+
+    public new void CappingOn()
+    {
+        vtkLinearExtrusionFilter_CappingOn(this.NativePointer);
+    }
+
+    internal new double* GetExtrusionPoint_Internal()
+    {
+        return vtkLinearExtrusionFilter_GetExtrusionPoint_(this.NativePointer);
+    }
+
+    public new void GetExtrusionPoint(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkLinearExtrusionFilter_GetExtrusionPoint_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    public new double GetScaleFactor()
+    {
+        return vtkLinearExtrusionFilter_GetScaleFactor(this.NativePointer);
+    }
+
+    internal new double* GetVector_Internal()
+    {
+        return vtkLinearExtrusionFilter_GetVector_(this.NativePointer);
+    }
+
+    public new void GetVector(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkLinearExtrusionFilter_GetVector_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    public new void SetExtrusionPoint(double _arg1, double _arg2, double _arg3)
+    {
+        vtkLinearExtrusionFilter_SetExtrusionPoint_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetExtrusionPoint(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkLinearExtrusionFilter_SetExtrusionPoint_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetExtrusionTypeToNormalExtrusion()
+    {
+        vtkLinearExtrusionFilter_SetExtrusionTypeToNormalExtrusion(this.NativePointer);
+    }
+
+    public new void SetExtrusionTypeToPointExtrusion()
+    {
+        vtkLinearExtrusionFilter_SetExtrusionTypeToPointExtrusion(this.NativePointer);
+    }
+
+    public new void SetExtrusionTypeToVectorExtrusion()
+    {
+        vtkLinearExtrusionFilter_SetExtrusionTypeToVectorExtrusion(this.NativePointer);
+    }
+
+    public new void SetScaleFactor(double _arg)
+    {
+        vtkLinearExtrusionFilter_SetScaleFactor(this.NativePointer, _arg);
+    }
+
+    public new void SetVector(double _arg1, double _arg2, double _arg3)
+    {
+        vtkLinearExtrusionFilter_SetVector_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetVector(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkLinearExtrusionFilter_SetVector_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLinearExtrusionFilter_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_CappingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_CappingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkLinearExtrusionFilter_GetExtrusionPoint_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_GetExtrusionPoint_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkLinearExtrusionFilter_GetScaleFactor(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkLinearExtrusionFilter_GetVector_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_GetVector_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetExtrusionPoint_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetExtrusionPoint_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetExtrusionTypeToNormalExtrusion(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetExtrusionTypeToPointExtrusion(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetExtrusionTypeToVectorExtrusion(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetScaleFactor(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetVector_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLinearExtrusionFilter_SetVector_doubleConstArray3(nint self, double* _arg);
     #endregion
 }

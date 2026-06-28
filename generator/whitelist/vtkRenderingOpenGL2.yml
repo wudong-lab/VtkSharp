@@ -4,7 +4,12 @@ module: vtkRenderingOpenGL2
 classes:
   - name: vtkOpenGLRenderWindow
     header: vtkOpenGLRenderWindow.h
-    functions: []
+    functions:
+      - name: Render
+        cppSignature: void Render()
+        return:
+          type: void
+        parameters: []
   - name: vtkWin32OpenGLRenderWindow
     header: vtkWin32OpenGLRenderWindow.h
     functions:

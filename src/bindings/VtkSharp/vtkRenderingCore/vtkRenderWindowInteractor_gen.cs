@@ -33,6 +33,11 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         return vtkRenderWindowInteractor_GetEventPosition(this.NativePointer);
     }
 
+    public new int GetInitialized()
+    {
+        return vtkRenderWindowInteractor_GetInitialized(this.NativePointer);
+    }
+
     public new char GetKeyCode()
     {
         return (char)vtkRenderWindowInteractor_GetKeyCode(this.NativePointer);
@@ -90,6 +95,9 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int* vtkRenderWindowInteractor_GetEventPosition(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetInitialized(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern byte vtkRenderWindowInteractor_GetKeyCode(nint self);

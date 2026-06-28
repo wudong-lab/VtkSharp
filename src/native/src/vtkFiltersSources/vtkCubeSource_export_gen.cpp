@@ -3,3 +3,13 @@
 #include <vtkCubeSource.h>
 
 VTKSHARP_API vtkCubeSource* vtkCubeSource_New() { return vtkCubeSource::New(); }
+
+VTKSHARP_API void vtkCubeSource_SetCenter_double_double_double(vtkCubeSource* self, double _arg1, double _arg2, double _arg3) { self->SetCenter(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkCubeSource_SetCenter_doubleConstArray3(vtkCubeSource* self, const double* _arg) { self->SetCenter(_arg); }
+
+VTKSHARP_API void vtkCubeSource_SetXLength(vtkCubeSource* self, double _arg) { self->SetXLength(_arg); }
+
+VTKSHARP_API void vtkCubeSource_SetYLength(vtkCubeSource* self, double _arg) { self->SetYLength(_arg); }
+
+VTKSHARP_API void vtkCubeSource_SetZLength(vtkCubeSource* self, double _arg) { self->SetZLength(_arg); }

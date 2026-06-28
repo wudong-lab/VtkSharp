@@ -3,3 +3,17 @@
 #include <vtkPNGWriter.h>
 
 VTKSHARP_API vtkPNGWriter* vtkPNGWriter_New() { return vtkPNGWriter::New(); }
+
+VTKSHARP_API int vtkPNGWriter_GetCompressionLevel(vtkPNGWriter* self) { return self->GetCompressionLevel(); }
+
+VTKSHARP_API int vtkPNGWriter_GetCompressionLevelMaxValue(vtkPNGWriter* self) { return self->GetCompressionLevelMaxValue(); }
+
+VTKSHARP_API int vtkPNGWriter_GetCompressionLevelMinValue(vtkPNGWriter* self) { return self->GetCompressionLevelMinValue(); }
+
+VTKSHARP_API void vtkPNGWriter_SetCompressionLevel(vtkPNGWriter* self, int _arg) { self->SetCompressionLevel(_arg); }
+
+VTKSHARP_API void vtkPNGWriter_Write(vtkPNGWriter* self) { self->Write(); }
+
+VTKSHARP_API void vtkPNGWriter_WriteToMemoryOff(vtkPNGWriter* self) { self->WriteToMemoryOff(); }
+
+VTKSHARP_API void vtkPNGWriter_WriteToMemoryOn(vtkPNGWriter* self) { self->WriteToMemoryOn(); }

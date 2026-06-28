@@ -18,19 +18,272 @@ public unsafe partial class vtkProperty : vtkObject
         return target;
     }
 
+    public new void BackfaceCullingOff()
+    {
+        vtkProperty_BackfaceCullingOff(this.NativePointer);
+    }
+
+    public new void BackfaceCullingOn()
+    {
+        vtkProperty_BackfaceCullingOn(this.NativePointer);
+    }
+
+    public new void EdgeVisibilityOff()
+    {
+        vtkProperty_EdgeVisibilityOff(this.NativePointer);
+    }
+
+    public new void EdgeVisibilityOn()
+    {
+        vtkProperty_EdgeVisibilityOn(this.NativePointer);
+    }
+
+    public new void FrontfaceCullingOff()
+    {
+        vtkProperty_FrontfaceCullingOff(this.NativePointer);
+    }
+
+    public new void FrontfaceCullingOn()
+    {
+        vtkProperty_FrontfaceCullingOn(this.NativePointer);
+    }
+
+    public new bool GetBackfaceCulling()
+    {
+        return vtkProperty_GetBackfaceCulling(this.NativePointer);
+    }
+
+    public new double GetEdgeOpacity()
+    {
+        return vtkProperty_GetEdgeOpacity(this.NativePointer);
+    }
+
+    public new float GetEdgeWidth()
+    {
+        return vtkProperty_GetEdgeWidth(this.NativePointer);
+    }
+
+    public new bool GetFrontfaceCulling()
+    {
+        return vtkProperty_GetFrontfaceCulling(this.NativePointer);
+    }
+
+    public new float GetLineWidth()
+    {
+        return vtkProperty_GetLineWidth(this.NativePointer);
+    }
+
+    public new double GetOpacity()
+    {
+        return vtkProperty_GetOpacity(this.NativePointer);
+    }
+
+    public new float GetPointSize()
+    {
+        return vtkProperty_GetPointSize(this.NativePointer);
+    }
+
+    public new float GetSelectionLineWidth()
+    {
+        return vtkProperty_GetSelectionLineWidth(this.NativePointer);
+    }
+
+    public new void LightingOff()
+    {
+        vtkProperty_LightingOff(this.NativePointer);
+    }
+
+    public new void LightingOn()
+    {
+        vtkProperty_LightingOn(this.NativePointer);
+    }
+
+    public new void RenderLinesAsTubesOff()
+    {
+        vtkProperty_RenderLinesAsTubesOff(this.NativePointer);
+    }
+
+    public new void RenderLinesAsTubesOn()
+    {
+        vtkProperty_RenderLinesAsTubesOn(this.NativePointer);
+    }
+
+    public new void RenderPointsAsSpheresOff()
+    {
+        vtkProperty_RenderPointsAsSpheresOff(this.NativePointer);
+    }
+
+    public new void RenderPointsAsSpheresOn()
+    {
+        vtkProperty_RenderPointsAsSpheresOn(this.NativePointer);
+    }
+
     public new void SetAmbient(double _arg)
     {
         vtkProperty_SetAmbient(this.NativePointer, _arg);
     }
 
+    public new void SetAmbientColor(double _arg1, double _arg2, double _arg3)
+    {
+        vtkProperty_SetAmbientColor_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetAmbientColor(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkProperty_SetAmbientColor_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetAnisotropy(double _arg)
+    {
+        vtkProperty_SetAnisotropy(this.NativePointer, _arg);
+    }
+
     public new void SetColor(double r, double g, double b)
     {
-        vtkProperty_SetColor(this.NativePointer, r, g, b);
+        vtkProperty_SetColor_double_double_double(this.NativePointer, r, g, b);
+    }
+
+    public new void SetColor(Span<double> a)
+    {
+        fixed (double* aPtr = a)
+        {
+            vtkProperty_SetColor_doubleArray3(this.NativePointer, aPtr);
+        }
     }
 
     public new void SetDiffuse(double _arg)
     {
         vtkProperty_SetDiffuse(this.NativePointer, _arg);
+    }
+
+    public new void SetDiffuseColor(double _arg1, double _arg2, double _arg3)
+    {
+        vtkProperty_SetDiffuseColor_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetDiffuseColor(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkProperty_SetDiffuseColor_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetEdgeColor(double _arg1, double _arg2, double _arg3)
+    {
+        vtkProperty_SetEdgeColor_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetEdgeColor(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkProperty_SetEdgeColor_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetEdgeOpacity(double _arg)
+    {
+        vtkProperty_SetEdgeOpacity(this.NativePointer, _arg);
+    }
+
+    public new void SetEdgeWidth(float _arg)
+    {
+        vtkProperty_SetEdgeWidth(this.NativePointer, _arg);
+    }
+
+    public new void SetEmissiveFactor(double _arg1, double _arg2, double _arg3)
+    {
+        vtkProperty_SetEmissiveFactor_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetEmissiveFactor(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkProperty_SetEmissiveFactor_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetInterpolationToFlat()
+    {
+        vtkProperty_SetInterpolationToFlat(this.NativePointer);
+    }
+
+    public new void SetInterpolationToGouraud()
+    {
+        vtkProperty_SetInterpolationToGouraud(this.NativePointer);
+    }
+
+    public new void SetInterpolationToPBR()
+    {
+        vtkProperty_SetInterpolationToPBR(this.NativePointer);
+    }
+
+    public new void SetInterpolationToPhong()
+    {
+        vtkProperty_SetInterpolationToPhong(this.NativePointer);
+    }
+
+    public new void SetLineWidth(float _arg)
+    {
+        vtkProperty_SetLineWidth(this.NativePointer, _arg);
+    }
+
+    public new void SetOpacity(double _arg)
+    {
+        vtkProperty_SetOpacity(this.NativePointer, _arg);
+    }
+
+    public new void SetPointSize(float _arg)
+    {
+        vtkProperty_SetPointSize(this.NativePointer, _arg);
+    }
+
+    public new void SetRepresentationToPoints()
+    {
+        vtkProperty_SetRepresentationToPoints(this.NativePointer);
+    }
+
+    public new void SetRepresentationToSurface()
+    {
+        vtkProperty_SetRepresentationToSurface(this.NativePointer);
+    }
+
+    public new void SetRepresentationToWireframe()
+    {
+        vtkProperty_SetRepresentationToWireframe(this.NativePointer);
+    }
+
+    public new void SetRoughness(double _arg)
+    {
+        vtkProperty_SetRoughness(this.NativePointer, _arg);
+    }
+
+    public new void SetSelectionColor(double _arg1, double _arg2, double _arg3, double _arg4)
+    {
+        vtkProperty_SetSelectionColor_double_double_double_double(this.NativePointer, _arg1, _arg2, _arg3, _arg4);
+    }
+
+    public new void SetSelectionColor(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkProperty_SetSelectionColor_doubleConstArray4(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetSelectionLineWidth(float _arg)
+    {
+        vtkProperty_SetSelectionLineWidth(this.NativePointer, _arg);
+    }
+
+    public new void SetSelectionPointSize(float _arg)
+    {
+        vtkProperty_SetSelectionPointSize(this.NativePointer, _arg);
     }
 
     public new void SetSpecular(double _arg)
@@ -40,7 +293,15 @@ public unsafe partial class vtkProperty : vtkObject
 
     public new void SetSpecularColor(double _arg1, double _arg2, double _arg3)
     {
-        vtkProperty_SetSpecularColor(this.NativePointer, _arg1, _arg2, _arg3);
+        vtkProperty_SetSpecularColor_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetSpecularColor(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkProperty_SetSpecularColor_doubleConstArray3(this.NativePointer, _argPtr);
+        }
     }
 
     public new void SetSpecularPower(double _arg)
@@ -48,26 +309,236 @@ public unsafe partial class vtkProperty : vtkObject
         vtkProperty_SetSpecularPower(this.NativePointer, _arg);
     }
 
+    public new void ShadingOff()
+    {
+        vtkProperty_ShadingOff(this.NativePointer);
+    }
+
+    public new void ShadingOn()
+    {
+        vtkProperty_ShadingOn(this.NativePointer);
+    }
+
+    public new void ShowTexturesOnBackfaceOff()
+    {
+        vtkProperty_ShowTexturesOnBackfaceOff(this.NativePointer);
+    }
+
+    public new void ShowTexturesOnBackfaceOn()
+    {
+        vtkProperty_ShowTexturesOnBackfaceOn(this.NativePointer);
+    }
+
+    public new void UseLineWidthForEdgeThicknessOff()
+    {
+        vtkProperty_UseLineWidthForEdgeThicknessOff(this.NativePointer);
+    }
+
+    public new void UseLineWidthForEdgeThicknessOn()
+    {
+        vtkProperty_UseLineWidthForEdgeThicknessOn(this.NativePointer);
+    }
+
+    public new void VertexVisibilityOff()
+    {
+        vtkProperty_VertexVisibilityOff(this.NativePointer);
+    }
+
+    public new void VertexVisibilityOn()
+    {
+        vtkProperty_VertexVisibilityOn(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkProperty_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_BackfaceCullingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_BackfaceCullingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_EdgeVisibilityOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_EdgeVisibilityOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_FrontfaceCullingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_FrontfaceCullingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    private static extern bool vtkProperty_GetBackfaceCulling(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkProperty_GetEdgeOpacity(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern float vtkProperty_GetEdgeWidth(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    private static extern bool vtkProperty_GetFrontfaceCulling(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern float vtkProperty_GetLineWidth(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkProperty_GetOpacity(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern float vtkProperty_GetPointSize(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern float vtkProperty_GetSelectionLineWidth(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_LightingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_LightingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_RenderLinesAsTubesOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_RenderLinesAsTubesOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_RenderPointsAsSpheresOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_RenderPointsAsSpheresOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProperty_SetAmbient(nint self, double _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkProperty_SetColor(nint self, double r, double g, double b);
+    private static extern void vtkProperty_SetAmbientColor_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetAmbientColor_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetAnisotropy(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetColor_double_double_double(nint self, double r, double g, double b);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetColor_doubleArray3(nint self, double* a);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProperty_SetDiffuse(nint self, double _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetDiffuseColor_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetDiffuseColor_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetEdgeColor_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetEdgeColor_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetEdgeOpacity(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetEdgeWidth(nint self, float _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetEmissiveFactor_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetEmissiveFactor_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetInterpolationToFlat(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetInterpolationToGouraud(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetInterpolationToPBR(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetInterpolationToPhong(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetLineWidth(nint self, float _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetOpacity(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetPointSize(nint self, float _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetRepresentationToPoints(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetRepresentationToSurface(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetRepresentationToWireframe(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetRoughness(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSelectionColor_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSelectionColor_doubleConstArray4(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSelectionLineWidth(nint self, float _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSelectionPointSize(nint self, float _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProperty_SetSpecular(nint self, double _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkProperty_SetSpecularColor(nint self, double _arg1, double _arg2, double _arg3);
+    private static extern void vtkProperty_SetSpecularColor_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetSpecularColor_doubleConstArray3(nint self, double* _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProperty_SetSpecularPower(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_ShadingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_ShadingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_ShowTexturesOnBackfaceOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_ShowTexturesOnBackfaceOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_UseLineWidthForEdgeThicknessOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_UseLineWidthForEdgeThicknessOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_VertexVisibilityOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_VertexVisibilityOn(nint self);
     #endregion
 }

@@ -18,8 +18,80 @@ public unsafe partial class vtkJPEGWriter : vtkImageWriter
         return target;
     }
 
+    public new int GetQuality()
+    {
+        return vtkJPEGWriter_GetQuality(this.NativePointer);
+    }
+
+    public new int GetQualityMaxValue()
+    {
+        return vtkJPEGWriter_GetQualityMaxValue(this.NativePointer);
+    }
+
+    public new int GetQualityMinValue()
+    {
+        return vtkJPEGWriter_GetQualityMinValue(this.NativePointer);
+    }
+
+    public new void ProgressiveOff()
+    {
+        vtkJPEGWriter_ProgressiveOff(this.NativePointer);
+    }
+
+    public new void ProgressiveOn()
+    {
+        vtkJPEGWriter_ProgressiveOn(this.NativePointer);
+    }
+
+    public new void SetQuality(int _arg)
+    {
+        vtkJPEGWriter_SetQuality(this.NativePointer, _arg);
+    }
+
+    public new void Write()
+    {
+        vtkJPEGWriter_Write(this.NativePointer);
+    }
+
+    public new void WriteToMemoryOff()
+    {
+        vtkJPEGWriter_WriteToMemoryOff(this.NativePointer);
+    }
+
+    public new void WriteToMemoryOn()
+    {
+        vtkJPEGWriter_WriteToMemoryOn(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkJPEGWriter_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkJPEGWriter_GetQuality(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkJPEGWriter_GetQualityMaxValue(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkJPEGWriter_GetQualityMinValue(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkJPEGWriter_ProgressiveOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkJPEGWriter_ProgressiveOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkJPEGWriter_SetQuality(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkJPEGWriter_Write(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkJPEGWriter_WriteToMemoryOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkJPEGWriter_WriteToMemoryOn(nint self);
     #endregion
 }

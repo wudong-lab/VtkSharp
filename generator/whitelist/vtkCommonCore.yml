@@ -4,13 +4,112 @@ module: vtkCommonCore
 classes:
   - name: vtkAbstractArray
     header: vtkAbstractArray.h
-    functions: []
+    functions:
+      - name: GetName
+        cppSignature: char * GetName()
+        return:
+          type: char*
+        parameters: []
+      - name: SetName
+        cppSignature: void SetName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetNumberOfComponents
+        cppSignature: void SetNumberOfComponents(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
   - name: vtkCollection
     header: vtkCollection.h
     functions: []
   - name: vtkDataArray
     header: vtkDataArray.h
-    functions: []
+    functions:
+      - name: InsertNextTuple1
+        cppSignature: void InsertNextTuple1(double value)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: value
+      - name: InsertNextTuple2
+        cppSignature: void InsertNextTuple2(double val0, double val1)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: val0
+          - type: double
+            name: val1
+      - name: InsertNextTuple3
+        cppSignature: void InsertNextTuple3(double val0, double val1, double val2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: val0
+          - type: double
+            name: val1
+          - type: double
+            name: val2
+      - name: InsertNextTuple4
+        cppSignature: void InsertNextTuple4(double val0, double val1, double val2, double val3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: val0
+          - type: double
+            name: val1
+          - type: double
+            name: val2
+          - type: double
+            name: val3
+      - name: InsertNextTuple6
+        cppSignature: void InsertNextTuple6(double val0, double val1, double val2, double val3, double val4, double val5)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: val0
+          - type: double
+            name: val1
+          - type: double
+            name: val2
+          - type: double
+            name: val3
+          - type: double
+            name: val4
+          - type: double
+            name: val5
+      - name: InsertNextTuple9
+        cppSignature: void InsertNextTuple9(double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: val0
+          - type: double
+            name: val1
+          - type: double
+            name: val2
+          - type: double
+            name: val3
+          - type: double
+            name: val4
+          - type: double
+            name: val5
+          - type: double
+            name: val6
+          - type: double
+            name: val7
+          - type: double
+            name: val8
   - name: vtkDoubleArray
     header: vtkDoubleArray.h
     functions: []
@@ -39,6 +138,9 @@ classes:
   - name: vtkInformation
     header: vtkInformation.h
     functions: []
+  - name: vtkInformationVector
+    header: vtkInformationVector.h
+    functions: []
   - name: vtkMinimalStandardRandomSequence
     header: vtkMinimalStandardRandomSequence.h
     functions:
@@ -62,6 +164,18 @@ classes:
   - name: vtkPoints
     header: vtkPoints.h
     functions:
+      - name: GetNumberOfPoints
+        cppSignature: vtkIdType GetNumberOfPoints()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: InsertNextPoint
+        cppSignature: vtkIdType InsertNextPoint(double const[3] x)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: const double[3]
+            name: x
       - name: InsertNextPoint
         cppSignature: vtkIdType InsertNextPoint(double x, double y, double z)
         return:
@@ -73,6 +187,22 @@ classes:
             name: y
           - type: double
             name: z
+      - name: InsertNextPoint
+        cppSignature: vtkIdType InsertNextPoint(float const[3] x)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: const float[3]
+            name: x
+      - name: InsertPoint
+        cppSignature: void InsertPoint(vtkIdType id, double const[3] x)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
+          - type: const double[3]
+            name: x
       - name: InsertPoint
         cppSignature: void InsertPoint(vtkIdType id, double x, double y, double z)
         return:
@@ -86,6 +216,120 @@ classes:
             name: y
           - type: double
             name: z
+      - name: InsertPoint
+        cppSignature: void InsertPoint(vtkIdType id, float const[3] x)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
+          - type: const float[3]
+            name: x
+      - name: Modified
+        cppSignature: void Modified()
+        return:
+          type: void
+        parameters: []
+      - name: Resize
+        cppSignature: vtkTypeBool Resize(vtkIdType numPoints)
+        return:
+          type: vtkTypeBool
+        parameters:
+          - type: vtkIdType
+            name: numPoints
+      - name: SetDataTypeToBit
+        cppSignature: void SetDataTypeToBit()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToChar
+        cppSignature: void SetDataTypeToChar()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToDouble
+        cppSignature: void SetDataTypeToDouble()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToFloat
+        cppSignature: void SetDataTypeToFloat()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToInt
+        cppSignature: void SetDataTypeToInt()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToLong
+        cppSignature: void SetDataTypeToLong()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToShort
+        cppSignature: void SetDataTypeToShort()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToUnsignedChar
+        cppSignature: void SetDataTypeToUnsignedChar()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToUnsignedInt
+        cppSignature: void SetDataTypeToUnsignedInt()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToUnsignedLong
+        cppSignature: void SetDataTypeToUnsignedLong()
+        return:
+          type: void
+        parameters: []
+      - name: SetDataTypeToUnsignedShort
+        cppSignature: void SetDataTypeToUnsignedShort()
+        return:
+          type: void
+        parameters: []
+      - name: SetNumberOfPoints
+        cppSignature: void SetNumberOfPoints(vtkIdType numPoints)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: numPoints
+      - name: SetPoint
+        cppSignature: void SetPoint(vtkIdType id, double const[3] x)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
+          - type: const double[3]
+            name: x
+      - name: SetPoint
+        cppSignature: void SetPoint(vtkIdType id, double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetPoint
+        cppSignature: void SetPoint(vtkIdType id, float const[3] x)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
+          - type: const float[3]
+            name: x
   - name: vtkRandomSequence
     header: vtkRandomSequence.h
     functions: []
@@ -98,6 +342,21 @@ classes:
   - name: vtkWindow
     header: vtkWindow.h
     functions:
+      - name: GetWindowName
+        cppSignature: char * GetWindowName()
+        return:
+          type: char*
+        parameters: []
+      - name: OffScreenRenderingOff
+        cppSignature: void OffScreenRenderingOff()
+        return:
+          type: void
+        parameters: []
+      - name: OffScreenRenderingOn
+        cppSignature: void OffScreenRenderingOn()
+        return:
+          type: void
+        parameters: []
       - name: Render
         cppSignature: void Render()
         return:
@@ -112,3 +371,27 @@ classes:
             name: width
           - type: int
             name: height
+      - name: SetSize
+        cppSignature: void SetSize(int[2] a)
+        return:
+          type: void
+        parameters:
+          - type: int[2]
+            name: a
+      - name: SetWindowName
+        cppSignature: void SetWindowName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: ShowWindowOff
+        cppSignature: void ShowWindowOff()
+        return:
+          type: void
+        parameters: []
+      - name: ShowWindowOn
+        cppSignature: void ShowWindowOn()
+        return:
+          type: void
+        parameters: []

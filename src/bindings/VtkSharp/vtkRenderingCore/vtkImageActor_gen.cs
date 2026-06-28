@@ -18,8 +18,16 @@ public unsafe partial class vtkImageActor : vtkImageSlice
         return target;
     }
 
+    public new void SetInputData(vtkImageData _arg1)
+    {
+        vtkImageActor_SetInputData(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageActor_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageActor_SetInputData(nint self, nint _arg1);
     #endregion
 }

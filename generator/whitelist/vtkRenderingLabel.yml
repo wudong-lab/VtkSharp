@@ -4,4 +4,58 @@ module: vtkRenderingLabel
 classes:
   - name: vtkLabeledDataMapper
     header: vtkLabeledDataMapper.h
-    functions: []
+    functions:
+      - name: GetLabelTextProperty
+        cppSignature: vtkTextProperty * GetLabelTextProperty()
+        return:
+          type: vtkTextProperty*
+        parameters: []
+      - name: GetLabelTextProperty
+        cppSignature: vtkTextProperty * GetLabelTextProperty(int type)
+        return:
+          type: vtkTextProperty*
+        parameters:
+          - type: int
+            name: type
+      - name: SetFieldDataName
+        cppSignature: void SetFieldDataName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetLabelModeToLabelFieldData
+        cppSignature: void SetLabelModeToLabelFieldData()
+        return:
+          type: void
+        parameters: []
+      - name: SetLabelModeToLabelIds
+        cppSignature: void SetLabelModeToLabelIds()
+        return:
+          type: void
+        parameters: []
+      - name: SetLabelModeToLabelNormals
+        cppSignature: void SetLabelModeToLabelNormals()
+        return:
+          type: void
+        parameters: []
+      - name: SetLabelModeToLabelScalars
+        cppSignature: void SetLabelModeToLabelScalars()
+        return:
+          type: void
+        parameters: []
+      - name: SetLabelModeToLabelTCoords
+        cppSignature: void SetLabelModeToLabelTCoords()
+        return:
+          type: void
+        parameters: []
+      - name: SetLabelModeToLabelTensors
+        cppSignature: void SetLabelModeToLabelTensors()
+        return:
+          type: void
+        parameters: []
+      - name: SetLabelModeToLabelVectors
+        cppSignature: void SetLabelModeToLabelVectors()
+        return:
+          type: void
+        parameters: []

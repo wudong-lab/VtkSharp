@@ -18,8 +18,72 @@ public unsafe partial class vtkArrowSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void SetArrowOriginToCenter()
+    {
+        vtkArrowSource_SetArrowOriginToCenter(this.NativePointer);
+    }
+
+    public new void SetArrowOriginToDefault()
+    {
+        vtkArrowSource_SetArrowOriginToDefault(this.NativePointer);
+    }
+
+    public new void SetInvert(bool _arg)
+    {
+        vtkArrowSource_SetInvert(this.NativePointer, _arg);
+    }
+
+    public new void SetShaftRadius(double _arg)
+    {
+        vtkArrowSource_SetShaftRadius(this.NativePointer, _arg);
+    }
+
+    public new void SetShaftResolution(int _arg)
+    {
+        vtkArrowSource_SetShaftResolution(this.NativePointer, _arg);
+    }
+
+    public new void SetTipLength(double _arg)
+    {
+        vtkArrowSource_SetTipLength(this.NativePointer, _arg);
+    }
+
+    public new void SetTipRadius(double _arg)
+    {
+        vtkArrowSource_SetTipRadius(this.NativePointer, _arg);
+    }
+
+    public new void SetTipResolution(int _arg)
+    {
+        vtkArrowSource_SetTipResolution(this.NativePointer, _arg);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkArrowSource_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetArrowOriginToCenter(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetArrowOriginToDefault(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetInvert(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetShaftRadius(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetShaftResolution(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetTipLength(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetTipRadius(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetTipResolution(nint self, int _arg);
     #endregion
 }

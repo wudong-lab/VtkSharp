@@ -23,9 +23,44 @@ public unsafe partial class vtkRenderWindow : vtkWindow
         vtkRenderWindow_AddRenderer(this.NativePointer, renderer.NativePointer);
     }
 
+    public new void LineSmoothingOff()
+    {
+        vtkRenderWindow_LineSmoothingOff(this.NativePointer);
+    }
+
+    public new void LineSmoothingOn()
+    {
+        vtkRenderWindow_LineSmoothingOn(this.NativePointer);
+    }
+
+    public new void PointSmoothingOff()
+    {
+        vtkRenderWindow_PointSmoothingOff(this.NativePointer);
+    }
+
+    public new void PointSmoothingOn()
+    {
+        vtkRenderWindow_PointSmoothingOn(this.NativePointer);
+    }
+
+    public new void PolygonSmoothingOff()
+    {
+        vtkRenderWindow_PolygonSmoothingOff(this.NativePointer);
+    }
+
+    public new void PolygonSmoothingOn()
+    {
+        vtkRenderWindow_PolygonSmoothingOn(this.NativePointer);
+    }
+
     public new void Render()
     {
         vtkRenderWindow_Render(this.NativePointer);
+    }
+
+    public new void SetMultiSamples(int _arg1)
+    {
+        vtkRenderWindow_SetMultiSamples(this.NativePointer, _arg1);
     }
 
     public new void SetWindowName(string _arg)
@@ -45,7 +80,28 @@ public unsafe partial class vtkRenderWindow : vtkWindow
     private static extern void vtkRenderWindow_AddRenderer(nint self, nint renderer);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_LineSmoothingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_LineSmoothingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_PointSmoothingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_PointSmoothingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_PolygonSmoothingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_PolygonSmoothingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_Render(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_SetMultiSamples(nint self, int _arg1);
 
 #if NET10_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]

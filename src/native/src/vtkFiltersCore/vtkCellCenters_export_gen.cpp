@@ -3,3 +3,15 @@
 #include <vtkCellCenters.h>
 
 VTKSHARP_API vtkCellCenters* vtkCellCenters_New() { return vtkCellCenters::New(); }
+
+VTKSHARP_API void vtkCellCenters_ConvertGhostCellsToGhostPointsOff(vtkCellCenters* self) { self->ConvertGhostCellsToGhostPointsOff(); }
+
+VTKSHARP_API void vtkCellCenters_ConvertGhostCellsToGhostPointsOn(vtkCellCenters* self) { self->ConvertGhostCellsToGhostPointsOn(); }
+
+VTKSHARP_API void vtkCellCenters_CopyArraysOff(vtkCellCenters* self) { self->CopyArraysOff(); }
+
+VTKSHARP_API void vtkCellCenters_CopyArraysOn(vtkCellCenters* self) { self->CopyArraysOn(); }
+
+VTKSHARP_API void vtkCellCenters_VertexCellsOff(vtkCellCenters* self) { self->VertexCellsOff(); }
+
+VTKSHARP_API void vtkCellCenters_VertexCellsOn(vtkCellCenters* self) { self->VertexCellsOn(); }

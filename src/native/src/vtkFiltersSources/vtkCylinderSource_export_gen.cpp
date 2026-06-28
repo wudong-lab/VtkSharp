@@ -4,4 +4,30 @@
 
 VTKSHARP_API vtkCylinderSource* vtkCylinderSource_New() { return vtkCylinderSource::New(); }
 
+VTKSHARP_API void vtkCylinderSource_CappingOff(vtkCylinderSource* self) { self->CappingOff(); }
+
+VTKSHARP_API void vtkCylinderSource_CappingOn(vtkCylinderSource* self) { self->CappingOn(); }
+
+VTKSHARP_API void vtkCylinderSource_CapsuleCapOff(vtkCylinderSource* self) { self->CapsuleCapOff(); }
+
+VTKSHARP_API void vtkCylinderSource_CapsuleCapOn(vtkCylinderSource* self) { self->CapsuleCapOn(); }
+
+VTKSHARP_API double* vtkCylinderSource_GetCenter_(vtkCylinderSource* self) { return self->GetCenter(); }
+
+VTKSHARP_API void vtkCylinderSource_GetCenter_doubleArray3(vtkCylinderSource* self, double* data) { self->GetCenter(data); }
+
+VTKSHARP_API double vtkCylinderSource_GetHeight(vtkCylinderSource* self) { return self->GetHeight(); }
+
+VTKSHARP_API double vtkCylinderSource_GetRadius(vtkCylinderSource* self) { return self->GetRadius(); }
+
+VTKSHARP_API int vtkCylinderSource_GetResolution(vtkCylinderSource* self) { return self->GetResolution(); }
+
+VTKSHARP_API void vtkCylinderSource_SetCenter_double_double_double(vtkCylinderSource* self, double _arg1, double _arg2, double _arg3) { self->SetCenter(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkCylinderSource_SetCenter_doubleConstArray3(vtkCylinderSource* self, const double* _arg) { self->SetCenter(_arg); }
+
+VTKSHARP_API void vtkCylinderSource_SetHeight(vtkCylinderSource* self, double _arg) { self->SetHeight(_arg); }
+
+VTKSHARP_API void vtkCylinderSource_SetRadius(vtkCylinderSource* self, double _arg) { self->SetRadius(_arg); }
+
 VTKSHARP_API void vtkCylinderSource_SetResolution(vtkCylinderSource* self, int _arg) { self->SetResolution(_arg); }

@@ -3,3 +3,21 @@
 #include <vtkImageWriter.h>
 
 VTKSHARP_API vtkImageWriter* vtkImageWriter_New() { return vtkImageWriter::New(); }
+
+VTKSHARP_API void vtkImageWriter_DeleteFiles(vtkImageWriter* self) { self->DeleteFiles(); }
+
+VTKSHARP_API int vtkImageWriter_GetFileDimensionality(vtkImageWriter* self) { return self->GetFileDimensionality(); }
+
+VTKSHARP_API char* vtkImageWriter_GetFileName(vtkImageWriter* self) { return self->GetFileName(); }
+
+VTKSHARP_API char* vtkImageWriter_GetFilePattern(vtkImageWriter* self) { return self->GetFilePattern(); }
+
+VTKSHARP_API char* vtkImageWriter_GetFilePrefix(vtkImageWriter* self) { return self->GetFilePrefix(); }
+
+VTKSHARP_API void vtkImageWriter_SetFileDimensionality(vtkImageWriter* self, int _arg) { self->SetFileDimensionality(_arg); }
+
+VTKSHARP_API void vtkImageWriter_SetFileName(vtkImageWriter* self, const char* _arg) { self->SetFileName(_arg); }
+
+VTKSHARP_API void vtkImageWriter_SetFilePattern(vtkImageWriter* self, const char* _arg1) { self->SetFilePattern(_arg1); }
+
+VTKSHARP_API void vtkImageWriter_SetFilePrefix(vtkImageWriter* self, const char* _arg) { self->SetFilePrefix(_arg); }

@@ -18,6 +18,77 @@ public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void CappingOff()
+    {
+        vtkCylinderSource_CappingOff(this.NativePointer);
+    }
+
+    public new void CappingOn()
+    {
+        vtkCylinderSource_CappingOn(this.NativePointer);
+    }
+
+    public new void CapsuleCapOff()
+    {
+        vtkCylinderSource_CapsuleCapOff(this.NativePointer);
+    }
+
+    public new void CapsuleCapOn()
+    {
+        vtkCylinderSource_CapsuleCapOn(this.NativePointer);
+    }
+
+    internal new double* GetCenter_Internal()
+    {
+        return vtkCylinderSource_GetCenter_(this.NativePointer);
+    }
+
+    public new void GetCenter(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkCylinderSource_GetCenter_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    public new double GetHeight()
+    {
+        return vtkCylinderSource_GetHeight(this.NativePointer);
+    }
+
+    public new double GetRadius()
+    {
+        return vtkCylinderSource_GetRadius(this.NativePointer);
+    }
+
+    public new int GetResolution()
+    {
+        return vtkCylinderSource_GetResolution(this.NativePointer);
+    }
+
+    public new void SetCenter(double _arg1, double _arg2, double _arg3)
+    {
+        vtkCylinderSource_SetCenter_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetCenter(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkCylinderSource_SetCenter_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetHeight(double _arg)
+    {
+        vtkCylinderSource_SetHeight(this.NativePointer, _arg);
+    }
+
+    public new void SetRadius(double _arg)
+    {
+        vtkCylinderSource_SetRadius(this.NativePointer, _arg);
+    }
+
     public new void SetResolution(int _arg)
     {
         vtkCylinderSource_SetResolution(this.NativePointer, _arg);
@@ -26,6 +97,45 @@ public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCylinderSource_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_CappingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_CappingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_CapsuleCapOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_CapsuleCapOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkCylinderSource_GetCenter_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_GetCenter_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCylinderSource_GetHeight(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkCylinderSource_GetRadius(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkCylinderSource_GetResolution(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_SetCenter_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_SetHeight(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCylinderSource_SetRadius(nint self, double _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCylinderSource_SetResolution(nint self, int _arg);

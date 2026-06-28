@@ -3,3 +3,5 @@
 #include <vtkOpenGLRenderWindow.h>
 
 VTKSHARP_API vtkOpenGLRenderWindow* vtkOpenGLRenderWindow_New() { return vtkOpenGLRenderWindow::New(); }
+
+VTKSHARP_API void vtkOpenGLRenderWindow_Render(vtkOpenGLRenderWindow* self) { self->Render(); }

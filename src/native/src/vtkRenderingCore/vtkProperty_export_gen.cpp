@@ -4,14 +4,126 @@
 
 VTKSHARP_API vtkProperty* vtkProperty_New() { return vtkProperty::New(); }
 
+VTKSHARP_API void vtkProperty_BackfaceCullingOff(vtkProperty* self) { self->BackfaceCullingOff(); }
+
+VTKSHARP_API void vtkProperty_BackfaceCullingOn(vtkProperty* self) { self->BackfaceCullingOn(); }
+
+VTKSHARP_API void vtkProperty_EdgeVisibilityOff(vtkProperty* self) { self->EdgeVisibilityOff(); }
+
+VTKSHARP_API void vtkProperty_EdgeVisibilityOn(vtkProperty* self) { self->EdgeVisibilityOn(); }
+
+VTKSHARP_API void vtkProperty_FrontfaceCullingOff(vtkProperty* self) { self->FrontfaceCullingOff(); }
+
+VTKSHARP_API void vtkProperty_FrontfaceCullingOn(vtkProperty* self) { self->FrontfaceCullingOn(); }
+
+VTKSHARP_API vtkTypeBool vtkProperty_GetBackfaceCulling(vtkProperty* self) { return self->GetBackfaceCulling(); }
+
+VTKSHARP_API double vtkProperty_GetEdgeOpacity(vtkProperty* self) { return self->GetEdgeOpacity(); }
+
+VTKSHARP_API float vtkProperty_GetEdgeWidth(vtkProperty* self) { return self->GetEdgeWidth(); }
+
+VTKSHARP_API vtkTypeBool vtkProperty_GetFrontfaceCulling(vtkProperty* self) { return self->GetFrontfaceCulling(); }
+
+VTKSHARP_API float vtkProperty_GetLineWidth(vtkProperty* self) { return self->GetLineWidth(); }
+
+VTKSHARP_API double vtkProperty_GetOpacity(vtkProperty* self) { return self->GetOpacity(); }
+
+VTKSHARP_API float vtkProperty_GetPointSize(vtkProperty* self) { return self->GetPointSize(); }
+
+VTKSHARP_API float vtkProperty_GetSelectionLineWidth(vtkProperty* self) { return self->GetSelectionLineWidth(); }
+
+VTKSHARP_API void vtkProperty_LightingOff(vtkProperty* self) { self->LightingOff(); }
+
+VTKSHARP_API void vtkProperty_LightingOn(vtkProperty* self) { self->LightingOn(); }
+
+VTKSHARP_API void vtkProperty_RenderLinesAsTubesOff(vtkProperty* self) { self->RenderLinesAsTubesOff(); }
+
+VTKSHARP_API void vtkProperty_RenderLinesAsTubesOn(vtkProperty* self) { self->RenderLinesAsTubesOn(); }
+
+VTKSHARP_API void vtkProperty_RenderPointsAsSpheresOff(vtkProperty* self) { self->RenderPointsAsSpheresOff(); }
+
+VTKSHARP_API void vtkProperty_RenderPointsAsSpheresOn(vtkProperty* self) { self->RenderPointsAsSpheresOn(); }
+
 VTKSHARP_API void vtkProperty_SetAmbient(vtkProperty* self, double _arg) { self->SetAmbient(_arg); }
 
-VTKSHARP_API void vtkProperty_SetColor(vtkProperty* self, double r, double g, double b) { self->SetColor(r, g, b); }
+VTKSHARP_API void vtkProperty_SetAmbientColor_double_double_double(vtkProperty* self, double _arg1, double _arg2, double _arg3) { self->SetAmbientColor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkProperty_SetAmbientColor_doubleConstArray3(vtkProperty* self, const double* _arg) { self->SetAmbientColor(_arg); }
+
+VTKSHARP_API void vtkProperty_SetAnisotropy(vtkProperty* self, double _arg) { self->SetAnisotropy(_arg); }
+
+VTKSHARP_API void vtkProperty_SetColor_double_double_double(vtkProperty* self, double r, double g, double b) { self->SetColor(r, g, b); }
+
+VTKSHARP_API void vtkProperty_SetColor_doubleArray3(vtkProperty* self, double* a) { self->SetColor(a); }
 
 VTKSHARP_API void vtkProperty_SetDiffuse(vtkProperty* self, double _arg) { self->SetDiffuse(_arg); }
 
+VTKSHARP_API void vtkProperty_SetDiffuseColor_double_double_double(vtkProperty* self, double _arg1, double _arg2, double _arg3) { self->SetDiffuseColor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkProperty_SetDiffuseColor_doubleConstArray3(vtkProperty* self, const double* _arg) { self->SetDiffuseColor(_arg); }
+
+VTKSHARP_API void vtkProperty_SetEdgeColor_double_double_double(vtkProperty* self, double _arg1, double _arg2, double _arg3) { self->SetEdgeColor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkProperty_SetEdgeColor_doubleConstArray3(vtkProperty* self, const double* _arg) { self->SetEdgeColor(_arg); }
+
+VTKSHARP_API void vtkProperty_SetEdgeOpacity(vtkProperty* self, double _arg) { self->SetEdgeOpacity(_arg); }
+
+VTKSHARP_API void vtkProperty_SetEdgeWidth(vtkProperty* self, float _arg) { self->SetEdgeWidth(_arg); }
+
+VTKSHARP_API void vtkProperty_SetEmissiveFactor_double_double_double(vtkProperty* self, double _arg1, double _arg2, double _arg3) { self->SetEmissiveFactor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkProperty_SetEmissiveFactor_doubleConstArray3(vtkProperty* self, const double* _arg) { self->SetEmissiveFactor(_arg); }
+
+VTKSHARP_API void vtkProperty_SetInterpolationToFlat(vtkProperty* self) { self->SetInterpolationToFlat(); }
+
+VTKSHARP_API void vtkProperty_SetInterpolationToGouraud(vtkProperty* self) { self->SetInterpolationToGouraud(); }
+
+VTKSHARP_API void vtkProperty_SetInterpolationToPBR(vtkProperty* self) { self->SetInterpolationToPBR(); }
+
+VTKSHARP_API void vtkProperty_SetInterpolationToPhong(vtkProperty* self) { self->SetInterpolationToPhong(); }
+
+VTKSHARP_API void vtkProperty_SetLineWidth(vtkProperty* self, float _arg) { self->SetLineWidth(_arg); }
+
+VTKSHARP_API void vtkProperty_SetOpacity(vtkProperty* self, double _arg) { self->SetOpacity(_arg); }
+
+VTKSHARP_API void vtkProperty_SetPointSize(vtkProperty* self, float _arg) { self->SetPointSize(_arg); }
+
+VTKSHARP_API void vtkProperty_SetRepresentationToPoints(vtkProperty* self) { self->SetRepresentationToPoints(); }
+
+VTKSHARP_API void vtkProperty_SetRepresentationToSurface(vtkProperty* self) { self->SetRepresentationToSurface(); }
+
+VTKSHARP_API void vtkProperty_SetRepresentationToWireframe(vtkProperty* self) { self->SetRepresentationToWireframe(); }
+
+VTKSHARP_API void vtkProperty_SetRoughness(vtkProperty* self, double _arg) { self->SetRoughness(_arg); }
+
+VTKSHARP_API void vtkProperty_SetSelectionColor_double_double_double_double(vtkProperty* self, double _arg1, double _arg2, double _arg3, double _arg4) { self->SetSelectionColor(_arg1, _arg2, _arg3, _arg4); }
+
+VTKSHARP_API void vtkProperty_SetSelectionColor_doubleConstArray4(vtkProperty* self, const double* _arg) { self->SetSelectionColor(_arg); }
+
+VTKSHARP_API void vtkProperty_SetSelectionLineWidth(vtkProperty* self, float _arg) { self->SetSelectionLineWidth(_arg); }
+
+VTKSHARP_API void vtkProperty_SetSelectionPointSize(vtkProperty* self, float _arg) { self->SetSelectionPointSize(_arg); }
+
 VTKSHARP_API void vtkProperty_SetSpecular(vtkProperty* self, double _arg) { self->SetSpecular(_arg); }
 
-VTKSHARP_API void vtkProperty_SetSpecularColor(vtkProperty* self, double _arg1, double _arg2, double _arg3) { self->SetSpecularColor(_arg1, _arg2, _arg3); }
+VTKSHARP_API void vtkProperty_SetSpecularColor_double_double_double(vtkProperty* self, double _arg1, double _arg2, double _arg3) { self->SetSpecularColor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkProperty_SetSpecularColor_doubleConstArray3(vtkProperty* self, const double* _arg) { self->SetSpecularColor(_arg); }
 
 VTKSHARP_API void vtkProperty_SetSpecularPower(vtkProperty* self, double _arg) { self->SetSpecularPower(_arg); }
+
+VTKSHARP_API void vtkProperty_ShadingOff(vtkProperty* self) { self->ShadingOff(); }
+
+VTKSHARP_API void vtkProperty_ShadingOn(vtkProperty* self) { self->ShadingOn(); }
+
+VTKSHARP_API void vtkProperty_ShowTexturesOnBackfaceOff(vtkProperty* self) { self->ShowTexturesOnBackfaceOff(); }
+
+VTKSHARP_API void vtkProperty_ShowTexturesOnBackfaceOn(vtkProperty* self) { self->ShowTexturesOnBackfaceOn(); }
+
+VTKSHARP_API void vtkProperty_UseLineWidthForEdgeThicknessOff(vtkProperty* self) { self->UseLineWidthForEdgeThicknessOff(); }
+
+VTKSHARP_API void vtkProperty_UseLineWidthForEdgeThicknessOn(vtkProperty* self) { self->UseLineWidthForEdgeThicknessOn(); }
+
+VTKSHARP_API void vtkProperty_VertexVisibilityOff(vtkProperty* self) { self->VertexVisibilityOff(); }
+
+VTKSHARP_API void vtkProperty_VertexVisibilityOn(vtkProperty* self) { self->VertexVisibilityOn(); }

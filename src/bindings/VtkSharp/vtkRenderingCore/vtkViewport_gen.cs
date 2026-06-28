@@ -17,13 +17,210 @@ public unsafe partial class vtkViewport : vtkObject
         return target;
     }
 
+    public new void AddViewProp(vtkProp _arg1)
+    {
+        vtkViewport_AddViewProp(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void DisplayToView()
+    {
+        vtkViewport_DisplayToView(this.NativePointer);
+    }
+
+    public new void DisplayToWorld()
+    {
+        vtkViewport_DisplayToWorld(this.NativePointer);
+    }
+
+    public new vtkActor2DCollection GetActors2D()
+    {
+        return vtkActor2DCollection.WeakReference(vtkViewport_GetActors2D(this.NativePointer));
+    }
+
+    internal new double* GetBackground_Internal()
+    {
+        return vtkViewport_GetBackground_(this.NativePointer);
+    }
+
+    public new void GetBackground(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkViewport_GetBackground_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    internal new double* GetBackground2_Internal()
+    {
+        return vtkViewport_GetBackground2_(this.NativePointer);
+    }
+
+    public new void GetBackground2(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkViewport_GetBackground2_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new vtkPropCollection GetViewProps()
+    {
+        return vtkPropCollection.WeakReference(vtkViewport_GetViewProps(this.NativePointer));
+    }
+
+    public new void GradientBackgroundOff()
+    {
+        vtkViewport_GradientBackgroundOff(this.NativePointer);
+    }
+
+    public new void GradientBackgroundOn()
+    {
+        vtkViewport_GradientBackgroundOn(this.NativePointer);
+    }
+
+    public new void GradientEnvironmentalBGOff()
+    {
+        vtkViewport_GradientEnvironmentalBGOff(this.NativePointer);
+    }
+
+    public new void GradientEnvironmentalBGOn()
+    {
+        vtkViewport_GradientEnvironmentalBGOn(this.NativePointer);
+    }
+
+    public new bool HasViewProp(vtkProp _arg1)
+    {
+        return vtkViewport_HasViewProp(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void RemoveAllViewProps()
+    {
+        vtkViewport_RemoveAllViewProps(this.NativePointer);
+    }
+
+    public new void RemoveViewProp(vtkProp _arg1)
+    {
+        vtkViewport_RemoveViewProp(this.NativePointer, _arg1.NativePointer);
+    }
+
     public new void SetBackground(double _arg1, double _arg2, double _arg3)
     {
-        vtkViewport_SetBackground(this.NativePointer, _arg1, _arg2, _arg3);
+        vtkViewport_SetBackground_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetBackground(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkViewport_SetBackground_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetBackground2(double _arg1, double _arg2, double _arg3)
+    {
+        vtkViewport_SetBackground2_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetBackground2(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkViewport_SetBackground2_doubleConstArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void ViewToDisplay()
+    {
+        vtkViewport_ViewToDisplay(this.NativePointer);
+    }
+
+    public new void ViewToWorld()
+    {
+        vtkViewport_ViewToWorld(this.NativePointer);
+    }
+
+    public new void WorldToDisplay()
+    {
+        vtkViewport_WorldToDisplay(this.NativePointer);
+    }
+
+    public new void WorldToView()
+    {
+        vtkViewport_WorldToView(this.NativePointer);
     }
 
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkViewport_SetBackground(nint self, double _arg1, double _arg2, double _arg3);
+    private static extern void vtkViewport_AddViewProp(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_DisplayToView(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_DisplayToWorld(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkViewport_GetActors2D(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkViewport_GetBackground_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_GetBackground_doubleArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkViewport_GetBackground2_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_GetBackground2_doubleArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkViewport_GetViewProps(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_GradientBackgroundOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_GradientBackgroundOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_GradientEnvironmentalBGOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_GradientEnvironmentalBGOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    private static extern bool vtkViewport_HasViewProp(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_RemoveAllViewProps(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_RemoveViewProp(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_SetBackground_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_SetBackground_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_SetBackground2_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_SetBackground2_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_ViewToDisplay(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_ViewToWorld(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_WorldToDisplay(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_WorldToView(nint self);
     #endregion
 }

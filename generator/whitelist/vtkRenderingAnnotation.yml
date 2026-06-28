@@ -4,7 +4,203 @@ module: vtkRenderingAnnotation
 classes:
   - name: vtkAxesActor
     header: vtkAxesActor.h
-    functions: []
+    functions:
+      - name: GetXAxisCaptionActor2D
+        cppSignature: vtkCaptionActor2D * GetXAxisCaptionActor2D()
+        return:
+          type: vtkCaptionActor2D*
+        parameters: []
+      - name: GetXAxisShaftProperty
+        cppSignature: vtkProperty * GetXAxisShaftProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
+      - name: GetXAxisTipProperty
+        cppSignature: vtkProperty * GetXAxisTipProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
+      - name: GetYAxisCaptionActor2D
+        cppSignature: vtkCaptionActor2D * GetYAxisCaptionActor2D()
+        return:
+          type: vtkCaptionActor2D*
+        parameters: []
+      - name: GetYAxisShaftProperty
+        cppSignature: vtkProperty * GetYAxisShaftProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
+      - name: GetYAxisTipProperty
+        cppSignature: vtkProperty * GetYAxisTipProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
+      - name: GetZAxisCaptionActor2D
+        cppSignature: vtkCaptionActor2D * GetZAxisCaptionActor2D()
+        return:
+          type: vtkCaptionActor2D*
+        parameters: []
+      - name: GetZAxisShaftProperty
+        cppSignature: vtkProperty * GetZAxisShaftProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
+      - name: GetZAxisTipProperty
+        cppSignature: vtkProperty * GetZAxisTipProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
+      - name: SetAxisLabels
+        cppSignature: void SetAxisLabels(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetConeRadius
+        cppSignature: void SetConeRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetCylinderRadius
+        cppSignature: void SetCylinderRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetNormalizedLabelPosition
+        cppSignature: void SetNormalizedLabelPosition(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetNormalizedLabelPosition
+        cppSignature: void SetNormalizedLabelPosition(double[3] v)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: v
+      - name: SetNormalizedShaftLength
+        cppSignature: void SetNormalizedShaftLength(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetNormalizedShaftLength
+        cppSignature: void SetNormalizedShaftLength(double[3] v)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: v
+      - name: SetNormalizedTipLength
+        cppSignature: void SetNormalizedTipLength(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetNormalizedTipLength
+        cppSignature: void SetNormalizedTipLength(double[3] v)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: v
+      - name: SetShaftTypeToCylinder
+        cppSignature: void SetShaftTypeToCylinder()
+        return:
+          type: void
+        parameters: []
+      - name: SetShaftTypeToLine
+        cppSignature: void SetShaftTypeToLine()
+        return:
+          type: void
+        parameters: []
+      - name: SetShaftTypeToUserDefined
+        cppSignature: void SetShaftTypeToUserDefined()
+        return:
+          type: void
+        parameters: []
+      - name: SetSphereRadius
+        cppSignature: void SetSphereRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetTipTypeToCone
+        cppSignature: void SetTipTypeToCone()
+        return:
+          type: void
+        parameters: []
+      - name: SetTipTypeToSphere
+        cppSignature: void SetTipTypeToSphere()
+        return:
+          type: void
+        parameters: []
+      - name: SetTipTypeToUserDefined
+        cppSignature: void SetTipTypeToUserDefined()
+        return:
+          type: void
+        parameters: []
+      - name: SetTotalLength
+        cppSignature: void SetTotalLength(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetTotalLength
+        cppSignature: void SetTotalLength(double[3] v)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: v
+      - name: SetXAxisLabelText
+        cppSignature: void SetXAxisLabelText(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetYAxisLabelText
+        cppSignature: void SetYAxisLabelText(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetZAxisLabelText
+        cppSignature: void SetZAxisLabelText(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
   - name: vtkAxisActor2D
     header: vtkAxisActor2D.h
     functions: []
@@ -13,4 +209,29 @@ classes:
     functions: []
   - name: vtkLegendScaleActor
     header: vtkLegendScaleActor.h
-    functions: []
+    functions:
+      - name: GetAxesProperty
+        cppSignature: vtkProperty2D * GetAxesProperty()
+        return:
+          type: vtkProperty2D*
+        parameters: []
+      - name: GetBottomAxis
+        cppSignature: vtkAxisActor2D * GetBottomAxis()
+        return:
+          type: vtkAxisActor2D*
+        parameters: []
+      - name: GetLeftAxis
+        cppSignature: vtkAxisActor2D * GetLeftAxis()
+        return:
+          type: vtkAxisActor2D*
+        parameters: []
+      - name: GetRightAxis
+        cppSignature: vtkAxisActor2D * GetRightAxis()
+        return:
+          type: vtkAxisActor2D*
+        parameters: []
+      - name: GetTopAxis
+        cppSignature: vtkAxisActor2D * GetTopAxis()
+        return:
+          type: vtkAxisActor2D*
+        parameters: []

@@ -3,3 +3,59 @@
 #include <vtkTextProperty.h>
 
 VTKSHARP_API vtkTextProperty* vtkTextProperty_New() { return vtkTextProperty::New(); }
+
+VTKSHARP_API void vtkTextProperty_BoldOff(vtkTextProperty* self) { self->BoldOff(); }
+
+VTKSHARP_API void vtkTextProperty_BoldOn(vtkTextProperty* self) { self->BoldOn(); }
+
+VTKSHARP_API void vtkTextProperty_FrameOff(vtkTextProperty* self) { self->FrameOff(); }
+
+VTKSHARP_API void vtkTextProperty_FrameOn(vtkTextProperty* self) { self->FrameOn(); }
+
+VTKSHARP_API int vtkTextProperty_GetFontSize(vtkTextProperty* self) { return self->GetFontSize(); }
+
+VTKSHARP_API double vtkTextProperty_GetOpacity(vtkTextProperty* self) { return self->GetOpacity(); }
+
+VTKSHARP_API void vtkTextProperty_ItalicOff(vtkTextProperty* self) { self->ItalicOff(); }
+
+VTKSHARP_API void vtkTextProperty_ItalicOn(vtkTextProperty* self) { self->ItalicOn(); }
+
+VTKSHARP_API void vtkTextProperty_SetColor_double_double_double(vtkTextProperty* self, double _arg1, double _arg2, double _arg3) { self->SetColor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkTextProperty_SetColor_doubleConstArray3(vtkTextProperty* self, const double* _arg) { self->SetColor(_arg); }
+
+VTKSHARP_API void vtkTextProperty_SetFontFamilyAsString(vtkTextProperty* self, const char* _arg) { self->SetFontFamilyAsString(_arg); }
+
+VTKSHARP_API void vtkTextProperty_SetFontFamilyToArial(vtkTextProperty* self) { self->SetFontFamilyToArial(); }
+
+VTKSHARP_API void vtkTextProperty_SetFontFamilyToCourier(vtkTextProperty* self) { self->SetFontFamilyToCourier(); }
+
+VTKSHARP_API void vtkTextProperty_SetFontFamilyToTimes(vtkTextProperty* self) { self->SetFontFamilyToTimes(); }
+
+VTKSHARP_API void vtkTextProperty_SetFontSize(vtkTextProperty* self, int _arg) { self->SetFontSize(_arg); }
+
+VTKSHARP_API void vtkTextProperty_SetJustificationToCentered(vtkTextProperty* self) { self->SetJustificationToCentered(); }
+
+VTKSHARP_API void vtkTextProperty_SetJustificationToLeft(vtkTextProperty* self) { self->SetJustificationToLeft(); }
+
+VTKSHARP_API void vtkTextProperty_SetJustificationToRight(vtkTextProperty* self) { self->SetJustificationToRight(); }
+
+VTKSHARP_API void vtkTextProperty_SetLineSpacing(vtkTextProperty* self, double _arg) { self->SetLineSpacing(_arg); }
+
+VTKSHARP_API void vtkTextProperty_SetOpacity(vtkTextProperty* self, double _arg) { self->SetOpacity(_arg); }
+
+VTKSHARP_API void vtkTextProperty_SetShadowOffset_int_int(vtkTextProperty* self, int _arg1, int _arg2) { self->SetShadowOffset(_arg1, _arg2); }
+
+VTKSHARP_API void vtkTextProperty_SetShadowOffset_intConstArray2(vtkTextProperty* self, const int* _arg) { self->SetShadowOffset(_arg); }
+
+VTKSHARP_API void vtkTextProperty_SetVerticalJustificationToBottom(vtkTextProperty* self) { self->SetVerticalJustificationToBottom(); }
+
+VTKSHARP_API void vtkTextProperty_SetVerticalJustificationToCentered(vtkTextProperty* self) { self->SetVerticalJustificationToCentered(); }
+
+VTKSHARP_API void vtkTextProperty_SetVerticalJustificationToTop(vtkTextProperty* self) { self->SetVerticalJustificationToTop(); }
+
+VTKSHARP_API void vtkTextProperty_ShadowOff(vtkTextProperty* self) { self->ShadowOff(); }
+
+VTKSHARP_API void vtkTextProperty_ShadowOn(vtkTextProperty* self) { self->ShadowOn(); }
+
+VTKSHARP_API void vtkTextProperty_ShallowCopy(vtkTextProperty* self, vtkTextProperty* tprop) { self->ShallowCopy(tprop); }

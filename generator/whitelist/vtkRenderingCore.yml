@@ -23,6 +23,13 @@ classes:
         parameters:
           - type: vtkMapper*
             name: mapper
+      - name: SetProperty
+        cppSignature: void SetProperty(vtkProperty * lut)
+        return:
+          type: void
+        parameters:
+          - type: vtkProperty*
+            name: lut
   - name: vtkActor2D
     header: vtkActor2D.h
     functions: []
@@ -45,6 +52,11 @@ classes:
         parameters:
           - type: double
             name: angle
+      - name: ComputeViewPlaneNormal
+        cppSignature: void ComputeViewPlaneNormal()
+        return:
+          type: void
+        parameters: []
       - name: Elevation
         cppSignature: void Elevation(double angle)
         return:
@@ -52,6 +64,182 @@ classes:
         parameters:
           - type: double
             name: angle
+      - name: GetDistance
+        cppSignature: double GetDistance()
+        return:
+          type: double
+        parameters: []
+      - name: GetFocalDistance
+        cppSignature: double GetFocalDistance()
+        return:
+          type: double
+        parameters: []
+      - name: GetFocalPoint
+        cppSignature: double * GetFocalPoint()
+        return:
+          type: double*
+        parameters: []
+      - name: GetFocalPoint
+        cppSignature: void GetFocalPoint(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetFocalPointScale
+        cppSignature: double GetFocalPointScale()
+        return:
+          type: double
+        parameters: []
+      - name: GetParallelScale
+        cppSignature: double GetParallelScale()
+        return:
+          type: double
+        parameters: []
+      - name: GetPosition
+        cppSignature: double * GetPosition()
+        return:
+          type: double*
+        parameters: []
+      - name: GetPosition
+        cppSignature: void GetPosition(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetRoll
+        cppSignature: double GetRoll()
+        return:
+          type: double
+        parameters: []
+      - name: GetThickness
+        cppSignature: double GetThickness()
+        return:
+          type: double
+        parameters: []
+      - name: GetViewAngle
+        cppSignature: double GetViewAngle()
+        return:
+          type: double
+        parameters: []
+      - name: GetViewPlaneNormal
+        cppSignature: double * GetViewPlaneNormal()
+        return:
+          type: double*
+        parameters: []
+      - name: GetViewPlaneNormal
+        cppSignature: void GetViewPlaneNormal(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetViewUp
+        cppSignature: double * GetViewUp()
+        return:
+          type: double*
+        parameters: []
+      - name: GetViewUp
+        cppSignature: void GetViewUp(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetWindowCenter
+        cppSignature: double * GetWindowCenter()
+        return:
+          type: double*
+        parameters: []
+      - name: GetWindowCenter
+        cppSignature: void GetWindowCenter(double[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: _arg
+      - name: ParallelProjectionOff
+        cppSignature: void ParallelProjectionOff()
+        return:
+          type: void
+        parameters: []
+      - name: ParallelProjectionOn
+        cppSignature: void ParallelProjectionOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetFocalPoint
+        cppSignature: void SetFocalPoint(double const[3] a)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: a
+      - name: SetFocalPoint
+        cppSignature: void SetFocalPoint(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetParallelScale
+        cppSignature: void SetParallelScale(double scale)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: scale
+      - name: SetPosition
+        cppSignature: void SetPosition(double const[3] a)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: a
+      - name: SetPosition
+        cppSignature: void SetPosition(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetViewUp
+        cppSignature: void SetViewUp(double const[3] a)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: a
+      - name: SetViewUp
+        cppSignature: void SetViewUp(double vx, double vy, double vz)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: vx
+          - type: double
+            name: vy
+          - type: double
+            name: vz
+      - name: UseHorizontalViewAngleOff
+        cppSignature: void UseHorizontalViewAngleOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseHorizontalViewAngleOn
+        cppSignature: void UseHorizontalViewAngleOn()
+        return:
+          type: void
+        parameters: []
       - name: Zoom
         cppSignature: void Zoom(double factor)
         return:
@@ -61,16 +249,105 @@ classes:
             name: factor
   - name: vtkCoordinate
     header: vtkCoordinate.h
+    functions:
+      - name: SetCoordinateSystemToDisplay
+        cppSignature: void SetCoordinateSystemToDisplay()
+        return:
+          type: void
+        parameters: []
+      - name: SetCoordinateSystemToNormalizedDisplay
+        cppSignature: void SetCoordinateSystemToNormalizedDisplay()
+        return:
+          type: void
+        parameters: []
+      - name: SetCoordinateSystemToNormalizedViewport
+        cppSignature: void SetCoordinateSystemToNormalizedViewport()
+        return:
+          type: void
+        parameters: []
+      - name: SetCoordinateSystemToPose
+        cppSignature: void SetCoordinateSystemToPose()
+        return:
+          type: void
+        parameters: []
+      - name: SetCoordinateSystemToView
+        cppSignature: void SetCoordinateSystemToView()
+        return:
+          type: void
+        parameters: []
+      - name: SetCoordinateSystemToViewport
+        cppSignature: void SetCoordinateSystemToViewport()
+        return:
+          type: void
+        parameters: []
+      - name: SetCoordinateSystemToWorld
+        cppSignature: void SetCoordinateSystemToWorld()
+        return:
+          type: void
+        parameters: []
+      - name: SetValue
+        cppSignature: void SetValue(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetValue
+        cppSignature: void SetValue(double a, double b)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: a
+          - type: double
+            name: b
+      - name: SetValue
+        cppSignature: void SetValue(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+  - name: vtkCuller
+    header: vtkCuller.h
     functions: []
   - name: vtkImageActor
     header: vtkImageActor.h
-    functions: []
+    functions:
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkImageData * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkImageData*
+            name: _arg1
   - name: vtkImageSlice
     header: vtkImageSlice.h
     functions: []
   - name: vtkInteractorObserver
     header: vtkInteractorObserver.h
-    functions: []
+    functions:
+      - name: EnabledOff
+        cppSignature: void EnabledOff()
+        return:
+          type: void
+        parameters: []
+      - name: EnabledOn
+        cppSignature: void EnabledOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetInteractor
+        cppSignature: void SetInteractor(vtkRenderWindowInteractor * iren)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderWindowInteractor*
+            name: iren
   - name: vtkInteractorStyle
     header: vtkInteractorStyle.h
     functions: []
@@ -108,7 +385,32 @@ classes:
     functions: []
   - name: vtkProp
     header: vtkProp.h
-    functions: []
+    functions:
+      - name: Pick
+        cppSignature: void Pick()
+        return:
+          type: void
+        parameters: []
+      - name: PickableOff
+        cppSignature: void PickableOff()
+        return:
+          type: void
+        parameters: []
+      - name: PickableOn
+        cppSignature: void PickableOn()
+        return:
+          type: void
+        parameters: []
+      - name: VisibilityOff
+        cppSignature: void VisibilityOff()
+        return:
+          type: void
+        parameters: []
+      - name: VisibilityOn
+        cppSignature: void VisibilityOn()
+        return:
+          type: void
+        parameters: []
   - name: vtkProp3D
     header: vtkProp3D.h
     functions:
@@ -132,8 +434,133 @@ classes:
   - name: vtkProperty
     header: vtkProperty.h
     functions:
+      - name: BackfaceCullingOff
+        cppSignature: void BackfaceCullingOff()
+        return:
+          type: void
+        parameters: []
+      - name: BackfaceCullingOn
+        cppSignature: void BackfaceCullingOn()
+        return:
+          type: void
+        parameters: []
+      - name: EdgeVisibilityOff
+        cppSignature: void EdgeVisibilityOff()
+        return:
+          type: void
+        parameters: []
+      - name: EdgeVisibilityOn
+        cppSignature: void EdgeVisibilityOn()
+        return:
+          type: void
+        parameters: []
+      - name: FrontfaceCullingOff
+        cppSignature: void FrontfaceCullingOff()
+        return:
+          type: void
+        parameters: []
+      - name: FrontfaceCullingOn
+        cppSignature: void FrontfaceCullingOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetBackfaceCulling
+        cppSignature: vtkTypeBool GetBackfaceCulling()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetEdgeOpacity
+        cppSignature: double GetEdgeOpacity()
+        return:
+          type: double
+        parameters: []
+      - name: GetEdgeWidth
+        cppSignature: float GetEdgeWidth()
+        return:
+          type: float
+        parameters: []
+      - name: GetFrontfaceCulling
+        cppSignature: vtkTypeBool GetFrontfaceCulling()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetLineWidth
+        cppSignature: float GetLineWidth()
+        return:
+          type: float
+        parameters: []
+      - name: GetOpacity
+        cppSignature: double GetOpacity()
+        return:
+          type: double
+        parameters: []
+      - name: GetPointSize
+        cppSignature: float GetPointSize()
+        return:
+          type: float
+        parameters: []
+      - name: GetSelectionLineWidth
+        cppSignature: float GetSelectionLineWidth()
+        return:
+          type: float
+        parameters: []
+      - name: LightingOff
+        cppSignature: void LightingOff()
+        return:
+          type: void
+        parameters: []
+      - name: LightingOn
+        cppSignature: void LightingOn()
+        return:
+          type: void
+        parameters: []
+      - name: RenderLinesAsTubesOff
+        cppSignature: void RenderLinesAsTubesOff()
+        return:
+          type: void
+        parameters: []
+      - name: RenderLinesAsTubesOn
+        cppSignature: void RenderLinesAsTubesOn()
+        return:
+          type: void
+        parameters: []
+      - name: RenderPointsAsSpheresOff
+        cppSignature: void RenderPointsAsSpheresOff()
+        return:
+          type: void
+        parameters: []
+      - name: RenderPointsAsSpheresOn
+        cppSignature: void RenderPointsAsSpheresOn()
+        return:
+          type: void
+        parameters: []
       - name: SetAmbient
         cppSignature: void SetAmbient(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetAmbientColor
+        cppSignature: void SetAmbientColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetAmbientColor
+        cppSignature: void SetAmbientColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetAnisotropy
+        cppSignature: void SetAnisotropy(double _arg)
         return:
           type: void
         parameters:
@@ -150,12 +577,184 @@ classes:
             name: g
           - type: double
             name: b
+      - name: SetColor
+        cppSignature: void SetColor(double[3] a)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: a
       - name: SetDiffuse
         cppSignature: void SetDiffuse(double _arg)
         return:
           type: void
         parameters:
           - type: double
+            name: _arg
+      - name: SetDiffuseColor
+        cppSignature: void SetDiffuseColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetDiffuseColor
+        cppSignature: void SetDiffuseColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetEdgeColor
+        cppSignature: void SetEdgeColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetEdgeColor
+        cppSignature: void SetEdgeColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetEdgeOpacity
+        cppSignature: void SetEdgeOpacity(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetEdgeWidth
+        cppSignature: void SetEdgeWidth(float _arg)
+        return:
+          type: void
+        parameters:
+          - type: float
+            name: _arg
+      - name: SetEmissiveFactor
+        cppSignature: void SetEmissiveFactor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetEmissiveFactor
+        cppSignature: void SetEmissiveFactor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetInterpolationToFlat
+        cppSignature: void SetInterpolationToFlat()
+        return:
+          type: void
+        parameters: []
+      - name: SetInterpolationToGouraud
+        cppSignature: void SetInterpolationToGouraud()
+        return:
+          type: void
+        parameters: []
+      - name: SetInterpolationToPBR
+        cppSignature: void SetInterpolationToPBR()
+        return:
+          type: void
+        parameters: []
+      - name: SetInterpolationToPhong
+        cppSignature: void SetInterpolationToPhong()
+        return:
+          type: void
+        parameters: []
+      - name: SetLineWidth
+        cppSignature: void SetLineWidth(float _arg)
+        return:
+          type: void
+        parameters:
+          - type: float
+            name: _arg
+      - name: SetOpacity
+        cppSignature: void SetOpacity(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetPointSize
+        cppSignature: void SetPointSize(float _arg)
+        return:
+          type: void
+        parameters:
+          - type: float
+            name: _arg
+      - name: SetRepresentationToPoints
+        cppSignature: void SetRepresentationToPoints()
+        return:
+          type: void
+        parameters: []
+      - name: SetRepresentationToSurface
+        cppSignature: void SetRepresentationToSurface()
+        return:
+          type: void
+        parameters: []
+      - name: SetRepresentationToWireframe
+        cppSignature: void SetRepresentationToWireframe()
+        return:
+          type: void
+        parameters: []
+      - name: SetRoughness
+        cppSignature: void SetRoughness(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetSelectionColor
+        cppSignature: void SetSelectionColor(double _arg1, double _arg2, double _arg3, double _arg4)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+          - type: double
+            name: _arg4
+      - name: SetSelectionColor
+        cppSignature: void SetSelectionColor(double const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[4]
+            name: _arg
+      - name: SetSelectionLineWidth
+        cppSignature: void SetSelectionLineWidth(float _arg)
+        return:
+          type: void
+        parameters:
+          - type: float
+            name: _arg
+      - name: SetSelectionPointSize
+        cppSignature: void SetSelectionPointSize(float _arg)
+        return:
+          type: void
+        parameters:
+          - type: float
             name: _arg
       - name: SetSpecular
         cppSignature: void SetSpecular(double _arg)
@@ -175,6 +774,13 @@ classes:
             name: _arg2
           - type: double
             name: _arg3
+      - name: SetSpecularColor
+        cppSignature: void SetSpecularColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
       - name: SetSpecularPower
         cppSignature: void SetSpecularPower(double _arg)
         return:
@@ -182,6 +788,46 @@ classes:
         parameters:
           - type: double
             name: _arg
+      - name: ShadingOff
+        cppSignature: void ShadingOff()
+        return:
+          type: void
+        parameters: []
+      - name: ShadingOn
+        cppSignature: void ShadingOn()
+        return:
+          type: void
+        parameters: []
+      - name: ShowTexturesOnBackfaceOff
+        cppSignature: void ShowTexturesOnBackfaceOff()
+        return:
+          type: void
+        parameters: []
+      - name: ShowTexturesOnBackfaceOn
+        cppSignature: void ShowTexturesOnBackfaceOn()
+        return:
+          type: void
+        parameters: []
+      - name: UseLineWidthForEdgeThicknessOff
+        cppSignature: void UseLineWidthForEdgeThicknessOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseLineWidthForEdgeThicknessOn
+        cppSignature: void UseLineWidthForEdgeThicknessOn()
+        return:
+          type: void
+        parameters: []
+      - name: VertexVisibilityOff
+        cppSignature: void VertexVisibilityOff()
+        return:
+          type: void
+        parameters: []
+      - name: VertexVisibilityOn
+        cppSignature: void VertexVisibilityOn()
+        return:
+          type: void
+        parameters: []
   - name: vtkProperty2D
     header: vtkProperty2D.h
     functions: []
@@ -195,11 +841,48 @@ classes:
         parameters:
           - type: vtkRenderer*
             name: renderer
+      - name: LineSmoothingOff
+        cppSignature: void LineSmoothingOff()
+        return:
+          type: void
+        parameters: []
+      - name: LineSmoothingOn
+        cppSignature: void LineSmoothingOn()
+        return:
+          type: void
+        parameters: []
+      - name: PointSmoothingOff
+        cppSignature: void PointSmoothingOff()
+        return:
+          type: void
+        parameters: []
+      - name: PointSmoothingOn
+        cppSignature: void PointSmoothingOn()
+        return:
+          type: void
+        parameters: []
+      - name: PolygonSmoothingOff
+        cppSignature: void PolygonSmoothingOff()
+        return:
+          type: void
+        parameters: []
+      - name: PolygonSmoothingOn
+        cppSignature: void PolygonSmoothingOn()
+        return:
+          type: void
+        parameters: []
       - name: Render
         cppSignature: void Render()
         return:
           type: void
         parameters: []
+      - name: SetMultiSamples
+        cppSignature: void SetMultiSamples(int _arg1)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
       - name: SetWindowName
         cppSignature: void SetWindowName(char const * _arg)
         return:
@@ -224,6 +907,11 @@ classes:
         cppSignature: int* GetEventPosition()
         return:
           type: int*
+        parameters: []
+      - name: GetInitialized
+        cppSignature: int GetInitialized()
+        return:
+          type: int
         parameters: []
       - name: GetKeyCode
         cppSignature: char GetKeyCode()
@@ -284,13 +972,203 @@ classes:
         parameters:
           - type: vtkProp*
             name: p
+      - name: AddCuller
+        cppSignature: void AddCuller(vtkCuller * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkCuller*
+            name: _arg1
+      - name: AddLight
+        cppSignature: void AddLight(vtkLight * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkLight*
+            name: _arg1
+      - name: AddVolume
+        cppSignature: void AddVolume(vtkProp * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: p
+      - name: AutomaticLightCreationOff
+        cppSignature: void AutomaticLightCreationOff()
+        return:
+          type: void
+        parameters: []
+      - name: AutomaticLightCreationOn
+        cppSignature: void AutomaticLightCreationOn()
+        return:
+          type: void
+        parameters: []
+      - name: BackingStoreOff
+        cppSignature: void BackingStoreOff()
+        return:
+          type: void
+        parameters: []
+      - name: BackingStoreOn
+        cppSignature: void BackingStoreOn()
+        return:
+          type: void
+        parameters: []
+      - name: Clear
+        cppSignature: void Clear()
+        return:
+          type: void
+        parameters: []
+      - name: ClearLights
+        cppSignature: void ClearLights()
+        return:
+          type: void
+        parameters: []
+      - name: CreateLight
+        cppSignature: void CreateLight()
+        return:
+          type: void
+        parameters: []
+      - name: DrawOff
+        cppSignature: void DrawOff()
+        return:
+          type: void
+        parameters: []
+      - name: DrawOn
+        cppSignature: void DrawOn()
+        return:
+          type: void
+        parameters: []
+      - name: EraseOff
+        cppSignature: void EraseOff()
+        return:
+          type: void
+        parameters: []
+      - name: EraseOn
+        cppSignature: void EraseOn()
+        return:
+          type: void
+        parameters: []
       - name: GetActiveCamera
         cppSignature: vtkCamera * GetActiveCamera()
         return:
           type: vtkCamera*
         parameters: []
+      - name: GetActors
+        cppSignature: vtkActorCollection * GetActors()
+        return:
+          type: vtkActorCollection*
+        parameters: []
+      - name: GetRenderWindow
+        cppSignature: vtkRenderWindow * GetRenderWindow()
+        return:
+          type: vtkRenderWindow*
+        parameters: []
+      - name: GetTiledAspectRatio
+        cppSignature: double GetTiledAspectRatio()
+        return:
+          type: double
+        parameters: []
+      - name: GetVTKWindow
+        cppSignature: vtkWindow * GetVTKWindow()
+        return:
+          type: vtkWindow*
+        parameters: []
+      - name: GetZ
+        cppSignature: double GetZ(int x, int y)
+        return:
+          type: double
+        parameters:
+          - type: int
+            name: x
+          - type: int
+            name: y
       - name: GradientBackgroundOn
         cppSignature: void GradientBackgroundOn()
+        return:
+          type: void
+        parameters: []
+      - name: InteractiveOff
+        cppSignature: void InteractiveOff()
+        return:
+          type: void
+        parameters: []
+      - name: InteractiveOn
+        cppSignature: void InteractiveOn()
+        return:
+          type: void
+        parameters: []
+      - name: LightFollowCameraOff
+        cppSignature: void LightFollowCameraOff()
+        return:
+          type: void
+        parameters: []
+      - name: LightFollowCameraOn
+        cppSignature: void LightFollowCameraOn()
+        return:
+          type: void
+        parameters: []
+      - name: MakeLight
+        cppSignature: vtkLight * MakeLight()
+        return:
+          type: vtkLight*
+        parameters: []
+      - name: PickProp
+        cppSignature: vtkAssemblyPath * PickProp(double selectionX, double selectionY)
+        return:
+          type: vtkAssemblyPath*
+        parameters:
+          - type: double
+            name: selectionX
+          - type: double
+            name: selectionY
+      - name: PickProp
+        cppSignature: vtkAssemblyPath * PickProp(double selectionX1, double selectionY1, double selectionX2, double selectionY2)
+        return:
+          type: vtkAssemblyPath*
+        parameters:
+          - type: double
+            name: selectionX1
+          - type: double
+            name: selectionY1
+          - type: double
+            name: selectionX2
+          - type: double
+            name: selectionY2
+      - name: RemoveActor
+        cppSignature: void RemoveActor(vtkProp * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: p
+      - name: RemoveAllLights
+        cppSignature: void RemoveAllLights()
+        return:
+          type: void
+        parameters: []
+      - name: RemoveCuller
+        cppSignature: void RemoveCuller(vtkCuller * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkCuller*
+            name: _arg1
+      - name: RemoveLight
+        cppSignature: void RemoveLight(vtkLight * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkLight*
+            name: _arg1
+      - name: RemoveVolume
+        cppSignature: void RemoveVolume(vtkProp * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: p
+      - name: Render
+        cppSignature: void Render()
         return:
           type: void
         parameters: []
@@ -299,6 +1177,94 @@ classes:
         return:
           type: void
         parameters: []
+      - name: ResetCamera
+        cppSignature: void ResetCamera(double const[6] bounds)
+        return:
+          type: void
+        parameters:
+          - type: const double[6]
+            name: bounds
+      - name: ResetCamera
+        cppSignature: void ResetCamera(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: xmin
+          - type: double
+            name: xmax
+          - type: double
+            name: ymin
+          - type: double
+            name: ymax
+          - type: double
+            name: zmin
+          - type: double
+            name: zmax
+      - name: ResetCameraClippingRange
+        cppSignature: void ResetCameraClippingRange()
+        return:
+          type: void
+        parameters: []
+      - name: ResetCameraClippingRange
+        cppSignature: void ResetCameraClippingRange(double const[6] bounds)
+        return:
+          type: void
+        parameters:
+          - type: const double[6]
+            name: bounds
+      - name: ResetCameraClippingRange
+        cppSignature: void ResetCameraClippingRange(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: xmin
+          - type: double
+            name: xmax
+          - type: double
+            name: ymin
+          - type: double
+            name: ymax
+          - type: double
+            name: zmin
+          - type: double
+            name: zmax
+      - name: SafeGetZOff
+        cppSignature: void SafeGetZOff()
+        return:
+          type: void
+        parameters: []
+      - name: SafeGetZOn
+        cppSignature: void SafeGetZOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetActiveCamera
+        cppSignature: void SetActiveCamera(vtkCamera * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkCamera*
+            name: _arg1
+      - name: SetAmbient
+        cppSignature: void SetAmbient(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetAmbient
+        cppSignature: void SetAmbient(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
       - name: SetBackground2
         cppSignature: void SetBackground2(double _arg1, double _arg2, double _arg3)
         return:
@@ -317,27 +1283,434 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+      - name: SetRenderWindow
+        cppSignature: void SetRenderWindow(vtkRenderWindow * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderWindow*
+            name: _arg1
+      - name: TexturedBackgroundOff
+        cppSignature: void TexturedBackgroundOff()
+        return:
+          type: void
+        parameters: []
+      - name: TexturedBackgroundOn
+        cppSignature: void TexturedBackgroundOn()
+        return:
+          type: void
+        parameters: []
+      - name: TwoSidedLightingOff
+        cppSignature: void TwoSidedLightingOff()
+        return:
+          type: void
+        parameters: []
+      - name: TwoSidedLightingOn
+        cppSignature: void TwoSidedLightingOn()
+        return:
+          type: void
+        parameters: []
+      - name: UseImageBasedLightingOff
+        cppSignature: void UseImageBasedLightingOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseImageBasedLightingOn
+        cppSignature: void UseImageBasedLightingOn()
+        return:
+          type: void
+        parameters: []
+      - name: UseShadowsOff
+        cppSignature: void UseShadowsOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseShadowsOn
+        cppSignature: void UseShadowsOn()
+        return:
+          type: void
+        parameters: []
+      - name: ViewToWorld
+        cppSignature: void ViewToWorld()
+        return:
+          type: void
+        parameters: []
+      - name: VisibleActorCount
+        cppSignature: int VisibleActorCount()
+        return:
+          type: int
+        parameters: []
+      - name: VisibleVolumeCount
+        cppSignature: int VisibleVolumeCount()
+        return:
+          type: int
+        parameters: []
+      - name: WorldToView
+        cppSignature: void WorldToView()
+        return:
+          type: void
+        parameters: []
   - name: vtkSelectVisiblePoints
     header: vtkSelectVisiblePoints.h
-    functions: []
+    functions:
+      - name: SelectInvisibleOff
+        cppSignature: void SelectInvisibleOff()
+        return:
+          type: void
+        parameters: []
+      - name: SelectInvisibleOn
+        cppSignature: void SelectInvisibleOn()
+        return:
+          type: void
+        parameters: []
+      - name: SelectionWindowOff
+        cppSignature: void SelectionWindowOff()
+        return:
+          type: void
+        parameters: []
+      - name: SelectionWindowOn
+        cppSignature: void SelectionWindowOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetRenderer
+        cppSignature: void SetRenderer(vtkRenderer * ren)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderer*
+            name: ren
+      - name: SetSelection
+        cppSignature: void SetSelection(int _arg1, int _arg2, int _arg3, int _arg4)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: int
+            name: _arg2
+          - type: int
+            name: _arg3
+          - type: int
+            name: _arg4
+      - name: SetSelection
+        cppSignature: void SetSelection(int const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const int[4]
+            name: _arg
   - name: vtkTDxInteractorStyle
     header: vtkTDxInteractorStyle.h
     functions: []
   - name: vtkTextActor
     header: vtkTextActor.h
-    functions: []
+    functions:
+      - name: GetTextProperty
+        cppSignature: vtkTextProperty * GetTextProperty()
+        return:
+          type: vtkTextProperty*
+        parameters: []
+      - name: SetInput
+        cppSignature: void SetInput(char const * inputString)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: inputString
+      - name: SetTextScaleModeToNone
+        cppSignature: void SetTextScaleModeToNone()
+        return:
+          type: void
+        parameters: []
+      - name: SetTextScaleModeToProp
+        cppSignature: void SetTextScaleModeToProp()
+        return:
+          type: void
+        parameters: []
+      - name: SetTextScaleModeToViewport
+        cppSignature: void SetTextScaleModeToViewport()
+        return:
+          type: void
+        parameters: []
   - name: vtkTextMapper
     header: vtkTextMapper.h
-    functions: []
+    functions:
+      - name: GetTextProperty
+        cppSignature: vtkTextProperty * GetTextProperty()
+        return:
+          type: vtkTextProperty*
+        parameters: []
+      - name: SetInput
+        cppSignature: void SetInput(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
   - name: vtkTextProperty
     header: vtkTextProperty.h
-    functions: []
+    functions:
+      - name: BoldOff
+        cppSignature: void BoldOff()
+        return:
+          type: void
+        parameters: []
+      - name: BoldOn
+        cppSignature: void BoldOn()
+        return:
+          type: void
+        parameters: []
+      - name: FrameOff
+        cppSignature: void FrameOff()
+        return:
+          type: void
+        parameters: []
+      - name: FrameOn
+        cppSignature: void FrameOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetFontSize
+        cppSignature: int GetFontSize()
+        return:
+          type: int
+        parameters: []
+      - name: GetOpacity
+        cppSignature: double GetOpacity()
+        return:
+          type: double
+        parameters: []
+      - name: ItalicOff
+        cppSignature: void ItalicOff()
+        return:
+          type: void
+        parameters: []
+      - name: ItalicOn
+        cppSignature: void ItalicOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetColor
+        cppSignature: void SetColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetColor
+        cppSignature: void SetColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetFontFamilyAsString
+        cppSignature: void SetFontFamilyAsString(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetFontFamilyToArial
+        cppSignature: void SetFontFamilyToArial()
+        return:
+          type: void
+        parameters: []
+      - name: SetFontFamilyToCourier
+        cppSignature: void SetFontFamilyToCourier()
+        return:
+          type: void
+        parameters: []
+      - name: SetFontFamilyToTimes
+        cppSignature: void SetFontFamilyToTimes()
+        return:
+          type: void
+        parameters: []
+      - name: SetFontSize
+        cppSignature: void SetFontSize(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetJustificationToCentered
+        cppSignature: void SetJustificationToCentered()
+        return:
+          type: void
+        parameters: []
+      - name: SetJustificationToLeft
+        cppSignature: void SetJustificationToLeft()
+        return:
+          type: void
+        parameters: []
+      - name: SetJustificationToRight
+        cppSignature: void SetJustificationToRight()
+        return:
+          type: void
+        parameters: []
+      - name: SetLineSpacing
+        cppSignature: void SetLineSpacing(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetOpacity
+        cppSignature: void SetOpacity(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetShadowOffset
+        cppSignature: void SetShadowOffset(int _arg1, int _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: int
+            name: _arg2
+      - name: SetShadowOffset
+        cppSignature: void SetShadowOffset(int const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const int[2]
+            name: _arg
+      - name: SetVerticalJustificationToBottom
+        cppSignature: void SetVerticalJustificationToBottom()
+        return:
+          type: void
+        parameters: []
+      - name: SetVerticalJustificationToCentered
+        cppSignature: void SetVerticalJustificationToCentered()
+        return:
+          type: void
+        parameters: []
+      - name: SetVerticalJustificationToTop
+        cppSignature: void SetVerticalJustificationToTop()
+        return:
+          type: void
+        parameters: []
+      - name: ShadowOff
+        cppSignature: void ShadowOff()
+        return:
+          type: void
+        parameters: []
+      - name: ShadowOn
+        cppSignature: void ShadowOn()
+        return:
+          type: void
+        parameters: []
+      - name: ShallowCopy
+        cppSignature: void ShallowCopy(vtkTextProperty * tprop)
+        return:
+          type: void
+        parameters:
+          - type: vtkTextProperty*
+            name: tprop
   - name: vtkTexturedActor2D
     header: vtkTexturedActor2D.h
     functions: []
   - name: vtkViewport
     header: vtkViewport.h
     functions:
+      - name: AddViewProp
+        cppSignature: void AddViewProp(vtkProp * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: _arg1
+      - name: DisplayToView
+        cppSignature: void DisplayToView()
+        return:
+          type: void
+        parameters: []
+      - name: DisplayToWorld
+        cppSignature: void DisplayToWorld()
+        return:
+          type: void
+        parameters: []
+      - name: GetActors2D
+        cppSignature: vtkActor2DCollection * GetActors2D()
+        return:
+          type: vtkActor2DCollection*
+        parameters: []
+      - name: GetBackground
+        cppSignature: double * GetBackground()
+        return:
+          type: double*
+        parameters: []
+      - name: GetBackground
+        cppSignature: void GetBackground(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetBackground2
+        cppSignature: double * GetBackground2()
+        return:
+          type: double*
+        parameters: []
+      - name: GetBackground2
+        cppSignature: void GetBackground2(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetViewProps
+        cppSignature: vtkPropCollection * GetViewProps()
+        return:
+          type: vtkPropCollection*
+        parameters: []
+      - name: GradientBackgroundOff
+        cppSignature: void GradientBackgroundOff()
+        return:
+          type: void
+        parameters: []
+      - name: GradientBackgroundOn
+        cppSignature: void GradientBackgroundOn()
+        return:
+          type: void
+        parameters: []
+      - name: GradientEnvironmentalBGOff
+        cppSignature: void GradientEnvironmentalBGOff()
+        return:
+          type: void
+        parameters: []
+      - name: GradientEnvironmentalBGOn
+        cppSignature: void GradientEnvironmentalBGOn()
+        return:
+          type: void
+        parameters: []
+      - name: HasViewProp
+        cppSignature: vtkTypeBool HasViewProp(vtkProp * _arg1)
+        return:
+          type: vtkTypeBool
+        parameters:
+          - type: vtkProp*
+            name: _arg1
+      - name: RemoveAllViewProps
+        cppSignature: void RemoveAllViewProps()
+        return:
+          type: void
+        parameters: []
+      - name: RemoveViewProp
+        cppSignature: void RemoveViewProp(vtkProp * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: _arg1
       - name: SetBackground
         cppSignature: void SetBackground(double _arg1, double _arg2, double _arg3)
         return:
@@ -349,6 +1722,167 @@ classes:
             name: _arg2
           - type: double
             name: _arg3
+      - name: SetBackground
+        cppSignature: void SetBackground(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetBackground2
+        cppSignature: void SetBackground2(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetBackground2
+        cppSignature: void SetBackground2(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: ViewToDisplay
+        cppSignature: void ViewToDisplay()
+        return:
+          type: void
+        parameters: []
+      - name: ViewToWorld
+        cppSignature: void ViewToWorld()
+        return:
+          type: void
+        parameters: []
+      - name: WorldToDisplay
+        cppSignature: void WorldToDisplay()
+        return:
+          type: void
+        parameters: []
+      - name: WorldToView
+        cppSignature: void WorldToView()
+        return:
+          type: void
+        parameters: []
   - name: vtkWindowToImageFilter
     header: vtkWindowToImageFilter.h
-    functions: []
+    functions:
+      - name: FixBoundaryOff
+        cppSignature: void FixBoundaryOff()
+        return:
+          type: void
+        parameters: []
+      - name: FixBoundaryOn
+        cppSignature: void FixBoundaryOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetOutput
+        cppSignature: vtkImageData * GetOutput()
+        return:
+          type: vtkImageData*
+        parameters: []
+      - name: GetScale
+        cppSignature: int * GetScale()
+        return:
+          type: int*
+        parameters: []
+      - name: GetScale
+        cppSignature: void GetScale(int[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: int[2]
+            name: _arg
+      - name: ReadFrontBufferOff
+        cppSignature: void ReadFrontBufferOff()
+        return:
+          type: void
+        parameters: []
+      - name: ReadFrontBufferOn
+        cppSignature: void ReadFrontBufferOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetInput
+        cppSignature: void SetInput(vtkWindow * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkWindow*
+            name: input
+      - name: SetInputBufferTypeToRGB
+        cppSignature: void SetInputBufferTypeToRGB()
+        return:
+          type: void
+        parameters: []
+      - name: SetInputBufferTypeToRGBA
+        cppSignature: void SetInputBufferTypeToRGBA()
+        return:
+          type: void
+        parameters: []
+      - name: SetInputBufferTypeToZBuffer
+        cppSignature: void SetInputBufferTypeToZBuffer()
+        return:
+          type: void
+        parameters: []
+      - name: SetScale
+        cppSignature: void SetScale(int _arg1, int _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: int
+            name: _arg2
+      - name: SetScale
+        cppSignature: void SetScale(int const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const int[2]
+            name: _arg
+      - name: SetScale
+        cppSignature: void SetScale(int scale)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: scale
+      - name: SetViewport
+        cppSignature: void SetViewport(double * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: double*
+            name: _arg1
+            direction: in
+            length:
+              kind: fixed
+              value: 4
+      - name: SetViewport
+        cppSignature: void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+          - type: double
+            name: _arg4
+      - name: ShouldRerenderOff
+        cppSignature: void ShouldRerenderOff()
+        return:
+          type: void
+        parameters: []
+      - name: ShouldRerenderOn
+        cppSignature: void ShouldRerenderOn()
+        return:
+          type: void
+        parameters: []

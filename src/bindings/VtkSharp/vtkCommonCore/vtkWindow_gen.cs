@@ -17,6 +17,21 @@ public unsafe partial class vtkWindow : vtkObject
         return target;
     }
 
+    public new string GetWindowName()
+    {
+        return VtkString.FromUtf8Pointer(vtkWindow_GetWindowName(this.NativePointer));
+    }
+
+    public new void OffScreenRenderingOff()
+    {
+        vtkWindow_OffScreenRenderingOff(this.NativePointer);
+    }
+
+    public new void OffScreenRenderingOn()
+    {
+        vtkWindow_OffScreenRenderingOn(this.NativePointer);
+    }
+
     public new void Render()
     {
         vtkWindow_Render(this.NativePointer);
@@ -24,14 +39,67 @@ public unsafe partial class vtkWindow : vtkObject
 
     public new void SetSize(int width, int height)
     {
-        vtkWindow_SetSize(this.NativePointer, width, height);
+        vtkWindow_SetSize_int_int(this.NativePointer, width, height);
+    }
+
+    public new void SetSize(Span<int> a)
+    {
+        fixed (int* aPtr = a)
+        {
+            vtkWindow_SetSize_intArray2(this.NativePointer, aPtr);
+        }
+    }
+
+    public new void SetWindowName(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkWindow_SetWindowName(this.NativePointer, _arg);
+        #else
+        vtkWindow_SetWindowName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    public new void ShowWindowOff()
+    {
+        vtkWindow_ShowWindowOff(this.NativePointer);
+    }
+
+    public new void ShowWindowOn()
+    {
+        vtkWindow_ShowWindowOn(this.NativePointer);
     }
 
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkWindow_GetWindowName(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_OffScreenRenderingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_OffScreenRenderingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWindow_Render(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkWindow_SetSize(nint self, int width, int height);
+    private static extern void vtkWindow_SetSize_int_int(nint self, int width, int height);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_SetSize_intArray2(nint self, int* a);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkWindow_SetWindowName(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_SetWindowName(nint self, byte[] _arg);
+#endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_ShowWindowOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_ShowWindowOn(nint self);
     #endregion
 }

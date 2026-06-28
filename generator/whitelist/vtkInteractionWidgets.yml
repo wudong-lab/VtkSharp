@@ -4,4 +4,41 @@ module: vtkInteractionWidgets
 classes:
   - name: vtkOrientationMarkerWidget
     header: vtkOrientationMarkerWidget.h
-    functions: []
+    functions:
+      - name: InteractiveOff
+        cppSignature: void InteractiveOff()
+        return:
+          type: void
+        parameters: []
+      - name: InteractiveOn
+        cppSignature: void InteractiveOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetOrientationMarker
+        cppSignature: void SetOrientationMarker(vtkProp * prop)
+        return:
+          type: void
+        parameters:
+          - type: vtkProp*
+            name: prop
+      - name: SetViewport
+        cppSignature: void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+          - type: double
+            name: _arg4
+      - name: SetViewport
+        cppSignature: void SetViewport(double const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[4]
+            name: _arg

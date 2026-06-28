@@ -18,8 +18,16 @@ public unsafe partial class vtkOpenGLRenderWindow : vtkRenderWindow
         return target;
     }
 
+    public new void Render()
+    {
+        vtkOpenGLRenderWindow_Render(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkOpenGLRenderWindow_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkOpenGLRenderWindow_Render(nint self);
     #endregion
 }

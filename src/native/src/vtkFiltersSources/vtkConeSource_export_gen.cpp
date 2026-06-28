@@ -4,7 +4,9 @@
 
 VTKSHARP_API vtkConeSource* vtkConeSource_New() { return vtkConeSource::New(); }
 
-VTKSHARP_API void vtkConeSource_SetCenter(vtkConeSource* self, double _arg1, double _arg2, double _arg3) { self->SetCenter(_arg1, _arg2, _arg3); }
+VTKSHARP_API void vtkConeSource_SetCenter_double_double_double(vtkConeSource* self, double _arg1, double _arg2, double _arg3) { self->SetCenter(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkConeSource_SetCenter_doubleConstArray3(vtkConeSource* self, const double* _arg) { self->SetCenter(_arg); }
 
 VTKSHARP_API void vtkConeSource_SetHeight(vtkConeSource* self, double height) { self->SetHeight(height); }
 

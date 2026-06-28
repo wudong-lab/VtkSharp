@@ -2,3 +2,8 @@
 #include "vtksharp_api.h"
 #include <vtkAbstractArray.h>
 
+VTKSHARP_API char* vtkAbstractArray_GetName(vtkAbstractArray* self) { return self->GetName(); }
+
+VTKSHARP_API void vtkAbstractArray_SetName(vtkAbstractArray* self, const char* _arg) { self->SetName(_arg); }
+
+VTKSHARP_API void vtkAbstractArray_SetNumberOfComponents(vtkAbstractArray* self, int _arg) { self->SetNumberOfComponents(_arg); }

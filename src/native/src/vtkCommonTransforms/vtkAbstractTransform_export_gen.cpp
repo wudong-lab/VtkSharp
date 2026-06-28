@@ -2,3 +2,10 @@
 #include "vtksharp_api.h"
 #include <vtkAbstractTransform.h>
 
+VTKSHARP_API double* vtkAbstractTransform_TransformPoint_doubleConstArray3(vtkAbstractTransform* self, const double* point) { return self->TransformPoint(point); }
+
+VTKSHARP_API double* vtkAbstractTransform_TransformPoint_double_double_double(vtkAbstractTransform* self, double x, double y, double z) { return self->TransformPoint(x, y, z); }
+
+VTKSHARP_API void vtkAbstractTransform_TransformPoint_doubleConstArray3_doubleArray3(vtkAbstractTransform* self, const double* in, double* out) { self->TransformPoint(in, out); }
+
+VTKSHARP_API void vtkAbstractTransform_TransformPoint_floatConstArray3_floatArray3(vtkAbstractTransform* self, const float* in, float* out) { self->TransformPoint(in, out); }

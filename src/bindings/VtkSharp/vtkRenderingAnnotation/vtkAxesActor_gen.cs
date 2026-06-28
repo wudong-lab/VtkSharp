@@ -18,8 +18,287 @@ public unsafe partial class vtkAxesActor : vtkProp3D
         return target;
     }
 
+    public new vtkCaptionActor2D GetXAxisCaptionActor2D()
+    {
+        return vtkCaptionActor2D.WeakReference(vtkAxesActor_GetXAxisCaptionActor2D(this.NativePointer));
+    }
+
+    public new vtkProperty GetXAxisShaftProperty()
+    {
+        return vtkProperty.WeakReference(vtkAxesActor_GetXAxisShaftProperty(this.NativePointer));
+    }
+
+    public new vtkProperty GetXAxisTipProperty()
+    {
+        return vtkProperty.WeakReference(vtkAxesActor_GetXAxisTipProperty(this.NativePointer));
+    }
+
+    public new vtkCaptionActor2D GetYAxisCaptionActor2D()
+    {
+        return vtkCaptionActor2D.WeakReference(vtkAxesActor_GetYAxisCaptionActor2D(this.NativePointer));
+    }
+
+    public new vtkProperty GetYAxisShaftProperty()
+    {
+        return vtkProperty.WeakReference(vtkAxesActor_GetYAxisShaftProperty(this.NativePointer));
+    }
+
+    public new vtkProperty GetYAxisTipProperty()
+    {
+        return vtkProperty.WeakReference(vtkAxesActor_GetYAxisTipProperty(this.NativePointer));
+    }
+
+    public new vtkCaptionActor2D GetZAxisCaptionActor2D()
+    {
+        return vtkCaptionActor2D.WeakReference(vtkAxesActor_GetZAxisCaptionActor2D(this.NativePointer));
+    }
+
+    public new vtkProperty GetZAxisShaftProperty()
+    {
+        return vtkProperty.WeakReference(vtkAxesActor_GetZAxisShaftProperty(this.NativePointer));
+    }
+
+    public new vtkProperty GetZAxisTipProperty()
+    {
+        return vtkProperty.WeakReference(vtkAxesActor_GetZAxisTipProperty(this.NativePointer));
+    }
+
+    public new void SetAxisLabels(bool _arg)
+    {
+        vtkAxesActor_SetAxisLabels(this.NativePointer, _arg);
+    }
+
+    public new void SetConeRadius(double _arg)
+    {
+        vtkAxesActor_SetConeRadius(this.NativePointer, _arg);
+    }
+
+    public new void SetCylinderRadius(double _arg)
+    {
+        vtkAxesActor_SetCylinderRadius(this.NativePointer, _arg);
+    }
+
+    public new void SetNormalizedLabelPosition(double x, double y, double z)
+    {
+        vtkAxesActor_SetNormalizedLabelPosition_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetNormalizedLabelPosition(Span<double> v)
+    {
+        fixed (double* vPtr = v)
+        {
+            vtkAxesActor_SetNormalizedLabelPosition_doubleArray3(this.NativePointer, vPtr);
+        }
+    }
+
+    public new void SetNormalizedShaftLength(double x, double y, double z)
+    {
+        vtkAxesActor_SetNormalizedShaftLength_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetNormalizedShaftLength(Span<double> v)
+    {
+        fixed (double* vPtr = v)
+        {
+            vtkAxesActor_SetNormalizedShaftLength_doubleArray3(this.NativePointer, vPtr);
+        }
+    }
+
+    public new void SetNormalizedTipLength(double x, double y, double z)
+    {
+        vtkAxesActor_SetNormalizedTipLength_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetNormalizedTipLength(Span<double> v)
+    {
+        fixed (double* vPtr = v)
+        {
+            vtkAxesActor_SetNormalizedTipLength_doubleArray3(this.NativePointer, vPtr);
+        }
+    }
+
+    public new void SetShaftTypeToCylinder()
+    {
+        vtkAxesActor_SetShaftTypeToCylinder(this.NativePointer);
+    }
+
+    public new void SetShaftTypeToLine()
+    {
+        vtkAxesActor_SetShaftTypeToLine(this.NativePointer);
+    }
+
+    public new void SetShaftTypeToUserDefined()
+    {
+        vtkAxesActor_SetShaftTypeToUserDefined(this.NativePointer);
+    }
+
+    public new void SetSphereRadius(double _arg)
+    {
+        vtkAxesActor_SetSphereRadius(this.NativePointer, _arg);
+    }
+
+    public new void SetTipTypeToCone()
+    {
+        vtkAxesActor_SetTipTypeToCone(this.NativePointer);
+    }
+
+    public new void SetTipTypeToSphere()
+    {
+        vtkAxesActor_SetTipTypeToSphere(this.NativePointer);
+    }
+
+    public new void SetTipTypeToUserDefined()
+    {
+        vtkAxesActor_SetTipTypeToUserDefined(this.NativePointer);
+    }
+
+    public new void SetTotalLength(double x, double y, double z)
+    {
+        vtkAxesActor_SetTotalLength_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetTotalLength(Span<double> v)
+    {
+        fixed (double* vPtr = v)
+        {
+            vtkAxesActor_SetTotalLength_doubleArray3(this.NativePointer, vPtr);
+        }
+    }
+
+    public new void SetXAxisLabelText(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkAxesActor_SetXAxisLabelText(this.NativePointer, _arg);
+        #else
+        vtkAxesActor_SetXAxisLabelText(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    public new void SetYAxisLabelText(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkAxesActor_SetYAxisLabelText(this.NativePointer, _arg);
+        #else
+        vtkAxesActor_SetYAxisLabelText(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    public new void SetZAxisLabelText(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkAxesActor_SetZAxisLabelText(this.NativePointer, _arg);
+        #else
+        vtkAxesActor_SetZAxisLabelText(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAxesActor_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetXAxisCaptionActor2D(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetXAxisShaftProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetXAxisTipProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetYAxisCaptionActor2D(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetYAxisShaftProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetYAxisTipProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetZAxisCaptionActor2D(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetZAxisShaftProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAxesActor_GetZAxisTipProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetAxisLabels(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetConeRadius(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetCylinderRadius(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetNormalizedLabelPosition_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetNormalizedLabelPosition_doubleArray3(nint self, double* v);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetNormalizedShaftLength_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetNormalizedShaftLength_doubleArray3(nint self, double* v);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetNormalizedTipLength_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetNormalizedTipLength_doubleArray3(nint self, double* v);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetShaftTypeToCylinder(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetShaftTypeToLine(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetShaftTypeToUserDefined(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetSphereRadius(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetTipTypeToCone(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetTipTypeToSphere(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetTipTypeToUserDefined(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetTotalLength_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetTotalLength_doubleArray3(nint self, double* v);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkAxesActor_SetXAxisLabelText(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetXAxisLabelText(nint self, byte[] _arg);
+#endif
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkAxesActor_SetYAxisLabelText(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetYAxisLabelText(nint self, byte[] _arg);
+#endif
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkAxesActor_SetZAxisLabelText(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAxesActor_SetZAxisLabelText(nint self, byte[] _arg);
+#endif
     #endregion
 }

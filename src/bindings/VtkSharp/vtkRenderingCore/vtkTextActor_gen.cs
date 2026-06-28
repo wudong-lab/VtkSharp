@@ -18,8 +18,57 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
         return target;
     }
 
+    public new vtkTextProperty GetTextProperty()
+    {
+        return vtkTextProperty.WeakReference(vtkTextActor_GetTextProperty(this.NativePointer));
+    }
+
+    public new void SetInput(string inputString)
+    {
+        #if NET10_0_OR_GREATER
+        vtkTextActor_SetInput(this.NativePointer, inputString);
+        #else
+        vtkTextActor_SetInput(this.NativePointer, VtkString.ToNullTerminatedUtf8(inputString));
+        #endif
+    }
+
+    public new void SetTextScaleModeToNone()
+    {
+        vtkTextActor_SetTextScaleModeToNone(this.NativePointer);
+    }
+
+    public new void SetTextScaleModeToProp()
+    {
+        vtkTextActor_SetTextScaleModeToProp(this.NativePointer);
+    }
+
+    public new void SetTextScaleModeToViewport()
+    {
+        vtkTextActor_SetTextScaleModeToViewport(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTextActor_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkTextActor_GetTextProperty(nint self);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkTextActor_SetInput(nint self, string inputString);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextActor_SetInput(nint self, byte[] inputString);
+#endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextActor_SetTextScaleModeToNone(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextActor_SetTextScaleModeToProp(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTextActor_SetTextScaleModeToViewport(nint self);
     #endregion
 }

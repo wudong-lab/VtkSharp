@@ -17,6 +17,29 @@ public unsafe partial class vtkInteractorObserver : vtkObject
         return target;
     }
 
+    public new void EnabledOff()
+    {
+        vtkInteractorObserver_EnabledOff(this.NativePointer);
+    }
+
+    public new void EnabledOn()
+    {
+        vtkInteractorObserver_EnabledOn(this.NativePointer);
+    }
+
+    public new void SetInteractor(vtkRenderWindowInteractor iren)
+    {
+        vtkInteractorObserver_SetInteractor(this.NativePointer, iren.NativePointer);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkInteractorObserver_EnabledOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkInteractorObserver_EnabledOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkInteractorObserver_SetInteractor(nint self, nint iren);
     #endregion
 }

@@ -3,3 +3,15 @@
 #include <vtkGenerateIds.h>
 
 VTKSHARP_API vtkGenerateIds* vtkGenerateIds_New() { return vtkGenerateIds::New(); }
+
+VTKSHARP_API void vtkGenerateIds_CellIdsOff(vtkGenerateIds* self) { self->CellIdsOff(); }
+
+VTKSHARP_API void vtkGenerateIds_CellIdsOn(vtkGenerateIds* self) { self->CellIdsOn(); }
+
+VTKSHARP_API void vtkGenerateIds_FieldDataOff(vtkGenerateIds* self) { self->FieldDataOff(); }
+
+VTKSHARP_API void vtkGenerateIds_FieldDataOn(vtkGenerateIds* self) { self->FieldDataOn(); }
+
+VTKSHARP_API void vtkGenerateIds_PointIdsOff(vtkGenerateIds* self) { self->PointIdsOff(); }
+
+VTKSHARP_API void vtkGenerateIds_PointIdsOn(vtkGenerateIds* self) { self->PointIdsOn(); }

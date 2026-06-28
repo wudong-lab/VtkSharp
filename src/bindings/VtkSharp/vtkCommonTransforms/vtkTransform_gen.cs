@@ -18,8 +18,224 @@ public unsafe partial class vtkTransform : vtkLinearTransform
         return target;
     }
 
+    public new void Concatenate(ReadOnlySpan<double> elements)
+    {
+        fixed (double* elementsPtr = elements)
+        {
+            vtkTransform_Concatenate_doubleConstArray16(this.NativePointer, elementsPtr);
+        }
+    }
+
+    public new void Concatenate(vtkLinearTransform transform)
+    {
+        vtkTransform_Concatenate_vtkLinearTransformPtr(this.NativePointer, transform.NativePointer);
+    }
+
+    public new void Concatenate(vtkMatrix4x4 matrix)
+    {
+        vtkTransform_Concatenate_vtkMatrix4x4Ptr(this.NativePointer, matrix.NativePointer);
+    }
+
+    public new vtkLinearTransform GetConcatenatedTransform(int i)
+    {
+        return vtkLinearTransform.WeakReference(vtkTransform_GetConcatenatedTransform(this.NativePointer, i));
+    }
+
+    public new int GetNumberOfConcatenatedTransforms()
+    {
+        return vtkTransform_GetNumberOfConcatenatedTransforms(this.NativePointer);
+    }
+
+    public new void Pop()
+    {
+        vtkTransform_Pop(this.NativePointer);
+    }
+
+    public new void PostMultiply()
+    {
+        vtkTransform_PostMultiply(this.NativePointer);
+    }
+
+    public new void PreMultiply()
+    {
+        vtkTransform_PreMultiply(this.NativePointer);
+    }
+
+    public new void Push()
+    {
+        vtkTransform_Push(this.NativePointer);
+    }
+
+    public new void RotateWXYZ(double angle, ReadOnlySpan<double> axis)
+    {
+        fixed (double* axisPtr = axis)
+        {
+            vtkTransform_RotateWXYZ_double_doubleConstArray3(this.NativePointer, angle, axisPtr);
+        }
+    }
+
+    public new void RotateWXYZ(double angle, double x, double y, double z)
+    {
+        vtkTransform_RotateWXYZ_double_double_double_double(this.NativePointer, angle, x, y, z);
+    }
+
+    public new void RotateWXYZ(double angle, ReadOnlySpan<float> axis)
+    {
+        fixed (float* axisPtr = axis)
+        {
+            vtkTransform_RotateWXYZ_double_floatConstArray3(this.NativePointer, angle, axisPtr);
+        }
+    }
+
+    public new void RotateX(double angle)
+    {
+        vtkTransform_RotateX(this.NativePointer, angle);
+    }
+
+    public new void RotateY(double angle)
+    {
+        vtkTransform_RotateY(this.NativePointer, angle);
+    }
+
+    public new void RotateZ(double angle)
+    {
+        vtkTransform_RotateZ(this.NativePointer, angle);
+    }
+
+    public new void Scale(ReadOnlySpan<double> s)
+    {
+        fixed (double* sPtr = s)
+        {
+            vtkTransform_Scale_doubleConstArray3(this.NativePointer, sPtr);
+        }
+    }
+
+    public new void Scale(double x, double y, double z)
+    {
+        vtkTransform_Scale_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void Scale(ReadOnlySpan<float> s)
+    {
+        fixed (float* sPtr = s)
+        {
+            vtkTransform_Scale_floatConstArray3(this.NativePointer, sPtr);
+        }
+    }
+
+    public new void SetInput(vtkLinearTransform input)
+    {
+        vtkTransform_SetInput(this.NativePointer, input.NativePointer);
+    }
+
+    public new void SetMatrix(ReadOnlySpan<double> elements)
+    {
+        fixed (double* elementsPtr = elements)
+        {
+            vtkTransform_SetMatrix_doubleConstArray16(this.NativePointer, elementsPtr);
+        }
+    }
+
+    public new void SetMatrix(vtkMatrix4x4 matrix)
+    {
+        vtkTransform_SetMatrix_vtkMatrix4x4Ptr(this.NativePointer, matrix.NativePointer);
+    }
+
+    public new void Translate(ReadOnlySpan<double> x)
+    {
+        fixed (double* xPtr = x)
+        {
+            vtkTransform_Translate_doubleConstArray3(this.NativePointer, xPtr);
+        }
+    }
+
+    public new void Translate(double x, double y, double z)
+    {
+        vtkTransform_Translate_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void Translate(ReadOnlySpan<float> x)
+    {
+        fixed (float* xPtr = x)
+        {
+            vtkTransform_Translate_floatConstArray3(this.NativePointer, xPtr);
+        }
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTransform_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Concatenate_doubleConstArray16(nint self, double* elements);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Concatenate_vtkLinearTransformPtr(nint self, nint transform);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Concatenate_vtkMatrix4x4Ptr(nint self, nint matrix);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkTransform_GetConcatenatedTransform(nint self, int i);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkTransform_GetNumberOfConcatenatedTransforms(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Pop(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_PostMultiply(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_PreMultiply(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Push(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_RotateWXYZ_double_doubleConstArray3(nint self, double angle, double* axis);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_RotateWXYZ_double_double_double_double(nint self, double angle, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_RotateWXYZ_double_floatConstArray3(nint self, double angle, float* axis);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_RotateX(nint self, double angle);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_RotateY(nint self, double angle);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_RotateZ(nint self, double angle);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Scale_doubleConstArray3(nint self, double* s);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Scale_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Scale_floatConstArray3(nint self, float* s);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_SetInput(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_SetMatrix_doubleConstArray16(nint self, double* elements);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_SetMatrix_vtkMatrix4x4Ptr(nint self, nint matrix);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Translate_doubleConstArray3(nint self, double* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Translate_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransform_Translate_floatConstArray3(nint self, float* x);
     #endregion
 }

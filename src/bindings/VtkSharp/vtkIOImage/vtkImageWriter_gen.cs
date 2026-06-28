@@ -18,8 +18,107 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
         return target;
     }
 
+    public new void DeleteFiles()
+    {
+        vtkImageWriter_DeleteFiles(this.NativePointer);
+    }
+
+    public new int GetFileDimensionality()
+    {
+        return vtkImageWriter_GetFileDimensionality(this.NativePointer);
+    }
+
+    public new string GetFileName()
+    {
+        return VtkString.FromUtf8Pointer(vtkImageWriter_GetFileName(this.NativePointer));
+    }
+
+    public new string GetFilePattern()
+    {
+        return VtkString.FromUtf8Pointer(vtkImageWriter_GetFilePattern(this.NativePointer));
+    }
+
+    public new string GetFilePrefix()
+    {
+        return VtkString.FromUtf8Pointer(vtkImageWriter_GetFilePrefix(this.NativePointer));
+    }
+
+    public new void SetFileDimensionality(int _arg)
+    {
+        vtkImageWriter_SetFileDimensionality(this.NativePointer, _arg);
+    }
+
+    public new void SetFileName(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkImageWriter_SetFileName(this.NativePointer, _arg);
+        #else
+        vtkImageWriter_SetFileName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    public new void SetFilePattern(string _arg1)
+    {
+        #if NET10_0_OR_GREATER
+        vtkImageWriter_SetFilePattern(this.NativePointer, _arg1);
+        #else
+        vtkImageWriter_SetFilePattern(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg1));
+        #endif
+    }
+
+    public new void SetFilePrefix(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkImageWriter_SetFilePrefix(this.NativePointer, _arg);
+        #else
+        vtkImageWriter_SetFilePrefix(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageWriter_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageWriter_DeleteFiles(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkImageWriter_GetFileDimensionality(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageWriter_GetFileName(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageWriter_GetFilePattern(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageWriter_GetFilePrefix(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageWriter_SetFileDimensionality(nint self, int _arg);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkImageWriter_SetFileName(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageWriter_SetFileName(nint self, byte[] _arg);
+#endif
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkImageWriter_SetFilePattern(nint self, string _arg1);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageWriter_SetFilePattern(nint self, byte[] _arg1);
+#endif
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkImageWriter_SetFilePrefix(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageWriter_SetFilePrefix(nint self, byte[] _arg);
+#endif
     #endregion
 }

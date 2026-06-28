@@ -18,8 +18,97 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
         return target;
     }
 
+    public new vtkTextProperty GetLabelTextProperty()
+    {
+        return vtkTextProperty.WeakReference(vtkLabeledDataMapper_GetLabelTextProperty_(this.NativePointer));
+    }
+
+    public new vtkTextProperty GetLabelTextProperty(int type)
+    {
+        return vtkTextProperty.WeakReference(vtkLabeledDataMapper_GetLabelTextProperty_int(this.NativePointer, type));
+    }
+
+    public new void SetFieldDataName(string _arg)
+    {
+        #if NET10_0_OR_GREATER
+        vtkLabeledDataMapper_SetFieldDataName(this.NativePointer, _arg);
+        #else
+        vtkLabeledDataMapper_SetFieldDataName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    public new void SetLabelModeToLabelFieldData()
+    {
+        vtkLabeledDataMapper_SetLabelModeToLabelFieldData(this.NativePointer);
+    }
+
+    public new void SetLabelModeToLabelIds()
+    {
+        vtkLabeledDataMapper_SetLabelModeToLabelIds(this.NativePointer);
+    }
+
+    public new void SetLabelModeToLabelNormals()
+    {
+        vtkLabeledDataMapper_SetLabelModeToLabelNormals(this.NativePointer);
+    }
+
+    public new void SetLabelModeToLabelScalars()
+    {
+        vtkLabeledDataMapper_SetLabelModeToLabelScalars(this.NativePointer);
+    }
+
+    public new void SetLabelModeToLabelTCoords()
+    {
+        vtkLabeledDataMapper_SetLabelModeToLabelTCoords(this.NativePointer);
+    }
+
+    public new void SetLabelModeToLabelTensors()
+    {
+        vtkLabeledDataMapper_SetLabelModeToLabelTensors(this.NativePointer);
+    }
+
+    public new void SetLabelModeToLabelVectors()
+    {
+        vtkLabeledDataMapper_SetLabelModeToLabelVectors(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLabeledDataMapper_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkLabeledDataMapper_GetLabelTextProperty_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkLabeledDataMapper_GetLabelTextProperty_int(nint self, int type);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkLabeledDataMapper_SetFieldDataName(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetFieldDataName(nint self, byte[] _arg);
+#endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelModeToLabelFieldData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelModeToLabelIds(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelModeToLabelNormals(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelModeToLabelScalars(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelModeToLabelTCoords(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelModeToLabelTensors(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelModeToLabelVectors(nint self);
     #endregion
 }

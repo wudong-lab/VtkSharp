@@ -28,6 +28,11 @@ public unsafe partial class vtkActor : vtkProp3D
         vtkActor_SetMapper(this.NativePointer, mapper.NativePointer);
     }
 
+    public new void SetProperty(vtkProperty lut)
+    {
+        vtkActor_SetProperty(this.NativePointer, lut.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkActor_New();
@@ -37,5 +42,8 @@ public unsafe partial class vtkActor : vtkProp3D
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkActor_SetMapper(nint self, nint mapper);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor_SetProperty(nint self, nint lut);
     #endregion
 }

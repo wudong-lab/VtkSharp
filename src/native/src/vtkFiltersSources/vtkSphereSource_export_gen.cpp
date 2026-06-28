@@ -5,18 +5,34 @@
 
 VTKSHARP_API vtkSphereSource* vtkSphereSource_New() { return vtkSphereSource::New(); }
 
+VTKSHARP_API void vtkSphereSource_GenerateNormalsOff(vtkSphereSource* self) { self->GenerateNormalsOff(); }
+
+VTKSHARP_API void vtkSphereSource_GenerateNormalsOn(vtkSphereSource* self) { self->GenerateNormalsOn(); }
+
 VTKSHARP_API vtkAlgorithmOutput* vtkSphereSource_GetOutputPort_(vtkSphereSource* self) { return self->GetOutputPort(); }
 
 VTKSHARP_API vtkAlgorithmOutput* vtkSphereSource_GetOutputPort_int(vtkSphereSource* self, int index) { return self->GetOutputPort(index); }
 
 VTKSHARP_API double vtkSphereSource_GetRadius(vtkSphereSource* self) { return self->GetRadius(); }
 
+VTKSHARP_API void vtkSphereSource_LatLongTessellationOff(vtkSphereSource* self) { self->LatLongTessellationOff(); }
+
+VTKSHARP_API void vtkSphereSource_LatLongTessellationOn(vtkSphereSource* self) { self->LatLongTessellationOn(); }
+
 VTKSHARP_API void vtkSphereSource_SetCenter_double_double_double(vtkSphereSource* self, double _arg1, double _arg2, double _arg3) { self->SetCenter(_arg1, _arg2, _arg3); }
 
 VTKSHARP_API void vtkSphereSource_SetCenter_doubleConstArray3(vtkSphereSource* self, const double* _arg) { self->SetCenter(_arg); }
 
+VTKSHARP_API void vtkSphereSource_SetEndPhi(vtkSphereSource* self, double _arg) { self->SetEndPhi(_arg); }
+
+VTKSHARP_API void vtkSphereSource_SetEndTheta(vtkSphereSource* self, double _arg) { self->SetEndTheta(_arg); }
+
 VTKSHARP_API void vtkSphereSource_SetPhiResolution(vtkSphereSource* self, int _arg) { self->SetPhiResolution(_arg); }
 
 VTKSHARP_API void vtkSphereSource_SetRadius(vtkSphereSource* self, double _arg) { self->SetRadius(_arg); }
+
+VTKSHARP_API void vtkSphereSource_SetStartPhi(vtkSphereSource* self, double _arg) { self->SetStartPhi(_arg); }
+
+VTKSHARP_API void vtkSphereSource_SetStartTheta(vtkSphereSource* self, double _arg) { self->SetStartTheta(_arg); }
 
 VTKSHARP_API void vtkSphereSource_SetThetaResolution(vtkSphereSource* self, int _arg) { self->SetThetaResolution(_arg); }

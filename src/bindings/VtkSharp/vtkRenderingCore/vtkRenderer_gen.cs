@@ -23,9 +23,104 @@ public unsafe partial class vtkRenderer : vtkViewport
         vtkRenderer_AddActor(this.NativePointer, p.NativePointer);
     }
 
+    public new void AddCuller(vtkCuller _arg1)
+    {
+        vtkRenderer_AddCuller(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void AddLight(vtkLight _arg1)
+    {
+        vtkRenderer_AddLight(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void AddVolume(vtkProp p)
+    {
+        vtkRenderer_AddVolume(this.NativePointer, p.NativePointer);
+    }
+
+    public new void AutomaticLightCreationOff()
+    {
+        vtkRenderer_AutomaticLightCreationOff(this.NativePointer);
+    }
+
+    public new void AutomaticLightCreationOn()
+    {
+        vtkRenderer_AutomaticLightCreationOn(this.NativePointer);
+    }
+
+    public new void BackingStoreOff()
+    {
+        vtkRenderer_BackingStoreOff(this.NativePointer);
+    }
+
+    public new void BackingStoreOn()
+    {
+        vtkRenderer_BackingStoreOn(this.NativePointer);
+    }
+
+    public new void Clear()
+    {
+        vtkRenderer_Clear(this.NativePointer);
+    }
+
+    public new void ClearLights()
+    {
+        vtkRenderer_ClearLights(this.NativePointer);
+    }
+
+    public new void CreateLight()
+    {
+        vtkRenderer_CreateLight(this.NativePointer);
+    }
+
+    public new void DrawOff()
+    {
+        vtkRenderer_DrawOff(this.NativePointer);
+    }
+
+    public new void DrawOn()
+    {
+        vtkRenderer_DrawOn(this.NativePointer);
+    }
+
+    public new void EraseOff()
+    {
+        vtkRenderer_EraseOff(this.NativePointer);
+    }
+
+    public new void EraseOn()
+    {
+        vtkRenderer_EraseOn(this.NativePointer);
+    }
+
     public new vtkCamera GetActiveCamera()
     {
         return vtkCamera.WeakReference(vtkRenderer_GetActiveCamera(this.NativePointer));
+    }
+
+    public new vtkActorCollection GetActors()
+    {
+        return vtkActorCollection.WeakReference(vtkRenderer_GetActors(this.NativePointer));
+    }
+
+    public new vtkRenderWindow GetRenderWindow()
+    {
+        return vtkRenderWindow.WeakReference(vtkRenderer_GetRenderWindow(this.NativePointer));
+    }
+
+    public new double GetTiledAspectRatio()
+    {
+        return vtkRenderer_GetTiledAspectRatio(this.NativePointer);
+    }
+
+    public new vtkWindow GetVTKWindow()
+    {
+        return vtkWindow.WeakReference(vtkRenderer_GetVTKWindow(this.NativePointer));
+    }
+
+    public new double GetZ(int x, int y)
+    {
+        return vtkRenderer_GetZ(this.NativePointer, x, y);
     }
 
     public new void GradientBackgroundOn()
@@ -33,9 +128,133 @@ public unsafe partial class vtkRenderer : vtkViewport
         vtkRenderer_GradientBackgroundOn(this.NativePointer);
     }
 
+    public new void InteractiveOff()
+    {
+        vtkRenderer_InteractiveOff(this.NativePointer);
+    }
+
+    public new void InteractiveOn()
+    {
+        vtkRenderer_InteractiveOn(this.NativePointer);
+    }
+
+    public new void LightFollowCameraOff()
+    {
+        vtkRenderer_LightFollowCameraOff(this.NativePointer);
+    }
+
+    public new void LightFollowCameraOn()
+    {
+        vtkRenderer_LightFollowCameraOn(this.NativePointer);
+    }
+
+    public new vtkLight MakeLight()
+    {
+        return vtkLight.WeakReference(vtkRenderer_MakeLight(this.NativePointer));
+    }
+
+    public new vtkAssemblyPath PickProp(double selectionX, double selectionY)
+    {
+        return vtkAssemblyPath.WeakReference(vtkRenderer_PickProp_double_double(this.NativePointer, selectionX, selectionY));
+    }
+
+    public new vtkAssemblyPath PickProp(double selectionX1, double selectionY1, double selectionX2, double selectionY2)
+    {
+        return vtkAssemblyPath.WeakReference(vtkRenderer_PickProp_double_double_double_double(this.NativePointer, selectionX1, selectionY1, selectionX2, selectionY2));
+    }
+
+    public new void RemoveActor(vtkProp p)
+    {
+        vtkRenderer_RemoveActor(this.NativePointer, p.NativePointer);
+    }
+
+    public new void RemoveAllLights()
+    {
+        vtkRenderer_RemoveAllLights(this.NativePointer);
+    }
+
+    public new void RemoveCuller(vtkCuller _arg1)
+    {
+        vtkRenderer_RemoveCuller(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void RemoveLight(vtkLight _arg1)
+    {
+        vtkRenderer_RemoveLight(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void RemoveVolume(vtkProp p)
+    {
+        vtkRenderer_RemoveVolume(this.NativePointer, p.NativePointer);
+    }
+
+    public new void Render()
+    {
+        vtkRenderer_Render(this.NativePointer);
+    }
+
     public new void ResetCamera()
     {
-        vtkRenderer_ResetCamera(this.NativePointer);
+        vtkRenderer_ResetCamera_(this.NativePointer);
+    }
+
+    public new void ResetCamera(ReadOnlySpan<double> bounds)
+    {
+        fixed (double* boundsPtr = bounds)
+        {
+            vtkRenderer_ResetCamera_doubleConstArray6(this.NativePointer, boundsPtr);
+        }
+    }
+
+    public new void ResetCamera(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax)
+    {
+        vtkRenderer_ResetCamera_double_double_double_double_double_double(this.NativePointer, xmin, xmax, ymin, ymax, zmin, zmax);
+    }
+
+    public new void ResetCameraClippingRange()
+    {
+        vtkRenderer_ResetCameraClippingRange_(this.NativePointer);
+    }
+
+    public new void ResetCameraClippingRange(ReadOnlySpan<double> bounds)
+    {
+        fixed (double* boundsPtr = bounds)
+        {
+            vtkRenderer_ResetCameraClippingRange_doubleConstArray6(this.NativePointer, boundsPtr);
+        }
+    }
+
+    public new void ResetCameraClippingRange(double xmin, double xmax, double ymin, double ymax, double zmin, double zmax)
+    {
+        vtkRenderer_ResetCameraClippingRange_double_double_double_double_double_double(this.NativePointer, xmin, xmax, ymin, ymax, zmin, zmax);
+    }
+
+    public new void SafeGetZOff()
+    {
+        vtkRenderer_SafeGetZOff(this.NativePointer);
+    }
+
+    public new void SafeGetZOn()
+    {
+        vtkRenderer_SafeGetZOn(this.NativePointer);
+    }
+
+    public new void SetActiveCamera(vtkCamera _arg1)
+    {
+        vtkRenderer_SetActiveCamera(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void SetAmbient(double _arg1, double _arg2, double _arg3)
+    {
+        vtkRenderer_SetAmbient_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
+    }
+
+    public new void SetAmbient(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkRenderer_SetAmbient_doubleConstArray3(this.NativePointer, _argPtr);
+        }
     }
 
     public new void SetBackground2(double _arg1, double _arg2, double _arg3)
@@ -51,6 +270,71 @@ public unsafe partial class vtkRenderer : vtkViewport
         }
     }
 
+    public new void SetRenderWindow(vtkRenderWindow _arg1)
+    {
+        vtkRenderer_SetRenderWindow(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void TexturedBackgroundOff()
+    {
+        vtkRenderer_TexturedBackgroundOff(this.NativePointer);
+    }
+
+    public new void TexturedBackgroundOn()
+    {
+        vtkRenderer_TexturedBackgroundOn(this.NativePointer);
+    }
+
+    public new void TwoSidedLightingOff()
+    {
+        vtkRenderer_TwoSidedLightingOff(this.NativePointer);
+    }
+
+    public new void TwoSidedLightingOn()
+    {
+        vtkRenderer_TwoSidedLightingOn(this.NativePointer);
+    }
+
+    public new void UseImageBasedLightingOff()
+    {
+        vtkRenderer_UseImageBasedLightingOff(this.NativePointer);
+    }
+
+    public new void UseImageBasedLightingOn()
+    {
+        vtkRenderer_UseImageBasedLightingOn(this.NativePointer);
+    }
+
+    public new void UseShadowsOff()
+    {
+        vtkRenderer_UseShadowsOff(this.NativePointer);
+    }
+
+    public new void UseShadowsOn()
+    {
+        vtkRenderer_UseShadowsOn(this.NativePointer);
+    }
+
+    public new void ViewToWorld()
+    {
+        vtkRenderer_ViewToWorld(this.NativePointer);
+    }
+
+    public new int VisibleActorCount()
+    {
+        return vtkRenderer_VisibleActorCount(this.NativePointer);
+    }
+
+    public new int VisibleVolumeCount()
+    {
+        return vtkRenderer_VisibleVolumeCount(this.NativePointer);
+    }
+
+    public new void WorldToView()
+    {
+        vtkRenderer_WorldToView(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderer_New();
@@ -59,18 +343,183 @@ public unsafe partial class vtkRenderer : vtkViewport
     private static extern void vtkRenderer_AddActor(nint self, nint p);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_AddCuller(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_AddLight(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_AddVolume(nint self, nint p);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_AutomaticLightCreationOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_AutomaticLightCreationOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_BackingStoreOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_BackingStoreOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_Clear(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ClearLights(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_CreateLight(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_DrawOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_DrawOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_EraseOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_EraseOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderer_GetActiveCamera(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderer_GetActors(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderer_GetRenderWindow(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkRenderer_GetTiledAspectRatio(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderer_GetVTKWindow(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkRenderer_GetZ(nint self, int x, int y);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_GradientBackgroundOn(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderer_ResetCamera(nint self);
+    private static extern void vtkRenderer_InteractiveOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_InteractiveOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_LightFollowCameraOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_LightFollowCameraOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderer_MakeLight(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderer_PickProp_double_double(nint self, double selectionX, double selectionY);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkRenderer_PickProp_double_double_double_double(nint self, double selectionX1, double selectionY1, double selectionX2, double selectionY2);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_RemoveActor(nint self, nint p);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_RemoveAllLights(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_RemoveCuller(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_RemoveLight(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_RemoveVolume(nint self, nint p);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_Render(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ResetCamera_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ResetCamera_doubleConstArray6(nint self, double* bounds);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ResetCamera_double_double_double_double_double_double(nint self, double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ResetCameraClippingRange_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ResetCameraClippingRange_doubleConstArray6(nint self, double* bounds);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ResetCameraClippingRange_double_double_double_double_double_double(nint self, double xmin, double xmax, double ymin, double ymax, double zmin, double zmax);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SafeGetZOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SafeGetZOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SetActiveCamera(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SetAmbient_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SetAmbient_doubleConstArray3(nint self, double* _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_SetBackground2_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_SetBackground2_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SetRenderWindow(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_TexturedBackgroundOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_TexturedBackgroundOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_TwoSidedLightingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_TwoSidedLightingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_UseImageBasedLightingOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_UseImageBasedLightingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_UseShadowsOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_UseShadowsOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_ViewToWorld(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderer_VisibleActorCount(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderer_VisibleVolumeCount(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_WorldToView(nint self);
     #endregion
 }

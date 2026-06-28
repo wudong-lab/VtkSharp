@@ -4,7 +4,59 @@ module: vtkFiltersSources
 classes:
   - name: vtkArrowSource
     header: vtkArrowSource.h
-    functions: []
+    functions:
+      - name: SetArrowOriginToCenter
+        cppSignature: void SetArrowOriginToCenter()
+        return:
+          type: void
+        parameters: []
+      - name: SetArrowOriginToDefault
+        cppSignature: void SetArrowOriginToDefault()
+        return:
+          type: void
+        parameters: []
+      - name: SetInvert
+        cppSignature: void SetInvert(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg
+      - name: SetShaftRadius
+        cppSignature: void SetShaftRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetShaftResolution
+        cppSignature: void SetShaftResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetTipLength
+        cppSignature: void SetTipLength(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetTipRadius
+        cppSignature: void SetTipRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetTipResolution
+        cppSignature: void SetTipResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
   - name: vtkConeSource
     header: vtkConeSource.h
     functions:
@@ -19,6 +71,13 @@ classes:
             name: _arg2
           - type: double
             name: _arg3
+      - name: SetCenter
+        cppSignature: void SetCenter(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
       - name: SetHeight
         cppSignature: void SetHeight(double _arg)
         return:
@@ -42,10 +101,128 @@ classes:
             name: resolution
   - name: vtkCubeSource
     header: vtkCubeSource.h
-    functions: []
+    functions:
+      - name: SetCenter
+        cppSignature: void SetCenter(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetCenter
+        cppSignature: void SetCenter(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetXLength
+        cppSignature: void SetXLength(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetYLength
+        cppSignature: void SetYLength(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetZLength
+        cppSignature: void SetZLength(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
   - name: vtkCylinderSource
     header: vtkCylinderSource.h
     functions:
+      - name: CappingOff
+        cppSignature: void CappingOff()
+        return:
+          type: void
+        parameters: []
+      - name: CappingOn
+        cppSignature: void CappingOn()
+        return:
+          type: void
+        parameters: []
+      - name: CapsuleCapOff
+        cppSignature: void CapsuleCapOff()
+        return:
+          type: void
+        parameters: []
+      - name: CapsuleCapOn
+        cppSignature: void CapsuleCapOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetCenter
+        cppSignature: double * GetCenter()
+        return:
+          type: double*
+        parameters: []
+      - name: GetCenter
+        cppSignature: void GetCenter(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
+      - name: GetHeight
+        cppSignature: double GetHeight()
+        return:
+          type: double
+        parameters: []
+      - name: GetRadius
+        cppSignature: double GetRadius()
+        return:
+          type: double
+        parameters: []
+      - name: GetResolution
+        cppSignature: int GetResolution()
+        return:
+          type: int
+        parameters: []
+      - name: SetCenter
+        cppSignature: void SetCenter(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetCenter
+        cppSignature: void SetCenter(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetHeight
+        cppSignature: void SetHeight(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetRadius
+        cppSignature: void SetRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
       - name: SetResolution
         cppSignature: void SetResolution(int _arg)
         return:
@@ -55,13 +232,196 @@ classes:
             name: _arg
   - name: vtkLineSource
     header: vtkLineSource.h
-    functions: []
+    functions:
+      - name: GetPoint1
+        cppSignature: double * GetPoint1()
+        return:
+          type: double*
+        parameters: []
+      - name: GetPoint1
+        cppSignature: void GetPoint1(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
+      - name: GetPoint2
+        cppSignature: double * GetPoint2()
+        return:
+          type: double*
+        parameters: []
+      - name: GetPoint2
+        cppSignature: void GetPoint2(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
+      - name: GetResolution
+        cppSignature: int GetResolution()
+        return:
+          type: int
+        parameters: []
+      - name: SetPoint1
+        cppSignature: void SetPoint1(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetPoint1
+        cppSignature: void SetPoint1(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetPoint1
+        cppSignature: void SetPoint1(float[3] _arg1)
+        return:
+          type: void
+        parameters:
+          - type: float[3]
+            name: _arg1
+      - name: SetPoint2
+        cppSignature: void SetPoint2(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetPoint2
+        cppSignature: void SetPoint2(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetPoint2
+        cppSignature: void SetPoint2(float[3] _arg1)
+        return:
+          type: void
+        parameters:
+          - type: float[3]
+            name: _arg1
+      - name: SetResolution
+        cppSignature: void SetResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
   - name: vtkParametricFunctionSource
     header: vtkParametricFunctionSource.h
-    functions: []
+    functions:
+      - name: SetParametricFunction
+        cppSignature: void SetParametricFunction(vtkParametricFunction * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkParametricFunction*
+            name: _arg1
   - name: vtkPlaneSource
     header: vtkPlaneSource.h
-    functions: []
+    functions:
+      - name: GetCenter
+        cppSignature: double * GetCenter()
+        return:
+          type: double*
+        parameters: []
+      - name: GetCenter
+        cppSignature: void GetCenter(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
+      - name: GetNormal
+        cppSignature: double * GetNormal()
+        return:
+          type: double*
+        parameters: []
+      - name: GetNormal
+        cppSignature: void GetNormal(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
+      - name: GetOrigin
+        cppSignature: double * GetOrigin()
+        return:
+          type: double*
+        parameters: []
+      - name: GetOrigin
+        cppSignature: void GetOrigin(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
+      - name: SetCenter
+        cppSignature: void SetCenter(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetCenter
+        cppSignature: void SetCenter(double[3] center)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: center
+      - name: SetNormal
+        cppSignature: void SetNormal(double nx, double ny, double nz)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: nx
+          - type: double
+            name: ny
+          - type: double
+            name: nz
+      - name: SetNormal
+        cppSignature: void SetNormal(double[3] n)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: n
+      - name: SetOrigin
+        cppSignature: void SetOrigin(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetOrigin
+        cppSignature: void SetOrigin(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
   - name: vtkRegularPolygonSource
     header: vtkRegularPolygonSource.h
     functions:
@@ -105,6 +465,16 @@ classes:
   - name: vtkSphereSource
     header: vtkSphereSource.h
     functions:
+      - name: GenerateNormalsOff
+        cppSignature: void GenerateNormalsOff()
+        return:
+          type: void
+        parameters: []
+      - name: GenerateNormalsOn
+        cppSignature: void GenerateNormalsOn()
+        return:
+          type: void
+        parameters: []
       - name: GetOutputPort
         cppSignature: vtkAlgorithmOutput * GetOutputPort()
         return:
@@ -121,6 +491,16 @@ classes:
         cppSignature: double GetRadius()
         return:
           type: double
+        parameters: []
+      - name: LatLongTessellationOff
+        cppSignature: void LatLongTessellationOff()
+        return:
+          type: void
+        parameters: []
+      - name: LatLongTessellationOn
+        cppSignature: void LatLongTessellationOn()
+        return:
+          type: void
         parameters: []
       - name: SetCenter
         cppSignature: void SetCenter(double _arg1, double _arg2, double _arg3)
@@ -140,6 +520,20 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+      - name: SetEndPhi
+        cppSignature: void SetEndPhi(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetEndTheta
+        cppSignature: void SetEndTheta(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
       - name: SetPhiResolution
         cppSignature: void SetPhiResolution(int _arg)
         return:
@@ -149,6 +543,20 @@ classes:
             name: _arg
       - name: SetRadius
         cppSignature: void SetRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetStartPhi
+        cppSignature: void SetStartPhi(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetStartTheta
+        cppSignature: void SetStartTheta(double _arg)
         return:
           type: void
         parameters:

@@ -4,7 +4,43 @@ module: vtkCommonTransforms
 classes:
   - name: vtkAbstractTransform
     header: vtkAbstractTransform.h
-    functions: []
+    functions:
+      - name: TransformPoint
+        cppSignature: double * TransformPoint(double const[3] point)
+        return:
+          type: double*
+        parameters:
+          - type: const double[3]
+            name: point
+      - name: TransformPoint
+        cppSignature: double * TransformPoint(double x, double y, double z)
+        return:
+          type: double*
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: TransformPoint
+        cppSignature: void TransformPoint(double const[3] in, double[3] out)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: in
+          - type: double[3]
+            name: out
+      - name: TransformPoint
+        cppSignature: void TransformPoint(float const[3] in, float[3] out)
+        return:
+          type: void
+        parameters:
+          - type: const float[3]
+            name: in
+          - type: float[3]
+            name: out
   - name: vtkHomogeneousTransform
     header: vtkHomogeneousTransform.h
     functions: []
@@ -13,4 +49,180 @@ classes:
     functions: []
   - name: vtkTransform
     header: vtkTransform.h
-    functions: []
+    functions:
+      - name: Concatenate
+        cppSignature: void Concatenate(double const[16] elements)
+        return:
+          type: void
+        parameters:
+          - type: const double[16]
+            name: elements
+      - name: Concatenate
+        cppSignature: void Concatenate(vtkLinearTransform * transform)
+        return:
+          type: void
+        parameters:
+          - type: vtkLinearTransform*
+            name: transform
+      - name: Concatenate
+        cppSignature: void Concatenate(vtkMatrix4x4 * matrix)
+        return:
+          type: void
+        parameters:
+          - type: vtkMatrix4x4*
+            name: matrix
+      - name: GetConcatenatedTransform
+        cppSignature: vtkLinearTransform * GetConcatenatedTransform(int i)
+        return:
+          type: vtkLinearTransform*
+        parameters:
+          - type: int
+            name: i
+      - name: GetNumberOfConcatenatedTransforms
+        cppSignature: int GetNumberOfConcatenatedTransforms()
+        return:
+          type: int
+        parameters: []
+      - name: Pop
+        cppSignature: void Pop()
+        return:
+          type: void
+        parameters: []
+      - name: PostMultiply
+        cppSignature: void PostMultiply()
+        return:
+          type: void
+        parameters: []
+      - name: PreMultiply
+        cppSignature: void PreMultiply()
+        return:
+          type: void
+        parameters: []
+      - name: Push
+        cppSignature: void Push()
+        return:
+          type: void
+        parameters: []
+      - name: RotateWXYZ
+        cppSignature: void RotateWXYZ(double angle, double const[3] axis)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
+          - type: const double[3]
+            name: axis
+      - name: RotateWXYZ
+        cppSignature: void RotateWXYZ(double angle, double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: RotateWXYZ
+        cppSignature: void RotateWXYZ(double angle, float const[3] axis)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
+          - type: const float[3]
+            name: axis
+      - name: RotateX
+        cppSignature: void RotateX(double angle)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
+      - name: RotateY
+        cppSignature: void RotateY(double angle)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
+      - name: RotateZ
+        cppSignature: void RotateZ(double angle)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: angle
+      - name: Scale
+        cppSignature: void Scale(double const[3] s)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: s
+      - name: Scale
+        cppSignature: void Scale(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: Scale
+        cppSignature: void Scale(float const[3] s)
+        return:
+          type: void
+        parameters:
+          - type: const float[3]
+            name: s
+      - name: SetInput
+        cppSignature: void SetInput(vtkLinearTransform * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkLinearTransform*
+            name: input
+      - name: SetMatrix
+        cppSignature: void SetMatrix(double const[16] elements)
+        return:
+          type: void
+        parameters:
+          - type: const double[16]
+            name: elements
+      - name: SetMatrix
+        cppSignature: void SetMatrix(vtkMatrix4x4 * matrix)
+        return:
+          type: void
+        parameters:
+          - type: vtkMatrix4x4*
+            name: matrix
+      - name: Translate
+        cppSignature: void Translate(double const[3] x)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: x
+      - name: Translate
+        cppSignature: void Translate(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: Translate
+        cppSignature: void Translate(float const[3] x)
+        return:
+          type: void
+        parameters:
+          - type: const float[3]
+            name: x

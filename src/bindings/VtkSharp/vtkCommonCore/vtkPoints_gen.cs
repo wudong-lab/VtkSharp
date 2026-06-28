@@ -18,14 +18,142 @@ public unsafe partial class vtkPoints : vtkObject
         return target;
     }
 
+    public new long GetNumberOfPoints()
+    {
+        return vtkPoints_GetNumberOfPoints(this.NativePointer);
+    }
+
+    public new long InsertNextPoint(ReadOnlySpan<double> x)
+    {
+        fixed (double* xPtr = x)
+        {
+            return vtkPoints_InsertNextPoint_doubleConstArray3(this.NativePointer, xPtr);
+        }
+    }
+
     public new long InsertNextPoint(double x, double y, double z)
     {
-        return vtkPoints_InsertNextPoint(this.NativePointer, x, y, z);
+        return vtkPoints_InsertNextPoint_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new long InsertNextPoint(ReadOnlySpan<float> x)
+    {
+        fixed (float* xPtr = x)
+        {
+            return vtkPoints_InsertNextPoint_floatConstArray3(this.NativePointer, xPtr);
+        }
+    }
+
+    public new void InsertPoint(long id, ReadOnlySpan<double> x)
+    {
+        fixed (double* xPtr = x)
+        {
+            vtkPoints_InsertPoint_vtkIdType_doubleConstArray3(this.NativePointer, id, xPtr);
+        }
     }
 
     public new void InsertPoint(long id, double x, double y, double z)
     {
-        vtkPoints_InsertPoint(this.NativePointer, id, x, y, z);
+        vtkPoints_InsertPoint_vtkIdType_double_double_double(this.NativePointer, id, x, y, z);
+    }
+
+    public new void InsertPoint(long id, ReadOnlySpan<float> x)
+    {
+        fixed (float* xPtr = x)
+        {
+            vtkPoints_InsertPoint_vtkIdType_floatConstArray3(this.NativePointer, id, xPtr);
+        }
+    }
+
+    public new void Modified()
+    {
+        vtkPoints_Modified(this.NativePointer);
+    }
+
+    public new bool Resize(long numPoints)
+    {
+        return vtkPoints_Resize(this.NativePointer, numPoints);
+    }
+
+    public new void SetDataTypeToBit()
+    {
+        vtkPoints_SetDataTypeToBit(this.NativePointer);
+    }
+
+    public new void SetDataTypeToChar()
+    {
+        vtkPoints_SetDataTypeToChar(this.NativePointer);
+    }
+
+    public new void SetDataTypeToDouble()
+    {
+        vtkPoints_SetDataTypeToDouble(this.NativePointer);
+    }
+
+    public new void SetDataTypeToFloat()
+    {
+        vtkPoints_SetDataTypeToFloat(this.NativePointer);
+    }
+
+    public new void SetDataTypeToInt()
+    {
+        vtkPoints_SetDataTypeToInt(this.NativePointer);
+    }
+
+    public new void SetDataTypeToLong()
+    {
+        vtkPoints_SetDataTypeToLong(this.NativePointer);
+    }
+
+    public new void SetDataTypeToShort()
+    {
+        vtkPoints_SetDataTypeToShort(this.NativePointer);
+    }
+
+    public new void SetDataTypeToUnsignedChar()
+    {
+        vtkPoints_SetDataTypeToUnsignedChar(this.NativePointer);
+    }
+
+    public new void SetDataTypeToUnsignedInt()
+    {
+        vtkPoints_SetDataTypeToUnsignedInt(this.NativePointer);
+    }
+
+    public new void SetDataTypeToUnsignedLong()
+    {
+        vtkPoints_SetDataTypeToUnsignedLong(this.NativePointer);
+    }
+
+    public new void SetDataTypeToUnsignedShort()
+    {
+        vtkPoints_SetDataTypeToUnsignedShort(this.NativePointer);
+    }
+
+    public new void SetNumberOfPoints(long numPoints)
+    {
+        vtkPoints_SetNumberOfPoints(this.NativePointer, numPoints);
+    }
+
+    public new void SetPoint(long id, ReadOnlySpan<double> x)
+    {
+        fixed (double* xPtr = x)
+        {
+            vtkPoints_SetPoint_vtkIdType_doubleConstArray3(this.NativePointer, id, xPtr);
+        }
+    }
+
+    public new void SetPoint(long id, double x, double y, double z)
+    {
+        vtkPoints_SetPoint_vtkIdType_double_double_double(this.NativePointer, id, x, y, z);
+    }
+
+    public new void SetPoint(long id, ReadOnlySpan<float> x)
+    {
+        fixed (float* xPtr = x)
+        {
+            vtkPoints_SetPoint_vtkIdType_floatConstArray3(this.NativePointer, id, xPtr);
+        }
     }
 
     #region Interop
@@ -33,9 +161,76 @@ public unsafe partial class vtkPoints : vtkObject
     private static extern nint vtkPoints_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern long vtkPoints_InsertNextPoint(nint self, double x, double y, double z);
+    private static extern long vtkPoints_GetNumberOfPoints(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkPoints_InsertPoint(nint self, long id, double x, double y, double z);
+    private static extern long vtkPoints_InsertNextPoint_doubleConstArray3(nint self, double* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkPoints_InsertNextPoint_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkPoints_InsertNextPoint_floatConstArray3(nint self, float* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_InsertPoint_vtkIdType_doubleConstArray3(nint self, long id, double* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_InsertPoint_vtkIdType_double_double_double(nint self, long id, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_InsertPoint_vtkIdType_floatConstArray3(nint self, long id, float* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_Modified(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    [return: MarshalAs(UnmanagedType.U4)]
+    private static extern bool vtkPoints_Resize(nint self, long numPoints);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToBit(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToChar(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToDouble(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToFloat(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToInt(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToLong(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToShort(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToUnsignedChar(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToUnsignedInt(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToUnsignedLong(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetDataTypeToUnsignedShort(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetNumberOfPoints(nint self, long numPoints);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetPoint_vtkIdType_doubleConstArray3(nint self, long id, double* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetPoint_vtkIdType_double_double_double(nint self, long id, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_SetPoint_vtkIdType_floatConstArray3(nint self, long id, float* x);
     #endregion
 }

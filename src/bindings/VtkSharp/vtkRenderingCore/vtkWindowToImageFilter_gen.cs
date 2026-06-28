@@ -18,8 +18,161 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
         return target;
     }
 
+    public new void FixBoundaryOff()
+    {
+        vtkWindowToImageFilter_FixBoundaryOff(this.NativePointer);
+    }
+
+    public new void FixBoundaryOn()
+    {
+        vtkWindowToImageFilter_FixBoundaryOn(this.NativePointer);
+    }
+
+    public new vtkImageData GetOutput()
+    {
+        return vtkImageData.WeakReference(vtkWindowToImageFilter_GetOutput(this.NativePointer));
+    }
+
+    internal new int* GetScale_Internal()
+    {
+        return vtkWindowToImageFilter_GetScale_(this.NativePointer);
+    }
+
+    public new void GetScale(Span<int> _arg)
+    {
+        fixed (int* _argPtr = _arg)
+        {
+            vtkWindowToImageFilter_GetScale_intArray2(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void ReadFrontBufferOff()
+    {
+        vtkWindowToImageFilter_ReadFrontBufferOff(this.NativePointer);
+    }
+
+    public new void ReadFrontBufferOn()
+    {
+        vtkWindowToImageFilter_ReadFrontBufferOn(this.NativePointer);
+    }
+
+    public new void SetInput(vtkWindow input)
+    {
+        vtkWindowToImageFilter_SetInput(this.NativePointer, input.NativePointer);
+    }
+
+    public new void SetInputBufferTypeToRGB()
+    {
+        vtkWindowToImageFilter_SetInputBufferTypeToRGB(this.NativePointer);
+    }
+
+    public new void SetInputBufferTypeToRGBA()
+    {
+        vtkWindowToImageFilter_SetInputBufferTypeToRGBA(this.NativePointer);
+    }
+
+    public new void SetInputBufferTypeToZBuffer()
+    {
+        vtkWindowToImageFilter_SetInputBufferTypeToZBuffer(this.NativePointer);
+    }
+
+    public new void SetScale(int _arg1, int _arg2)
+    {
+        vtkWindowToImageFilter_SetScale_int_int(this.NativePointer, _arg1, _arg2);
+    }
+
+    public new void SetScale(ReadOnlySpan<int> _arg)
+    {
+        fixed (int* _argPtr = _arg)
+        {
+            vtkWindowToImageFilter_SetScale_intConstArray2(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetScale(int scale)
+    {
+        vtkWindowToImageFilter_SetScale_int(this.NativePointer, scale);
+    }
+
+    public new void SetViewport(ReadOnlySpan<double> _arg1)
+    {
+        fixed (double* _arg1Ptr = _arg1)
+        {
+            vtkWindowToImageFilter_SetViewport_doublePtr(this.NativePointer, _arg1Ptr);
+        }
+    }
+
+    public new void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)
+    {
+        vtkWindowToImageFilter_SetViewport_double_double_double_double(this.NativePointer, _arg1, _arg2, _arg3, _arg4);
+    }
+
+    public new void ShouldRerenderOff()
+    {
+        vtkWindowToImageFilter_ShouldRerenderOff(this.NativePointer);
+    }
+
+    public new void ShouldRerenderOn()
+    {
+        vtkWindowToImageFilter_ShouldRerenderOn(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWindowToImageFilter_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_FixBoundaryOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_FixBoundaryOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkWindowToImageFilter_GetOutput(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int* vtkWindowToImageFilter_GetScale_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_GetScale_intArray2(nint self, int* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_ReadFrontBufferOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_ReadFrontBufferOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetInput(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetInputBufferTypeToRGB(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetInputBufferTypeToRGBA(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetInputBufferTypeToZBuffer(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetScale_int_int(nint self, int _arg1, int _arg2);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetScale_intConstArray2(nint self, int* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetScale_int(nint self, int scale);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetViewport_doublePtr(nint self, double* _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_SetViewport_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_ShouldRerenderOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindowToImageFilter_ShouldRerenderOn(nint self);
     #endregion
 }

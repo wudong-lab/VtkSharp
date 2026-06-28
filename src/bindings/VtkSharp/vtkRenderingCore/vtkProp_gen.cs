@@ -17,6 +17,45 @@ public unsafe partial class vtkProp : vtkObject
         return target;
     }
 
+    public new void Pick()
+    {
+        vtkProp_Pick(this.NativePointer);
+    }
+
+    public new void PickableOff()
+    {
+        vtkProp_PickableOff(this.NativePointer);
+    }
+
+    public new void PickableOn()
+    {
+        vtkProp_PickableOn(this.NativePointer);
+    }
+
+    public new void VisibilityOff()
+    {
+        vtkProp_VisibilityOff(this.NativePointer);
+    }
+
+    public new void VisibilityOn()
+    {
+        vtkProp_VisibilityOn(this.NativePointer);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp_Pick(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp_PickableOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp_PickableOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp_VisibilityOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp_VisibilityOn(nint self);
     #endregion
 }

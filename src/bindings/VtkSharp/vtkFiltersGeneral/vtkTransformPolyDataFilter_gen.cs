@@ -18,8 +18,16 @@ public unsafe partial class vtkTransformPolyDataFilter : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void SetTransform(vtkAbstractTransform _arg1)
+    {
+        vtkTransformPolyDataFilter_SetTransform(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTransformPolyDataFilter_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTransformPolyDataFilter_SetTransform(nint self, nint _arg1);
     #endregion
 }

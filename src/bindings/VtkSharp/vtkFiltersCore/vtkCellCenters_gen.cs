@@ -18,8 +18,56 @@ public unsafe partial class vtkCellCenters : vtkPolyDataAlgorithm
         return target;
     }
 
+    public new void ConvertGhostCellsToGhostPointsOff()
+    {
+        vtkCellCenters_ConvertGhostCellsToGhostPointsOff(this.NativePointer);
+    }
+
+    public new void ConvertGhostCellsToGhostPointsOn()
+    {
+        vtkCellCenters_ConvertGhostCellsToGhostPointsOn(this.NativePointer);
+    }
+
+    public new void CopyArraysOff()
+    {
+        vtkCellCenters_CopyArraysOff(this.NativePointer);
+    }
+
+    public new void CopyArraysOn()
+    {
+        vtkCellCenters_CopyArraysOn(this.NativePointer);
+    }
+
+    public new void VertexCellsOff()
+    {
+        vtkCellCenters_VertexCellsOff(this.NativePointer);
+    }
+
+    public new void VertexCellsOn()
+    {
+        vtkCellCenters_VertexCellsOn(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCellCenters_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCellCenters_ConvertGhostCellsToGhostPointsOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCellCenters_ConvertGhostCellsToGhostPointsOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCellCenters_CopyArraysOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCellCenters_CopyArraysOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCellCenters_VertexCellsOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCellCenters_VertexCellsOn(nint self);
     #endregion
 }
