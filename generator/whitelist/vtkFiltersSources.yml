@@ -475,18 +475,6 @@ classes:
         return:
           type: void
         parameters: []
-      - name: GetOutputPort
-        cppSignature: vtkAlgorithmOutput * GetOutputPort()
-        return:
-          type: vtkAlgorithmOutput*
-        parameters: []
-      - name: GetOutputPort
-        cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
-        return:
-          type: vtkAlgorithmOutput*
-        parameters:
-          - type: int
-            name: index
       - name: GetRadius
         cppSignature: double GetRadius()
         return:

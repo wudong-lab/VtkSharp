@@ -31,7 +31,8 @@ VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 
 - `parameters[].name` 始终用于生成 C# API。头文件缺少形参名时，由 AI 或人工补齐，生成器也可按位置生成 `_arg1`、`_arg2` 作为兜底。
 - 白名单是强契约，匹配失败、类型不支持或依赖无法解析时默认报错并停止生成。
 - 依赖类和基类链由生成器自动发现；依赖类可由 `normalize-whitelist` 写回白名单，通常 `functions: []`。
-- 所有被生成 wrapper 的 VTK 类，只要存在 `static New()`，就生成 `New()` 和对应 native 导出。
+- generator 只为当前 VTK 类直接声明的 public 实例成员函数生成导出；继承自基类但当前类未重新声明的函数由 C# 继承调用基类 wrapper。
+- 所有被生成 wrapper 的 VTK 类，只要存在 `static New()`，就生成 `New()` 和对应 native 导出；其他 static 函数默认忽略，C++ 构造函数和析构函数不导出。
 - `vtkObjectBase`、`vtkObject` 等 `manualBindingClasses` 由人工维护，生成器视为已存在并跳过。
 - 生成器优先生成低层稳定绑定；工程友好 API 通过手写 partial 或后续专门规则补充。
 - AI 负责编排分析流程，CLI 提供确定性查询、校验和生成能力。
@@ -342,6 +343,16 @@ JSON Schema 应约束必填字段、枚举值和未知字段。例如 `direction
 生成器应输出清晰诊断，便于人工和 AI 修复。例如列出白名单条目、匹配失败原因、候选函数列表和建议。
 
 可提供探索模式，例如 `--continue-on-error`，用于 AI 批量分析候选 API，但正式生成默认失败即停止。
+
+## VTK 函数导出规则
+
+- 候选函数列表、白名单校验和最终生成必须使用一致的可导出函数规则。
+- generator 只为当前 VTK 类直接声明的 public 实例成员函数生成导出；继承自基类但当前类未重新声明的函数，不在当前类重复导出。
+- C# 端通过继承调用基类 wrapper 时，语义应等价于 C++ 通过基类指针/引用调用；是否分派到子类实现由 C++ virtual dispatch 决定。
+- 如果当前类声明了同名函数，应按 C++ 名称隐藏规则理解候选函数，不应把被隐藏的基类 overload 当作当前类可直接调用的函数。
+- VTK 静态函数中只特殊导出 `static New()`；其他 static 函数默认忽略。
+- C++ 构造函数、析构函数不导出。
+- 这些规则应在 inspect/candidate、validate 和 emit 三个阶段保持一致，避免候选列表或白名单校验放行后 native 编译失败。
 
 ## 依赖类和规范化
 

@@ -57,6 +57,43 @@ public sealed class WhitelistValidatorTests
         Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Message == "Function 'vtkAlgorithm.SetInputConnection' was not found.");
     }
 
+    [Fact]
+    public void Validate_RejectsInheritedFunctionOnDerivedClass()
+    {
+        var document = new WhitelistDocument
+        {
+            Module = "vtkFiltersCore",
+            Classes =
+            [
+                new WhitelistClass
+                {
+                    Name = "vtkDerived",
+                    Header = "vtkDerived.h",
+                    Functions =
+                    [
+                        new WhitelistFunction
+                        {
+                            Name = "Update",
+                            CppSignature = "void Update()",
+                            Return = new WhitelistReturn { Type = "void" },
+                            Parameters = [],
+                        },
+                    ],
+                },
+            ],
+        };
+        var inspectedClasses = new Dictionary<string, InspectedClass>
+        {
+            ["vtkDerived"] = new("vtkDerived", []),
+        };
+        var validator = new WhitelistValidator();
+
+        var result = validator.Validate(document, inspectedClasses);
+
+        Assert.False(result.Success);
+        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Message == "Function 'vtkDerived.Update' was not found.");
+    }
+
     private static WhitelistDocument CreateDocument(string returnType, string parameterType)
         => new()
         {

@@ -72,29 +72,8 @@ public sealed class VtkClassInspector
             ? rawClass
             : throw new InvalidOperationException($"Class '{className}' was not found in '{headerFileName}'.");
 
-        var functions = raw.Functions.ToList();
-        var declaredFunctionNames = raw.DeclaredFunctionNames ?? new HashSet<string>(StringComparer.Ordinal);
-
-        foreach (var baseClassName in raw.BaseClassNames ?? [])
-        {
-            var baseHeaderFileName = $"{baseClassName}.h";
-            var baseHeaderPath = Path.Combine(includeDirectory, baseHeaderFileName);
-            if (!File.Exists(baseHeaderPath))
-                continue;
-
-            var baseClass = this.BuildClass(includeDirectory, baseHeaderFileName, baseClassName, visitedClassNames);
-            foreach (var function in baseClass.Functions)
-            {
-                if (declaredFunctionNames.Contains(function.Name))
-                    continue;
-
-                if (!functions.Any(item => HasSameSignature(item, function)))
-                    functions.Add(function);
-            }
-        }
-
         var directBaseClassName = (raw.BaseClassNames ?? []).FirstOrDefault();
-        var result = new InspectedClass(className, functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(functions));
+        var result = new InspectedClass(className, raw.Functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(raw.Functions));
         this._cache[cacheKey] = result;
         return result;
     }
@@ -107,11 +86,6 @@ public sealed class VtkClassInspector
             function.IsStatic &&
             function.Parameters.Count == 0 &&
             function.ReturnType.FullName.Contains(cppClass.Name, StringComparison.Ordinal));
-
-        var declaredFunctionNames = cppClass.Functions
-            .Where(static function => !function.IsConstructor && !function.IsDestructor)
-            .Select(static function => function.Name)
-            .ToHashSet(StringComparer.Ordinal);
 
         var functions = cppClass.Functions
             .Where(static function =>
@@ -154,7 +128,7 @@ public sealed class VtkClassInspector
             })
             .ToList();
 
-        return new InspectedClass(cppClass.Name, functions, hasStaticNew, BaseClassNames: baseClassNames, DeclaredFunctionNames: declaredFunctionNames);
+        return new InspectedClass(cppClass.Name, functions, hasStaticNew, BaseClassNames: baseClassNames);
     }
 
     private static IReadOnlyList<string> GetCppBaseClassNames(CppClass cppClass)
@@ -170,11 +144,6 @@ public sealed class VtkClassInspector
 
     private static string CreateCacheKey(string includeDirectory, string headerFileName, string className)
         => $"{Path.GetFullPath(includeDirectory)}|{headerFileName}|{className}";
-
-    private static bool HasSameSignature(InspectedFunction left, InspectedFunction right)
-        => left.Name == right.Name &&
-           left.ReturnType == right.ReturnType &&
-           left.Parameters.Select(parameter => parameter.Type).SequenceEqual(right.Parameters.Select(parameter => parameter.Type));
 
     private static IReadOnlyList<string> GetClassDependencies(IEnumerable<InspectedFunction> functions)
         => functions

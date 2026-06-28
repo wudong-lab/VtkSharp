@@ -54,8 +54,6 @@ VTKSHARP_API vtkWindow* vtkRenderer_GetVTKWindow(vtkRenderer* self) { return sel
 
 VTKSHARP_API double vtkRenderer_GetZ(vtkRenderer* self, int x, int y) { return self->GetZ(x, y); }
 
-VTKSHARP_API void vtkRenderer_GradientBackgroundOn(vtkRenderer* self) { self->GradientBackgroundOn(); }
-
 VTKSHARP_API void vtkRenderer_InteractiveOff(vtkRenderer* self) { self->InteractiveOff(); }
 
 VTKSHARP_API void vtkRenderer_InteractiveOn(vtkRenderer* self) { self->InteractiveOn(); }
@@ -103,10 +101,6 @@ VTKSHARP_API void vtkRenderer_SetActiveCamera(vtkRenderer* self, vtkCamera* _arg
 VTKSHARP_API void vtkRenderer_SetAmbient_double_double_double(vtkRenderer* self, double _arg1, double _arg2, double _arg3) { self->SetAmbient(_arg1, _arg2, _arg3); }
 
 VTKSHARP_API void vtkRenderer_SetAmbient_doubleConstArray3(vtkRenderer* self, const double* _arg) { self->SetAmbient(_arg); }
-
-VTKSHARP_API void vtkRenderer_SetBackground2_double_double_double(vtkRenderer* self, double _arg1, double _arg2, double _arg3) { self->SetBackground2(_arg1, _arg2, _arg3); }
-
-VTKSHARP_API void vtkRenderer_SetBackground2_doubleConstArray3(vtkRenderer* self, const double* _arg) { self->SetBackground2(_arg); }
 
 VTKSHARP_API void vtkRenderer_SetRenderWindow(vtkRenderer* self, vtkRenderWindow* _arg1) { self->SetRenderWindow(_arg1); }
 

@@ -22,6 +22,13 @@ public sealed class WhitelistLoader
     public WhitelistDocument LoadFile(string path)
     {
         using var reader = File.OpenText(path);
-        return _deserializer.Deserialize<WhitelistDocument>(reader);
+        var document = _deserializer.Deserialize<WhitelistDocument>(reader);
+        return document with
+        {
+            Classes = document.Classes.Select(whitelistClass => whitelistClass with
+            {
+                Functions = whitelistClass.Functions ?? [],
+            }).ToList(),
+        };
     }
 }

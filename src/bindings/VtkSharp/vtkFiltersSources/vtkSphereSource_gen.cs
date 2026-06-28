@@ -28,16 +28,6 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
         vtkSphereSource_GenerateNormalsOn(this.NativePointer);
     }
 
-    public new vtkAlgorithmOutput GetOutputPort()
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkSphereSource_GetOutputPort_(this.NativePointer));
-    }
-
-    public new vtkAlgorithmOutput GetOutputPort(int index)
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkSphereSource_GetOutputPort_int(this.NativePointer, index));
-    }
-
     public new double GetRadius()
     {
         return vtkSphereSource_GetRadius(this.NativePointer);
@@ -110,12 +100,6 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_GenerateNormalsOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkSphereSource_GetOutputPort_(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkSphereSource_GetOutputPort_int(nint self, int index);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkSphereSource_GetRadius(nint self);

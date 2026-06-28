@@ -28,11 +28,6 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
         vtkWin32OpenGLRenderWindow_SetParentId(this.NativePointer, _arg1);
     }
 
-    public new void ShowWindowOff()
-    {
-        vtkWin32OpenGLRenderWindow_ShowWindowOff(this.NativePointer);
-    }
-
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32OpenGLRenderWindow_New();
@@ -42,8 +37,5 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32OpenGLRenderWindow_SetParentId(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkWin32OpenGLRenderWindow_ShowWindowOff(nint self);
     #endregion
 }

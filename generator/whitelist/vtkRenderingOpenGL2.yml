@@ -25,8 +25,3 @@ classes:
         parameters:
           - type: HWND
             name: _arg1
-      - name: ShowWindowOff
-        cppSignature: void ShowWindowOff()
-        return:
-          type: void
-        parameters: []

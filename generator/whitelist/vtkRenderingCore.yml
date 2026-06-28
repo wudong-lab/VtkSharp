@@ -366,13 +366,6 @@ classes:
   - name: vtkPolyDataMapper
     header: vtkPolyDataMapper.h
     functions:
-      - name: SetInputConnection
-        cppSignature: void SetInputConnection(vtkAlgorithmOutput* input)
-        return:
-          type: void
-        parameters:
-          - type: vtkAlgorithmOutput*
-            name: input
       - name: SetInputData
         cppSignature: void SetInputData(vtkPolyData * in)
         return:
@@ -883,13 +876,6 @@ classes:
         parameters:
           - type: int
             name: _arg1
-      - name: SetWindowName
-        cppSignature: void SetWindowName(char const * _arg)
-        return:
-          type: void
-        parameters:
-          - type: const char*
-            name: _arg
   - name: vtkRenderWindowInteractor
     header: vtkRenderWindowInteractor.h
     functions:
@@ -1082,11 +1068,6 @@ classes:
             name: x
           - type: int
             name: y
-      - name: GradientBackgroundOn
-        cppSignature: void GradientBackgroundOn()
-        return:
-          type: void
-        parameters: []
       - name: InteractiveOff
         cppSignature: void InteractiveOff()
         return:
@@ -1260,24 +1241,6 @@ classes:
             name: _arg3
       - name: SetAmbient
         cppSignature: void SetAmbient(double const[3] _arg)
-        return:
-          type: void
-        parameters:
-          - type: const double[3]
-            name: _arg
-      - name: SetBackground2
-        cppSignature: void SetBackground2(double _arg1, double _arg2, double _arg3)
-        return:
-          type: void
-        parameters:
-          - type: double
-            name: _arg1
-          - type: double
-            name: _arg2
-          - type: double
-            name: _arg3
-      - name: SetBackground2
-        cppSignature: void SetBackground2(double const[3] _arg)
         return:
           type: void
         parameters:

@@ -18,26 +18,6 @@ public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
         return target;
     }
 
-    public new vtkAlgorithmOutput GetOutputPort()
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkTubeFilter_GetOutputPort_(this.NativePointer));
-    }
-
-    public new vtkAlgorithmOutput GetOutputPort(int index)
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkTubeFilter_GetOutputPort_int(this.NativePointer, index));
-    }
-
-    public new void SetInputConnection(int port, vtkAlgorithmOutput input)
-    {
-        vtkTubeFilter_SetInputConnection_int_vtkAlgorithmOutputPtr(this.NativePointer, port, input.NativePointer);
-    }
-
-    public new void SetInputConnection(vtkAlgorithmOutput input)
-    {
-        vtkTubeFilter_SetInputConnection_vtkAlgorithmOutputPtr(this.NativePointer, input.NativePointer);
-    }
-
     public new void SetNumberOfSides(int _arg)
     {
         vtkTubeFilter_SetNumberOfSides(this.NativePointer, _arg);
@@ -51,18 +31,6 @@ public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTubeFilter_New();
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkTubeFilter_GetOutputPort_(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkTubeFilter_GetOutputPort_int(nint self, int index);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkTubeFilter_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int port, nint input);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkTubeFilter_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTubeFilter_SetNumberOfSides(nint self, int _arg);

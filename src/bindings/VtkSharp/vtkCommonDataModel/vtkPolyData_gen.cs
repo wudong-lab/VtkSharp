@@ -23,11 +23,6 @@ public unsafe partial class vtkPolyData : vtkPointSet
         vtkPolyData_SetLines(this.NativePointer, l.NativePointer);
     }
 
-    public new void SetPoints(vtkPoints _arg1)
-    {
-        vtkPolyData_SetPoints(this.NativePointer, _arg1.NativePointer);
-    }
-
     public new void SetPolys(vtkCellArray p)
     {
         vtkPolyData_SetPolys(this.NativePointer, p.NativePointer);
@@ -39,9 +34,6 @@ public unsafe partial class vtkPolyData : vtkPointSet
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyData_SetLines(nint self, nint l);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkPolyData_SetPoints(nint self, nint _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyData_SetPolys(nint self, nint p);

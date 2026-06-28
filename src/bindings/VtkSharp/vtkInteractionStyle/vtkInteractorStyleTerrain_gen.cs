@@ -18,194 +18,14 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         return target;
     }
 
-    public new void AutoAdjustCameraClippingRangeOff()
-    {
-        vtkInteractorStyleTerrain_AutoAdjustCameraClippingRangeOff(this.NativePointer);
-    }
-
-    public new void AutoAdjustCameraClippingRangeOn()
-    {
-        vtkInteractorStyleTerrain_AutoAdjustCameraClippingRangeOn(this.NativePointer);
-    }
-
-    public new void DebugOff()
-    {
-        vtkInteractorStyleTerrain_DebugOff(this.NativePointer);
-    }
-
-    public new void DebugOn()
-    {
-        vtkInteractorStyleTerrain_DebugOn(this.NativePointer);
-    }
-
-    public new void Delete()
-    {
-        vtkInteractorStyleTerrain_Delete(this.NativePointer);
-    }
-
     public new void Dolly()
     {
         vtkInteractorStyleTerrain_Dolly(this.NativePointer);
     }
 
-    public new void EnabledOff()
-    {
-        vtkInteractorStyleTerrain_EnabledOff(this.NativePointer);
-    }
-
-    public new void EnabledOn()
-    {
-        vtkInteractorStyleTerrain_EnabledOn(this.NativePointer);
-    }
-
-    public new void EndDolly()
-    {
-        vtkInteractorStyleTerrain_EndDolly(this.NativePointer);
-    }
-
-    public new void EndEnvRotate()
-    {
-        vtkInteractorStyleTerrain_EndEnvRotate(this.NativePointer);
-    }
-
-    public new void EndGesture()
-    {
-        vtkInteractorStyleTerrain_EndGesture(this.NativePointer);
-    }
-
-    public new void EndPan()
-    {
-        vtkInteractorStyleTerrain_EndPan(this.NativePointer);
-    }
-
-    public new void EndRotate()
-    {
-        vtkInteractorStyleTerrain_EndRotate(this.NativePointer);
-    }
-
-    public new void EndSpin()
-    {
-        vtkInteractorStyleTerrain_EndSpin(this.NativePointer);
-    }
-
-    public new void EndTimer()
-    {
-        vtkInteractorStyleTerrain_EndTimer(this.NativePointer);
-    }
-
-    public new void EndTwoPointer()
-    {
-        vtkInteractorStyleTerrain_EndTwoPointer(this.NativePointer);
-    }
-
-    public new void EndUniformScale()
-    {
-        vtkInteractorStyleTerrain_EndUniformScale(this.NativePointer);
-    }
-
-    public new void EndZoom()
-    {
-        vtkInteractorStyleTerrain_EndZoom(this.NativePointer);
-    }
-
-    public new void EnvironmentRotate()
-    {
-        vtkInteractorStyleTerrain_EnvironmentRotate(this.NativePointer);
-    }
-
-    public new void FastDelete()
-    {
-        vtkInteractorStyleTerrain_FastDelete(this.NativePointer);
-    }
-
-    public new void FindPokedRenderer(int _arg1, int _arg2)
-    {
-        vtkInteractorStyleTerrain_FindPokedRenderer(this.NativePointer, _arg1, _arg2);
-    }
-
-    public new bool GetAutoAdjustCameraClippingRange()
-    {
-        return vtkInteractorStyleTerrain_GetAutoAdjustCameraClippingRange(this.NativePointer);
-    }
-
-    public new bool GetAutoAdjustCameraClippingRangeMaxValue()
-    {
-        return vtkInteractorStyleTerrain_GetAutoAdjustCameraClippingRangeMaxValue(this.NativePointer);
-    }
-
-    public new bool GetAutoAdjustCameraClippingRangeMinValue()
-    {
-        return vtkInteractorStyleTerrain_GetAutoAdjustCameraClippingRangeMinValue(this.NativePointer);
-    }
-
-    public new string GetClassName()
-    {
-        return VtkString.FromUtf8Pointer(vtkInteractorStyleTerrain_GetClassName(this.NativePointer));
-    }
-
-    public new string GetClassNameA()
-    {
-        return VtkString.FromUtf8Pointer(vtkInteractorStyleTerrain_GetClassNameA(this.NativePointer));
-    }
-
-    public new string GetClassNameW()
-    {
-        return VtkString.FromUtf8Pointer(vtkInteractorStyleTerrain_GetClassNameW(this.NativePointer));
-    }
-
-    public new vtkRenderer GetCurrentRenderer()
-    {
-        return vtkRenderer.WeakReference(vtkInteractorStyleTerrain_GetCurrentRenderer(this.NativePointer));
-    }
-
-    public new bool GetDebug()
-    {
-        return vtkInteractorStyleTerrain_GetDebug(this.NativePointer);
-    }
-
-    public new vtkRenderer GetDefaultRenderer()
-    {
-        return vtkRenderer.WeakReference(vtkInteractorStyleTerrain_GetDefaultRenderer(this.NativePointer));
-    }
-
-    public new int GetEnabled()
-    {
-        return vtkInteractorStyleTerrain_GetEnabled(this.NativePointer);
-    }
-
-    public new bool GetHandleObservers()
-    {
-        return vtkInteractorStyleTerrain_GetHandleObservers(this.NativePointer);
-    }
-
-    public new vtkRenderWindowInteractor GetInteractor()
-    {
-        return vtkRenderWindowInteractor.WeakReference(vtkInteractorStyleTerrain_GetInteractor(this.NativePointer));
-    }
-
-    public new bool GetIsInMemkind()
-    {
-        return vtkInteractorStyleTerrain_GetIsInMemkind(this.NativePointer);
-    }
-
-    public new bool GetKeyPressActivation()
-    {
-        return vtkInteractorStyleTerrain_GetKeyPressActivation(this.NativePointer);
-    }
-
-    public new char GetKeyPressActivationValue()
-    {
-        return (char)vtkInteractorStyleTerrain_GetKeyPressActivationValue(this.NativePointer);
-    }
-
     public new bool GetLatLongLines()
     {
         return vtkInteractorStyleTerrain_GetLatLongLines(this.NativePointer);
-    }
-
-    public new double GetMouseWheelMotionFactor()
-    {
-        return vtkInteractorStyleTerrain_GetMouseWheelMotionFactor(this.NativePointer);
     }
 
     public new long GetNumberOfGenerationsFromBase(string type)
@@ -214,116 +34,6 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         return vtkInteractorStyleTerrain_GetNumberOfGenerationsFromBase(this.NativePointer, type);
         #else
         return vtkInteractorStyleTerrain_GetNumberOfGenerationsFromBase(this.NativePointer, VtkString.ToNullTerminatedUtf8(type));
-        #endif
-    }
-
-    internal new double* GetPickColor_Internal()
-    {
-        return vtkInteractorStyleTerrain_GetPickColor_(this.NativePointer);
-    }
-
-    public new void GetPickColor(Span<double> data)
-    {
-        fixed (double* dataPtr = data)
-        {
-            vtkInteractorStyleTerrain_GetPickColor_doubleArray3(this.NativePointer, dataPtr);
-        }
-    }
-
-    public new bool GetPickingManaged()
-    {
-        return vtkInteractorStyleTerrain_GetPickingManaged(this.NativePointer);
-    }
-
-    public new float GetPriority()
-    {
-        return vtkInteractorStyleTerrain_GetPriority(this.NativePointer);
-    }
-
-    public new float GetPriorityMaxValue()
-    {
-        return vtkInteractorStyleTerrain_GetPriorityMaxValue(this.NativePointer);
-    }
-
-    public new float GetPriorityMinValue()
-    {
-        return vtkInteractorStyleTerrain_GetPriorityMinValue(this.NativePointer);
-    }
-
-    public new int GetReferenceCount()
-    {
-        return vtkInteractorStyleTerrain_GetReferenceCount(this.NativePointer);
-    }
-
-    public new int GetState()
-    {
-        return vtkInteractorStyleTerrain_GetState(this.NativePointer);
-    }
-
-    public new vtkTDxInteractorStyle GetTDxStyle()
-    {
-        return vtkTDxInteractorStyle.WeakReference(vtkInteractorStyleTerrain_GetTDxStyle(this.NativePointer));
-    }
-
-    public new bool GetUseTimers()
-    {
-        return vtkInteractorStyleTerrain_GetUseTimers(this.NativePointer);
-    }
-
-    public new void HandleObserversOff()
-    {
-        vtkInteractorStyleTerrain_HandleObserversOff(this.NativePointer);
-    }
-
-    public new void HandleObserversOn()
-    {
-        vtkInteractorStyleTerrain_HandleObserversOn(this.NativePointer);
-    }
-
-    public new bool HasObserver(string @event)
-    {
-        #if NET10_0_OR_GREATER
-        return vtkInteractorStyleTerrain_HasObserver(this.NativePointer, @event);
-        #else
-        return vtkInteractorStyleTerrain_HasObserver(this.NativePointer, VtkString.ToNullTerminatedUtf8(@event));
-        #endif
-    }
-
-    public new void HighlightActor2D(vtkActor2D actor2D)
-    {
-        vtkInteractorStyleTerrain_HighlightActor2D(this.NativePointer, actor2D.NativePointer);
-    }
-
-    public new void HighlightProp(vtkProp prop)
-    {
-        vtkInteractorStyleTerrain_HighlightProp(this.NativePointer, prop.NativePointer);
-    }
-
-    public new void HighlightProp3D(vtkProp3D prop3D)
-    {
-        vtkInteractorStyleTerrain_HighlightProp3D(this.NativePointer, prop3D.NativePointer);
-    }
-
-    public new void InitializeObjectBase()
-    {
-        vtkInteractorStyleTerrain_InitializeObjectBase(this.NativePointer);
-    }
-
-    public new bool InvokeEvent(string @event)
-    {
-        #if NET10_0_OR_GREATER
-        return vtkInteractorStyleTerrain_InvokeEvent_constCharPtr(this.NativePointer, @event);
-        #else
-        return vtkInteractorStyleTerrain_InvokeEvent_constCharPtr(this.NativePointer, VtkString.ToNullTerminatedUtf8(@event));
-        #endif
-    }
-
-    public new bool InvokeEvent(string @event, nint callData)
-    {
-        #if NET10_0_OR_GREATER
-        return vtkInteractorStyleTerrain_InvokeEvent_constCharPtr_voidPtr(this.NativePointer, @event, callData);
-        #else
-        return vtkInteractorStyleTerrain_InvokeEvent_constCharPtr_voidPtr(this.NativePointer, VtkString.ToNullTerminatedUtf8(@event), callData);
         #endif
     }
 
@@ -336,16 +46,6 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         #endif
     }
 
-    public new void KeyPressActivationOff()
-    {
-        vtkInteractorStyleTerrain_KeyPressActivationOff(this.NativePointer);
-    }
-
-    public new void KeyPressActivationOn()
-    {
-        vtkInteractorStyleTerrain_KeyPressActivationOn(this.NativePointer);
-    }
-
     public new void LatLongLinesOff()
     {
         vtkInteractorStyleTerrain_LatLongLinesOff(this.NativePointer);
@@ -356,134 +56,14 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         vtkInteractorStyleTerrain_LatLongLinesOn(this.NativePointer);
     }
 
-    public new void Modified()
-    {
-        vtkInteractorStyleTerrain_Modified(this.NativePointer);
-    }
-
     public new vtkInteractorStyleTerrain NewInstance()
     {
         return vtkInteractorStyleTerrain.WeakReference(vtkInteractorStyleTerrain_NewInstance(this.NativePointer));
     }
 
-    public new void Off()
-    {
-        vtkInteractorStyleTerrain_Off(this.NativePointer);
-    }
-
-    public new void On()
-    {
-        vtkInteractorStyleTerrain_On(this.NativePointer);
-    }
-
-    public new void OnButton3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnButton3D(this.NativePointer, _arg1.NativePointer);
-    }
-
     public new void OnChar()
     {
         vtkInteractorStyleTerrain_OnChar(this.NativePointer);
-    }
-
-    public new void OnClip3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnClip3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnConfigure()
-    {
-        vtkInteractorStyleTerrain_OnConfigure(this.NativePointer);
-    }
-
-    public new void OnDropFiles(vtkStringArray _arg1)
-    {
-        vtkInteractorStyleTerrain_OnDropFiles(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnElevation3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnElevation3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnEndPan()
-    {
-        vtkInteractorStyleTerrain_OnEndPan(this.NativePointer);
-    }
-
-    public new void OnEndPinch()
-    {
-        vtkInteractorStyleTerrain_OnEndPinch(this.NativePointer);
-    }
-
-    public new void OnEndRotate()
-    {
-        vtkInteractorStyleTerrain_OnEndRotate(this.NativePointer);
-    }
-
-    public new void OnEndSwipe()
-    {
-        vtkInteractorStyleTerrain_OnEndSwipe(this.NativePointer);
-    }
-
-    public new void OnEnter()
-    {
-        vtkInteractorStyleTerrain_OnEnter(this.NativePointer);
-    }
-
-    public new void OnExpose()
-    {
-        vtkInteractorStyleTerrain_OnExpose(this.NativePointer);
-    }
-
-    public new void OnFifthButtonDown()
-    {
-        vtkInteractorStyleTerrain_OnFifthButtonDown(this.NativePointer);
-    }
-
-    public new void OnFifthButtonUp()
-    {
-        vtkInteractorStyleTerrain_OnFifthButtonUp(this.NativePointer);
-    }
-
-    public new void OnFourthButtonDown()
-    {
-        vtkInteractorStyleTerrain_OnFourthButtonDown(this.NativePointer);
-    }
-
-    public new void OnFourthButtonUp()
-    {
-        vtkInteractorStyleTerrain_OnFourthButtonUp(this.NativePointer);
-    }
-
-    public new void OnKeyDown()
-    {
-        vtkInteractorStyleTerrain_OnKeyDown(this.NativePointer);
-    }
-
-    public new void OnKeyPress()
-    {
-        vtkInteractorStyleTerrain_OnKeyPress(this.NativePointer);
-    }
-
-    public new void OnKeyRelease()
-    {
-        vtkInteractorStyleTerrain_OnKeyRelease(this.NativePointer);
-    }
-
-    public new void OnKeyUp()
-    {
-        vtkInteractorStyleTerrain_OnKeyUp(this.NativePointer);
-    }
-
-    public new void OnLeave()
-    {
-        vtkInteractorStyleTerrain_OnLeave(this.NativePointer);
-    }
-
-    public new void OnLeftButtonDoubleClick()
-    {
-        vtkInteractorStyleTerrain_OnLeftButtonDoubleClick(this.NativePointer);
     }
 
     public new void OnLeftButtonDown()
@@ -494,21 +74,6 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     public new void OnLeftButtonUp()
     {
         vtkInteractorStyleTerrain_OnLeftButtonUp(this.NativePointer);
-    }
-
-    public new void OnLongTap()
-    {
-        vtkInteractorStyleTerrain_OnLongTap(this.NativePointer);
-    }
-
-    public new void OnMenu3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnMenu3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnMiddleButtonDoubleClick()
-    {
-        vtkInteractorStyleTerrain_OnMiddleButtonDoubleClick(this.NativePointer);
     }
 
     public new void OnMiddleButtonDown()
@@ -526,61 +91,6 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         vtkInteractorStyleTerrain_OnMouseMove(this.NativePointer);
     }
 
-    public new void OnMouseWheelBackward()
-    {
-        vtkInteractorStyleTerrain_OnMouseWheelBackward(this.NativePointer);
-    }
-
-    public new void OnMouseWheelForward()
-    {
-        vtkInteractorStyleTerrain_OnMouseWheelForward(this.NativePointer);
-    }
-
-    public new void OnMouseWheelLeft()
-    {
-        vtkInteractorStyleTerrain_OnMouseWheelLeft(this.NativePointer);
-    }
-
-    public new void OnMouseWheelRight()
-    {
-        vtkInteractorStyleTerrain_OnMouseWheelRight(this.NativePointer);
-    }
-
-    public new void OnMove3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnMove3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnNextPose3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnNextPose3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnPan()
-    {
-        vtkInteractorStyleTerrain_OnPan(this.NativePointer);
-    }
-
-    public new void OnPick3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnPick3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnPinch()
-    {
-        vtkInteractorStyleTerrain_OnPinch(this.NativePointer);
-    }
-
-    public new void OnPositionProp3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnPositionProp3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnRightButtonDoubleClick()
-    {
-        vtkInteractorStyleTerrain_OnRightButtonDoubleClick(this.NativePointer);
-    }
-
     public new void OnRightButtonDown()
     {
         vtkInteractorStyleTerrain_OnRightButtonDown(this.NativePointer);
@@ -591,93 +101,9 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         vtkInteractorStyleTerrain_OnRightButtonUp(this.NativePointer);
     }
 
-    public new void OnRotate()
-    {
-        vtkInteractorStyleTerrain_OnRotate(this.NativePointer);
-    }
-
-    public new void OnSelect3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnSelect3D(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void OnStartPan()
-    {
-        vtkInteractorStyleTerrain_OnStartPan(this.NativePointer);
-    }
-
-    public new void OnStartPinch()
-    {
-        vtkInteractorStyleTerrain_OnStartPinch(this.NativePointer);
-    }
-
-    public new void OnStartRotate()
-    {
-        vtkInteractorStyleTerrain_OnStartRotate(this.NativePointer);
-    }
-
-    public new void OnStartSwipe()
-    {
-        vtkInteractorStyleTerrain_OnStartSwipe(this.NativePointer);
-    }
-
-    public new void OnSwipe()
-    {
-        vtkInteractorStyleTerrain_OnSwipe(this.NativePointer);
-    }
-
-    public new void OnTap()
-    {
-        vtkInteractorStyleTerrain_OnTap(this.NativePointer);
-    }
-
-    public new void OnTimer()
-    {
-        vtkInteractorStyleTerrain_OnTimer(this.NativePointer);
-    }
-
-    public new void OnViewerMovement3D(vtkEventData _arg1)
-    {
-        vtkInteractorStyleTerrain_OnViewerMovement3D(this.NativePointer, _arg1.NativePointer);
-    }
-
     public new void Pan()
     {
         vtkInteractorStyleTerrain_Pan(this.NativePointer);
-    }
-
-    public new void PickingManagedOff()
-    {
-        vtkInteractorStyleTerrain_PickingManagedOff(this.NativePointer);
-    }
-
-    public new void PickingManagedOn()
-    {
-        vtkInteractorStyleTerrain_PickingManagedOn(this.NativePointer);
-    }
-
-    public new void Register(vtkObjectBase o)
-    {
-        vtkInteractorStyleTerrain_Register(this.NativePointer, o.NativePointer);
-    }
-
-    public new void ReleaseFocus()
-    {
-        vtkInteractorStyleTerrain_ReleaseFocus(this.NativePointer);
-    }
-
-    public new void RemoveAllObservers()
-    {
-        vtkInteractorStyleTerrain_RemoveAllObservers(this.NativePointer);
-    }
-
-    public new void RemoveObservers(string @event)
-    {
-        #if NET10_0_OR_GREATER
-        vtkInteractorStyleTerrain_RemoveObservers(this.NativePointer, @event);
-        #else
-        vtkInteractorStyleTerrain_RemoveObservers(this.NativePointer, VtkString.ToNullTerminatedUtf8(@event));
-        #endif
     }
 
     public new void Rotate()
@@ -685,202 +111,9 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         vtkInteractorStyleTerrain_Rotate(this.NativePointer);
     }
 
-    public new void SetAutoAdjustCameraClippingRange(bool _arg)
-    {
-        vtkInteractorStyleTerrain_SetAutoAdjustCameraClippingRange(this.NativePointer, _arg);
-    }
-
-    public new void SetCurrentRenderer(vtkRenderer _arg1)
-    {
-        vtkInteractorStyleTerrain_SetCurrentRenderer(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void SetDebug(bool debugFlag)
-    {
-        vtkInteractorStyleTerrain_SetDebug(this.NativePointer, debugFlag);
-    }
-
-    public new void SetDefaultRenderer(vtkRenderer _arg1)
-    {
-        vtkInteractorStyleTerrain_SetDefaultRenderer(this.NativePointer, _arg1.NativePointer);
-    }
-
-    public new void SetEnabled(int _arg1)
-    {
-        vtkInteractorStyleTerrain_SetEnabled(this.NativePointer, _arg1);
-    }
-
-    public new void SetHandleObservers(bool _arg)
-    {
-        vtkInteractorStyleTerrain_SetHandleObservers(this.NativePointer, _arg);
-    }
-
-    public new void SetInteractor(vtkRenderWindowInteractor interactor)
-    {
-        vtkInteractorStyleTerrain_SetInteractor(this.NativePointer, interactor.NativePointer);
-    }
-
-    public new void SetKeyPressActivation(bool _arg)
-    {
-        vtkInteractorStyleTerrain_SetKeyPressActivation(this.NativePointer, _arg);
-    }
-
-    public new void SetKeyPressActivationValue(char _arg)
-    {
-        vtkInteractorStyleTerrain_SetKeyPressActivationValue(this.NativePointer, _arg);
-    }
-
     public new void SetLatLongLines(bool _arg)
     {
         vtkInteractorStyleTerrain_SetLatLongLines(this.NativePointer, _arg);
-    }
-
-    public new void SetMouseWheelMotionFactor(double _arg)
-    {
-        vtkInteractorStyleTerrain_SetMouseWheelMotionFactor(this.NativePointer, _arg);
-    }
-
-    public new void SetPickColor(double _arg1, double _arg2, double _arg3)
-    {
-        vtkInteractorStyleTerrain_SetPickColor_double_double_double(this.NativePointer, _arg1, _arg2, _arg3);
-    }
-
-    public new void SetPickColor(ReadOnlySpan<double> _arg)
-    {
-        fixed (double* _argPtr = _arg)
-        {
-            vtkInteractorStyleTerrain_SetPickColor_doubleConstArray3(this.NativePointer, _argPtr);
-        }
-    }
-
-    public new void SetPickingManaged(bool managed)
-    {
-        vtkInteractorStyleTerrain_SetPickingManaged(this.NativePointer, managed);
-    }
-
-    public new void SetPriority(float _arg)
-    {
-        vtkInteractorStyleTerrain_SetPriority(this.NativePointer, _arg);
-    }
-
-    public new void SetReferenceCount(int _arg1)
-    {
-        vtkInteractorStyleTerrain_SetReferenceCount(this.NativePointer, _arg1);
-    }
-
-    public new void SetTDxStyle(vtkTDxInteractorStyle tdxStyle)
-    {
-        vtkInteractorStyleTerrain_SetTDxStyle(this.NativePointer, tdxStyle.NativePointer);
-    }
-
-    public new void SetUseTimers(bool _arg)
-    {
-        vtkInteractorStyleTerrain_SetUseTimers(this.NativePointer, _arg);
-    }
-
-    public new void Spin()
-    {
-        vtkInteractorStyleTerrain_Spin(this.NativePointer);
-    }
-
-    public new void StartAnimate()
-    {
-        vtkInteractorStyleTerrain_StartAnimate(this.NativePointer);
-    }
-
-    public new void StartDolly()
-    {
-        vtkInteractorStyleTerrain_StartDolly(this.NativePointer);
-    }
-
-    public new void StartEnvRotate()
-    {
-        vtkInteractorStyleTerrain_StartEnvRotate(this.NativePointer);
-    }
-
-    public new void StartGesture()
-    {
-        vtkInteractorStyleTerrain_StartGesture(this.NativePointer);
-    }
-
-    public new void StartPan()
-    {
-        vtkInteractorStyleTerrain_StartPan(this.NativePointer);
-    }
-
-    public new void StartRotate()
-    {
-        vtkInteractorStyleTerrain_StartRotate(this.NativePointer);
-    }
-
-    public new void StartSpin()
-    {
-        vtkInteractorStyleTerrain_StartSpin(this.NativePointer);
-    }
-
-    public new void StartState(int newstate)
-    {
-        vtkInteractorStyleTerrain_StartState(this.NativePointer, newstate);
-    }
-
-    public new void StartTimer()
-    {
-        vtkInteractorStyleTerrain_StartTimer(this.NativePointer);
-    }
-
-    public new void StartTwoPointer()
-    {
-        vtkInteractorStyleTerrain_StartTwoPointer(this.NativePointer);
-    }
-
-    public new void StartUniformScale()
-    {
-        vtkInteractorStyleTerrain_StartUniformScale(this.NativePointer);
-    }
-
-    public new void StartZoom()
-    {
-        vtkInteractorStyleTerrain_StartZoom(this.NativePointer);
-    }
-
-    public new void StopAnimate()
-    {
-        vtkInteractorStyleTerrain_StopAnimate(this.NativePointer);
-    }
-
-    public new void StopState()
-    {
-        vtkInteractorStyleTerrain_StopState(this.NativePointer);
-    }
-
-    public new void UnRegister(vtkObjectBase o)
-    {
-        vtkInteractorStyleTerrain_UnRegister(this.NativePointer, o.NativePointer);
-    }
-
-    public new void UniformScale()
-    {
-        vtkInteractorStyleTerrain_UniformScale(this.NativePointer);
-    }
-
-    public new void UseTimersOff()
-    {
-        vtkInteractorStyleTerrain_UseTimersOff(this.NativePointer);
-    }
-
-    public new void UseTimersOn()
-    {
-        vtkInteractorStyleTerrain_UseTimersOn(this.NativePointer);
-    }
-
-    public new bool UsesGarbageCollector()
-    {
-        return vtkInteractorStyleTerrain_UsesGarbageCollector(this.NativePointer);
-    }
-
-    public new void Zoom()
-    {
-        vtkInteractorStyleTerrain_Zoom(this.NativePointer);
     }
 
     #region Interop
@@ -888,126 +121,11 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     private static extern nint vtkInteractorStyleTerrain_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_AutoAdjustCameraClippingRangeOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_AutoAdjustCameraClippingRangeOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_DebugOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_DebugOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_Delete(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_Dolly(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EnabledOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EnabledOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndDolly(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndEnvRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndGesture(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndPan(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndSpin(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndTimer(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndTwoPointer(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndUniformScale(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EndZoom(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_EnvironmentRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_FastDelete(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_FindPokedRenderer(nint self, int _arg1, int _arg2);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_GetAutoAdjustCameraClippingRange(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_GetAutoAdjustCameraClippingRangeMaxValue(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_GetAutoAdjustCameraClippingRangeMinValue(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkInteractorStyleTerrain_GetClassName(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkInteractorStyleTerrain_GetClassNameA(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkInteractorStyleTerrain_GetClassNameW(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkInteractorStyleTerrain_GetCurrentRenderer(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U1)]
-    private static extern bool vtkInteractorStyleTerrain_GetDebug(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkInteractorStyleTerrain_GetDefaultRenderer(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkInteractorStyleTerrain_GetEnabled(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_GetHandleObservers(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkInteractorStyleTerrain_GetInteractor(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U1)]
-    private static extern bool vtkInteractorStyleTerrain_GetIsInMemkind(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_GetKeyPressActivation(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern byte vtkInteractorStyleTerrain_GetKeyPressActivationValue(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     [return: MarshalAs(UnmanagedType.U4)]
     private static extern bool vtkInteractorStyleTerrain_GetLatLongLines(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern double vtkInteractorStyleTerrain_GetMouseWheelMotionFactor(nint self);
 
 #if NET10_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
@@ -1015,86 +133,6 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 #else
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkInteractorStyleTerrain_GetNumberOfGenerationsFromBase(nint self, byte[] type);
-#endif
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern double* vtkInteractorStyleTerrain_GetPickColor_(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_GetPickColor_doubleArray3(nint self, double* data);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U1)]
-    private static extern bool vtkInteractorStyleTerrain_GetPickingManaged(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern float vtkInteractorStyleTerrain_GetPriority(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern float vtkInteractorStyleTerrain_GetPriorityMaxValue(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern float vtkInteractorStyleTerrain_GetPriorityMinValue(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkInteractorStyleTerrain_GetReferenceCount(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkInteractorStyleTerrain_GetState(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkInteractorStyleTerrain_GetTDxStyle(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_GetUseTimers(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_HandleObserversOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_HandleObserversOn(nint self);
-
-#if NET10_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static partial bool vtkInteractorStyleTerrain_HasObserver(nint self, string @event);
-#else
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_HasObserver(nint self, byte[] @event);
-#endif
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_HighlightActor2D(nint self, nint actor2D);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_HighlightProp(nint self, nint prop);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_HighlightProp3D(nint self, nint prop3D);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_InitializeObjectBase(nint self);
-
-#if NET10_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static partial bool vtkInteractorStyleTerrain_InvokeEvent_constCharPtr(nint self, string @event);
-#else
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_InvokeEvent_constCharPtr(nint self, byte[] @event);
-#endif
-
-#if NET10_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static partial bool vtkInteractorStyleTerrain_InvokeEvent_constCharPtr_voidPtr(nint self, string @event, nint callData);
-#else
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_InvokeEvent_constCharPtr_voidPtr(nint self, byte[] @event, nint callData);
 #endif
 
 #if NET10_0_OR_GREATER
@@ -1108,109 +146,22 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 #endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_KeyPressActivationOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_KeyPressActivationOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_LatLongLinesOff(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_LatLongLinesOn(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_Modified(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleTerrain_NewInstance(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_Off(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_On(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnButton3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_OnChar(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnClip3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnConfigure(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnDropFiles(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnElevation3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnEndPan(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnEndPinch(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnEndRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnEndSwipe(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnEnter(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnExpose(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnFifthButtonDown(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnFifthButtonUp(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnFourthButtonDown(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnFourthButtonUp(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnKeyDown(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnKeyPress(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnKeyRelease(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnKeyUp(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnLeave(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnLeftButtonDoubleClick(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_OnLeftButtonDown(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_OnLeftButtonUp(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnLongTap(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnMenu3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnMiddleButtonDoubleClick(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_OnMiddleButtonDown(nint self);
@@ -1222,219 +173,18 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     private static extern void vtkInteractorStyleTerrain_OnMouseMove(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnMouseWheelBackward(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnMouseWheelForward(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnMouseWheelLeft(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnMouseWheelRight(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnMove3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnNextPose3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnPan(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnPick3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnPinch(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnPositionProp3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnRightButtonDoubleClick(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_OnRightButtonDown(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_OnRightButtonUp(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnSelect3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnStartPan(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnStartPinch(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnStartRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnStartSwipe(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnSwipe(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnTap(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnTimer(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_OnViewerMovement3D(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_Pan(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_PickingManagedOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_PickingManagedOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_Register(nint self, nint o);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_ReleaseFocus(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_RemoveAllObservers(nint self);
-
-#if NET10_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
-    private static partial void vtkInteractorStyleTerrain_RemoveObservers(nint self, string @event);
-#else
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_RemoveObservers(nint self, byte[] @event);
-#endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_Rotate(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetAutoAdjustCameraClippingRange(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetCurrentRenderer(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetDebug(nint self, [MarshalAs(UnmanagedType.U1)] bool debugFlag);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetDefaultRenderer(nint self, nint _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetEnabled(nint self, int _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetHandleObservers(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetInteractor(nint self, nint interactor);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetKeyPressActivation(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetKeyPressActivationValue(nint self, char _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleTerrain_SetLatLongLines(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetMouseWheelMotionFactor(nint self, double _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetPickColor_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetPickColor_doubleConstArray3(nint self, double* _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetPickingManaged(nint self, [MarshalAs(UnmanagedType.U1)] bool managed);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetPriority(nint self, float _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetReferenceCount(nint self, int _arg1);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetTDxStyle(nint self, nint tdxStyle);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetUseTimers(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_Spin(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartAnimate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartDolly(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartEnvRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartGesture(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartPan(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartRotate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartSpin(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartState(nint self, int newstate);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartTimer(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartTwoPointer(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartUniformScale(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StartZoom(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StopAnimate(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_StopState(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_UnRegister(nint self, nint o);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_UniformScale(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_UseTimersOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_UseTimersOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U1)]
-    private static extern bool vtkInteractorStyleTerrain_UsesGarbageCollector(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_Zoom(nint self);
     #endregion
 }

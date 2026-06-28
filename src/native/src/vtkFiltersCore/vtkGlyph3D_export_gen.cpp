@@ -5,14 +5,6 @@
 
 VTKSHARP_API vtkGlyph3D* vtkGlyph3D_New() { return vtkGlyph3D::New(); }
 
-VTKSHARP_API vtkAlgorithmOutput* vtkGlyph3D_GetOutputPort_(vtkGlyph3D* self) { return self->GetOutputPort(); }
-
-VTKSHARP_API vtkAlgorithmOutput* vtkGlyph3D_GetOutputPort_int(vtkGlyph3D* self, int index) { return self->GetOutputPort(index); }
-
-VTKSHARP_API void vtkGlyph3D_SetInputConnection_int_vtkAlgorithmOutputPtr(vtkGlyph3D* self, int port, vtkAlgorithmOutput* input) { self->SetInputConnection(port, input); }
-
-VTKSHARP_API void vtkGlyph3D_SetInputConnection_vtkAlgorithmOutputPtr(vtkGlyph3D* self, vtkAlgorithmOutput* input) { self->SetInputConnection(input); }
-
 VTKSHARP_API void vtkGlyph3D_SetSourceConnection_int_vtkAlgorithmOutputPtr(vtkGlyph3D* self, int id, vtkAlgorithmOutput* algOutput) { self->SetSourceConnection(id, algOutput); }
 
 VTKSHARP_API void vtkGlyph3D_SetSourceConnection_vtkAlgorithmOutputPtr(vtkGlyph3D* self, vtkAlgorithmOutput* algOutput) { self->SetSourceConnection(algOutput); }

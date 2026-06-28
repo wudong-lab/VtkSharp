@@ -18,40 +18,8 @@ public unsafe partial class vtkExtractEdges : vtkPolyDataAlgorithm
         return target;
     }
 
-    public new vtkAlgorithmOutput GetOutputPort()
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkExtractEdges_GetOutputPort_(this.NativePointer));
-    }
-
-    public new vtkAlgorithmOutput GetOutputPort(int index)
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkExtractEdges_GetOutputPort_int(this.NativePointer, index));
-    }
-
-    public new void SetInputConnection(int port, vtkAlgorithmOutput input)
-    {
-        vtkExtractEdges_SetInputConnection_int_vtkAlgorithmOutputPtr(this.NativePointer, port, input.NativePointer);
-    }
-
-    public new void SetInputConnection(vtkAlgorithmOutput input)
-    {
-        vtkExtractEdges_SetInputConnection_vtkAlgorithmOutputPtr(this.NativePointer, input.NativePointer);
-    }
-
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkExtractEdges_New();
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkExtractEdges_GetOutputPort_(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkExtractEdges_GetOutputPort_int(nint self, int index);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkExtractEdges_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int port, nint input);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkExtractEdges_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
     #endregion
 }

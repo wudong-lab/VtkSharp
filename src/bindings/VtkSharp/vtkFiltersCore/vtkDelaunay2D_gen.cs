@@ -18,26 +18,6 @@ public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
         return target;
     }
 
-    public new vtkAlgorithmOutput GetOutputPort()
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkDelaunay2D_GetOutputPort_(this.NativePointer));
-    }
-
-    public new vtkAlgorithmOutput GetOutputPort(int index)
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkDelaunay2D_GetOutputPort_int(this.NativePointer, index));
-    }
-
-    public new void SetInputData(int _arg1, vtkDataObject _arg2)
-    {
-        vtkDelaunay2D_SetInputData_int_vtkDataObjectPtr(this.NativePointer, _arg1, _arg2.NativePointer);
-    }
-
-    public new void SetInputData(vtkDataObject _arg1)
-    {
-        vtkDelaunay2D_SetInputData_vtkDataObjectPtr(this.NativePointer, _arg1.NativePointer);
-    }
-
     public new void SetTolerance(double _arg)
     {
         vtkDelaunay2D_SetTolerance(this.NativePointer, _arg);
@@ -46,18 +26,6 @@ public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDelaunay2D_New();
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkDelaunay2D_GetOutputPort_(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkDelaunay2D_GetOutputPort_int(nint self, int index);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkDelaunay2D_SetInputData_int_vtkDataObjectPtr(nint self, int _arg1, nint _arg2);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkDelaunay2D_SetInputData_vtkDataObjectPtr(nint self, nint _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDelaunay2D_SetTolerance(nint self, double _arg);

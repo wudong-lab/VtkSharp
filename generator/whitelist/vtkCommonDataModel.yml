@@ -132,13 +132,6 @@ classes:
         parameters:
           - type: vtkCellArray*
             name: l
-      - name: SetPoints
-        cppSignature: void SetPoints(vtkPoints * _arg1)
-        return:
-          type: void
-        parameters:
-          - type: vtkPoints*
-            name: _arg1
       - name: SetPolys
         cppSignature: void SetPolys(vtkCellArray * p)
         return:

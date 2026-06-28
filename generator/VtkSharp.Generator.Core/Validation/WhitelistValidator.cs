@@ -54,7 +54,7 @@ public sealed class WhitelistValidator
                         $"Class '{whitelistClass.Name}' has header '{hierarchyHeader}' in hierarchy but whitelist declares '{whitelistClass.Header}'."));
             }
 
-            foreach (var function in whitelistClass.Functions)
+            foreach (var function in whitelistClass.Functions ?? [])
             {
                 var matches = inspectedClass.Functions
                     .Where(item => item.Name == function.Name)

@@ -18,26 +18,6 @@ public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
         return target;
     }
 
-    public new vtkAlgorithmOutput GetOutputPort()
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkGlyph3D_GetOutputPort_(this.NativePointer));
-    }
-
-    public new vtkAlgorithmOutput GetOutputPort(int index)
-    {
-        return vtkAlgorithmOutput.WeakReference(vtkGlyph3D_GetOutputPort_int(this.NativePointer, index));
-    }
-
-    public new void SetInputConnection(int port, vtkAlgorithmOutput input)
-    {
-        vtkGlyph3D_SetInputConnection_int_vtkAlgorithmOutputPtr(this.NativePointer, port, input.NativePointer);
-    }
-
-    public new void SetInputConnection(vtkAlgorithmOutput input)
-    {
-        vtkGlyph3D_SetInputConnection_vtkAlgorithmOutputPtr(this.NativePointer, input.NativePointer);
-    }
-
     public new void SetSourceConnection(int id, vtkAlgorithmOutput algOutput)
     {
         vtkGlyph3D_SetSourceConnection_int_vtkAlgorithmOutputPtr(this.NativePointer, id, algOutput.NativePointer);
@@ -51,18 +31,6 @@ public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkGlyph3D_New();
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkGlyph3D_GetOutputPort_(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkGlyph3D_GetOutputPort_int(nint self, int index);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkGlyph3D_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int port, nint input);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkGlyph3D_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGlyph3D_SetSourceConnection_int_vtkAlgorithmOutputPtr(nint self, int id, nint algOutput);
