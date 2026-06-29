@@ -3,3 +3,9 @@
 #include <vtkWin32RenderWindowInteractor.h>
 
 VTKSHARP_API vtkWin32RenderWindowInteractor* vtkWin32RenderWindowInteractor_New() { return vtkWin32RenderWindowInteractor::New(); }
+
+VTKSHARP_API void vtkWin32RenderWindowInteractor_Initialize(vtkWin32RenderWindowInteractor* self) { self->Initialize(); }
+
+VTKSHARP_API void vtkWin32RenderWindowInteractor_InstallMessageProcOff(vtkWin32RenderWindowInteractor* self) { self->InstallMessageProcOff(); }
+
+VTKSHARP_API void vtkWin32RenderWindowInteractor_InstallMessageProcOn(vtkWin32RenderWindowInteractor* self) { self->InstallMessageProcOn(); }

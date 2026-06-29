@@ -18,8 +18,32 @@ public unsafe partial class vtkWin32RenderWindowInteractor : vtkRenderWindowInte
         return target;
     }
 
+    public new void Initialize()
+    {
+        vtkWin32RenderWindowInteractor_Initialize(this.NativePointer);
+    }
+
+    public new void InstallMessageProcOff()
+    {
+        vtkWin32RenderWindowInteractor_InstallMessageProcOff(this.NativePointer);
+    }
+
+    public new void InstallMessageProcOn()
+    {
+        vtkWin32RenderWindowInteractor_InstallMessageProcOn(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32RenderWindowInteractor_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWin32RenderWindowInteractor_Initialize(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWin32RenderWindowInteractor_InstallMessageProcOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWin32RenderWindowInteractor_InstallMessageProcOn(nint self);
     #endregion
 }
