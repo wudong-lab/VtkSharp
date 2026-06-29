@@ -23,6 +23,11 @@ public unsafe partial class vtkPoints : vtkObject
         return vtkPoints_GetNumberOfPoints(this.NativePointer);
     }
 
+    public new void Initialize()
+    {
+        vtkPoints_Initialize(this.NativePointer);
+    }
+
     public new long InsertNextPoint(ReadOnlySpan<double> x)
     {
         fixed (double* xPtr = x)
@@ -162,6 +167,9 @@ public unsafe partial class vtkPoints : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkPoints_GetNumberOfPoints(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_Initialize(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkPoints_InsertNextPoint_doubleConstArray3(nint self, double* x);

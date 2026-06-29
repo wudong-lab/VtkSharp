@@ -73,7 +73,7 @@ classes:
             name: _arg
   - name: vtkExtractEdges
     header: vtkExtractEdges.h
-    functions:
+    functions: []
   - name: vtkGenerateIds
     header: vtkGenerateIds.h
     functions:

@@ -6,6 +6,8 @@ VTKSHARP_API vtkPoints* vtkPoints_New() { return vtkPoints::New(); }
 
 VTKSHARP_API vtkIdType vtkPoints_GetNumberOfPoints(vtkPoints* self) { return self->GetNumberOfPoints(); }
 
+VTKSHARP_API void vtkPoints_Initialize(vtkPoints* self) { self->Initialize(); }
+
 VTKSHARP_API vtkIdType vtkPoints_InsertNextPoint_doubleConstArray3(vtkPoints* self, const double* x) { return self->InsertNextPoint(x); }
 
 VTKSHARP_API vtkIdType vtkPoints_InsertNextPoint_double_double_double(vtkPoints* self, double x, double y, double z) { return self->InsertNextPoint(x, y, z); }
