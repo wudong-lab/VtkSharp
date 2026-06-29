@@ -6,7 +6,9 @@ public sealed class NativeProjectEmitter
         => $$"""
            cmake_minimum_required(VERSION 3.25)
 
-           project({{nativeLibraryName}} LANGUAGES CXX)
+           set(VTKSHARP_NATIVE_TARGET {{nativeLibraryName}})
+
+           project(${VTKSHARP_NATIVE_TARGET} LANGUAGES CXX)
 
            include(${CMAKE_CURRENT_SOURCE_DIR}/vtksharp.modules.generated.cmake)
 
@@ -32,25 +34,25 @@ public sealed class NativeProjectEmitter
                FILES ${LIB_HEADERS}
            )
 
-           add_library({{nativeLibraryName}} SHARED
+           add_library(${VTKSHARP_NATIVE_TARGET} SHARED
              ${LIB_SRC}
              ${LIB_HEADERS}
            )
 
-           target_compile_features({{nativeLibraryName}} PRIVATE cxx_std_17)
+           target_compile_features(${VTKSHARP_NATIVE_TARGET} PRIVATE cxx_std_17)
 
-           target_include_directories({{nativeLibraryName}}
+           target_include_directories(${VTKSHARP_NATIVE_TARGET}
              PRIVATE
                ${CMAKE_CURRENT_SOURCE_DIR}/include
            )
 
-           target_link_libraries({{nativeLibraryName}}
+           target_link_libraries(${VTKSHARP_NATIVE_TARGET}
              PRIVATE
                ${VTKSHARP_VTK_TARGETS}
            )
 
            vtk_module_autoinit(
-             TARGETS {{nativeLibraryName}}
+             TARGETS ${VTKSHARP_NATIVE_TARGET}
              MODULES
                ${VTKSHARP_VTK_TARGETS}
            )

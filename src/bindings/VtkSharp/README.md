@@ -7,7 +7,7 @@ Unofficial .NET bindings for [VTK](https://vtk.org/) (Visualization Toolkit).
 - C ABI shim + C# P/Invoke approach — no C++/CLI required
 - Multi-target: `netstandard2.0` and `net10.0`
 - Generated bindings with hand-written sugar for common patterns
-- Bundled native `vtksharp_native.dll` for Windows x64
+- Bundled native `VtkSharp.Native.dll` for Windows x64
 
 ## Getting Started
 

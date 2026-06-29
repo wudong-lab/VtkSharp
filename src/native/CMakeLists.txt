@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.25)
 
-project(vtksharp_native LANGUAGES CXX)
+set(VTKSHARP_NATIVE_TARGET VtkSharp.Native)
+
+project(${VTKSHARP_NATIVE_TARGET} LANGUAGES CXX)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/vtksharp.modules.generated.cmake)
 
@@ -26,25 +28,25 @@ source_group(
     FILES ${LIB_HEADERS}
 )
 
-add_library(vtksharp_native SHARED
+add_library(${VTKSHARP_NATIVE_TARGET} SHARED
   ${LIB_SRC}
   ${LIB_HEADERS}
 )
 
-target_compile_features(vtksharp_native PRIVATE cxx_std_17)
+target_compile_features(${VTKSHARP_NATIVE_TARGET} PRIVATE cxx_std_17)
 
-target_include_directories(vtksharp_native
+target_include_directories(${VTKSHARP_NATIVE_TARGET}
   PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-target_link_libraries(vtksharp_native
+target_link_libraries(${VTKSHARP_NATIVE_TARGET}
   PRIVATE
     ${VTKSHARP_VTK_TARGETS}
 )
 
 vtk_module_autoinit(
-  TARGETS vtksharp_native
+  TARGETS ${VTKSHARP_NATIVE_TARGET}
   MODULES
     ${VTKSHARP_VTK_TARGETS}
 )

@@ -55,7 +55,7 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --out
 ### 构建
 
 > **⚠ CRT 匹配要求**：native DLL 与 VTK DLL 必须使用相同的 CRT（`/MD` 对 Release、`/MDd` 对 Debug）。构建配置必须一致：
-> `VtkSharp.csproj` 已按 `$(Configuration)` 自动选择对应版本的 `vtksharp_native.dll`。
+> `VtkSharp.csproj` 已按 `$(Configuration)` 自动选择对应版本的 `VtkSharp.Native.dll`。
 >
 > | C# 构建 | Native 构建 | CRT |
 > | --- | --- | --- |

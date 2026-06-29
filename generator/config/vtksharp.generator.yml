@@ -11,7 +11,7 @@ vtk:
 
 binding:
   namespace: VtkSharp
-  nativeLibraryName: vtksharp_native
+  nativeLibraryName: VtkSharp.Native
   manualBindingClasses:
     - vtkObjectBase
     - vtkObject

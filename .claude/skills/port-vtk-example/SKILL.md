@@ -150,7 +150,7 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --out
 
 ## 5. Build native and managed code
 
-> **⚠ CRT 匹配要求**：native DLL 与 VTK DLL 必须使用相同的 CRT（`/MD` 对 Release、`/MDd` 对 Debug）。在 VtkSharp.csproj 中，`$(Configuration)` 会自动选择对应版本的 `vtksharp_native.dll`。
+> **⚠ CRT 匹配要求**：native DLL 与 VTK DLL 必须使用相同的 CRT（`/MD` 对 Release、`/MDd` 对 Debug）。在 VtkSharp.csproj 中，`$(Configuration)` 会自动选择对应版本的 `VtkSharp.Native.dll`。
 
 ```bash
 .\tools\build-native.ps1 -Configuration Release
@@ -169,7 +169,7 @@ If there are compilation errors in generated code, diagnose the type mapping iss
 
 ## 6. Smoke test
 
-The native DLL is automatically copied to output via `VtkSharp.csproj` (it references `src/native/out/build/windows-x64/Release/vtksharp_native.dll` with `CopyToOutputDirectory`). Run ExampleBrowser to verify the example works:
+The native DLL is automatically copied to output via `VtkSharp.csproj` (it references `src/native/out/build/windows-x64/Release/VtkSharp.Native.dll` with `CopyToOutputDirectory`). Run ExampleBrowser to verify the example works:
 
 ```bash
 dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj

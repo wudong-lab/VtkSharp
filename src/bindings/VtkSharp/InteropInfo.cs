@@ -2,5 +2,5 @@
 
 internal static class InteropInfo
 {
-    public const string NativeLibraryName = "vtksharp_native";
+    public const string NativeLibraryName = "VtkSharp.Native";
 }
