@@ -17,6 +17,24 @@ public unsafe partial class vtkProp3D : vtkProp
         return target;
     }
 
+    internal new double* GetScale_Internal()
+    {
+        return vtkProp3D_GetScale_(this.NativePointer);
+    }
+
+    public new void GetScale(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkProp3D_GetScale_doubleArray3(this.NativePointer, dataPtr);
+        }
+    }
+
+    public new void RotateWXYZ(double w, double x, double y, double z)
+    {
+        vtkProp3D_RotateWXYZ(this.NativePointer, w, x, y, z);
+    }
+
     public new void RotateX(double _arg1)
     {
         vtkProp3D_RotateX(this.NativePointer, _arg1);
@@ -27,11 +45,36 @@ public unsafe partial class vtkProp3D : vtkProp
         vtkProp3D_RotateY(this.NativePointer, _arg1);
     }
 
+    public new void RotateZ(double _arg1)
+    {
+        vtkProp3D_RotateZ(this.NativePointer, _arg1);
+    }
+
+    public new void SetUserTransform(vtkLinearTransform transform)
+    {
+        vtkProp3D_SetUserTransform(this.NativePointer, transform.NativePointer);
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkProp3D_GetScale_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp3D_GetScale_doubleArray3(nint self, double* data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp3D_RotateWXYZ(nint self, double w, double x, double y, double z);
+
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_RotateX(nint self, double _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_RotateY(nint self, double _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp3D_RotateZ(nint self, double _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp3D_SetUserTransform(nint self, nint transform);
     #endregion
 }

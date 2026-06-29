@@ -18,8 +18,110 @@ public unsafe partial class vtkActor2D : vtkProp
         return target;
     }
 
+    public new vtkCoordinate GetPositionCoordinate()
+    {
+        return vtkCoordinate.WeakReference(vtkActor2D_GetPositionCoordinate(this.NativePointer));
+    }
+
+    public new vtkProperty2D GetProperty()
+    {
+        return vtkProperty2D.WeakReference(vtkActor2D_GetProperty(this.NativePointer));
+    }
+
+    public new void SetDisplayPosition(int _arg1, int _arg2)
+    {
+        vtkActor2D_SetDisplayPosition(this.NativePointer, _arg1, _arg2);
+    }
+
+    public new void SetHeight(double h)
+    {
+        vtkActor2D_SetHeight(this.NativePointer, h);
+    }
+
+    public new void SetLayerNumber(int _arg)
+    {
+        vtkActor2D_SetLayerNumber(this.NativePointer, _arg);
+    }
+
+    public new void SetMapper(vtkMapper2D mapper)
+    {
+        vtkActor2D_SetMapper(this.NativePointer, mapper.NativePointer);
+    }
+
+    public new void SetPosition(double x, double y)
+    {
+        vtkActor2D_SetPosition_double_double(this.NativePointer, x, y);
+    }
+
+    public new void SetPosition(Span<double> x)
+    {
+        fixed (double* xPtr = x)
+        {
+            vtkActor2D_SetPosition_doubleArray2(this.NativePointer, xPtr);
+        }
+    }
+
+    public new void SetPosition2(double x, double y)
+    {
+        vtkActor2D_SetPosition2_double_double(this.NativePointer, x, y);
+    }
+
+    public new void SetPosition2(Span<double> x)
+    {
+        fixed (double* xPtr = x)
+        {
+            vtkActor2D_SetPosition2_doubleArray2(this.NativePointer, xPtr);
+        }
+    }
+
+    public new void SetProperty(vtkProperty2D _arg1)
+    {
+        vtkActor2D_SetProperty(this.NativePointer, _arg1.NativePointer);
+    }
+
+    public new void SetWidth(double w)
+    {
+        vtkActor2D_SetWidth(this.NativePointer, w);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkActor2D_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkActor2D_GetPositionCoordinate(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkActor2D_GetProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetDisplayPosition(nint self, int _arg1, int _arg2);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetHeight(nint self, double h);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetLayerNumber(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetMapper(nint self, nint mapper);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetPosition_double_double(nint self, double x, double y);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetPosition_doubleArray2(nint self, double* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetPosition2_double_double(nint self, double x, double y);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetPosition2_doubleArray2(nint self, double* x);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetProperty(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor2D_SetWidth(nint self, double w);
     #endregion
 }

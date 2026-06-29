@@ -3,3 +3,7 @@
 #include <vtkProperty2D.h>
 
 VTKSHARP_API vtkProperty2D* vtkProperty2D_New() { return vtkProperty2D::New(); }
+
+VTKSHARP_API void vtkProperty2D_SetColor_double_double_double(vtkProperty2D* self, double _arg1, double _arg2, double _arg3) { self->SetColor(_arg1, _arg2, _arg3); }
+
+VTKSHARP_API void vtkProperty2D_SetColor_doubleConstArray3(vtkProperty2D* self, const double* _arg) { self->SetColor(_arg); }

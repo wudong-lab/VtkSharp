@@ -32,7 +32,93 @@ classes:
             name: lut
   - name: vtkActor2D
     header: vtkActor2D.h
-    functions: []
+    functions:
+      - name: GetPositionCoordinate
+        cppSignature: vtkCoordinate * GetPositionCoordinate()
+        return:
+          type: vtkCoordinate*
+        parameters: []
+      - name: GetProperty
+        cppSignature: vtkProperty2D * GetProperty()
+        return:
+          type: vtkProperty2D*
+        parameters: []
+      - name: SetDisplayPosition
+        cppSignature: void SetDisplayPosition(int _arg1, int _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: int
+            name: _arg2
+      - name: SetHeight
+        cppSignature: void SetHeight(double h)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: h
+      - name: SetLayerNumber
+        cppSignature: void SetLayerNumber(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetMapper
+        cppSignature: void SetMapper(vtkMapper2D * mapper)
+        return:
+          type: void
+        parameters:
+          - type: vtkMapper2D*
+            name: mapper
+      - name: SetPosition
+        cppSignature: void SetPosition(double x, double y)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+      - name: SetPosition
+        cppSignature: void SetPosition(double[2] x)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: x
+      - name: SetPosition2
+        cppSignature: void SetPosition2(double x, double y)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+      - name: SetPosition2
+        cppSignature: void SetPosition2(double[2] x)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: x
+      - name: SetProperty
+        cppSignature: void SetProperty(vtkProperty2D * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkProperty2D*
+            name: _arg1
+      - name: SetWidth
+        cppSignature: void SetWidth(double w)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: w
   - name: vtkActor2DCollection
     header: vtkActor2DCollection.h
     functions: []
@@ -375,7 +461,41 @@ classes:
             name: in
   - name: vtkPolyDataMapper2D
     header: vtkPolyDataMapper2D.h
-    functions: []
+    functions:
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkPolyData * in)
+        return:
+          type: void
+        parameters:
+          - type: vtkPolyData*
+            name: in
+      - name: SetScalarModeToUseCellData
+        cppSignature: void SetScalarModeToUseCellData()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUseCellFieldData
+        cppSignature: void SetScalarModeToUseCellFieldData()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUsePointData
+        cppSignature: void SetScalarModeToUsePointData()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUsePointFieldData
+        cppSignature: void SetScalarModeToUsePointFieldData()
+        return:
+          type: void
+        parameters: []
+      - name: SetTransformCoordinate
+        cppSignature: void SetTransformCoordinate(vtkCoordinate * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkCoordinate*
+            name: _arg1
   - name: vtkProp
     header: vtkProp.h
     functions:
@@ -407,6 +527,31 @@ classes:
   - name: vtkProp3D
     header: vtkProp3D.h
     functions:
+      - name: GetScale
+        cppSignature: double * GetScale()
+        return:
+          type: double*
+        parameters: []
+      - name: GetScale
+        cppSignature: void GetScale(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
+      - name: RotateWXYZ
+        cppSignature: void RotateWXYZ(double w, double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: w
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
       - name: RotateX
         cppSignature: void RotateX(double _arg1)
         return:
@@ -421,6 +566,20 @@ classes:
         parameters:
           - type: double
             name: _arg1
+      - name: RotateZ
+        cppSignature: void RotateZ(double _arg1)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+      - name: SetUserTransform
+        cppSignature: void SetUserTransform(vtkLinearTransform * transform)
+        return:
+          type: void
+        parameters:
+          - type: vtkLinearTransform*
+            name: transform
   - name: vtkPropCollection
     header: vtkPropCollection.h
     functions: []
@@ -823,7 +982,25 @@ classes:
         parameters: []
   - name: vtkProperty2D
     header: vtkProperty2D.h
-    functions: []
+    functions:
+      - name: SetColor
+        cppSignature: void SetColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetColor
+        cppSignature: void SetColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
   - name: vtkRenderWindow
     header: vtkRenderWindow.h
     functions:

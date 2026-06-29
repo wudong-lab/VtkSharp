@@ -18,8 +18,56 @@ public unsafe partial class vtkPolyDataMapper2D : vtkMapper2D
         return target;
     }
 
+    public new void SetInputData(vtkPolyData @in)
+    {
+        vtkPolyDataMapper2D_SetInputData(this.NativePointer, @in.NativePointer);
+    }
+
+    public new void SetScalarModeToUseCellData()
+    {
+        vtkPolyDataMapper2D_SetScalarModeToUseCellData(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUseCellFieldData()
+    {
+        vtkPolyDataMapper2D_SetScalarModeToUseCellFieldData(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUsePointData()
+    {
+        vtkPolyDataMapper2D_SetScalarModeToUsePointData(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUsePointFieldData()
+    {
+        vtkPolyDataMapper2D_SetScalarModeToUsePointFieldData(this.NativePointer);
+    }
+
+    public new void SetTransformCoordinate(vtkCoordinate _arg1)
+    {
+        vtkPolyDataMapper2D_SetTransformCoordinate(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyDataMapper2D_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataMapper2D_SetInputData(nint self, nint @in);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataMapper2D_SetScalarModeToUseCellData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataMapper2D_SetScalarModeToUseCellFieldData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataMapper2D_SetScalarModeToUsePointData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataMapper2D_SetScalarModeToUsePointFieldData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPolyDataMapper2D_SetTransformCoordinate(nint self, nint _arg1);
     #endregion
 }
