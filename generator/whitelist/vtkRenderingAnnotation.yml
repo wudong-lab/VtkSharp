@@ -206,7 +206,17 @@ classes:
     functions: []
   - name: vtkCaptionActor2D
     header: vtkCaptionActor2D.h
-    functions: []
+    functions:
+      - name: GetCaptionTextProperty
+        cppSignature: vtkTextProperty * GetCaptionTextProperty()
+        return:
+          type: vtkTextProperty*
+        parameters: []
+      - name: GetTextActor
+        cppSignature: vtkTextActor * GetTextActor()
+        return:
+          type: vtkTextActor*
+        parameters: []
   - name: vtkLegendScaleActor
     header: vtkLegendScaleActor.h
     functions:

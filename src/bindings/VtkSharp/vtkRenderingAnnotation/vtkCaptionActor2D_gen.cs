@@ -18,8 +18,24 @@ public unsafe partial class vtkCaptionActor2D : vtkActor2D
         return target;
     }
 
+    public new vtkTextProperty GetCaptionTextProperty()
+    {
+        return vtkTextProperty.WeakReference(vtkCaptionActor2D_GetCaptionTextProperty(this.NativePointer));
+    }
+
+    public new vtkTextActor GetTextActor()
+    {
+        return vtkTextActor.WeakReference(vtkCaptionActor2D_GetTextActor(this.NativePointer));
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCaptionActor2D_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkCaptionActor2D_GetCaptionTextProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkCaptionActor2D_GetTextActor(nint self);
     #endregion
 }
