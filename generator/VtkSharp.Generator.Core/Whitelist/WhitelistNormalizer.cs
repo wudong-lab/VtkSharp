@@ -185,7 +185,7 @@ public sealed class WhitelistNormalizer
             normalized = normalized[..nestedTypeSeparator];
 
         return normalized.StartsWith("vtk", StringComparison.Ordinal) &&
-               normalized is not "vtkTypeBool" and not "vtkIdType" and not "vtkMTimeType"
+               normalized is not "vtkTypeBool" and not "vtkTypeUInt32" and not "vtkIdType" and not "vtkMTimeType"
                && !TypeClassifier.IsVtkValueStruct(normalized)
             ? normalized
             : null;

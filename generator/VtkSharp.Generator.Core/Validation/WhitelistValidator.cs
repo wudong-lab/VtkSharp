@@ -11,7 +11,7 @@ public sealed class WhitelistValidator
     private static readonly HashSet<string> SupportedScalarTypes = new(StringComparer.Ordinal)
     {
         "void", "char", "int", "unsigned int", "long long", "unsigned long long",
-        "double", "float", "bool", "vtkTypeBool", "vtkIdType",
+        "double", "float", "bool", "vtkTypeBool", "vtkTypeUInt32", "vtkIdType",
         "const char*", "char*", "void*",
         "HWND", "HDC", "HGLRC",
     };

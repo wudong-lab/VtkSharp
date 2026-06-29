@@ -129,6 +129,7 @@ public sealed class WhitelistValidatorTests
     [InlineData("float")]
     [InlineData("bool")]
     [InlineData("vtkTypeBool")]
+    [InlineData("vtkTypeUInt32")]
     [InlineData("vtkIdType")]
     [InlineData("const char*")]
     [InlineData("char*")]

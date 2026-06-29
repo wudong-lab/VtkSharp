@@ -207,6 +207,13 @@ public sealed class BindingEmitterFunctionTests
             },
             new WhitelistFunction
             {
+                Name = "GetSeed",
+                CppSignature = "vtkTypeUInt32 GetSeed()",
+                Return = new WhitelistReturn { Type = "vtkTypeUInt32" },
+                Parameters = [],
+            },
+            new WhitelistFunction
+            {
                 Name = "SetName",
                 CppSignature = "void SetName(const char* name)",
                 Return = new WhitelistReturn { Type = "void" },
@@ -247,6 +254,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("[return: MarshalAs(UnmanagedType.U4)]", text);
         Assert.Contains("public new bool HasViewProp()", text);
         Assert.Contains("public new long GetId()", text);
+        Assert.Contains("public new uint GetSeed()", text);
         Assert.Contains("public new void SetName(string name)", text);
         Assert.Contains("[LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]", text);
         Assert.Contains("private static partial void vtkThing_SetName(nint self, string name)", text);
@@ -297,6 +305,23 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VTKSHARP_API void vtkThing_SetOrigin(vtkThing* self, const double* origin)", text);
         Assert.Contains("VTKSHARP_API void* vtkThing_GetData(vtkThing* self)", text);
         Assert.Contains("VTKSHARP_API vtkIdType vtkThing_GetId(vtkThing* self)", text);
+    }
+
+    [Fact]
+    public void CppEmitter_EmitsVtkTypeUInt32Mapping()
+    {
+        var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "GetSeed",
+                CppSignature = "vtkTypeUInt32 GetSeed()",
+                Return = new WhitelistReturn { Type = "vtkTypeUInt32" },
+                Parameters = [],
+            },
+        ]);
+
+        Assert.Contains("VTKSHARP_API vtkTypeUInt32 vtkFoo_GetSeed(vtkFoo* self)", text);
     }
 
     [Fact]

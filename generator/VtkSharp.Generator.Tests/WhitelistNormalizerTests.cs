@@ -46,4 +46,40 @@ public sealed class WhitelistNormalizerTests
         Assert.Equal("vtkMapper*", actor.Functions[0].Parameters[0].Type);
         Assert.Equal([], renderingCore.Classes.Single(item => item.Name == "vtkMapper").Functions);
     }
+
+    [Fact]
+    public void Normalize_ExcludesVtkTypeUInt32FromDependencyClass()
+    {
+        var document = new WhitelistDocument
+        {
+            Module = "vtkCommonCore",
+            Classes =
+            [
+                new WhitelistClass
+                {
+                    Name = "vtkMinimalStandardRandomSequence",
+                    Header = "vtkMinimalStandardRandomSequence.h",
+                    Functions =
+                    [
+                        new WhitelistFunction
+                        {
+                            Name = "Initialize",
+                            CppSignature = "void Initialize(vtkTypeUInt32 seed)",
+                            Return = new WhitelistReturn { Type = "void" },
+                            Parameters = [new WhitelistParameter { Type = "vtkTypeUInt32", Name = "seed" }],
+                        },
+                    ],
+                },
+            ],
+        };
+        var hierarchy = new Dictionary<string, VtkHierarchyEntry>(StringComparer.Ordinal)
+        {
+            ["vtkMinimalStandardRandomSequence"] = new("vtkMinimalStandardRandomSequence", "vtkRandomSequence", "vtkMinimalStandardRandomSequence.h", "vtkCommonCore"),
+        };
+
+        var normalized = new WhitelistNormalizer().Normalize([document], hierarchy, manualBindingClasses: ["vtkObject"]);
+
+        var commonCore = Assert.Single(normalized);
+        Assert.DoesNotContain(commonCore.Classes, c => c.Name == "vtkTypeUInt32");
+    }
 }

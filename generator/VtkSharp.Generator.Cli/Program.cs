@@ -899,7 +899,7 @@ internal class Program
 
         if (!normalized.StartsWith("vtk", StringComparison.Ordinal))
             return null;
-        if (normalized is "vtkTypeBool" or "vtkIdType" or "vtkMTimeType")
+        if (normalized is "vtkTypeBool" or "vtkTypeUInt32" or "vtkIdType" or "vtkMTimeType")
             return null;
         if (TypeClassifier.IsVtkValueStruct(normalized))
             return null;

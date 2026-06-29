@@ -82,6 +82,7 @@ public sealed class CppExportEmitter
             "float" => "float",
             "bool" => "bool",
             "vtkTypeBool" => "vtkTypeBool",
+            "vtkTypeUInt32" => "vtkTypeUInt32",
             "vtkIdType" => "vtkIdType",
             "const char*" => "const char*",
             "char*" => "char*",
