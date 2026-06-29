@@ -28,6 +28,15 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
         vtkWin32OpenGLRenderWindow_SetParentId(this.NativePointer, _arg1);
     }
 
+    public new void SetWindowName(string _arg1)
+    {
+        #if NET10_0_OR_GREATER
+        vtkWin32OpenGLRenderWindow_SetWindowName(this.NativePointer, _arg1);
+        #else
+        vtkWin32OpenGLRenderWindow_SetWindowName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg1));
+        #endif
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32OpenGLRenderWindow_New();
@@ -37,5 +46,13 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32OpenGLRenderWindow_SetParentId(nint self, nint _arg1);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkWin32OpenGLRenderWindow_SetWindowName(nint self, string _arg1);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWin32OpenGLRenderWindow_SetWindowName(nint self, byte[] _arg1);
+#endif
     #endregion
 }

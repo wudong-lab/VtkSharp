@@ -25,3 +25,10 @@ classes:
         parameters:
           - type: HWND
             name: _arg1
+      - name: SetWindowName
+        cppSignature: void SetWindowName(char const * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg1
