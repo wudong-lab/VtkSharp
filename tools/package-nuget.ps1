@@ -25,9 +25,11 @@ if (-not (Test-Path $OutputDirectory)) {
 # 1. Build native DLL (unless skipped)
 if (-not $SkipNativeBuild) {
     Write-Host "=== Building native DLL ==="
-    $buildNativeArgs = @("-Configuration", $Configuration)
+    $buildNativeArgs = @{
+        Configuration = $Configuration
+    }
     if ($VtkDir) {
-        $buildNativeArgs += @("-VtkDir", $VtkDir)
+        $buildNativeArgs.VtkDir = $VtkDir
     }
     & "$PSScriptRoot/build-native.ps1" @buildNativeArgs
     if ($LASTEXITCODE -ne 0) {
