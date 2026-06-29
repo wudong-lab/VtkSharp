@@ -410,6 +410,38 @@ public sealed class BindingEmitterFunctionTests
     }
 
     [Fact]
+    public void CSharpEmitter_EmitsReadOnlySpanForConstVtkIdTypePointerWithParameterLength()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkCellArray", "vtkAbstractCellArray", hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "InsertNextCell",
+                CppSignature = "vtkIdType InsertNextCell(vtkIdType npts, vtkIdType const * pts)",
+                Return = new WhitelistReturn { Type = "vtkIdType" },
+                Parameters =
+                [
+                    new WhitelistParameter { Type = "vtkIdType", Name = "npts" },
+                    new WhitelistParameter
+                    {
+                        Type = "const vtkIdType*",
+                        Name = "pts",
+                        Direction = "in",
+                        Length = new WhitelistLength { Kind = "parameter", Name = "npts" },
+                    },
+                ],
+            },
+        ]);
+
+        Assert.Contains("public new long InsertNextCell(long npts, ReadOnlySpan<long> pts)", text);
+        Assert.Contains("fixed (long* ptsPtr = pts)", text);
+        Assert.Contains("return vtkCellArray_InsertNextCell(this.NativePointer, npts, ptsPtr);", text);
+        Assert.Contains("private static extern long vtkCellArray_InsertNextCell(nint self, long npts, long* pts);", text);
+        Assert.DoesNotContain("vtkIdType pts", text);
+        Assert.DoesNotContain("pts.NativePointer", text);
+    }
+
+    [Fact]
     public void CSharpEmitter_KeepsRawPointerForPointerWithoutMetadata()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,

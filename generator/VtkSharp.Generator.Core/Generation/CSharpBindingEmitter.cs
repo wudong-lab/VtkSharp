@@ -232,11 +232,11 @@ public sealed class CSharpBindingEmitter
 
     private static string ToPublicType(string type)
     {
-        if (TryGetVtkClassName(type, out var className))
-            return className;
-
         if (TypeClassifier.IsVtkValueStruct(type))
             return TypeClassifier.GetValueStructCSharpName(type);
+
+        if (TryGetVtkClassName(type, out var className))
+            return className;
 
         return type switch
         {
@@ -255,7 +255,7 @@ public sealed class CSharpBindingEmitter
             "const char*" or "char*" => "string",
             "void*" => "nint",
             "HWND" or "HDC" or "HGLRC" => "nint",
-            _ when IsPrimitivePointer(type) => type,
+            _ when IsPrimitivePointer(type) => $"{ToPublicType(GetPointerElementType(type))}*",
             _ when IsFixedArray(type) => ToPublicArrayType(type),
             _ => throw new NotSupportedException($"C# public type '{type}' is not supported by the MVP emitter."),
         };
@@ -263,11 +263,11 @@ public sealed class CSharpBindingEmitter
 
     private static string ToInteropType(string type)
     {
-        if (TryGetVtkClassName(type, out _))
-            return "nint";
-
         if (TypeClassifier.IsVtkValueStruct(type))
             return "void";
+
+        if (TryGetVtkClassName(type, out _))
+            return "nint";
 
         return type switch
         {
@@ -286,7 +286,7 @@ public sealed class CSharpBindingEmitter
             "const char*" or "char*" => "nint",
             "void*" => "nint",
             "HWND" or "HDC" or "HGLRC" => "nint",
-            _ when IsPrimitivePointer(type) => type,
+            _ when IsPrimitivePointer(type) => $"{ToInteropType(GetPointerElementType(type))}*",
             _ when IsFixedArray(type) => $"{GetArrayElementType(type)}*",
             _ => throw new NotSupportedException($"C# interop type '{type}' is not supported by the MVP emitter."),
         };
@@ -322,6 +322,12 @@ public sealed class CSharpBindingEmitter
         var normalized = type.Replace("const", "", StringComparison.Ordinal)
             .Replace("*", "", StringComparison.Ordinal)
             .Trim();
+
+        if (IsVtkScalarType(normalized))
+        {
+            className = "";
+            return false;
+        }
 
         if (normalized.StartsWith("vtk", StringComparison.Ordinal) &&
             type.Replace("const", "", StringComparison.Ordinal).Trim().EndsWith("*", StringComparison.Ordinal))
@@ -360,7 +366,18 @@ public sealed class CSharpBindingEmitter
         => type is "const char*" or "char*";
 
     private static bool IsPrimitivePointer(string type)
-        => type is "double*" or "float*" or "int*";
+        => type.TrimEnd().EndsWith('*') && IsPrimitivePointerElementType(GetPointerElementType(type));
+
+    private static bool IsPrimitivePointerElementType(string type)
+        => type is "double" or "float" or "int" or "vtkIdType";
+
+    private static string GetPointerElementType(string type)
+        => type.Replace("const", "", StringComparison.Ordinal)
+            .Replace("*", "", StringComparison.Ordinal)
+            .Trim();
+
+    private static bool IsVtkScalarType(string type)
+        => type is "vtkTypeBool" or "vtkTypeUInt32" or "vtkIdType" or "vtkMTimeType";
 
     private static bool IsFixedArray(string type)
         => type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal);
@@ -408,7 +425,7 @@ public sealed class CSharpBindingEmitter
         if (IsFixedArray(type))
             return GetArrayElementType(type);
         if (IsPrimitivePointer(type))
-            return type.TrimEnd('*');
+            return ToPublicType(GetPointerElementType(type));
         throw new ArgumentException($"Cannot get span element type from '{type}'.", nameof(type));
     }
 }

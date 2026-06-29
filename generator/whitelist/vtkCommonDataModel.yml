@@ -83,6 +83,10 @@ classes:
             name: npts
           - type: const vtkIdType*
             name: pts
+            direction: in
+            length:
+              kind: parameter
+              name: npts
   - name: vtkDataObject
     header: vtkDataObject.h
     functions:

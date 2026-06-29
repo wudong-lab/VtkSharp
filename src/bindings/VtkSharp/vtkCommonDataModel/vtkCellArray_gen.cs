@@ -38,9 +38,12 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
         return vtkCellArray_InsertNextCell_vtkIdListPtr(this.NativePointer, pts.NativePointer);
     }
 
-    public new long InsertNextCell(long npts, vtkIdType pts)
+    public new long InsertNextCell(long npts, ReadOnlySpan<long> pts)
     {
-        return vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(this.NativePointer, npts, pts.NativePointer);
+        fixed (long* ptsPtr = pts)
+        {
+            return vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(this.NativePointer, npts, ptsPtr);
+        }
     }
 
     #region Interop
@@ -60,6 +63,6 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
     private static extern long vtkCellArray_InsertNextCell_vtkIdListPtr(nint self, nint pts);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern long vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(nint self, long npts, nint pts);
+    private static extern long vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(nint self, long npts, long* pts);
     #endregion
 }
