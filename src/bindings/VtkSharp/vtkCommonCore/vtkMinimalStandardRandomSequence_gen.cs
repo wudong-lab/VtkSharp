@@ -23,6 +23,11 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
         return vtkMinimalStandardRandomSequence_GetValue(this.NativePointer);
     }
 
+    public new void Initialize(uint seed)
+    {
+        vtkMinimalStandardRandomSequence_Initialize(this.NativePointer, seed);
+    }
+
     public new void Next()
     {
         vtkMinimalStandardRandomSequence_Next(this.NativePointer);
@@ -39,6 +44,9 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkMinimalStandardRandomSequence_GetValue(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMinimalStandardRandomSequence_Initialize(nint self, uint seed);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMinimalStandardRandomSequence_Next(nint self);

@@ -149,6 +149,13 @@ classes:
         return:
           type: double
         parameters: []
+      - name: Initialize
+        cppSignature: void Initialize(vtkTypeUInt32 seed)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeUInt32
+            name: seed
       - name: Next
         cppSignature: void Next()
         return:
