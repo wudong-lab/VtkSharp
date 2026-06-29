@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VtkSharp.Wpf": {
+      "commandName": "Project",
+      "debugEngines": "managed"
+    }
+  }
+}
