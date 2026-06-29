@@ -40,138 +40,10 @@ void ReleaseCom(T*& value)
 }
 
 template <typename T>
-T LoadWglProc(const char* name)
+T LoadOpenGLProc(const char* name)
 {
     return reinterpret_cast<T>(::wglGetProcAddress(name));
 }
-
-LRESULT CALLBACK RenderTargetWindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
-{
-    return ::DefWindowProc(hwnd, message, wparam, lparam);
-}
-}
-
-bool VtkWpfD3DImageOpenGLRenderTarget::WglDxInteropApi::Load()
-{
-    this->m_setResourceShareHandle = LoadWglProc<WglDxSetResourceShareHandleNvProc>("wglDXSetResourceShareHandleNV");
-    this->m_openDevice = LoadWglProc<WglDxOpenDeviceNvProc>("wglDXOpenDeviceNV");
-    this->m_closeDevice = LoadWglProc<WglDxCloseDeviceNvProc>("wglDXCloseDeviceNV");
-    this->m_registerObject = LoadWglProc<WglDxRegisterObjectNvProc>("wglDXRegisterObjectNV");
-    this->m_unregisterObject = LoadWglProc<WglDxUnregisterObjectNvProc>("wglDXUnregisterObjectNV");
-    this->m_lockObjects = LoadWglProc<WglDxLockObjectsNvProc>("wglDXLockObjectsNV");
-    this->m_unlockObjects = LoadWglProc<WglDxUnlockObjectsNvProc>("wglDXUnlockObjectsNV");
-    return this->IsAvailable();
-}
-
-bool VtkWpfD3DImageOpenGLRenderTarget::WglDxInteropApi::IsAvailable() const
-{
-    return this->m_openDevice &&
-        this->m_closeDevice &&
-        this->m_registerObject &&
-        this->m_unregisterObject &&
-        this->m_lockObjects &&
-        this->m_unlockObjects;
-}
-
-bool VtkWpfD3DImageOpenGLRenderTarget::WglContext::CreateHiddenWindowContext()
-{
-    const wchar_t* className = L"VtkSharpD3DImageOpenGLRenderTargetWindow";
-
-    WNDCLASSW windowClass = {};
-    windowClass.lpfnWndProc = RenderTargetWindowProc;
-    windowClass.hInstance = ::GetModuleHandleW(nullptr);
-    windowClass.lpszClassName = className;
-    ::RegisterClassW(&windowClass);
-
-    this->m_window = ::CreateWindowExW(0, className, L"VtkSharp D3DImage OpenGL Render Target",
-        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1, 1, nullptr, nullptr,
-        ::GetModuleHandleW(nullptr), nullptr);
-    if (!this->m_window)
-    {
-        return false;
-    }
-
-    this->m_deviceContext = ::GetDC(this->m_window);
-    if (!this->m_deviceContext)
-    {
-        return false;
-    }
-
-    PIXELFORMATDESCRIPTOR pixelFormat = {};
-    pixelFormat.nSize = sizeof(pixelFormat);
-    pixelFormat.nVersion = 1;
-    pixelFormat.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
-    pixelFormat.iPixelType = PFD_TYPE_RGBA;
-    pixelFormat.cColorBits = 32;
-    pixelFormat.cDepthBits = 24;
-    pixelFormat.iLayerType = PFD_MAIN_PLANE;
-
-    const int format = ::ChoosePixelFormat(this->m_deviceContext, &pixelFormat);
-    if (format == 0 || !::SetPixelFormat(this->m_deviceContext, format, &pixelFormat))
-    {
-        return false;
-    }
-
-    this->m_glContext = ::wglCreateContext(this->m_deviceContext);
-    if (!this->m_glContext || !::wglMakeCurrent(this->m_deviceContext, this->m_glContext))
-    {
-        return false;
-    }
-
-    this->m_openGL32Library = ::LoadLibraryW(L"opengl32.dll");
-    return this->m_openGL32Library != nullptr;
-}
-
-void VtkWpfD3DImageOpenGLRenderTarget::WglContext::Release()
-{
-    if (this->m_glContext)
-    {
-        ::wglMakeCurrent(nullptr, nullptr);
-        ::wglDeleteContext(this->m_glContext);
-        this->m_glContext = nullptr;
-    }
-
-    if (this->m_openGL32Library)
-    {
-        ::FreeLibrary(this->m_openGL32Library);
-        this->m_openGL32Library = nullptr;
-    }
-
-    if (this->m_deviceContext && this->m_window)
-    {
-        ::ReleaseDC(this->m_window, this->m_deviceContext);
-        this->m_deviceContext = nullptr;
-    }
-
-    if (this->m_window)
-    {
-        ::DestroyWindow(this->m_window);
-        this->m_window = nullptr;
-    }
-}
-
-void VtkWpfD3DImageOpenGLRenderTarget::WglContext::MakeCurrent() const
-{
-    ::wglMakeCurrent(this->m_deviceContext, this->m_glContext);
-}
-
-bool VtkWpfD3DImageOpenGLRenderTarget::WglContext::IsCurrent() const
-{
-    return ::wglGetCurrentContext() == this->m_glContext;
-}
-
-vtkOpenGLRenderWindow::VTKOpenGLAPIProc VtkWpfD3DImageOpenGLRenderTarget::WglContext::LoadSymbol(
-    const char* name) const
-{
-    auto* proc = reinterpret_cast<void*>(::wglGetProcAddress(name));
-
-    if (proc == nullptr || proc == reinterpret_cast<void*>(1) || proc == reinterpret_cast<void*>(2) ||
-        proc == reinterpret_cast<void*>(3) || proc == reinterpret_cast<void*>(-1))
-    {
-        proc = reinterpret_cast<void*>(::GetProcAddress(this->m_openGL32Library, name));
-    }
-
-    return reinterpret_cast<vtkOpenGLRenderWindow::VTKOpenGLAPIProc>(proc);
 }
 
 VtkWpfD3DImageOpenGLRenderTarget* VtkWpfD3DImageOpenGLRenderTarget::Create()
@@ -316,11 +188,11 @@ bool VtkWpfD3DImageOpenGLRenderTarget::CheckHr(HRESULT hr, const char* message)
 
 bool VtkWpfD3DImageOpenGLRenderTarget::LoadOpenGLExtensions()
 {
-    this->m_glGenFramebuffers = LoadWglProc<GlGenFramebuffersProc>("glGenFramebuffers");
-    this->m_glBindFramebuffer = LoadWglProc<GlBindFramebufferProc>("glBindFramebuffer");
-    this->m_glFramebufferTexture2D = LoadWglProc<GlFramebufferTexture2DProc>("glFramebufferTexture2D");
-    this->m_glCheckFramebufferStatus = LoadWglProc<GlCheckFramebufferStatusProc>("glCheckFramebufferStatus");
-    this->m_glDeleteFramebuffers = LoadWglProc<GlDeleteFramebuffersProc>("glDeleteFramebuffers");
+    this->m_glGenFramebuffers = LoadOpenGLProc<GlGenFramebuffersProc>("glGenFramebuffers");
+    this->m_glBindFramebuffer = LoadOpenGLProc<GlBindFramebufferProc>("glBindFramebuffer");
+    this->m_glFramebufferTexture2D = LoadOpenGLProc<GlFramebufferTexture2DProc>("glFramebufferTexture2D");
+    this->m_glCheckFramebufferStatus = LoadOpenGLProc<GlCheckFramebufferStatusProc>("glCheckFramebufferStatus");
+    this->m_glDeleteFramebuffers = LoadOpenGLProc<GlDeleteFramebuffersProc>("glDeleteFramebuffers");
 
     if (!this->m_glGenFramebuffers || !this->m_glBindFramebuffer || !this->m_glFramebufferTexture2D ||
         !this->m_glCheckFramebufferStatus || !this->m_glDeleteFramebuffers)

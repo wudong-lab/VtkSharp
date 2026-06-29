@@ -12,7 +12,9 @@
 
 #include <d3d9.h>
 #include <gl/GL.h>
-#include <vtkOpenGLRenderWindow.h>
+#include "WglContext.h"
+#include "WglDxInteropApi.h"
+
 #include <vtkSmartPointer.h>
 
 class vtkCallbackCommand;
@@ -42,47 +44,6 @@ private:
     using GlFramebufferTexture2DProc = void(APIENTRY*)(GLenum, GLenum, GLenum, GLuint, GLint);
     using GlCheckFramebufferStatusProc = GLenum(APIENTRY*)(GLenum);
     using GlDeleteFramebuffersProc = void(APIENTRY*)(GLsizei, const GLuint*);
-
-    using WglDxSetResourceShareHandleNvProc = BOOL(WINAPI*)(void*, HANDLE);
-    using WglDxOpenDeviceNvProc = HANDLE(WINAPI*)(void*);
-    using WglDxCloseDeviceNvProc = BOOL(WINAPI*)(HANDLE);
-    using WglDxRegisterObjectNvProc = HANDLE(WINAPI*)(HANDLE, void*, GLuint, GLenum, GLenum);
-    using WglDxUnregisterObjectNvProc = BOOL(WINAPI*)(HANDLE, HANDLE);
-    using WglDxLockObjectsNvProc = BOOL(WINAPI*)(HANDLE, GLint, HANDLE*);
-    using WglDxUnlockObjectsNvProc = BOOL(WINAPI*)(HANDLE, GLint, HANDLE*);
-
-    struct WglDxInteropApi
-    {
-        WglDxSetResourceShareHandleNvProc m_setResourceShareHandle = nullptr;
-        WglDxOpenDeviceNvProc m_openDevice = nullptr;
-        WglDxCloseDeviceNvProc m_closeDevice = nullptr;
-        WglDxRegisterObjectNvProc m_registerObject = nullptr;
-        WglDxUnregisterObjectNvProc m_unregisterObject = nullptr;
-        WglDxLockObjectsNvProc m_lockObjects = nullptr;
-        WglDxUnlockObjectsNvProc m_unlockObjects = nullptr;
-
-        bool Load();
-        bool IsAvailable() const;
-    };
-
-    class WglContext
-    {
-    public:
-        bool CreateHiddenWindowContext();
-        void Release();
-
-        void MakeCurrent() const;
-        bool IsCurrent() const;
-        vtkOpenGLRenderWindow::VTKOpenGLAPIProc LoadSymbol(const char* name) const;
-
-        HDC DeviceContext() const { return this->m_deviceContext; }
-
-    private:
-        HWND m_window = nullptr;
-        HDC m_deviceContext = nullptr;
-        HGLRC m_glContext = nullptr;
-        HMODULE m_openGL32Library = nullptr;
-    };
 
     using CallbackMethod = void (VtkWpfD3DImageOpenGLRenderTarget::*)(void*);
 
