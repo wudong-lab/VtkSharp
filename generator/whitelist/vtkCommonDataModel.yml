@@ -54,12 +54,35 @@ classes:
           - type: vtkIdType
             name: id
       - name: InsertNextCell
+        cppSignature: vtkIdType InsertNextCell(int npts)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: int
+            name: npts
+      - name: InsertNextCell
         cppSignature: vtkIdType InsertNextCell(vtkCell * cell)
         return:
           type: vtkIdType
         parameters:
           - type: vtkCell*
             name: cell
+      - name: InsertNextCell
+        cppSignature: vtkIdType InsertNextCell(vtkIdList * pts)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: vtkIdList*
+            name: pts
+      - name: InsertNextCell
+        cppSignature: vtkIdType InsertNextCell(vtkIdType npts, vtkIdType const * pts)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: vtkIdType
+            name: npts
+          - type: const vtkIdType*
+            name: pts
   - name: vtkDataObject
     header: vtkDataObject.h
     functions:

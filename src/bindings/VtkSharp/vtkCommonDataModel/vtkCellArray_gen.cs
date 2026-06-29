@@ -23,9 +23,24 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
         vtkCellArray_InsertCellPoint(this.NativePointer, id);
     }
 
+    public new long InsertNextCell(int npts)
+    {
+        return vtkCellArray_InsertNextCell_int(this.NativePointer, npts);
+    }
+
     public new long InsertNextCell(vtkCell cell)
     {
-        return vtkCellArray_InsertNextCell(this.NativePointer, cell.NativePointer);
+        return vtkCellArray_InsertNextCell_vtkCellPtr(this.NativePointer, cell.NativePointer);
+    }
+
+    public new long InsertNextCell(vtkIdList pts)
+    {
+        return vtkCellArray_InsertNextCell_vtkIdListPtr(this.NativePointer, pts.NativePointer);
+    }
+
+    public new long InsertNextCell(long npts, vtkIdType pts)
+    {
+        return vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(this.NativePointer, npts, pts.NativePointer);
     }
 
     #region Interop
@@ -36,6 +51,15 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
     private static extern void vtkCellArray_InsertCellPoint(nint self, long id);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern long vtkCellArray_InsertNextCell(nint self, nint cell);
+    private static extern long vtkCellArray_InsertNextCell_int(nint self, int npts);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkCellArray_InsertNextCell_vtkCellPtr(nint self, nint cell);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkCellArray_InsertNextCell_vtkIdListPtr(nint self, nint pts);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(nint self, long npts, nint pts);
     #endregion
 }
