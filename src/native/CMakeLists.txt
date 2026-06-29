@@ -45,6 +45,16 @@ target_link_libraries(${VTKSHARP_NATIVE_TARGET}
     ${VTKSHARP_VTK_TARGETS}
 )
 
+if (WIN32)
+  target_link_libraries(${VTKSHARP_NATIVE_TARGET}
+    PRIVATE
+      d3d9
+      gdi32
+      opengl32
+      user32
+  )
+endif()
+
 vtk_module_autoinit(
   TARGETS ${VTKSHARP_NATIVE_TARGET}
   MODULES

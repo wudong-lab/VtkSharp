@@ -1,11 +1,21 @@
 # VtkSharp.Wpf
 
-WPF integration for VtkSharp. Provides an `HwndHost`-based VTK render window.
+WPF integration for VtkSharp.
 
-## Features
+## Recommended Control
 
-- `VtkRenderHost` control for embedding VTK in WPF applications
-- Windows-only (requires `net10.0-windows`)
+Use `VtkOpenGLD3DImageRenderControl` for new WPF integration work. It renders VTK with `vtkGenericOpenGLRenderWindow` into a shared OpenGL/D3D9Ex texture displayed by WPF `D3DImage`, so VTK content participates in the WPF visual tree without HWND airspace issues or CPU frame readback.
+
+Windows-only. The OpenGL/D3D9Ex backend requires a GPU/driver path that supports `WGL_NV_DX_interop`.
+
+## Diagnostic Controls
+
+The following controls are retained for comparison, fallback experiments, and backend diagnostics:
+
+- `VtkRenderHost`: existing `HwndHost`-based VTK host. It is useful as a compatibility baseline but has WPF airspace limitations.
+- `VtkNativeRenderControl`: offscreen VTK render plus CPU copy into `WriteableBitmap`.
+- `VtkD3DImageRenderControl`: offscreen VTK render plus CPU upload into a D3D9Ex surface shown through `D3DImage`.
+- `VtkOpenGLD3DImageProbeControl`: OpenGL-to-D3D9Ex probe that does not render VTK content.
 
 ## Getting Started
 
@@ -17,7 +27,7 @@ WPF integration for VtkSharp. Provides an `HwndHost`-based VTK render window.
 ```xaml
 <Window x:Class="MyApp.MainWindow"
         xmlns:vtk="clr-namespace:VtkSharp.Wpf;assembly=VtkSharp.Wpf">
-    <vtk:VtkRenderHost x:Name="RenderHost" />
+    <vtk:VtkOpenGLD3DImageRenderControl x:Name="RenderControl" />
 </Window>
 ```
 
