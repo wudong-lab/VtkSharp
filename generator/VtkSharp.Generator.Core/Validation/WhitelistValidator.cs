@@ -22,13 +22,6 @@ public sealed class WhitelistValidator
         "double", "float", "int",
     };
 
-    // Primitive pointer types allowed for return values and for parameters
-    // that carry direction + length metadata.
-    private static readonly HashSet<string> PrimitivePointerTypes = new(StringComparer.Ordinal)
-    {
-        "double*", "float*", "int*",
-    };
-
     public ValidationResult Validate(WhitelistDocument document, IReadOnlyDictionary<string, InspectedClass> inspectedClasses, VtkHierarchyResolver? hierarchyResolver = null)
     {
         var diagnostics = new List<ValidationDiagnostic>();
@@ -91,7 +84,7 @@ public sealed class WhitelistValidator
     {
         var diagnostics = new List<ValidationDiagnostic>(CheckType(className, functionName, $"parameter '{parameter.Name}'", parameter.Type));
 
-        if (PrimitivePointerTypes.Contains(parameter.Type) && parameter.Direction is null && parameter.Length is null)
+        if (TypeClassifier.IsSupportedPrimitivePointerType(parameter.Type) && parameter.Direction is null && parameter.Length is null)
         {
             diagnostics.Add(new ValidationDiagnostic(
                 $"Type '{className}.{functionName}' parameter '{parameter.Name}' ({parameter.Type}) is a primitive pointer " +
@@ -111,7 +104,7 @@ public sealed class WhitelistValidator
         {
             _ when type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal) =>
                 $"unsupported fixed-array element type '{GetArrayElementType(type)}' in '{type}'",
-            _ when PrimitivePointerTypes.Contains(type) =>
+            _ when TypeClassifier.IsSupportedPrimitivePointerType(type) =>
                 "primitive pointer — add direction and length metadata to the parameter entry",
             _ when TypeClassifier.IsVtkValueStruct(type) =>
                 $"vtk value struct '{type}' requires emitter support (out-pointer bridge)",
@@ -137,18 +130,14 @@ public sealed class WhitelistValidator
         if (IsFixedArrayWithSupportedElement(type))
             return true;
 
-        if (PrimitivePointerTypes.Contains(type))
+        if (TypeClassifier.IsSupportedPrimitivePointerType(type))
             return true;
 
         return false;
     }
 
     private static bool IsVtkClassPointer(string type)
-    {
-        var normalized = type.Replace("const ", "", StringComparison.Ordinal);
-        return normalized.StartsWith("vtk", StringComparison.Ordinal) &&
-               normalized.EndsWith('*');
-    }
+        => TypeClassifier.TryGetVtkClassPointerName(type, out _);
 
     private static bool IsFixedArrayWithSupportedElement(string type)
         => type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal) &&

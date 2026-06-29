@@ -116,7 +116,7 @@ public sealed class WhitelistNormalizer
         foreach (var type in function.Parameters.Select(parameter => parameter.Type).Append(function.Return.Type))
         {
             var canonical = _canonicalizer.Canonicalize(type).Text;
-            var className = ExtractVtkClassName(canonical);
+            var className = TypeClassifier.ExtractVtkClassName(canonical);
             if (className is not null)
                 yield return className;
         }
@@ -173,21 +173,4 @@ public sealed class WhitelistNormalizer
         classesByName.Add(className, (document, whitelistClass));
     }
 
-    private static string? ExtractVtkClassName(string type)
-    {
-        var normalized = type.Replace("const", "", StringComparison.Ordinal)
-            .Replace("*", "", StringComparison.Ordinal)
-            .Replace("&", "", StringComparison.Ordinal)
-            .Trim();
-
-        var nestedTypeSeparator = normalized.IndexOf("::", StringComparison.Ordinal);
-        if (nestedTypeSeparator >= 0)
-            normalized = normalized[..nestedTypeSeparator];
-
-        return normalized.StartsWith("vtk", StringComparison.Ordinal) &&
-               normalized is not "vtkTypeBool" and not "vtkTypeUInt32" and not "vtkIdType" and not "vtkMTimeType"
-               && !TypeClassifier.IsVtkValueStruct(normalized)
-            ? normalized
-            : null;
-    }
 }

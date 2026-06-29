@@ -884,26 +884,11 @@ internal class Program
         {
             foreach (var typeName in function.Parameters.Select(parameter => parameter.Type).Append(function.Return.Type))
             {
-                var className = ExtractVtkClassName(typeName);
+                var className = TypeClassifier.ExtractVtkClassName(typeName);
                 if (className is not null)
                     yield return className;
             }
         }
-    }
-
-    private static string? ExtractVtkClassName(string typeName)
-    {
-        var normalized = typeName.Replace("const", "", StringComparison.Ordinal)
-            .Replace("*", "", StringComparison.Ordinal)
-            .Trim();
-
-        if (!normalized.StartsWith("vtk", StringComparison.Ordinal))
-            return null;
-        if (normalized is "vtkTypeBool" or "vtkTypeUInt32" or "vtkIdType" or "vtkMTimeType")
-            return null;
-        if (TypeClassifier.IsVtkValueStruct(normalized))
-            return null;
-        return normalized;
     }
 
     private static string? ResolveIncludeDirectory(GeneratorConfig config)

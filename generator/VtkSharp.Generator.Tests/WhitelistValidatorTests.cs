@@ -285,6 +285,49 @@ public sealed class WhitelistValidatorTests
     }
 
     [Fact]
+    public void Validate_AcceptsConstVtkIdTypePointerWithMetadata()
+    {
+        var type = "const vtkIdType*";
+        var document = new WhitelistDocument
+        {
+            Module = "vtkCommonDataModel",
+            Classes =
+            [
+                new WhitelistClass
+                {
+                    Name = "vtkCellArray",
+                    Header = "vtkCellArray.h",
+                    Functions =
+                    [
+                        new WhitelistFunction
+                        {
+                            Name = "InsertNextCell",
+                            CppSignature = "vtkIdType InsertNextCell(vtkIdType npts, vtkIdType const * pts)",
+                            Return = new WhitelistReturn { Type = "vtkIdType" },
+                            Parameters =
+                            [
+                                new WhitelistParameter { Type = "vtkIdType", Name = "npts" },
+                                new WhitelistParameter { Type = type, Name = "pts", Direction = "in", Length = new WhitelistLength { Kind = "parameter", Name = "npts" } },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        };
+        var inspectedClasses = new Dictionary<string, InspectedClass>
+        {
+            ["vtkCellArray"] = new("vtkCellArray", [
+                new InspectedFunction("InsertNextCell", "", "vtkIdType", [new InspectedParameter("vtkIdType", "npts"), new InspectedParameter(type, "pts")], IsSupported: true),
+            ]),
+        };
+        var validator = new WhitelistValidator();
+
+        var result = validator.Validate(document, inspectedClasses);
+
+        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("direction") || d.Message.Contains("unsupported"));
+    }
+
+    [Fact]
     public void Validate_ChecksReturnType()
     {
         var type = "unsigned long";

@@ -1,4 +1,5 @@
 using CppAst;
+using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Types;
 
 namespace VtkSharp.Generator.Core.Inspection;
@@ -154,25 +155,10 @@ public sealed class VtkClassInspector
 
     private static IReadOnlyList<string> GetDependencyTypes(IEnumerable<string> typeNames, string className)
         => typeNames
-            .Select(ExtractVtkClassName)
+            .Select(TypeClassifier.ExtractVtkClassName)
             .Where(typeName => typeName is not null && typeName != className)
             .Select(typeName => typeName!)
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToList();
-
-    private static string? ExtractVtkClassName(string typeName)
-    {
-        var text = typeName
-            .Replace("const", "", StringComparison.Ordinal)
-            .Replace("*", "", StringComparison.Ordinal)
-            .Replace("&", "", StringComparison.Ordinal)
-            .Trim();
-
-        var nestedTypeSeparator = text.IndexOf("::", StringComparison.Ordinal);
-        if (nestedTypeSeparator >= 0)
-            text = text[..nestedTypeSeparator];
-
-        return text.StartsWith("vtk", StringComparison.Ordinal) ? text : null;
-    }
 }

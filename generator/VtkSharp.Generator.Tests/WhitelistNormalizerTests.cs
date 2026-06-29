@@ -47,8 +47,12 @@ public sealed class WhitelistNormalizerTests
         Assert.Equal([], renderingCore.Classes.Single(item => item.Name == "vtkMapper").Functions);
     }
 
-    [Fact]
-    public void Normalize_ExcludesVtkTypeUInt32FromDependencyClass()
+    [Theory]
+    [InlineData("vtkTypeBool")]
+    [InlineData("vtkTypeUInt32")]
+    [InlineData("vtkIdType")]
+    [InlineData("vtkMTimeType")]
+    public void Normalize_ExcludesVtkScalarTypesFromDependencyClasses(string scalarType)
     {
         var document = new WhitelistDocument
         {
@@ -64,9 +68,9 @@ public sealed class WhitelistNormalizerTests
                         new WhitelistFunction
                         {
                             Name = "Initialize",
-                            CppSignature = "void Initialize(vtkTypeUInt32 seed)",
+                            CppSignature = $"void Initialize({scalarType} seed)",
                             Return = new WhitelistReturn { Type = "void" },
-                            Parameters = [new WhitelistParameter { Type = "vtkTypeUInt32", Name = "seed" }],
+                            Parameters = [new WhitelistParameter { Type = scalarType, Name = "seed" }],
                         },
                     ],
                 },
@@ -80,6 +84,6 @@ public sealed class WhitelistNormalizerTests
         var normalized = new WhitelistNormalizer().Normalize([document], hierarchy, manualBindingClasses: ["vtkObject"]);
 
         var commonCore = Assert.Single(normalized);
-        Assert.DoesNotContain(commonCore.Classes, c => c.Name == "vtkTypeUInt32");
+        Assert.DoesNotContain(commonCore.Classes, c => c.Name == scalarType);
     }
 }
