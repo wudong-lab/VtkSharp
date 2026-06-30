@@ -17,7 +17,7 @@ public:
     bool CreateHiddenWindowContext();
     void Release();
 
-    void MakeCurrent() const;
+    bool MakeCurrent() const;
     bool IsCurrent() const;
 
     vtkOpenGLRenderWindow::VTKOpenGLAPIProc LoadSymbol(const char* name) const;

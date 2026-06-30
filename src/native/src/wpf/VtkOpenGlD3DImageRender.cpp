@@ -66,7 +66,11 @@ void VtkOpenGlD3DImageRender::SetSize(int width, int height)
 
 void VtkOpenGlD3DImageRender::Render()
 {
-    this->m_wglContext.MakeCurrent();
+    if (!this->m_wglContext.MakeCurrent())
+    {
+        this->SetError("Failed to make OpenGL context current.");
+        return;
+    }
 
     if (!this->m_wglDxInterop.LockObject())
     {
@@ -124,7 +128,7 @@ bool VtkOpenGlD3DImageRender::Initialize()
 
 void VtkOpenGlD3DImageRender::Release()
 {
-    this->m_wglContext.MakeCurrent();
+    const bool isCurrent = this->m_wglContext.MakeCurrent();
 
     this->m_renderer = nullptr;
     this->m_renderWindow = nullptr;
@@ -134,7 +138,10 @@ void VtkOpenGlD3DImageRender::Release()
     this->m_isDirectCallback = nullptr;
     this->m_frameCallback = nullptr;
 
-    this->ReleaseInteropResource();
+    if (isCurrent)
+    {
+        this->ReleaseInteropResource();
+    }
 
     this->m_wglDxInterop.CloseDevice();
     this->m_d3DRenderTarget.Release();

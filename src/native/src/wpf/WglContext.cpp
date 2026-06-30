@@ -89,9 +89,14 @@ void WglContext::Release()
     }
 }
 
-void WglContext::MakeCurrent() const
+bool WglContext::MakeCurrent() const
 {
-    ::wglMakeCurrent(this->m_deviceContext, this->m_glContext);
+    if (!this->m_deviceContext || !this->m_glContext)
+    {
+        return false;
+    }
+
+    return ::wglMakeCurrent(this->m_deviceContext, this->m_glContext) == TRUE;
 }
 
 bool WglContext::IsCurrent() const
