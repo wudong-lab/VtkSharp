@@ -77,11 +77,12 @@ bool OpenGlFramebuffer::RenderToTexture(
 
 void OpenGlFramebuffer::Release()
 {
-    if (this->m_framebuffer)
+    if (this->m_framebuffer && this->glDeleteFramebuffers)
     {
         this->glDeleteFramebuffers(1, &this->m_framebuffer);
-        this->m_framebuffer = 0;
     }
+
+    this->m_framebuffer = 0;
 
     if (this->m_texture)
     {

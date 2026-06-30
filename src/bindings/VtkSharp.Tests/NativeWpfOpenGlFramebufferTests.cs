@@ -48,6 +48,16 @@ public sealed class NativeWpfOpenGlFramebufferTests
         Assert.Contains("glDeleteTextures", framebufferSource);
     }
 
+    [Fact]
+    public void Release_DoesNotCallFramebufferDeleteFunction_WhenItWasNotLoaded()
+    {
+        var root = FindRepositoryRoot();
+        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
+
+        Assert.Contains("if (this->m_framebuffer && this->glDeleteFramebuffers)", framebufferSource);
+    }
+
     private static DirectoryInfo FindRepositoryRoot()
     {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
