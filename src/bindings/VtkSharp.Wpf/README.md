@@ -4,7 +4,7 @@ WPF integration for VtkSharp.
 
 ## Render Controls
 
-Use `VtkOpenGLD3DImageRenderControl` for new WPF integration work. It renders VTK with `vtkGenericOpenGLRenderWindow` into a shared OpenGL/D3D9Ex texture displayed by WPF `D3DImage`, so VTK content participates in the WPF visual tree without HWND airspace issues or CPU frame readback.
+Use `VtkOpenGlD3DImageRenderControl` for new WPF integration work. It renders VTK with `vtkGenericOpenGLRenderWindow` into a shared OpenGL/D3D9Ex texture displayed by WPF `D3DImage`, so VTK content participates in the WPF visual tree without HWND airspace issues or CPU frame readback.
 
 Windows-only. The OpenGL/D3D9Ex backend requires a GPU/driver path that supports `WGL_NV_DX_interop`.
 
@@ -20,7 +20,7 @@ Windows-only. The OpenGL/D3D9Ex backend requires a GPU/driver path that supports
 ```xaml
 <Window x:Class="MyApp.MainWindow"
         xmlns:vtk="clr-namespace:VtkSharp.Wpf;assembly=VtkSharp.Wpf">
-    <vtk:VtkOpenGLD3DImageRenderControl x:Name="RenderControl" />
+    <vtk:VtkOpenGlD3DImageRenderControl x:Name="RenderControl" />
 </Window>
 ```
 

@@ -2,6 +2,7 @@
 using System.Windows.Interop;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace VtkSharp.Wpf;
 
@@ -19,6 +20,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     private PixelSize _pixelSize;
     private bool _isInitialized;
     private bool _isDisposed;
+    private bool _renderRequested;
     private Point? _lastMousePosition;
 
     public VtkOpenGlD3DImageRenderControl()
@@ -35,9 +37,32 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     public event EventHandler<VtkRenderControlInitializedEventArgs>? VtkInitialized;
 
+    public void RequestRender()
+    {
+        if (this._isDisposed || this._renderRequested) return;
+
+        this._renderRequested = true;
+        this.Dispatcher.BeginInvoke(
+            DispatcherPriority.Render,
+            new Action(() =>
+            {
+                this._renderRequested = false;
+                this.Render();
+            }));
+    }
+
     public void Render()
     {
-        if (!this._isInitialized || this._render is null || !this._image.IsFrontBufferAvailable) return;
+        if (this._isDisposed ||
+            !this.IsLoaded ||
+            !this._isInitialized ||
+            this._render is null ||
+            !this._image.IsFrontBufferAvailable ||
+            this.ActualWidth <= 0 ||
+            this.ActualHeight <= 0)
+        {
+            return;
+        }
 
         var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));
 
@@ -84,7 +109,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
     {
         base.OnRenderSizeChanged(sizeInfo);
-        this.Render();
+        this.RequestRender();
     }
 
     protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -118,7 +143,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         camera.Elevation(delta.Y * 0.5);
         camera.ComputeViewPlaneNormal();
         this.Renderer.ResetCameraClippingRange();
-        this.Render();
+        this.RequestRender();
         e.Handled = true;
     }
 
@@ -143,7 +168,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         var camera = this.Renderer.GetActiveCamera();
         camera.Zoom(e.Delta > 0 ? 1.1 : 0.9);
         this.Renderer.ResetCameraClippingRange();
-        this.Render();
+        this.RequestRender();
         e.Handled = true;
     }
 
@@ -152,6 +177,9 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this._isDisposed) return;
 
         this.DisposeVtkRender();
+        this.Loaded -= this.OnLoaded;
+        this.Unloaded -= this.OnUnloaded;
+        this._image.IsFrontBufferAvailableChanged -= this.OnIsFrontBufferAvailableChanged;
         this._isDisposed = true;
         GC.SuppressFinalize(this);
     }
@@ -159,7 +187,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         this.InitializeVtkRender();
-        this.Render();
+        this.RequestRender();
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
@@ -172,7 +200,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this._image.IsFrontBufferAvailable)
         {
             this._backBuffer = IntPtr.Zero;
-            this.Render();
+            this.RequestRender();
         }
     }
 
@@ -198,6 +226,17 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     private void DisposeVtkRender()
     {
+        this._lastMousePosition = null;
+        if (this.IsMouseCaptured)
+        {
+            this.ReleaseMouseCapture();
+        }
+
+        this.Interactor?.Dispose();
+        this._interactorStyle?.Dispose();
+        this.Interactor = null;
+        this._interactorStyle = null;
+
         if (this._render is not null)
         {
             if (this._image.IsFrontBufferAvailable)
