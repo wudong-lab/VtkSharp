@@ -10,8 +10,8 @@
 
 #include <windows.h>
 
-#include <d3d9.h>
 #include <gl/GL.h>
+#include "D3DImageRenderTarget.h"
 #include "OpenGlFramebufferApi.h"
 #include "WglContext.h"
 #include "WglDxInteropApi.h"
@@ -57,10 +57,8 @@ private:
     void Release();
 
     void SetError(const char* message);
-    bool CheckHr(HRESULT hr, const char* message);
 
     bool LoadOpenGLExtensions();
-    bool CreateD3DDevice();
     bool OpenDxInteropDevice();
     bool InitializeVtk();
     bool CreateInteropResource(int width, int height);
@@ -81,11 +79,7 @@ private:
     WglContext m_wglContext;
     WglDxInteropApi m_wglDxInteropApi;
     OpenGlFramebufferApi m_openGlFramebufferApi;
-
-    IDirect3D9Ex* m_direct3D = nullptr;
-    IDirect3DDevice9Ex* m_d3DDevice = nullptr;
-    IDirect3DTexture9* m_texture = nullptr;
-    IDirect3DSurface9* m_surface = nullptr;
+    D3DImageRenderTarget m_d3DRenderTarget;
 
     HANDLE m_dxInteropDevice = nullptr;
     HANDLE m_dxInteropObject = nullptr;

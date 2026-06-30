@@ -11,7 +11,10 @@ namespace VtkSharp.Wpf;
 public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposable
 {
     private readonly D3DImage _image = new();
+
     private VtkOpenGlD3DImageRender? _render;
+    private vtkInteractorStyleTrackballCamera? _interactorStyle;
+
     private nint _backBuffer;
     private PixelSize _pixelSize;
     private bool _isInitialized;
@@ -28,6 +31,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     public vtkRenderWindow? RenderWindow { get; private set; }
     public vtkRenderer? Renderer { get; private set; }
+    public vtkWin32RenderWindowInteractor? Interactor { get; private set; }
 
     public event EventHandler<VtkRenderControlInitializedEventArgs>? VtkInitialized;
 
@@ -177,6 +181,14 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this._render = VtkOpenGlD3DImageRender.Create();
         this.RenderWindow = this._render.RenderWindow;
         this.Renderer = this._render.Renderer;
+
+        this.Interactor = vtkWin32RenderWindowInteractor.New();
+        this.Interactor.SetRenderWindow(this.RenderWindow);
+
+        this._interactorStyle = vtkInteractorStyleTrackballCamera.New();
+        this.Interactor.SetInteractorStyle(this._interactorStyle);
+        this.Interactor.Initialize();
+
         this._isInitialized = true;
 
         this.VtkInitialized?.Invoke(this, new VtkRenderControlInitializedEventArgs(this.RenderWindow, this.Renderer));

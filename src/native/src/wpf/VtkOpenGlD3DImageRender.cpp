@@ -17,16 +17,6 @@ namespace
 {
 thread_local char LastRenderTargetError[256] = {};
 
-template <typename T>
-void ReleaseCom(T*& value)
-{
-    if (value)
-    {
-        value->Release();
-        value = nullptr;
-    }
-}
-
 }
 
 VtkOpenGlD3DImageRender* VtkOpenGlD3DImageRender::Create()
@@ -63,7 +53,7 @@ vtkRenderer* VtkOpenGlD3DImageRender::GetRenderer() const
 
 IDirect3DSurface9* VtkOpenGlD3DImageRender::GetBackBuffer() const
 {
-    return this->m_surface;
+    return this->m_d3DRenderTarget.GetSurface();
 }
 
 void VtkOpenGlD3DImageRender::SetSize(int width, int height)
@@ -71,7 +61,7 @@ void VtkOpenGlD3DImageRender::SetSize(int width, int height)
     const int clampedWidth = std::max(1, width);
     const int clampedHeight = std::max(1, height);
 
-    if (this->m_surface && this->m_width == clampedWidth && this->m_height == clampedHeight)
+    if (this->m_d3DRenderTarget.GetSurface() && this->m_width == clampedWidth && this->m_height == clampedHeight)
     {
         return;
     }
@@ -126,9 +116,18 @@ bool VtkOpenGlD3DImageRender::Initialize()
 
     this->m_wglContext.MakeCurrent();
 
-    return this->LoadOpenGLExtensions() &&
-        this->CreateD3DDevice() &&
-        this->OpenDxInteropDevice() &&
+    if (!this->LoadOpenGLExtensions())
+    {
+        return false;
+    }
+
+    if (!this->m_d3DRenderTarget.CreateDevice())
+    {
+        this->SetError(this->m_d3DRenderTarget.GetLastError());
+        return false;
+    }
+
+    return this->OpenDxInteropDevice() &&
         this->InitializeVtk() &&
         this->CreateInteropResource(this->m_width, this->m_height);
 }
@@ -153,8 +152,7 @@ void VtkOpenGlD3DImageRender::Release()
         this->m_dxInteropDevice = nullptr;
     }
 
-    ReleaseCom(this->m_d3DDevice);
-    ReleaseCom(this->m_direct3D);
+    this->m_d3DRenderTarget.Release();
     this->m_wglContext.Release();
 }
 
@@ -162,17 +160,6 @@ void VtkOpenGlD3DImageRender::SetError(const char* message)
 {
     std::strncpy(LastRenderTargetError, message, sizeof(LastRenderTargetError) - 1);
     LastRenderTargetError[sizeof(LastRenderTargetError) - 1] = '\0';
-}
-
-bool VtkOpenGlD3DImageRender::CheckHr(HRESULT hr, const char* message)
-{
-    if (FAILED(hr))
-    {
-        this->SetError(message);
-        return false;
-    }
-
-    return true;
 }
 
 bool VtkOpenGlD3DImageRender::LoadOpenGLExtensions()
@@ -192,32 +179,9 @@ bool VtkOpenGlD3DImageRender::LoadOpenGLExtensions()
     return true;
 }
 
-bool VtkOpenGlD3DImageRender::CreateD3DDevice()
-{
-    if (!this->CheckHr(::Direct3DCreate9Ex(D3D_SDK_VERSION, &this->m_direct3D), "Direct3DCreate9Ex failed."))
-    {
-        return false;
-    }
-
-    D3DPRESENT_PARAMETERS presentParameters = {};
-    presentParameters.Windowed = TRUE;
-    presentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-    presentParameters.hDeviceWindow = ::GetDesktopWindow();
-    presentParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-    presentParameters.BackBufferFormat = D3DFMT_A8R8G8B8;
-    presentParameters.BackBufferWidth = 1;
-    presentParameters.BackBufferHeight = 1;
-
-    return this->CheckHr(
-        this->m_direct3D->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, ::GetDesktopWindow(),
-            D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED | D3DCREATE_FPU_PRESERVE,
-            &presentParameters, nullptr, &this->m_d3DDevice),
-        "IDirect3D9Ex::CreateDeviceEx failed.");
-}
-
 bool VtkOpenGlD3DImageRender::OpenDxInteropDevice()
 {
-    this->m_dxInteropDevice = this->m_wglDxInteropApi.m_openDevice(this->m_d3DDevice);
+    this->m_dxInteropDevice = this->m_wglDxInteropApi.m_openDevice(this->m_d3DRenderTarget.GetDevice());
     if (!this->m_dxInteropDevice)
     {
         this->SetError("wglDXOpenDeviceNV failed.");
@@ -265,40 +229,33 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
     this->m_width = std::max(1, width);
     this->m_height = std::max(1, height);
 
-    HANDLE shareHandle = nullptr;
-    if (!this->CheckHr(
-            this->m_d3DDevice->CreateTexture(this->m_width, this->m_height, 1, D3DUSAGE_RENDERTARGET,
-                D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->m_texture, &shareHandle),
-            "IDirect3DDevice9Ex::CreateTexture failed."))
+    if (!this->m_d3DRenderTarget.CreateTexture(this->m_width, this->m_height))
     {
+        this->SetError(this->m_d3DRenderTarget.GetLastError());
         return false;
     }
 
     if (this->m_wglDxInteropApi.m_setResourceShareHandle)
     {
-        this->m_wglDxInteropApi.m_setResourceShareHandle(this->m_texture, shareHandle);
+        this->m_wglDxInteropApi.m_setResourceShareHandle(
+            this->m_d3DRenderTarget.GetTexture(),
+            this->m_d3DRenderTarget.GetShareHandle());
     }
 
-    if (!this->CheckHr(this->m_texture->GetSurfaceLevel(0, &this->m_surface), "IDirect3DTexture9::GetSurfaceLevel failed."))
-    {
-        return false;
-    }
-
-    ::glGenTextures(1, &this->m_glTexture);
-    ::glBindTexture(GL_TEXTURE_2D, this->m_glTexture);
-    ::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    ::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    ::glBindTexture(GL_TEXTURE_2D, 0);
+    this->m_openGlFramebufferApi.CreateRenderTarget(&this->m_glTexture, &this->m_framebuffer);
 
     this->m_dxInteropObject = this->m_wglDxInteropApi.m_registerObject(
-        this->m_dxInteropDevice, this->m_texture, this->m_glTexture, GL_TEXTURE_2D, WGL_ACCESS_WRITE_DISCARD_NV);
+        this->m_dxInteropDevice,
+        this->m_d3DRenderTarget.GetTexture(),
+        this->m_glTexture,
+        GL_TEXTURE_2D,
+        WGL_ACCESS_WRITE_DISCARD_NV);
     if (!this->m_dxInteropObject)
     {
         this->SetError("wglDXRegisterObjectNV failed.");
         return false;
     }
 
-    this->m_openGlFramebufferApi.CreateFramebuffer(&this->m_framebuffer);
     this->m_renderWindow->SetSize(this->m_width, this->m_height);
     return true;
 }
@@ -311,16 +268,9 @@ void VtkOpenGlD3DImageRender::ReleaseInteropResource()
         this->m_dxInteropObject = nullptr;
     }
 
-    this->m_openGlFramebufferApi.DeleteFramebuffer(&this->m_framebuffer);
+    this->m_openGlFramebufferApi.DeleteRenderTarget(&this->m_glTexture, &this->m_framebuffer);
 
-    if (this->m_glTexture)
-    {
-        ::glDeleteTextures(1, &this->m_glTexture);
-        this->m_glTexture = 0;
-    }
-
-    ReleaseCom(this->m_surface);
-    ReleaseCom(this->m_texture);
+    this->m_d3DRenderTarget.ReleaseTexture();
 }
 
 vtkSmartPointer<vtkCallbackCommand> VtkOpenGlD3DImageRender::CreateCallback(CallbackMethod method)

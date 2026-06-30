@@ -13,9 +13,9 @@ class OpenGlFramebufferApi
 public:
     bool Load();
 
-    void CreateFramebuffer(GLuint* framebuffer) const;
+    void CreateRenderTarget(GLuint* texture, GLuint* framebuffer) const;
     bool RenderToTexture(GLuint framebuffer, GLuint texture, int width, int height, void (*renderCallback)(void*), void* userData) const;
-    void DeleteFramebuffer(GLuint* framebuffer) const;
+    void DeleteRenderTarget(GLuint* texture, GLuint* framebuffer) const;
 
 private:
     using GlGenFramebuffersProc = void(APIENTRY*)(GLsizei, GLuint*);

@@ -59,6 +59,7 @@ public sealed class VtkRenderHost : HwndHost
 
         this.Interactor = vtkWin32RenderWindowInteractor.New();
         this.Interactor.SetRenderWindow(this.RenderWindow);
+
         this._interactorStyle = vtkInteractorStyleTrackballCamera.New();
         this.Interactor.SetInteractorStyle(this._interactorStyle);
         this.Interactor.Initialize();

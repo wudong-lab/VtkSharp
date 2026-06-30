@@ -21,14 +21,22 @@ public sealed class NativeWpfOpenGlFramebufferApiTests
         Assert.DoesNotContain("m_glFramebufferTexture2D", renderSource);
         Assert.DoesNotContain("m_glCheckFramebufferStatus", renderSource);
         Assert.DoesNotContain("m_glDeleteFramebuffers", renderSource);
+        Assert.DoesNotContain("glGenTextures", renderSource);
+        Assert.DoesNotContain("glBindTexture", renderSource);
+        Assert.DoesNotContain("glTexParameteri", renderSource);
+        Assert.DoesNotContain("glDeleteTextures", renderSource);
 
         Assert.Contains("class OpenGlFramebufferApi", apiHeader);
         Assert.Contains("GlGenFramebuffersProc", apiHeader);
         Assert.Contains("bool Load()", apiHeader);
-        Assert.Contains("void CreateFramebuffer", apiHeader);
+        Assert.Contains("void CreateRenderTarget", apiHeader);
         Assert.Contains("bool RenderToTexture", apiHeader);
-        Assert.Contains("void DeleteFramebuffer", apiHeader);
+        Assert.Contains("void DeleteRenderTarget", apiHeader);
         Assert.Contains("wglGetProcAddress", apiSource);
+        Assert.Contains("glGenTextures", apiSource);
+        Assert.Contains("glBindTexture", apiSource);
+        Assert.Contains("glTexParameteri", apiSource);
+        Assert.Contains("glDeleteTextures", apiSource);
     }
 
     private static DirectoryInfo FindRepositoryRoot()
