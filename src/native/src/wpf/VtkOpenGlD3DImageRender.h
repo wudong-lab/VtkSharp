@@ -23,13 +23,13 @@ class vtkObject;
 class vtkRenderWindow;
 class vtkRenderer;
 
-class VtkWpfD3DImageOpenGLRenderTarget
+class VtkOpenGlD3DImageRender
 {
 public:
-    static VtkWpfD3DImageOpenGLRenderTarget* Create();
+    static VtkOpenGlD3DImageRender* Create();
     static const char* GetLastError();
 
-    ~VtkWpfD3DImageOpenGLRenderTarget();
+    ~VtkOpenGlD3DImageRender();
 
     vtkRenderWindow* GetRenderWindow() const;
     vtkRenderer* GetRenderer() const;
@@ -45,18 +45,18 @@ private:
     using GlCheckFramebufferStatusProc = GLenum(APIENTRY*)(GLenum);
     using GlDeleteFramebuffersProc = void(APIENTRY*)(GLsizei, const GLuint*);
 
-    using CallbackMethod = void (VtkWpfD3DImageOpenGLRenderTarget::*)(void*);
+    using CallbackMethod = void (VtkOpenGlD3DImageRender::*)(void*);
 
     struct CallbackState
     {
-        VtkWpfD3DImageOpenGLRenderTarget* Target;
+        VtkOpenGlD3DImageRender* Target;
         CallbackMethod Method;
     };
 
-    VtkWpfD3DImageOpenGLRenderTarget() = default;
+    VtkOpenGlD3DImageRender() = default;
 
-    VtkWpfD3DImageOpenGLRenderTarget(const VtkWpfD3DImageOpenGLRenderTarget&) = delete;
-    VtkWpfD3DImageOpenGLRenderTarget& operator=(const VtkWpfD3DImageOpenGLRenderTarget&) = delete;
+    VtkOpenGlD3DImageRender(const VtkOpenGlD3DImageRender&) = delete;
+    VtkOpenGlD3DImageRender& operator=(const VtkOpenGlD3DImageRender&) = delete;
 
     bool Initialize();
     void Release();

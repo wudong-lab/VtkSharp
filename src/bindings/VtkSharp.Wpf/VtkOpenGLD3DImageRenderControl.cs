@@ -49,10 +49,10 @@ public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposab
                 this._backBuffer = IntPtr.Zero;
             }
 
-            VtkWpfD3DImageOpenGLRenderTarget_SetSize(this._bridge, pixelSize.Width, pixelSize.Height);
+            VtkOpenGlD3DImageRender_SetSize(this._bridge, pixelSize.Width, pixelSize.Height);
             this._pixelSize = pixelSize;
 
-            var backBuffer = VtkWpfD3DImageOpenGLRenderTarget_GetBackBuffer(this._bridge);
+            var backBuffer = VtkOpenGlD3DImageRender_GetBackBuffer(this._bridge);
             if (backBuffer == IntPtr.Zero) return;
 
             if (backBuffer != this._backBuffer)
@@ -61,7 +61,7 @@ public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposab
                 this._backBuffer = backBuffer;
             }
 
-            VtkWpfD3DImageOpenGLRenderTarget_Render(this._bridge);
+            VtkOpenGlD3DImageRender_Render(this._bridge);
             this._image.AddDirtyRect(new Int32Rect(0, 0, pixelSize.Width, pixelSize.Height));
         }
         finally
@@ -177,10 +177,10 @@ public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposab
     {
         if (this._isInitialized) return;
 
-        this._bridge = VtkWpfD3DImageOpenGLRenderTarget_New();
+        this._bridge = VtkOpenGlD3DImageRender_New();
         if (this._bridge == IntPtr.Zero)
         {
-            var nativeError = Marshal.PtrToStringAnsi(VtkWpfD3DImageOpenGLRenderTarget_GetLastError());
+            var nativeError = Marshal.PtrToStringAnsi(VtkOpenGlD3DImageRender_GetLastError());
             var detail = string.IsNullOrWhiteSpace(nativeError)
                 ? "The current GPU/driver may not support WGL_NV_DX_interop."
                 : nativeError;
@@ -188,8 +188,8 @@ public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposab
             throw new InvalidOperationException($"Failed to create VTK OpenGL/D3DImage render bridge. {detail}");
         }
 
-        this.RenderWindow = vtkRenderWindow.WeakReference(VtkWpfD3DImageOpenGLRenderTarget_GetRenderWindow(this._bridge));
-        this.Renderer = vtkRenderer.WeakReference(VtkWpfD3DImageOpenGLRenderTarget_GetRenderer(this._bridge));
+        this.RenderWindow = vtkRenderWindow.WeakReference(VtkOpenGlD3DImageRender_GetRenderWindow(this._bridge));
+        this.Renderer = vtkRenderer.WeakReference(VtkOpenGlD3DImageRender_GetRenderer(this._bridge));
         this._isInitialized = true;
 
         this.VtkInitialized?.Invoke(this, new VtkRenderControlInitializedEventArgs(this.RenderWindow, this.Renderer));
@@ -212,7 +212,7 @@ public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposab
                 }
             }
 
-            VtkWpfD3DImageOpenGLRenderTarget_Delete(this._bridge);
+            VtkOpenGlD3DImageRender_Delete(this._bridge);
             this._bridge = IntPtr.Zero;
         }
 
@@ -233,28 +233,28 @@ public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposab
     }
 
     [DllImport(NativeLibraryName)]
-    private static extern nint VtkWpfD3DImageOpenGLRenderTarget_New();
+    private static extern nint VtkOpenGlD3DImageRender_New();
 
     [DllImport(NativeLibraryName)]
-    private static extern void VtkWpfD3DImageOpenGLRenderTarget_Delete(nint bridge);
+    private static extern void VtkOpenGlD3DImageRender_Delete(nint bridge);
 
     [DllImport(NativeLibraryName)]
-    private static extern nint VtkWpfD3DImageOpenGLRenderTarget_GetRenderWindow(nint bridge);
+    private static extern nint VtkOpenGlD3DImageRender_GetRenderWindow(nint bridge);
 
     [DllImport(NativeLibraryName)]
-    private static extern nint VtkWpfD3DImageOpenGLRenderTarget_GetRenderer(nint bridge);
+    private static extern nint VtkOpenGlD3DImageRender_GetRenderer(nint bridge);
 
     [DllImport(NativeLibraryName)]
-    private static extern void VtkWpfD3DImageOpenGLRenderTarget_SetSize(nint bridge, int width, int height);
+    private static extern void VtkOpenGlD3DImageRender_SetSize(nint bridge, int width, int height);
 
     [DllImport(NativeLibraryName)]
-    private static extern void VtkWpfD3DImageOpenGLRenderTarget_Render(nint bridge);
+    private static extern void VtkOpenGlD3DImageRender_Render(nint bridge);
 
     [DllImport(NativeLibraryName)]
-    private static extern nint VtkWpfD3DImageOpenGLRenderTarget_GetBackBuffer(nint bridge);
+    private static extern nint VtkOpenGlD3DImageRender_GetBackBuffer(nint bridge);
 
     [DllImport(NativeLibraryName)]
-    private static extern nint VtkWpfD3DImageOpenGLRenderTarget_GetLastError();
+    private static extern nint VtkOpenGlD3DImageRender_GetLastError();
 
     private readonly record struct PixelSize(int Width, int Height);
 }

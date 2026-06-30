@@ -1,4 +1,4 @@
-#include "VtkWpfD3DImageOpenGLRenderTarget.h"
+#include "VtkOpenGlD3DImageRender.h"
 
 #include <vtkCallbackCommand.h>
 #include <vtkCommand.h>
@@ -46,9 +46,9 @@ T LoadOpenGLProc(const char* name)
 }
 }
 
-VtkWpfD3DImageOpenGLRenderTarget* VtkWpfD3DImageOpenGLRenderTarget::Create()
+VtkOpenGlD3DImageRender* VtkOpenGlD3DImageRender::Create()
 {
-    auto* target = new VtkWpfD3DImageOpenGLRenderTarget();
+    auto* target = new VtkOpenGlD3DImageRender();
     if (!target->Initialize())
     {
         delete target;
@@ -58,32 +58,32 @@ VtkWpfD3DImageOpenGLRenderTarget* VtkWpfD3DImageOpenGLRenderTarget::Create()
     return target;
 }
 
-const char* VtkWpfD3DImageOpenGLRenderTarget::GetLastError()
+const char* VtkOpenGlD3DImageRender::GetLastError()
 {
     return LastRenderTargetError;
 }
 
-VtkWpfD3DImageOpenGLRenderTarget::~VtkWpfD3DImageOpenGLRenderTarget()
+VtkOpenGlD3DImageRender::~VtkOpenGlD3DImageRender()
 {
     this->Release();
 }
 
-vtkRenderWindow* VtkWpfD3DImageOpenGLRenderTarget::GetRenderWindow() const
+vtkRenderWindow* VtkOpenGlD3DImageRender::GetRenderWindow() const
 {
     return this->m_renderWindow.GetPointer();
 }
 
-vtkRenderer* VtkWpfD3DImageOpenGLRenderTarget::GetRenderer() const
+vtkRenderer* VtkOpenGlD3DImageRender::GetRenderer() const
 {
     return this->m_renderer.GetPointer();
 }
 
-IDirect3DSurface9* VtkWpfD3DImageOpenGLRenderTarget::GetBackBuffer() const
+IDirect3DSurface9* VtkOpenGlD3DImageRender::GetBackBuffer() const
 {
     return this->m_surface;
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::SetSize(int width, int height)
+void VtkOpenGlD3DImageRender::SetSize(int width, int height)
 {
     const int clampedWidth = std::max(1, width);
     const int clampedHeight = std::max(1, height);
@@ -96,7 +96,7 @@ void VtkWpfD3DImageOpenGLRenderTarget::SetSize(int width, int height)
     this->CreateInteropResource(clampedWidth, clampedHeight);
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::Render()
+void VtkOpenGlD3DImageRender::Render()
 {
     if (!this->m_dxInteropObject) return;
 
@@ -127,7 +127,7 @@ void VtkWpfD3DImageOpenGLRenderTarget::Render()
     this->m_wglDxInteropApi.m_unlockObjects(this->m_dxInteropDevice, 1, &object);
 }
 
-bool VtkWpfD3DImageOpenGLRenderTarget::Initialize()
+bool VtkOpenGlD3DImageRender::Initialize()
 {
     if (!this->m_wglContext.CreateHiddenWindowContext())
     {
@@ -144,7 +144,7 @@ bool VtkWpfD3DImageOpenGLRenderTarget::Initialize()
         this->CreateInteropResource(this->m_width, this->m_height);
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::Release()
+void VtkOpenGlD3DImageRender::Release()
 {
     this->m_wglContext.MakeCurrent();
 
@@ -169,13 +169,13 @@ void VtkWpfD3DImageOpenGLRenderTarget::Release()
     this->m_wglContext.Release();
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::SetError(const char* message)
+void VtkOpenGlD3DImageRender::SetError(const char* message)
 {
     std::strncpy(LastRenderTargetError, message, sizeof(LastRenderTargetError) - 1);
     LastRenderTargetError[sizeof(LastRenderTargetError) - 1] = '\0';
 }
 
-bool VtkWpfD3DImageOpenGLRenderTarget::CheckHr(HRESULT hr, const char* message)
+bool VtkOpenGlD3DImageRender::CheckHr(HRESULT hr, const char* message)
 {
     if (FAILED(hr))
     {
@@ -186,7 +186,7 @@ bool VtkWpfD3DImageOpenGLRenderTarget::CheckHr(HRESULT hr, const char* message)
     return true;
 }
 
-bool VtkWpfD3DImageOpenGLRenderTarget::LoadOpenGLExtensions()
+bool VtkOpenGlD3DImageRender::LoadOpenGLExtensions()
 {
     this->m_glGenFramebuffers = LoadOpenGLProc<GlGenFramebuffersProc>("glGenFramebuffers");
     this->m_glBindFramebuffer = LoadOpenGLProc<GlBindFramebufferProc>("glBindFramebuffer");
@@ -210,7 +210,7 @@ bool VtkWpfD3DImageOpenGLRenderTarget::LoadOpenGLExtensions()
     return true;
 }
 
-bool VtkWpfD3DImageOpenGLRenderTarget::CreateD3DDevice()
+bool VtkOpenGlD3DImageRender::CreateD3DDevice()
 {
     if (!this->CheckHr(::Direct3DCreate9Ex(D3D_SDK_VERSION, &this->m_direct3D), "Direct3DCreate9Ex failed."))
     {
@@ -233,7 +233,7 @@ bool VtkWpfD3DImageOpenGLRenderTarget::CreateD3DDevice()
         "IDirect3D9Ex::CreateDeviceEx failed.");
 }
 
-bool VtkWpfD3DImageOpenGLRenderTarget::OpenDxInteropDevice()
+bool VtkOpenGlD3DImageRender::OpenDxInteropDevice()
 {
     this->m_dxInteropDevice = this->m_wglDxInteropApi.m_openDevice(this->m_d3DDevice);
     if (!this->m_dxInteropDevice)
@@ -245,29 +245,29 @@ bool VtkWpfD3DImageOpenGLRenderTarget::OpenDxInteropDevice()
     return true;
 }
 
-bool VtkWpfD3DImageOpenGLRenderTarget::InitializeVtk()
+bool VtkOpenGlD3DImageRender::InitializeVtk()
 {
     this->m_renderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
     this->m_renderer = vtkSmartPointer<vtkRenderer>::New();
 
-    this->m_makeCurrentCallback = this->CreateCallback(&VtkWpfD3DImageOpenGLRenderTarget::OnMakeCurrent);
+    this->m_makeCurrentCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnMakeCurrent);
     this->m_renderWindow->AddObserver(vtkCommand::WindowMakeCurrentEvent, this->m_makeCurrentCallback);
 
-    this->m_isCurrentCallback = this->CreateCallback(&VtkWpfD3DImageOpenGLRenderTarget::OnIsCurrent);
+    this->m_isCurrentCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnIsCurrent);
     this->m_renderWindow->AddObserver(vtkCommand::WindowIsCurrentEvent, this->m_isCurrentCallback);
 
-    this->m_supportsOpenGLCallback = this->CreateCallback(&VtkWpfD3DImageOpenGLRenderTarget::OnSupportsOpenGL);
+    this->m_supportsOpenGLCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnSupportsOpenGL);
     this->m_renderWindow->AddObserver(vtkCommand::WindowSupportsOpenGLEvent, this->m_supportsOpenGLCallback);
 
-    this->m_isDirectCallback = this->CreateCallback(&VtkWpfD3DImageOpenGLRenderTarget::OnIsDirect);
+    this->m_isDirectCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnIsDirect);
     this->m_renderWindow->AddObserver(vtkCommand::WindowIsDirectEvent, this->m_isDirectCallback);
 
-    this->m_frameCallback = this->CreateCallback(&VtkWpfD3DImageOpenGLRenderTarget::OnFrame);
+    this->m_frameCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnFrame);
     this->m_renderWindow->AddObserver(vtkCommand::WindowFrameEvent, this->m_frameCallback);
 
     this->m_renderWindow->SetOpenGLSymbolLoader(
         [](void* userData, const char* name) -> vtkOpenGLRenderWindow::VTKOpenGLAPIProc {
-            return static_cast<VtkWpfD3DImageOpenGLRenderTarget*>(userData)->m_wglContext.LoadSymbol(name);
+            return static_cast<VtkOpenGlD3DImageRender*>(userData)->m_wglContext.LoadSymbol(name);
         },
         this);
     this->m_renderWindow->AddRenderer(this->m_renderer);
@@ -276,7 +276,7 @@ bool VtkWpfD3DImageOpenGLRenderTarget::InitializeVtk()
     return this->m_renderWindow->InitializeFromCurrentContext();
 }
 
-bool VtkWpfD3DImageOpenGLRenderTarget::CreateInteropResource(int width, int height)
+bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
 {
     this->ReleaseInteropResource();
 
@@ -321,7 +321,7 @@ bool VtkWpfD3DImageOpenGLRenderTarget::CreateInteropResource(int width, int heig
     return true;
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::ReleaseInteropResource()
+void VtkOpenGlD3DImageRender::ReleaseInteropResource()
 {
     if (this->m_dxInteropObject)
     {
@@ -345,16 +345,16 @@ void VtkWpfD3DImageOpenGLRenderTarget::ReleaseInteropResource()
     ReleaseCom(this->m_texture);
 }
 
-vtkSmartPointer<vtkCallbackCommand> VtkWpfD3DImageOpenGLRenderTarget::CreateCallback(CallbackMethod method)
+vtkSmartPointer<vtkCallbackCommand> VtkOpenGlD3DImageRender::CreateCallback(CallbackMethod method)
 {
     auto callback = vtkSmartPointer<vtkCallbackCommand>::New();
     callback->SetClientData(new CallbackState{this, method});
-    callback->SetCallback(&VtkWpfD3DImageOpenGLRenderTarget::InvokeCallback);
-    callback->SetClientDataDeleteCallback(&VtkWpfD3DImageOpenGLRenderTarget::DeleteCallbackState);
+    callback->SetCallback(&VtkOpenGlD3DImageRender::InvokeCallback);
+    callback->SetClientDataDeleteCallback(&VtkOpenGlD3DImageRender::DeleteCallbackState);
     return callback;
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::InvokeCallback(
+void VtkOpenGlD3DImageRender::InvokeCallback(
     vtkObject*,
     unsigned long,
     void* clientData,
@@ -364,17 +364,17 @@ void VtkWpfD3DImageOpenGLRenderTarget::InvokeCallback(
     (state->Target->*state->Method)(callData);
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::DeleteCallbackState(void* clientData)
+void VtkOpenGlD3DImageRender::DeleteCallbackState(void* clientData)
 {
     delete static_cast<CallbackState*>(clientData);
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::OnMakeCurrent(void*)
+void VtkOpenGlD3DImageRender::OnMakeCurrent(void*)
 {
     this->m_wglContext.MakeCurrent();
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::OnIsCurrent(void* callData)
+void VtkOpenGlD3DImageRender::OnIsCurrent(void* callData)
 {
     auto* isCurrent = static_cast<bool*>(callData);
     if (isCurrent)
@@ -383,7 +383,7 @@ void VtkWpfD3DImageOpenGLRenderTarget::OnIsCurrent(void* callData)
     }
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::OnSupportsOpenGL(void* callData)
+void VtkOpenGlD3DImageRender::OnSupportsOpenGL(void* callData)
 {
     auto* supportsOpenGL = static_cast<int*>(callData);
     if (supportsOpenGL)
@@ -392,7 +392,7 @@ void VtkWpfD3DImageOpenGLRenderTarget::OnSupportsOpenGL(void* callData)
     }
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::OnIsDirect(void* callData)
+void VtkOpenGlD3DImageRender::OnIsDirect(void* callData)
 {
     auto* isDirect = static_cast<int*>(callData);
     if (isDirect)
@@ -401,7 +401,7 @@ void VtkWpfD3DImageOpenGLRenderTarget::OnIsDirect(void* callData)
     }
 }
 
-void VtkWpfD3DImageOpenGLRenderTarget::OnFrame(void*)
+void VtkOpenGlD3DImageRender::OnFrame(void*)
 {
     ::glFlush();
 }
