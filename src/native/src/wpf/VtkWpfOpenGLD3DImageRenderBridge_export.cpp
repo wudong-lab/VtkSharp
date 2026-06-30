@@ -1,4 +1,4 @@
-#include "VtkWpfD3DImageOpenGLRenderTarget.h"
+﻿#include "VtkWpfD3DImageOpenGLRenderTarget.h"
 #include "vtksharp_api.h"
 
 VTKSHARP_API VtkWpfD3DImageOpenGLRenderTarget* VtkWpfOpenGLD3DImageRenderBridge_New()
@@ -21,10 +21,7 @@ VTKSHARP_API vtkRenderer* VtkWpfOpenGLD3DImageRenderBridge_GetRenderer(VtkWpfD3D
     return target ? target->GetRenderer() : nullptr;
 }
 
-VTKSHARP_API void VtkWpfOpenGLD3DImageRenderBridge_SetSize(
-    VtkWpfD3DImageOpenGLRenderTarget* target,
-    int width,
-    int height)
+VTKSHARP_API void VtkWpfOpenGLD3DImageRenderBridge_SetSize(VtkWpfD3DImageOpenGLRenderTarget* target, int width, int height)
 {
     if (target)
     {
@@ -40,8 +37,7 @@ VTKSHARP_API void VtkWpfOpenGLD3DImageRenderBridge_Render(VtkWpfD3DImageOpenGLRe
     }
 }
 
-VTKSHARP_API IDirect3DSurface9* VtkWpfOpenGLD3DImageRenderBridge_GetBackBuffer(
-    VtkWpfD3DImageOpenGLRenderTarget* target)
+VTKSHARP_API IDirect3DSurface9* VtkWpfOpenGLD3DImageRenderBridge_GetBackBuffer(VtkWpfD3DImageOpenGLRenderTarget* target)
 {
     return target ? target->GetBackBuffer() : nullptr;
 }
