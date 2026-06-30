@@ -31,7 +31,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
         Assert.Contains("class OpenGlFramebuffer", framebufferHeader);
         Assert.Contains("GlGenFramebuffersProc", framebufferHeader);
         Assert.Contains("bool Load()", framebufferHeader);
-        Assert.Contains("void Create()", framebufferHeader);
+        Assert.Contains("bool Create()", framebufferHeader);
         Assert.Contains("GLuint GetTexture() const", framebufferHeader);
         Assert.Contains("bool RenderToTexture", framebufferHeader);
         Assert.Contains("void Release()", framebufferHeader);
@@ -56,6 +56,23 @@ public sealed class NativeWpfOpenGlFramebufferTests
         var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
 
         Assert.Contains("if (this->m_framebuffer && this->glDeleteFramebuffers)", framebufferSource);
+    }
+
+    [Fact]
+    public void Create_ReportsTextureAndFramebufferCreationFailure()
+    {
+        var root = FindRepositoryRoot();
+        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
+        var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
+
+        Assert.Contains("if (!this->glGenFramebuffers)", framebufferSource);
+        Assert.Contains("if (!this->m_texture)", framebufferSource);
+        Assert.Contains("if (!this->m_framebuffer)", framebufferSource);
+        Assert.Contains("return false;", framebufferSource);
+        Assert.Contains("return true;", framebufferSource);
+        Assert.Contains("if (!this->m_openGlFramebuffer.Create())", renderSource);
+        Assert.Contains("this->SetError(\"Failed to create shared OpenGL framebuffer.\");", renderSource);
     }
 
     private static DirectoryInfo FindRepositoryRoot()

@@ -36,17 +36,34 @@ bool OpenGlFramebuffer::Load()
         this->glDeleteFramebuffers;
 }
 
-void OpenGlFramebuffer::Create()
+bool OpenGlFramebuffer::Create()
 {
     this->Release();
 
+    if (!this->glGenFramebuffers)
+    {
+        return false;
+    }
+
     ::glGenTextures(1, &this->m_texture);
+    if (!this->m_texture)
+    {
+        return false;
+    }
+
     ::glBindTexture(GL_TEXTURE_2D, this->m_texture);
     ::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     ::glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     ::glBindTexture(GL_TEXTURE_2D, 0);
 
     this->glGenFramebuffers(1, &this->m_framebuffer);
+    if (!this->m_framebuffer)
+    {
+        this->Release();
+        return false;
+    }
+
+    return true;
 }
 
 GLuint OpenGlFramebuffer::GetTexture() const

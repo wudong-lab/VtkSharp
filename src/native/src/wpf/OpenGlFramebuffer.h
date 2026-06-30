@@ -13,7 +13,7 @@ class OpenGlFramebuffer
 public:
     bool Load();
 
-    void Create();
+    bool Create();
     GLuint GetTexture() const;
     bool RenderToTexture(int width, int height, void (*renderCallback)(void*), void* userData) const;
     void Release();

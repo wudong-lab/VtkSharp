@@ -240,7 +240,12 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
         return false;
     }
 
-    this->m_openGlFramebuffer.Create();
+    if (!this->m_openGlFramebuffer.Create())
+    {
+        this->SetError("Failed to create shared OpenGL framebuffer.");
+        this->ReleaseInteropResource();
+        return false;
+    }
 
     if (!this->m_wglDxInterop.RegisterObject(
         this->m_d3DRenderTarget.GetTexture(),
