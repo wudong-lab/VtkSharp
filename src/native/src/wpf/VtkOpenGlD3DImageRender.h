@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -14,7 +14,7 @@
 #include "D3DImageRenderTarget.h"
 #include "OpenGlFramebuffer.h"
 #include "WglContext.h"
-#include "WglDxInteropApi.h"
+#include "WglDxInterop.h"
 
 #include <vtkSmartPointer.h>
 
@@ -77,7 +77,7 @@ private:
     void OnFrame(void* callData);
 
     WglContext m_wglContext;
-    WglDxInteropApi m_wglDxInteropApi;
+    WglDxInterop m_wglDxInterop;
     OpenGlFramebuffer m_openGlFramebuffer;
     D3DImageRenderTarget m_d3DRenderTarget;
 

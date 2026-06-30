@@ -1,8 +1,8 @@
-﻿#define WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
 
-#include "WglDxInteropApi.h"
+#include "WglDxInterop.h"
 
 #include <cstring>
 
@@ -15,7 +15,7 @@ namespace
     }
 }
 
-bool WglDxInteropApi::Load()
+bool WglDxInterop::Load()
 {
     this->wglDXSetResourceShareHandleNV = LoadWglProc<SetResourceShareHandleProc>("wglDXSetResourceShareHandleNV");
     this->wglDXOpenDeviceNV = LoadWglProc<OpenDeviceProc>("wglDXOpenDeviceNV");
@@ -27,7 +27,7 @@ bool WglDxInteropApi::Load()
     return this->IsAvailable();
 }
 
-bool WglDxInteropApi::IsAvailable() const
+bool WglDxInterop::IsAvailable() const
 {
     return this->wglDXOpenDeviceNV &&
         this->wglDXCloseDeviceNV &&
@@ -37,7 +37,7 @@ bool WglDxInteropApi::IsAvailable() const
         this->wglDXUnlockObjectsNV;
 }
 
-bool WglDxInteropApi::OpenDevice(void* d3DDevice)
+bool WglDxInterop::OpenDevice(void* d3DDevice)
 {
     this->CloseDevice();
 
@@ -51,7 +51,7 @@ bool WglDxInteropApi::OpenDevice(void* d3DDevice)
     return true;
 }
 
-bool WglDxInteropApi::RegisterObject(void* d3DTexture, GLuint glTexture, GLenum glTextureType, GLenum access)
+bool WglDxInterop::RegisterObject(void* d3DTexture, GLuint glTexture, GLenum glTextureType, GLenum access)
 {
     this->UnregisterObject();
 
@@ -65,7 +65,7 @@ bool WglDxInteropApi::RegisterObject(void* d3DTexture, GLuint glTexture, GLenum 
     return true;
 }
 
-bool WglDxInteropApi::LockObject()
+bool WglDxInterop::LockObject()
 {
     if (!this->m_object)
     {
@@ -83,7 +83,7 @@ bool WglDxInteropApi::LockObject()
     return true;
 }
 
-void WglDxInteropApi::UnlockObject()
+void WglDxInterop::UnlockObject()
 {
     if (!this->m_object)
     {
@@ -94,7 +94,7 @@ void WglDxInteropApi::UnlockObject()
     this->wglDXUnlockObjectsNV(this->m_device, 1, &object);
 }
 
-void WglDxInteropApi::UnregisterObject()
+void WglDxInterop::UnregisterObject()
 {
     if (this->m_object)
     {
@@ -103,7 +103,7 @@ void WglDxInteropApi::UnregisterObject()
     }
 }
 
-void WglDxInteropApi::CloseDevice()
+void WglDxInterop::CloseDevice()
 {
     this->UnregisterObject();
 
@@ -114,12 +114,12 @@ void WglDxInteropApi::CloseDevice()
     }
 }
 
-const char* WglDxInteropApi::GetLastError() const
+const char* WglDxInterop::GetLastError() const
 {
     return this->m_lastError;
 }
 
-void WglDxInteropApi::SetError(const char* message)
+void WglDxInterop::SetError(const char* message)
 {
     std::strncpy(this->m_lastError, message, sizeof(this->m_lastError) - 1);
     this->m_lastError[sizeof(this->m_lastError) - 1] = '\0';

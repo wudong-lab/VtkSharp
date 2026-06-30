@@ -12,7 +12,7 @@
 
 #include <gl/GL.h>
 
-class WglDxInteropApi
+class WglDxInterop
 {
 public:
     using SetResourceShareHandleProc = BOOL(WINAPI*)(void*, HANDLE);

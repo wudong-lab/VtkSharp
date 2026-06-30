@@ -73,9 +73,9 @@ void VtkOpenGlD3DImageRender::Render()
 {
     this->m_wglContext.MakeCurrent();
 
-    if (!this->m_wglDxInteropApi.LockObject())
+    if (!this->m_wglDxInterop.LockObject())
     {
-        this->SetError(this->m_wglDxInteropApi.GetLastError());
+        this->SetError(this->m_wglDxInterop.GetLastError());
         return;
     }
 
@@ -88,7 +88,7 @@ void VtkOpenGlD3DImageRender::Render()
         this->SetError("Shared OpenGL framebuffer is incomplete.");
     }
 
-    this->m_wglDxInteropApi.UnlockObject();
+    this->m_wglDxInterop.UnlockObject();
 }
 
 void VtkOpenGlD3DImageRender::RenderVtkWindow()
@@ -141,7 +141,7 @@ void VtkOpenGlD3DImageRender::Release()
 
     this->ReleaseInteropResource();
 
-    this->m_wglDxInteropApi.CloseDevice();
+    this->m_wglDxInterop.CloseDevice();
     this->m_d3DRenderTarget.Release();
     this->m_wglContext.Release();
 }
@@ -160,7 +160,7 @@ bool VtkOpenGlD3DImageRender::LoadOpenGLExtensions()
         return false;
     }
 
-    if (!this->m_wglDxInteropApi.Load())
+    if (!this->m_wglDxInterop.Load())
     {
         this->SetError("WGL_NV_DX_interop is not available.");
         return false;
@@ -171,9 +171,9 @@ bool VtkOpenGlD3DImageRender::LoadOpenGLExtensions()
 
 bool VtkOpenGlD3DImageRender::OpenDxInteropDevice()
 {
-    if (!this->m_wglDxInteropApi.OpenDevice(this->m_d3DRenderTarget.GetDevice()))
+    if (!this->m_wglDxInterop.OpenDevice(this->m_d3DRenderTarget.GetDevice()))
     {
-        this->SetError(this->m_wglDxInteropApi.GetLastError());
+        this->SetError(this->m_wglDxInterop.GetLastError());
         return false;
     }
 
@@ -224,22 +224,22 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
         return false;
     }
 
-    if (this->m_wglDxInteropApi.wglDXSetResourceShareHandleNV)
+    if (this->m_wglDxInterop.wglDXSetResourceShareHandleNV)
     {
-        this->m_wglDxInteropApi.wglDXSetResourceShareHandleNV(
+        this->m_wglDxInterop.wglDXSetResourceShareHandleNV(
             this->m_d3DRenderTarget.GetTexture(),
             this->m_d3DRenderTarget.GetShareHandle());
     }
 
     this->m_openGlFramebuffer.Create();
 
-    if (!this->m_wglDxInteropApi.RegisterObject(
+    if (!this->m_wglDxInterop.RegisterObject(
         this->m_d3DRenderTarget.GetTexture(),
         this->m_openGlFramebuffer.GetTexture(),
         GL_TEXTURE_2D,
         WGL_ACCESS_WRITE_DISCARD_NV))
     {
-        this->SetError(this->m_wglDxInteropApi.GetLastError());
+        this->SetError(this->m_wglDxInterop.GetLastError());
         return false;
     }
 
@@ -249,7 +249,7 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
 
 void VtkOpenGlD3DImageRender::ReleaseInteropResource()
 {
-    this->m_wglDxInteropApi.UnregisterObject();
+    this->m_wglDxInterop.UnregisterObject();
     this->m_openGlFramebuffer.Release();
 
     this->m_d3DRenderTarget.ReleaseTexture();
