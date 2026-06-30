@@ -12,7 +12,7 @@
 
 #include <gl/GL.h>
 #include "D3DImageRenderTarget.h"
-#include "OpenGlFramebufferApi.h"
+#include "OpenGlFramebuffer.h"
 #include "WglContext.h"
 #include "WglDxInteropApi.h"
 
@@ -78,14 +78,11 @@ private:
 
     WglContext m_wglContext;
     WglDxInteropApi m_wglDxInteropApi;
-    OpenGlFramebufferApi m_openGlFramebufferApi;
+    OpenGlFramebuffer m_openGlFramebuffer;
     D3DImageRenderTarget m_d3DRenderTarget;
 
     HANDLE m_dxInteropDevice = nullptr;
     HANDLE m_dxInteropObject = nullptr;
-
-    GLuint m_glTexture = 0;
-    GLuint m_framebuffer = 0;
 
     vtkSmartPointer<vtkGenericOpenGLRenderWindow> m_renderWindow;
     vtkSmartPointer<vtkRenderer> m_renderer;

@@ -82,9 +82,7 @@ void VtkOpenGlD3DImageRender::Render()
         return;
     }
 
-    if (!this->m_openGlFramebufferApi.RenderToTexture(
-            this->m_framebuffer,
-            this->m_glTexture,
+    if (!this->m_openGlFramebuffer.RenderToTexture(
             this->m_width,
             this->m_height,
             &VtkOpenGlD3DImageRender::RenderVtkWindowCallback,
@@ -164,7 +162,7 @@ void VtkOpenGlD3DImageRender::SetError(const char* message)
 
 bool VtkOpenGlD3DImageRender::LoadOpenGLExtensions()
 {
-    if (!this->m_openGlFramebufferApi.Load())
+    if (!this->m_openGlFramebuffer.Load())
     {
         this->SetError("OpenGL framebuffer functions are not available.");
         return false;
@@ -242,12 +240,12 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
             this->m_d3DRenderTarget.GetShareHandle());
     }
 
-    this->m_openGlFramebufferApi.CreateRenderTarget(&this->m_glTexture, &this->m_framebuffer);
+    this->m_openGlFramebuffer.Create();
 
     this->m_dxInteropObject = this->m_wglDxInteropApi.m_registerObject(
         this->m_dxInteropDevice,
         this->m_d3DRenderTarget.GetTexture(),
-        this->m_glTexture,
+        this->m_openGlFramebuffer.GetTexture(),
         GL_TEXTURE_2D,
         WGL_ACCESS_WRITE_DISCARD_NV);
     if (!this->m_dxInteropObject)
@@ -268,7 +266,7 @@ void VtkOpenGlD3DImageRender::ReleaseInteropResource()
         this->m_dxInteropObject = nullptr;
     }
 
-    this->m_openGlFramebufferApi.DeleteRenderTarget(&this->m_glTexture, &this->m_framebuffer);
+    this->m_openGlFramebuffer.Release();
 
     this->m_d3DRenderTarget.ReleaseTexture();
 }

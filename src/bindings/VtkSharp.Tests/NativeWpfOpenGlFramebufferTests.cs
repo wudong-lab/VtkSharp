@@ -3,7 +3,7 @@ using System.IO;
 
 namespace VtkSharp.Tests;
 
-public sealed class NativeWpfOpenGlFramebufferApiTests
+public sealed class NativeWpfOpenGlFramebufferTests
 {
     [Fact]
     public void OpenGlFramebufferDetails_AreIsolatedFromD3DImageRender()
@@ -12,11 +12,13 @@ public sealed class NativeWpfOpenGlFramebufferApiTests
         var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
         var renderHeader = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.h"));
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
-        var apiHeader = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebufferApi.h"));
-        var apiSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebufferApi.cpp"));
+        var framebufferHeader = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.h"));
+        var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
 
         Assert.DoesNotContain("GlGenFramebuffersProc", renderHeader);
         Assert.DoesNotContain("m_glGenFramebuffers", renderHeader);
+        Assert.DoesNotContain("m_glTexture", renderHeader);
+        Assert.DoesNotContain("m_framebuffer", renderHeader);
         Assert.DoesNotContain("m_glBindFramebuffer", renderSource);
         Assert.DoesNotContain("m_glFramebufferTexture2D", renderSource);
         Assert.DoesNotContain("m_glCheckFramebufferStatus", renderSource);
@@ -26,17 +28,24 @@ public sealed class NativeWpfOpenGlFramebufferApiTests
         Assert.DoesNotContain("glTexParameteri", renderSource);
         Assert.DoesNotContain("glDeleteTextures", renderSource);
 
-        Assert.Contains("class OpenGlFramebufferApi", apiHeader);
-        Assert.Contains("GlGenFramebuffersProc", apiHeader);
-        Assert.Contains("bool Load()", apiHeader);
-        Assert.Contains("void CreateRenderTarget", apiHeader);
-        Assert.Contains("bool RenderToTexture", apiHeader);
-        Assert.Contains("void DeleteRenderTarget", apiHeader);
-        Assert.Contains("wglGetProcAddress", apiSource);
-        Assert.Contains("glGenTextures", apiSource);
-        Assert.Contains("glBindTexture", apiSource);
-        Assert.Contains("glTexParameteri", apiSource);
-        Assert.Contains("glDeleteTextures", apiSource);
+        Assert.Contains("class OpenGlFramebuffer", framebufferHeader);
+        Assert.Contains("GlGenFramebuffersProc", framebufferHeader);
+        Assert.Contains("bool Load()", framebufferHeader);
+        Assert.Contains("void Create()", framebufferHeader);
+        Assert.Contains("GLuint GetTexture() const", framebufferHeader);
+        Assert.Contains("bool RenderToTexture", framebufferHeader);
+        Assert.Contains("void Release()", framebufferHeader);
+        Assert.Contains("GLuint m_texture = 0", framebufferHeader);
+        Assert.Contains("GLuint m_framebuffer = 0", framebufferHeader);
+        Assert.Contains("GlGenFramebuffersProc glGenFramebuffers = nullptr", framebufferHeader);
+        Assert.Contains("GlBindFramebufferProc glBindFramebuffer = nullptr", framebufferHeader);
+        Assert.DoesNotContain("m_glGenFramebuffers", framebufferHeader);
+        Assert.DoesNotContain("m_glBindFramebuffer", framebufferHeader);
+        Assert.Contains("wglGetProcAddress", framebufferSource);
+        Assert.Contains("glGenTextures", framebufferSource);
+        Assert.Contains("glBindTexture", framebufferSource);
+        Assert.Contains("glTexParameteri", framebufferSource);
+        Assert.Contains("glDeleteTextures", framebufferSource);
     }
 
     private static DirectoryInfo FindRepositoryRoot()
