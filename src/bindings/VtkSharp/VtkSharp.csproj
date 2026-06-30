@@ -44,14 +44,15 @@
     The selected DLL is copied to the output directory.
   -->
   <PropertyGroup>
-    <VtkSharpNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64-vs2026\$(Configuration)\VtkSharp.Native.dll</VtkSharpNativeDefaultDllPath>
-    <VtkSharpNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64-vs2022\$(Configuration)\VtkSharp.Native.dll</VtkSharpNativeVs2022DllPath>
+    <VtkSharpNativeDllName>VtkSharp.Native.dll</VtkSharpNativeDllName>
+    <VtkSharpNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64-vs2026\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeDefaultDllPath>
+    <VtkSharpNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\..\native\out\build\windows-x64-vs2022\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeVs2022DllPath>
     <VtkSharpNativeDllPath Condition="Exists('$(VtkSharpNativeDefaultDllPath)')">$(VtkSharpNativeDefaultDllPath)</VtkSharpNativeDllPath>
     <VtkSharpNativeDllPath Condition="'$(VtkSharpNativeDllPath)' == '' And Exists('$(VtkSharpNativeVs2022DllPath)')">$(VtkSharpNativeVs2022DllPath)</VtkSharpNativeDllPath>
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
-    <None Include="$(VtkSharpNativeDllPath)" Link="VtkSharp.Native.dll" TargetPath="VtkSharp.Native.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="$(VtkSharpNativeDllPath)" Link="$(VtkSharpNativeDllName)" TargetPath="$(VtkSharpNativeDllName)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <!--
