@@ -1,5 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using VtkSharp.Wpf;
 
@@ -32,6 +34,10 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
         private vtkActor? _actor;
         private vtkAxesActor? _orientationAxes;
         private vtkOrientationMarkerWidget? _orientationWidget;
+        private vtkPropPicker? _picker;
+        private Button? _statusButton;
+        private VtkOpenGlD3DImageRenderControl? _viewport;
+        private bool _isPicked;
 
         public WpfOpenGLD3DImageViewportWindow()
         {
@@ -41,10 +47,14 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this.MinWidth = 480;
             this.MinHeight = 360;
 
-            var viewport = new VtkOpenGlD3DImageRenderControl();
-            viewport.VtkInitialized += this.OnVtkInitialized;
+            this._viewport = new VtkOpenGlD3DImageRenderControl();
+            this._viewport.VtkInitialized += this.OnVtkInitialized;
+            this._viewport.AddHandler(
+                UIElement.MouseLeftButtonUpEvent,
+                new MouseButtonEventHandler(this.OnViewportMouseLeftButtonUp),
+                handledEventsToo: true);
 
-            var overlayButton = new Button
+            this._statusButton = new Button
             {
                 Content = "OpenGL/D3D VTK",
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -61,8 +71,8 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             {
                 Background = new SolidColorBrush(Color.FromRgb(8, 10, 13))
             };
-            root.Children.Add(viewport);
-            root.Children.Add(overlayButton);
+            root.Children.Add(this._viewport);
+            root.Children.Add(this._statusButton);
             this.Content = root;
 
             this.Closed += this.OnClosed;
@@ -81,6 +91,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this._actor = vtkActor.New();
             this._actor.SetMapper(this._mapper);
             this._actor.GetProperty().SetColor(0.95, 0.58, 0.22);
+            this._picker = vtkPropPicker.New();
 
             e.Renderer.SetBackground(0.08, 0.1, 0.13);
             e.Renderer.AddActor(this._actor);
@@ -104,14 +115,60 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             }
         }
 
+        private void OnViewportMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this._viewport?.Renderer is null || this._picker is null || this._actor is null) return;
+
+            var pixelPosition = this.GetVtkDisplayPosition(e.GetPosition(this._viewport));
+            var picked = this._picker.Pick(pixelPosition.X, pixelPosition.Y, 0.0, this._viewport.Renderer);
+            var pickedActor = picked ? this._picker.GetActor() : null;
+
+            this._isPicked = pickedActor?.NativePointer == this._actor.NativePointer && !this._isPicked;
+            this._actor.GetProperty().SetColor(this._isPicked ? 0.28 : 0.95, this._isPicked ? 0.72 : 0.58, this._isPicked ? 1.0 : 0.22);
+
+            if (this._statusButton is not null)
+            {
+                this._statusButton.Content = this._isPicked ? "Cone picked" : "OpenGL/D3D VTK";
+            }
+
+            this._viewport.RequestRender();
+        }
+
+        private PixelPoint GetVtkDisplayPosition(Point position)
+        {
+            if (this._viewport is null) return new PixelPoint(0, 0);
+
+            var source = PresentationSource.FromVisual(this._viewport);
+            var transform = source?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
+            var pixelSize = this.GetPixelSize();
+            var x = (int)Math.Round(position.X * transform.M11);
+            var y = pixelSize.Height - 1 - (int)Math.Round(position.Y * transform.M22);
+            return new PixelPoint(x, y);
+        }
+
+        private PixelSize GetPixelSize()
+        {
+            if (this._viewport is null) return new PixelSize(1, 1);
+
+            var source = PresentationSource.FromVisual(this._viewport);
+            var transform = source?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
+            var width = Math.Max(1, (int)Math.Ceiling(this._viewport.ActualWidth * transform.M11));
+            var height = Math.Max(1, (int)Math.Ceiling(this._viewport.ActualHeight * transform.M22));
+            return new PixelSize(width, height);
+        }
+
         private void OnClosed(object? sender, EventArgs e)
         {
             this._orientationWidget?.EnabledOff();
             this._orientationWidget?.Dispose();
             this._orientationAxes?.Dispose();
+            this._picker?.Dispose();
             this._actor?.Dispose();
             this._mapper?.Dispose();
             this._cone?.Dispose();
         }
+
+        private readonly record struct PixelPoint(int X, int Y);
+        private readonly record struct PixelSize(int Width, int Height);
     }
 }

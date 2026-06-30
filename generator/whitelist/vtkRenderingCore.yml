@@ -583,6 +583,32 @@ classes:
   - name: vtkPropCollection
     header: vtkPropCollection.h
     functions: []
+  - name: vtkPropPicker
+    header: vtkPropPicker.h
+    functions:
+      - name: GetActor
+        cppSignature: vtkActor * GetActor()
+        return:
+          type: vtkActor*
+        parameters: []
+      - name: GetViewProp
+        cppSignature: vtkProp * GetViewProp()
+        return:
+          type: vtkProp*
+        parameters: []
+      - name: Pick
+        cppSignature: int Pick(double selectionX, double selectionY, double selectionZ, vtkRenderer * renderer)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: selectionX
+          - type: double
+            name: selectionY
+          - type: double
+            name: selectionZ
+          - type: vtkRenderer*
+            name: renderer
   - name: vtkProperty
     header: vtkProperty.h
     functions:
