@@ -37,6 +37,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
         private vtkPropPicker? _picker;
         private Button? _statusButton;
         private VtkOpenGlD3DImageRenderControl? _viewport;
+        private Point? _leftButtonDownPosition;
         private bool _isPicked;
 
         public WpfOpenGLD3DImageViewportWindow()
@@ -49,6 +50,10 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
 
             this._viewport = new VtkOpenGlD3DImageRenderControl();
             this._viewport.VtkInitialized += this.OnVtkInitialized;
+            this._viewport.AddHandler(
+                UIElement.MouseLeftButtonDownEvent,
+                new MouseButtonEventHandler(this.OnViewportMouseLeftButtonDown),
+                handledEventsToo: true);
             this._viewport.AddHandler(
                 UIElement.MouseLeftButtonUpEvent,
                 new MouseButtonEventHandler(this.OnViewportMouseLeftButtonUp),
@@ -115,11 +120,27 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             }
         }
 
+        private void OnViewportMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (this._viewport is null) return;
+
+            this._leftButtonDownPosition = e.GetPosition(this._viewport);
+        }
+
         private void OnViewportMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (this._viewport?.Renderer is null || this._picker is null || this._actor is null) return;
 
-            var pixelPosition = this.GetVtkDisplayPosition(e.GetPosition(this._viewport));
+            var position = e.GetPosition(this._viewport);
+            if (!this.IsClick(position))
+            {
+                this._leftButtonDownPosition = null;
+                return;
+            }
+
+            this._leftButtonDownPosition = null;
+
+            var pixelPosition = this.GetVtkDisplayPosition(position);
             var picked = this._picker.Pick(pixelPosition.X, pixelPosition.Y, 0.0, this._viewport.Renderer);
             var pickedActor = picked ? this._picker.GetActor() : null;
 
@@ -132,6 +153,14 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             }
 
             this._viewport.RequestRender();
+        }
+
+        private bool IsClick(Point position)
+        {
+            if (this._leftButtonDownPosition is not { } start) return false;
+
+            var delta = position - start;
+            return delta.Length <= 4.0;
         }
 
         private PixelPoint GetVtkDisplayPosition(Point position)
