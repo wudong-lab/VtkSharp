@@ -12,6 +12,7 @@
 
 #include <d3d9.h>
 #include <gl/GL.h>
+#include "OpenGlFramebufferApi.h"
 #include "WglContext.h"
 #include "WglDxInteropApi.h"
 
@@ -39,12 +40,6 @@ public:
     void Render();
 
 private:
-    using GlGenFramebuffersProc = void(APIENTRY*)(GLsizei, GLuint*);
-    using GlBindFramebufferProc = void(APIENTRY*)(GLenum, GLuint);
-    using GlFramebufferTexture2DProc = void(APIENTRY*)(GLenum, GLenum, GLenum, GLuint, GLint);
-    using GlCheckFramebufferStatusProc = GLenum(APIENTRY*)(GLenum);
-    using GlDeleteFramebuffersProc = void(APIENTRY*)(GLsizei, const GLuint*);
-
     using CallbackMethod = void (VtkOpenGlD3DImageRender::*)(void*);
 
     struct CallbackState
@@ -74,7 +69,9 @@ private:
     vtkSmartPointer<vtkCallbackCommand> CreateCallback(CallbackMethod method);
     static void InvokeCallback(vtkObject* caller, unsigned long eventId, void* clientData, void* callData);
     static void DeleteCallbackState(void* clientData);
+    static void RenderVtkWindowCallback(void* userData);
 
+    void RenderVtkWindow();
     void OnMakeCurrent(void* callData);
     void OnIsCurrent(void* callData);
     void OnSupportsOpenGL(void* callData);
@@ -83,12 +80,7 @@ private:
 
     WglContext m_wglContext;
     WglDxInteropApi m_wglDxInteropApi;
-
-    GlGenFramebuffersProc m_glGenFramebuffers = nullptr;
-    GlBindFramebufferProc m_glBindFramebuffer = nullptr;
-    GlFramebufferTexture2DProc m_glFramebufferTexture2D = nullptr;
-    GlCheckFramebufferStatusProc m_glCheckFramebufferStatus = nullptr;
-    GlDeleteFramebuffersProc m_glDeleteFramebuffers = nullptr;
+    OpenGlFramebufferApi m_openGlFramebufferApi;
 
     IDirect3D9Ex* m_direct3D = nullptr;
     IDirect3DDevice9Ex* m_d3DDevice = nullptr;

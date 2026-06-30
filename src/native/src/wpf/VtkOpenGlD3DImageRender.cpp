@@ -9,18 +9,6 @@
 #include <algorithm>
 #include <cstring>
 
-#ifndef GL_FRAMEBUFFER
-#define GL_FRAMEBUFFER 0x8D40
-#endif
-
-#ifndef GL_COLOR_ATTACHMENT0
-#define GL_COLOR_ATTACHMENT0 0x8CE0
-#endif
-
-#ifndef GL_FRAMEBUFFER_COMPLETE
-#define GL_FRAMEBUFFER_COMPLETE 0x8CD5
-#endif
-
 #ifndef WGL_ACCESS_WRITE_DISCARD_NV
 #define WGL_ACCESS_WRITE_DISCARD_NV 0x0002
 #endif
@@ -39,11 +27,6 @@ void ReleaseCom(T*& value)
     }
 }
 
-template <typename T>
-T LoadOpenGLProc(const char* name)
-{
-    return reinterpret_cast<T>(::wglGetProcAddress(name));
-}
 }
 
 VtkOpenGlD3DImageRender* VtkOpenGlD3DImageRender::Create()
@@ -109,22 +92,28 @@ void VtkOpenGlD3DImageRender::Render()
         return;
     }
 
-    this->m_glBindFramebuffer(GL_FRAMEBUFFER, this->m_framebuffer);
-    this->m_glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, this->m_glTexture, 0);
-
-    if (this->m_glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE)
-    {
-        ::glViewport(0, 0, this->m_width, this->m_height);
-        this->m_renderWindow->Render();
-        ::glFinish();
-    }
-    else
+    if (!this->m_openGlFramebufferApi.RenderToTexture(
+            this->m_framebuffer,
+            this->m_glTexture,
+            this->m_width,
+            this->m_height,
+            &VtkOpenGlD3DImageRender::RenderVtkWindowCallback,
+            this))
     {
         this->SetError("Shared OpenGL framebuffer is incomplete.");
     }
 
-    this->m_glBindFramebuffer(GL_FRAMEBUFFER, 0);
     this->m_wglDxInteropApi.m_unlockObjects(this->m_dxInteropDevice, 1, &object);
+}
+
+void VtkOpenGlD3DImageRender::RenderVtkWindow()
+{
+    this->m_renderWindow->Render();
+}
+
+void VtkOpenGlD3DImageRender::RenderVtkWindowCallback(void* userData)
+{
+    static_cast<VtkOpenGlD3DImageRender*>(userData)->RenderVtkWindow();
 }
 
 bool VtkOpenGlD3DImageRender::Initialize()
@@ -188,14 +177,7 @@ bool VtkOpenGlD3DImageRender::CheckHr(HRESULT hr, const char* message)
 
 bool VtkOpenGlD3DImageRender::LoadOpenGLExtensions()
 {
-    this->m_glGenFramebuffers = LoadOpenGLProc<GlGenFramebuffersProc>("glGenFramebuffers");
-    this->m_glBindFramebuffer = LoadOpenGLProc<GlBindFramebufferProc>("glBindFramebuffer");
-    this->m_glFramebufferTexture2D = LoadOpenGLProc<GlFramebufferTexture2DProc>("glFramebufferTexture2D");
-    this->m_glCheckFramebufferStatus = LoadOpenGLProc<GlCheckFramebufferStatusProc>("glCheckFramebufferStatus");
-    this->m_glDeleteFramebuffers = LoadOpenGLProc<GlDeleteFramebuffersProc>("glDeleteFramebuffers");
-
-    if (!this->m_glGenFramebuffers || !this->m_glBindFramebuffer || !this->m_glFramebufferTexture2D ||
-        !this->m_glCheckFramebufferStatus || !this->m_glDeleteFramebuffers)
+    if (!this->m_openGlFramebufferApi.Load())
     {
         this->SetError("OpenGL framebuffer functions are not available.");
         return false;
@@ -316,7 +298,7 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
         return false;
     }
 
-    this->m_glGenFramebuffers(1, &this->m_framebuffer);
+    this->m_openGlFramebufferApi.CreateFramebuffer(&this->m_framebuffer);
     this->m_renderWindow->SetSize(this->m_width, this->m_height);
     return true;
 }
@@ -329,11 +311,7 @@ void VtkOpenGlD3DImageRender::ReleaseInteropResource()
         this->m_dxInteropObject = nullptr;
     }
 
-    if (this->m_framebuffer)
-    {
-        this->m_glDeleteFramebuffers(1, &this->m_framebuffer);
-        this->m_framebuffer = 0;
-    }
+    this->m_openGlFramebufferApi.DeleteFramebuffer(&this->m_framebuffer);
 
     if (this->m_glTexture)
     {
