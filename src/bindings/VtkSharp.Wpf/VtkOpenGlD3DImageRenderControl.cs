@@ -103,7 +103,9 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     protected override void OnRender(DrawingContext drawingContext)
     {
         base.OnRender(drawingContext);
+        drawingContext.PushTransform(new MatrixTransform(1.0, 0.0, 0.0, -1.0, 0.0, this.ActualHeight));
         drawingContext.DrawImage(this._image, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
+        drawingContext.Pop();
     }
 
     protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
@@ -300,7 +302,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
         var pixelPosition = this.GetPixelPosition(position);
         var modifiers = Keyboard.Modifiers;
-        this.Interactor.SetEventInformation(
+        this.Interactor.SetEventInformationFlipY(
             pixelPosition.X,
             pixelPosition.Y,
             modifiers.HasFlag(ModifierKeys.Control),

@@ -25,7 +25,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 
     public new bool GetLatLongLines()
     {
-        return vtkInteractorStyleTerrain_GetLatLongLines(this.NativePointer);
+        return vtkInteractorStyleTerrain_GetLatLongLines(this.NativePointer) != 0;
     }
 
     public new long GetNumberOfGenerationsFromBase(string type)
@@ -40,10 +40,10 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     public new bool IsA(string type)
     {
         #if NET10_0_OR_GREATER
-        return vtkInteractorStyleTerrain_IsA(this.NativePointer, type);
-        #else
-        return vtkInteractorStyleTerrain_IsA(this.NativePointer, VtkString.ToNullTerminatedUtf8(type));
-        #endif
+        return vtkInteractorStyleTerrain_IsA(this.NativePointer, type) != 0;
+#else
+        return vtkInteractorStyleTerrain_IsA(this.NativePointer, VtkString.ToNullTerminatedUtf8(type)) != 0;
+#endif
     }
 
     public new void LatLongLinesOff()
@@ -113,7 +113,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 
     public new void SetLatLongLines(bool _arg)
     {
-        vtkInteractorStyleTerrain_SetLatLongLines(this.NativePointer, _arg);
+        vtkInteractorStyleTerrain_SetLatLongLines(this.NativePointer, _arg ? 1 : 0);
     }
 
     #region Interop
@@ -124,8 +124,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     private static extern void vtkInteractorStyleTerrain_Dolly(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_GetLatLongLines(nint self);
+    private static extern int vtkInteractorStyleTerrain_GetLatLongLines(nint self);
 
 #if NET10_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
@@ -137,12 +136,10 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 
 #if NET10_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static partial bool vtkInteractorStyleTerrain_IsA(nint self, string type);
+    private static partial int vtkInteractorStyleTerrain_IsA(nint self, string type);
 #else
     [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkInteractorStyleTerrain_IsA(nint self, byte[] type);
+    private static extern int vtkInteractorStyleTerrain_IsA(nint self, byte[] type);
 #endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
@@ -185,6 +182,6 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     private static extern void vtkInteractorStyleTerrain_Rotate(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkInteractorStyleTerrain_SetLatLongLines(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
+    private static extern void vtkInteractorStyleTerrain_SetLatLongLines(nint self, int _arg);
     #endregion
 }

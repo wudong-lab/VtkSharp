@@ -50,7 +50,7 @@ public unsafe partial class vtkProperty : vtkObject
 
     public new bool GetBackfaceCulling()
     {
-        return vtkProperty_GetBackfaceCulling(this.NativePointer);
+        return vtkProperty_GetBackfaceCulling(this.NativePointer) != 0;
     }
 
     public new double GetEdgeOpacity()
@@ -65,7 +65,7 @@ public unsafe partial class vtkProperty : vtkObject
 
     public new bool GetFrontfaceCulling()
     {
-        return vtkProperty_GetFrontfaceCulling(this.NativePointer);
+        return vtkProperty_GetFrontfaceCulling(this.NativePointer) != 0;
     }
 
     public new float GetLineWidth()
@@ -372,8 +372,7 @@ public unsafe partial class vtkProperty : vtkObject
     private static extern void vtkProperty_FrontfaceCullingOn(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkProperty_GetBackfaceCulling(nint self);
+    private static extern int vtkProperty_GetBackfaceCulling(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkProperty_GetEdgeOpacity(nint self);
@@ -382,8 +381,7 @@ public unsafe partial class vtkProperty : vtkObject
     private static extern float vtkProperty_GetEdgeWidth(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkProperty_GetFrontfaceCulling(nint self);
+    private static extern int vtkProperty_GetFrontfaceCulling(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern float vtkProperty_GetLineWidth(nint self);

@@ -200,6 +200,13 @@ public sealed class BindingEmitterFunctionTests
             },
             new WhitelistFunction
             {
+                Name = "SetTypeVisible",
+                CppSignature = "void SetTypeVisible(vtkTypeBool value)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters = [new WhitelistParameter { Type = "vtkTypeBool", Name = "value" }],
+            },
+            new WhitelistFunction
+            {
                 Name = "GetId",
                 CppSignature = "vtkIdType GetId()",
                 Return = new WhitelistReturn { Type = "vtkIdType" },
@@ -251,8 +258,12 @@ public sealed class BindingEmitterFunctionTests
 
         Assert.Contains("public new void SetVisible(bool value)", text);
         Assert.Contains("[MarshalAs(UnmanagedType.U1)] bool value", text);
-        Assert.Contains("[return: MarshalAs(UnmanagedType.U4)]", text);
         Assert.Contains("public new bool HasViewProp()", text);
+        Assert.Contains("return vtkThing_HasViewProp(this.NativePointer) != 0;", text);
+        Assert.Contains("private static extern int vtkThing_HasViewProp(nint self);", text);
+        Assert.Contains("public new void SetTypeVisible(bool value)", text);
+        Assert.Contains("vtkThing_SetTypeVisible(this.NativePointer, value ? 1 : 0);", text);
+        Assert.Contains("private static extern void vtkThing_SetTypeVisible(nint self, int value);", text);
         Assert.Contains("public new long GetId()", text);
         Assert.Contains("public new uint GetSeed()", text);
         Assert.Contains("public new void SetName(string name)", text);

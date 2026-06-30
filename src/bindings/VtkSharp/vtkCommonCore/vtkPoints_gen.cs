@@ -77,7 +77,7 @@ public unsafe partial class vtkPoints : vtkObject
 
     public new bool Resize(long numPoints)
     {
-        return vtkPoints_Resize(this.NativePointer, numPoints);
+        return vtkPoints_Resize(this.NativePointer, numPoints) != 0;
     }
 
     public new void SetDataTypeToBit()
@@ -193,8 +193,7 @@ public unsafe partial class vtkPoints : vtkObject
     private static extern void vtkPoints_Modified(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkPoints_Resize(nint self, long numPoints);
+    private static extern int vtkPoints_Resize(nint self, long numPoints);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPoints_SetDataTypeToBit(nint self);

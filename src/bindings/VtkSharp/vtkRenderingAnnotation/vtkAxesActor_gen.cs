@@ -65,7 +65,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
 
     public new void SetAxisLabels(bool _arg)
     {
-        vtkAxesActor_SetAxisLabels(this.NativePointer, _arg);
+        vtkAxesActor_SetAxisLabels(this.NativePointer, _arg ? 1 : 0);
     }
 
     public new void SetConeRadius(double _arg)
@@ -224,7 +224,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     private static extern nint vtkAxesActor_GetZAxisTipProperty(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAxesActor_SetAxisLabels(nint self, [MarshalAs(UnmanagedType.U4)] bool _arg);
+    private static extern void vtkAxesActor_SetAxisLabels(nint self, int _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAxesActor_SetConeRadius(nint self, double _arg);

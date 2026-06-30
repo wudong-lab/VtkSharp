@@ -90,7 +90,7 @@ public unsafe partial class vtkViewport : vtkObject
 
     public new bool HasViewProp(vtkProp _arg1)
     {
-        return vtkViewport_HasViewProp(this.NativePointer, _arg1.NativePointer);
+        return vtkViewport_HasViewProp(this.NativePointer, _arg1.NativePointer) != 0;
     }
 
     public new void RemoveAllViewProps()
@@ -190,8 +190,7 @@ public unsafe partial class vtkViewport : vtkObject
     private static extern void vtkViewport_GradientEnvironmentalBGOn(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    [return: MarshalAs(UnmanagedType.U4)]
-    private static extern bool vtkViewport_HasViewProp(nint self, nint _arg1);
+    private static extern int vtkViewport_HasViewProp(nint self, nint _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_RemoveAllViewProps(nint self);

@@ -30,6 +30,8 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
         private vtkConeSource? _cone;
         private vtkPolyDataMapper? _mapper;
         private vtkActor? _actor;
+        private vtkAxesActor? _orientationAxes;
+        private vtkOrientationMarkerWidget? _orientationWidget;
 
         public WpfOpenGLD3DImageViewportWindow()
         {
@@ -84,6 +86,18 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             e.Renderer.AddActor(this._actor);
             e.Renderer.ResetCamera();
 
+            if (e.Interactor is not null)
+            {
+                this._orientationAxes = vtkAxesActor.New();
+
+                this._orientationWidget = vtkOrientationMarkerWidget.New();
+                this._orientationWidget.SetOrientationMarker(this._orientationAxes);
+                this._orientationWidget.SetInteractor(e.Interactor);
+                this._orientationWidget.SetViewport(0.0, 0.0, 0.22, 0.22);
+                this._orientationWidget.EnabledOn();
+                this._orientationWidget.InteractiveOn();
+            }
+
             if (sender is VtkOpenGlD3DImageRenderControl control)
             {
                 control.Render();
@@ -92,6 +106,9 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
 
         private void OnClosed(object? sender, EventArgs e)
         {
+            this._orientationWidget?.EnabledOff();
+            this._orientationWidget?.Dispose();
+            this._orientationAxes?.Dispose();
             this._actor?.Dispose();
             this._mapper?.Dispose();
             this._cone?.Dispose();

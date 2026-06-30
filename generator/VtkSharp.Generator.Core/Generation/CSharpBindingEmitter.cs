@@ -179,6 +179,10 @@ public sealed class CSharpBindingEmitter
         {
             sb.AppendLine($"{indent}return (char){call};");
         }
+        else if (returnType == "vtkTypeBool")
+        {
+            sb.AppendLine($"{indent}return {call} != 0;");
+        }
         else
         {
             sb.AppendLine($"{indent}return {call};");
@@ -280,7 +284,7 @@ public sealed class CSharpBindingEmitter
             "double" => "double",
             "float" => "float",
             "bool" => "bool",
-            "vtkTypeBool" => "bool",
+            "vtkTypeBool" => "int",
             "vtkTypeUInt32" => "uint",
             "vtkIdType" => "long",
             "const char*" or "char*" => "nint",
@@ -303,6 +307,9 @@ public sealed class CSharpBindingEmitter
 
         if (IsSpanParameter(parameter))
             return $"{parameter.Name}Ptr";
+
+        if (parameter.Type == "vtkTypeBool")
+            return $"{name} ? 1 : 0";
 
         return name;
     }
@@ -327,7 +334,6 @@ public sealed class CSharpBindingEmitter
         => type switch
         {
             "bool" => "[return: MarshalAs(UnmanagedType.U1)]",
-            "vtkTypeBool" => "[return: MarshalAs(UnmanagedType.U4)]",
             _ => null,
         };
 
@@ -335,7 +341,6 @@ public sealed class CSharpBindingEmitter
         => type switch
         {
             "bool" => "[MarshalAs(UnmanagedType.U1)]",
-            "vtkTypeBool" => "[MarshalAs(UnmanagedType.U4)]",
             _ => null,
         };
 
