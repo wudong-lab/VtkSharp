@@ -21,7 +21,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     private bool _isInitialized;
     private bool _isDisposed;
     private bool _renderRequested;
-    private Point? _lastMousePosition;
+    private MouseButton? _activeMouseButton;
 
     public VtkOpenGlD3DImageRenderControl()
     {
@@ -116,11 +116,12 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     {
         base.OnMouseDown(e);
 
-        if (e.ChangedButton == MouseButton.Left)
+        if (e.ChangedButton is MouseButton.Left or MouseButton.Right or MouseButton.Middle)
         {
             this.Focus();
             this.CaptureMouse();
-            this._lastMousePosition = e.GetPosition(this);
+            this._activeMouseButton = e.ChangedButton;
+            this.InvokeMouseButtonEvent(e.ChangedButton, pressed: true, e.GetPosition(this), e.ClickCount);
             e.Handled = true;
         }
     }
@@ -129,20 +130,13 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     {
         base.OnMouseMove(e);
 
-        if (this._lastMousePosition is not { } lastPosition || e.LeftButton != MouseButtonState.Pressed || this.Renderer is null)
+        if (this.Interactor is null)
         {
             return;
         }
 
-        var currentPosition = e.GetPosition(this);
-        var delta = currentPosition - lastPosition;
-        this._lastMousePosition = currentPosition;
-
-        var camera = this.Renderer.GetActiveCamera();
-        camera.Azimuth(-delta.X * 0.5);
-        camera.Elevation(delta.Y * 0.5);
-        camera.ComputeViewPlaneNormal();
-        this.Renderer.ResetCameraClippingRange();
+        this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
+        this.Interactor.InvokeEvent(vtkCommand.MouseMoveEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -151,9 +145,10 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     {
         base.OnMouseUp(e);
 
-        if (e.ChangedButton == MouseButton.Left)
+        if (e.ChangedButton == this._activeMouseButton)
         {
-            this._lastMousePosition = null;
+            this.InvokeMouseButtonEvent(e.ChangedButton, pressed: false, e.GetPosition(this), repeatCount: 0);
+            this._activeMouseButton = null;
             this.ReleaseMouseCapture();
             e.Handled = true;
         }
@@ -163,11 +158,36 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     {
         base.OnMouseWheel(e);
 
-        if (this.Renderer is null) return;
+        if (this.Interactor is null) return;
 
-        var camera = this.Renderer.GetActiveCamera();
-        camera.Zoom(e.Delta > 0 ? 1.1 : 0.9);
-        this.Renderer.ResetCameraClippingRange();
+        this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
+        this.Interactor.InvokeEvent(e.Delta > 0
+            ? vtkCommand.MouseWheelForwardEvent
+            : vtkCommand.MouseWheelBackwardEvent);
+        this.RequestRender();
+        e.Handled = true;
+    }
+
+    protected override void OnKeyDown(KeyEventArgs e)
+    {
+        base.OnKeyDown(e);
+
+        if (this.Interactor is null) return;
+
+        this.SetInteractorKeyEventInformation(e);
+        this.Interactor.InvokeEvent(vtkCommand.KeyPressEvent);
+        this.RequestRender();
+        e.Handled = true;
+    }
+
+    protected override void OnKeyUp(KeyEventArgs e)
+    {
+        base.OnKeyUp(e);
+
+        if (this.Interactor is null) return;
+
+        this.SetInteractorKeyEventInformation(e);
+        this.Interactor.InvokeEvent(vtkCommand.KeyReleaseEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -217,16 +237,19 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
         this._interactorStyle = vtkInteractorStyleTrackballCamera.New();
         this.Interactor.SetInteractorStyle(this._interactorStyle);
+        this.Interactor.EnableRenderOff();
         this.Interactor.Initialize();
 
         this._isInitialized = true;
 
-        this.VtkInitialized?.Invoke(this, new VtkRenderControlInitializedEventArgs(this.RenderWindow, this.Renderer));
+        this.VtkInitialized?.Invoke(
+            this,
+            new VtkRenderControlInitializedEventArgs(this.RenderWindow, this.Renderer, this.Interactor));
     }
 
     private void DisposeVtkRender()
     {
-        this._lastMousePosition = null;
+        this._activeMouseButton = null;
         if (this.IsMouseCaptured)
         {
             this.ReleaseMouseCapture();
@@ -262,6 +285,72 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this._isInitialized = false;
     }
 
+    private void InvokeMouseButtonEvent(MouseButton button, bool pressed, Point position, int repeatCount)
+    {
+        if (this.Interactor is null) return;
+
+        this.SetInteractorEventInformation(position, repeatCount);
+        this.Interactor.InvokeEvent(GetMouseButtonEvent(button, pressed));
+        this.RequestRender();
+    }
+
+    private void SetInteractorEventInformation(Point position, int repeatCount)
+    {
+        if (this.Interactor is null) return;
+
+        var pixelPosition = this.GetPixelPosition(position);
+        var modifiers = Keyboard.Modifiers;
+        this.Interactor.SetEventInformation(
+            pixelPosition.X,
+            pixelPosition.Y,
+            modifiers.HasFlag(ModifierKeys.Control),
+            modifiers.HasFlag(ModifierKeys.Shift),
+            keyCode: '\0',
+            repeatCount);
+        this.Interactor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
+    }
+
+    private void SetInteractorKeyEventInformation(KeyEventArgs e)
+    {
+        if (this.Interactor is null) return;
+
+        var modifiers = Keyboard.Modifiers;
+        this.Interactor.SetKeyEventInformation(
+            modifiers.HasFlag(ModifierKeys.Control),
+            modifiers.HasFlag(ModifierKeys.Shift),
+            GetKeyCode(e),
+            e.IsRepeat ? 1 : 0);
+        this.Interactor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
+    }
+
+    private PixelPoint GetPixelPosition(Point position)
+    {
+        var source = PresentationSource.FromVisual(this);
+        var transform = source?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
+
+        var x = (int)Math.Round(position.X * transform.M11);
+        var y = (int)Math.Round(position.Y * transform.M22);
+        return new PixelPoint(x, y);
+    }
+
+    private static uint GetMouseButtonEvent(MouseButton button, bool pressed)
+    {
+        return button switch
+        {
+            MouseButton.Left => pressed ? vtkCommand.LeftButtonPressEvent : vtkCommand.LeftButtonReleaseEvent,
+            MouseButton.Middle => pressed ? vtkCommand.MiddleButtonPressEvent : vtkCommand.MiddleButtonReleaseEvent,
+            MouseButton.Right => pressed ? vtkCommand.RightButtonPressEvent : vtkCommand.RightButtonReleaseEvent,
+            _ => vtkCommand.NoEvent
+        };
+    }
+
+    private static char GetKeyCode(KeyEventArgs e)
+    {
+        var key = e.Key == Key.System ? e.SystemKey : e.Key;
+        var virtualKey = KeyInterop.VirtualKeyFromKey(key);
+        return virtualKey is >= 0 and <= byte.MaxValue ? (char)virtualKey : '\0';
+    }
+
     private PixelSize GetPixelSize(Size dipSize)
     {
         var source = PresentationSource.FromVisual(this);
@@ -273,4 +362,5 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     }
 
     private readonly record struct PixelSize(int Width, int Height);
+    private readonly record struct PixelPoint(int X, int Y);
 }
