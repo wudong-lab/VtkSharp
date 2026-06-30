@@ -74,6 +74,13 @@ public sealed class WpfExportNameTests
             nativeNames);
         Assert.Equal(nativeNames, managedNames);
         Assert.Contains("sealed class VtkOpenGlD3DImageRender : IDisposable", managedWrapper);
+        Assert.Contains("public bool SetSize(int width, int height)", managedWrapper);
+        Assert.Contains("public bool Render()", managedWrapper);
+        Assert.Contains("VTKSHARP_API bool VtkOpenGlD3DImageRender_SetSize", nativeExport);
+        Assert.Contains("VTKSHARP_API bool VtkOpenGlD3DImageRender_Render", nativeExport);
+        Assert.Contains("[return: MarshalAs(UnmanagedType.U1)]", managedWrapper);
+        Assert.Contains("if (!this._render.SetSize(pixelSize.Width, pixelSize.Height)) return;", wpfControl);
+        Assert.Contains("if (!this._render.Render()) return;", wpfControl);
         Assert.Contains("public void Dispose()", managedWrapper);
         Assert.DoesNotContain("DllImport", wpfControl);
         Assert.DoesNotContain("nint _bridge", wpfControl);

@@ -34,8 +34,8 @@ public:
     vtkRenderer* GetRenderer() const;
     IDirect3DSurface9* GetBackBuffer() const;
 
-    void SetSize(int width, int height);
-    void Render();
+    bool SetSize(int width, int height);
+    bool Render();
 
     static const char* GetLastError();
 

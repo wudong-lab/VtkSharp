@@ -29,11 +29,11 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
         throw new InvalidOperationException($"Failed to create internal VTK OpenGL/D3DImage render. {detail}");
     }
 
-    public void SetSize(int width, int height)
+    public bool SetSize(int width, int height)
     {
-        if (this._nativePointer == IntPtr.Zero) return;
+        if (this._nativePointer == IntPtr.Zero) return false;
 
-        VtkOpenGlD3DImageRender_SetSize(this._nativePointer, width, height);
+        return VtkOpenGlD3DImageRender_SetSize(this._nativePointer, width, height);
     }
 
     public nint GetBackBuffer()
@@ -43,11 +43,11 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
             : VtkOpenGlD3DImageRender_GetBackBuffer(this._nativePointer);
     }
 
-    public void Render()
+    public bool Render()
     {
-        if (this._nativePointer == IntPtr.Zero) return;
+        if (this._nativePointer == IntPtr.Zero) return false;
 
-        VtkOpenGlD3DImageRender_Render(this._nativePointer);
+        return VtkOpenGlD3DImageRender_Render(this._nativePointer);
     }
 
     public void Dispose()
@@ -72,10 +72,12 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
     private static extern nint VtkOpenGlD3DImageRender_GetRenderer(nint render);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void VtkOpenGlD3DImageRender_SetSize(nint render, int width, int height);
+    [return: MarshalAs(UnmanagedType.U1)]
+    private static extern bool VtkOpenGlD3DImageRender_SetSize(nint render, int width, int height);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void VtkOpenGlD3DImageRender_Render(nint render);
+    [return: MarshalAs(UnmanagedType.U1)]
+    private static extern bool VtkOpenGlD3DImageRender_Render(nint render);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint VtkOpenGlD3DImageRender_GetBackBuffer(nint render);

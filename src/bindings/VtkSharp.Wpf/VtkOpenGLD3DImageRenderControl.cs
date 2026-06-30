@@ -50,7 +50,8 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
                 this._backBuffer = IntPtr.Zero;
             }
 
-            this._render.SetSize(pixelSize.Width, pixelSize.Height);
+            if (!this._render.SetSize(pixelSize.Width, pixelSize.Height)) return;
+
             this._pixelSize = pixelSize;
 
             var backBuffer = this._render.GetBackBuffer();
@@ -62,7 +63,8 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
                 this._backBuffer = backBuffer;
             }
 
-            this._render.Render();
+            if (!this._render.Render()) return;
+
             this._image.AddDirtyRect(new Int32Rect(0, 0, pixelSize.Width, pixelSize.Height));
         }
         finally

@@ -21,20 +21,14 @@ VTKSHARP_API vtkRenderer* VtkOpenGlD3DImageRender_GetRenderer(VtkOpenGlD3DImageR
     return self ? self->GetRenderer() : nullptr;
 }
 
-VTKSHARP_API void VtkOpenGlD3DImageRender_SetSize(VtkOpenGlD3DImageRender* self, int width, int height)
+VTKSHARP_API bool VtkOpenGlD3DImageRender_SetSize(VtkOpenGlD3DImageRender* self, int width, int height)
 {
-    if (self)
-    {
-        self->SetSize(width, height);
-    }
+    return self ? self->SetSize(width, height) : false;
 }
 
-VTKSHARP_API void VtkOpenGlD3DImageRender_Render(VtkOpenGlD3DImageRender* self)
+VTKSHARP_API bool VtkOpenGlD3DImageRender_Render(VtkOpenGlD3DImageRender* self)
 {
-    if (self)
-    {
-        self->Render();
-    }
+    return self ? self->Render() : false;
 }
 
 VTKSHARP_API IDirect3DSurface9* VtkOpenGlD3DImageRender_GetBackBuffer(VtkOpenGlD3DImageRender* self)

@@ -51,33 +51,34 @@ IDirect3DSurface9* VtkOpenGlD3DImageRender::GetBackBuffer() const
     return this->m_d3DRenderTarget.GetSurface();
 }
 
-void VtkOpenGlD3DImageRender::SetSize(int width, int height)
+bool VtkOpenGlD3DImageRender::SetSize(int width, int height)
 {
     const int clampedWidth = std::max(1, width);
     const int clampedHeight = std::max(1, height);
 
     if (this->m_d3DRenderTarget.GetSurface() && this->m_width == clampedWidth && this->m_height == clampedHeight)
     {
-        return;
+        return true;
     }
 
-    this->CreateInteropResource(clampedWidth, clampedHeight);
+    return this->CreateInteropResource(clampedWidth, clampedHeight);
 }
 
-void VtkOpenGlD3DImageRender::Render()
+bool VtkOpenGlD3DImageRender::Render()
 {
     if (!this->m_wglContext.MakeCurrent())
     {
         this->SetError("Failed to make OpenGL context current.");
-        return;
+        return false;
     }
 
     if (!this->m_wglDxInterop.LockObject())
     {
         this->SetError(this->m_wglDxInterop.GetLastError());
-        return;
+        return false;
     }
 
+    bool rendered = true;
     if (!this->m_openGlFramebuffer.RenderToTexture(
         this->m_width,
         this->m_height,
@@ -85,9 +86,11 @@ void VtkOpenGlD3DImageRender::Render()
         this))
     {
         this->SetError("Shared OpenGL framebuffer is incomplete.");
+        rendered = false;
     }
 
     this->m_wglDxInterop.UnlockObject();
+    return rendered;
 }
 
 void VtkOpenGlD3DImageRender::RenderVtkWindow()
