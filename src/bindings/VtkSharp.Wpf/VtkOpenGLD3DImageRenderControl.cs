@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -11,10 +10,8 @@ namespace VtkSharp.Wpf;
 /// </summary>
 public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposable
 {
-    private const string NativeLibraryName = "VtkSharp.Native";
-
     private readonly D3DImage _image = new();
-    private nint _bridge;
+    private VtkOpenGlD3DImageRender? _render;
     private nint _backBuffer;
     private PixelSize _pixelSize;
     private bool _isInitialized;
@@ -36,7 +33,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     public void Render()
     {
-        if (!this._isInitialized || this._bridge == IntPtr.Zero || !this._image.IsFrontBufferAvailable) return;
+        if (!this._isInitialized || this._render is null || !this._image.IsFrontBufferAvailable) return;
 
         var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));
 
@@ -49,10 +46,10 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
                 this._backBuffer = IntPtr.Zero;
             }
 
-            VtkOpenGlD3DImageRender_SetSize(this._bridge, pixelSize.Width, pixelSize.Height);
+            this._render.SetSize(pixelSize.Width, pixelSize.Height);
             this._pixelSize = pixelSize;
 
-            var backBuffer = VtkOpenGlD3DImageRender_GetBackBuffer(this._bridge);
+            var backBuffer = this._render.GetBackBuffer();
             if (backBuffer == IntPtr.Zero) return;
 
             if (backBuffer != this._backBuffer)
@@ -61,7 +58,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
                 this._backBuffer = backBuffer;
             }
 
-            VtkOpenGlD3DImageRender_Render(this._bridge);
+            this._render.Render();
             this._image.AddDirtyRect(new Int32Rect(0, 0, pixelSize.Width, pixelSize.Height));
         }
         finally
@@ -148,20 +145,20 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     {
         if (this._isDisposed) return;
 
-        this.DisposeBridge();
+        this.DisposeVtkRender();
         this._isDisposed = true;
         GC.SuppressFinalize(this);
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        this.InitializeBridge();
+        this.InitializeVtkRender();
         this.Render();
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
-        this.DisposeBridge();
+        this.DisposeVtkRender();
     }
 
     private void OnIsFrontBufferAvailableChanged(object? sender, DependencyPropertyChangedEventArgs e)
@@ -173,31 +170,21 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         }
     }
 
-    private void InitializeBridge()
+    private void InitializeVtkRender()
     {
         if (this._isInitialized) return;
 
-        this._bridge = VtkOpenGlD3DImageRender_New();
-        if (this._bridge == IntPtr.Zero)
-        {
-            var nativeError = Marshal.PtrToStringAnsi(VtkOpenGlD3DImageRender_GetLastError());
-            var detail = string.IsNullOrWhiteSpace(nativeError)
-                ? "The current GPU/driver may not support WGL_NV_DX_interop."
-                : nativeError;
-
-            throw new InvalidOperationException($"Failed to create VTK OpenGL/D3DImage render bridge. {detail}");
-        }
-
-        this.RenderWindow = vtkRenderWindow.WeakReference(VtkOpenGlD3DImageRender_GetRenderWindow(this._bridge));
-        this.Renderer = vtkRenderer.WeakReference(VtkOpenGlD3DImageRender_GetRenderer(this._bridge));
+        this._render = VtkOpenGlD3DImageRender.Create();
+        this.RenderWindow = this._render.RenderWindow;
+        this.Renderer = this._render.Renderer;
         this._isInitialized = true;
 
         this.VtkInitialized?.Invoke(this, new VtkRenderControlInitializedEventArgs(this.RenderWindow, this.Renderer));
     }
 
-    private void DisposeBridge()
+    private void DisposeVtkRender()
     {
-        if (this._bridge != IntPtr.Zero)
+        if (this._render is not null)
         {
             if (this._image.IsFrontBufferAvailable)
             {
@@ -212,8 +199,8 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
                 }
             }
 
-            VtkOpenGlD3DImageRender_Delete(this._bridge);
-            this._bridge = IntPtr.Zero;
+            this._render.Dispose();
+            this._render = null;
         }
 
         this._backBuffer = IntPtr.Zero;
@@ -227,34 +214,10 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         var source = PresentationSource.FromVisual(this);
         var transform = source?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
 
-        return new PixelSize(
-            Math.Max(1, (int)Math.Ceiling(dipSize.Width * transform.M11)),
-            Math.Max(1, (int)Math.Ceiling(dipSize.Height * transform.M22)));
+        var width = Math.Max(1, (int)Math.Ceiling(dipSize.Width * transform.M11));
+        var height = Math.Max(1, (int)Math.Ceiling(dipSize.Height * transform.M22));
+        return new PixelSize(width, height);
     }
-
-    [DllImport(NativeLibraryName)]
-    private static extern nint VtkOpenGlD3DImageRender_New();
-
-    [DllImport(NativeLibraryName)]
-    private static extern void VtkOpenGlD3DImageRender_Delete(nint bridge);
-
-    [DllImport(NativeLibraryName)]
-    private static extern nint VtkOpenGlD3DImageRender_GetRenderWindow(nint bridge);
-
-    [DllImport(NativeLibraryName)]
-    private static extern nint VtkOpenGlD3DImageRender_GetRenderer(nint bridge);
-
-    [DllImport(NativeLibraryName)]
-    private static extern void VtkOpenGlD3DImageRender_SetSize(nint bridge, int width, int height);
-
-    [DllImport(NativeLibraryName)]
-    private static extern void VtkOpenGlD3DImageRender_Render(nint bridge);
-
-    [DllImport(NativeLibraryName)]
-    private static extern nint VtkOpenGlD3DImageRender_GetBackBuffer(nint bridge);
-
-    [DllImport(NativeLibraryName)]
-    private static extern nint VtkOpenGlD3DImageRender_GetLastError();
 
     private readonly record struct PixelSize(int Width, int Height);
 }

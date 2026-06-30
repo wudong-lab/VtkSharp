@@ -27,12 +27,20 @@ public sealed class WpfExportNameTests
             "src",
             "bindings",
             "VtkSharp.Wpf",
-            "VtkOpenGLD3DImageRenderControl.cs"));
+            "VtkOpenGlD3DImageRenderControl.cs"));
+        var managedWrapper = File.ReadAllText(Path.Combine(
+            root.FullName,
+            "src",
+            "bindings",
+            "VtkSharp.Wpf",
+            "VtkOpenGlD3DImageRender.cs"));
 
         Assert.DoesNotContain(LegacyBridgePrefix, nativeExport);
         Assert.DoesNotContain(LegacyBridgePrefix, wpfControl);
+        Assert.DoesNotContain(LegacyBridgePrefix, managedWrapper);
         Assert.DoesNotContain(LegacyTargetPrefix, nativeExport);
         Assert.DoesNotContain(LegacyTargetPrefix, wpfControl);
+        Assert.DoesNotContain(LegacyTargetPrefix, managedWrapper);
         Assert.False(File.Exists(Path.Combine(
             root.FullName,
             "src",
@@ -49,7 +57,7 @@ public sealed class WpfExportNameTests
             "VtkWpfD3DImageOpenGLRenderTarget.h")));
 
         var nativeNames = GetExportNames(nativeExport);
-        var managedNames = GetDllImportNames(wpfControl);
+        var managedNames = GetDllImportNames(managedWrapper);
 
         Assert.Equal(
             new[]
@@ -65,6 +73,10 @@ public sealed class WpfExportNameTests
             },
             nativeNames);
         Assert.Equal(nativeNames, managedNames);
+        Assert.Contains("sealed class VtkOpenGlD3DImageRender : IDisposable", managedWrapper);
+        Assert.Contains("public void Dispose()", managedWrapper);
+        Assert.DoesNotContain("DllImport", wpfControl);
+        Assert.DoesNotContain("nint _bridge", wpfControl);
     }
 
     private static DirectoryInfo FindRepositoryRoot()
