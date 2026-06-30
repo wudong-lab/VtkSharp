@@ -39,7 +39,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this.MinWidth = 480;
             this.MinHeight = 360;
 
-            var viewport = new VtkOpenGLD3DImageRenderControl();
+            var viewport = new VtkOpenGlD3DImageRenderControl();
             viewport.VtkInitialized += this.OnVtkInitialized;
 
             var overlayButton = new Button
@@ -84,7 +84,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             e.Renderer.AddActor(this._actor);
             e.Renderer.ResetCamera();
 
-            if (sender is VtkOpenGLD3DImageRenderControl control)
+            if (sender is VtkOpenGlD3DImageRenderControl control)
             {
                 control.Render();
             }

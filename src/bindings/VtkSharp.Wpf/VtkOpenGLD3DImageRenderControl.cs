@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Input;
@@ -9,7 +9,7 @@ namespace VtkSharp.Wpf;
 /// <summary>
 /// Recommended WPF VTK control that renders through OpenGL/D3D9Ex interop into a WPF D3DImage.
 /// </summary>
-public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposable
+public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposable
 {
     private const string NativeLibraryName = "VtkSharp.Native";
 
@@ -21,7 +21,7 @@ public sealed class VtkOpenGLD3DImageRenderControl : FrameworkElement, IDisposab
     private bool _isDisposed;
     private Point? _lastMousePosition;
 
-    public VtkOpenGLD3DImageRenderControl()
+    public VtkOpenGlD3DImageRenderControl()
     {
         this.Focusable = true;
         this.Loaded += this.OnLoaded;
