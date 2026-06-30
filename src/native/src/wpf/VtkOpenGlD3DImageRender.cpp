@@ -9,14 +9,9 @@
 #include <algorithm>
 #include <cstring>
 
-#ifndef WGL_ACCESS_WRITE_DISCARD_NV
-#define WGL_ACCESS_WRITE_DISCARD_NV 0x0002
-#endif
-
 namespace
 {
-thread_local char LastRenderTargetError[256] = {};
-
+    thread_local char LastRenderTargetError[256] = {};
 }
 
 VtkOpenGlD3DImageRender* VtkOpenGlD3DImageRender::Create()
@@ -80,10 +75,10 @@ void VtkOpenGlD3DImageRender::Render()
     }
 
     if (!this->m_openGlFramebuffer.RenderToTexture(
-            this->m_width,
-            this->m_height,
-            &VtkOpenGlD3DImageRender::RenderVtkWindowCallback,
-            this))
+        this->m_width,
+        this->m_height,
+        &VtkOpenGlD3DImageRender::RenderVtkWindowCallback,
+        this))
     {
         this->SetError("Shared OpenGL framebuffer is incomplete.");
     }
@@ -201,7 +196,8 @@ bool VtkOpenGlD3DImageRender::InitializeVtk()
     this->m_renderWindow->AddObserver(vtkCommand::WindowFrameEvent, this->m_frameCallback);
 
     this->m_renderWindow->SetOpenGLSymbolLoader(
-        [](void* userData, const char* name) -> vtkOpenGLRenderWindow::VTKOpenGLAPIProc {
+        [](void* userData, const char* name) -> vtkOpenGLRenderWindow::VTKOpenGLAPIProc
+        {
             return static_cast<VtkOpenGlD3DImageRender*>(userData)->m_wglContext.LoadSymbol(name);
         },
         this);
@@ -235,9 +231,7 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
 
     if (!this->m_wglDxInterop.RegisterObject(
         this->m_d3DRenderTarget.GetTexture(),
-        this->m_openGlFramebuffer.GetTexture(),
-        GL_TEXTURE_2D,
-        WGL_ACCESS_WRITE_DISCARD_NV))
+        this->m_openGlFramebuffer.GetTexture()))
     {
         this->SetError(this->m_wglDxInterop.GetLastError());
         return false;

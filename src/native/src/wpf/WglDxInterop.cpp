@@ -1,10 +1,14 @@
-#define WIN32_LEAN_AND_MEAN
+﻿#define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
 
 #include "WglDxInterop.h"
 
 #include <cstring>
+
+#ifndef WGL_ACCESS_WRITE_DISCARD_NV
+#define WGL_ACCESS_WRITE_DISCARD_NV 0x0002
+#endif
 
 namespace
 {
@@ -51,9 +55,12 @@ bool WglDxInterop::OpenDevice(void* d3DDevice)
     return true;
 }
 
-bool WglDxInterop::RegisterObject(void* d3DTexture, GLuint glTexture, GLenum glTextureType, GLenum access)
+bool WglDxInterop::RegisterObject(void* d3DTexture, GLuint glTexture)
 {
     this->UnregisterObject();
+
+    GLenum glTextureType = GL_TEXTURE_2D;
+    GLenum access = WGL_ACCESS_WRITE_DISCARD_NV;
 
     this->m_object = this->wglDXRegisterObjectNV(this->m_device, d3DTexture, glTexture, glTextureType, access);
     if (!this->m_object)

@@ -27,7 +27,7 @@ public:
     bool IsAvailable() const;
 
     bool OpenDevice(void* d3DDevice);
-    bool RegisterObject(void* d3DTexture, GLuint glTexture, GLenum glTextureType, GLenum access);
+    bool RegisterObject(void* d3DTexture, GLuint glTexture);
     bool LockObject();
     void UnlockObject();
     void UnregisterObject();
