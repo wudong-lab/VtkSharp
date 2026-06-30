@@ -4,6 +4,9 @@ namespace VtkSharp;
 
 public unsafe partial class vtkRenderWindowInteractor
 {
+    public const int OneShotTimer = 1;
+    public const int RepeatingTimer = 2;
+
     public void EnableRenderOff()
     {
         vtkRenderWindowInteractor_EnableRenderOff(this.NativePointer);
@@ -69,6 +72,56 @@ public unsafe partial class vtkRenderWindowInteractor
             repeatCount);
     }
 
+    public int CreateRepeatingTimer(int duration)
+    {
+        return vtkRenderWindowInteractor_CreateRepeatingTimer(this.NativePointer, duration);
+    }
+
+    public int CreateOneShotTimer(int duration)
+    {
+        return vtkRenderWindowInteractor_CreateOneShotTimer(this.NativePointer, duration);
+    }
+
+    public int DestroyTimer(int timerId)
+    {
+        return vtkRenderWindowInteractor_DestroyTimer_int(this.NativePointer, timerId);
+    }
+
+    public int GetTimerEventId()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventId(this.NativePointer);
+    }
+
+    public void SetTimerEventId(int timerId)
+    {
+        vtkRenderWindowInteractor_SetTimerEventId(this.NativePointer, timerId);
+    }
+
+    public int GetTimerEventType()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventType(this.NativePointer);
+    }
+
+    public int GetTimerEventDuration()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventDuration(this.NativePointer);
+    }
+
+    public int GetTimerEventPlatformId()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventPlatformId(this.NativePointer);
+    }
+
+    public void SetTimerEventPlatformId(int platformTimerId)
+    {
+        vtkRenderWindowInteractor_SetTimerEventPlatformId(this.NativePointer, platformTimerId);
+    }
+
+    public void InvokeTimerEvent(int timerId)
+    {
+        vtkRenderWindowInteractor_InvokeTimerEvent(this.NativePointer, timerId);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_EnableRenderOff(nint self);
@@ -106,5 +159,35 @@ public unsafe partial class vtkRenderWindowInteractor
         int shiftKey,
         byte keyCode,
         int repeatCount);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_CreateRepeatingTimer(nint self, int duration);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_CreateOneShotTimer(nint self, int duration);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_DestroyTimer_int(nint self, int timerId);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventId(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetTimerEventId(nint self, int timerId);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventType(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventDuration(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventPlatformId(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetTimerEventPlatformId(nint self, int platformTimerId);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_InvokeTimerEvent(nint self, int timerId);
     #endregion
 }

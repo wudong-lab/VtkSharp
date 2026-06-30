@@ -37,6 +37,8 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
         private vtkPropPicker? _picker;
         private Button? _statusButton;
         private VtkOpenGlD3DImageRenderControl? _viewport;
+        private VtkObserverHandle? _timerObserver;
+        private int _animationTimerId;
         private Point? _leftButtonDownPosition;
         private bool _isPicked;
 
@@ -112,6 +114,9 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
                 this._orientationWidget.SetViewport(0.0, 0.0, 0.22, 0.22);
                 this._orientationWidget.EnabledOn();
                 this._orientationWidget.InteractiveOn();
+
+                this._timerObserver = e.Interactor.AddTimerEventObserver(this.OnTimer);
+                this._animationTimerId = e.Interactor.CreateRepeatingTimer(33);
             }
 
             if (sender is VtkOpenGlD3DImageRenderControl control)
@@ -155,6 +160,14 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this._viewport.RequestRender();
         }
 
+        private void OnTimer(VtkTimerEventArgs e)
+        {
+            if (e.TimerId != this._animationTimerId || this._actor is null || this._viewport is null) return;
+
+            this._actor.RotateY(0.5);
+            this._viewport.RequestRender();
+        }
+
         private bool IsClick(Point position)
         {
             if (this._leftButtonDownPosition is not { } start) return false;
@@ -189,6 +202,13 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
         private void OnClosed(object? sender, EventArgs e)
         {
             this._orientationWidget?.EnabledOff();
+            if (this._animationTimerId != 0)
+            {
+                this._viewport?.Interactor?.DestroyTimer(this._animationTimerId);
+                this._animationTimerId = 0;
+            }
+
+            this._timerObserver?.Dispose();
             this._orientationWidget?.Dispose();
             this._orientationAxes?.Dispose();
             this._picker?.Dispose();

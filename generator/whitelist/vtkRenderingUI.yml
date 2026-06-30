@@ -2,6 +2,19 @@
 
 module: vtkRenderingUI
 classes:
+  - name: vtkGenericRenderWindowInteractor
+    header: vtkGenericRenderWindowInteractor.h
+    functions:
+      - name: TimerEvent
+        cppSignature: void TimerEvent()
+        return:
+          type: void
+        parameters: []
+      - name: TimerEventResetsTimerOff
+        cppSignature: void TimerEventResetsTimerOff()
+        return:
+          type: void
+        parameters: []
   - name: vtkWin32RenderWindowInteractor
     header: vtkWin32RenderWindowInteractor.h
     functions:

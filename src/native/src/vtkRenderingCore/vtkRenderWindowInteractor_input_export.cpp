@@ -1,4 +1,5 @@
 #include "vtksharp_api.h"
+#include <vtkCommand.h>
 #include <vtkRenderWindowInteractor.h>
 
 VTKSHARP_API void vtkRenderWindowInteractor_EnableRenderOff(vtkRenderWindowInteractor* self)
@@ -48,4 +49,60 @@ VTKSHARP_API void vtkRenderWindowInteractor_SetKeyEventInformation(
     int repeatCount)
 {
     self->SetKeyEventInformation(controlKey, shiftKey, keyCode, repeatCount);
+}
+
+VTKSHARP_API int vtkRenderWindowInteractor_CreateRepeatingTimer(
+    vtkRenderWindowInteractor* self,
+    int duration)
+{
+    return self->CreateRepeatingTimer(static_cast<unsigned long>(duration));
+}
+
+VTKSHARP_API int vtkRenderWindowInteractor_CreateOneShotTimer(
+    vtkRenderWindowInteractor* self,
+    int duration)
+{
+    return self->CreateOneShotTimer(static_cast<unsigned long>(duration));
+}
+
+VTKSHARP_API int vtkRenderWindowInteractor_DestroyTimer_int(vtkRenderWindowInteractor* self, int timerId)
+{
+    return self->DestroyTimer(timerId);
+}
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventId(vtkRenderWindowInteractor* self)
+{
+    return self->GetTimerEventId();
+}
+
+VTKSHARP_API void vtkRenderWindowInteractor_SetTimerEventId(vtkRenderWindowInteractor* self, int timerId)
+{
+    self->SetTimerEventId(timerId);
+}
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventType(vtkRenderWindowInteractor* self)
+{
+    return self->GetTimerEventType();
+}
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventDuration(vtkRenderWindowInteractor* self)
+{
+    return self->GetTimerEventDuration();
+}
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventPlatformId(vtkRenderWindowInteractor* self)
+{
+    return self->GetTimerEventPlatformId();
+}
+
+VTKSHARP_API void vtkRenderWindowInteractor_SetTimerEventPlatformId(
+    vtkRenderWindowInteractor* self,
+    int platformTimerId)
+{
+    self->SetTimerEventPlatformId(platformTimerId);
+}
+
+VTKSHARP_API void vtkRenderWindowInteractor_InvokeTimerEvent(vtkRenderWindowInteractor* self, int timerId)
+{
+    self->InvokeEvent(vtkCommand::TimerEvent, &timerId);
 }

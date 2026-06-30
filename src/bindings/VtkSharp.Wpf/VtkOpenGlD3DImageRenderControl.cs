@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Collections.Generic;
 using System.Windows.Interop;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -12,15 +13,19 @@ namespace VtkSharp.Wpf;
 public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposable
 {
     private readonly D3DImage _image = new();
+    private readonly Dictionary<int, VtkDispatcherTimer> _timers = new();
 
     private VtkOpenGlD3DImageRender? _render;
     private vtkInteractorStyleTrackballCamera? _interactorStyle;
+    private VtkObserverHandle? _createTimerObserver;
+    private VtkObserverHandle? _destroyTimerObserver;
 
     private nint _backBuffer;
     private PixelSize _pixelSize;
     private bool _isInitialized;
     private bool _isDisposed;
     private bool _renderRequested;
+    private int _nextPlatformTimerId;
     private MouseButton? _activeMouseButton;
 
     public VtkOpenGlD3DImageRenderControl()
@@ -33,7 +38,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     public vtkRenderWindow? RenderWindow { get; private set; }
     public vtkRenderer? Renderer { get; private set; }
-    public vtkWin32RenderWindowInteractor? Interactor { get; private set; }
+    public vtkRenderWindowInteractor? Interactor { get; private set; }
 
     public event EventHandler<VtkRenderControlInitializedEventArgs>? VtkInitialized;
 
@@ -234,12 +239,16 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this.RenderWindow = this._render.RenderWindow;
         this.Renderer = this._render.Renderer;
 
-        this.Interactor = vtkWin32RenderWindowInteractor.New();
+        var interactor = vtkGenericRenderWindowInteractor.New();
+        interactor.TimerEventResetsTimerOff();
+
+        this.Interactor = interactor;
         this.Interactor.SetRenderWindow(this.RenderWindow);
 
         this._interactorStyle = vtkInteractorStyleTrackballCamera.New();
         this.Interactor.SetInteractorStyle(this._interactorStyle);
         this.Interactor.EnableRenderOff();
+        this.AttachTimerBridge(this.Interactor);
         this.Interactor.Initialize();
 
         this._isInitialized = true;
@@ -257,6 +266,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
             this.ReleaseMouseCapture();
         }
 
+        this.DetachTimerBridge();
         this.Interactor?.Dispose();
         this._interactorStyle?.Dispose();
         this.Interactor = null;
@@ -285,6 +295,85 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this.RenderWindow = null;
         this.Renderer = null;
         this._isInitialized = false;
+    }
+
+    private void AttachTimerBridge(vtkRenderWindowInteractor interactor)
+    {
+        this._createTimerObserver = interactor.AddObserver(vtkCommand.CreateTimerEvent, (_, _) => this.CreatePlatformTimer());
+        this._destroyTimerObserver = interactor.AddObserver(vtkCommand.DestroyTimerEvent, (_, _) => this.DestroyPlatformTimer());
+    }
+
+    private void DetachTimerBridge()
+    {
+        this._createTimerObserver?.Dispose();
+        this._destroyTimerObserver?.Dispose();
+        this._createTimerObserver = null;
+        this._destroyTimerObserver = null;
+
+        foreach (var timer in this._timers.Values)
+        {
+            timer.DispatcherTimer.Stop();
+            timer.DispatcherTimer.Tick -= timer.OnTick;
+        }
+
+        this._timers.Clear();
+    }
+
+    private void CreatePlatformTimer()
+    {
+        if (this.Interactor is null) return;
+
+        var timerId = this.Interactor.GetTimerEventId();
+        var timerType = this.Interactor.GetTimerEventType();
+        var duration = Math.Max(1, this.Interactor.GetTimerEventDuration());
+        var platformTimerId = ++this._nextPlatformTimerId;
+
+        EventHandler? onTick = null;
+        var dispatcherTimer = new DispatcherTimer(DispatcherPriority.Normal, this.Dispatcher)
+        {
+            Interval = TimeSpan.FromMilliseconds(duration)
+        };
+
+        onTick = (_, _) =>
+        {
+            if (this.Interactor is null) return;
+
+            if (timerType == vtkRenderWindowInteractor.OneShotTimer)
+            {
+                dispatcherTimer.Stop();
+                dispatcherTimer.Tick -= onTick;
+                this._timers.Remove(platformTimerId);
+            }
+
+            this.Interactor.SetTimerEventId(timerId);
+            if (this.Interactor is vtkGenericRenderWindowInteractor genericInteractor)
+            {
+                genericInteractor.TimerEvent();
+            }
+            else
+            {
+                this.Interactor.InvokeTimerEvent(timerId);
+            }
+
+            this.RequestRender();
+        };
+
+        dispatcherTimer.Tick += onTick;
+        this._timers.Add(platformTimerId, new VtkDispatcherTimer(dispatcherTimer, onTick));
+        this.Interactor.SetTimerEventPlatformId(platformTimerId);
+        dispatcherTimer.Start();
+    }
+
+    private void DestroyPlatformTimer()
+    {
+        if (this.Interactor is null) return;
+
+        var platformTimerId = this.Interactor.GetTimerEventPlatformId();
+        if (!this._timers.TryGetValue(platformTimerId, out var timer)) return;
+
+        this._timers.Remove(platformTimerId);
+        timer.DispatcherTimer.Stop();
+        timer.DispatcherTimer.Tick -= timer.OnTick;
     }
 
     private void InvokeMouseButtonEvent(MouseButton button, bool pressed, Point position, int repeatCount)
@@ -365,4 +454,5 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     private readonly record struct PixelSize(int Width, int Height);
     private readonly record struct PixelPoint(int X, int Y);
+    private sealed record VtkDispatcherTimer(DispatcherTimer DispatcherTimer, EventHandler OnTick);
 }

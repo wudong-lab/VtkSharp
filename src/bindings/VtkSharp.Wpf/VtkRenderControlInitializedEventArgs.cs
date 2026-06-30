@@ -10,7 +10,7 @@ public sealed class VtkRenderControlInitializedEventArgs : EventArgs
     public VtkRenderControlInitializedEventArgs(
         vtkRenderWindow renderWindow,
         vtkRenderer renderer,
-        vtkWin32RenderWindowInteractor? interactor)
+        vtkRenderWindowInteractor? interactor)
     {
         this.RenderWindow = renderWindow;
         this.Renderer = renderer;
@@ -19,5 +19,5 @@ public sealed class VtkRenderControlInitializedEventArgs : EventArgs
 
     public vtkRenderWindow RenderWindow { get; }
     public vtkRenderer Renderer { get; }
-    public vtkWin32RenderWindowInteractor? Interactor { get; }
+    public vtkRenderWindowInteractor? Interactor { get; }
 }
