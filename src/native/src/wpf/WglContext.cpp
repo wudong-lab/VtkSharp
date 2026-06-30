@@ -14,7 +14,7 @@ namespace
 
 bool WglContext::CreateHiddenWindowContext()
 {
-    const wchar_t* className = L"VtkSharpD3DImageOpenGLRenderTargetWindow";
+    const wchar_t* className = L"VtkSharpOpenGlD3DImageRenderTargetWindow";
 
     WNDCLASSW windowClass = {};
     windowClass.lpfnWndProc = RenderTargetWindowProc;
@@ -22,7 +22,7 @@ bool WglContext::CreateHiddenWindowContext()
     windowClass.lpszClassName = className;
     ::RegisterClassW(&windowClass);
 
-    this->m_window = ::CreateWindowExW(0, className, L"VtkSharp D3DImage OpenGL Render Target",
+    this->m_window = ::CreateWindowExW(0, className, L"VtkSharp OpenGL D3DImage Render Target",
                                        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1, 1, nullptr, nullptr,
                                        ::GetModuleHandleW(nullptr), nullptr);
     if (!this->m_window)
@@ -103,8 +103,11 @@ vtkOpenGLRenderWindow::VTKOpenGLAPIProc WglContext::LoadSymbol(const char* name)
 {
     auto* proc = reinterpret_cast<void*>(::wglGetProcAddress(name));
 
-    if (proc == nullptr || proc == reinterpret_cast<void*>(1) || proc == reinterpret_cast<void*>(2) ||
-        proc == reinterpret_cast<void*>(3) || proc == reinterpret_cast<void*>(-1))
+    if (proc == nullptr ||
+        proc == reinterpret_cast<void*>(1) ||
+        proc == reinterpret_cast<void*>(2) ||
+        proc == reinterpret_cast<void*>(3) ||
+        proc == reinterpret_cast<void*>(-1))
     {
         proc = reinterpret_cast<void*>(::GetProcAddress(this->m_openGL32Library, name));
     }

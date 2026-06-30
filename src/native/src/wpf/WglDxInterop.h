@@ -26,6 +26,8 @@ public:
     bool Load();
     bool IsAvailable() const;
 
+    BOOL SetResourceShareHandle(void* d3dTexture, HANDLE sharedHandle);
+
     bool OpenDevice(void* d3DDevice);
     bool RegisterObject(void* d3DTexture, GLuint glTexture);
     bool LockObject();
@@ -34,6 +36,7 @@ public:
     void CloseDevice();
     const char* GetLastError() const;
 
+private:
     SetResourceShareHandleProc wglDXSetResourceShareHandleNV = nullptr;
     OpenDeviceProc wglDXOpenDeviceNV = nullptr;
     CloseDeviceProc wglDXCloseDeviceNV = nullptr;
@@ -42,7 +45,6 @@ public:
     LockObjectsProc wglDXLockObjectsNV = nullptr;
     UnlockObjectsProc wglDXUnlockObjectsNV = nullptr;
 
-private:
     void SetError(const char* message);
 
     HANDLE m_device = nullptr;

@@ -220,11 +220,12 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
         return false;
     }
 
-    if (this->m_wglDxInterop.wglDXSetResourceShareHandleNV)
+    if (!this->m_wglDxInterop.SetResourceShareHandle(
+        this->m_d3DRenderTarget.GetTexture(),
+        this->m_d3DRenderTarget.GetShareHandle()))
     {
-        this->m_wglDxInterop.wglDXSetResourceShareHandleNV(
-            this->m_d3DRenderTarget.GetTexture(),
-            this->m_d3DRenderTarget.GetShareHandle());
+        this->SetError(this->m_wglDxInterop.GetLastError());
+        return false;
     }
 
     this->m_openGlFramebuffer.Create();

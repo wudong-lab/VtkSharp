@@ -28,8 +28,6 @@ class VtkOpenGlD3DImageRender
 {
 public:
     static VtkOpenGlD3DImageRender* Create();
-    static const char* GetLastError();
-
     ~VtkOpenGlD3DImageRender();
 
     vtkRenderWindow* GetRenderWindow() const;
@@ -38,6 +36,8 @@ public:
 
     void SetSize(int width, int height);
     void Render();
+
+    static const char* GetLastError();
 
 private:
     using CallbackMethod = void (VtkOpenGlD3DImageRender::*)(void*);
@@ -89,6 +89,6 @@ private:
     vtkSmartPointer<vtkCallbackCommand> m_isDirectCallback;
     vtkSmartPointer<vtkCallbackCommand> m_frameCallback;
 
-    int m_width = 1;
-    int m_height = 1;
+    int m_width{1};
+    int m_height{1};
 };

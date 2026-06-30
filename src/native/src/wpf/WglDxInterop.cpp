@@ -41,6 +41,16 @@ bool WglDxInterop::IsAvailable() const
         this->wglDXUnlockObjectsNV;
 }
 
+BOOL WglDxInterop::SetResourceShareHandle(void* d3dTexture, HANDLE sharedHandle)
+{
+    if (this->wglDXSetResourceShareHandleNV)
+    {
+        return this->wglDXSetResourceShareHandleNV(d3dTexture, sharedHandle);
+    }
+
+    return false;
+}
+
 bool WglDxInterop::OpenDevice(void* d3DDevice)
 {
     this->CloseDevice();
