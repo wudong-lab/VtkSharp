@@ -33,7 +33,8 @@ bool WglDxInterop::Load()
 
 bool WglDxInterop::IsAvailable() const
 {
-    return this->wglDXOpenDeviceNV &&
+    return this->wglDXSetResourceShareHandleNV &&
+        this->wglDXOpenDeviceNV &&
         this->wglDXCloseDeviceNV &&
         this->wglDXRegisterObjectNV &&
         this->wglDXUnregisterObjectNV &&
@@ -41,14 +42,21 @@ bool WglDxInterop::IsAvailable() const
         this->wglDXUnlockObjectsNV;
 }
 
-BOOL WglDxInterop::SetResourceShareHandle(void* d3dTexture, HANDLE sharedHandle)
+bool WglDxInterop::SetResourceShareHandle(void* d3dTexture, HANDLE sharedHandle)
 {
-    if (this->wglDXSetResourceShareHandleNV)
+    if (!this->wglDXSetResourceShareHandleNV)
     {
-        return this->wglDXSetResourceShareHandleNV(d3dTexture, sharedHandle);
+        this->SetError("wglDXSetResourceShareHandleNV is not available.");
+        return false;
     }
 
-    return false;
+    if (!this->wglDXSetResourceShareHandleNV(d3dTexture, sharedHandle))
+    {
+        this->SetError("wglDXSetResourceShareHandleNV failed.");
+        return false;
+    }
+
+    return true;
 }
 
 bool WglDxInterop::OpenDevice(void* d3DDevice)

@@ -217,6 +217,7 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
     if (!this->m_d3DRenderTarget.CreateTexture(this->m_width, this->m_height))
     {
         this->SetError(this->m_d3DRenderTarget.GetLastError());
+        this->ReleaseInteropResource();
         return false;
     }
 
@@ -225,6 +226,7 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
         this->m_d3DRenderTarget.GetShareHandle()))
     {
         this->SetError(this->m_wglDxInterop.GetLastError());
+        this->ReleaseInteropResource();
         return false;
     }
 
@@ -235,6 +237,7 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
         this->m_openGlFramebuffer.GetTexture()))
     {
         this->SetError(this->m_wglDxInterop.GetLastError());
+        this->ReleaseInteropResource();
         return false;
     }
 

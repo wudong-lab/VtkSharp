@@ -26,7 +26,7 @@ public:
     bool Load();
     bool IsAvailable() const;
 
-    BOOL SetResourceShareHandle(void* d3dTexture, HANDLE sharedHandle);
+    bool SetResourceShareHandle(void* d3dTexture, HANDLE sharedHandle);
 
     bool OpenDevice(void* d3DDevice);
     bool RegisterObject(void* d3DTexture, GLuint glTexture);
