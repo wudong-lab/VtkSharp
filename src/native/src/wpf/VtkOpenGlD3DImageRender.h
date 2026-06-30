@@ -81,9 +81,6 @@ private:
     OpenGlFramebuffer m_openGlFramebuffer;
     D3DImageRenderTarget m_d3DRenderTarget;
 
-    HANDLE m_dxInteropDevice = nullptr;
-    HANDLE m_dxInteropObject = nullptr;
-
     vtkSmartPointer<vtkGenericOpenGLRenderWindow> m_renderWindow;
     vtkSmartPointer<vtkRenderer> m_renderer;
     vtkSmartPointer<vtkCallbackCommand> m_makeCurrentCallback;

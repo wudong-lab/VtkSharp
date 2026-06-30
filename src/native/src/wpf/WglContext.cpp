@@ -1,4 +1,4 @@
-#define WIN32_LEAN_AND_MEAN
+﻿#define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
 
@@ -6,10 +6,10 @@
 
 namespace
 {
-LRESULT CALLBACK RenderTargetWindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
-{
-    return ::DefWindowProc(hwnd, message, wparam, lparam);
-}
+    LRESULT CALLBACK RenderTargetWindowProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam)
+    {
+        return ::DefWindowProc(hwnd, message, wparam, lparam);
+    }
 }
 
 bool WglContext::CreateHiddenWindowContext()
@@ -23,8 +23,8 @@ bool WglContext::CreateHiddenWindowContext()
     ::RegisterClassW(&windowClass);
 
     this->m_window = ::CreateWindowExW(0, className, L"VtkSharp D3DImage OpenGL Render Target",
-        WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1, 1, nullptr, nullptr,
-        ::GetModuleHandleW(nullptr), nullptr);
+                                       WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1, 1, nullptr, nullptr,
+                                       ::GetModuleHandleW(nullptr), nullptr);
     if (!this->m_window)
     {
         return false;

@@ -1,19 +1,19 @@
-#include "D3DImageRenderTarget.h"
+﻿#include "D3DImageRenderTarget.h"
 
 #include <algorithm>
 #include <cstring>
 
 namespace
 {
-template <typename T>
-void ReleaseCom(T*& value)
-{
-    if (value)
+    template <typename T>
+    void ReleaseCom(T*& value)
     {
-        value->Release();
-        value = nullptr;
+        if (value)
+        {
+            value->Release();
+            value = nullptr;
+        }
     }
-}
 }
 
 bool D3DImageRenderTarget::CreateDevice()
@@ -34,8 +34,8 @@ bool D3DImageRenderTarget::CreateDevice()
 
     return this->CheckHr(
         this->m_direct3D->CreateDeviceEx(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, ::GetDesktopWindow(),
-            D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED | D3DCREATE_FPU_PRESERVE,
-            &presentParameters, nullptr, &this->m_device),
+                                         D3DCREATE_HARDWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED | D3DCREATE_FPU_PRESERVE,
+                                         &presentParameters, nullptr, &this->m_device),
         "IDirect3D9Ex::CreateDeviceEx failed.");
 }
 
@@ -48,9 +48,9 @@ bool D3DImageRenderTarget::CreateTexture(int width, int height)
     this->m_shareHandle = nullptr;
 
     if (!this->CheckHr(
-            this->m_device->CreateTexture(clampedWidth, clampedHeight, 1, D3DUSAGE_RENDERTARGET,
-                D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->m_texture, &this->m_shareHandle),
-            "IDirect3DDevice9Ex::CreateTexture failed."))
+        this->m_device->CreateTexture(clampedWidth, clampedHeight, 1, D3DUSAGE_RENDERTARGET,
+                                      D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->m_texture, &this->m_shareHandle),
+        "IDirect3DDevice9Ex::CreateTexture failed."))
     {
         return false;
     }

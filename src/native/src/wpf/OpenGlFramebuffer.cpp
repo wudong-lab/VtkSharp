@@ -1,4 +1,4 @@
-#include "OpenGlFramebuffer.h"
+﻿#include "OpenGlFramebuffer.h"
 
 #ifndef GL_FRAMEBUFFER
 #define GL_FRAMEBUFFER 0x8D40
@@ -14,11 +14,11 @@
 
 namespace
 {
-template <typename T>
-T LoadOpenGLProc(const char* name)
-{
-    return reinterpret_cast<T>(::wglGetProcAddress(name));
-}
+    template <typename T>
+    T LoadOpenGLProc(const char* name)
+    {
+        return reinterpret_cast<T>(::wglGetProcAddress(name));
+    }
 }
 
 bool OpenGlFramebuffer::Load()

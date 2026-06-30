@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
@@ -26,11 +26,26 @@ public:
     bool Load();
     bool IsAvailable() const;
 
-    SetResourceShareHandleProc m_setResourceShareHandle = nullptr;
-    OpenDeviceProc m_openDevice = nullptr;
-    CloseDeviceProc m_closeDevice = nullptr;
-    RegisterObjectProc m_registerObject = nullptr;
-    UnregisterObjectProc m_unregisterObject = nullptr;
-    LockObjectsProc m_lockObjects = nullptr;
-    UnlockObjectsProc m_unlockObjects = nullptr;
+    bool OpenDevice(void* d3DDevice);
+    bool RegisterObject(void* d3DTexture, GLuint glTexture, GLenum glTextureType, GLenum access);
+    bool LockObject();
+    void UnlockObject();
+    void UnregisterObject();
+    void CloseDevice();
+    const char* GetLastError() const;
+
+    SetResourceShareHandleProc wglDXSetResourceShareHandleNV = nullptr;
+    OpenDeviceProc wglDXOpenDeviceNV = nullptr;
+    CloseDeviceProc wglDXCloseDeviceNV = nullptr;
+    RegisterObjectProc wglDXRegisterObjectNV = nullptr;
+    UnregisterObjectProc wglDXUnregisterObjectNV = nullptr;
+    LockObjectsProc wglDXLockObjectsNV = nullptr;
+    UnlockObjectsProc wglDXUnlockObjectsNV = nullptr;
+
+private:
+    void SetError(const char* message);
+
+    HANDLE m_device = nullptr;
+    HANDLE m_object = nullptr;
+    char m_lastError[256] = {};
 };
