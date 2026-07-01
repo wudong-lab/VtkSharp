@@ -10,7 +10,7 @@ public sealed class WhitelistValidator
     // Canonical scalar types supported by both C# and C++ emitters.
     private static readonly HashSet<string> SupportedScalarTypes = new(StringComparer.Ordinal)
     {
-        "void", "char", "int", "unsigned int", "long long", "unsigned long long",
+        "void", "char", "int", "unsigned int", "unsigned long", "long long", "unsigned long long",
         "double", "float", "bool", "vtkTypeBool", "vtkTypeUInt32", "vtkIdType",
         "const char*", "char*", "void*",
         "HWND", "HDC", "HGLRC",

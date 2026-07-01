@@ -123,6 +123,7 @@ public sealed class WhitelistValidatorTests
     [InlineData("char")]
     [InlineData("int")]
     [InlineData("unsigned int")]
+    [InlineData("unsigned long")]
     [InlineData("long long")]
     [InlineData("unsigned long long")]
     [InlineData("double")]
@@ -194,7 +195,7 @@ public sealed class WhitelistValidatorTests
     [Fact]
     public void Validate_ReportsUnsupportedType()
     {
-        var type = "unsigned long";
+        var type = "unsigned short";
         var document = CreateDocument("void", type);
         var inspectedClasses = new Dictionary<string, InspectedClass>
         {
@@ -363,7 +364,8 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("return") && d.Message.Contains(type));
+        Assert.Contains(result.Diagnostics, d => d.Message.Contains("Function 'vtkAlgorithm.SetInputConnection' was not found."));
+        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("return") && d.Message.Contains(type));
     }
 
     [Fact]

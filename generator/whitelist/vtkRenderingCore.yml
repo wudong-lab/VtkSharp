@@ -1105,6 +1105,20 @@ classes:
         return:
           type: void
         parameters: []
+      - name: CreateOneShotTimer
+        cppSignature: int CreateOneShotTimer(unsigned long duration)
+        return:
+          type: int
+        parameters:
+          - type: unsigned long
+            name: duration
+      - name: CreateRepeatingTimer
+        cppSignature: int CreateRepeatingTimer(unsigned long duration)
+        return:
+          type: int
+        parameters:
+          - type: unsigned long
+            name: duration
       - name: DestroyTimer
         cppSignature: int DestroyTimer(int timerId)
         return:

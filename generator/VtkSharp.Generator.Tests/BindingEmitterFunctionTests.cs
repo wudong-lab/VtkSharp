@@ -221,6 +221,13 @@ public sealed class BindingEmitterFunctionTests
             },
             new WhitelistFunction
             {
+                Name = "CreateRepeatingTimer",
+                CppSignature = "int CreateRepeatingTimer(unsigned long duration)",
+                Return = new WhitelistReturn { Type = "int" },
+                Parameters = [new WhitelistParameter { Type = "unsigned long", Name = "duration" }],
+            },
+            new WhitelistFunction
+            {
                 Name = "SetName",
                 CppSignature = "void SetName(const char* name)",
                 Return = new WhitelistReturn { Type = "void" },
@@ -266,6 +273,8 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("private static extern void vtkThing_SetTypeVisible(nint self, int value);", text);
         Assert.Contains("public new long GetId()", text);
         Assert.Contains("public new uint GetSeed()", text);
+        Assert.Contains("public new int CreateRepeatingTimer(ulong duration)", text);
+        Assert.Contains("private static extern int vtkThing_CreateRepeatingTimer(nint self, ulong duration);", text);
         Assert.Contains("public new void SetName(string name)", text);
         Assert.Contains("[LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]", text);
         Assert.Contains("private static partial void vtkThing_SetName(nint self, string name)", text);
@@ -311,11 +320,30 @@ public sealed class BindingEmitterFunctionTests
                 Return = new WhitelistReturn { Type = "vtkIdType" },
                 Parameters = [],
             },
+            new WhitelistFunction
+            {
+                Name = "CreateRepeatingTimer",
+                CppSignature = "int CreateRepeatingTimer(unsigned long duration)",
+                Return = new WhitelistReturn { Type = "int" },
+                Parameters = [new WhitelistParameter { Type = "unsigned long", Name = "duration" }],
+            },
+            new WhitelistFunction
+            {
+                Name = "GetDuration",
+                CppSignature = "unsigned long GetDuration()",
+                Return = new WhitelistReturn { Type = "unsigned long" },
+                Parameters = [],
+            },
         ]);
 
         Assert.Contains("VTKSHARP_API void vtkThing_SetOrigin(vtkThing* self, const double* origin)", text);
         Assert.Contains("VTKSHARP_API void* vtkThing_GetData(vtkThing* self)", text);
         Assert.Contains("VTKSHARP_API vtkIdType vtkThing_GetId(vtkThing* self)", text);
+        Assert.Contains("#include <cstdint>", text);
+        Assert.Contains("VTKSHARP_API std::uint64_t vtkThing_GetDuration(vtkThing* self)", text);
+        Assert.Contains("return static_cast<std::uint64_t>(self->GetDuration());", text);
+        Assert.Contains("VTKSHARP_API int vtkThing_CreateRepeatingTimer(vtkThing* self, std::uint64_t duration)", text);
+        Assert.Contains("self->CreateRepeatingTimer(static_cast<unsigned long>(duration));", text);
     }
 
     [Fact]

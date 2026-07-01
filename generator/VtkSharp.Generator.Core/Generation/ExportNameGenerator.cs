@@ -91,6 +91,7 @@ public sealed class ExportNameGenerator
         {
             "char" => "char",
             "unsigned int" => "uint",
+            "unsigned long" => "ulong",
             "long long" => "long",
             "unsigned long long" => "ulong",
             "HWND" => "hwnd",

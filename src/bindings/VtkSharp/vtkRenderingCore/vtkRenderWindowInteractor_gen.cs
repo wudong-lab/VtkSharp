@@ -23,6 +23,16 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         vtkRenderWindowInteractor_CharEvent(this.NativePointer);
     }
 
+    public new int CreateOneShotTimer(ulong duration)
+    {
+        return vtkRenderWindowInteractor_CreateOneShotTimer(this.NativePointer, duration);
+    }
+
+    public new int CreateRepeatingTimer(ulong duration)
+    {
+        return vtkRenderWindowInteractor_CreateRepeatingTimer(this.NativePointer, duration);
+    }
+
     public new int DestroyTimer(int timerId)
     {
         return vtkRenderWindowInteractor_DestroyTimer(this.NativePointer, timerId);
@@ -241,6 +251,12 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_CharEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_CreateOneShotTimer(nint self, ulong duration);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_CreateRepeatingTimer(nint self, ulong duration);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkRenderWindowInteractor_DestroyTimer(nint self, int timerId);

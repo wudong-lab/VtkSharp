@@ -67,12 +67,12 @@ public unsafe partial class vtkRenderWindowInteractor
 
     public int CreateRepeatingTimer(int duration)
     {
-        return vtkRenderWindowInteractor_CreateRepeatingTimer(this.NativePointer, duration);
+        return this.CreateRepeatingTimer((ulong)duration);
     }
 
     public int CreateOneShotTimer(int duration)
     {
-        return vtkRenderWindowInteractor_CreateOneShotTimer(this.NativePointer, duration);
+        return this.CreateOneShotTimer((ulong)duration);
     }
 
     public void InvokeTimerEvent(int timerId)
@@ -81,12 +81,6 @@ public unsafe partial class vtkRenderWindowInteractor
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_CreateRepeatingTimer(nint self, int duration);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_CreateOneShotTimer(nint self, int duration);
-
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_InvokeTimerEvent(nint self, int timerId);
     #endregion

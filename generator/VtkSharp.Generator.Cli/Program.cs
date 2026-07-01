@@ -214,7 +214,7 @@ internal class Program
 
         var supportedOnlyOption = new Option<bool>("--supported-only")
         {
-            Description = "Only include functions whose types are all supported (filters out unsigned long, basic_ostream, int&, etc.)",
+            Description = "Only include functions whose types are all supported (filters out basic_ostream, int&, etc.)",
         };
         var skipMissingMethodsOption = new Option<bool>("--skip-missing-methods")
         {
