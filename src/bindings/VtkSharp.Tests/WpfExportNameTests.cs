@@ -88,6 +88,73 @@ public sealed class WpfExportNameTests
         Assert.DoesNotContain("nint _bridge", wpfControl);
     }
 
+    [Fact]
+    public void WpfD3DImageControl_DisposesTimerAndCursorBridgesBeforeNativeObjects()
+    {
+        var wpfControl = ReadRepositoryText(
+            "src",
+            "bindings",
+            "VtkSharp.Wpf",
+            "VtkOpenGlD3DImageRenderControl.cs");
+
+        Assert.Contains("this.DetachTimerBridge();", wpfControl);
+        Assert.Contains("this.DetachCursorBridge();", wpfControl);
+
+        var disposeBody = GetMethodBody(wpfControl, "DisposeVtkRender");
+        Assert.True(
+            disposeBody.IndexOf("this.DetachTimerBridge();", StringComparison.Ordinal) <
+            disposeBody.IndexOf("this.Interactor?.Dispose();", StringComparison.Ordinal));
+        Assert.True(
+            disposeBody.IndexOf("this.DetachCursorBridge();", StringComparison.Ordinal) <
+            disposeBody.IndexOf("this.Interactor?.Dispose();", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void WpfD3DImageControl_ReleasesActiveMouseButtonWhenCaptureIsLost()
+    {
+        var wpfControl = ReadRepositoryText(
+            "src",
+            "bindings",
+            "VtkSharp.Wpf",
+            "VtkOpenGlD3DImageRenderControl.cs");
+
+        var lostCaptureBody = GetMethodBody(wpfControl, "OnLostMouseCapture");
+        Assert.Contains("this._activeMouseButton is not { } activeButton", lostCaptureBody);
+        Assert.Contains("this.InvokeMouseButtonEvent(activeButton, pressed: false", lostCaptureBody);
+        Assert.Contains("this._activeMouseButton = null;", lostCaptureBody);
+    }
+
+    [Fact]
+    public void WpfD3DImageControl_ReportsRenderFailures()
+    {
+        var wpfControl = ReadRepositoryText(
+            "src",
+            "bindings",
+            "VtkSharp.Wpf",
+            "VtkOpenGlD3DImageRenderControl.cs");
+
+        Assert.Contains("public event EventHandler<VtkRenderFailedEventArgs>? RenderFailed;", wpfControl);
+        Assert.Contains("renderFailure = this.GetRenderError(\"Failed to resize the VTK D3DImage render target.\");", wpfControl);
+        Assert.Contains("renderFailure = this.GetRenderError(\"The VTK D3DImage render target did not provide a back buffer.\");", wpfControl);
+        Assert.Contains("renderFailure = this.GetRenderError(\"Failed to render the VTK scene.\");", wpfControl);
+        Assert.Contains("this.OnRenderFailed(renderFailure);", wpfControl);
+    }
+
+    [Fact]
+    public void WpfD3DImageControl_SyncsDpiAndCursorState()
+    {
+        var wpfControl = ReadRepositoryText(
+            "src",
+            "bindings",
+            "VtkSharp.Wpf",
+            "VtkOpenGlD3DImageRenderControl.cs");
+
+        Assert.Contains("protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)", wpfControl);
+        Assert.Contains("this._cursorChangedObserver = renderWindow.AddObserver(vtkCommand.CursorChangedEvent", wpfControl);
+        Assert.Contains("this.SyncCursor();", wpfControl);
+        Assert.Contains("private static Cursor MapVtkCursor(int vtkCursor)", wpfControl);
+    }
+
     private static DirectoryInfo FindRepositoryRoot()
     {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
@@ -100,6 +167,40 @@ public sealed class WpfExportNameTests
         }
 
         throw new DirectoryNotFoundException("Could not find VtkSharp repository root.");
+    }
+
+    private static string ReadRepositoryText(params string[] pathParts)
+    {
+        return File.ReadAllText(Path.Combine(new[] { FindRepositoryRoot().FullName }.Concat(pathParts).ToArray()));
+    }
+
+    private static string GetMethodBody(string sourceText, string methodName)
+    {
+        var methodMatch = Regex.Match(sourceText, $@"\b(?:private|protected|public)\s+(?:override\s+)?[\w<>\?]+\s+{Regex.Escape(methodName)}\s*\(");
+        Assert.True(methodMatch.Success, $"Could not find method '{methodName}'.");
+        var methodIndex = methodMatch.Index;
+
+        var bodyStart = sourceText.IndexOf('{', methodIndex);
+        Assert.True(bodyStart >= 0, $"Could not find method body for '{methodName}'.");
+
+        var depth = 0;
+        for (var i = bodyStart; i < sourceText.Length; i++)
+        {
+            if (sourceText[i] == '{')
+            {
+                depth++;
+            }
+            else if (sourceText[i] == '}')
+            {
+                depth--;
+                if (depth == 0)
+                {
+                    return sourceText.Substring(bodyStart, i - bodyStart + 1);
+                }
+            }
+        }
+
+        throw new InvalidOperationException($"Could not parse method body for '{methodName}'.");
     }
 
     private static string[] GetExportNames(string text)
