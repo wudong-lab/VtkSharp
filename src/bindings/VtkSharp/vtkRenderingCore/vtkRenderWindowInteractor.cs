@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
-
 namespace VtkSharp;
 
 public unsafe partial class vtkRenderWindowInteractor
@@ -159,11 +157,6 @@ public unsafe partial class vtkRenderWindowInteractor
 
     public void InvokeTimerEvent(int timerId)
     {
-        vtkRenderWindowInteractor_InvokeTimerEvent(this.NativePointer, timerId);
+        this.InvokeEvent(vtkCommand.TimerEvent, (nint)(&timerId));
     }
-
-    #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_InvokeTimerEvent(nint self, int timerId);
-    #endregion
 }
