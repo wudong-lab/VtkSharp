@@ -110,6 +110,25 @@ public sealed class WpfExportNameTests
     }
 
     [Fact]
+    public void WpfD3DImageControl_CanKeepNativeResourcesWhenUnloaded()
+    {
+        var wpfControl = ReadRepositoryText(
+            "src",
+            "bindings",
+            "VtkSharp.Wpf",
+            "VtkOpenGlD3DImageRenderControl.cs");
+
+        Assert.Contains("public static readonly DependencyProperty DisposeOnUnloadProperty", wpfControl);
+        Assert.Contains("public bool DisposeOnUnload", wpfControl);
+        Assert.Contains("private void SuspendVtkRender()", wpfControl);
+
+        var unloadedBody = GetMethodBody(wpfControl, "OnUnloaded");
+        Assert.Contains("if (this.DisposeOnUnload)", unloadedBody);
+        Assert.Contains("this.DisposeVtkRender();", unloadedBody);
+        Assert.Contains("this.SuspendVtkRender();", unloadedBody);
+    }
+
+    [Fact]
     public void WpfD3DImageControl_ReleasesActiveMouseButtonWhenCaptureIsLost()
     {
         var wpfControl = ReadRepositoryText(

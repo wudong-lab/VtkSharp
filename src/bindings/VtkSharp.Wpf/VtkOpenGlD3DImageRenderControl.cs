@@ -12,6 +12,12 @@ namespace VtkSharp.Wpf;
 /// </summary>
 public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposable
 {
+    public static readonly DependencyProperty DisposeOnUnloadProperty = DependencyProperty.Register(
+        nameof(DisposeOnUnload),
+        typeof(bool),
+        typeof(VtkOpenGlD3DImageRenderControl),
+        new PropertyMetadata(true));
+
     private readonly D3DImage _image = new();
     private readonly Dictionary<int, VtkDispatcherTimer> _timers = new();
 
@@ -40,6 +46,12 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     public vtkRenderWindow? RenderWindow { get; private set; }
     public vtkRenderer? Renderer { get; private set; }
     public vtkRenderWindowInteractor? Interactor { get; private set; }
+
+    public bool DisposeOnUnload
+    {
+        get => (bool)this.GetValue(DisposeOnUnloadProperty);
+        set => this.SetValue(DisposeOnUnloadProperty, value);
+    }
 
     public event EventHandler<VtkRenderControlInitializedEventArgs>? VtkInitialized;
     public event EventHandler<VtkRenderFailedEventArgs>? RenderFailed;
@@ -305,7 +317,13 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
-        this.DisposeVtkRender();
+        if (this.DisposeOnUnload)
+        {
+            this.DisposeVtkRender();
+            return;
+        }
+
+        this.SuspendVtkRender();
     }
 
     private void OnIsFrontBufferAvailableChanged(object? sender, DependencyPropertyChangedEventArgs e)
@@ -358,11 +376,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     private void DisposeVtkRender()
     {
-        this._activeMouseButton = null;
-        if (this.IsMouseCaptured)
-        {
-            this.ReleaseMouseCapture();
-        }
+        this.ReleaseActiveMouseInteraction();
 
         this.DetachTimerBridge();
         this.DetachCursorBridge();
@@ -395,6 +409,26 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this.RenderWindow = null;
         this.Renderer = null;
         this._isInitialized = false;
+    }
+
+    private void SuspendVtkRender()
+    {
+        this.ReleaseActiveMouseInteraction();
+        this._renderRequested = false;
+    }
+
+    private void ReleaseActiveMouseInteraction()
+    {
+        if (this._activeMouseButton is { } activeButton)
+        {
+            this.InvokeMouseButtonEvent(activeButton, pressed: false, Mouse.GetPosition(this), repeatCount: 0);
+            this._activeMouseButton = null;
+        }
+
+        if (this.IsMouseCaptured)
+        {
+            this.ReleaseMouseCapture();
+        }
     }
 
     private void AttachCursorBridge(vtkRenderWindow renderWindow)

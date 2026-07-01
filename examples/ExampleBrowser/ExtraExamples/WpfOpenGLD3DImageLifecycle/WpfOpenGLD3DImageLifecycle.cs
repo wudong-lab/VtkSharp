@@ -30,6 +30,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
     {
         private readonly Grid _viewportHost = new();
         private readonly TextBlock _statusText = new();
+        private readonly TabControl _tabControl = new();
         private readonly DispatcherTimer _hideTimer;
         private readonly DispatcherTimer _resizeTimer;
 
@@ -44,6 +45,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
         private int _resizeStep;
         private bool _isViewportLoaded = true;
         private bool _resizeStressEnabled;
+        private bool _cacheOnUnload = true;
 
         public WpfOpenGLD3DImageLifecycleWindow()
         {
@@ -82,6 +84,19 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
             this.AddButton(toolbar, "Hide/Show", this.HideThenShow);
             this.AddButton(toolbar, "Timer", this.ToggleAnimationTimer);
             this.AddButton(toolbar, "Resize Stress", this.ToggleResizeStress);
+            this.AddButton(toolbar, "Switch Tab", this.SwitchTab);
+
+            var cacheCheckBox = new CheckBox
+            {
+                Content = "Cache VTK on Unload",
+                IsChecked = this._cacheOnUnload,
+                Margin = new Thickness(8, 4, 8, 8),
+                Foreground = Brushes.White,
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            cacheCheckBox.Checked += (_, _) => this.SetCacheOnUnload(true);
+            cacheCheckBox.Unchecked += (_, _) => this.SetCacheOnUnload(false);
+            toolbar.Children.Add(cacheCheckBox);
 
             this._statusText.Margin = new Thickness(12, 0, 12, 10);
             this._statusText.Foreground = Brushes.White;
@@ -89,8 +104,23 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
             root.Children.Add(this._statusText);
 
             this._viewportHost.Background = Brushes.Black;
-            this._viewportHost.Margin = new Thickness(10, 0, 10, 10);
-            root.Children.Add(this._viewportHost);
+            this._tabControl.Margin = new Thickness(10, 0, 10, 10);
+            this._tabControl.Items.Add(new TabItem
+            {
+                Header = "VTK",
+                Content = this._viewportHost
+            });
+            this._tabControl.Items.Add(new TabItem
+            {
+                Header = "Other",
+                Content = new TextBlock
+                {
+                    Text = "Switch back to the VTK tab and check whether initialized count changes.",
+                    Margin = new Thickness(16),
+                    Foreground = Brushes.White
+                }
+            });
+            root.Children.Add(this._tabControl);
 
             this.Content = root;
             this.Closed += this.OnClosed;
@@ -116,6 +146,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
             this.DisposeViewportContent();
 
             this._viewport = new VtkOpenGlD3DImageRenderControl();
+            this._viewport.DisposeOnUnload = !this._cacheOnUnload;
             this._viewport.VtkInitialized += this.OnVtkInitialized;
             this._viewport.RenderFailed += this.OnRenderFailed;
 
@@ -209,6 +240,23 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
             this.Height = height;
         }
 
+        private void SwitchTab()
+        {
+            this._tabControl.SelectedIndex = this._tabControl.SelectedIndex == 0 ? 1 : 0;
+            this.UpdateStatus("Tab switched");
+        }
+
+        private void SetCacheOnUnload(bool cacheOnUnload)
+        {
+            this._cacheOnUnload = cacheOnUnload;
+            if (this._viewport is not null)
+            {
+                this._viewport.DisposeOnUnload = !cacheOnUnload;
+            }
+
+            this.UpdateStatus(cacheOnUnload ? "Unload cache enabled" : "Unload disposal enabled");
+        }
+
         private void OnVtkInitialized(object? sender, VtkRenderControlInitializedEventArgs e)
         {
             this._initializedCount++;
@@ -293,7 +341,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
         private void UpdateStatus(string action)
         {
             this._statusText.Text =
-                $"{action} | initialized={this._initializedCount} | renderFailures={this._renderFailureCount} | loaded={this._isViewportLoaded} | timer={(this._animationTimerId != 0 ? "on" : "off")}";
+                $"{action} | initialized={this._initializedCount} | renderFailures={this._renderFailureCount} | loaded={this._isViewportLoaded} | cache={this._cacheOnUnload} | timer={(this._animationTimerId != 0 ? "on" : "off")}";
         }
     }
 }
