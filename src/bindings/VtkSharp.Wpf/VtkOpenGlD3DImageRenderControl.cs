@@ -41,6 +41,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     public vtkRenderWindowInteractor? Interactor { get; private set; }
 
     public event EventHandler<VtkRenderControlInitializedEventArgs>? VtkInitialized;
+    public event EventHandler<VtkRenderFailedEventArgs>? RenderFailed;
 
     public void RequestRender()
     {
@@ -70,6 +71,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         }
 
         var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));
+        string? renderFailure = null;
 
         this._image.Lock();
         try
@@ -81,7 +83,11 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
             }
 
             var sizeChanged = pixelSize != this._pixelSize;
-            if (!this._render.SetSize(pixelSize.Width, pixelSize.Height)) return;
+            if (!this._render.SetSize(pixelSize.Width, pixelSize.Height))
+            {
+                renderFailure = this.GetRenderError("Failed to resize the VTK D3DImage render target.");
+                return;
+            }
 
             if (sizeChanged)
             {
@@ -91,7 +97,11 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
             this._pixelSize = pixelSize;
 
             var backBuffer = this._render.GetBackBuffer();
-            if (backBuffer == IntPtr.Zero) return;
+            if (backBuffer == IntPtr.Zero)
+            {
+                renderFailure = this.GetRenderError("The VTK D3DImage render target did not provide a back buffer.");
+                return;
+            }
 
             if (backBuffer != this._backBuffer)
             {
@@ -99,16 +109,30 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
                 this._backBuffer = backBuffer;
             }
 
-            if (!this._render.Render()) return;
+            if (!this._render.Render())
+            {
+                renderFailure = this.GetRenderError("Failed to render the VTK scene.");
+                return;
+            }
 
             this._image.AddDirtyRect(new Int32Rect(0, 0, pixelSize.Width, pixelSize.Height));
         }
         finally
         {
             this._image.Unlock();
+            if (renderFailure is not null)
+            {
+                this.OnRenderFailed(renderFailure);
+            }
         }
 
         this.InvalidateVisual();
+    }
+
+    protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
+    {
+        base.OnDpiChanged(oldDpi, newDpi);
+        this.RequestRender();
     }
 
     protected override void OnRender(DrawingContext drawingContext)
@@ -290,6 +314,17 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
             this._backBuffer = IntPtr.Zero;
             this.RequestRender();
         }
+    }
+
+    private string GetRenderError(string fallbackMessage)
+    {
+        var nativeError = this._render?.GetLastError();
+        return string.IsNullOrWhiteSpace(nativeError) ? fallbackMessage : nativeError!;
+    }
+
+    private void OnRenderFailed(string message)
+    {
+        this.RenderFailed?.Invoke(this, new VtkRenderFailedEventArgs(message));
     }
 
     private void InitializeVtkRender()

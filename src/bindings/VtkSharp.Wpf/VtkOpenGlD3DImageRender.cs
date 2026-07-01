@@ -50,6 +50,12 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
         return VtkOpenGlD3DImageRender_Render(this._nativePointer);
     }
 
+    public string? GetLastError()
+    {
+        var nativeError = Marshal.PtrToStringAnsi(VtkOpenGlD3DImageRender_GetLastError());
+        return string.IsNullOrWhiteSpace(nativeError) ? null : nativeError;
+    }
+
     public void Dispose()
     {
         if (this._nativePointer == IntPtr.Zero) return;
