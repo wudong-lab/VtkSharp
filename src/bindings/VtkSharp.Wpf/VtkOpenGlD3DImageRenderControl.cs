@@ -125,6 +125,30 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this.RequestRender();
     }
 
+    protected override void OnMouseEnter(MouseEventArgs e)
+    {
+        base.OnMouseEnter(e);
+
+        if (this.Interactor is null) return;
+
+        this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
+        this.Interactor.InvokeEvent(vtkCommand.EnterEvent);
+        this.RequestRender();
+        e.Handled = true;
+    }
+
+    protected override void OnMouseLeave(MouseEventArgs e)
+    {
+        base.OnMouseLeave(e);
+
+        if (this.Interactor is null) return;
+
+        this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
+        this.Interactor.InvokeEvent(vtkCommand.LeaveEvent);
+        this.RequestRender();
+        e.Handled = true;
+    }
+
     protected override void OnMouseDown(MouseButtonEventArgs e)
     {
         base.OnMouseDown(e);
@@ -165,6 +189,20 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
             this.ReleaseMouseCapture();
             e.Handled = true;
         }
+    }
+
+    protected override void OnLostMouseCapture(MouseEventArgs e)
+    {
+        base.OnLostMouseCapture(e);
+
+        if (this._activeMouseButton is not { } activeButton)
+        {
+            return;
+        }
+
+        this.InvokeMouseButtonEvent(activeButton, pressed: false, e.GetPosition(this), repeatCount: 0);
+        this._activeMouseButton = null;
+        e.Handled = true;
     }
 
     protected override void OnMouseWheel(MouseWheelEventArgs e)
