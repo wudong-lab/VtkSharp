@@ -22,12 +22,7 @@ public sealed class WpfExportNameTests
             "src",
             "wpf",
             "VtkOpenGlD3DImageRender_export.cpp"));
-        var wpfControl = File.ReadAllText(Path.Combine(
-            root.FullName,
-            "src",
-            "bindings",
-            "VtkSharp.Wpf",
-            "VtkOpenGlD3DImageRenderControl.cs"));
+        var wpfControl = ReadWpfControlText();
         var managedWrapper = File.ReadAllText(Path.Combine(
             root.FullName,
             "src",
@@ -91,11 +86,7 @@ public sealed class WpfExportNameTests
     [Fact]
     public void WpfD3DImageControl_DisposesTimerAndCursorObserversBeforeNativeObjects()
     {
-        var wpfControl = ReadRepositoryText(
-            "src",
-            "bindings",
-            "VtkSharp.Wpf",
-            "VtkOpenGlD3DImageRenderControl.cs");
+        var wpfControl = ReadWpfControlText();
 
         Assert.Contains("this.DetachTimerObservers();", wpfControl);
         Assert.Contains("this.DetachCursorObserver();", wpfControl);
@@ -112,11 +103,7 @@ public sealed class WpfExportNameTests
     [Fact]
     public void WpfD3DImageControl_CanKeepNativeResourcesWhenUnloaded()
     {
-        var wpfControl = ReadRepositoryText(
-            "src",
-            "bindings",
-            "VtkSharp.Wpf",
-            "VtkOpenGlD3DImageRenderControl.cs");
+        var wpfControl = ReadWpfControlText();
 
         Assert.Contains("public static readonly DependencyProperty DisposeOnUnloadProperty", wpfControl);
         Assert.Contains("public bool DisposeOnUnload", wpfControl);
@@ -134,11 +121,7 @@ public sealed class WpfExportNameTests
     [Fact]
     public void WpfD3DImageControl_ReleasesActiveMouseButtonWhenCaptureIsLost()
     {
-        var wpfControl = ReadRepositoryText(
-            "src",
-            "bindings",
-            "VtkSharp.Wpf",
-            "VtkOpenGlD3DImageRenderControl.cs");
+        var wpfControl = ReadWpfControlText();
 
         var lostCaptureBody = GetMethodBody(wpfControl, "OnLostMouseCapture");
         Assert.Contains("this._activeMouseButton is not { } activeButton", lostCaptureBody);
@@ -149,11 +132,7 @@ public sealed class WpfExportNameTests
     [Fact]
     public void WpfD3DImageControl_ReportsRenderFailures()
     {
-        var wpfControl = ReadRepositoryText(
-            "src",
-            "bindings",
-            "VtkSharp.Wpf",
-            "VtkOpenGlD3DImageRenderControl.cs");
+        var wpfControl = ReadWpfControlText();
 
         Assert.Contains("public event EventHandler<VtkRenderFailedEventArgs>? RenderFailed;", wpfControl);
         Assert.Contains("renderFailure = this.GetRenderError(\"Failed to resize the VTK D3DImage render target.\");", wpfControl);
@@ -165,11 +144,7 @@ public sealed class WpfExportNameTests
     [Fact]
     public void WpfD3DImageControl_SyncsDpiAndCursorState()
     {
-        var wpfControl = ReadRepositoryText(
-            "src",
-            "bindings",
-            "VtkSharp.Wpf",
-            "VtkOpenGlD3DImageRenderControl.cs");
+        var wpfControl = ReadWpfControlText();
 
         Assert.Contains("protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)", wpfControl);
         Assert.Contains("this._cursorChangedObserver = renderWindow.AddObserver(vtkCommand.CursorChangedEvent", wpfControl);
@@ -180,11 +155,7 @@ public sealed class WpfExportNameTests
     [Fact]
     public void WpfD3DImageControl_ClampsPixelCoordinatesToRenderTarget()
     {
-        var wpfControl = ReadRepositoryText(
-            "src",
-            "bindings",
-            "VtkSharp.Wpf",
-            "VtkOpenGlD3DImageRenderControl.cs");
+        var wpfControl = ReadWpfControlText();
 
         var getPixelPositionBody = GetMethodBody(wpfControl, "GetPixelPosition");
         Assert.Contains("var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));", getPixelPositionBody);
@@ -210,6 +181,17 @@ public sealed class WpfExportNameTests
     private static string ReadRepositoryText(params string[] pathParts)
     {
         return File.ReadAllText(Path.Combine(new[] { FindRepositoryRoot().FullName }.Concat(pathParts).ToArray()));
+    }
+
+    private static string ReadWpfControlText()
+    {
+        var directory = Path.Combine(FindRepositoryRoot().FullName, "src", "bindings", "VtkSharp.Wpf");
+        return string.Join(
+            Environment.NewLine,
+            Directory
+                .EnumerateFiles(directory, "VtkOpenGlD3DImageRenderControl*.cs")
+                .OrderBy(Path.GetFileName)
+                .Select(File.ReadAllText));
     }
 
     private static string GetMethodBody(string sourceText, string methodName)
