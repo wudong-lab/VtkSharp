@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-07-01.incremental-v1",
+  "module": "vtkCommonMath",
+  "classes": [
+    {
+      "className": "vtkMatrix4x4",
+      "header": "vtkMatrix4x4.h",
+      "baseClassName": "vtkObject",
+      "hasStaticNew": true,
+      "inputHash": "3b847951a80fbf0e3cfcfc2b7a7a6a2c4ad5f24e14dddf4f7f09eb26d6286731",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonMath\\vtkMatrix4x4_gen.cs",
+      "nativePath": "native\\src\\vtkCommonMath\\vtkMatrix4x4_export_gen.cpp",
+      "managedContentHash": "4b1be5347dec659f8af9db7a5e4183f6172892035b4249e0497bb607f0a62946",
+      "nativeContentHash": "54705472950164d08e5b96b6a0f1835d2052e46fec81fe1a2cefae4e70876045"
+    }
+  ]
+}

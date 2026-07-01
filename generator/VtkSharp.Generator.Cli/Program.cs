@@ -9,6 +9,8 @@ using VtkSharp.Generator.Core.Whitelist;
 
 internal class Program
 {
+    private const string IncrementalCacheVersion = "2026-07-01.incremental-v1";
+
     public static int Main(string[] args)
     {
         var classArgument = new Argument<string>("class-name")
@@ -141,6 +143,14 @@ internal class Program
         {
             Description = "Generate to a temporary directory and compare with current generated files",
         };
+        var incrementalOption = new Option<bool>("--incremental")
+        {
+            Description = "Reuse per-class generated output manifests and only regenerate changed classes.",
+        };
+        var forceOption = new Option<bool>("--force")
+        {
+            Description = "Ignore existing incremental manifests and regenerate all classes.",
+        };
 
         var generateCommand = new Command("generate-bindings", "Generate C# and C++ bindings from the whitelist")
         {
@@ -148,6 +158,8 @@ internal class Program
             outputRootOption,
             checkOption,
             continueOnErrorOption,
+            incrementalOption,
+            forceOption,
         };
 
         generateCommand.SetAction(parseResult =>
@@ -155,6 +167,8 @@ internal class Program
             var check = parseResult.GetValue(checkOption);
             var outputRoot = parseResult.GetValue(outputRootOption);
             var continueOnError = parseResult.GetValue(continueOnErrorOption);
+            var incremental = parseResult.GetValue(incrementalOption);
+            var force = parseResult.GetValue(forceOption);
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
             var outputRootPath = outputRoot?.FullName
@@ -162,7 +176,7 @@ internal class Program
                                      ? Path.Combine(Path.GetTempPath(), "VtkSharp.Generator", "check", Guid.NewGuid().ToString("N"))
                                      : throw new InvalidOperationException("--output-root is required unless --check is specified."));
 
-            var exitCode = Generate(configPath, outputRootPath, continueOnError);
+            var exitCode = Generate(configPath, outputRootPath, continueOnError, incremental && !check, force);
             if (exitCode != 0)
                 return exitCode;
 
@@ -717,7 +731,12 @@ internal class Program
         return 0;
     }
 
-    private static int Generate(string configPath, string outputRoot, bool continueOnError = false)
+    private static int Generate(string configPath, string outputRoot, bool continueOnError = false, bool incremental = false, bool force = false)
+        => incremental
+            ? GenerateIncremental(configPath, outputRoot, continueOnError, force)
+            : GenerateFull(configPath, outputRoot, continueOnError);
+
+    private static int GenerateFull(string configPath, string outputRoot, bool continueOnError = false)
     {
         var context = CreateGeneratorRunContext(configPath);
         if (context is null)
@@ -731,8 +750,6 @@ internal class Program
 
         var csharpEmitter = new CSharpBindingEmitter();
         var cppEmitter = new CppExportEmitter();
-        var cmakeEmitter = new CMakeModulesEmitter();
-        var nativeProjectEmitter = new NativeProjectEmitter();
 
         var manualClasses = context.Config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
         var skippedCount = 0;
@@ -769,21 +786,152 @@ internal class Program
             }
         }
 
-        var modulesPath = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
-        var vtkModules = context.Documents
-            .Select(document => document.Module)
-            .Concat(context.Config.Vtk.RuntimeModules)
-            .Distinct(StringComparer.Ordinal)
-            .ToList();
-        WriteText(modulesPath, cmakeEmitter.Emit(vtkModules));
-        WriteText(Path.Combine(outputRoot, "native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(context.Config.Binding.NativeLibraryName));
-        WriteText(Path.Combine(outputRoot, "native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
-        WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
+        WriteNativeProjectFiles(outputRoot, context.Config, context.Documents);
 
         if (continueOnError && skippedCount > 0)
             Console.WriteLine($"Skipped {skippedCount} class(es) due to inspection/validation failures.");
 
         Console.WriteLine($"Generated files will be written to: {Path.GetFullPath(outputRoot)}");
+        return 0;
+    }
+
+    private static int GenerateIncremental(string configPath, string outputRoot, bool continueOnError = false, bool force = false)
+    {
+        var configDirectory = Path.GetDirectoryName(configPath)
+                              ?? throw new InvalidOperationException($"Config path '{configPath}' does not have a directory.");
+
+        var config = LoadConfig(configPath);
+        var whitelistDirectory = Path.GetFullPath(Path.Combine(configDirectory, config.Paths.WhitelistDirectory));
+        var includeDirectory = ResolveIncludeDirectory(config);
+        if (includeDirectory is null)
+        {
+            Console.Error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
+            return 1;
+        }
+
+        Directory.CreateDirectory(outputRoot);
+
+        var documents = new WhitelistLoader().LoadDirectory(whitelistDirectory);
+        var hierarchyResolver = LoadHierarchyResolver(config);
+        var inspector = new VtkClassInspector();
+        var validator = new WhitelistValidator();
+        var csharpEmitter = new CSharpBindingEmitter();
+        var cppEmitter = new CppExportEmitter();
+        var manifestStore = new GeneratedManifestStore();
+        var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
+        var manifests = new Dictionary<string, GeneratedManifest>(StringComparer.Ordinal);
+        var generatedCount = 0;
+        var skippedCount = 0;
+        var failedCount = 0;
+
+        foreach (var document in documents)
+        {
+            var manifestPath = GetManifestPath(outputRoot, document.Module);
+            var manifest = force
+                ? new GeneratedManifest { SchemaVersion = GeneratedManifestStore.CurrentSchemaVersion, GeneratorVersion = IncrementalCacheVersion, Module = document.Module }
+                : manifestStore.Load(manifestPath, document.Module, IncrementalCacheVersion);
+            manifests[document.Module] = manifest;
+
+            foreach (var whitelistClass in document.Classes)
+            {
+                if (manualClasses.Contains(whitelistClass.Name))
+                    continue;
+
+                var baseClassName = hierarchyResolver.GetBaseClassName(whitelistClass.Name);
+                var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
+                var nativePath = Path.Combine(outputRoot, "native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
+                var managedRelativePath = Path.Combine("bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
+                var nativeRelativePath = Path.Combine("native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
+                var headerPath = Path.Combine(includeDirectory, whitelistClass.Header);
+                var inputHash = GenerationInputFingerprint.Compute(
+                    IncrementalCacheVersion,
+                    config.Vtk.Version,
+                    config.Binding.Namespace,
+                    config.Binding.NativeLibraryName,
+                    document.Module,
+                    whitelistClass.Name,
+                    whitelistClass.Header,
+                    baseClassName,
+                    GenerationInputFingerprint.HashFileText(headerPath),
+                    whitelistClass.Functions);
+
+                if (!force && GeneratedManifestCache.TryGetReusableEntry(manifest, whitelistClass.Name, inputHash, managedPath, nativePath, out _))
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                InspectedClass inspectedClass;
+                try
+                {
+                    inspectedClass = inspector.InspectHeader(includeDirectory, whitelistClass.Header, whitelistClass.Name);
+                }
+                catch (Exception ex) when (ex is IOException or InvalidOperationException or ArgumentException)
+                {
+                    failedCount++;
+                    Console.Error.WriteLine($"Class '{whitelistClass.Name}' could not be inspected from '{whitelistClass.Header}': {ex.Message}");
+                    if (!continueOnError)
+                        return 1;
+                    continue;
+                }
+
+                var validationDocument = new WhitelistDocument
+                {
+                    Module = document.Module,
+                    Classes = [whitelistClass],
+                };
+                var validationResult = validator.Validate(
+                    validationDocument,
+                    new Dictionary<string, InspectedClass>(StringComparer.Ordinal) { [whitelistClass.Name] = inspectedClass },
+                    hierarchyResolver);
+                if (validationResult.Diagnostics.Count > 0)
+                {
+                    failedCount++;
+                    foreach (var diagnostic in validationResult.Diagnostics)
+                        Console.Error.WriteLine(diagnostic.Message);
+                    if (!continueOnError)
+                        return 1;
+                    continue;
+                }
+
+                var includeClassNames = GetIncludeClassNames(whitelistClass)
+                    .Where(name => name != whitelistClass.Name)
+                    .Distinct(StringComparer.Ordinal)
+                    .ToList();
+                var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions);
+                var nativeContent = cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions);
+
+                WriteText(managedPath, managedContent);
+                WriteText(nativePath, nativeContent);
+
+                var entry = new GeneratedManifestEntry
+                {
+                    ClassName = whitelistClass.Name,
+                    Header = whitelistClass.Header,
+                    BaseClassName = baseClassName,
+                    HasStaticNew = inspectedClass.HasStaticNew,
+                    InputHash = inputHash,
+                    ManagedPath = managedRelativePath,
+                    NativePath = nativeRelativePath,
+                    ManagedContentHash = GenerationInputFingerprint.HashGeneratedText(managedContent),
+                    NativeContentHash = GenerationInputFingerprint.HashGeneratedText(nativeContent),
+                };
+                manifest = GeneratedManifestStore.WithEntry(manifest, entry);
+                manifests[document.Module] = manifest;
+                generatedCount++;
+            }
+        }
+
+        WriteNativeProjectFiles(outputRoot, config, documents);
+
+        foreach (var (module, manifest) in manifests)
+            manifestStore.Save(GetManifestPath(outputRoot, module), manifest);
+
+        Console.WriteLine($"Generated files will be written to: {Path.GetFullPath(outputRoot)}");
+        Console.WriteLine($"Incremental generation: generated {generatedCount} class(es), reused {skippedCount} class(es).");
+        if (continueOnError && failedCount > 0)
+            Console.WriteLine($"Skipped {failedCount} class(es) due to inspection/validation failures.");
+
         return 0;
     }
 
@@ -816,6 +964,25 @@ internal class Program
 
         return continueOnError ? 0 : 1;
     }
+
+    private static void WriteNativeProjectFiles(string outputRoot, GeneratorConfig config, IReadOnlyList<WhitelistDocument> documents)
+    {
+        var cmakeEmitter = new CMakeModulesEmitter();
+        var nativeProjectEmitter = new NativeProjectEmitter();
+        var modulesPath = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
+        var vtkModules = documents
+            .Select(document => document.Module)
+            .Concat(config.Vtk.RuntimeModules)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        WriteText(modulesPath, cmakeEmitter.Emit(vtkModules));
+        WriteText(Path.Combine(outputRoot, "native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(config.Binding.NativeLibraryName));
+        WriteText(Path.Combine(outputRoot, "native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
+        WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
+    }
+
+    private static string GetManifestPath(string outputRoot, string module)
+        => Path.Combine(outputRoot, "bindings", "VtkSharp", module, GeneratedManifestStore.FileName);
 
     private static int NormalizeWhitelist(string configPath)
     {

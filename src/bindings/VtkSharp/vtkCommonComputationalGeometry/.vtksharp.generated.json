@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-07-01.incremental-v1",
+  "module": "vtkCommonComputationalGeometry",
+  "classes": [
+    {
+      "className": "vtkParametricEnneper",
+      "header": "vtkParametricEnneper.h",
+      "baseClassName": "vtkParametricFunction",
+      "hasStaticNew": true,
+      "inputHash": "4960d08977dff9a15aa3af594db23a56897a25a0930aba193c3383e9291e0732",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricEnneper_gen.cs",
+      "nativePath": "native\\src\\vtkCommonComputationalGeometry\\vtkParametricEnneper_export_gen.cpp",
+      "managedContentHash": "29d0dc6503f504301543bfc0b087c25290af1242d2f8ff184855269ff560bba9",
+      "nativeContentHash": "658e3f1f416e75c70d90bd369b6e5ae9e90717040f34a59c7147d1eafec95252"
+    },
+    {
+      "className": "vtkParametricFunction",
+      "header": "vtkParametricFunction.h",
+      "baseClassName": "vtkObject",
+      "hasStaticNew": false,
+      "inputHash": "cd63b603af73458f554386bc1377fb7553af07c5b4df40debdf5bc8a23c9f629",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricFunction_gen.cs",
+      "nativePath": "native\\src\\vtkCommonComputationalGeometry\\vtkParametricFunction_export_gen.cpp",
+      "managedContentHash": "6592252f4f789ce36524ef56a9acf60f0885779e1e688c8a8e62b0b3d2371ebb",
+      "nativeContentHash": "2b842f24074bb54b42f862e4c2a42a2180a5269e402714bc9cb6061d7c5dcbbe"
+    }
+  ]
+}

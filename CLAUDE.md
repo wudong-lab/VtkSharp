@@ -50,7 +50,11 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- normalize-whitelist
 ```
 dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --check
 dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root <dir> [--continue-on-error]
+dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root <dir> --incremental
+dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root <dir> --incremental --force
 ```
+
+日常开发需要更新生成文件时优先使用 `--incremental`。它按类复用输出目录中的 `.vtksharp.generated.json` 记录；白名单、header、配置、输出文件内容或 generator cache version 变化时会自动重新生成对应类。`--check` 始终全量生成到临时目录并 diff 当前输出，不使用增量缓存，适合作为提交前一致性检查。
 
 ### 构建
 
@@ -89,7 +93,7 @@ dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
 5. 对每个缺失类调 CLI 查询：`create-candidate vtkXxx -o examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml --supported-only --source-kind vtk-example --source-name <Name> --source-original <path>`
 6. 人工审核 candidate.yml
 7. `merge-candidate examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`（自动 normalize）
-8. `generate-bindings --check` → `.\tools\build-native.ps1` → `dotnet build` → smoke test
+8. 日常迭代用 `generate-bindings --output-root src --incremental` 更新生成文件；收尾时执行 `generate-bindings --check` → `.\tools\build-native.ps1` → `dotnet build` → smoke test
 
 ## 约束
 

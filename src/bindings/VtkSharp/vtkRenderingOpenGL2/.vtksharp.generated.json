@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-07-01.incremental-v1",
+  "module": "vtkRenderingOpenGL2",
+  "classes": [
+    {
+      "className": "vtkOpenGLRenderWindow",
+      "header": "vtkOpenGLRenderWindow.h",
+      "baseClassName": "vtkRenderWindow",
+      "hasStaticNew": true,
+      "inputHash": "6d03e0821d5f1d4bf4be5a7019561d9b1ecd59d66ce9c75416b910ab74aded12",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkOpenGLRenderWindow_gen.cs",
+      "nativePath": "native\\src\\vtkRenderingOpenGL2\\vtkOpenGLRenderWindow_export_gen.cpp",
+      "managedContentHash": "636a4cfe55b55846fdfe0dd080c98e92196891ce7eb56df192a2da3bf2bf5124",
+      "nativeContentHash": "76d0db33abd36ead192abe88d0e86a256f26d394f42eb29beb773dc17ac29150"
+    },
+    {
+      "className": "vtkWin32OpenGLRenderWindow",
+      "header": "vtkWin32OpenGLRenderWindow.h",
+      "baseClassName": "vtkOpenGLRenderWindow",
+      "hasStaticNew": true,
+      "inputHash": "41eb8e750e47a11fd51f0e4a2e0f0665dc650740614ead165cf8f6a8e785415e",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkWin32OpenGLRenderWindow_gen.cs",
+      "nativePath": "native\\src\\vtkRenderingOpenGL2\\vtkWin32OpenGLRenderWindow_export_gen.cpp",
+      "managedContentHash": "26d0199820f1d58a0922f3da2c9c71f0dcf9c68f859c7d23941d806698f65708",
+      "nativeContentHash": "81a864d1dca313522564eb937a642a1d4b3b77044405fcaffc99d916d2d403d5"
+    }
+  ]
+}

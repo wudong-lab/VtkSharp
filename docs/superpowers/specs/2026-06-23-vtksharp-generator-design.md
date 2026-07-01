@@ -157,6 +157,8 @@ vtksharp-gen list-modules
 vtksharp-gen list-classes
 vtksharp-gen inspect-function vtkRenderer SetBackground
 vtksharp-gen generate-bindings --check
+vtksharp-gen generate-bindings --output-root src --incremental
+vtksharp-gen generate-bindings --output-root src --incremental --force
 vtksharp-gen merge-candidate examples/Cone/whitelist-candidate.yml
 ```
 
@@ -221,7 +223,7 @@ CLI 命令按职责分为三组：
 - 不修改白名单。
 - 第一阶段不删除 orphan generated files。
 
-`generate --check` 和 orphan 清理放到后续增强，不作为第一版必须项。
+`generate-bindings --check` 使用临时目录执行全量生成并与当前输出 diff，不使用增量缓存。`generate-bindings --incremental` 只优化普通生成到输出目录的开发内循环：按类读取 `.vtksharp.generated.json`，当输入指纹和输出内容 hash 都匹配时跳过该类的 inspect、validate、emit 和 write。`--force` 忽略已有 manifest 并重建缓存。orphan 清理放到后续增强。
 
 ## 白名单设计
 
@@ -839,6 +841,7 @@ requirements:
 
 ```bash
 vtksharp-gen validate-whitelist
+vtksharp-gen generate-bindings --output-root src --incremental
 vtksharp-gen generate-bindings --check
 
 cmake --build src/native/out/build/windows-x64 --config Release
@@ -849,8 +852,9 @@ dotnet run --project src/bindings/TestConsole/TestConsole.csproj -- --smoke
 
 后续增强：
 
-- `vtksharp-gen generate --check`：临时生成并与当前生成文件 diff，确保生成结果最新。
-- CppAst 解析性能优化：当前第一阶段可以接受按类/按 header 逐次解析，优先打通 validate、generate、round-trip diff、build 和 smoke test 的整体闭环；后续应改为对本轮需要分析的类进行批量解析，并缓存 header/module 解析结果，避免 `validate-whitelist` 和 `generate` 重复解析同一批 VTK 头文件。
+- `vtksharp-gen generate-bindings --incremental`：日常开发内循环命令，按类复用生成记录，未变化类不重新解析 header。
+- `vtksharp-gen generate-bindings --check`：严格一致性检查，临时全量生成并与当前生成文件 diff，确保生成结果最新。
+- CppAst 解析性能优化：当前阶段已有类级生成缓存；后续仍可改为对本轮需要分析的类进行批量解析，并缓存 header/module inspection 结果，进一步优化 cache miss 或 validate-whitelist 场景。
 - native 导出符号检查。
 - 引用计数测试。
 - 字符串 UTF-8 测试。
@@ -917,7 +921,8 @@ src/bindings/TestConsole
 ```bash
 vtksharp-gen validate-whitelist
 vtksharp-gen inspect-class vtkActor --format text
-vtksharp-gen generate --output-root <temp-dir>
+vtksharp-gen generate-bindings --output-root <temp-dir>
+vtksharp-gen generate-bindings --output-root src --incremental
 ```
 
 第一版 `generate` 应支持将生成结果输出到临时目录，避免一开始覆盖当前项目已有绑定代码。待 round-trip 结果稳定后，再使用正式输出路径。
@@ -926,7 +931,6 @@ vtksharp-gen generate --output-root <temp-dir>
 
 - 自动解析 build log。
 - 自动翻译示例。
-- `generate --check`。
 - 删除 orphan generated files。
 - 支持旧 BrdiVtkNet 全量白名单。
 - 支持所有复杂 pointer / ownership 规则。
