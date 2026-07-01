@@ -24,9 +24,10 @@ VTKSHARP_API void vtkRenderWindowInteractor_SetEventInformationFlipY(
     int controlKey,
     int shiftKey,
     char keyCode,
-    int repeatCount)
+    int repeatCount,
+    const char* keySym)
 {
-    self->SetEventInformationFlipY(x, y, controlKey, shiftKey, keyCode, repeatCount);
+    self->SetEventInformationFlipY(x, y, controlKey, shiftKey, keyCode, repeatCount, keySym);
 }
 
 VTKSHARP_API void vtkRenderWindowInteractor_SetEventInformation(
@@ -36,9 +37,10 @@ VTKSHARP_API void vtkRenderWindowInteractor_SetEventInformation(
     int controlKey,
     int shiftKey,
     char keyCode,
-    int repeatCount)
+    int repeatCount,
+    const char* keySym)
 {
-    self->SetEventInformation(x, y, controlKey, shiftKey, keyCode, repeatCount);
+    self->SetEventInformation(x, y, controlKey, shiftKey, keyCode, repeatCount, keySym);
 }
 
 VTKSHARP_API void vtkRenderWindowInteractor_SetKeyEventInformation(
@@ -46,9 +48,18 @@ VTKSHARP_API void vtkRenderWindowInteractor_SetKeyEventInformation(
     int controlKey,
     int shiftKey,
     char keyCode,
-    int repeatCount)
+    int repeatCount,
+    const char* keySym)
 {
-    self->SetKeyEventInformation(controlKey, shiftKey, keyCode, repeatCount);
+    self->SetKeyEventInformation(controlKey, shiftKey, keyCode, repeatCount, keySym);
+}
+
+VTKSHARP_API void vtkRenderWindowInteractor_UpdateSize(
+    vtkRenderWindowInteractor* self,
+    int width,
+    int height)
+{
+    self->UpdateSize(width, height);
 }
 
 VTKSHARP_API int vtkRenderWindowInteractor_CreateRepeatingTimer(

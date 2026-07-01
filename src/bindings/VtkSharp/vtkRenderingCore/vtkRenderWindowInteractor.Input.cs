@@ -28,7 +28,8 @@ public unsafe partial class vtkRenderWindowInteractor
         bool controlKey,
         bool shiftKey,
         char keyCode = '\0',
-        int repeatCount = 0)
+        int repeatCount = 0,
+        string? keySym = null)
     {
         vtkRenderWindowInteractor_SetEventInformationFlipY(
             this.NativePointer,
@@ -37,7 +38,8 @@ public unsafe partial class vtkRenderWindowInteractor
             controlKey ? 1 : 0,
             shiftKey ? 1 : 0,
             (byte)keyCode,
-            repeatCount);
+            repeatCount,
+            keySym);
     }
 
     public void SetEventInformation(
@@ -46,7 +48,8 @@ public unsafe partial class vtkRenderWindowInteractor
         bool controlKey,
         bool shiftKey,
         char keyCode = '\0',
-        int repeatCount = 0)
+        int repeatCount = 0,
+        string? keySym = null)
     {
         vtkRenderWindowInteractor_SetEventInformation(
             this.NativePointer,
@@ -55,21 +58,29 @@ public unsafe partial class vtkRenderWindowInteractor
             controlKey ? 1 : 0,
             shiftKey ? 1 : 0,
             (byte)keyCode,
-            repeatCount);
+            repeatCount,
+            keySym);
     }
 
     public void SetKeyEventInformation(
         bool controlKey,
         bool shiftKey,
         char keyCode,
-        int repeatCount = 0)
+        int repeatCount = 0,
+        string? keySym = null)
     {
         vtkRenderWindowInteractor_SetKeyEventInformation(
             this.NativePointer,
             controlKey ? 1 : 0,
             shiftKey ? 1 : 0,
             (byte)keyCode,
-            repeatCount);
+            repeatCount,
+            keySym);
+    }
+
+    public void UpdateSize(int width, int height)
+    {
+        vtkRenderWindowInteractor_UpdateSize(this.NativePointer, width, height);
     }
 
     public int CreateRepeatingTimer(int duration)
@@ -140,7 +151,8 @@ public unsafe partial class vtkRenderWindowInteractor
         int controlKey,
         int shiftKey,
         byte keyCode,
-        int repeatCount);
+        int repeatCount,
+        [MarshalAs(UnmanagedType.LPStr)] string? keySym);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_SetEventInformation(
@@ -150,7 +162,8 @@ public unsafe partial class vtkRenderWindowInteractor
         int controlKey,
         int shiftKey,
         byte keyCode,
-        int repeatCount);
+        int repeatCount,
+        [MarshalAs(UnmanagedType.LPStr)] string? keySym);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_SetKeyEventInformation(
@@ -158,7 +171,11 @@ public unsafe partial class vtkRenderWindowInteractor
         int controlKey,
         int shiftKey,
         byte keyCode,
-        int repeatCount);
+        int repeatCount,
+        [MarshalAs(UnmanagedType.LPStr)] string? keySym);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_UpdateSize(nint self, int width, int height);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkRenderWindowInteractor_CreateRepeatingTimer(nint self, int duration);
