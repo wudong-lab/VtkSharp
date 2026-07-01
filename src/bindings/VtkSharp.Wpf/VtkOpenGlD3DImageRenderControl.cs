@@ -227,6 +227,11 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
         this.SetInteractorKeyEventInformation(e);
         this.InvokeInteractorEvent(vtkCommand.KeyPressEvent);
+        if (IsCharEventKey(e))
+        {
+            this.InvokeInteractorEvent(vtkCommand.CharEvent);
+        }
+
         this.RequestRender();
         e.Handled = true;
     }
@@ -575,9 +580,19 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
 
     private static char GetKeyCode(KeyEventArgs e)
     {
-        var key = e.Key == Key.System ? e.SystemKey : e.Key;
-        var virtualKey = KeyInterop.VirtualKeyFromKey(key);
-        return virtualKey is >= 0 and <= byte.MaxValue ? (char)virtualKey : '\0';
+        var keySym = GetKeySym(e);
+        if (keySym?.Length == 1 && keySym[0] <= byte.MaxValue)
+        {
+            return keySym[0];
+        }
+
+        return '\0';
+    }
+
+    private static bool IsCharEventKey(KeyEventArgs e)
+    {
+        var keySym = GetKeySym(e);
+        return keySym?.Length == 1 || keySym is "BackSpace" or "Tab" or "Return" or "Escape" or "space";
     }
 
     private static string? GetKeySym(KeyEventArgs e)
