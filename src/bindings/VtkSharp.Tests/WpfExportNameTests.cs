@@ -177,6 +177,22 @@ public sealed class WpfExportNameTests
         Assert.Contains("private static Cursor MapVtkCursor(int vtkCursor)", wpfControl);
     }
 
+    [Fact]
+    public void WpfD3DImageControl_ClampsPixelCoordinatesToRenderTarget()
+    {
+        var wpfControl = ReadRepositoryText(
+            "src",
+            "bindings",
+            "VtkSharp.Wpf",
+            "VtkOpenGlD3DImageRenderControl.cs");
+
+        var getPixelPositionBody = GetMethodBody(wpfControl, "GetPixelPosition");
+        Assert.Contains("var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));", getPixelPositionBody);
+        Assert.Contains("ClampPixelCoordinate((int)Math.Round(position.X * transform.M11), pixelSize.Width)", getPixelPositionBody);
+        Assert.Contains("ClampPixelCoordinate((int)Math.Round(position.Y * transform.M22), pixelSize.Height)", getPixelPositionBody);
+        Assert.Contains("private static int ClampPixelCoordinate(int value, int length)", wpfControl);
+    }
+
     private static DirectoryInfo FindRepositoryRoot()
     {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);

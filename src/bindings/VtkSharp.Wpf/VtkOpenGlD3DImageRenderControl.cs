@@ -681,10 +681,16 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     {
         var source = PresentationSource.FromVisual(this);
         var transform = source?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
+        var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));
 
-        var x = (int)Math.Round(position.X * transform.M11);
-        var y = (int)Math.Round(position.Y * transform.M22);
+        var x = ClampPixelCoordinate((int)Math.Round(position.X * transform.M11), pixelSize.Width);
+        var y = ClampPixelCoordinate((int)Math.Round(position.Y * transform.M22), pixelSize.Height);
         return new PixelPoint(x, y);
+    }
+
+    private static int ClampPixelCoordinate(int value, int length)
+    {
+        return Math.Min(Math.Max(value, 0), length - 1);
     }
 
     private static uint GetMouseButtonEvent(MouseButton button, bool pressed)
