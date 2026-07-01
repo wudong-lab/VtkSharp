@@ -143,10 +143,11 @@ Check that only the expected methods are listed as "Added".
 
 ```bash
 dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
-dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src/
+dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src/ --incremental
 ```
 
 `merge-candidate` automatically normalizes the whitelist after merging.
+Use incremental generation for the porting inner loop. It reuses per-module `.vtksharp.generated.json` manifests and only regenerates classes whose whitelist, header, config, or generated output changed.
 
 ## 5. Build native and managed code
 
@@ -183,7 +184,7 @@ Select the new example from the list and confirm it renders correctly.
 dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --check
 ```
 
-This must print "Generated output is up to date." If it reports differences, regenerate (`--output-root src/`) and rebuild.
+This must print "Generated output is up to date." If it reports differences, regenerate (`--output-root src/ --incremental`, or add `--force` if cache invalidation is suspected) and rebuild.
 
 ## 8. Write porting notes
 
