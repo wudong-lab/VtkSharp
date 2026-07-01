@@ -16,7 +16,7 @@ CLI binary: `dotnet run --project generator/VtkSharp.Generator.Cli --`
 ## 0. Fetch the C++ source
 
 First obtain the C++ source. Try in order:
-1. If given a URL to `examples.vtk.org`, fetch it with `curl -sL <url>` and extract the code from `<pre>` tags.
+1. If given a URL to `examples.vtk.org`, fetch it with `curl -sL <url>` and extract the code from `<pre>` tags. Also extract the **Description** paragraph from the page (the content between `<h3>Description</h3>` and `<h3>Code</h3>`). Strip HTML tags to get plain text.
 2. If given a local file path, read it directly.
 3. Do NOT rely on memory — always read the actual source. Missing calls like `RotateX`, `Zoom`, `SetWindowName`, `ResetCamera` leads to incorrect ports.
 
@@ -41,12 +41,17 @@ internal class <Name> : IExample
 {
     public void Run()
     {
+        // <Description paragraph from VTK website, each line prefixed with // >
+        //
+        // VTK example source: <original URL>
+
         // C# translation here
     }
 }
 ```
 
 Key translation rules:
+- **Description comment**: If the VTK website page has a Description paragraph (extracted in step 0), write it as a `//` comment block at the top of the `Run()` method. Add a line with the original VTK example URL below it. This documents what the example demonstrates directly in the code.
 - `vtkNew<vtkXxx> xxx;` → `using var xxx = vtkXxx.New();`
 - `->` method calls → `.` method calls
 - `vtkSmartPointer` / raw pointers → no wrapping needed, `New()` returns a managed wrapper
