@@ -1037,6 +1037,11 @@ classes:
         parameters:
           - type: vtkRenderer*
             name: renderer
+      - name: GetCurrentCursor
+        cppSignature: int GetCurrentCursor()
+        return:
+          type: int
+        parameters: []
       - name: LineSmoothingOff
         cppSignature: void LineSmoothingOff()
         return:
@@ -1074,6 +1079,13 @@ classes:
         parameters: []
       - name: SetMultiSamples
         cppSignature: void SetMultiSamples(int _arg1)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+      - name: SetCurrentCursor
+        cppSignature: void SetCurrentCursor(int _arg1)
         return:
           type: void
         parameters:

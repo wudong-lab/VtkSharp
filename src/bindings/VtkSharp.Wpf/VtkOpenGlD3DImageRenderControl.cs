@@ -19,6 +19,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     private vtkInteractorStyleTrackballCamera? _interactorStyle;
     private VtkObserverHandle? _createTimerObserver;
     private VtkObserverHandle? _destroyTimerObserver;
+    private VtkObserverHandle? _cursorChangedObserver;
 
     private nint _backBuffer;
     private PixelSize _pixelSize;
@@ -334,6 +335,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this._render = VtkOpenGlD3DImageRender.Create();
         this.RenderWindow = this._render.RenderWindow;
         this.Renderer = this._render.Renderer;
+        this.AttachCursorBridge(this.RenderWindow);
 
         var interactor = vtkGenericRenderWindowInteractor.New();
         interactor.TimerEventResetsTimerOff();
@@ -363,6 +365,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         }
 
         this.DetachTimerBridge();
+        this.DetachCursorBridge();
         this.Interactor?.Dispose();
         this._interactorStyle?.Dispose();
         this.Interactor = null;
@@ -388,9 +391,22 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         }
 
         this._backBuffer = IntPtr.Zero;
+        this.Cursor = null;
         this.RenderWindow = null;
         this.Renderer = null;
         this._isInitialized = false;
+    }
+
+    private void AttachCursorBridge(vtkRenderWindow renderWindow)
+    {
+        this._cursorChangedObserver = renderWindow.AddObserver(vtkCommand.CursorChangedEvent, (_, _) => this.SyncCursor());
+        this.SyncCursor();
+    }
+
+    private void DetachCursorBridge()
+    {
+        this._cursorChangedObserver?.Dispose();
+        this._cursorChangedObserver = null;
     }
 
     private void AttachTimerBridge(vtkRenderWindowInteractor interactor)
@@ -488,10 +504,12 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is vtkGenericRenderWindowInteractor genericInteractor)
         {
             InvokeGenericInteractorEvent(genericInteractor, eventId);
+            this.SyncCursor();
             return;
         }
 
         this.Interactor.InvokeEvent(eventId);
+        this.SyncCursor();
     }
 
     private static void InvokeGenericInteractorEvent(vtkGenericRenderWindowInteractor interactor, uint eventId)
@@ -544,6 +562,33 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
                 interactor.InvokeEvent(eventId);
                 break;
         }
+    }
+
+    private void SyncCursor()
+    {
+        if (this.RenderWindow is null) return;
+
+        var cursor = MapVtkCursor(this.RenderWindow.GetCurrentCursor());
+        if (this.Cursor != cursor)
+        {
+            this.Cursor = cursor;
+        }
+    }
+
+    private static Cursor MapVtkCursor(int vtkCursor)
+    {
+        return vtkCursor switch
+        {
+            vtkRenderWindow.CursorSizeNE or vtkRenderWindow.CursorSizeSW => Cursors.SizeNESW,
+            vtkRenderWindow.CursorSizeNW or vtkRenderWindow.CursorSizeSE => Cursors.SizeNWSE,
+            vtkRenderWindow.CursorSizeNS => Cursors.SizeNS,
+            vtkRenderWindow.CursorSizeWE => Cursors.SizeWE,
+            vtkRenderWindow.CursorSizeAll => Cursors.SizeAll,
+            vtkRenderWindow.CursorHand => Cursors.Hand,
+            vtkRenderWindow.CursorCrosshair => Cursors.Cross,
+            vtkRenderWindow.CursorDefault or vtkRenderWindow.CursorArrow or vtkRenderWindow.CursorCustom => Cursors.Arrow,
+            _ => Cursors.Arrow
+        };
     }
 
     private void SetInteractorEventInformation(Point position, int repeatCount)
