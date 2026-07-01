@@ -16,9 +16,17 @@ CLI binary: `dotnet run --project generator/VtkSharp.Generator.Cli --`
 ## 0. Fetch the C++ source
 
 First obtain the C++ source. Try in order:
-1. If given a URL to `examples.vtk.org`, fetch it with `curl -sL <url>` and extract the code from `<pre>` tags. Also extract the **Description** paragraph from the page (the content between `<h3>Description</h3>` and `<h3>Code</h3>`). Strip HTML tags to get plain text.
+1. If given a URL to `examples.vtk.org`, fetch it with `curl -sL <url>` and extract the code from `<pre>` tags. Also extract the **Description** paragraph from the page (the content between the Description heading and the Code heading). Strip HTML tags to get plain text.
 2. If given a local file path, read it directly.
 3. Do NOT rely on memory — always read the actual source. Missing calls like `RotateX`, `Zoom`, `SetWindowName`, `ResetCamera` leads to incorrect ports.
+
+> **⚠ HTML 提取注意**：`examples.vtk.org` 页面的 `<h3>` 标题常带有 HTML 属性（如 `<h3 id="description">`）和内部子元素（如 `<a>` 锚点链接）。
+> 用正则提取 Description 时必须匹配 **任意属性的 `<h3>`** + **任意内容的结束 `</h3>`**，例如：
+> ```python
+> re.search(r'<h3[^>]*>Description.*?</h3>\s*(.*?)\s*<h3[^>]*>Code', article, re.DOTALL)
+> ```
+> 不要用精确的 `<h3>Description</h3>` 去匹配——多数页面不会命中。
+> 注意部分示例页面**没有 Description 段落**（只有 Screenshot / Interactive example 面板），此时不写注释块，只保留 URL 来源行。
 
 Identify all VTK classes and methods used. Note any types that are likely unsupported (pointer returns to non-vtkObject types, references, `std::array`, `vtkVariant`, etc.) — these will need inline value substitution.
 
