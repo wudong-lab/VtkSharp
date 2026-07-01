@@ -7,19 +7,9 @@ public unsafe partial class vtkRenderWindowInteractor
     public const int OneShotTimer = 1;
     public const int RepeatingTimer = 2;
 
-    public void EnableRenderOff()
-    {
-        vtkRenderWindowInteractor_EnableRenderOff(this.NativePointer);
-    }
-
-    public void EnableRenderOn()
-    {
-        vtkRenderWindowInteractor_EnableRenderOn(this.NativePointer);
-    }
-
     public void SetAltKey(bool altKey)
     {
-        vtkRenderWindowInteractor_SetAltKey(this.NativePointer, altKey ? 1 : 0);
+        this.SetAltKey(altKey ? 1 : 0);
     }
 
     public void SetEventInformationFlipY(
@@ -31,15 +21,14 @@ public unsafe partial class vtkRenderWindowInteractor
         int repeatCount = 0,
         string? keySym = null)
     {
-        vtkRenderWindowInteractor_SetEventInformationFlipY(
-            this.NativePointer,
+        this.SetEventInformationFlipY(
             x,
             y,
             controlKey ? 1 : 0,
             shiftKey ? 1 : 0,
-            (byte)keyCode,
+            keyCode,
             repeatCount,
-            keySym);
+            keySym ?? string.Empty);
     }
 
     public void SetEventInformation(
@@ -51,15 +40,14 @@ public unsafe partial class vtkRenderWindowInteractor
         int repeatCount = 0,
         string? keySym = null)
     {
-        vtkRenderWindowInteractor_SetEventInformation(
-            this.NativePointer,
+        this.SetEventInformation(
             x,
             y,
             controlKey ? 1 : 0,
             shiftKey ? 1 : 0,
-            (byte)keyCode,
+            keyCode,
             repeatCount,
-            keySym);
+            keySym ?? string.Empty);
     }
 
     public void SetKeyEventInformation(
@@ -69,18 +57,12 @@ public unsafe partial class vtkRenderWindowInteractor
         int repeatCount = 0,
         string? keySym = null)
     {
-        vtkRenderWindowInteractor_SetKeyEventInformation(
-            this.NativePointer,
+        this.SetKeyEventInformation(
             controlKey ? 1 : 0,
             shiftKey ? 1 : 0,
-            (byte)keyCode,
+            keyCode,
             repeatCount,
-            keySym);
-    }
-
-    public void UpdateSize(int width, int height)
-    {
-        vtkRenderWindowInteractor_UpdateSize(this.NativePointer, width, height);
+            keySym ?? string.Empty);
     }
 
     public int CreateRepeatingTimer(int duration)
@@ -93,41 +75,6 @@ public unsafe partial class vtkRenderWindowInteractor
         return vtkRenderWindowInteractor_CreateOneShotTimer(this.NativePointer, duration);
     }
 
-    public int DestroyTimer(int timerId)
-    {
-        return vtkRenderWindowInteractor_DestroyTimer_int(this.NativePointer, timerId);
-    }
-
-    public int GetTimerEventId()
-    {
-        return vtkRenderWindowInteractor_GetTimerEventId(this.NativePointer);
-    }
-
-    public void SetTimerEventId(int timerId)
-    {
-        vtkRenderWindowInteractor_SetTimerEventId(this.NativePointer, timerId);
-    }
-
-    public int GetTimerEventType()
-    {
-        return vtkRenderWindowInteractor_GetTimerEventType(this.NativePointer);
-    }
-
-    public int GetTimerEventDuration()
-    {
-        return vtkRenderWindowInteractor_GetTimerEventDuration(this.NativePointer);
-    }
-
-    public int GetTimerEventPlatformId()
-    {
-        return vtkRenderWindowInteractor_GetTimerEventPlatformId(this.NativePointer);
-    }
-
-    public void SetTimerEventPlatformId(int platformTimerId)
-    {
-        vtkRenderWindowInteractor_SetTimerEventPlatformId(this.NativePointer, platformTimerId);
-    }
-
     public void InvokeTimerEvent(int timerId)
     {
         vtkRenderWindowInteractor_InvokeTimerEvent(this.NativePointer, timerId);
@@ -135,74 +82,10 @@ public unsafe partial class vtkRenderWindowInteractor
 
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_EnableRenderOff(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_EnableRenderOn(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_SetAltKey(nint self, int altKey);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_SetEventInformationFlipY(
-        nint self,
-        int x,
-        int y,
-        int controlKey,
-        int shiftKey,
-        byte keyCode,
-        int repeatCount,
-        [MarshalAs(UnmanagedType.LPStr)] string? keySym);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_SetEventInformation(
-        nint self,
-        int x,
-        int y,
-        int controlKey,
-        int shiftKey,
-        byte keyCode,
-        int repeatCount,
-        [MarshalAs(UnmanagedType.LPStr)] string? keySym);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_SetKeyEventInformation(
-        nint self,
-        int controlKey,
-        int shiftKey,
-        byte keyCode,
-        int repeatCount,
-        [MarshalAs(UnmanagedType.LPStr)] string? keySym);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_UpdateSize(nint self, int width, int height);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkRenderWindowInteractor_CreateRepeatingTimer(nint self, int duration);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkRenderWindowInteractor_CreateOneShotTimer(nint self, int duration);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_DestroyTimer_int(nint self, int timerId);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetTimerEventId(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_SetTimerEventId(nint self, int timerId);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetTimerEventType(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetTimerEventDuration(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkRenderWindowInteractor_GetTimerEventPlatformId(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindowInteractor_SetTimerEventPlatformId(nint self, int platformTimerId);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_InvokeTimerEvent(nint self, int timerId);

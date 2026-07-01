@@ -18,6 +18,31 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         return target;
     }
 
+    public new void CharEvent()
+    {
+        vtkRenderWindowInteractor_CharEvent(this.NativePointer);
+    }
+
+    public new int DestroyTimer(int timerId)
+    {
+        return vtkRenderWindowInteractor_DestroyTimer(this.NativePointer, timerId);
+    }
+
+    public new void EnableRenderOff()
+    {
+        vtkRenderWindowInteractor_EnableRenderOff(this.NativePointer);
+    }
+
+    public new void EnableRenderOn()
+    {
+        vtkRenderWindowInteractor_EnableRenderOn(this.NativePointer);
+    }
+
+    public new void EnterEvent()
+    {
+        vtkRenderWindowInteractor_EnterEvent(this.NativePointer);
+    }
+
     public new int GetAltKey()
     {
         return vtkRenderWindowInteractor_GetAltKey(this.NativePointer);
@@ -63,9 +88,112 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         return vtkRenderWindowInteractor_GetShiftKey(this.NativePointer);
     }
 
+    public new int GetTimerEventDuration()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventDuration(this.NativePointer);
+    }
+
+    public new int GetTimerEventId()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventId(this.NativePointer);
+    }
+
+    public new int GetTimerEventPlatformId()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventPlatformId(this.NativePointer);
+    }
+
+    public new int GetTimerEventType()
+    {
+        return vtkRenderWindowInteractor_GetTimerEventType(this.NativePointer);
+    }
+
     public new void Initialize()
     {
         vtkRenderWindowInteractor_Initialize(this.NativePointer);
+    }
+
+    public new void KeyPressEvent()
+    {
+        vtkRenderWindowInteractor_KeyPressEvent(this.NativePointer);
+    }
+
+    public new void KeyReleaseEvent()
+    {
+        vtkRenderWindowInteractor_KeyReleaseEvent(this.NativePointer);
+    }
+
+    public new void LeaveEvent()
+    {
+        vtkRenderWindowInteractor_LeaveEvent(this.NativePointer);
+    }
+
+    public new void LeftButtonPressEvent()
+    {
+        vtkRenderWindowInteractor_LeftButtonPressEvent(this.NativePointer);
+    }
+
+    public new void LeftButtonReleaseEvent()
+    {
+        vtkRenderWindowInteractor_LeftButtonReleaseEvent(this.NativePointer);
+    }
+
+    public new void MiddleButtonPressEvent()
+    {
+        vtkRenderWindowInteractor_MiddleButtonPressEvent(this.NativePointer);
+    }
+
+    public new void MiddleButtonReleaseEvent()
+    {
+        vtkRenderWindowInteractor_MiddleButtonReleaseEvent(this.NativePointer);
+    }
+
+    public new void MouseMoveEvent()
+    {
+        vtkRenderWindowInteractor_MouseMoveEvent(this.NativePointer);
+    }
+
+    public new void MouseWheelBackwardEvent()
+    {
+        vtkRenderWindowInteractor_MouseWheelBackwardEvent(this.NativePointer);
+    }
+
+    public new void MouseWheelForwardEvent()
+    {
+        vtkRenderWindowInteractor_MouseWheelForwardEvent(this.NativePointer);
+    }
+
+    public new void RightButtonPressEvent()
+    {
+        vtkRenderWindowInteractor_RightButtonPressEvent(this.NativePointer);
+    }
+
+    public new void RightButtonReleaseEvent()
+    {
+        vtkRenderWindowInteractor_RightButtonReleaseEvent(this.NativePointer);
+    }
+
+    public new void SetAltKey(int _arg)
+    {
+        vtkRenderWindowInteractor_SetAltKey(this.NativePointer, _arg);
+    }
+
+    public new void SetEventInformation(int x, int y, int ctrl, int shift, char keycode, int repeatcount, string keysym)
+    {
+        #if NET10_0_OR_GREATER
+        vtkRenderWindowInteractor_SetEventInformation(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, keysym);
+        #else
+        vtkRenderWindowInteractor_SetEventInformation(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, VtkString.ToNullTerminatedUtf8(keysym));
+        #endif
+    }
+
+    public new void SetEventInformationFlipY(int x, int y, int ctrl, int shift, char keycode, int repeatcount, string keysym)
+    {
+        #if NET10_0_OR_GREATER
+        vtkRenderWindowInteractor_SetEventInformationFlipY(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, keysym);
+        #else
+        vtkRenderWindowInteractor_SetEventInformationFlipY(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, VtkString.ToNullTerminatedUtf8(keysym));
+        #endif
     }
 
     public new void SetInteractorStyle(vtkInteractorObserver _arg1)
@@ -73,9 +201,28 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         vtkRenderWindowInteractor_SetInteractorStyle(this.NativePointer, _arg1.NativePointer);
     }
 
+    public new void SetKeyEventInformation(int ctrl, int shift, char keycode, int repeatcount, string keysym)
+    {
+        #if NET10_0_OR_GREATER
+        vtkRenderWindowInteractor_SetKeyEventInformation(this.NativePointer, ctrl, shift, (byte)keycode, repeatcount, keysym);
+        #else
+        vtkRenderWindowInteractor_SetKeyEventInformation(this.NativePointer, ctrl, shift, (byte)keycode, repeatcount, VtkString.ToNullTerminatedUtf8(keysym));
+        #endif
+    }
+
     public new void SetRenderWindow(vtkRenderWindow aren)
     {
         vtkRenderWindowInteractor_SetRenderWindow(this.NativePointer, aren.NativePointer);
+    }
+
+    public new void SetTimerEventId(int _arg)
+    {
+        vtkRenderWindowInteractor_SetTimerEventId(this.NativePointer, _arg);
+    }
+
+    public new void SetTimerEventPlatformId(int _arg)
+    {
+        vtkRenderWindowInteractor_SetTimerEventPlatformId(this.NativePointer, _arg);
     }
 
     public new void Start()
@@ -83,9 +230,29 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
         vtkRenderWindowInteractor_Start(this.NativePointer);
     }
 
+    public new void UpdateSize(int x, int y)
+    {
+        vtkRenderWindowInteractor_UpdateSize(this.NativePointer, x, y);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderWindowInteractor_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_CharEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_DestroyTimer(nint self, int timerId);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_EnableRenderOff(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_EnableRenderOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_EnterEvent(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkRenderWindowInteractor_GetAltKey(nint self);
@@ -115,15 +282,99 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     private static extern int vtkRenderWindowInteractor_GetShiftKey(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventDuration(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventId(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventPlatformId(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindowInteractor_GetTimerEventType(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_Initialize(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_KeyPressEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_KeyReleaseEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_LeaveEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_LeftButtonPressEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_LeftButtonReleaseEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_MiddleButtonPressEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_MiddleButtonReleaseEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_MouseMoveEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_MouseWheelBackwardEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_MouseWheelForwardEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_RightButtonPressEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_RightButtonReleaseEvent(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetAltKey(nint self, int _arg);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkRenderWindowInteractor_SetEventInformation(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetEventInformation(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, byte[] keysym);
+#endif
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkRenderWindowInteractor_SetEventInformationFlipY(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetEventInformationFlipY(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, byte[] keysym);
+#endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_SetInteractorStyle(nint self, nint _arg1);
+
+#if NET10_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkRenderWindowInteractor_SetKeyEventInformation(nint self, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetKeyEventInformation(nint self, int ctrl, int shift, byte keycode, int repeatcount, byte[] keysym);
+#endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_SetRenderWindow(nint self, nint aren);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetTimerEventId(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_SetTimerEventPlatformId(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_Start(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindowInteractor_UpdateSize(nint self, int x, int y);
     #endregion
 }

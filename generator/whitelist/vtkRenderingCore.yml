@@ -583,8 +583,11 @@ classes:
   - name: vtkPropCollection
     header: vtkPropCollection.h
     functions: []
-  - name: vtkPropPicker
-    header: vtkPropPicker.h
+  - name: vtkAbstractPicker
+    header: vtkAbstractPicker.h
+    functions: []
+  - name: vtkAbstractPropPicker
+    header: vtkAbstractPropPicker.h
     functions:
       - name: GetActor
         cppSignature: vtkActor * GetActor()
@@ -596,6 +599,9 @@ classes:
         return:
           type: vtkProp*
         parameters: []
+  - name: vtkPropPicker
+    header: vtkPropPicker.h
+    functions:
       - name: Pick
         cppSignature: int Pick(double selectionX, double selectionY, double selectionZ, vtkRenderer * renderer)
         return:
@@ -1094,6 +1100,33 @@ classes:
   - name: vtkRenderWindowInteractor
     header: vtkRenderWindowInteractor.h
     functions:
+      - name: CharEvent
+        cppSignature: void CharEvent()
+        return:
+          type: void
+        parameters: []
+      - name: DestroyTimer
+        cppSignature: int DestroyTimer(int timerId)
+        return:
+          type: int
+        parameters:
+          - type: int
+            name: timerId
+      - name: EnableRenderOff
+        cppSignature: void EnableRenderOff()
+        return:
+          type: void
+        parameters: []
+      - name: EnableRenderOn
+        cppSignature: void EnableRenderOn()
+        return:
+          type: void
+        parameters: []
+      - name: EnterEvent
+        cppSignature: void EnterEvent()
+        return:
+          type: void
+        parameters: []
       - name: GetAltKey
         cppSignature: int GetAltKey()
         return:
@@ -1139,11 +1172,136 @@ classes:
         return:
           type: int
         parameters: []
+      - name: GetTimerEventDuration
+        cppSignature: int GetTimerEventDuration()
+        return:
+          type: int
+        parameters: []
+      - name: GetTimerEventId
+        cppSignature: int GetTimerEventId()
+        return:
+          type: int
+        parameters: []
+      - name: GetTimerEventPlatformId
+        cppSignature: int GetTimerEventPlatformId()
+        return:
+          type: int
+        parameters: []
+      - name: GetTimerEventType
+        cppSignature: int GetTimerEventType()
+        return:
+          type: int
+        parameters: []
       - name: Initialize
         cppSignature: void Initialize()
         return:
           type: void
         parameters: []
+      - name: KeyPressEvent
+        cppSignature: void KeyPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: KeyReleaseEvent
+        cppSignature: void KeyReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: LeaveEvent
+        cppSignature: void LeaveEvent()
+        return:
+          type: void
+        parameters: []
+      - name: LeftButtonPressEvent
+        cppSignature: void LeftButtonPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: LeftButtonReleaseEvent
+        cppSignature: void LeftButtonReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MiddleButtonPressEvent
+        cppSignature: void MiddleButtonPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MiddleButtonReleaseEvent
+        cppSignature: void MiddleButtonReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MouseMoveEvent
+        cppSignature: void MouseMoveEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MouseWheelBackwardEvent
+        cppSignature: void MouseWheelBackwardEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MouseWheelForwardEvent
+        cppSignature: void MouseWheelForwardEvent()
+        return:
+          type: void
+        parameters: []
+      - name: RightButtonPressEvent
+        cppSignature: void RightButtonPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: RightButtonReleaseEvent
+        cppSignature: void RightButtonReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: SetAltKey
+        cppSignature: void SetAltKey(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetEventInformation
+        cppSignature: void SetEventInformation(int x, int y, int ctrl, int shift, char keycode, int repeatcount, char const * keysym)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: x
+          - type: int
+            name: y
+          - type: int
+            name: ctrl
+          - type: int
+            name: shift
+          - type: char
+            name: keycode
+          - type: int
+            name: repeatcount
+          - type: const char*
+            name: keysym
+      - name: SetEventInformationFlipY
+        cppSignature: void SetEventInformationFlipY(int x, int y, int ctrl, int shift, char keycode, int repeatcount, char const * keysym)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: x
+          - type: int
+            name: y
+          - type: int
+            name: ctrl
+          - type: int
+            name: shift
+          - type: char
+            name: keycode
+          - type: int
+            name: repeatcount
+          - type: const char*
+            name: keysym
       - name: SetInteractorStyle
         cppSignature: void SetInteractorStyle(vtkInteractorObserver * _arg1)
         return:
@@ -1151,6 +1309,21 @@ classes:
         parameters:
           - type: vtkInteractorObserver*
             name: _arg1
+      - name: SetKeyEventInformation
+        cppSignature: void SetKeyEventInformation(int ctrl, int shift, char keycode, int repeatcount, char const * keysym)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: ctrl
+          - type: int
+            name: shift
+          - type: char
+            name: keycode
+          - type: int
+            name: repeatcount
+          - type: const char*
+            name: keysym
       - name: SetRenderWindow
         cppSignature: void SetRenderWindow(vtkRenderWindow* aren)
         return:
@@ -1158,11 +1331,34 @@ classes:
         parameters:
           - type: vtkRenderWindow*
             name: aren
+      - name: SetTimerEventId
+        cppSignature: void SetTimerEventId(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetTimerEventPlatformId
+        cppSignature: void SetTimerEventPlatformId(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
       - name: Start
         cppSignature: void Start()
         return:
           type: void
         parameters: []
+      - name: UpdateSize
+        cppSignature: void UpdateSize(int x, int y)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: x
+          - type: int
+            name: y
   - name: vtkRenderer
     header: vtkRenderer.h
     functions:

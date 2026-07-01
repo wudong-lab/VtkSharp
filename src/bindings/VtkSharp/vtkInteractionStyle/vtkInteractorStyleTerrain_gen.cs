@@ -41,9 +41,9 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     {
         #if NET10_0_OR_GREATER
         return vtkInteractorStyleTerrain_IsA(this.NativePointer, type) != 0;
-#else
+        #else
         return vtkInteractorStyleTerrain_IsA(this.NativePointer, VtkString.ToNullTerminatedUtf8(type)) != 0;
-#endif
+        #endif
     }
 
     public new void LatLongLinesOff()

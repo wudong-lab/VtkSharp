@@ -7,6 +7,8 @@ VTKSHARP_API vtkRenderWindow* vtkRenderWindow_New() { return vtkRenderWindow::Ne
 
 VTKSHARP_API void vtkRenderWindow_AddRenderer(vtkRenderWindow* self, vtkRenderer* renderer) { self->AddRenderer(renderer); }
 
+VTKSHARP_API int vtkRenderWindow_GetCurrentCursor(vtkRenderWindow* self) { return self->GetCurrentCursor(); }
+
 VTKSHARP_API void vtkRenderWindow_LineSmoothingOff(vtkRenderWindow* self) { self->LineSmoothingOff(); }
 
 VTKSHARP_API void vtkRenderWindow_LineSmoothingOn(vtkRenderWindow* self) { self->LineSmoothingOn(); }
@@ -22,3 +24,5 @@ VTKSHARP_API void vtkRenderWindow_PolygonSmoothingOn(vtkRenderWindow* self) { se
 VTKSHARP_API void vtkRenderWindow_Render(vtkRenderWindow* self) { self->Render(); }
 
 VTKSHARP_API void vtkRenderWindow_SetMultiSamples(vtkRenderWindow* self, int _arg1) { self->SetMultiSamples(_arg1); }
+
+VTKSHARP_API void vtkRenderWindow_SetCurrentCursor(vtkRenderWindow* self, int _arg1) { self->SetCurrentCursor(_arg1); }

@@ -23,6 +23,11 @@ public unsafe partial class vtkRenderWindow : vtkWindow
         vtkRenderWindow_AddRenderer(this.NativePointer, renderer.NativePointer);
     }
 
+    public new int GetCurrentCursor()
+    {
+        return vtkRenderWindow_GetCurrentCursor(this.NativePointer);
+    }
+
     public new void LineSmoothingOff()
     {
         vtkRenderWindow_LineSmoothingOff(this.NativePointer);
@@ -63,12 +68,20 @@ public unsafe partial class vtkRenderWindow : vtkWindow
         vtkRenderWindow_SetMultiSamples(this.NativePointer, _arg1);
     }
 
+    public new void SetCurrentCursor(int _arg1)
+    {
+        vtkRenderWindow_SetCurrentCursor(this.NativePointer, _arg1);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderWindow_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_AddRenderer(nint self, nint renderer);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkRenderWindow_GetCurrentCursor(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_LineSmoothingOff(nint self);
@@ -93,5 +106,8 @@ public unsafe partial class vtkRenderWindow : vtkWindow
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_SetMultiSamples(nint self, int _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderWindow_SetCurrentCursor(nint self, int _arg1);
     #endregion
 }

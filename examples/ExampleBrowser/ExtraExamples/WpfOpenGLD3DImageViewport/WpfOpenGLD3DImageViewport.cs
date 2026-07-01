@@ -146,7 +146,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this._leftButtonDownPosition = null;
 
             var pixelPosition = this.GetVtkDisplayPosition(position);
-            var picked = this._picker.Pick(pixelPosition.X, pixelPosition.Y, 0.0, this._viewport.Renderer);
+            var picked = this._picker.Pick(pixelPosition.X, pixelPosition.Y, 0.0, this._viewport.Renderer) != 0;
             var pickedActor = picked ? this._picker.GetActor() : null;
 
             this._isPicked = pickedActor?.NativePointer == this._actor.NativePointer && !this._isPicked;

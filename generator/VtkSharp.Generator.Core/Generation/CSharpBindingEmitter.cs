@@ -308,6 +308,9 @@ public sealed class CSharpBindingEmitter
         if (IsSpanParameter(parameter))
             return $"{parameter.Name}Ptr";
 
+        if (parameter.Type == "char")
+            return $"(byte){name}";
+
         if (parameter.Type == "vtkTypeBool")
             return $"{name} ? 1 : 0";
 
@@ -322,7 +325,9 @@ public sealed class CSharpBindingEmitter
     }
 
     private static string ToInteropParameterType(string type)
-        => IsStringPointer(type) ? "string" : ToInteropType(type);
+        => IsStringPointer(type) ? "string" :
+           type == "char" ? "byte" :
+           ToInteropType(type);
 
     private Dictionary<WhitelistFunction, string> CreateExportNames(string className, IReadOnlyList<WhitelistFunction> functions)
     {

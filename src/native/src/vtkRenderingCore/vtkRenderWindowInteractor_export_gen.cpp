@@ -6,6 +6,16 @@
 
 VTKSHARP_API vtkRenderWindowInteractor* vtkRenderWindowInteractor_New() { return vtkRenderWindowInteractor::New(); }
 
+VTKSHARP_API void vtkRenderWindowInteractor_CharEvent(vtkRenderWindowInteractor* self) { self->CharEvent(); }
+
+VTKSHARP_API int vtkRenderWindowInteractor_DestroyTimer(vtkRenderWindowInteractor* self, int timerId) { return self->DestroyTimer(timerId); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_EnableRenderOff(vtkRenderWindowInteractor* self) { self->EnableRenderOff(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_EnableRenderOn(vtkRenderWindowInteractor* self) { self->EnableRenderOn(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_EnterEvent(vtkRenderWindowInteractor* self) { self->EnterEvent(); }
+
 VTKSHARP_API int vtkRenderWindowInteractor_GetAltKey(vtkRenderWindowInteractor* self) { return self->GetAltKey(); }
 
 VTKSHARP_API int vtkRenderWindowInteractor_GetControlKey(vtkRenderWindowInteractor* self) { return self->GetControlKey(); }
@@ -24,10 +34,56 @@ VTKSHARP_API int vtkRenderWindowInteractor_GetRepeatCount(vtkRenderWindowInterac
 
 VTKSHARP_API int vtkRenderWindowInteractor_GetShiftKey(vtkRenderWindowInteractor* self) { return self->GetShiftKey(); }
 
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventDuration(vtkRenderWindowInteractor* self) { return self->GetTimerEventDuration(); }
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventId(vtkRenderWindowInteractor* self) { return self->GetTimerEventId(); }
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventPlatformId(vtkRenderWindowInteractor* self) { return self->GetTimerEventPlatformId(); }
+
+VTKSHARP_API int vtkRenderWindowInteractor_GetTimerEventType(vtkRenderWindowInteractor* self) { return self->GetTimerEventType(); }
+
 VTKSHARP_API void vtkRenderWindowInteractor_Initialize(vtkRenderWindowInteractor* self) { self->Initialize(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_KeyPressEvent(vtkRenderWindowInteractor* self) { self->KeyPressEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_KeyReleaseEvent(vtkRenderWindowInteractor* self) { self->KeyReleaseEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_LeaveEvent(vtkRenderWindowInteractor* self) { self->LeaveEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_LeftButtonPressEvent(vtkRenderWindowInteractor* self) { self->LeftButtonPressEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_LeftButtonReleaseEvent(vtkRenderWindowInteractor* self) { self->LeftButtonReleaseEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_MiddleButtonPressEvent(vtkRenderWindowInteractor* self) { self->MiddleButtonPressEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_MiddleButtonReleaseEvent(vtkRenderWindowInteractor* self) { self->MiddleButtonReleaseEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_MouseMoveEvent(vtkRenderWindowInteractor* self) { self->MouseMoveEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_MouseWheelBackwardEvent(vtkRenderWindowInteractor* self) { self->MouseWheelBackwardEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_MouseWheelForwardEvent(vtkRenderWindowInteractor* self) { self->MouseWheelForwardEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_RightButtonPressEvent(vtkRenderWindowInteractor* self) { self->RightButtonPressEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_RightButtonReleaseEvent(vtkRenderWindowInteractor* self) { self->RightButtonReleaseEvent(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_SetAltKey(vtkRenderWindowInteractor* self, int _arg) { self->SetAltKey(_arg); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_SetEventInformation(vtkRenderWindowInteractor* self, int x, int y, int ctrl, int shift, char keycode, int repeatcount, const char* keysym) { self->SetEventInformation(x, y, ctrl, shift, keycode, repeatcount, keysym); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_SetEventInformationFlipY(vtkRenderWindowInteractor* self, int x, int y, int ctrl, int shift, char keycode, int repeatcount, const char* keysym) { self->SetEventInformationFlipY(x, y, ctrl, shift, keycode, repeatcount, keysym); }
 
 VTKSHARP_API void vtkRenderWindowInteractor_SetInteractorStyle(vtkRenderWindowInteractor* self, vtkInteractorObserver* _arg1) { self->SetInteractorStyle(_arg1); }
 
+VTKSHARP_API void vtkRenderWindowInteractor_SetKeyEventInformation(vtkRenderWindowInteractor* self, int ctrl, int shift, char keycode, int repeatcount, const char* keysym) { self->SetKeyEventInformation(ctrl, shift, keycode, repeatcount, keysym); }
+
 VTKSHARP_API void vtkRenderWindowInteractor_SetRenderWindow(vtkRenderWindowInteractor* self, vtkRenderWindow* aren) { self->SetRenderWindow(aren); }
 
+VTKSHARP_API void vtkRenderWindowInteractor_SetTimerEventId(vtkRenderWindowInteractor* self, int _arg) { self->SetTimerEventId(_arg); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_SetTimerEventPlatformId(vtkRenderWindowInteractor* self, int _arg) { self->SetTimerEventPlatformId(_arg); }
+
 VTKSHARP_API void vtkRenderWindowInteractor_Start(vtkRenderWindowInteractor* self) { self->Start(); }
+
+VTKSHARP_API void vtkRenderWindowInteractor_UpdateSize(vtkRenderWindowInteractor* self, int x, int y) { self->UpdateSize(x, y); }
