@@ -13,6 +13,7 @@ set(VTKSHARP_VTK_COMPONENTS
   FiltersSources
   IOImage
   ImagingMath
+  InteractionImage
   InteractionStyle
   InteractionWidgets
   RenderingAnnotation
@@ -36,6 +37,7 @@ set(VTKSHARP_VTK_TARGETS
   VTK::FiltersSources
   VTK::IOImage
   VTK::ImagingMath
+  VTK::InteractionImage
   VTK::InteractionStyle
   VTK::InteractionWidgets
   VTK::RenderingAnnotation

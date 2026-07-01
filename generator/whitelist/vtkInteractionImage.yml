@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkInteractionImage
+classes:
+  - name: vtkImageViewer2
+    header: vtkImageViewer2.h
+    functions:
+      - name: GetImageActor
+        cppSignature: vtkImageActor * GetImageActor()
+        return:
+          type: vtkImageActor*
+        parameters: []
+      - name: GetRenderWindow
+        cppSignature: vtkRenderWindow * GetRenderWindow()
+        return:
+          type: vtkRenderWindow*
+        parameters: []
+      - name: GetRenderer
+        cppSignature: vtkRenderer * GetRenderer()
+        return:
+          type: vtkRenderer*
+        parameters: []
+      - name: Render
+        cppSignature: void Render()
+        return:
+          type: void
+        parameters: []
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkImageData * in)
+        return:
+          type: void
+        parameters:
+          - type: vtkImageData*
+            name: in
+      - name: SetSlice
+        cppSignature: void SetSlice(int s)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: s
+      - name: SetupInteractor
+        cppSignature: void SetupInteractor(vtkRenderWindowInteractor * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderWindowInteractor*
+            name: _arg1

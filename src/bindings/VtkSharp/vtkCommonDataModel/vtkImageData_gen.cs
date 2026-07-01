@@ -18,6 +18,16 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
         return target;
     }
 
+    public new void AllocateScalars(int dataType, int numComponents)
+    {
+        vtkImageData_AllocateScalars_int_int(this.NativePointer, dataType, numComponents);
+    }
+
+    public new void AllocateScalars(vtkInformation pipeline_info)
+    {
+        vtkImageData_AllocateScalars_vtkInformationPtr(this.NativePointer, pipeline_info.NativePointer);
+    }
+
     public new int GetScalarSize()
     {
         return vtkImageData_GetScalarSize_(this.NativePointer);
@@ -28,14 +38,28 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
         return vtkImageData_GetScalarSize_vtkInformationPtr(this.NativePointer, meta_data.NativePointer);
     }
 
+    public new void SetScalarComponentFromDouble(int x, int y, int z, int component, double v)
+    {
+        vtkImageData_SetScalarComponentFromDouble(this.NativePointer, x, y, z, component, v);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageData_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_AllocateScalars_int_int(nint self, int dataType, int numComponents);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_AllocateScalars_vtkInformationPtr(nint self, nint pipeline_info);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageData_GetScalarSize_(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageData_GetScalarSize_vtkInformationPtr(nint self, nint meta_data);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_SetScalarComponentFromDouble(nint self, int x, int y, int z, int component, double v);
     #endregion
 }

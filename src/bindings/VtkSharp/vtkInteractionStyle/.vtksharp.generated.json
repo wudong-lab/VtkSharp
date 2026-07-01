@@ -4,6 +4,17 @@
   "module": "vtkInteractionStyle",
   "classes": [
     {
+      "className": "vtkInteractorStyleImage",
+      "header": "vtkInteractorStyleImage.h",
+      "baseClassName": "vtkInteractorStyleTrackballCamera",
+      "hasStaticNew": true,
+      "inputHash": "a69f4d2f2be680c5bc95dff20baef5c5d2a237f8721c51a9456e603d31676f77",
+      "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleImage_gen.cs",
+      "nativePath": "native\\src\\vtkInteractionStyle\\vtkInteractorStyleImage_export_gen.cpp",
+      "managedContentHash": "a476e4f0cbd9663fa9027770e9e4c9c47a23831ee8d3a841aae959448eef7757",
+      "nativeContentHash": "88cd708a344e0d6ef63cad6512be62fc152cabca70938f1dca8505135fe2db55"
+    },
+    {
       "className": "vtkInteractorStyleJoystickCamera",
       "header": "vtkInteractorStyleJoystickCamera.h",
       "baseClassName": "vtkInteractorStyle",

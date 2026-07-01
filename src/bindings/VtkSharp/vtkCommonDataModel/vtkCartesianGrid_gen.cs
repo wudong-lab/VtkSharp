@@ -45,6 +45,19 @@ public unsafe partial class vtkCartesianGrid : vtkDataSet
         return vtkCartesianGrid_GetScalarType(this.NativePointer);
     }
 
+    public new void SetDimensions(ReadOnlySpan<int> dim)
+    {
+        fixed (int* dimPtr = dim)
+        {
+            vtkCartesianGrid_SetDimensions_intConstArray3(this.NativePointer, dimPtr);
+        }
+    }
+
+    public new void SetDimensions(int i, int j, int k)
+    {
+        vtkCartesianGrid_SetDimensions_int_int_int(this.NativePointer, i, j, k);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkCartesianGrid_GetDataDimension(nint self);
@@ -60,5 +73,11 @@ public unsafe partial class vtkCartesianGrid : vtkDataSet
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkCartesianGrid_GetScalarType(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCartesianGrid_SetDimensions_intConstArray3(nint self, int* dim);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkCartesianGrid_SetDimensions_int_int_int(nint self, int i, int j, int k);
     #endregion
 }

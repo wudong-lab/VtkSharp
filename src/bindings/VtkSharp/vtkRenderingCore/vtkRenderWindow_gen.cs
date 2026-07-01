@@ -63,14 +63,14 @@ public unsafe partial class vtkRenderWindow : vtkWindow
         vtkRenderWindow_Render(this.NativePointer);
     }
 
-    public new void SetMultiSamples(int _arg1)
-    {
-        vtkRenderWindow_SetMultiSamples(this.NativePointer, _arg1);
-    }
-
     public new void SetCurrentCursor(int _arg1)
     {
         vtkRenderWindow_SetCurrentCursor(this.NativePointer, _arg1);
+    }
+
+    public new void SetMultiSamples(int _arg1)
+    {
+        vtkRenderWindow_SetMultiSamples(this.NativePointer, _arg1);
     }
 
     #region Interop
@@ -105,9 +105,9 @@ public unsafe partial class vtkRenderWindow : vtkWindow
     private static extern void vtkRenderWindow_Render(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindow_SetMultiSamples(nint self, int _arg1);
+    private static extern void vtkRenderWindow_SetCurrentCursor(nint self, int _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderWindow_SetCurrentCursor(nint self, int _arg1);
+    private static extern void vtkRenderWindow_SetMultiSamples(nint self, int _arg1);
     #endregion
 }

@@ -5,6 +5,12 @@
 
 VTKSHARP_API vtkImageData* vtkImageData_New() { return vtkImageData::New(); }
 
+VTKSHARP_API void vtkImageData_AllocateScalars_int_int(vtkImageData* self, int dataType, int numComponents) { self->AllocateScalars(dataType, numComponents); }
+
+VTKSHARP_API void vtkImageData_AllocateScalars_vtkInformationPtr(vtkImageData* self, vtkInformation* pipeline_info) { self->AllocateScalars(pipeline_info); }
+
 VTKSHARP_API int vtkImageData_GetScalarSize_(vtkImageData* self) { return self->GetScalarSize(); }
 
 VTKSHARP_API int vtkImageData_GetScalarSize_vtkInformationPtr(vtkImageData* self, vtkInformation* meta_data) { return self->GetScalarSize(meta_data); }
+
+VTKSHARP_API void vtkImageData_SetScalarComponentFromDouble(vtkImageData* self, int x, int y, int z, int component, double v) { self->SetScalarComponentFromDouble(x, y, z, component, v); }

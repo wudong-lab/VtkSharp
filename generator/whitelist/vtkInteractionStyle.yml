@@ -2,6 +2,14 @@
 
 module: vtkInteractionStyle
 classes:
+  - name: vtkInteractorStyleImage
+    header: vtkInteractorStyleImage.h
+    functions:
+      - name: SetInteractionModeToImageSlicing
+        cppSignature: void SetInteractionModeToImageSlicing()
+        return:
+          type: void
+        parameters: []
   - name: vtkInteractorStyleJoystickCamera
     header: vtkInteractorStyleJoystickCamera.h
     functions: []

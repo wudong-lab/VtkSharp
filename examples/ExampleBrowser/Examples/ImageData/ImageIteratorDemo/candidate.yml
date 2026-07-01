@@ -1,0 +1,120 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: ImageIteratorDemo
+  original: "https://examples.vtk.org/site/Cxx/ImageData/ImageIteratorDemo/"
+
+requirements:
+  - module: vtkCommonDataModel
+    class: vtkCartesianGrid
+    header: vtkCartesianGrid.h
+    functions:
+      - name: SetDimensions
+        cppSignature: "void SetDimensions(int i, int j, int k)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: i }
+          - { type: "int", name: j }
+          - { type: "int", name: k }
+      - name: SetDimensions
+        cppSignature: "void SetDimensions(int const[3] dim)"
+        return:
+          type: void
+        parameters:
+          - { type: "const int[3]", name: dim }
+  - module: vtkCommonDataModel
+    class: vtkImageData
+    header: vtkImageData.h
+    functions:
+      - name: SetScalarComponentFromDouble
+        cppSignature: "void SetScalarComponentFromDouble(int x, int y, int z, int component, double v)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: x }
+          - { type: "int", name: y }
+          - { type: "int", name: z }
+          - { type: "int", name: component }
+          - { type: "double", name: v }
+      - name: AllocateScalars
+        cppSignature: "void AllocateScalars(int dataType, int numComponents)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: dataType }
+          - { type: "int", name: numComponents }
+      - name: AllocateScalars
+        cppSignature: "void AllocateScalars(vtkInformation * pipeline_info)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkInformation*", name: pipeline_info }
+  - module: vtkInteractionImage
+    class: vtkImageViewer2
+    header: vtkImageViewer2.h
+    functions:
+      - name: Render
+        cppSignature: "void Render()"
+        return:
+          type: void
+        parameters:
+          []
+      - name: SetInputData
+        cppSignature: "void SetInputData(vtkImageData * in)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkImageData*", name: in }
+      - name: SetSlice
+        cppSignature: "void SetSlice(int s)"
+        return:
+          type: void
+        parameters:
+          - { type: "int", name: s }
+      - name: GetRenderWindow
+        cppSignature: "vtkRenderWindow * GetRenderWindow()"
+        return:
+          type: vtkRenderWindow*
+        parameters:
+          []
+      - name: GetRenderer
+        cppSignature: "vtkRenderer * GetRenderer()"
+        return:
+          type: vtkRenderer*
+        parameters:
+          []
+      - name: GetImageActor
+        cppSignature: "vtkImageActor * GetImageActor()"
+        return:
+          type: vtkImageActor*
+        parameters:
+          []
+      - name: SetupInteractor
+        cppSignature: "void SetupInteractor(vtkRenderWindowInteractor * _arg1)"
+        return:
+          type: void
+        parameters:
+          - { type: "vtkRenderWindowInteractor*", name: _arg1 }
+  - module: vtkInteractionStyle
+    class: vtkInteractorStyleImage
+    header: vtkInteractorStyleImage.h
+    functions:
+      - name: SetInteractionModeToImageSlicing
+        cppSignature: "void SetInteractionModeToImageSlicing()"
+        return:
+          type: void
+        parameters:
+          []
+  - module: vtkRenderingCore
+    class: vtkImageActor
+    header: vtkImageActor.h
+    functions:
+      - name: InterpolateOff
+        cppSignature: "void InterpolateOff()"
+        return:
+          type: void
+        parameters:
+          []

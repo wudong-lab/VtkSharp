@@ -23,6 +23,6 @@ VTKSHARP_API void vtkRenderWindow_PolygonSmoothingOn(vtkRenderWindow* self) { se
 
 VTKSHARP_API void vtkRenderWindow_Render(vtkRenderWindow* self) { self->Render(); }
 
-VTKSHARP_API void vtkRenderWindow_SetMultiSamples(vtkRenderWindow* self, int _arg1) { self->SetMultiSamples(_arg1); }
-
 VTKSHARP_API void vtkRenderWindow_SetCurrentCursor(vtkRenderWindow* self, int _arg1) { self->SetCurrentCursor(_arg1); }
+
+VTKSHARP_API void vtkRenderWindow_SetMultiSamples(vtkRenderWindow* self, int _arg1) { self->SetMultiSamples(_arg1); }

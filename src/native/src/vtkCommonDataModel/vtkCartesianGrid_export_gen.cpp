@@ -11,3 +11,7 @@ VTKSHARP_API void vtkCartesianGrid_GetDimensions_intArray3(vtkCartesianGrid* sel
 VTKSHARP_API int vtkCartesianGrid_GetNumberOfScalarComponents(vtkCartesianGrid* self) { return self->GetNumberOfScalarComponents(); }
 
 VTKSHARP_API int vtkCartesianGrid_GetScalarType(vtkCartesianGrid* self) { return self->GetScalarType(); }
+
+VTKSHARP_API void vtkCartesianGrid_SetDimensions_intConstArray3(vtkCartesianGrid* self, const int* dim) { self->SetDimensions(dim); }
+
+VTKSHARP_API void vtkCartesianGrid_SetDimensions_int_int_int(vtkCartesianGrid* self, int i, int j, int k) { self->SetDimensions(i, j, k); }

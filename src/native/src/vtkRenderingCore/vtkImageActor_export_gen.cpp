@@ -5,4 +5,6 @@
 
 VTKSHARP_API vtkImageActor* vtkImageActor_New() { return vtkImageActor::New(); }
 
+VTKSHARP_API void vtkImageActor_InterpolateOff(vtkImageActor* self) { self->InterpolateOff(); }
+
 VTKSHARP_API void vtkImageActor_SetInputData(vtkImageActor* self, vtkImageData* _arg1) { self->SetInputData(_arg1); }

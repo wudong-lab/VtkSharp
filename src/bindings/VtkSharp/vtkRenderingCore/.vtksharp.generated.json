@@ -140,11 +140,11 @@
       "header": "vtkImageActor.h",
       "baseClassName": "vtkImageSlice",
       "hasStaticNew": true,
-      "inputHash": "f89bfc2c74d6e3cb64b454eeddec5038249e4d76ce36604a9eacf7fe62408094",
+      "inputHash": "f575181908ae6174a1d00372a792be8f2897049d46afe07ab1d008291dc323ac",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkImageActor_gen.cs",
       "nativePath": "native\\src\\vtkRenderingCore\\vtkImageActor_export_gen.cpp",
-      "managedContentHash": "33b84d04acbccb141e3e7c733ae759d8b7721c0157f66ca88b47f97e96c4c26e",
-      "nativeContentHash": "36014b207f50b792f017a3f70639f0c924d53d4da1f1fb914c137caf50ffe574"
+      "managedContentHash": "a6874f4c5084c24c639543d375ed97220e7bbb504d3a235fd25332857afffb6b",
+      "nativeContentHash": "f8eb8c81cccf0bb5badb45b93bc5db680fd0a03fb973854fd1ac908e5308ab85"
     },
     {
       "className": "vtkImageSlice",
@@ -316,11 +316,11 @@
       "header": "vtkRenderWindow.h",
       "baseClassName": "vtkWindow",
       "hasStaticNew": true,
-      "inputHash": "3b00f805efb995d85a4aab140888322b6e289cdede1bf43db4a4fa3743e99192",
+      "inputHash": "d2b30e6af6e0048cc4365ada50bffe16ab8e54864071a5c2078ea4f4cfdff103",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkRenderWindow_gen.cs",
       "nativePath": "native\\src\\vtkRenderingCore\\vtkRenderWindow_export_gen.cpp",
-      "managedContentHash": "d1c724882bec8dae4fd7e096e711f6c06a6bffcd6046fd49ab5ef9af9a9a80ca",
-      "nativeContentHash": "337e00e7ca2d04004edbcad935c610bca59cac098b3b5bceb069363b56a54d61"
+      "managedContentHash": "999c95aaa7fdcff0d5cff46b835dd50269be5d4ce8d57fe6b61478210c7f6e5f",
+      "nativeContentHash": "f4beb6b8059956fedb4476014c028ac0d1fb58b0e4c2645d5fbe6afa231f0ffa"
     },
     {
       "className": "vtkRenderWindowInteractor",

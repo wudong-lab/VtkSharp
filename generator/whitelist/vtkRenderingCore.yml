@@ -8,6 +8,22 @@ classes:
   - name: vtkAbstractMapper3D
     header: vtkAbstractMapper3D.h
     functions: []
+  - name: vtkAbstractPicker
+    header: vtkAbstractPicker.h
+    functions: []
+  - name: vtkAbstractPropPicker
+    header: vtkAbstractPropPicker.h
+    functions:
+      - name: GetActor
+        cppSignature: vtkActor * GetActor()
+        return:
+          type: vtkActor*
+        parameters: []
+      - name: GetViewProp
+        cppSignature: vtkProp * GetViewProp()
+        return:
+          type: vtkProp*
+        parameters: []
   - name: vtkActor
     header: vtkActor.h
     functions:
@@ -404,6 +420,11 @@ classes:
   - name: vtkImageActor
     header: vtkImageActor.h
     functions:
+      - name: InterpolateOff
+        cppSignature: void InterpolateOff()
+        return:
+          type: void
+        parameters: []
       - name: SetInputData
         cppSignature: void SetInputData(vtkImageData * _arg1)
         return:
@@ -583,22 +604,6 @@ classes:
   - name: vtkPropCollection
     header: vtkPropCollection.h
     functions: []
-  - name: vtkAbstractPicker
-    header: vtkAbstractPicker.h
-    functions: []
-  - name: vtkAbstractPropPicker
-    header: vtkAbstractPropPicker.h
-    functions:
-      - name: GetActor
-        cppSignature: vtkActor * GetActor()
-        return:
-          type: vtkActor*
-        parameters: []
-      - name: GetViewProp
-        cppSignature: vtkProp * GetViewProp()
-        return:
-          type: vtkProp*
-        parameters: []
   - name: vtkPropPicker
     header: vtkPropPicker.h
     functions:
@@ -1083,15 +1088,15 @@ classes:
         return:
           type: void
         parameters: []
-      - name: SetMultiSamples
-        cppSignature: void SetMultiSamples(int _arg1)
+      - name: SetCurrentCursor
+        cppSignature: void SetCurrentCursor(int _arg1)
         return:
           type: void
         parameters:
           - type: int
             name: _arg1
-      - name: SetCurrentCursor
-        cppSignature: void SetCurrentCursor(int _arg1)
+      - name: SetMultiSamples
+        cppSignature: void SetMultiSamples(int _arg1)
         return:
           type: void
         parameters:

@@ -35,6 +35,24 @@ classes:
         return:
           type: int
         parameters: []
+      - name: SetDimensions
+        cppSignature: void SetDimensions(int const[3] dim)
+        return:
+          type: void
+        parameters:
+          - type: const int[3]
+            name: dim
+      - name: SetDimensions
+        cppSignature: void SetDimensions(int i, int j, int k)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: i
+          - type: int
+            name: j
+          - type: int
+            name: k
   - name: vtkCell
     header: vtkCell.h
     functions:
@@ -121,6 +139,22 @@ classes:
   - name: vtkImageData
     header: vtkImageData.h
     functions:
+      - name: AllocateScalars
+        cppSignature: void AllocateScalars(int dataType, int numComponents)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: dataType
+          - type: int
+            name: numComponents
+      - name: AllocateScalars
+        cppSignature: void AllocateScalars(vtkInformation * pipeline_info)
+        return:
+          type: void
+        parameters:
+          - type: vtkInformation*
+            name: pipeline_info
       - name: GetScalarSize
         cppSignature: int GetScalarSize()
         return:
@@ -133,6 +167,21 @@ classes:
         parameters:
           - type: vtkInformation*
             name: meta_data
+      - name: SetScalarComponentFromDouble
+        cppSignature: void SetScalarComponentFromDouble(int x, int y, int z, int component, double v)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: x
+          - type: int
+            name: y
+          - type: int
+            name: z
+          - type: int
+            name: component
+          - type: double
+            name: v
   - name: vtkLine
     header: vtkLine.h
     functions: []
