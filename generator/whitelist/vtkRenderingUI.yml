@@ -10,6 +10,76 @@ classes:
         return:
           type: void
         parameters: []
+      - name: MouseMoveEvent
+        cppSignature: void MouseMoveEvent()
+        return:
+          type: void
+        parameters: []
+      - name: LeftButtonPressEvent
+        cppSignature: void LeftButtonPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: LeftButtonReleaseEvent
+        cppSignature: void LeftButtonReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MiddleButtonPressEvent
+        cppSignature: void MiddleButtonPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MiddleButtonReleaseEvent
+        cppSignature: void MiddleButtonReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: RightButtonPressEvent
+        cppSignature: void RightButtonPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: RightButtonReleaseEvent
+        cppSignature: void RightButtonReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MouseWheelForwardEvent
+        cppSignature: void MouseWheelForwardEvent()
+        return:
+          type: void
+        parameters: []
+      - name: MouseWheelBackwardEvent
+        cppSignature: void MouseWheelBackwardEvent()
+        return:
+          type: void
+        parameters: []
+      - name: EnterEvent
+        cppSignature: void EnterEvent()
+        return:
+          type: void
+        parameters: []
+      - name: LeaveEvent
+        cppSignature: void LeaveEvent()
+        return:
+          type: void
+        parameters: []
+      - name: KeyPressEvent
+        cppSignature: void KeyPressEvent()
+        return:
+          type: void
+        parameters: []
+      - name: KeyReleaseEvent
+        cppSignature: void KeyReleaseEvent()
+        return:
+          type: void
+        parameters: []
+      - name: CharEvent
+        cppSignature: void CharEvent()
+        return:
+          type: void
+        parameters: []
       - name: TimerEventResetsTimerOff
         cppSignature: void TimerEventResetsTimerOff()
         return:

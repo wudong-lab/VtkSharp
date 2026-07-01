@@ -132,7 +132,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is null) return;
 
         this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
-        this.Interactor.InvokeEvent(vtkCommand.EnterEvent);
+        this.InvokeInteractorEvent(vtkCommand.EnterEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -144,7 +144,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is null) return;
 
         this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
-        this.Interactor.InvokeEvent(vtkCommand.LeaveEvent);
+        this.InvokeInteractorEvent(vtkCommand.LeaveEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -173,7 +173,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         }
 
         this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
-        this.Interactor.InvokeEvent(vtkCommand.MouseMoveEvent);
+        this.InvokeInteractorEvent(vtkCommand.MouseMoveEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -212,7 +212,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is null) return;
 
         this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
-        this.Interactor.InvokeEvent(e.Delta > 0
+        this.InvokeInteractorEvent(e.Delta > 0
             ? vtkCommand.MouseWheelForwardEvent
             : vtkCommand.MouseWheelBackwardEvent);
         this.RequestRender();
@@ -226,7 +226,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is null) return;
 
         this.SetInteractorKeyEventInformation(e);
-        this.Interactor.InvokeEvent(vtkCommand.KeyPressEvent);
+        this.InvokeInteractorEvent(vtkCommand.KeyPressEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -238,7 +238,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is null) return;
 
         this.SetInteractorKeyEventInformation(e);
-        this.Interactor.InvokeEvent(vtkCommand.KeyReleaseEvent);
+        this.InvokeInteractorEvent(vtkCommand.KeyReleaseEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -250,7 +250,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is null || string.IsNullOrEmpty(e.Text)) return;
 
         this.SetInteractorTextEventInformation(e.Text);
-        this.Interactor.InvokeEvent(vtkCommand.CharEvent);
+        this.InvokeInteractorEvent(vtkCommand.CharEvent);
         this.RequestRender();
         e.Handled = true;
     }
@@ -437,8 +437,73 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         if (this.Interactor is null) return;
 
         this.SetInteractorEventInformation(position, repeatCount);
-        this.Interactor.InvokeEvent(GetMouseButtonEvent(button, pressed));
+        this.InvokeInteractorEvent(GetMouseButtonEvent(button, pressed));
         this.RequestRender();
+    }
+
+    private void InvokeInteractorEvent(uint eventId)
+    {
+        if (this.Interactor is null) return;
+
+        if (this.Interactor is vtkGenericRenderWindowInteractor genericInteractor)
+        {
+            InvokeGenericInteractorEvent(genericInteractor, eventId);
+            return;
+        }
+
+        this.Interactor.InvokeEvent(eventId);
+    }
+
+    private static void InvokeGenericInteractorEvent(vtkGenericRenderWindowInteractor interactor, uint eventId)
+    {
+        switch (eventId)
+        {
+            case vtkCommand.MouseMoveEvent:
+                interactor.MouseMoveEvent();
+                break;
+            case vtkCommand.LeftButtonPressEvent:
+                interactor.LeftButtonPressEvent();
+                break;
+            case vtkCommand.LeftButtonReleaseEvent:
+                interactor.LeftButtonReleaseEvent();
+                break;
+            case vtkCommand.MiddleButtonPressEvent:
+                interactor.MiddleButtonPressEvent();
+                break;
+            case vtkCommand.MiddleButtonReleaseEvent:
+                interactor.MiddleButtonReleaseEvent();
+                break;
+            case vtkCommand.RightButtonPressEvent:
+                interactor.RightButtonPressEvent();
+                break;
+            case vtkCommand.RightButtonReleaseEvent:
+                interactor.RightButtonReleaseEvent();
+                break;
+            case vtkCommand.MouseWheelForwardEvent:
+                interactor.MouseWheelForwardEvent();
+                break;
+            case vtkCommand.MouseWheelBackwardEvent:
+                interactor.MouseWheelBackwardEvent();
+                break;
+            case vtkCommand.EnterEvent:
+                interactor.EnterEvent();
+                break;
+            case vtkCommand.LeaveEvent:
+                interactor.LeaveEvent();
+                break;
+            case vtkCommand.KeyPressEvent:
+                interactor.KeyPressEvent();
+                break;
+            case vtkCommand.KeyReleaseEvent:
+                interactor.KeyReleaseEvent();
+                break;
+            case vtkCommand.CharEvent:
+                interactor.CharEvent();
+                break;
+            default:
+                interactor.InvokeEvent(eventId);
+                break;
+        }
     }
 
     private void SetInteractorEventInformation(Point position, int repeatCount)
