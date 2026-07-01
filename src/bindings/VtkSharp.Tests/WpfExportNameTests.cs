@@ -89,7 +89,7 @@ public sealed class WpfExportNameTests
     }
 
     [Fact]
-    public void WpfD3DImageControl_DisposesTimerAndCursorBridgesBeforeNativeObjects()
+    public void WpfD3DImageControl_DisposesTimerAndCursorObserversBeforeNativeObjects()
     {
         var wpfControl = ReadRepositoryText(
             "src",
@@ -97,15 +97,15 @@ public sealed class WpfExportNameTests
             "VtkSharp.Wpf",
             "VtkOpenGlD3DImageRenderControl.cs");
 
-        Assert.Contains("this.DetachTimerBridge();", wpfControl);
-        Assert.Contains("this.DetachCursorBridge();", wpfControl);
+        Assert.Contains("this.DetachTimerObservers();", wpfControl);
+        Assert.Contains("this.DetachCursorObserver();", wpfControl);
 
         var disposeBody = GetMethodBody(wpfControl, "DisposeVtkRender");
         Assert.True(
-            disposeBody.IndexOf("this.DetachTimerBridge();", StringComparison.Ordinal) <
+            disposeBody.IndexOf("this.DetachTimerObservers();", StringComparison.Ordinal) <
             disposeBody.IndexOf("this.Interactor?.Dispose();", StringComparison.Ordinal));
         Assert.True(
-            disposeBody.IndexOf("this.DetachCursorBridge();", StringComparison.Ordinal) <
+            disposeBody.IndexOf("this.DetachCursorObserver();", StringComparison.Ordinal) <
             disposeBody.IndexOf("this.Interactor?.Dispose();", StringComparison.Ordinal));
     }
 
@@ -126,6 +126,9 @@ public sealed class WpfExportNameTests
         Assert.Contains("if (this.DisposeOnUnload)", unloadedBody);
         Assert.Contains("this.DisposeVtkRender();", unloadedBody);
         Assert.Contains("this.SuspendVtkRender();", unloadedBody);
+
+        var suspendBody = GetMethodBody(wpfControl, "SuspendVtkRender");
+        Assert.Contains("this.StopPlatformTimers();", suspendBody);
     }
 
     [Fact]

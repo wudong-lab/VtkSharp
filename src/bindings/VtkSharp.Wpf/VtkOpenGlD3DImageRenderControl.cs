@@ -353,7 +353,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this._render = VtkOpenGlD3DImageRender.Create();
         this.RenderWindow = this._render.RenderWindow;
         this.Renderer = this._render.Renderer;
-        this.AttachCursorBridge(this.RenderWindow);
+        this.AttachCursorObserver(this.RenderWindow);
 
         var interactor = vtkGenericRenderWindowInteractor.New();
         interactor.TimerEventResetsTimerOff();
@@ -364,7 +364,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         this._interactorStyle = vtkInteractorStyleTrackballCamera.New();
         this.Interactor.SetInteractorStyle(this._interactorStyle);
         this.Interactor.EnableRenderOff();
-        this.AttachTimerBridge(this.Interactor);
+        this.AttachTimerObservers(this.Interactor);
         this.Interactor.Initialize();
 
         this._isInitialized = true;
@@ -378,8 +378,8 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     {
         this.ReleaseActiveMouseInteraction();
 
-        this.DetachTimerBridge();
-        this.DetachCursorBridge();
+        this.DetachTimerObservers();
+        this.DetachCursorObserver();
         this.Interactor?.Dispose();
         this._interactorStyle?.Dispose();
         this.Interactor = null;
@@ -414,6 +414,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     private void SuspendVtkRender()
     {
         this.ReleaseActiveMouseInteraction();
+        this.StopPlatformTimers();
         this._renderRequested = false;
     }
 
@@ -431,31 +432,36 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
         }
     }
 
-    private void AttachCursorBridge(vtkRenderWindow renderWindow)
+    private void AttachCursorObserver(vtkRenderWindow renderWindow)
     {
         this._cursorChangedObserver = renderWindow.AddObserver(vtkCommand.CursorChangedEvent, (_, _) => this.SyncCursor());
         this.SyncCursor();
     }
 
-    private void DetachCursorBridge()
+    private void DetachCursorObserver()
     {
         this._cursorChangedObserver?.Dispose();
         this._cursorChangedObserver = null;
     }
 
-    private void AttachTimerBridge(vtkRenderWindowInteractor interactor)
+    private void AttachTimerObservers(vtkRenderWindowInteractor interactor)
     {
         this._createTimerObserver = interactor.AddObserver(vtkCommand.CreateTimerEvent, (_, _) => this.CreatePlatformTimer());
         this._destroyTimerObserver = interactor.AddObserver(vtkCommand.DestroyTimerEvent, (_, _) => this.DestroyPlatformTimer());
     }
 
-    private void DetachTimerBridge()
+    private void DetachTimerObservers()
     {
         this._createTimerObserver?.Dispose();
         this._destroyTimerObserver?.Dispose();
         this._createTimerObserver = null;
         this._destroyTimerObserver = null;
 
+        this.StopPlatformTimers();
+    }
+
+    private void StopPlatformTimers()
+    {
         foreach (var timer in this._timers.Values)
         {
             timer.DispatcherTimer.Stop();
