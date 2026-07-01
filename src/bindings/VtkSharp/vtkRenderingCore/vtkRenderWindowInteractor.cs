@@ -115,13 +115,13 @@ public unsafe partial class vtkRenderWindowInteractor
     private bool IsShiftKeyPressed() => this.GetShiftKey() != 0;
     private bool IsAltKeyPressed() => this.GetAltKey() != 0;
 
-    public const int OneShotTimer = 1;
-    public const int RepeatingTimer = 2;
-
     public void SetAltKey(bool altKey)
     {
         this.SetAltKey(altKey ? 1 : 0);
     }
+
+    public const int OneShotTimer = 1;
+    public const int RepeatingTimer = 2;
 
     public void SetEventInformationFlipY(
         int x,

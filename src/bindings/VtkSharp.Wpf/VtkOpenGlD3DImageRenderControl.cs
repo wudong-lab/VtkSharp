@@ -621,7 +621,7 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
             vtkRenderWindow.CursorHand => Cursors.Hand,
             vtkRenderWindow.CursorCrosshair => Cursors.Cross,
             vtkRenderWindow.CursorDefault or vtkRenderWindow.CursorArrow or vtkRenderWindow.CursorCustom => Cursors.Arrow,
-            _ => Cursors.Arrow
+            _ => Cursors.Arrow,
         };
     }
 
@@ -795,6 +795,8 @@ public sealed class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposab
     }
 
     private readonly record struct PixelSize(int Width, int Height);
+
     private readonly record struct PixelPoint(int X, int Y);
+
     private sealed record VtkDispatcherTimer(DispatcherTimer DispatcherTimer, EventHandler OnTick);
 }
