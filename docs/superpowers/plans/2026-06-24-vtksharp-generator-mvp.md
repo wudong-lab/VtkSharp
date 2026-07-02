@@ -1736,4 +1736,4 @@ Known gaps intentionally left for later phases:
 - CppAst parsing performance: the MVP may parse classes/headers repeatedly while the end-to-end flow is being stabilized. After validate/generate/round-trip/build/smoke test are working, refactor inspection to batch-parse all required classes and cache parsed header/module results.
 - Automatic example translation.
 - Mature extension shell creation.
-- Full old BrdiVtkNet whitelist import.
+- Full old VtkNet whitelist import.

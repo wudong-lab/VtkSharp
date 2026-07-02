@@ -4,7 +4,7 @@
 
 VtkSharp 的目标是创建有实用价值的 VTK .NET 绑定库，同时实践 AI 工具在工程开发中的协作方式，包括 vibe coding、AI agent skills、示例翻译和渐进式 API 补全。
 
-旧项目 `D:\Code\SVN\BrdiVtkNet\src\VtkNetSourceGenerator` 已经验证了一条可行路径：读取 VTK hierarchy 文件和头文件，通过人工维护的 API 白名单生成 C# wrapper 与 C++ C ABI 导出层。当前项目会以此为基础重构生成器，但生成器形态、配置格式和输出规则需要适配 VtkSharp 当前结构。
+旧项目 VtkNet 已经验证了一条可行路径：读取 VTK hierarchy 文件和头文件，通过人工维护的 API 白名单生成 C# wrapper 与 C++ C ABI 导出层。当前项目会以此为基础重构生成器，但生成器形态、配置格式和输出规则需要适配 VtkSharp 当前结构。
 
 ## 目标
 
@@ -866,7 +866,7 @@ dotnet run --project src/bindings/TestConsole/TestConsole.csproj -- --smoke
 
 ## 初始白名单来源
 
-第一版白名单不从零手写，也不直接导入旧 BrdiVtkNet 的全量白名单。初始白名单应从当前 VtkSharp 已有绑定代码反推，优先实现当前代码的 round-trip：
+第一版白名单不从零手写，也不直接导入旧 VtkNet 的全量白名单。初始白名单应从当前 VtkSharp 已有绑定代码反推，优先实现当前代码的 round-trip：
 
 ```text
 src/bindings/VtkSharp/**/*_gen.cs
@@ -932,6 +932,6 @@ vtksharp-gen generate-bindings --output-root src --incremental
 - 自动解析 build log。
 - 自动翻译示例。
 - 删除 orphan generated files。
-- 支持旧 BrdiVtkNet 全量白名单。
+- 支持旧 VtkNet 全量白名单。
 - 支持所有复杂 pointer / ownership 规则。
 - 完整 CI。

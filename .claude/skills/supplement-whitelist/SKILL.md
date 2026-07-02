@@ -15,7 +15,7 @@ CLI binary: `dotnet run --project src/generator/VtkSharp.Generator.Cli --`
 
 ## Prerequisites
 
-- A reference directory containing `*_export_gen.cpp` files (e.g. from BrdiVtkNet or another VTK .NET binding project)
+- A reference directory containing `*_export_gen.cpp` files (e.g. from VtkNet or another VTK .NET binding project)
 - Each file `#include`s a VTK class header; `VTK_NET_API` lines export individual methods
 
 ## 1. Scan reference directory — extract class names and method names
@@ -128,7 +128,7 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate <C
 
 `--supported-only` filters out methods whose parameter or return types are not supported by the generator (e.g. `unsigned long`, `basic_ostream&`, non-const references).
 
-`--skip-missing-methods` tells the generator to warn about but not fail on method names that are not found. This is essential because method names parsed from BrdiVtkNet export files carry disambiguator suffixes (`_\d+`) that must be stripped — if an edge case slips through, the candidate is still generated with the correctly-matched methods rather than failing the entire batch. Review the warnings in the output to catch any systematic parsing issues.
+`--skip-missing-methods` tells the generator to warn about but not fail on method names that are not found. This is essential because method names parsed from VtkNet export files carry disambiguator suffixes (`_\d+`) that must be stripped — if an edge case slips through, the candidate is still generated with the correctly-matched methods rather than failing the entire batch. Review the warnings in the output to catch any systematic parsing issues.
 
 If a method name is not found, `create-candidate` will emit:
 ```
