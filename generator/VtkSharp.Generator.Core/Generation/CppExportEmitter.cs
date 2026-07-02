@@ -49,7 +49,7 @@ public sealed class CppExportEmitter
             var componentCount = TypeClassifier.GetValueStructComponentCount(function.Return.Type);
             var outParamName = $"__out{function.Name}";
             var paramList = new List<string> { $"{className}* self" };
-            paramList.AddRange(function.Parameters.Select(p => $"{ToCppType(p.Type)} {p.Name}"));
+            paramList.AddRange(function.Parameters.Select(p => $"{BindingTypeMapper.ToCppType(p.Type)} {p.Name}"));
             paramList.Add($"double* {outParamName}");
 
             var args = string.Join(", ", function.Parameters.Select(p => p.Name));
@@ -61,9 +61,9 @@ public sealed class CppExportEmitter
             return;
         }
 
-        var returnType = ToCppExportType(function.Return.Type);
+        var returnType = BindingTypeMapper.ToCppExportType(function.Return.Type);
         var parameters = new[] { $"{className}* self" }
-            .Concat(function.Parameters.Select(parameter => $"{ToCppExportType(parameter.Type)} {parameter.Name}"));
+            .Concat(function.Parameters.Select(parameter => $"{BindingTypeMapper.ToCppExportType(parameter.Type)} {parameter.Name}"));
 
         var arguments = string.Join(", ", function.Parameters.Select(ToCppArgument));
         var call = $"self->{function.Name}({arguments})";
@@ -75,36 +75,6 @@ public sealed class CppExportEmitter
             sb.AppendLine($"VTKSHARP_API {returnType} {exportName}({string.Join(", ", parameters)}) {{ return {call}; }}");
     }
 
-    private static string ToCppType(string type)
-        => type switch
-        {
-            "void" => "void",
-            "char" => "char",
-            "int" => "int",
-            "unsigned int" => "unsigned int",
-            "unsigned long" => "unsigned long",
-            "long long" => "long long",
-            "unsigned long long" => "unsigned long long",
-            "double" => "double",
-            "float" => "float",
-            "bool" => "bool",
-            "vtkTypeBool" => "vtkTypeBool",
-            "vtkTypeUInt32" => "vtkTypeUInt32",
-            "vtkIdType" => "vtkIdType",
-            "const char*" => "const char*",
-            "char*" => "char*",
-            "void*" => "void*",
-            "HWND" or "HDC" or "HGLRC" => "void*",
-            "double*" or "float*" or "int*" => type,
-            _ when TypeClassifier.IsVtkValueStruct(type) => "void",
-            _ when IsFixedArray(type) => ToCppArrayPointerType(type),
-            _ when IsVtkPointer(type) => type,
-            _ => throw new NotSupportedException($"C++ type '{type}' is not supported by the MVP emitter."),
-        };
-
-    private static string ToCppExportType(string type)
-        => type == "unsigned long" ? "std::uint64_t" : ToCppType(type);
-
     private static string ToCppArgument(WhitelistParameter parameter)
         => parameter.Type == "unsigned long"
             ? $"static_cast<unsigned long>({parameter.Name})"
@@ -114,26 +84,9 @@ public sealed class CppExportEmitter
         => function.Return.Type == "unsigned long" ||
            function.Parameters.Any(parameter => parameter.Type == "unsigned long");
 
-    private static bool IsVtkPointer(string type)
-    {
-        var normalized = type.Replace("const", "", StringComparison.Ordinal).Trim();
-        return normalized.StartsWith("vtk", StringComparison.Ordinal) && normalized.EndsWith("*", StringComparison.Ordinal);
-    }
-
     private Dictionary<WhitelistFunction, string> CreateExportNames(string className, IReadOnlyList<WhitelistFunction> functions)
     {
         return this._exportNameGenerator.CreateAll(className,
             functions.Select(f => (f, f.Name, (IReadOnlyList<CanonicalType>)f.Parameters.Select(p => new CanonicalType(p.Type)).ToList())).ToList());
-    }
-
-    private static bool IsFixedArray(string type)
-        => type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal);
-
-    private static string ToCppArrayPointerType(string type)
-    {
-        var bracketIndex = type.IndexOf('[', StringComparison.Ordinal);
-        var isConst = type.StartsWith("const ", StringComparison.Ordinal);
-        var elementType = type[..bracketIndex].Replace("const ", "", StringComparison.Ordinal).Trim();
-        return isConst ? $"const {elementType}*" : $"{elementType}*";
     }
 }

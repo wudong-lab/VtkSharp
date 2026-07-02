@@ -78,11 +78,11 @@ public sealed class CSharpBindingEmitter
 
     private void EmitPublicMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
-        var isInternalPointerReturn = IsPrimitivePointer(function.Return.Type);
+        var isInternalPointerReturn = TypeClassifier.IsSupportedPrimitivePointerType(function.Return.Type);
         var isValueStructReturn = TypeClassifier.IsVtkValueStruct(function.Return.Type);
         var methodName = isInternalPointerReturn ? $"{function.Name}_Internal" : function.Name;
         var visibility = isInternalPointerReturn ? "internal" : "public";
-        var returnType = ToPublicType(function.Return.Type);
+        var returnType = BindingTypeMapper.ToCSharpPublicType(function.Return.Type);
         var parameterEntries = function.Parameters
             .Select(p => (PublicType: GetPublicParameterType(p), Name: EscapeIdentifier(p.Name)))
             .ToList();
@@ -114,7 +114,7 @@ public sealed class CSharpBindingEmitter
             sb.AppendLine($"{indent}double* {outVarName} = stackalloc double[{componentCount}];");
         }
 
-        var hasStringParameter = function.Parameters.Any(p => IsStringPointer(p.Type));
+        var hasStringParameter = function.Parameters.Any(p => BindingTypeMapper.IsStringPointer(p.Type));
 
         if (hasStringParameter)
         {
@@ -123,7 +123,7 @@ public sealed class CSharpBindingEmitter
             EmitCall(sb, indent, function.Return.Type, call10, outVarName);
             sb.AppendLine($"{indent}#else");
             var call20 = FormatCall(exportName, function.Parameters, p =>
-                IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({EscapeIdentifier(p.Name)})" : ToInteropArgument(p), outVarName);
+                BindingTypeMapper.IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({EscapeIdentifier(p.Name)})" : ToInteropArgument(p), outVarName);
             EmitCall(sb, indent, function.Return.Type, call20, outVarName);
             sb.AppendLine($"{indent}#endif");
         }
@@ -171,7 +171,7 @@ public sealed class CSharpBindingEmitter
         {
             sb.AppendLine($"{indent}return {returnClassName}.WeakReference({call});");
         }
-        else if (IsStringPointer(returnType))
+        else if (BindingTypeMapper.IsStringPointer(returnType))
         {
             sb.AppendLine($"{indent}return VtkString.FromUtf8Pointer({call});");
         }
@@ -192,9 +192,9 @@ public sealed class CSharpBindingEmitter
     private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
     {
         var isValueStructReturn = TypeClassifier.IsVtkValueStruct(function.Return.Type);
-        var interopReturnType = isValueStructReturn ? "void" : ToInteropReturnType(function.Return.Type);
+        var interopReturnType = isValueStructReturn ? "void" : BindingTypeMapper.ToCSharpInteropReturnType(function.Return.Type);
         var returnMarshal = isValueStructReturn ? null : ToReturnMarshalAttribute(function.Return.Type);
-        var hasStringParameter = function.Parameters.Any(p => IsStringPointer(p.Type));
+        var hasStringParameter = function.Parameters.Any(p => BindingTypeMapper.IsStringPointer(p.Type));
 
         string extraParam = "";
         if (isValueStructReturn)
@@ -209,7 +209,7 @@ public sealed class CSharpBindingEmitter
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
             var net10Params = string.Join(", ", new[] { "nint self" }.Concat(
-                function.Parameters.Select(p => IsStringPointer(p.Type)
+                function.Parameters.Select(p => BindingTypeMapper.IsStringPointer(p.Type)
                     ? $"string {EscapeIdentifier(p.Name)}"
                     : ToInteropParameter(p)))) + extraParam;
             sb.AppendLine($"    private static partial {interopReturnType} {exportName}({net10Params});");
@@ -218,7 +218,7 @@ public sealed class CSharpBindingEmitter
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
             var ns20Params = string.Join(", ", new[] { "nint self" }.Concat(
-                function.Parameters.Select(p => IsStringPointer(p.Type)
+                function.Parameters.Select(p => BindingTypeMapper.IsStringPointer(p.Type)
                     ? $"byte[] {EscapeIdentifier(p.Name)}"
                     : ToInteropParameter(p)))) + extraParam;
             sb.AppendLine($"    private static extern {interopReturnType} {exportName}({ns20Params});");
@@ -233,73 +233,6 @@ public sealed class CSharpBindingEmitter
             sb.AppendLine($"    private static extern {interopReturnType} {exportName}({parameters});");
         }
     }
-
-    private static string ToPublicType(string type)
-    {
-        if (TypeClassifier.IsVtkValueStruct(type))
-            return TypeClassifier.GetValueStructCSharpName(type);
-
-        if (TypeClassifier.TryGetVtkClassPointerName(type, out var className))
-            return className;
-
-        return type switch
-        {
-            "void" => "void",
-            "char" => "char",
-            "int" => "int",
-            "unsigned int" => "uint",
-            "unsigned long" => "ulong",
-            "long long" => "long",
-            "unsigned long long" => "ulong",
-            "double" => "double",
-            "float" => "float",
-            "bool" => "bool",
-            "vtkTypeBool" => "bool",
-            "vtkTypeUInt32" => "uint",
-            "vtkIdType" => "long",
-            "const char*" or "char*" => "string",
-            "void*" => "nint",
-            "HWND" or "HDC" or "HGLRC" => "nint",
-            _ when IsPrimitivePointer(type) => $"{ToPublicType(TypeClassifier.GetPointerElementType(type))}*",
-            _ when IsFixedArray(type) => ToPublicArrayType(type),
-            _ => throw new NotSupportedException($"C# public type '{type}' is not supported by the MVP emitter."),
-        };
-    }
-
-    private static string ToInteropType(string type)
-    {
-        if (TypeClassifier.IsVtkValueStruct(type))
-            return "void";
-
-        if (TypeClassifier.TryGetVtkClassPointerName(type, out _))
-            return "nint";
-
-        return type switch
-        {
-            "void" => "void",
-            "char" => "char",
-            "int" => "int",
-            "unsigned int" => "uint",
-            "unsigned long" => "ulong",
-            "long long" => "long",
-            "unsigned long long" => "ulong",
-            "double" => "double",
-            "float" => "float",
-            "bool" => "bool",
-            "vtkTypeBool" => "int",
-            "vtkTypeUInt32" => "uint",
-            "vtkIdType" => "long",
-            "const char*" or "char*" => "nint",
-            "void*" => "nint",
-            "HWND" or "HDC" or "HGLRC" => "nint",
-            _ when IsPrimitivePointer(type) => $"{ToInteropType(TypeClassifier.GetPointerElementType(type))}*",
-            _ when IsFixedArray(type) => $"{GetArrayElementType(type)}*",
-            _ => throw new NotSupportedException($"C# interop type '{type}' is not supported by the MVP emitter."),
-        };
-    }
-
-    private static string ToInteropReturnType(string type)
-        => type == "char" ? "byte" : ToInteropType(type);
 
     private static string ToInteropArgument(WhitelistParameter parameter)
     {
@@ -327,9 +260,7 @@ public sealed class CSharpBindingEmitter
     }
 
     private static string ToInteropParameterType(string type)
-        => IsStringPointer(type) ? "string" :
-           type == "char" ? "byte" :
-           ToInteropType(type);
+        => BindingTypeMapper.ToCSharpInteropParameterType(type);
 
     private Dictionary<WhitelistFunction, string> CreateExportNames(string className, IReadOnlyList<WhitelistFunction> functions)
     {
@@ -351,33 +282,9 @@ public sealed class CSharpBindingEmitter
             _ => null,
         };
 
-    private static bool IsStringPointer(string type)
-        => type is "const char*" or "char*";
-
-    private static bool IsPrimitivePointer(string type)
-        => TypeClassifier.IsSupportedPrimitivePointerType(type);
-
-    private static bool IsFixedArray(string type)
-        => type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal);
-
-    private static string ToPublicArrayType(string type)
-    {
-        var elementType = GetArrayElementType(type);
-        return type.StartsWith("const ", StringComparison.Ordinal)
-            ? $"ReadOnlySpan<{elementType}>"
-            : $"Span<{elementType}>";
-    }
-
-    private static string GetArrayElementType(string type)
-    {
-        var bracketIndex = type.IndexOf('[', StringComparison.Ordinal);
-        var elementType = type[..bracketIndex].Replace("const ", "", StringComparison.Ordinal).Trim();
-        return elementType;
-    }
-
     private static bool IsSpanParameter(WhitelistParameter parameter)
-        => IsFixedArray(parameter.Type) ||
-           (IsPrimitivePointer(parameter.Type) && HasPointerMetadata(parameter));
+        => BindingTypeMapper.IsFixedArray(parameter.Type) ||
+           (TypeClassifier.IsSupportedPrimitivePointerType(parameter.Type) && HasPointerMetadata(parameter));
 
     private static bool HasPointerMetadata(WhitelistParameter parameter)
         => parameter.Direction is not null && parameter.Length is not null;
@@ -386,13 +293,13 @@ public sealed class CSharpBindingEmitter
     {
         if (IsSpanParameter(parameter))
             return GetSpanPublicType(parameter);
-        return ToPublicType(parameter.Type);
+        return BindingTypeMapper.ToCSharpPublicType(parameter.Type);
     }
 
     private static string GetSpanPublicType(WhitelistParameter parameter)
     {
         var elementType = GetSpanElementType(parameter.Type);
-        var isReadOnly = IsFixedArray(parameter.Type)
+        var isReadOnly = BindingTypeMapper.IsFixedArray(parameter.Type)
             ? parameter.Type.StartsWith("const ", StringComparison.Ordinal)
             : parameter.Direction == "in";
         return isReadOnly ? $"ReadOnlySpan<{elementType}>" : $"Span<{elementType}>";
@@ -400,10 +307,10 @@ public sealed class CSharpBindingEmitter
 
     private static string GetSpanElementType(string type)
     {
-        if (IsFixedArray(type))
-            return GetArrayElementType(type);
-        if (IsPrimitivePointer(type))
-            return ToPublicType(TypeClassifier.GetPointerElementType(type));
+        if (BindingTypeMapper.IsFixedArray(type))
+            return BindingTypeMapper.GetArrayElementType(type);
+        if (TypeClassifier.IsSupportedPrimitivePointerType(type))
+            return BindingTypeMapper.ToCSharpPublicType(TypeClassifier.GetPointerElementType(type));
         throw new ArgumentException($"Cannot get span element type from '{type}'.", nameof(type));
     }
 }

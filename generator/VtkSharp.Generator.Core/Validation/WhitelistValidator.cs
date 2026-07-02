@@ -7,21 +7,6 @@ namespace VtkSharp.Generator.Core.Validation;
 
 public sealed class WhitelistValidator
 {
-    // Canonical scalar types supported by both C# and C++ emitters.
-    private static readonly HashSet<string> SupportedScalarTypes = new(StringComparer.Ordinal)
-    {
-        "void", "char", "int", "unsigned int", "unsigned long", "long long", "unsigned long long",
-        "double", "float", "bool", "vtkTypeBool", "vtkTypeUInt32", "vtkIdType",
-        "const char*", "char*", "void*",
-        "HWND", "HDC", "HGLRC",
-    };
-
-    // Element types that are valid inside T[N] / const T[N].
-    private static readonly HashSet<string> FixedArrayElementTypes = new(StringComparer.Ordinal)
-    {
-        "double", "float", "int",
-    };
-
     public ValidationResult Validate(WhitelistDocument document, IReadOnlyDictionary<string, InspectedClass> inspectedClasses, VtkHierarchyResolver? hierarchyResolver = null)
     {
         var diagnostics = new List<ValidationDiagnostic>();
@@ -103,7 +88,7 @@ public sealed class WhitelistValidator
         var hint = type switch
         {
             _ when type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal) =>
-                $"unsupported fixed-array element type '{GetArrayElementType(type)}' in '{type}'",
+                $"unsupported fixed-array element type '{BindingTypeMapper.GetArrayElementType(type)}' in '{type}'",
             _ when TypeClassifier.IsSupportedPrimitivePointerType(type) =>
                 "primitive pointer — add direction and length metadata to the parameter entry",
             _ when TypeClassifier.IsVtkValueStruct(type) =>
@@ -117,35 +102,5 @@ public sealed class WhitelistValidator
     }
 
     public static bool IsSupportedType(string type)
-    {
-        if (SupportedScalarTypes.Contains(type))
-            return true;
-
-        if (TypeClassifier.IsVtkValueStruct(type))
-            return true;
-
-        if (IsVtkClassPointer(type))
-            return true;
-
-        if (IsFixedArrayWithSupportedElement(type))
-            return true;
-
-        if (TypeClassifier.IsSupportedPrimitivePointerType(type))
-            return true;
-
-        return false;
-    }
-
-    private static bool IsVtkClassPointer(string type)
-        => TypeClassifier.TryGetVtkClassPointerName(type, out _);
-
-    private static bool IsFixedArrayWithSupportedElement(string type)
-        => type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal) &&
-           FixedArrayElementTypes.Contains(GetArrayElementType(type));
-
-    private static string GetArrayElementType(string type)
-    {
-        var bracketIndex = type.IndexOf('[', StringComparison.Ordinal);
-        return type[..bracketIndex].Replace("const ", "", StringComparison.Ordinal).Trim();
-    }
+        => BindingTypeMapper.IsSupportedType(type);
 }
