@@ -11,7 +11,7 @@ Follow this workflow exactly to translate a VTK C++ example to C# and extend the
 
 All commands run from repository root. Use `--` after `--project` to pass arguments to the CLI.
 
-CLI binary: `dotnet run --project generator/VtkSharp.Generator.Cli --`
+CLI binary: `dotnet run --project src/generator/VtkSharp.Generator.Cli --`
 
 ## 0. Fetch the C++ source
 
@@ -32,9 +32,9 @@ Identify all VTK classes and methods used. Note any types that are likely unsupp
 
 ## 1. Determine category and write the C# translation
 
-Determine the appropriate category directory under `examples/ExampleBrowser/Examples/`. Existing categories: `GeometricObjects`, `Interaction`, `Modelling`. The category typically maps to the VTK example's parent directory (e.g. `VTK/Examples/GeometricObjects/Cxx/Cone.cxx` → `GeometricObjects`).
+Determine the appropriate category directory under `src/examples/ExampleBrowser/Examples/`. Existing categories: `GeometricObjects`, `Interaction`, `Modelling`. The category typically maps to the VTK example's parent directory (e.g. `VTK/Examples/GeometricObjects/Cxx/Cone.cxx` → `GeometricObjects`).
 
-Create `examples/ExampleBrowser/Examples/<Category>/<Name>/<Name>.cs`. Follow the pattern from existing examples (see `examples/ExampleBrowser/Examples/GeometricObjects/Cone/Cone.cs`, `examples/ExampleBrowser/Examples/Modelling/DelaunayMesh/DelaunayMesh.cs`):
+Create `src/examples/ExampleBrowser/Examples/<Category>/<Name>/<Name>.cs`. Follow the pattern from existing examples (see `src/examples/ExampleBrowser/Examples/GeometricObjects/Cone/Cone.cs`, `src/examples/ExampleBrowser/Examples/Modelling/DelaunayMesh/DelaunayMesh.cs`):
 
 ```csharp
 using System.Diagnostics;
@@ -74,7 +74,7 @@ Key translation rules:
   Span<double> rgba = stackalloc double[4];
   colors.GetColor("Tomato", rgba);
   ```
-- Callback functions (vtk observers / command callbacks) are supported via `AddObserver`. See `examples/ExampleBrowser/ExtraExamples/Callback/Callback.cs` for the pattern. VtkSharp provides **two overloads**:
+- Callback functions (vtk observers / command callbacks) are supported via `AddObserver`. See `src/examples/ExampleBrowser/ExtraExamples/Callback/Callback.cs` for the pattern. VtkSharp provides **two overloads**:
 
   **Simple observer** (no client data):
   ```csharp
@@ -109,7 +109,7 @@ Key translation rules:
 ## 2. Build and identify missing symbols
 
 ```bash
-dotnet build examples/ExampleBrowser/ExampleBrowser.csproj
+dotnet build src/examples/ExampleBrowser/ExampleBrowser.csproj
 ```
 
 Parse compilation errors to identify exactly which classes and methods are missing. Collect a list of `<ClassName>::<MethodName>` pairs needed.
@@ -117,18 +117,18 @@ Parse compilation errors to identify exactly which classes and methods are missi
 Note: methods defined on base classes (e.g. `SetBackground` is on `vtkViewport`, not `vtkRenderer`) will resolve via C# inheritance once the base class method is whitelisted. Use `inspect-function` to verify which class declares a method:
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- inspect-function <ClassName> <MethodName> --format json
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-function <ClassName> <MethodName> --format json
 ```
 
 ## 3. Build the candidate whitelist
 
-Create `examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`. There are two approaches:
+Create `src/examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`. There are two approaches:
 
 **Approach A (recommended for new examples): targeted build**
 
 For each new class, use `create-candidate --methods` to get only the needed methods:
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate <NewClass> \
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate <NewClass> \
   -o /tmp/<name>_<class>.yml \
   --supported-only \
   --source-kind vtk-example --source-name <Name> \
@@ -136,7 +136,7 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate <NewCl
   --methods Method1 Method2 ...
 ```
 
-Then assemble all requirements into a single `examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`. Look at `examples/ExampleBrowser/Examples/GeometricObjects/Cylinder/candidate.yml` for the exact format.
+Then assemble all requirements into a single `src/examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml`. Look at `src/examples/ExampleBrowser/Examples/GeometricObjects/Cylinder/candidate.yml` for the exact format.
 
 For existing classes that need additional methods (e.g. adding `GetProperty` to `vtkActor`), inspect the exact signature with `inspect-function` and add the entry directly to the candidate YAML manually — the candidate format supports adding methods to already-whitelisted classes.
 
@@ -148,15 +148,15 @@ If you need many methods from one class, use `create-candidate` without `--metho
 
 Before merging, verify with `diff-whitelist`:
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist src/examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
 ```
 Check that only the expected methods are listed as "Added".
 
 ## 4. Merge candidate and regenerate
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
-dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src/ --incremental
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate src/examples/ExampleBrowser/Examples/<Category>/<Name>/candidate.yml
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src/ --incremental
 ```
 
 `merge-candidate` automatically normalizes the whitelist after merging.
@@ -169,24 +169,24 @@ Use incremental generation for the porting inner loop. It reuses per-module `.vt
 ```bash
 .\tools\build-native.ps1 -Configuration Release
 dotnet build src/bindings/VtkSharp.slnx
-dotnet build examples/ExampleBrowser/ExampleBrowser.csproj
+dotnet build src/examples/ExampleBrowser/ExampleBrowser.csproj
 ```
 
 `build-native.ps1` 自动完成 cmake configure + build，优先尝试 VS2026，回退到 VS2022。
 
 如果 `generate-bindings` 后只需增量编译 native 代码（build 目录已存在），可直接用：
 ```bash
-cmake --build src/native/out/build/windows-x64 --config Release
+cmake --build src/bindings/VtkSharp.Native/out/build/windows-x64 --config Release
 ```
 
 If there are compilation errors in generated code, diagnose the type mapping issue rather than editing generated files directly.
 
 ## 6. Smoke test
 
-The native DLL is automatically copied to output via `VtkSharp.csproj` (it references `src/native/out/build/windows-x64/Release/VtkSharp.Native.dll` with `CopyToOutputDirectory`). Run ExampleBrowser to verify the example works:
+The native DLL is automatically copied to output via `VtkSharp.csproj` (it references `src/bindings/VtkSharp.Native/out/build/windows-x64/Release/VtkSharp.Native.dll` with `CopyToOutputDirectory`). Run ExampleBrowser to verify the example works:
 
 ```bash
-dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
+dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj
 ```
 
 Select the new example from the list and confirm it renders correctly.
@@ -194,14 +194,14 @@ Select the new example from the list and confirm it renders correctly.
 ## 7. Verify generation is clean
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --check
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check
 ```
 
 This must print "Generated output is up to date." If it reports differences, regenerate (`--output-root src/ --incremental`, or add `--force` if cache invalidation is suspected) and rebuild.
 
 ## 8. Write porting notes
 
-Create `examples/ExampleBrowser/Examples/<Category>/<Name>/porting-notes.md` following the pattern in `examples/ExampleBrowser/Examples/GeometricObjects/Cone/porting-notes.md`. Include:
+Create `src/examples/ExampleBrowser/Examples/<Category>/<Name>/porting-notes.md` following the pattern in `src/examples/ExampleBrowser/Examples/GeometricObjects/Cone/porting-notes.md`. Include:
 - Original source path
 - All VTK classes used and their whitelist status
 - All APIs added (with module and class)
@@ -220,7 +220,7 @@ Review changes with `git status` and `git diff`. Commit message format:
 - **Always use `--supported-only`** with create-candidate to filter out unsupported signatures.
 - **Always fetch actual source** — do not translate from memory or examples.vtk.org screenshots.
 - **Method goes on the declaring class** (use `inspect-function` to find where it's defined if the inheritance is unclear).
-- Revert whitespace-only changes to `src/native/CMakeLists.txt`, `CMakePresets.json`, `vtksharp_api.h` caused by regeneration — these are line-ending artifacts.
+- Revert whitespace-only changes to `src/bindings/VtkSharp.Native/CMakeLists.txt`, `CMakePresets.json`, `vtksharp_api.h` caused by regeneration — these are line-ending artifacts.
 - If a type is unsupported (e.g. returns a non-vtkObject pointer, uses `int&` out parameters, `std::string&`, etc.), do NOT add it to the whitelist. Instead, work around it in the C# port and document the deviation in porting-notes.md.
 - **NEVER use `vtkCallbackCommand` directly.** C++ examples that pass client data via `vtkCallbackCommand::SetClientData()` + `SetCallback()` must be translated to the managed `AddObserver(uint eventId, VtkObjectEventDataHandler, object? clientData)` overload. Do NOT whitelist `vtkCallbackCommand` methods.
 - **Event constants live on `vtkCommand`** (static class, `const uint`). There is no `VtkCommandEventIds` class. Reference events as `vtkCommand.KeyPressEvent`, `vtkCommand.ModifiedEvent`, etc.

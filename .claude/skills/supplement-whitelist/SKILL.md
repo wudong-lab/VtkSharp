@@ -11,7 +11,7 @@ Follow this workflow exactly to extract VTK classes and methods from a reference
 
 All commands run from repository root.
 
-CLI binary: `dotnet run --project generator/VtkSharp.Generator.Cli --`
+CLI binary: `dotnet run --project src/generator/VtkSharp.Generator.Cli --`
 
 ## Prerequisites
 
@@ -76,7 +76,7 @@ vtkClassName2 → [MethodC]
 For each extracted class name:
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- inspect-class <ClassName> --format json
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-class <ClassName> --format json
 ```
 
 Use `--format json` to get structured output containing `Name`, `Module`, `Header`, `BaseClassName`, and `HasStaticNew`.
@@ -95,7 +95,7 @@ Record for each valid class:
 For each class:
 
 ```bash
-grep -r "name: <ClassName>" generator/whitelist/
+grep -r "name: <ClassName>" src/generator/whitelist/
 ```
 
 Build three categories:
@@ -117,7 +117,7 @@ For categories B and D: if every class falls here (reference files only export `
 
 ```bash
 # Create candidate with specific methods — always use --skip-missing-methods
-dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate <ClassName> \
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate <ClassName> \
   -o /tmp/candidate_<ClassName>.yml \
   --supported-only \
   --skip-missing-methods \
@@ -146,7 +146,7 @@ Treat warnings as informational — the candidate will still be generated and me
 
 ```bash
 # Create candidate with just the class stub (no --methods)
-dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate <ClassName> \
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate <ClassName> \
   -o /tmp/candidate_<ClassName>.yml \
   --supported-only \
   --source-kind manual --source-name from-reference-exports \
@@ -156,7 +156,7 @@ dotnet run --project generator/VtkSharp.Generator.Cli -- create-candidate <Class
 ### 4c. Review before merging
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- diff-whitelist /tmp/candidate_<ClassName>.yml
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist /tmp/candidate_<ClassName>.yml
 ```
 
 Check that only expected classes and methods are listed as "Added". No "Removed" entries should appear.
@@ -164,7 +164,7 @@ Check that only expected classes and methods are listed as "Added". No "Removed"
 ### 4d. Merge
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- merge-candidate /tmp/candidate_<ClassName>.yml
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate /tmp/candidate_<ClassName>.yml
 ```
 
 `merge-candidate` automatically normalizes after merging and reports the merged file path.
@@ -176,15 +176,15 @@ Process all classes (categories A/B/C) before proceeding to the next step.
 After all merge operations, run normalization to ensure consistent formatting across all module files:
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- normalize-whitelist
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- normalize-whitelist
 ```
 
-Review with `git diff generator/whitelist/` to confirm only intended modifications.
+Review with `git diff src/generator/whitelist/` to confirm only intended modifications.
 
 ## 6. Validate
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- validate-whitelist
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- validate-whitelist
 ```
 
 This checks:
@@ -207,18 +207,18 @@ Or leave them — they are outside the repo and won't be committed.
 ## 8. Regenerate bindings
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src
 ```
 
 This outputs:
 - C# binding files → `src/bindings/VtkSharp/<Module>/<ClassName>_gen.cs`
-- C++ export files → `src/native/src/<Module>/<ClassName>_export_gen.cpp`
-- CMake modules file → `src/native/vtksharp.modules.generated.cmake`
-- Native project files → `src/native/CMakeLists.txt`, `CMakePresets.json`
+- C++ export files → `src/bindings/VtkSharp.Native/src/<Module>/<ClassName>_export_gen.cpp`
+- CMake modules file → `src/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake`
+- Native project files → `src/bindings/VtkSharp.Native/CMakeLists.txt`, `CMakePresets.json`
 
 ### 8a. Verify CMake modules file
 
-After generation, check that `src/native/vtksharp.modules.generated.cmake` lists every module from the whitelist. The generator builds this file from `generator/whitelist/` + `runtimeModules` config. If new whitelist modules were added (step 4), the cmake file must include them.
+After generation, check that `src/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake` lists every module from the whitelist. The generator builds this file from `src/generator/whitelist/` + `runtimeModules` config. If new whitelist modules were added (step 4), the cmake file must include them.
 
 **Naming convention** — the cmake file uses VTK naming without module prefix/suffix:
 
@@ -233,10 +233,10 @@ Rule: strip `vtk` prefix → COMPONENTS; wrap with `VTK::` prefix → TARGETS.
 
 ```bash
 # List all whitelist modules
-grep "^module:" generator/whitelist/*.yml | sed 's/.*module: //' | sed 's/^vtk//' | sort > /tmp/wl_modules.txt
+grep "^module:" src/generator/whitelist/*.yml | sed 's/.*module: //' | sed 's/^vtk//' | sort > /tmp/wl_modules.txt
 
 # List cmake COMPONENTS
-grep -E "^  [A-Z]" src/native/vtksharp.modules.generated.cmake | grep -v "^  VTK::" | sed 's/^  //' | sort > /tmp/cmake_modules.txt
+grep -E "^  [A-Z]" src/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake | grep -v "^  VTK::" | sed 's/^  //' | sort > /tmp/cmake_modules.txt
 
 # Diff should be empty
 diff /tmp/wl_modules.txt /tmp/cmake_modules.txt
@@ -268,7 +268,7 @@ This means a newly added class inherits from a base class that is not yet whitel
 ## 10. Final verification
 
 ```bash
-dotnet run --project generator/VtkSharp.Generator.Cli -- generate-bindings --check
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check
 ```
 
 Must print: `Generated output is up to date.`
@@ -283,7 +283,7 @@ for cls in <class1> <class2> ...; do
   echo "=== $cls ==="
   grep "VTK_NET_API" "<ref-dir>/${cls}_export_gen.cpp" | sed 's/.*VTK_NET_API //' | while read line; do
     method_name=$(echo "$line" | sed 's/.*vtk'"${cls}"'_\([A-Za-z][^(]*\).*/\1/' | sed 's/_[0-9]\+$//')
-    if ! grep -q "$method_name" "src/native/src/<Module>/${cls}_export_gen.cpp" 2>/dev/null; then
+    if ! grep -q "$method_name" "src/bindings/VtkSharp.Native/src/<Module>/${cls}_export_gen.cpp" 2>/dev/null; then
       echo "  Missing: $method_name (in reference, not in VtkSharp)"
     fi
   done
@@ -320,4 +320,4 @@ Report:
 - **If build fails due to missing base class**, process the base class through the same create-candidate + merge-candidate flow.
 - **Temporary candidate files** go to `/tmp/` (outside the repo). Clean up after step 7.
 - **Verify CMake modules file** — after regeneration, confirm `vtksharp.modules.generated.cmake` lists every whitelist module. COMPONENTS strip `vtk` prefix; TARGETS wrap with `VTK::` prefix. Missing modules break native linking.
-- Do NOT modify `generator/whitelist/` files directly.
+- Do NOT modify `src/generator/whitelist/` files directly.

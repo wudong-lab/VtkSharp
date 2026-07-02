@@ -17,7 +17,7 @@ src/bindings/VtkSharp.Native/src/ # C++ export 输出目录
 
 docs/superpowers/specs/           # 设计文档
 src/examples/
-  ExampleBrowser/                 # 示例浏览器（Avalonia 桌面应用）
+  ExampleBrowser/                 # 示例浏览器（WPF 桌面应用）
     Examples/                     # 示例翻译案例（按 VTK 分类）
       GeometricObjects/           # 几何对象类示例
       Modelling/                  # 建模类示例
