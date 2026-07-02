@@ -102,6 +102,6 @@ dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj
 - `--supported-only` 过滤不支持的类型：`unsigned long`、`int&`、`basic_ostream&`、非指针值类型 class 等都会被排除
 - `vtkObjectBase` / `vtkObject` 是 manualBindingClasses，生成器跳过
 - 手写 partial 类不进入白名单
-- C# 项目 multi-target: `netstandard2.0;net10.0`，生成代码使用 `#if NET10_0_OR_GREATER` 条件编译
+- C# 项目 multi-target: `netstandard2.0;net8.0`，生成代码使用 `#if NET8_0_OR_GREATER` 条件编译
 - `src/bindings/VtkSharp/VtkString.cs` 是手写 runtime helper，不由生成器输出
 - 正式白名单必须通过 `git diff` 审核后才能提交

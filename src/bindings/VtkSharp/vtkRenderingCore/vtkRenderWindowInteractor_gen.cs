@@ -190,7 +190,7 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
 
     public new void SetEventInformation(int x, int y, int ctrl, int shift, char keycode, int repeatcount, string keysym)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkRenderWindowInteractor_SetEventInformation(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, keysym);
         #else
         vtkRenderWindowInteractor_SetEventInformation(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, VtkString.ToNullTerminatedUtf8(keysym));
@@ -199,7 +199,7 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
 
     public new void SetEventInformationFlipY(int x, int y, int ctrl, int shift, char keycode, int repeatcount, string keysym)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkRenderWindowInteractor_SetEventInformationFlipY(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, keysym);
         #else
         vtkRenderWindowInteractor_SetEventInformationFlipY(this.NativePointer, x, y, ctrl, shift, (byte)keycode, repeatcount, VtkString.ToNullTerminatedUtf8(keysym));
@@ -213,7 +213,7 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
 
     public new void SetKeyEventInformation(int ctrl, int shift, char keycode, int repeatcount, string keysym)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkRenderWindowInteractor_SetKeyEventInformation(this.NativePointer, ctrl, shift, (byte)keycode, repeatcount, keysym);
         #else
         vtkRenderWindowInteractor_SetKeyEventInformation(this.NativePointer, ctrl, shift, (byte)keycode, repeatcount, VtkString.ToNullTerminatedUtf8(keysym));
@@ -351,7 +351,7 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_SetAltKey(nint self, int _arg);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkRenderWindowInteractor_SetEventInformation(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
 #else
@@ -359,7 +359,7 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     private static extern void vtkRenderWindowInteractor_SetEventInformation(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, byte[] keysym);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkRenderWindowInteractor_SetEventInformationFlipY(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
 #else
@@ -370,7 +370,7 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindowInteractor_SetInteractorStyle(nint self, nint _arg1);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkRenderWindowInteractor_SetKeyEventInformation(nint self, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
 #else

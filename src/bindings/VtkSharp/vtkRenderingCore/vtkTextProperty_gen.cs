@@ -73,7 +73,7 @@ public unsafe partial class vtkTextProperty : vtkObject
 
     public new void SetFontFamilyAsString(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkTextProperty_SetFontFamilyAsString(this.NativePointer, _arg);
         #else
         vtkTextProperty_SetFontFamilyAsString(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -202,7 +202,7 @@ public unsafe partial class vtkTextProperty : vtkObject
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTextProperty_SetColor_doubleConstArray3(nint self, double* _arg);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkTextProperty_SetFontFamilyAsString(nint self, string _arg);
 #else

@@ -50,7 +50,7 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
 
     public new void SetFileName(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkImageWriter_SetFileName(this.NativePointer, _arg);
         #else
         vtkImageWriter_SetFileName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -59,7 +59,7 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
 
     public new void SetFilePattern(string _arg1)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkImageWriter_SetFilePattern(this.NativePointer, _arg1);
         #else
         vtkImageWriter_SetFilePattern(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg1));
@@ -68,7 +68,7 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
 
     public new void SetFilePrefix(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkImageWriter_SetFilePrefix(this.NativePointer, _arg);
         #else
         vtkImageWriter_SetFilePrefix(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -97,7 +97,7 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageWriter_SetFileDimensionality(nint self, int _arg);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkImageWriter_SetFileName(nint self, string _arg);
 #else
@@ -105,7 +105,7 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
     private static extern void vtkImageWriter_SetFileName(nint self, byte[] _arg);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkImageWriter_SetFilePattern(nint self, string _arg1);
 #else
@@ -113,7 +113,7 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
     private static extern void vtkImageWriter_SetFilePattern(nint self, byte[] _arg1);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkImageWriter_SetFilePrefix(nint self, string _arg);
 #else

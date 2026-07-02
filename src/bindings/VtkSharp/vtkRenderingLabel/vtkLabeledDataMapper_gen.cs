@@ -30,7 +30,7 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
 
     public new void SetFieldDataName(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkLabeledDataMapper_SetFieldDataName(this.NativePointer, _arg);
         #else
         vtkLabeledDataMapper_SetFieldDataName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -82,7 +82,7 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLabeledDataMapper_GetLabelTextProperty_int(nint self, int type);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkLabeledDataMapper_SetFieldDataName(nint self, string _arg);
 #else

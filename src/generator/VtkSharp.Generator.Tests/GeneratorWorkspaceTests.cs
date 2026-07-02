@@ -35,7 +35,7 @@ public sealed class GeneratorWorkspaceTests
               nativeProjectFile: "../src/bindings/VtkSharp.Native/CMakeLists.txt"
               nativeModulesFile: "../src/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake"
             generation:
-              targetFramework: "net10.0"
+              targetFramework: "net8.0"
             """);
 
         var workspace = GeneratorWorkspace.Load(configPath);

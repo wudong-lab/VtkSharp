@@ -20,7 +20,7 @@ public unsafe partial class vtkNamedColors : vtkObject
 
     public new bool ColorExists(string name)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         return vtkNamedColors_ColorExists(this.NativePointer, name);
         #else
         return vtkNamedColors_ColorExists(this.NativePointer, VtkString.ToNullTerminatedUtf8(name));
@@ -31,7 +31,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     {
         fixed (double* rgbaPtr = rgba)
         {
-            #if NET10_0_OR_GREATER
+            #if NET8_0_OR_GREATER
             vtkNamedColors_GetColor(this.NativePointer, name, rgbaPtr);
             #else
             vtkNamedColors_GetColor(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), rgbaPtr);
@@ -42,7 +42,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     public new VtkColor3d GetColor3d(string name)
     {
         double* __outGetColor3d = stackalloc double[3];
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkNamedColors_GetColor3d(this.NativePointer, name, __outGetColor3d);
         return new VtkColor3d(__outGetColor3d[0], __outGetColor3d[1], __outGetColor3d[2]);
         #else
@@ -55,7 +55,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     {
         fixed (double* rgbPtr = rgb)
         {
-            #if NET10_0_OR_GREATER
+            #if NET8_0_OR_GREATER
             vtkNamedColors_GetColorRGB(this.NativePointer, name, rgbPtr);
             #else
             vtkNamedColors_GetColorRGB(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), rgbPtr);
@@ -75,7 +75,7 @@ public unsafe partial class vtkNamedColors : vtkObject
 
     public new void SetColor(string name, string htmlString)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkNamedColors_SetColor_constCharPtr_constCharPtr(this.NativePointer, name, htmlString);
         #else
         vtkNamedColors_SetColor_constCharPtr_constCharPtr(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), VtkString.ToNullTerminatedUtf8(htmlString));
@@ -86,7 +86,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     {
         fixed (double* rgbaPtr = rgba)
         {
-            #if NET10_0_OR_GREATER
+            #if NET8_0_OR_GREATER
             vtkNamedColors_SetColor_constCharPtr_doubleConstArray4(this.NativePointer, name, rgbaPtr);
             #else
             vtkNamedColors_SetColor_constCharPtr_doubleConstArray4(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), rgbaPtr);
@@ -98,7 +98,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkNamedColors_New();
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     [return: MarshalAs(UnmanagedType.U1)]
     private static partial bool vtkNamedColors_ColorExists(nint self, string name);
@@ -108,7 +108,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     private static extern bool vtkNamedColors_ColorExists(nint self, byte[] name);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColor(nint self, string name, double* rgba);
 #else
@@ -116,7 +116,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     private static extern void vtkNamedColors_GetColor(nint self, byte[] name, double* rgba);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColor3d(nint self, string name, double* __outGetColor3d);
 #else
@@ -124,7 +124,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     private static extern void vtkNamedColors_GetColor3d(nint self, byte[] name, double* __outGetColor3d);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColorRGB(nint self, string name, double* rgb);
 #else
@@ -138,7 +138,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_ResetColors(nint self);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_SetColor_constCharPtr_constCharPtr(nint self, string name, string htmlString);
 #else
@@ -146,7 +146,7 @@ public unsafe partial class vtkNamedColors : vtkObject
     private static extern void vtkNamedColors_SetColor_constCharPtr_constCharPtr(nint self, byte[] name, byte[] htmlString);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_SetColor_constCharPtr_doubleConstArray4(nint self, string name, double* rgba);
 #else

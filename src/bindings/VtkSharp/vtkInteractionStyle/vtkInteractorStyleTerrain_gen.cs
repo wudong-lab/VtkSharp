@@ -30,7 +30,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 
     public new long GetNumberOfGenerationsFromBase(string type)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         return vtkInteractorStyleTerrain_GetNumberOfGenerationsFromBase(this.NativePointer, type);
         #else
         return vtkInteractorStyleTerrain_GetNumberOfGenerationsFromBase(this.NativePointer, VtkString.ToNullTerminatedUtf8(type));
@@ -39,7 +39,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 
     public new bool IsA(string type)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         return vtkInteractorStyleTerrain_IsA(this.NativePointer, type) != 0;
         #else
         return vtkInteractorStyleTerrain_IsA(this.NativePointer, VtkString.ToNullTerminatedUtf8(type)) != 0;
@@ -126,7 +126,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkInteractorStyleTerrain_GetLatLongLines(nint self);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial long vtkInteractorStyleTerrain_GetNumberOfGenerationsFromBase(nint self, string type);
 #else
@@ -134,7 +134,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     private static extern long vtkInteractorStyleTerrain_GetNumberOfGenerationsFromBase(nint self, byte[] type);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial int vtkInteractorStyleTerrain_IsA(nint self, string type);
 #else

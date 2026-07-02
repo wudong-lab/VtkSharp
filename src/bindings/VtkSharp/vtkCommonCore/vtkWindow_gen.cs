@@ -52,7 +52,7 @@ public unsafe partial class vtkWindow : vtkObject
 
     public new void SetWindowName(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkWindow_SetWindowName(this.NativePointer, _arg);
         #else
         vtkWindow_SetWindowName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -88,7 +88,7 @@ public unsafe partial class vtkWindow : vtkObject
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWindow_SetSize_intArray2(nint self, int* a);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkWindow_SetWindowName(nint self, string _arg);
 #else

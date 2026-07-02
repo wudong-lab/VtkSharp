@@ -167,7 +167,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
 
     public new void SetXAxisLabelText(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkAxesActor_SetXAxisLabelText(this.NativePointer, _arg);
         #else
         vtkAxesActor_SetXAxisLabelText(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -176,7 +176,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
 
     public new void SetYAxisLabelText(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkAxesActor_SetYAxisLabelText(this.NativePointer, _arg);
         #else
         vtkAxesActor_SetYAxisLabelText(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -185,7 +185,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
 
     public new void SetZAxisLabelText(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkAxesActor_SetZAxisLabelText(this.NativePointer, _arg);
         #else
         vtkAxesActor_SetZAxisLabelText(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -277,7 +277,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAxesActor_SetTotalLength_doubleArray3(nint self, double* v);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAxesActor_SetXAxisLabelText(nint self, string _arg);
 #else
@@ -285,7 +285,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     private static extern void vtkAxesActor_SetXAxisLabelText(nint self, byte[] _arg);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAxesActor_SetYAxisLabelText(nint self, string _arg);
 #else
@@ -293,7 +293,7 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     private static extern void vtkAxesActor_SetYAxisLabelText(nint self, byte[] _arg);
 #endif
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAxesActor_SetZAxisLabelText(nint self, string _arg);
 #else

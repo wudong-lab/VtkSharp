@@ -286,7 +286,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("public new char GetKeyCode()", text);
         Assert.Contains("return (char)vtkThing_GetKeyCode(this.NativePointer)", text);
         Assert.Contains("private static extern byte vtkThing_GetKeyCode(nint self);", text);
-        Assert.Contains("#if NET10_0_OR_GREATER", text);
+        Assert.Contains("#if NET8_0_OR_GREATER", text);
         Assert.Contains("#else", text);
         Assert.Contains("#endif", text);
         Assert.Contains("public new nint GetData()", text);

@@ -30,7 +30,7 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
 
     public new void SetWindowName(string _arg1)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkWin32OpenGLRenderWindow_SetWindowName(this.NativePointer, _arg1);
         #else
         vtkWin32OpenGLRenderWindow_SetWindowName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg1));
@@ -47,7 +47,7 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32OpenGLRenderWindow_SetParentId(nint self, nint _arg1);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkWin32OpenGLRenderWindow_SetWindowName(nint self, string _arg1);
 #else

@@ -118,7 +118,7 @@ public sealed class CSharpBindingEmitter
 
         if (hasStringParameter)
         {
-            sb.AppendLine($"{indent}#if NET10_0_OR_GREATER");
+            sb.AppendLine($"{indent}#if NET8_0_OR_GREATER");
             var call10 = FormatCall(exportName, function.Parameters, p => ToInteropArgument(p), outVarName);
             EmitCall(sb, indent, function.Return.Type, call10, outVarName);
             sb.AppendLine($"{indent}#else");
@@ -204,15 +204,15 @@ public sealed class CSharpBindingEmitter
 
         if (hasStringParameter)
         {
-            sb.AppendLine("#if NET10_0_OR_GREATER");
+            sb.AppendLine("#if NET8_0_OR_GREATER");
             sb.AppendLine($"    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]");
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
-            var net10Params = string.Join(", ", new[] { "nint self" }.Concat(
+            var net8Params = string.Join(", ", new[] { "nint self" }.Concat(
                 function.Parameters.Select(p => BindingTypeMapper.IsStringPointer(p.Type)
                     ? $"string {EscapeIdentifier(p.Name)}"
                     : ToInteropParameter(p)))) + extraParam;
-            sb.AppendLine($"    private static partial {interopReturnType} {exportName}({net10Params});");
+            sb.AppendLine($"    private static partial {interopReturnType} {exportName}({net8Params});");
             sb.AppendLine("#else");
             sb.AppendLine($"    [DllImport(InteropInfo.NativeLibraryName)]");
             if (returnMarshal is not null)

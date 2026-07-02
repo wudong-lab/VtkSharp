@@ -24,7 +24,7 @@ public unsafe partial class vtkAbstractArray : vtkObject
 
     public new void SetName(string _arg)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkAbstractArray_SetName(this.NativePointer, _arg);
         #else
         vtkAbstractArray_SetName(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
@@ -40,7 +40,7 @@ public unsafe partial class vtkAbstractArray : vtkObject
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAbstractArray_GetName(nint self);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAbstractArray_SetName(nint self, string _arg);
 #else

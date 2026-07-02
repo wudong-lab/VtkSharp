@@ -25,7 +25,7 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
 
     public new void SetInput(string inputString)
     {
-        #if NET10_0_OR_GREATER
+        #if NET8_0_OR_GREATER
         vtkTextActor_SetInput(this.NativePointer, inputString);
         #else
         vtkTextActor_SetInput(this.NativePointer, VtkString.ToNullTerminatedUtf8(inputString));
@@ -54,7 +54,7 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTextActor_GetTextProperty(nint self);
 
-#if NET10_0_OR_GREATER
+#if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkTextActor_SetInput(nint self, string inputString);
 #else
