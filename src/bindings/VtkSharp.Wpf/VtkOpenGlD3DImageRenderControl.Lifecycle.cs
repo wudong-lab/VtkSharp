@@ -1,4 +1,4 @@
-using System;
+﻿using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -21,12 +21,16 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
+        Debug.Assert(!this._isInDesignMode);
+
         this.InitializeVtkRender();
         this.RequestRender();
     }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
+        Debug.Assert(!this._isInDesignMode);
+
         if (this.DisposeOnUnload)
         {
             this.DisposeVtkRender();

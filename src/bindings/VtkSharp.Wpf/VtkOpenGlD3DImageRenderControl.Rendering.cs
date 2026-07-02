@@ -1,5 +1,4 @@
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -10,7 +9,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 {
     public void RequestRender()
     {
-        if (this._isDisposed || this._renderRequested) return;
+        if (this._isDisposed || this._renderRequested || this._isInDesignMode) return;
 
         this._renderRequested = true;
         this.Dispatcher.BeginInvoke(
@@ -31,9 +30,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
             !this._image.IsFrontBufferAvailable ||
             this.ActualWidth <= 0 ||
             this.ActualHeight <= 0)
-        {
             return;
-        }
 
         var pixelSize = this.GetPixelSize(new Size(this.ActualWidth, this.ActualHeight));
         string? renderFailure = null;
@@ -103,6 +100,15 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     protected override void OnRender(DrawingContext drawingContext)
     {
         base.OnRender(drawingContext);
+
+        if (this._isInDesignMode)
+        {
+            var width = this.ActualWidth > 0 ? this.ActualWidth : 300;
+            var height = this.ActualHeight > 0 ? this.ActualHeight : 200;
+            DesignTimeHelper.DrawDesignTimeContent(drawingContext, width, height);
+            return;
+        }
+
         drawingContext.PushTransform(new MatrixTransform(1.0, 0.0, 0.0, -1.0, 0.0, this.ActualHeight));
         drawingContext.DrawImage(this._image, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
         drawingContext.Pop();

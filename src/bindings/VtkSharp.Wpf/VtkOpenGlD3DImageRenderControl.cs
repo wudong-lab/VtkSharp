@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using System.Collections.Generic;
-using System.Windows.Interop;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace VtkSharp.Wpf;
 
@@ -32,9 +32,13 @@ public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, I
     private bool _renderRequested;
     private int _nextPlatformTimerId;
     private MouseButton? _activeMouseButton;
+    private readonly bool _isInDesignMode = false;
 
     public VtkOpenGlD3DImageRenderControl()
     {
+        this._isInDesignMode = DesignerProperties.GetIsInDesignMode(this);
+        if (this._isInDesignMode) return;
+
         this.Focusable = true;
         this.Loaded += this.OnLoaded;
         this.Unloaded += this.OnUnloaded;
@@ -53,5 +57,4 @@ public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, I
 
     public event EventHandler<VtkRenderControlInitializedEventArgs>? VtkInitialized;
     public event EventHandler<VtkRenderFailedEventArgs>? RenderFailed;
-
 }
