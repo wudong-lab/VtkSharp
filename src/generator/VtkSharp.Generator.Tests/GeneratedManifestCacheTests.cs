@@ -118,7 +118,7 @@ public sealed class GeneratedManifestCacheTests
                     HasStaticNew = true,
                     InputHash = inputHash,
                     ManagedPath = "bindings/VtkSharp/vtkCommonCore/vtkFoo_gen.cs",
-                    NativePath = "native/src/vtkCommonCore/vtkFoo_export_gen.cpp",
+                    NativePath = "bindings/VtkSharp.Native/src/vtkCommonCore/vtkFoo_export_gen.cpp",
                     ManagedContentHash = GenerationInputFingerprint.HashFileText(managedPath),
                     NativeContentHash = GenerationInputFingerprint.HashFileText(nativePath),
                 },

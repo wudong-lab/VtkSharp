@@ -22,15 +22,15 @@ public sealed class BindingGenerationService
         var currentNativeProjectFile = workspace.GetNativeProjectFile();
         var currentModulesFile = workspace.GetNativeModulesFile();
         var generatedManagedDirectory = Path.Combine(outputRoot, "bindings", "VtkSharp");
-        var generatedNativeDirectory = Path.Combine(outputRoot, "native", "src");
-        var generatedNativeProjectFile = Path.Combine(outputRoot, "native", "CMakeLists.txt");
-        var generatedModulesFile = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
+        var generatedNativeDirectory = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "src");
+        var generatedNativeProjectFile = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "CMakeLists.txt");
+        var generatedModulesFile = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "vtksharp.modules.generated.cmake");
 
         var comparer = new GeneratedOutputComparer();
         var differences = comparer.CompareDirectories(currentManagedDirectory, generatedManagedDirectory, "*_gen.cs")
             .Concat(comparer.CompareDirectories(currentNativeDirectory, generatedNativeDirectory, "*_export_gen.cpp"))
-            .Concat(comparer.CompareFiles(currentNativeProjectFile, generatedNativeProjectFile, "native/CMakeLists.txt"))
-            .Concat(comparer.CompareFiles(currentModulesFile, generatedModulesFile, "native/vtksharp.modules.generated.cmake"))
+            .Concat(comparer.CompareFiles(currentNativeProjectFile, generatedNativeProjectFile, "bindings/VtkSharp.Native/CMakeLists.txt"))
+            .Concat(comparer.CompareFiles(currentModulesFile, generatedModulesFile, "bindings/VtkSharp.Native/vtksharp.modules.generated.cmake"))
             .ToList();
 
         if (differences.Count == 0)
@@ -88,7 +88,7 @@ public sealed class BindingGenerationService
 
                 var baseClassName = context.HierarchyResolver.GetBaseClassName(whitelistClass.Name);
                 var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
-                var nativePath = Path.Combine(outputRoot, "native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
+                var nativePath = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
                 var includeClassNames = GetIncludeClassNames(whitelistClass)
                     .Where(name => name != whitelistClass.Name)
                     .Distinct(StringComparer.Ordinal)
@@ -150,9 +150,9 @@ public sealed class BindingGenerationService
 
                 var baseClassName = hierarchyResolver.GetBaseClassName(whitelistClass.Name);
                 var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
-                var nativePath = Path.Combine(outputRoot, "native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
+                var nativePath = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
                 var managedRelativePath = Path.Combine("bindings", "VtkSharp", document.Module, $"{whitelistClass.Name}_gen.cs");
-                var nativeRelativePath = Path.Combine("native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
+                var nativeRelativePath = Path.Combine("bindings", "VtkSharp.Native", "src", document.Module, $"{whitelistClass.Name}_export_gen.cpp");
                 var headerPath = Path.Combine(workspace.IncludeDirectory, whitelistClass.Header);
                 var inputHash = GenerationInputFingerprint.Compute(
                     IncrementalCacheVersion,
@@ -254,16 +254,16 @@ public sealed class BindingGenerationService
     {
         var cmakeEmitter = new CMakeModulesEmitter();
         var nativeProjectEmitter = new NativeProjectEmitter();
-        var modulesPath = Path.Combine(outputRoot, "native", "vtksharp.modules.generated.cmake");
+        var modulesPath = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "vtksharp.modules.generated.cmake");
         var vtkModules = documents
             .Select(document => document.Module)
             .Concat(config.Vtk.RuntimeModules)
             .Distinct(StringComparer.Ordinal)
             .ToList();
         WriteText(modulesPath, cmakeEmitter.Emit(vtkModules));
-        WriteText(Path.Combine(outputRoot, "native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(config.Binding.NativeLibraryName));
-        WriteText(Path.Combine(outputRoot, "native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
-        WriteText(Path.Combine(outputRoot, "native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
+        WriteText(Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(config.Binding.NativeLibraryName));
+        WriteText(Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
+        WriteText(Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
     }
 
     private static string GetManifestPath(string outputRoot, string module)

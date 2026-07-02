@@ -299,7 +299,7 @@ internal class Program
     }
 
     private static string GetDefaultConfigPath()
-        => Path.GetFullPath(Path.Combine("generator", "config", "vtksharp.generator.yml"));
+        => Path.GetFullPath(Path.Combine("src", "generator", "config", "vtksharp.generator.yml"));
 
     private static int InspectFunction(string configPath, string className, string functionName, string format)
     {
