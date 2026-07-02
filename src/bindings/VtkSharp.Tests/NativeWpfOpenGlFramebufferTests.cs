@@ -9,7 +9,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
     public void OpenGlFramebufferDetails_AreIsolatedFromD3DImageRender()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
         var renderHeader = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.h"));
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
         var framebufferHeader = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.h"));
@@ -52,7 +52,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
     public void Release_DoesNotCallFramebufferDeleteFunction_WhenItWasNotLoaded()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
         var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
 
         Assert.Contains("if (this->m_framebuffer && this->glDeleteFramebuffers)", framebufferSource);
@@ -62,7 +62,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
     public void Create_ReportsTextureAndFramebufferCreationFailure()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
         var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
 
@@ -80,7 +80,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory is not null)
         {
-            if (File.Exists(Path.Combine(directory.FullName, "src", "native", "CMakeLists.txt")))
+            if (File.Exists(Path.Combine(directory.FullName, "src", "bindings", "VtkSharp.Native", "CMakeLists.txt")))
                 return directory;
 
             directory = directory.Parent;

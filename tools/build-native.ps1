@@ -8,7 +8,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$nativeDir = Join-Path $repoRoot "src\native"
+$nativeDir = Join-Path $repoRoot "src\bindings\VtkSharp.Native"
 
 $candidates = @(
     @{ Name = "Visual Studio 2026"; ConfigurePreset = "windows-x64-vs2026"; BuildPreset = if ($Configuration -eq "Debug") { "windows-x64-vs2026-debug" } else { "windows-x64-vs2026-release" } },

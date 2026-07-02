@@ -31,9 +31,9 @@ public sealed class GeneratorWorkspaceTests
             paths:
               whitelistDirectory: "../whitelist"
               managedOutputDirectory: "../src/bindings"
-              nativeOutputDirectory: "../src/native"
-              nativeProjectFile: "../src/native/CMakeLists.txt"
-              nativeModulesFile: "../src/native/vtksharp.modules.generated.cmake"
+              nativeOutputDirectory: "../src/bindings/VtkSharp.Native/src"
+              nativeProjectFile: "../src/bindings/VtkSharp.Native/CMakeLists.txt"
+              nativeModulesFile: "../src/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake"
             generation:
               targetFramework: "net10.0"
             """);

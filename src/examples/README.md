@@ -5,7 +5,7 @@
 ## 目录约定
 
 ```
-examples/
+src/examples/
   ExampleBrowser/
     Examples/
       <Category>/
@@ -18,13 +18,13 @@ examples/
 ## 运行示例浏览器
 
 ```bash
-dotnet run --project examples/ExampleBrowser/ExampleBrowser.csproj
+dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj
 ```
 
 ## 添加新示例
 
 1. 找到 VTK C++ 示例源码（`VTK_ROOT/Examples/...`），确定分类（如 `GeometricObjects`、`Modelling` 等）
-2. 在 `examples/ExampleBrowser/Examples/<Category>/<ExampleName>/` 下创建 C# 翻译代码
+2. 在 `src/examples/ExampleBrowser/Examples/<Category>/<ExampleName>/` 下创建 C# 翻译代码
 3. 实现 `IExample` 接口，标注 `[Example]` Attribute
 4. 构建 → 编译错误 → `create-candidate` + `inspect-function` 查缺失 API
 5. 把缺失 API 写成 `candidate.yml`

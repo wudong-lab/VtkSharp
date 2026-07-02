@@ -18,7 +18,8 @@ public sealed class WpfExportNameTests
         var nativeExport = File.ReadAllText(Path.Combine(
             root.FullName,
             "src",
-            "native",
+            "bindings",
+            "VtkSharp.Native",
             "src",
             "wpf",
             "VtkOpenGlD3DImageRender_export.cpp"));
@@ -39,14 +40,16 @@ public sealed class WpfExportNameTests
         Assert.False(File.Exists(Path.Combine(
             root.FullName,
             "src",
-            "native",
+            "bindings",
+            "VtkSharp.Native",
             "src",
             "wpf",
             "VtkWpfD3DImageOpenGLRenderTarget.cpp")));
         Assert.False(File.Exists(Path.Combine(
             root.FullName,
             "src",
-            "native",
+            "bindings",
+            "VtkSharp.Native",
             "src",
             "wpf",
             "VtkWpfD3DImageOpenGLRenderTarget.h")));
@@ -169,7 +172,7 @@ public sealed class WpfExportNameTests
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory is not null)
         {
-            if (File.Exists(Path.Combine(directory.FullName, "src", "native", "CMakeLists.txt")))
+            if (File.Exists(Path.Combine(directory.FullName, "src", "bindings", "VtkSharp.Native", "CMakeLists.txt")))
                 return directory;
 
             directory = directory.Parent;

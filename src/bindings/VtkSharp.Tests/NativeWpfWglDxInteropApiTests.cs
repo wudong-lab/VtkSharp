@@ -9,7 +9,7 @@ public sealed class NativeWpfWglDxInteropApiTests
     public void WglDxInteropHandles_AreOwnedByWglDxInteropApi()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
         var renderHeader = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.h"));
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
         var interopHeader = File.ReadAllText(Path.Combine(nativeDirectory, "WglDxInterop.h"));
@@ -42,7 +42,7 @@ public sealed class NativeWpfWglDxInteropApiTests
     public void CreateInteropResource_ReleasesPartialResources_WhenResourceCreationFails()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
 
         Assert.Contains("if (!this->m_d3DRenderTarget.CreateTexture", renderSource);
@@ -57,7 +57,7 @@ public sealed class NativeWpfWglDxInteropApiTests
     public void SetResourceShareHandle_ReportsFailureReason()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
         var interopSource = File.ReadAllText(Path.Combine(nativeDirectory, "WglDxInterop.cpp"));
 
         Assert.Contains("this->SetError(\"wglDXSetResourceShareHandleNV is not available.\");", interopSource);
@@ -69,7 +69,7 @@ public sealed class NativeWpfWglDxInteropApiTests
         var directory = new DirectoryInfo(AppContext.BaseDirectory);
         while (directory is not null)
         {
-            if (File.Exists(Path.Combine(directory.FullName, "src", "native", "CMakeLists.txt")))
+            if (File.Exists(Path.Combine(directory.FullName, "src", "bindings", "VtkSharp.Native", "CMakeLists.txt")))
                 return directory;
 
             directory = directory.Parent;

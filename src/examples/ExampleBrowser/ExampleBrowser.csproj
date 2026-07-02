@@ -11,8 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\bindings\VtkSharp\VtkSharp.csproj" />
-    <ProjectReference Include="..\..\src\bindings\VtkSharp.Wpf\VtkSharp.Wpf.csproj" />
+    <ProjectReference Include="..\..\bindings\VtkSharp\VtkSharp.csproj" />
+    <ProjectReference Include="..\..\bindings\VtkSharp.Wpf\VtkSharp.Wpf.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=../../generator/schemas/vtksharp.whitelist-candidate.schema.json
+# yaml-language-server: $schema=../../../../../generator/schemas/vtksharp.whitelist-candidate.schema.json
 
 status: proposed
 source:
