@@ -40,22 +40,31 @@ else {
     Write-Host "=== Skipping native build (--SkipNativeBuild) ==="
 }
 
-# 2. Pack VtkSharp (core bindings)
+# 2. Compute version once so both packages share the same timestamp.
+# Hour is mapped to 1–24 range (0 o'clock → 24).
+$now = Get-Date
+$hour = if ($now.Hour -eq 0) { 24 } else { $now.Hour }
+$version = "$($now.ToString('yy.Mdd')).$hour$($now.ToString('mm'))"
+Write-Host "Package version: $version"
+
+# 3. Pack VtkSharp (core bindings)
 Write-Host "`n=== Packing VtkSharp ==="
 dotnet pack (Join-Path (Join-Path $bindingsDir "VtkSharp") "VtkSharp.csproj") `
     --configuration $Configuration `
     --output $OutputDirectory `
+    -p:Version=$version `
     -p:IncludeSymbols=true `
     -p:SymbolPackageFormat=snupkg
 if ($LASTEXITCODE -ne 0) {
     throw "VtkSharp pack failed."
 }
 
-# 3. Pack VtkSharp.Wpf
+# 4. Pack VtkSharp.Wpf
 Write-Host "`n=== Packing VtkSharp.Wpf ==="
 dotnet pack (Join-Path (Join-Path $bindingsDir "VtkSharp.Wpf") "VtkSharp.Wpf.csproj") `
     --configuration $Configuration `
     --output $OutputDirectory `
+    -p:Version=$version `
     -p:IncludeSymbols=true `
     -p:SymbolPackageFormat=snupkg
 if ($LASTEXITCODE -ne 0) {

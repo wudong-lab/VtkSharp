@@ -16,11 +16,14 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
-  <!-- MinVer: derive NuGet version from git tags (tag prefix: "v") -->
+  <!--
+    Package version derived from build time: YY.MDD.Hmm
+    Hour is 1–24 (0 o'clock → 24), minute is zero-padded to 2 digits.
+    Examples: 2026-07-01 20:30 → 26.701.2030, 2026-07-02 00:31 → 26.702.2431
+    Override from CLI with: dotnet pack -p:Version=X.Y.Z
+  -->
   <PropertyGroup>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
+    <VersionHour>$([MSBuild]::Add($([MSBuild]::Modulo($([MSBuild]::Add($([System.DateTime]::Now.Hour), 23)), 24)), 1))</VersionHour>
+    <Version>$([System.DateTime]::Now.ToString('yy.Mdd.'))$(VersionHour)$([System.DateTime]::Now.ToString('mm'))</Version>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="MinVer" Version="6.0.0" PrivateAssets="All" />
-  </ItemGroup>
 </Project>
