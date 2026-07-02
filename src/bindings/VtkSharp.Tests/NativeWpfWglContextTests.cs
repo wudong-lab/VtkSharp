@@ -9,7 +9,7 @@ public sealed class NativeWpfWglContextTests
     public void MakeCurrent_ReportsWhetherContextWasMadeCurrent()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Wpf.Native", "src");
         var contextHeader = File.ReadAllText(Path.Combine(nativeDirectory, "WglContext.h"));
         var contextSource = File.ReadAllText(Path.Combine(nativeDirectory, "WglContext.cpp"));
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));

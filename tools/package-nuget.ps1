@@ -12,7 +12,7 @@ param(
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
-$bindingsDir = Join-Path $repoRoot "src" "bindings"
+$bindingsDir = Join-Path (Join-Path $repoRoot "src") "bindings"
 
 if (-not $OutputDirectory) {
     $OutputDirectory = Join-Path $repoRoot "artifacts"
@@ -42,7 +42,7 @@ else {
 
 # 2. Pack VtkSharp (core bindings)
 Write-Host "`n=== Packing VtkSharp ==="
-dotnet pack (Join-Path $bindingsDir "VtkSharp" "VtkSharp.csproj") `
+dotnet pack (Join-Path (Join-Path $bindingsDir "VtkSharp") "VtkSharp.csproj") `
     --configuration $Configuration `
     --output $OutputDirectory `
     -p:IncludeSymbols=true `
@@ -53,7 +53,7 @@ if ($LASTEXITCODE -ne 0) {
 
 # 3. Pack VtkSharp.Wpf
 Write-Host "`n=== Packing VtkSharp.Wpf ==="
-dotnet pack (Join-Path $bindingsDir "VtkSharp.Wpf" "VtkSharp.Wpf.csproj") `
+dotnet pack (Join-Path (Join-Path $bindingsDir "VtkSharp.Wpf") "VtkSharp.Wpf.csproj") `
     --configuration $Configuration `
     --output $OutputDirectory `
     -p:IncludeSymbols=true `

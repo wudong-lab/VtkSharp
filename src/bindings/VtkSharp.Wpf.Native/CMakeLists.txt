@@ -1,0 +1,42 @@
+set(VTKSHARP_WPF_NATIVE_TARGET VtkSharp.Wpf.Native)
+
+file(GLOB_RECURSE WPF_NATIVE_SRC CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+)
+
+file(GLOB_RECURSE WPF_NATIVE_HEADERS CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h"
+)
+
+source_group(
+    TREE "${CMAKE_CURRENT_SOURCE_DIR}/src"
+    PREFIX "src"
+    FILES ${WPF_NATIVE_SRC} ${WPF_NATIVE_HEADERS}
+)
+
+add_library(${VTKSHARP_WPF_NATIVE_TARGET} SHARED
+  ${WPF_NATIVE_SRC}
+  ${WPF_NATIVE_HEADERS}
+)
+
+target_compile_features(${VTKSHARP_WPF_NATIVE_TARGET} PRIVATE cxx_std_17)
+
+target_include_directories(${VTKSHARP_WPF_NATIVE_TARGET}
+  PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../VtkSharp.Native/include
+)
+
+target_link_libraries(${VTKSHARP_WPF_NATIVE_TARGET}
+  PRIVATE
+    ${VTKSHARP_VTK_TARGETS}
+    d3d9
+    gdi32
+    opengl32
+    user32
+)
+
+vtk_module_autoinit(
+  TARGETS ${VTKSHARP_WPF_NATIVE_TARGET}
+  MODULES
+    ${VTKSHARP_VTK_TARGETS}
+)

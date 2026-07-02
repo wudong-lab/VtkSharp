@@ -25,6 +25,28 @@
     <PackageReference Include="PolySharp" Version="1.15.0" PrivateAssets="All" />
   </ItemGroup>
 
+  <!--
+    WPF native DLL resolution for local development builds.
+    The CMake entry point lives in VtkSharp.Native and builds both native targets.
+  -->
+  <PropertyGroup>
+    <VtkSharpWpfNativeDllName>VtkSharp.Wpf.Native.dll</VtkSharpWpfNativeDllName>
+    <VtkSharpWpfNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2026\VtkSharp.Wpf.Native\$(Configuration)\$(VtkSharpWpfNativeDllName)</VtkSharpWpfNativeDefaultDllPath>
+    <VtkSharpWpfNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2022\VtkSharp.Wpf.Native\$(Configuration)\$(VtkSharpWpfNativeDllName)</VtkSharpWpfNativeVs2022DllPath>
+    <VtkSharpWpfNativeDllPath Condition="Exists('$(VtkSharpWpfNativeDefaultDllPath)')">$(VtkSharpWpfNativeDefaultDllPath)</VtkSharpWpfNativeDllPath>
+    <VtkSharpWpfNativeDllPath Condition="'$(VtkSharpWpfNativeDllPath)' == '' And Exists('$(VtkSharpWpfNativeVs2022DllPath)')">$(VtkSharpWpfNativeVs2022DllPath)</VtkSharpWpfNativeDllPath>
+  </PropertyGroup>
+
+  <ItemGroup Condition="Exists('$(VtkSharpWpfNativeDllPath)')">
+    <None Include="$(VtkSharpWpfNativeDllPath)" Link="$(VtkSharpWpfNativeDllName)" TargetPath="$(VtkSharpWpfNativeDllName)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists('$(VtkSharpWpfNativeDllPath)')">
+    <Content Include="$(VtkSharpWpfNativeDllPath)"
+             PackagePath="runtimes/win-x64/native/VtkSharp.Wpf.Native.dll"
+             Visible="false" />
+  </ItemGroup>
+
   <!-- Package README -->
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />

@@ -19,9 +19,8 @@ public sealed class WpfExportNameTests
             root.FullName,
             "src",
             "bindings",
-            "VtkSharp.Native",
+            "VtkSharp.Wpf.Native",
             "src",
-            "wpf",
             "VtkOpenGlD3DImageRender_export.cpp"));
         var wpfControl = ReadWpfControlText();
         var managedWrapper = File.ReadAllText(Path.Combine(
@@ -41,17 +40,15 @@ public sealed class WpfExportNameTests
             root.FullName,
             "src",
             "bindings",
-            "VtkSharp.Native",
+            "VtkSharp.Wpf.Native",
             "src",
-            "wpf",
             "VtkWpfD3DImageOpenGLRenderTarget.cpp")));
         Assert.False(File.Exists(Path.Combine(
             root.FullName,
             "src",
             "bindings",
-            "VtkSharp.Native",
+            "VtkSharp.Wpf.Native",
             "src",
-            "wpf",
             "VtkWpfD3DImageOpenGLRenderTarget.h")));
 
         var nativeNames = GetExportNames(nativeExport);
@@ -84,6 +81,22 @@ public sealed class WpfExportNameTests
         Assert.Contains("public void Dispose()", managedWrapper);
         Assert.DoesNotContain("DllImport", wpfControl);
         Assert.DoesNotContain("nint _bridge", wpfControl);
+    }
+
+    [Fact]
+    public void WpfInterop_UsesSeparateNativeLibrary()
+    {
+        var coreInterop = ReadRepositoryText("src", "bindings", "VtkSharp", "InteropInfo.cs");
+        var wpfInterop = ReadRepositoryText("src", "bindings", "VtkSharp.Wpf", "InteropInfo.cs");
+        var coreCMake = ReadRepositoryText("src", "bindings", "VtkSharp.Native", "CMakeLists.txt");
+        var wpfCMake = ReadRepositoryText("src", "bindings", "VtkSharp.Wpf.Native", "CMakeLists.txt");
+
+        Assert.Contains("NativeLibraryName = \"VtkSharp.Native\"", coreInterop);
+        Assert.Contains("NativeLibraryName = \"VtkSharp.Wpf.Native\"", wpfInterop);
+        Assert.Contains("add_subdirectory(", coreCMake);
+        Assert.Contains("../VtkSharp.Wpf.Native", coreCMake);
+        Assert.Contains("set(VTKSHARP_WPF_NATIVE_TARGET VtkSharp.Wpf.Native)", wpfCMake);
+        Assert.Contains("add_library(${VTKSHARP_WPF_NATIVE_TARGET} SHARED", wpfCMake);
     }
 
     [Fact]

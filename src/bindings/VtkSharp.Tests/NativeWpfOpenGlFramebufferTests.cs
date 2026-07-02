@@ -9,7 +9,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
     public void OpenGlFramebufferDetails_AreIsolatedFromD3DImageRender()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Wpf.Native", "src");
         var renderHeader = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.h"));
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
         var framebufferHeader = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.h"));
@@ -52,7 +52,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
     public void Release_DoesNotCallFramebufferDeleteFunction_WhenItWasNotLoaded()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Wpf.Native", "src");
         var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
 
         Assert.Contains("if (this->m_framebuffer && this->glDeleteFramebuffers)", framebufferSource);
@@ -62,7 +62,7 @@ public sealed class NativeWpfOpenGlFramebufferTests
     public void Create_ReportsTextureAndFramebufferCreationFailure()
     {
         var root = FindRepositoryRoot();
-        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Native", "src", "wpf");
+        var nativeDirectory = Path.Combine(root.FullName, "src", "bindings", "VtkSharp.Wpf.Native", "src");
         var renderSource = File.ReadAllText(Path.Combine(nativeDirectory, "VtkOpenGlD3DImageRender.cpp"));
         var framebufferSource = File.ReadAllText(Path.Combine(nativeDirectory, "OpenGlFramebuffer.cpp"));
 
