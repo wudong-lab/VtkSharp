@@ -1,4 +1,4 @@
-using CppAst;
+﻿using CppAst;
 using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Types;
 
@@ -7,12 +7,13 @@ namespace VtkSharp.Generator.Core.Inspection;
 public sealed class VtkClassInspector
 {
     private readonly TypeCanonicalizer _canonicalizer = new();
-    private readonly Dictionary<string, InspectedClass> _cache = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, RawInspectedClass> _rawClassCache = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, InspectedClass> _classCache = new(StringComparer.Ordinal);
 
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
     {
         var cacheKey = CreateCacheKey(includeDirectory, headerFileName, className);
-        if (this._cache.TryGetValue(cacheKey, out var cachedClass))
+        if (this._classCache.TryGetValue(cacheKey, out var cachedClass))
             return cachedClass;
 
         return this.BuildClass(includeDirectory, headerFileName, className, []);
@@ -37,13 +38,13 @@ public sealed class VtkClassInspector
                 continue;
 
             var cacheKey = CreateCacheKey(fullIncludeDir, headerFileName, cppClass.Name);
-            if (this._cache.ContainsKey(cacheKey))
+            if (this._rawClassCache.ContainsKey(cacheKey))
                 continue;
 
             var baseClassNames = GetCppBaseClassNames(cppClass);
             var rawClass = BuildRawClass(cppClass, baseClassNames, this._canonicalizer);
-            this._cache[cacheKey] = rawClass;
-            result[cppClass.Name] = rawClass;
+            this._rawClassCache[cacheKey] = rawClass;
+            result[cppClass.Name] = rawClass.ToInspectedClassWithBaseClassNames();
         }
 
         return result;
@@ -56,30 +57,29 @@ public sealed class VtkClassInspector
         HashSet<string> visitedClassNames)
     {
         var cacheKey = CreateCacheKey(includeDirectory, headerFileName, className);
-        if (this._cache.TryGetValue(cacheKey, out var cachedClass) &&
-            cachedClass.BaseClassNames is null)
+        if (this._classCache.TryGetValue(cacheKey, out var cachedClass))
             return cachedClass;
 
         if (!visitedClassNames.Add(className))
         {
             var empty = new InspectedClass(className, []);
-            this._cache[cacheKey] = empty;
+            this._classCache[cacheKey] = empty;
             return empty;
         }
 
         this.InspectFile(includeDirectory, headerFileName);
 
-        var raw = this._cache.TryGetValue(cacheKey, out var rawClass)
+        var raw = this._rawClassCache.TryGetValue(cacheKey, out var rawClass)
             ? rawClass
             : throw new InvalidOperationException($"Class '{className}' was not found in '{headerFileName}'.");
 
-        var directBaseClassName = (raw.BaseClassNames ?? []).FirstOrDefault();
+        var directBaseClassName = raw.BaseClassNames.FirstOrDefault();
         var result = new InspectedClass(className, raw.Functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(raw.Functions));
-        this._cache[cacheKey] = result;
+        this._classCache[cacheKey] = result;
         return result;
     }
 
-    private static InspectedClass BuildRawClass(CppClass cppClass, IReadOnlyList<string> baseClassNames, TypeCanonicalizer canonicalizer)
+    private static RawInspectedClass BuildRawClass(CppClass cppClass, IReadOnlyList<string> baseClassNames, TypeCanonicalizer canonicalizer)
     {
         var hasStaticNew = cppClass.Functions.Any(function =>
             function.Visibility == CppVisibility.Public &&
@@ -129,7 +129,7 @@ public sealed class VtkClassInspector
             })
             .ToList();
 
-        return new InspectedClass(cppClass.Name, functions, hasStaticNew, BaseClassNames: baseClassNames);
+        return new RawInspectedClass(cppClass.Name, functions, hasStaticNew, baseClassNames);
     }
 
     private static IReadOnlyList<string> GetCppBaseClassNames(CppClass cppClass)

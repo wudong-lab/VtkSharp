@@ -204,6 +204,28 @@ public sealed class VtkClassInspectorTests
             function.DependencyTypes!.SequenceEqual(["vtkProperty"]));
     }
 
+    [Fact]
+    public void InspectHeader_ReturnsFinalClassAfterInspectFileCachedRawClass()
+    {
+        var directory = CreateHeader("""
+            class vtkBase {};
+            class vtkMapper;
+            class vtkActor : public vtkBase
+            {
+            public:
+                void SetMapper(vtkMapper * mapper);
+            };
+            """, "vtkActor.h");
+        var inspector = new VtkClassInspector();
+
+        inspector.InspectFile(directory, "vtkActor.h");
+        var inspected = inspector.InspectHeader(directory, "vtkActor.h", "vtkActor");
+
+        Assert.Equal("vtkBase", inspected.BaseClassName);
+        Assert.Equal(["vtkMapper"], inspected.Dependencies);
+        Assert.Null(inspected.BaseClassNames);
+    }
+
     private static string CreateHeader(string text, string fileName = "vtkThing.h")
     {
         var directory = Path.Combine(Path.GetTempPath(), "VtkSharp.Generator.Tests", Guid.NewGuid().ToString("N"));
