@@ -8,7 +8,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         base.OnKeyDown(e);
 
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         this.SetInteractorKeyEventInformation(e);
         this.InvokeInteractorEvent(vtkCommand.KeyPressEvent);
@@ -25,7 +25,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         base.OnKeyUp(e);
 
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         this.SetInteractorKeyEventInformation(e);
         this.InvokeInteractorEvent(vtkCommand.KeyReleaseEvent);
@@ -37,7 +37,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         base.OnTextInput(e);
 
-        if (this.Interactor is null || string.IsNullOrEmpty(e.Text)) return;
+        if (this.RenderWindowInteractor is null || string.IsNullOrEmpty(e.Text)) return;
 
         this.SetInteractorTextEventInformation(e.Text);
         this.InvokeInteractorEvent(vtkCommand.CharEvent);
@@ -47,32 +47,32 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void SetInteractorKeyEventInformation(KeyEventArgs e)
     {
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         var modifiers = Keyboard.Modifiers;
-        this.Interactor.SetKeyEventInformation(
+        this.RenderWindowInteractor.SetKeyEventInformation(
             modifiers.HasFlag(ModifierKeys.Control),
             modifiers.HasFlag(ModifierKeys.Shift),
             GetKeyCode(e),
             e.IsRepeat ? 1 : 0,
             GetKeySym(e));
-        this.Interactor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
+        this.RenderWindowInteractor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
     }
 
     private void SetInteractorTextEventInformation(string text)
     {
-        if (this.Interactor is null || text.Length == 0) return;
+        if (this.RenderWindowInteractor is null || text.Length == 0) return;
 
         var modifiers = Keyboard.Modifiers;
         var keyCode = text[0] <= byte.MaxValue ? text[0] : '\0';
         var keySym = text.Length == 1 ? text : null;
-        this.Interactor.SetKeyEventInformation(
+        this.RenderWindowInteractor.SetKeyEventInformation(
             modifiers.HasFlag(ModifierKeys.Control),
             modifiers.HasFlag(ModifierKeys.Shift),
             keyCode,
             repeatCount: 0,
             keySym);
-        this.Interactor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
+        this.RenderWindowInteractor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
     }
 
     private static char GetKeyCode(KeyEventArgs e)

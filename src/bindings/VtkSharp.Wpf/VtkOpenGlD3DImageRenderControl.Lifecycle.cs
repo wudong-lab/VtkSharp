@@ -16,6 +16,8 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
         this.Unloaded -= this.OnUnloaded;
         this._image.IsFrontBufferAvailableChanged -= this.OnIsFrontBufferAvailableChanged;
         this._isDisposed = true;
+
+        //
         GC.SuppressFinalize(this);
     }
 
@@ -61,31 +63,35 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
         var interactor = vtkGenericRenderWindowInteractor.New();
         interactor.TimerEventResetsTimerOff();
 
-        this.Interactor = interactor;
-        this.Interactor.SetRenderWindow(this.RenderWindow);
+        this.RenderWindowInteractor = interactor;
+        this.RenderWindowInteractor.SetRenderWindow(this.RenderWindow);
 
         this._interactorStyle = vtkInteractorStyleTrackballCamera.New();
-        this.Interactor.SetInteractorStyle(this._interactorStyle);
-        this.Interactor.EnableRenderOff();
-        this.AttachTimerObservers(this.Interactor);
-        this.Interactor.Initialize();
+        this.RenderWindowInteractor.SetInteractorStyle(this._interactorStyle);
+        this.RenderWindowInteractor.EnableRenderOff();
+        this.AttachTimerObservers(this.RenderWindowInteractor);
+        this.RenderWindowInteractor.Initialize();
 
         this._isInitialized = true;
 
-        this.VtkInitialized?.Invoke(
-            this,
-            new VtkRenderControlInitializedEventArgs(this.RenderWindow, this.Renderer, this.Interactor));
+        //
+        this.VtkRenderInitialized?.Invoke(this, new VtkRenderInitializedEventArgs(this.RenderWindow, this.Renderer, this.RenderWindowInteractor));
     }
 
     private void DisposeVtkRender()
     {
+        if (!this._isInitialized) return;
+
+        this.VtkRenderDisposing?.Invoke(this, new VtkRenderDisposingEventArgs(this.RenderWindow!, this.Renderer!, this.RenderWindowInteractor!));
+
+        //
         this.ReleaseActiveMouseInteraction();
 
         this.DetachTimerObservers();
         this.DetachCursorObserver();
-        this.Interactor?.Dispose();
+        this.RenderWindowInteractor?.Dispose();
         this._interactorStyle?.Dispose();
-        this.Interactor = null;
+        this.RenderWindowInteractor = null;
         this._interactorStyle = null;
 
         if (this._render is not null)
@@ -111,6 +117,8 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
         this.Cursor = null;
         this.RenderWindow = null;
         this.Renderer = null;
+
+        //
         this._isInitialized = false;
     }
 

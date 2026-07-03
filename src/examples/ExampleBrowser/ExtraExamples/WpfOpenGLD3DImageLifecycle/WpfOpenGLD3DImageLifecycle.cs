@@ -147,8 +147,8 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
 
             this._viewport = new VtkOpenGlD3DImageRenderControl();
             this._viewport.DisposeOnUnload = !this._cacheOnUnload;
-            this._viewport.VtkInitialized += this.OnVtkInitialized;
-            this._viewport.RenderFailed += this.OnRenderFailed;
+            this._viewport.VtkRenderInitialized += this.OnVtkRenderInitialized;
+            this._viewport.VtkRenderFailed += this.OnVtkRenderFailed;
 
             if (this._isViewportLoaded)
             {
@@ -198,7 +198,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
 
         private void ToggleAnimationTimer()
         {
-            if (this._viewport?.Interactor is null)
+            if (this._viewport?.RenderWindowInteractor is null)
             {
                 this.UpdateStatus("Interactor not initialized");
                 return;
@@ -211,8 +211,8 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
                 return;
             }
 
-            this._timerObserver = this._viewport.Interactor.AddTimerEventObserver(this.OnTimer);
-            this._animationTimerId = this._viewport.Interactor.CreateRepeatingTimer(33);
+            this._timerObserver = this._viewport.RenderWindowInteractor.AddTimerEventObserver(this.OnTimer);
+            this._animationTimerId = this._viewport.RenderWindowInteractor.CreateRepeatingTimer(33);
             this.UpdateStatus("VTK repeating timer started");
         }
 
@@ -257,7 +257,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
             this.UpdateStatus(cacheOnUnload ? "Unload cache enabled" : "Unload disposal enabled");
         }
 
-        private void OnVtkInitialized(object? sender, VtkRenderControlInitializedEventArgs e)
+        private void OnVtkRenderInitialized(object? sender, VtkRenderInitializedEventArgs e)
         {
             this._initializedCount++;
 
@@ -293,7 +293,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
             this._viewport.RequestRender();
         }
 
-        private void OnRenderFailed(object? sender, VtkRenderFailedEventArgs e)
+        private void OnVtkRenderFailed(object? sender, VtkRenderFailedEventArgs e)
         {
             this._renderFailureCount++;
             this.UpdateStatus($"Render failed: {e.Message}");
@@ -303,7 +303,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
         {
             if (this._animationTimerId != 0)
             {
-                this._viewport?.Interactor?.DestroyTimer(this._animationTimerId);
+                this._viewport?.RenderWindowInteractor?.DestroyTimer(this._animationTimerId);
                 this._animationTimerId = 0;
             }
 
@@ -317,8 +317,8 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
 
             if (this._viewport is not null)
             {
-                this._viewport.VtkInitialized -= this.OnVtkInitialized;
-                this._viewport.RenderFailed -= this.OnRenderFailed;
+                this._viewport.VtkRenderInitialized -= this.OnVtkRenderInitialized;
+                this._viewport.VtkRenderFailed -= this.OnVtkRenderFailed;
                 this._viewport.Dispose();
                 this._viewport = null;
             }

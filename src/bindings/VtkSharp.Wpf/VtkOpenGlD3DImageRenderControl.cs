@@ -10,12 +10,6 @@ namespace VtkSharp.Wpf;
 /// </summary>
 public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposable
 {
-    public static readonly DependencyProperty DisposeOnUnloadProperty = DependencyProperty.Register(
-        nameof(DisposeOnUnload),
-        typeof(bool),
-        typeof(VtkOpenGlD3DImageRenderControl),
-        new PropertyMetadata(true));
-
     private readonly D3DImage _image = new();
     private readonly Dictionary<int, VtkDispatcherTimer> _timers = new();
 
@@ -47,14 +41,21 @@ public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, I
 
     public vtkRenderWindow? RenderWindow { get; private set; }
     public vtkRenderer? Renderer { get; private set; }
-    public vtkRenderWindowInteractor? Interactor { get; private set; }
+    public vtkRenderWindowInteractor? RenderWindowInteractor { get; private set; }
 
+    public static readonly DependencyProperty DisposeOnUnloadProperty = DependencyProperty.Register(
+        nameof(DisposeOnUnload), typeof(bool), typeof(VtkOpenGlD3DImageRenderControl), new PropertyMetadata(true));
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the VTK render should be disposed when the control is unloaded.
+    /// </summary>
     public bool DisposeOnUnload
     {
         get => (bool)this.GetValue(DisposeOnUnloadProperty);
         set => this.SetValue(DisposeOnUnloadProperty, value);
     }
 
-    public event EventHandler<VtkRenderControlInitializedEventArgs>? VtkInitialized;
-    public event EventHandler<VtkRenderFailedEventArgs>? RenderFailed;
+    public event EventHandler<VtkRenderInitializedEventArgs>? VtkRenderInitialized;
+    public event EventHandler<VtkRenderDisposingEventArgs>? VtkRenderDisposing;
+    public event EventHandler<VtkRenderFailedEventArgs>? VtkRenderFailed;
 }

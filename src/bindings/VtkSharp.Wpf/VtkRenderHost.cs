@@ -17,7 +17,7 @@ public sealed class VtkRenderHost : HwndHost
     public vtkRenderer? Renderer { get; private set; }
     public vtkWin32RenderWindowInteractor? Interactor { get; private set; }
 
-    public event EventHandler<VtkRenderHostInitializedEventArgs>? VtkInitialized;
+    public event EventHandler<VtkRenderHostInitializedEventArgs>? VtkRenderHostInitialized;
 
     protected override HandleRef BuildWindowCore(HandleRef hwndParent)
     {
@@ -65,7 +65,7 @@ public sealed class VtkRenderHost : HwndHost
         this.Interactor.Initialize();
 
         this._isVtkInitialized = true;
-        this.VtkInitialized?.Invoke(this, new VtkRenderHostInitializedEventArgs(this.RenderWindow, this.Renderer, this.Interactor));
+        this.VtkRenderHostInitialized?.Invoke(this, new VtkRenderHostInitializedEventArgs(this.RenderWindow, this.Renderer, this.Interactor));
         this.UpdateHostSizeAndRender();
     }
 

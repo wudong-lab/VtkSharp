@@ -11,7 +11,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         base.OnMouseEnter(e);
 
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
         this.InvokeInteractorEvent(vtkCommand.EnterEvent);
@@ -23,7 +23,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         base.OnMouseLeave(e);
 
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
         this.InvokeInteractorEvent(vtkCommand.LeaveEvent);
@@ -49,7 +49,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         base.OnMouseMove(e);
 
-        if (this.Interactor is null)
+        if (this.RenderWindowInteractor is null)
         {
             return;
         }
@@ -91,7 +91,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         base.OnMouseWheel(e);
 
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         this.SetInteractorEventInformation(e.GetPosition(this), repeatCount: 0);
         this.InvokeInteractorEvent(e.Delta > 0
@@ -103,7 +103,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void InvokeMouseButtonEvent(MouseButton button, bool pressed, Point position, int repeatCount)
     {
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         this.SetInteractorEventInformation(position, repeatCount);
         this.InvokeInteractorEvent(GetMouseButtonEvent(button, pressed));
@@ -112,16 +112,16 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void InvokeInteractorEvent(uint eventId)
     {
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
-        if (this.Interactor is vtkGenericRenderWindowInteractor genericInteractor)
+        if (this.RenderWindowInteractor is vtkGenericRenderWindowInteractor genericInteractor)
         {
             InvokeGenericInteractorEvent(genericInteractor, eventId);
             this.SyncCursor();
             return;
         }
 
-        this.Interactor.InvokeEvent(eventId);
+        this.RenderWindowInteractor.InvokeEvent(eventId);
         this.SyncCursor();
     }
 
@@ -179,18 +179,18 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void SetInteractorEventInformation(Point position, int repeatCount)
     {
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
         var pixelPosition = this.GetPixelPosition(position);
         var modifiers = Keyboard.Modifiers;
-        this.Interactor.SetEventInformationFlipY(
+        this.RenderWindowInteractor.SetEventInformationFlipY(
             pixelPosition.X,
             pixelPosition.Y,
             modifiers.HasFlag(ModifierKeys.Control),
             modifiers.HasFlag(ModifierKeys.Shift),
             keyCode: '\0',
             repeatCount);
-        this.Interactor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
+        this.RenderWindowInteractor.SetAltKey(modifiers.HasFlag(ModifierKeys.Alt));
     }
 
     private PixelPoint GetPixelPosition(Point position)

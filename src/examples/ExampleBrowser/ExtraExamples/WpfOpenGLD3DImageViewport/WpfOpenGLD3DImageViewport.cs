@@ -51,7 +51,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this.MinHeight = 360;
 
             this._viewport = new VtkOpenGlD3DImageRenderControl();
-            this._viewport.VtkInitialized += this.OnVtkInitialized;
+            this._viewport.VtkRenderInitialized += this.OnVtkRenderInitialized;
             this._viewport.AddHandler(
                 UIElement.MouseLeftButtonDownEvent,
                 new MouseButtonEventHandler(this.OnViewportMouseLeftButtonDown),
@@ -85,7 +85,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this.Closed += this.OnClosed;
         }
 
-        private void OnVtkInitialized(object? sender, VtkRenderControlInitializedEventArgs e)
+        private void OnVtkRenderInitialized(object? sender, VtkRenderInitializedEventArgs e)
         {
             this._cone = vtkConeSource.New();
             this._cone.SetHeight(3.0);
@@ -104,19 +104,19 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             e.Renderer.AddActor(this._actor);
             e.Renderer.ResetCamera();
 
-            if (e.Interactor is not null)
+            if (e.RenderWindowInteractor is not null)
             {
                 this._orientationAxes = vtkAxesActor.New();
 
                 this._orientationWidget = vtkOrientationMarkerWidget.New();
                 this._orientationWidget.SetOrientationMarker(this._orientationAxes);
-                this._orientationWidget.SetInteractor(e.Interactor);
+                this._orientationWidget.SetInteractor(e.RenderWindowInteractor);
                 this._orientationWidget.SetViewport(0.0, 0.0, 0.22, 0.22);
                 this._orientationWidget.EnabledOn();
                 this._orientationWidget.InteractiveOn();
 
-                this._timerObserver = e.Interactor.AddTimerEventObserver(this.OnTimer);
-                this._animationTimerId = e.Interactor.CreateRepeatingTimer(33);
+                this._timerObserver = e.RenderWindowInteractor.AddTimerEventObserver(this.OnTimer);
+                this._animationTimerId = e.RenderWindowInteractor.CreateRepeatingTimer(33);
             }
 
             if (sender is VtkOpenGlD3DImageRenderControl control)
@@ -204,7 +204,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this._orientationWidget?.EnabledOff();
             if (this._animationTimerId != 0)
             {
-                this._viewport?.Interactor?.DestroyTimer(this._animationTimerId);
+                this._viewport?.RenderWindowInteractor?.DestroyTimer(this._animationTimerId);
                 this._animationTimerId = 0;
             }
 

@@ -11,7 +11,7 @@ internal sealed class WpfViewport : IExample
     public void Run()
     {
         var dispatcher = Application.Current?.Dispatcher
-            ?? throw new InvalidOperationException("WPF application dispatcher is not available.");
+                         ?? throw new InvalidOperationException("WPF application dispatcher is not available.");
 
         dispatcher.Invoke(() =>
         {
@@ -38,7 +38,7 @@ internal sealed class WpfViewport : IExample
             this.MinHeight = 360;
 
             var host = new VtkRenderHost();
-            host.VtkInitialized += this.OnVtkInitialized;
+            host.VtkRenderHostInitialized += this.OnVtkInitialized;
             this.Content = host;
 
             this.Closed += this.OnClosed;

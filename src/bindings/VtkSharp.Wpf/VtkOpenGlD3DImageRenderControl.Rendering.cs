@@ -53,7 +53,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
             if (sizeChanged)
             {
-                this.Interactor?.UpdateSize(pixelSize.Width, pixelSize.Height);
+                this.RenderWindowInteractor?.UpdateSize(pixelSize.Width, pixelSize.Height);
             }
 
             this._pixelSize = pixelSize;
@@ -128,7 +128,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void OnRenderFailed(string message)
     {
-        this.RenderFailed?.Invoke(this, new VtkRenderFailedEventArgs(message));
+        this.VtkRenderFailed?.Invoke(this, new VtkRenderFailedEventArgs(message));
     }
 
     private PixelSize GetPixelSize(Size dipSize)

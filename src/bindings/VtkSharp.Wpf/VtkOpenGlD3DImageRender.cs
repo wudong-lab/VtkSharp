@@ -11,10 +11,6 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
         this._nativePointer = nativePointer;
     }
 
-    public vtkRenderWindow RenderWindow => vtkRenderWindow.WeakReference(VtkOpenGlD3DImageRender_GetRenderWindow(this._nativePointer));
-
-    public vtkRenderer Renderer => vtkRenderer.WeakReference(VtkOpenGlD3DImageRender_GetRenderer(this._nativePointer));
-
     public static VtkOpenGlD3DImageRender Create()
     {
         var nativePointer = VtkOpenGlD3DImageRender_New();
@@ -28,6 +24,9 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
 
         throw new InvalidOperationException($"Failed to create internal VTK OpenGL/D3DImage render. {detail}");
     }
+
+    public vtkRenderWindow RenderWindow => vtkRenderWindow.WeakReference(VtkOpenGlD3DImageRender_GetRenderWindow(this._nativePointer));
+    public vtkRenderer Renderer => vtkRenderer.WeakReference(VtkOpenGlD3DImageRender_GetRenderer(this._nativePointer));
 
     public bool SetSize(int width, int height)
     {

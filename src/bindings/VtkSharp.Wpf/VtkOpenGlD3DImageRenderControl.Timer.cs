@@ -34,11 +34,11 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void CreatePlatformTimer()
     {
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
-        var timerId = this.Interactor.GetTimerEventId();
-        var timerType = this.Interactor.GetTimerEventType();
-        var duration = Math.Max(1, this.Interactor.GetTimerEventDuration());
+        var timerId = this.RenderWindowInteractor.GetTimerEventId();
+        var timerType = this.RenderWindowInteractor.GetTimerEventType();
+        var duration = Math.Max(1, this.RenderWindowInteractor.GetTimerEventDuration());
         var platformTimerId = ++this._nextPlatformTimerId;
 
         EventHandler? onTick = null;
@@ -49,7 +49,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
         onTick = (_, _) =>
         {
-            if (this.Interactor is null) return;
+            if (this.RenderWindowInteractor is null) return;
 
             if (timerType == vtkRenderWindowInteractor.OneShotTimer)
             {
@@ -58,14 +58,14 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
                 this._timers.Remove(platformTimerId);
             }
 
-            this.Interactor.SetTimerEventId(timerId);
-            if (this.Interactor is vtkGenericRenderWindowInteractor genericInteractor)
+            this.RenderWindowInteractor.SetTimerEventId(timerId);
+            if (this.RenderWindowInteractor is vtkGenericRenderWindowInteractor genericInteractor)
             {
                 genericInteractor.TimerEvent();
             }
             else
             {
-                this.Interactor.InvokeTimerEvent(timerId);
+                this.RenderWindowInteractor.InvokeTimerEvent(timerId);
             }
 
             this.RequestRender();
@@ -73,15 +73,15 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
         dispatcherTimer.Tick += onTick;
         this._timers.Add(platformTimerId, new VtkDispatcherTimer(dispatcherTimer, onTick));
-        this.Interactor.SetTimerEventPlatformId(platformTimerId);
+        this.RenderWindowInteractor.SetTimerEventPlatformId(platformTimerId);
         dispatcherTimer.Start();
     }
 
     private void DestroyPlatformTimer()
     {
-        if (this.Interactor is null) return;
+        if (this.RenderWindowInteractor is null) return;
 
-        var platformTimerId = this.Interactor.GetTimerEventPlatformId();
+        var platformTimerId = this.RenderWindowInteractor.GetTimerEventPlatformId();
         if (!this._timers.TryGetValue(platformTimerId, out var timer)) return;
 
         this._timers.Remove(platformTimerId);
