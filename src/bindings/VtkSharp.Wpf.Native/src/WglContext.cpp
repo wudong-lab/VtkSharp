@@ -104,7 +104,7 @@ bool WglContext::IsCurrent() const
     return ::wglGetCurrentContext() == this->m_glContext;
 }
 
-vtkOpenGLRenderWindow::VTKOpenGLAPIProc WglContext::LoadSymbol(const char* name) const
+void* WglContext::LoadSymbol(const char* name) const
 {
     auto* proc = reinterpret_cast<void*>(::wglGetProcAddress(name));
 
@@ -117,5 +117,5 @@ vtkOpenGLRenderWindow::VTKOpenGLAPIProc WglContext::LoadSymbol(const char* name)
         proc = reinterpret_cast<void*>(::GetProcAddress(this->m_openGL32Library, name));
     }
 
-    return reinterpret_cast<vtkOpenGLRenderWindow::VTKOpenGLAPIProc>(proc);
+    return proc;
 }

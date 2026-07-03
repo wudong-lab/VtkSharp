@@ -26,17 +26,16 @@ target_include_directories(${VTKSHARP_WPF_NATIVE_TARGET}
     ${CMAKE_CURRENT_SOURCE_DIR}/../VtkSharp.Native/include
 )
 
+target_compile_definitions(${VTKSHARP_WPF_NATIVE_TARGET}
+  PRIVATE
+    VTKSHARP_EXTERNAL_OPENGL_RENDER_CONTEXT_IMPORTS
+)
+
 target_link_libraries(${VTKSHARP_WPF_NATIVE_TARGET}
   PRIVATE
-    ${VTKSHARP_VTK_TARGETS}
+    ${VTKSHARP_NATIVE_TARGET}
     d3d9
     gdi32
     opengl32
     user32
-)
-
-vtk_module_autoinit(
-  TARGETS ${VTKSHARP_WPF_NATIVE_TARGET}
-  MODULES
-    ${VTKSHARP_VTK_TARGETS}
 )

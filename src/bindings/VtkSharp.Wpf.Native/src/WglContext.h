@@ -9,7 +9,6 @@
 #endif
 
 #include <windows.h>
-#include <vtkOpenGLRenderWindow.h>
 
 class WglContext
 {
@@ -20,7 +19,7 @@ public:
     bool MakeCurrent() const;
     bool IsCurrent() const;
 
-    vtkOpenGLRenderWindow::VTKOpenGLAPIProc LoadSymbol(const char* name) const;
+    void* LoadSymbol(const char* name) const;
 
     HDC DeviceContext() const { return this->m_deviceContext; }
 

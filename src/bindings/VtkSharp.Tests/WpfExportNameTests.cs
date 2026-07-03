@@ -97,6 +97,8 @@ public sealed class WpfExportNameTests
         Assert.Contains("../VtkSharp.Wpf.Native", coreCMake);
         Assert.Contains("set(VTKSHARP_WPF_NATIVE_TARGET VtkSharp.Wpf.Native)", wpfCMake);
         Assert.Contains("add_library(${VTKSHARP_WPF_NATIVE_TARGET} SHARED", wpfCMake);
+        Assert.Contains("${VTKSHARP_NATIVE_TARGET}", wpfCMake);
+        Assert.DoesNotContain("${VTKSHARP_VTK_TARGETS}", wpfCMake);
     }
 
     [Fact]
@@ -110,10 +112,10 @@ public sealed class WpfExportNameTests
         var disposeBody = GetMethodBody(wpfControl, "DisposeVtkRender");
         Assert.True(
             disposeBody.IndexOf("this.DetachTimerObservers();", StringComparison.Ordinal) <
-            disposeBody.IndexOf("this.Interactor?.Dispose();", StringComparison.Ordinal));
+            disposeBody.IndexOf("this.RenderWindowInteractor?.Dispose();", StringComparison.Ordinal));
         Assert.True(
             disposeBody.IndexOf("this.DetachCursorObserver();", StringComparison.Ordinal) <
-            disposeBody.IndexOf("this.Interactor?.Dispose();", StringComparison.Ordinal));
+            disposeBody.IndexOf("this.RenderWindowInteractor?.Dispose();", StringComparison.Ordinal));
     }
 
     [Fact]
@@ -150,7 +152,7 @@ public sealed class WpfExportNameTests
     {
         var wpfControl = ReadWpfControlText();
 
-        Assert.Contains("public event EventHandler<VtkRenderFailedEventArgs>? RenderFailed;", wpfControl);
+        Assert.Contains("public event EventHandler<VtkRenderFailedEventArgs>? VtkRenderFailed;", wpfControl);
         Assert.Contains("renderFailure = this.GetRenderError(\"Failed to resize the VTK D3DImage render target.\");", wpfControl);
         Assert.Contains("renderFailure = this.GetRenderError(\"The VTK D3DImage render target did not provide a back buffer.\");", wpfControl);
         Assert.Contains("renderFailure = this.GetRenderError(\"Failed to render the VTK scene.\");", wpfControl);

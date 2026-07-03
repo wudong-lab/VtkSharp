@@ -1,11 +1,5 @@
 ﻿#include "VtkOpenGlD3DImageRender.h"
 
-#include <vtkCallbackCommand.h>
-#include <vtkCommand.h>
-#include <vtkGenericOpenGLRenderWindow.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderer.h>
-
 #include <algorithm>
 #include <cstring>
 
@@ -38,12 +32,14 @@ VtkOpenGlD3DImageRender::~VtkOpenGlD3DImageRender()
 
 vtkRenderWindow* VtkOpenGlD3DImageRender::GetRenderWindow() const
 {
-    return this->m_renderWindow.GetPointer();
+    return reinterpret_cast<vtkRenderWindow*>(
+        VtkSharpExternalOpenGlRenderContext_GetRenderWindow(this->m_vtkContext));
 }
 
 vtkRenderer* VtkOpenGlD3DImageRender::GetRenderer() const
 {
-    return this->m_renderer.GetPointer();
+    return reinterpret_cast<vtkRenderer*>(
+        VtkSharpExternalOpenGlRenderContext_GetRenderer(this->m_vtkContext));
 }
 
 IDirect3DSurface9* VtkOpenGlD3DImageRender::GetBackBuffer() const
@@ -95,7 +91,7 @@ bool VtkOpenGlD3DImageRender::Render()
 
 void VtkOpenGlD3DImageRender::RenderVtkWindow()
 {
-    this->m_renderWindow->Render();
+    VtkSharpExternalOpenGlRenderContext_Render(this->m_vtkContext);
 }
 
 void VtkOpenGlD3DImageRender::RenderVtkWindowCallback(void* userData)
@@ -133,13 +129,11 @@ void VtkOpenGlD3DImageRender::Release()
 {
     const bool isCurrent = this->m_wglContext.MakeCurrent();
 
-    this->m_renderer = nullptr;
-    this->m_renderWindow = nullptr;
-    this->m_makeCurrentCallback = nullptr;
-    this->m_isCurrentCallback = nullptr;
-    this->m_supportsOpenGLCallback = nullptr;
-    this->m_isDirectCallback = nullptr;
-    this->m_frameCallback = nullptr;
+    if (this->m_vtkContext)
+    {
+        VtkSharpExternalOpenGlRenderContext_Delete(this->m_vtkContext);
+        this->m_vtkContext = nullptr;
+    }
 
     if (isCurrent)
     {
@@ -187,34 +181,25 @@ bool VtkOpenGlD3DImageRender::OpenDxInteropDevice()
 
 bool VtkOpenGlD3DImageRender::InitializeVtk()
 {
-    this->m_renderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
-    this->m_renderer = vtkSmartPointer<vtkRenderer>::New();
+    this->m_vtkContext = VtkSharpExternalOpenGlRenderContext_New(
+        this,
+        &VtkOpenGlD3DImageRender::LoadOpenGlSymbolCallback,
+        &VtkOpenGlD3DImageRender::MakeCurrentCallback,
+        &VtkOpenGlD3DImageRender::IsCurrentCallback,
+        &VtkOpenGlD3DImageRender::FrameCallback);
+    if (!this->m_vtkContext)
+    {
+        this->SetError("Failed to create VTK external OpenGL render context.");
+        return false;
+    }
 
-    this->m_makeCurrentCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnMakeCurrent);
-    this->m_renderWindow->AddObserver(vtkCommand::WindowMakeCurrentEvent, this->m_makeCurrentCallback);
+    if (!VtkSharpExternalOpenGlRenderContext_InitializeFromCurrentContext(this->m_vtkContext))
+    {
+        this->SetError(VtkSharpExternalOpenGlRenderContext_GetLastError(this->m_vtkContext));
+        return false;
+    }
 
-    this->m_isCurrentCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnIsCurrent);
-    this->m_renderWindow->AddObserver(vtkCommand::WindowIsCurrentEvent, this->m_isCurrentCallback);
-
-    this->m_supportsOpenGLCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnSupportsOpenGL);
-    this->m_renderWindow->AddObserver(vtkCommand::WindowSupportsOpenGLEvent, this->m_supportsOpenGLCallback);
-
-    this->m_isDirectCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnIsDirect);
-    this->m_renderWindow->AddObserver(vtkCommand::WindowIsDirectEvent, this->m_isDirectCallback);
-
-    this->m_frameCallback = this->CreateCallback(&VtkOpenGlD3DImageRender::OnFrame);
-    this->m_renderWindow->AddObserver(vtkCommand::WindowFrameEvent, this->m_frameCallback);
-
-    this->m_renderWindow->SetOpenGLSymbolLoader(
-        [](void* userData, const char* name) -> vtkOpenGLRenderWindow::VTKOpenGLAPIProc
-        {
-            return static_cast<VtkOpenGlD3DImageRender*>(userData)->m_wglContext.LoadSymbol(name);
-        },
-        this);
-    this->m_renderWindow->AddRenderer(this->m_renderer);
-    this->m_renderWindow->SetFrameBlitModeToBlitToCurrent();
-    this->m_renderWindow->FramebufferFlipYOff();
-    return this->m_renderWindow->InitializeFromCurrentContext();
+    return true;
 }
 
 bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
@@ -256,7 +241,7 @@ bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
         return false;
     }
 
-    this->m_renderWindow->SetSize(this->m_width, this->m_height);
+    VtkSharpExternalOpenGlRenderContext_SetSize(this->m_vtkContext, this->m_width, this->m_height);
     return true;
 }
 
@@ -268,63 +253,22 @@ void VtkOpenGlD3DImageRender::ReleaseInteropResource()
     this->m_d3DRenderTarget.ReleaseTexture();
 }
 
-vtkSmartPointer<vtkCallbackCommand> VtkOpenGlD3DImageRender::CreateCallback(CallbackMethod method)
+void* VtkOpenGlD3DImageRender::LoadOpenGlSymbolCallback(void* userData, const char* name)
 {
-    auto callback = vtkSmartPointer<vtkCallbackCommand>::New();
-    callback->SetClientData(new CallbackState{this, method});
-    callback->SetCallback(&VtkOpenGlD3DImageRender::InvokeCallback);
-    callback->SetClientDataDeleteCallback(&VtkOpenGlD3DImageRender::DeleteCallbackState);
-    return callback;
+    return static_cast<VtkOpenGlD3DImageRender*>(userData)->m_wglContext.LoadSymbol(name);
 }
 
-void VtkOpenGlD3DImageRender::InvokeCallback(
-    vtkObject*,
-    unsigned long,
-    void* clientData,
-    void* callData)
+int VtkOpenGlD3DImageRender::MakeCurrentCallback(void* userData)
 {
-    auto* state = static_cast<CallbackState*>(clientData);
-    (state->Target->*state->Method)(callData);
+    return static_cast<VtkOpenGlD3DImageRender*>(userData)->m_wglContext.MakeCurrent() ? 1 : 0;
 }
 
-void VtkOpenGlD3DImageRender::DeleteCallbackState(void* clientData)
+int VtkOpenGlD3DImageRender::IsCurrentCallback(void* userData)
 {
-    delete static_cast<CallbackState*>(clientData);
+    return static_cast<VtkOpenGlD3DImageRender*>(userData)->m_wglContext.IsCurrent() ? 1 : 0;
 }
 
-void VtkOpenGlD3DImageRender::OnMakeCurrent(void*)
-{
-    this->m_wglContext.MakeCurrent();
-}
-
-void VtkOpenGlD3DImageRender::OnIsCurrent(void* callData)
-{
-    auto* isCurrent = static_cast<bool*>(callData);
-    if (isCurrent)
-    {
-        *isCurrent = this->m_wglContext.IsCurrent();
-    }
-}
-
-void VtkOpenGlD3DImageRender::OnSupportsOpenGL(void* callData)
-{
-    auto* supportsOpenGL = static_cast<int*>(callData);
-    if (supportsOpenGL)
-    {
-        *supportsOpenGL = 1;
-    }
-}
-
-void VtkOpenGlD3DImageRender::OnIsDirect(void* callData)
-{
-    auto* isDirect = static_cast<int*>(callData);
-    if (isDirect)
-    {
-        *isDirect = 1;
-    }
-}
-
-void VtkOpenGlD3DImageRender::OnFrame(void*)
+void VtkOpenGlD3DImageRender::FrameCallback(void*)
 {
     ::glFlush();
 }

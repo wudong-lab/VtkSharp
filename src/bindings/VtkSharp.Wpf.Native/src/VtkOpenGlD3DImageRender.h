@@ -15,12 +15,8 @@
 #include "OpenGlFramebuffer.h"
 #include "WglContext.h"
 #include "WglDxInterop.h"
+#include "VtkSharpExternalOpenGlRenderContext.h"
 
-#include <vtkSmartPointer.h>
-
-class vtkCallbackCommand;
-class vtkGenericOpenGLRenderWindow;
-class vtkObject;
 class vtkRenderWindow;
 class vtkRenderer;
 
@@ -40,14 +36,6 @@ public:
     static const char* GetLastError();
 
 private:
-    using CallbackMethod = void (VtkOpenGlD3DImageRender::*)(void*);
-
-    struct CallbackState
-    {
-        VtkOpenGlD3DImageRender* Target;
-        CallbackMethod Method;
-    };
-
     VtkOpenGlD3DImageRender() = default;
 
     VtkOpenGlD3DImageRender(const VtkOpenGlD3DImageRender&) = delete;
@@ -64,30 +52,19 @@ private:
     bool CreateInteropResource(int width, int height);
     void ReleaseInteropResource();
 
-    vtkSmartPointer<vtkCallbackCommand> CreateCallback(CallbackMethod method);
-    static void InvokeCallback(vtkObject* caller, unsigned long eventId, void* clientData, void* callData);
-    static void DeleteCallbackState(void* clientData);
     static void RenderVtkWindowCallback(void* userData);
+    static void* LoadOpenGlSymbolCallback(void* userData, const char* name);
+    static int MakeCurrentCallback(void* userData);
+    static int IsCurrentCallback(void* userData);
+    static void FrameCallback(void* userData);
 
     void RenderVtkWindow();
-    void OnMakeCurrent(void* callData);
-    void OnIsCurrent(void* callData);
-    void OnSupportsOpenGL(void* callData);
-    void OnIsDirect(void* callData);
-    void OnFrame(void* callData);
 
     WglContext m_wglContext;
     WglDxInterop m_wglDxInterop;
     OpenGlFramebuffer m_openGlFramebuffer;
     D3DImageRenderTarget m_d3DRenderTarget;
-
-    vtkSmartPointer<vtkGenericOpenGLRenderWindow> m_renderWindow;
-    vtkSmartPointer<vtkRenderer> m_renderer;
-    vtkSmartPointer<vtkCallbackCommand> m_makeCurrentCallback;
-    vtkSmartPointer<vtkCallbackCommand> m_isCurrentCallback;
-    vtkSmartPointer<vtkCallbackCommand> m_supportsOpenGLCallback;
-    vtkSmartPointer<vtkCallbackCommand> m_isDirectCallback;
-    vtkSmartPointer<vtkCallbackCommand> m_frameCallback;
+    VtkSharpExternalOpenGlRenderContext* m_vtkContext = nullptr;
 
     int m_width{1};
     int m_height{1};
