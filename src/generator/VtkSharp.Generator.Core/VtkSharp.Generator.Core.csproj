@@ -1,7 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == '' AND '$(PackAsTool)' != 'true'">$(NETCoreSdkRuntimeIdentifier)</RuntimeIdentifier>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="ClangSharp" Version="20.1.2.3" />
+    <PackageReference Include="ClangSharp" Version="21.1.8.3" />
     <PackageReference Include="YamlDotNet" Version="18.0.0" />
   </ItemGroup>
 
