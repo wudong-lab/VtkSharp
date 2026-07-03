@@ -25,7 +25,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
     {
         if (this._isDisposed ||
             !this.IsLoaded ||
-            !this._isInitialized ||
+            !this.IsVtkRenderInitialized ||
             this._render is null ||
             !this._image.IsFrontBufferAvailable ||
             this.ActualWidth <= 0 ||
@@ -103,9 +103,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
         if (this._isInDesignMode)
         {
-            var width = this.ActualWidth > 0 ? this.ActualWidth : 300;
-            var height = this.ActualHeight > 0 ? this.ActualHeight : 200;
-            DesignTimeHelper.DrawDesignTimeContent(drawingContext, width, height);
+            DesignTimeHelper.DrawDesignTimePlaceholder(drawingContext, this.ActualWidth, this.ActualHeight);
             return;
         }
 

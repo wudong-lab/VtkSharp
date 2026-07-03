@@ -53,7 +53,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void InitializeVtkRender()
     {
-        if (this._isInitialized) return;
+        if (this.IsVtkRenderInitialized) return;
 
         this._render = VtkOpenGlD3DImageRender.Create();
         this.RenderWindow = this._render.RenderWindow;
@@ -72,7 +72,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
         this.AttachTimerObservers(this.RenderWindowInteractor);
         this.RenderWindowInteractor.Initialize();
 
-        this._isInitialized = true;
+        this.IsVtkRenderInitialized = true;
 
         //
         this.VtkRenderInitialized?.Invoke(this, new VtkRenderInitializedEventArgs(this.RenderWindow, this.Renderer, this.RenderWindowInteractor));
@@ -80,7 +80,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
 
     private void DisposeVtkRender()
     {
-        if (!this._isInitialized) return;
+        if (!this.IsVtkRenderInitialized) return;
 
         this.VtkRenderDisposing?.Invoke(this, new VtkRenderDisposingEventArgs(this.RenderWindow!, this.Renderer!, this.RenderWindowInteractor!));
 
@@ -119,7 +119,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl
         this.Renderer = null;
 
         //
-        this._isInitialized = false;
+        this.IsVtkRenderInitialized = false;
     }
 
     private void SuspendVtkRender()

@@ -21,7 +21,6 @@ public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, I
 
     private nint _backBuffer;
     private PixelSize _pixelSize;
-    private bool _isInitialized;
     private bool _isDisposed;
     private bool _renderRequested;
     private int _nextPlatformTimerId;
@@ -42,6 +41,11 @@ public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, I
     public vtkRenderWindow? RenderWindow { get; private set; }
     public vtkRenderer? Renderer { get; private set; }
     public vtkRenderWindowInteractor? RenderWindowInteractor { get; private set; }
+
+    /// <summary>
+    /// Gets a value indicating whether the VTK render has been initialized.
+    /// </summary>
+    public bool IsVtkRenderInitialized { get; private set; }
 
     public static readonly DependencyProperty DisposeOnUnloadProperty = DependencyProperty.Register(
         nameof(DisposeOnUnload), typeof(bool), typeof(VtkOpenGlD3DImageRenderControl), new PropertyMetadata(true));
