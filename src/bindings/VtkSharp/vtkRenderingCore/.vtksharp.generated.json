@@ -10,7 +10,7 @@
       "hasStaticNew": false,
       "inputHash": "314abdf1f3f59c9afd8211e47fd976b33a5dedc23133ae3d8f978b7c34b13b40",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractMapper_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkAbstractMapper_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractMapper_export_gen.cpp",
       "managedContentHash": "7a904f3619b75d3e8df972c70d3cf7086759820be9b1d27adba363321930d1fb",
       "nativeContentHash": "23cfad5757537f8ecd9749d5289c7dbafb80ac2a6cffb650d849130313a49717"
     },
@@ -21,7 +21,7 @@
       "hasStaticNew": false,
       "inputHash": "66926a1020a4cfeae46203508d57eeb66674c55c85b3b81c1f2e3ab9b9bb992b",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractMapper3D_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkAbstractMapper3D_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractMapper3D_export_gen.cpp",
       "managedContentHash": "4bd706e3498e47d2563698d637f332316b9acedc279b7dc0042707ef5772fe0a",
       "nativeContentHash": "ac2439ced2a456230a4c9087a34f0eff68c556899b1ec653704a1a26b9cbf077"
     },
@@ -32,7 +32,7 @@
       "hasStaticNew": false,
       "inputHash": "726e36b0fc0a2335265082bece3c4deb6ad66ad319b7ccf6a56f8c079c3dcb64",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractPicker_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkAbstractPicker_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractPicker_export_gen.cpp",
       "managedContentHash": "8766f540aeac9f751e4e290cc7e3ed563ab4d167f9c81ce54c1f5e8cfeb4dd2a",
       "nativeContentHash": "c8121d9e4a6465932b881da7790a3a0d2e4da4d327bb8bd58ed66968c8cd226d"
     },
@@ -43,7 +43,7 @@
       "hasStaticNew": false,
       "inputHash": "530e742d591317477dbfb161f60e44e930ca4b8cb26ac848af2644840d44a627",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractPropPicker_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkAbstractPropPicker_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractPropPicker_export_gen.cpp",
       "managedContentHash": "4fa90c6cf7052e90f3e2402a0a8d769c99fa35bf18857b0f8c5225601f412053",
       "nativeContentHash": "425b8af22b0e0b3abb7d4ff69191e1a97d9d522fe3d0a15027f33ddd5d488f2c"
     },
@@ -54,7 +54,7 @@
       "hasStaticNew": true,
       "inputHash": "2a413ff5064de405f405c202c53e95737feb160ca0b74c0f11375c449acca87f",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkActor_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkActor_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkActor_export_gen.cpp",
       "managedContentHash": "87a432b6755f8d9f570d979077402a2b77b75786b0e1b5a19ddf893abc6631d2",
       "nativeContentHash": "1e9925fd02d5a25a052626ff6d06012b15d5bcd52fbfce5c86d7c8314a3c0d09"
     },
@@ -65,7 +65,7 @@
       "hasStaticNew": true,
       "inputHash": "08caa7ac6bf643f481ab6f6e2638ecaa7cd988d9f1bf9273cd2e11f69bcac355",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkActor2D_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkActor2D_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkActor2D_export_gen.cpp",
       "managedContentHash": "0776454b97930ce34e4993bfff2e2a01252addc2c4325565e53347dfdd92d571",
       "nativeContentHash": "af4706923a345be91ee8106d6894b5d3d36f41bb134af709af683cad783b525a"
     },
@@ -76,7 +76,7 @@
       "hasStaticNew": true,
       "inputHash": "c6a9461a190b9b71c6f155c9a002128a6f6af32bea175519834856051afe0bad",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkActor2DCollection_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkActor2DCollection_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkActor2DCollection_export_gen.cpp",
       "managedContentHash": "622117d5558be8ab04e5184e988329b45bf3f79fd08d180b59abab2b785133c6",
       "nativeContentHash": "455bd0ec02ce958eba6d9aaf0a741ea3a70eba9d7177fa7b5b98ab79aa74ec60"
     },
@@ -87,7 +87,7 @@
       "hasStaticNew": true,
       "inputHash": "9573d577370a17a39838b2b1dc07153b1019aed72071b550783ee82d16e035a0",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkActorCollection_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkActorCollection_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkActorCollection_export_gen.cpp",
       "managedContentHash": "6780588ae79006b3dae17b626cedabefbb87c1e51729eec1663f2f87621d0392",
       "nativeContentHash": "228e1d3c49f2df02fcdb125e53a1bd8a1e4838e666c4b4cbc7028024c7a6638c"
     },
@@ -98,7 +98,7 @@
       "hasStaticNew": true,
       "inputHash": "1bdfd9fe388d017fb89b10375ae34145691e6dc0ae7a974db4c54575b5886041",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAssemblyPath_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkAssemblyPath_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAssemblyPath_export_gen.cpp",
       "managedContentHash": "66cbd0f1c3ee87c0f38fbd742330422fdb7d0d80597bd3d6dbd963dc944b4472",
       "nativeContentHash": "2e01dc03a68d87bfde01d2609602d32f1b455d628f74ba62b584a801cdb2e3cd"
     },
@@ -109,7 +109,7 @@
       "hasStaticNew": true,
       "inputHash": "f0286454a3668bbd07d1885c83f9ceba128311b7115f815919c1e72e2645d565",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkCamera_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkCamera_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkCamera_export_gen.cpp",
       "managedContentHash": "8e117d246265f9db7eeda6ba7cfb491e192afc57d288baf16d83be50086f90e3",
       "nativeContentHash": "d624efe990537e5fb61ef47a2fa38bf1d02e32f3ff39291abcd45f56b8567bf1"
     },
@@ -120,7 +120,7 @@
       "hasStaticNew": true,
       "inputHash": "9f839123b8efd0028750cf5cc615045b602ab41255346538148da81e55fe0341",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkCoordinate_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkCoordinate_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkCoordinate_export_gen.cpp",
       "managedContentHash": "8c58fa629e81fda8e33373f4b73d46624aadb71653da5c72e46047b9f39a6133",
       "nativeContentHash": "dd1ded49f321be996074d58a61ce80555dd2109b39f2af3bf439a6c9899f4f33"
     },
@@ -131,7 +131,7 @@
       "hasStaticNew": false,
       "inputHash": "d70d460937b2bed05719f46d0c1d47414718460f11268a08cb54337c3da0d3a5",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkCuller_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkCuller_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkCuller_export_gen.cpp",
       "managedContentHash": "1202a146188e8cc438538ce519984e979aca452cf3ba9f31e870e38165af1cee",
       "nativeContentHash": "87123d1c4bc82a883837c2f9cc8aa804be0742d3a41c934e5c5716f2c38e2ff5"
     },
@@ -142,7 +142,7 @@
       "hasStaticNew": true,
       "inputHash": "f575181908ae6174a1d00372a792be8f2897049d46afe07ab1d008291dc323ac",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkImageActor_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkImageActor_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkImageActor_export_gen.cpp",
       "managedContentHash": "a6874f4c5084c24c639543d375ed97220e7bbb504d3a235fd25332857afffb6b",
       "nativeContentHash": "f8eb8c81cccf0bb5badb45b93bc5db680fd0a03fb973854fd1ac908e5308ab85"
     },
@@ -153,7 +153,7 @@
       "hasStaticNew": true,
       "inputHash": "1cf16ec80155d07aed1f007bb5111329bc3fdf418b19c57d2c8387d17d671389",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkImageSlice_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkImageSlice_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkImageSlice_export_gen.cpp",
       "managedContentHash": "26e448013f5c7c6c83a9420d905bbcfd934385c737a8c8551b86e17b039351a1",
       "nativeContentHash": "9ad883988b2bfa94dd274e483325bc197a7690fadae93e30159e6840e27c8475"
     },
@@ -164,7 +164,7 @@
       "hasStaticNew": false,
       "inputHash": "821313118f64c4153490c597e4ce7c93a71e85ab4aaaf6d93ba59ca329b4a9e3",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkInteractorObserver_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkInteractorObserver_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkInteractorObserver_export_gen.cpp",
       "managedContentHash": "f8b1855df89749fe052e2622ebad46a64af60155acf87dd56ccb1b6db503f352",
       "nativeContentHash": "a3dc3742e1f2e59c529e82fa8bf56717c75685ef5f13577e5b99f6798c7784fb"
     },
@@ -175,7 +175,7 @@
       "hasStaticNew": true,
       "inputHash": "7128cae9bbc3dda9ba49f4d139744ab96f336144a9a12d5dadb42c60835c00e8",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkInteractorStyle_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkInteractorStyle_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkInteractorStyle_export_gen.cpp",
       "managedContentHash": "559a7463c8dcbce99cc7c94d3a3110f71f2486e9ebdac37c13ce0a81c8a4bb43",
       "nativeContentHash": "3f6245c6063af7f5af7fef908447b8fdbc6352ffd9f87bfce068e59184f0998f"
     },
@@ -186,7 +186,7 @@
       "hasStaticNew": true,
       "inputHash": "2b73c674262172d01f317dc871092d63964514d1a74b9e6135b9194b74a405ef",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkInteractorStyleSwitchBase_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkInteractorStyleSwitchBase_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkInteractorStyleSwitchBase_export_gen.cpp",
       "managedContentHash": "b264eb5fa06c07ccf44c52d0648b5713a029b32192ce3f3a3cdf3e377f2b3e23",
       "nativeContentHash": "4d83efc5d80b2a780d528be98b373feffb69f4dc47141c40c6fa8b6c2aeb2f5d"
     },
@@ -197,7 +197,7 @@
       "hasStaticNew": true,
       "inputHash": "1eceaea7a62e93fd44aee617d5263338b7f60406ac3629afd576b3891c663c58",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkLight_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkLight_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkLight_export_gen.cpp",
       "managedContentHash": "a6828ee11f445e7d44b74894e8dda171856cc37a49474a318ee60c5ac4bef451",
       "nativeContentHash": "f68241879f2316627220bef90b618d6077c3de74cba1de6aecee712851e10f42"
     },
@@ -208,7 +208,7 @@
       "hasStaticNew": false,
       "inputHash": "26155e10cacd0303a4a05ffe2c5ff5bcc36886d85a2bd8cf7c8b6661aef811fc",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkMapper_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkMapper_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkMapper_export_gen.cpp",
       "managedContentHash": "4126f0e4b27ad375fe16cb1e38e41fa4d5a61b9e757421db5d99d94c146fd01a",
       "nativeContentHash": "013d40bd6fafd106f86798f0590619595c8047186d459270a705a7ea3e1b6329"
     },
@@ -219,7 +219,7 @@
       "hasStaticNew": false,
       "inputHash": "2d70e2fb5e7c1940f21bd55961b1ed28870c01b3a39f811a96835c98e2b02321",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkMapper2D_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkMapper2D_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkMapper2D_export_gen.cpp",
       "managedContentHash": "d405644ee9fb33a6e25ae3ff0fac58ca95739cd56aff35bb89f14886fec295f4",
       "nativeContentHash": "f89896bbc3bb7c689923336e47b29d61074581eb76897d7827ee6503034d99a9"
     },
@@ -230,7 +230,7 @@
       "hasStaticNew": true,
       "inputHash": "a3da8f9bc1147e5b9d7c0b0ed363c2289f468c5108164a80d86630f460674c56",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPolyDataMapper_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkPolyDataMapper_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPolyDataMapper_export_gen.cpp",
       "managedContentHash": "e9571ed2b8caf1c113e6d494c4606260cc115c5d25b8a93a3ebc864aaf5df19e",
       "nativeContentHash": "19d593b434bf254ba0ffb837e29c0d5207ae33373dd3c877efbec6b5dc13bd9b"
     },
@@ -241,7 +241,7 @@
       "hasStaticNew": true,
       "inputHash": "7d0bc2422a7ca507dee0e7c52ee2b3d8f675e4ce4fbab1e537c52facb2ebd230",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPolyDataMapper2D_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkPolyDataMapper2D_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPolyDataMapper2D_export_gen.cpp",
       "managedContentHash": "3518674eaf50e54524c60b2d2545f5ac95c3377f17d686b2dface2098bd9101b",
       "nativeContentHash": "3dd3d2e3c8c0394880163ee296cfd066845985f777b5234cddc3e615d1ea07e7"
     },
@@ -252,7 +252,7 @@
       "hasStaticNew": false,
       "inputHash": "52913127566aea5f600289471e3503b8263539f5aa3d1302b492622f005f2b38",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkProp_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkProp_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkProp_export_gen.cpp",
       "managedContentHash": "2465398345bc44f9117929fcf587ab152d061b6367ce475d92c04d0cb3ad27f5",
       "nativeContentHash": "2d37e3f82d62f187aa0de6d4eaac67d519b02d0c4321c2799394a25802cb2235"
     },
@@ -263,7 +263,7 @@
       "hasStaticNew": false,
       "inputHash": "319982fef38ca3af5dcf1f29519e615d01de747089751646b625a1266d590aaf",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkProp3D_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkProp3D_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkProp3D_export_gen.cpp",
       "managedContentHash": "9e7f2b57c5f0fc9759659298d9678e89a721ad3d5b87de8682ca5184a9865d4e",
       "nativeContentHash": "84e791f2c5fb48d7bc8185229cb37f01e59be68f43dcd1b5c12fa7e5476dbd14"
     },
@@ -274,7 +274,7 @@
       "hasStaticNew": true,
       "inputHash": "1c34a30962f0b3266340c1f9d782152aef64700e6209a216dad57233c3b15909",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPropCollection_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkPropCollection_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPropCollection_export_gen.cpp",
       "managedContentHash": "a5fb187172435043873f8eb5a92a8a267348f60b685a2ef8a1e67d1f24c10c59",
       "nativeContentHash": "5d18734ac4c7107a1c999eaa737cc99407bea575769bf1aeb4c3ea49f92c1cac"
     },
@@ -285,7 +285,7 @@
       "hasStaticNew": true,
       "inputHash": "54111b447d0788b04d356cab226b2ceb7c4a7d3010c8b9770c963eda43ab1ffd",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPropPicker_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkPropPicker_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPropPicker_export_gen.cpp",
       "managedContentHash": "584204894b6963322dd21b028c18135d2a4c7678bf226a7c78f06b5f3fba9ca1",
       "nativeContentHash": "2a5e2ec1332d7a2a32afb4a7dd5ffbb48b01646a81cfa31ef327f80632de9be3"
     },
@@ -296,7 +296,7 @@
       "hasStaticNew": true,
       "inputHash": "85f7a649da0f1032a6e546298a0e33c77b298115c15eb0ebfc22fead2e95eb2b",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkProperty_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkProperty_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkProperty_export_gen.cpp",
       "managedContentHash": "6cdf5be77a6dd346ac35919e203b1efe618713ab7d0fabb1152c44cf78b208ac",
       "nativeContentHash": "8490f7cfbb6009c17d87f95d6aaf0bdd8eb01f0bf856bd681f313b7aafd7d5ab"
     },
@@ -307,7 +307,7 @@
       "hasStaticNew": true,
       "inputHash": "e3c50ff66d1ef104767610fe7f3d032e77172e3cdc229a3f2ea8edd56eb0e312",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkProperty2D_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkProperty2D_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkProperty2D_export_gen.cpp",
       "managedContentHash": "2ec940f7b4dbb1aed2a15aa2eee7e4bf329f623414a0c5cc8f46c253202493b6",
       "nativeContentHash": "6a6a63fc9b18e9dbcf2cd3b074eec45f6ba2ca88cdec07446b15f8fb50501420"
     },
@@ -318,7 +318,7 @@
       "hasStaticNew": true,
       "inputHash": "d2b30e6af6e0048cc4365ada50bffe16ab8e54864071a5c2078ea4f4cfdff103",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkRenderWindow_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkRenderWindow_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkRenderWindow_export_gen.cpp",
       "managedContentHash": "999c95aaa7fdcff0d5cff46b835dd50269be5d4ce8d57fe6b61478210c7f6e5f",
       "nativeContentHash": "f4beb6b8059956fedb4476014c028ac0d1fb58b0e4c2645d5fbe6afa231f0ffa"
     },
@@ -329,8 +329,8 @@
       "hasStaticNew": true,
       "inputHash": "2612a781d30ff27865f9fc022a1c65c871ccde23cd6e52158ce3e46fd63360fb",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkRenderWindowInteractor_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkRenderWindowInteractor_export_gen.cpp",
-      "managedContentHash": "2c19e3f55e671b5792c7cfe08b3795290e635dd512bacbf260bb7a7ba34e569c",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkRenderWindowInteractor_export_gen.cpp",
+      "managedContentHash": "dac34fac2def369694bd00c2144a49014b7f570ce9398502273b0fbd902e07ec",
       "nativeContentHash": "40565ceb68ebd9c47af5ebda8848280b39e13ee906710e6b1920efc7a9a5e7de"
     },
     {
@@ -340,7 +340,7 @@
       "hasStaticNew": true,
       "inputHash": "b873645803edba8001289a9887281bb7305d11f14b147fa8f1b8dd3b39cbbf85",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkRenderer_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkRenderer_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkRenderer_export_gen.cpp",
       "managedContentHash": "fb0dd5c03db6bd200ed9e4932494a2e894c6ed62142fbe6cd9b4f9b246a479eb",
       "nativeContentHash": "06008753001557166b952613610873f96060f4e439d1a5585e48430fd2e66939"
     },
@@ -351,7 +351,7 @@
       "hasStaticNew": true,
       "inputHash": "be9c273198f0a9fb293755ecafe36910e059ea20380b703028b9c835beb73dca",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkSelectVisiblePoints_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkSelectVisiblePoints_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkSelectVisiblePoints_export_gen.cpp",
       "managedContentHash": "f7084f87f9067ac7cedf151b9aaa5549c210641a51cdafea1e2ddee0dde1b86c",
       "nativeContentHash": "226f862261468efd7fb3edc9d07d6e9f33f2ee813e79467239d34ccdbae32367"
     },
@@ -362,7 +362,7 @@
       "hasStaticNew": false,
       "inputHash": "26a215b531ff4d40c34d48a1dfbe5a9091527a52a22add8b449b5f56983b547a",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkTDxInteractorStyle_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkTDxInteractorStyle_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkTDxInteractorStyle_export_gen.cpp",
       "managedContentHash": "34a690834f8e7f18a6e524d8a8a3d56fa4214e5fe27c0a6a54aa0376864fa1ff",
       "nativeContentHash": "68c940cb45675fd23b27242845c6f28b7afbd2bb596a4db9074ab2173d0d1784"
     },
@@ -373,8 +373,8 @@
       "hasStaticNew": true,
       "inputHash": "4d3d551b03bcbc4629a633b3e5c1848145f01a50a0c17925a1adb843165adb6c",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkTextActor_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkTextActor_export_gen.cpp",
-      "managedContentHash": "5a65b96ce2573ca044c1b918eba8187fca6a00c626d16613d4caed6cfde18dc1",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkTextActor_export_gen.cpp",
+      "managedContentHash": "286aaa17bdfe573984b5024767bae8216b2c49bd78ed39a2ea0c0aa3ec9879a0",
       "nativeContentHash": "dc479e7286a99f5e077ef79fa6844f613034f65dd191df926122987ea23fdaa6"
     },
     {
@@ -384,8 +384,8 @@
       "hasStaticNew": true,
       "inputHash": "0042011d9c0050a676a0784191387ff8e90d884c3d5995f036f696054100592f",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkTextMapper_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkTextMapper_export_gen.cpp",
-      "managedContentHash": "2d220a03ab348d71236c074744ae992193f587534b2f04872b670f990b2c07ce",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkTextMapper_export_gen.cpp",
+      "managedContentHash": "28add7b9b3fc54965d4848e8b01f79252b17eaccb5d9a74be8dff793860896b6",
       "nativeContentHash": "34e80b895750d966b2f74198c862f9eb651559847eee7c405015fa0ca43e1d9e"
     },
     {
@@ -395,8 +395,8 @@
       "hasStaticNew": true,
       "inputHash": "7cdc2d9c764211b2ba8bc6935f5eba5d70e3d00f86ffa5418c933b3bab86657c",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkTextProperty_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkTextProperty_export_gen.cpp",
-      "managedContentHash": "01287a1489e4c592f3c14140901983fb8302c33d4ba1ecb1d85d1c14988f3a45",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkTextProperty_export_gen.cpp",
+      "managedContentHash": "b481f702afa796a12e8ada86b47d01f20568e70639be1194a7779ec712d3ff2c",
       "nativeContentHash": "3cb9a90b44b12f0817b45aa5e51da4cdb094303ad16568f0ee8cf4afccc1d0f7"
     },
     {
@@ -406,7 +406,7 @@
       "hasStaticNew": true,
       "inputHash": "d7a5a30f1705cc0c628ee1a6c03beeb97ca369fb34cbf562973e8020d0a338c4",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkTexturedActor2D_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkTexturedActor2D_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkTexturedActor2D_export_gen.cpp",
       "managedContentHash": "3f738a22da683c34554a9e8f4b1d22df29699606578f4fb675d7c7cb1952fb6a",
       "nativeContentHash": "3ebdf22ac2e1ed4164190117d890f5392e34cefe2c3b08a4c1eff65f82b7dd8b"
     },
@@ -417,7 +417,7 @@
       "hasStaticNew": false,
       "inputHash": "634dc6af5b11944276cb37ada6cf06c444562130250abc1c2c46d4f88beecfae",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkViewport_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkViewport_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkViewport_export_gen.cpp",
       "managedContentHash": "f064f5695eec95e84c20c874515f2325d80636ded5326673eb36bd8fff6c64cc",
       "nativeContentHash": "7d29749a6c87cb4c65a8e7be4a61a4645ec302824f8bcbadb4a32118e6dc4b78"
     },
@@ -428,7 +428,7 @@
       "hasStaticNew": true,
       "inputHash": "dd33f37204862224d2d0579dc6f249905738ed143bca18dff541202780195b36",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkWindowToImageFilter_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingCore\\vtkWindowToImageFilter_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkWindowToImageFilter_export_gen.cpp",
       "managedContentHash": "e8cb08da6ccabdd6845067a38d901dda65bb610e0b5441d14e1056afe8bb8120",
       "nativeContentHash": "1d0f48e55e0f4b1b162747d35c9f25061fe2a3f9af3de485a0e8c115bb6e3f04"
     }

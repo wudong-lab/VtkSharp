@@ -10,7 +10,7 @@
       "hasStaticNew": true,
       "inputHash": "26d8cd39d58f1b1baf1679e0f04ce3b9711b8c8bc6d1ed27c83f89626e693238",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionImage\\vtkImageViewer2_gen.cs",
-      "nativePath": "native\\src\\vtkInteractionImage\\vtkImageViewer2_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionImage\\vtkImageViewer2_export_gen.cpp",
       "managedContentHash": "cc2626d37c11ef6082da708eb327b6354bd394fbc045a61b6221bdc7e90d57c5",
       "nativeContentHash": "63d00cba5002a66ff142552a6c1e4e56e1bf4a93556cb8ab221a99cc1eef6bcb"
     }

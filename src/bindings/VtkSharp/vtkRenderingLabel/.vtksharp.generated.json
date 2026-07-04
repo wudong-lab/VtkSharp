@@ -10,8 +10,8 @@
       "hasStaticNew": true,
       "inputHash": "679f39a58dd592216ab8a1a413e6641b331c34b154408c02ebd03f56945acfe8",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkLabeledDataMapper_gen.cs",
-      "nativePath": "native\\src\\vtkRenderingLabel\\vtkLabeledDataMapper_export_gen.cpp",
-      "managedContentHash": "a65b91871459ffd06d2bbd602dd2544f3a666201a64221b3007f0be0beba2e35",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkLabeledDataMapper_export_gen.cpp",
+      "managedContentHash": "c583d978005a8bd855c3c7f96e0a2cd9f4d90855d35f0167d2e0120e70694e04",
       "nativeContentHash": "de81d7675cbfb99615de025b5bb5c5297d1daa0e73016e620fdec454ad03a67a"
     }
   ]

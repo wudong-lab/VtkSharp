@@ -10,7 +10,7 @@
       "hasStaticNew": true,
       "inputHash": "b56ee56c26d096f18db6e1624e807e6b8cb4d2257f36fb034a4c98d83f2612ec",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkOrientationMarkerWidget_gen.cs",
-      "nativePath": "native\\src\\vtkInteractionWidgets\\vtkOrientationMarkerWidget_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkOrientationMarkerWidget_export_gen.cpp",
       "managedContentHash": "d023094b5ae61456b40b10c684087667d41a40b775cda1284a3c1c3c5a404d4f",
       "nativeContentHash": "39d7f95a07adeae879cee42a81e72b3ae9a11f95422e2c4768a17b2bef7108d4"
     }

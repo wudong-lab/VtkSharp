@@ -10,7 +10,7 @@
       "hasStaticNew": true,
       "inputHash": "b3706d481ce5e70ec0d8eb4336116480b1b437e85300e306ebb6c19f6e5a7b73",
       "managedPath": "bindings\\VtkSharp\\vtkImagingMath\\vtkImageMathematics_gen.cs",
-      "nativePath": "native\\src\\vtkImagingMath\\vtkImageMathematics_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingMath\\vtkImageMathematics_export_gen.cpp",
       "managedContentHash": "a102d1b7ef768ed00da5f8b2fd59ec17bd4db2fc22621007996958205db8ec32",
       "nativeContentHash": "26ec7108ebd980b2386e02e48ebead4582399aaed68a70974b3a499ce184b78b"
     }

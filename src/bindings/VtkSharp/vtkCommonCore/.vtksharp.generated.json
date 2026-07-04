@@ -10,8 +10,8 @@
       "hasStaticNew": false,
       "inputHash": "89dda0fc31e9195f96a79b17745375fa41c0afabd5584509410f15f41f061c9c",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkAbstractArray_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkAbstractArray_export_gen.cpp",
-      "managedContentHash": "dd7aa69e6dd29b272d65f571d8465ba63fec79f19fc7f84a20833dd539fe2056",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkAbstractArray_export_gen.cpp",
+      "managedContentHash": "a33dc2304060a7f49873b04c93b0b3d7b71377a049a1a74e1408096e7058455a",
       "nativeContentHash": "09b8753aa6d634ef508d60dfb97576b1e972fc83a8127790e6959618594ed1c3"
     },
     {
@@ -21,7 +21,7 @@
       "hasStaticNew": true,
       "inputHash": "e43e54a5239fc5122a39d538ab304b74a14ddbff45901fda1265610380d20e2e",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkCollection_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkCollection_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkCollection_export_gen.cpp",
       "managedContentHash": "4251a722372b224bea9d271ae5d8ad90e4942e889f18e99ef99828afcee60e0d",
       "nativeContentHash": "9c76daa06cef212f720babdf69b7e043f0820ed9bb7d532a387f8e6351435ff9"
     },
@@ -32,7 +32,7 @@
       "hasStaticNew": false,
       "inputHash": "59a08bc20dc9c70916e6b1f3d8119c48861a22c06b578d87f7754f09a45d45ab",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkDataArray_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkDataArray_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkDataArray_export_gen.cpp",
       "managedContentHash": "e32726f336536b3b7a3e1beb5e931ecdd87471f5b3142f8bf4eb4225c1bff42f",
       "nativeContentHash": "85c39c55059170586de36b4ea6621ff8b756df9ca9a5e98a3257201e1eb81a30"
     },
@@ -43,7 +43,7 @@
       "hasStaticNew": true,
       "inputHash": "6b94aaea2f5d253a0c0eaa1c1876596fa0da8b433721a47d33971d6d1dd9ecc3",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkDoubleArray_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkDoubleArray_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkDoubleArray_export_gen.cpp",
       "managedContentHash": "1a6c32a2a5d526790ea29b7af51bdfb935876040f5dc3ba946784cfc8bc3853b",
       "nativeContentHash": "0c862fb6f80a36394948dce397d8a9fbe943ed9c6fedd5802305fceb61c1fd05"
     },
@@ -54,7 +54,7 @@
       "hasStaticNew": false,
       "inputHash": "ee63f5008f4694c1c9a8ee75506eff75c6a38842cf63c82a8ca56b25d530ad0a",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkEventData_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkEventData_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkEventData_export_gen.cpp",
       "managedContentHash": "b0a7309bf6cef55dc2d2b415f9ce2cac853b889fc8c5aad7a1421bf221f009d0",
       "nativeContentHash": "c349bf73e898183c6e11a35c3891f0074506555882e650c211a9e27bf3e4a8b2"
     },
@@ -65,7 +65,7 @@
       "hasStaticNew": true,
       "inputHash": "5dcb713c3a4f06cf99d31938adfb1000c9bffe001a976141f8e10286dc2bcc76",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkIdList_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkIdList_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkIdList_export_gen.cpp",
       "managedContentHash": "fd744d440031e7d0c9c7f869851dd69d7300268b54cc8e042844776452dd4a30",
       "nativeContentHash": "dd7f64c60b843c39829e9ca0d4a10e7d4bddcf680cd9a7942c3bfa12fcd34533"
     },
@@ -76,7 +76,7 @@
       "hasStaticNew": true,
       "inputHash": "e74c8c7f95354bdec4514df91f1e74fb29c5e15bd25c93e69434ec4975e07df4",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkInformation_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkInformation_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkInformation_export_gen.cpp",
       "managedContentHash": "af2dd6d4fb65fb772aaf5f0230639054f78c720100e92cf1dfaef9b633a95eb8",
       "nativeContentHash": "6631fa05ab01c7bfe48344b55e5431846183632985778ef42bf55b92d24376b0"
     },
@@ -87,7 +87,7 @@
       "hasStaticNew": true,
       "inputHash": "045794fe1cc13d6f894a91cfa2750a0d6e755ee5eed296a33389fb422a20d585",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkInformationVector_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkInformationVector_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkInformationVector_export_gen.cpp",
       "managedContentHash": "910ae32a1f1200dd8aa930f006e128cd5d15185c2980cbf47be279c6a9114fa9",
       "nativeContentHash": "eb14134a9ed2d8e4f73bdc348a0ccfd8e28a4ccc79c435cb14d54589b8c6c747"
     },
@@ -98,7 +98,7 @@
       "hasStaticNew": true,
       "inputHash": "6ee30b976cd1d3f85c60ed23698214870263d4ceec70e737aa9c55943ca417fd",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkMinimalStandardRandomSequence_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkMinimalStandardRandomSequence_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkMinimalStandardRandomSequence_export_gen.cpp",
       "managedContentHash": "740b5afe0724c9f14407526e7e847e9c4b4b09c5c45602133be209eca3d0fc39",
       "nativeContentHash": "9156add31e5098cfdbbccd0627a08eb2f91eda6eb94164eb6a90853c1d7eb1aa"
     },
@@ -109,7 +109,7 @@
       "hasStaticNew": true,
       "inputHash": "980df2f3e2e2bc9468b7412d4fb6efd0b76f2608221e715ea73f1022f2d9ebce",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkPoints_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkPoints_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkPoints_export_gen.cpp",
       "managedContentHash": "ef643a9440add8ac195bd466bbb4c4616ba4ea3744e48b61eab85c3830d857b6",
       "nativeContentHash": "15cba2cd4d6b474ae3c9d8ed9325a0484ef44eb638d8d495ec5632fc717428f2"
     },
@@ -120,7 +120,7 @@
       "hasStaticNew": false,
       "inputHash": "0c6680f8d4dcb021915f4b046df62c5c0adb74ab2dc92504bf3dde6059e94f6d",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkRandomSequence_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkRandomSequence_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkRandomSequence_export_gen.cpp",
       "managedContentHash": "d20a0cc8b07152ed2f40a6be70336fe2c6c1d3345b423c5a6d9eb4cae01e3a1d",
       "nativeContentHash": "4ff982ad7b245e75888e7e31dfd131994367160fd2ce5b04d1663d9a1a054bea"
     },
@@ -131,7 +131,7 @@
       "hasStaticNew": true,
       "inputHash": "98d5ea39603435234d27e7fe340e42414c22dbda17de23ecb0eb84c87486c956",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkStringArray_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkStringArray_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkStringArray_export_gen.cpp",
       "managedContentHash": "015b28484e9fd3602a8faa30281265caebdcc04636f03aad783da7ac80492702",
       "nativeContentHash": "a17c7613e23619626fd3ca9df82beb6e42568594be26f409c2fe65a724b0db8e"
     },
@@ -142,7 +142,7 @@
       "hasStaticNew": true,
       "inputHash": "c5348eb5c0336a258165b0362a761a2f87d89d191d5c8bda8546db015ae862a0",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkUnsignedCharArray_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkUnsignedCharArray_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkUnsignedCharArray_export_gen.cpp",
       "managedContentHash": "4e4a76eaba2a983382d1f958b5fab53b585ed3596c96795fd1d0856400ac91dc",
       "nativeContentHash": "b24546a9a3c7f0be84ba150708672cf10703ff9253a33298ac095f774ba1d6be"
     },
@@ -153,8 +153,8 @@
       "hasStaticNew": false,
       "inputHash": "9f4f2864e49dcc228741fa37a008489af7fadba616ae0e944077eec8a664feba",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkWindow_gen.cs",
-      "nativePath": "native\\src\\vtkCommonCore\\vtkWindow_export_gen.cpp",
-      "managedContentHash": "5ee7daac8a281a29200abfec7f8e48f6208415faa39a0713d8e8a4d4a67c0345",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkWindow_export_gen.cpp",
+      "managedContentHash": "a626411bf38eb0d53dce9be2cca8c76baa4d76c418e2318fff3984445cecfa92",
       "nativeContentHash": "a47fc0fbdd388a810a47bc3609b8598e20189e901385066c181263e3a25236c7"
     }
   ]

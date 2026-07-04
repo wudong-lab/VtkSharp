@@ -10,7 +10,7 @@
       "hasStaticNew": true,
       "inputHash": "d131dc25b911cae7277c495c967e44a22b36de3bd3f8f1e2c456666ee1757ddf",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkArrowSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkArrowSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkArrowSource_export_gen.cpp",
       "managedContentHash": "d397ff3d2aa787d55aabdd3954edb6c007d7501a46de554df04b6c9544aded97",
       "nativeContentHash": "35ca101db183ab69de527605cb8482cf9efa9074cd94ccf55c2dc11b4fda6618"
     },
@@ -21,7 +21,7 @@
       "hasStaticNew": true,
       "inputHash": "99adff42a735d8a118f279cfcf41e655e4575a9feb1bfeded4a581393b0686ae",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkConeSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkConeSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkConeSource_export_gen.cpp",
       "managedContentHash": "b3da17021b1a4b57a11e925962e1991bc86ec4c8d356cb4cbf1eb69aa997e7f9",
       "nativeContentHash": "653f605b57ce45f98e2b24a9f3f75b17b1fdc0d04232a5f0afd77593ce0d9afe"
     },
@@ -32,7 +32,7 @@
       "hasStaticNew": true,
       "inputHash": "44f328a5c321bf263f032d047cb8469c8c04a884bae1a181c64a70ae7b080007",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkCubeSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkCubeSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkCubeSource_export_gen.cpp",
       "managedContentHash": "42620c23c4edc7ba0524adadc3b6e08cae2d30a1229c7fb40309b4cb198e180e",
       "nativeContentHash": "7df3a09a5904959676670e0a2cbec5ea23d51fd0037b70f27b0f3077ab224379"
     },
@@ -43,7 +43,7 @@
       "hasStaticNew": true,
       "inputHash": "959b7ac911d4d8cdd280a50035d8ec58c22cd685f60015450ddddcade48e6a3c",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkCylinderSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkCylinderSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkCylinderSource_export_gen.cpp",
       "managedContentHash": "62300d4e60c7e1086bb6e3a57b25625875f4043d4d93c76d7b8436237773528f",
       "nativeContentHash": "ef7b81a34d9a59cb3122d5e59b98493e6dc865da727c464663b4ec364d79d080"
     },
@@ -54,7 +54,7 @@
       "hasStaticNew": true,
       "inputHash": "462eef4cc7b2deda96125f92fd53f76d84a144ac6c0a6d4841dc6ab22fb9e280",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkLineSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkLineSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkLineSource_export_gen.cpp",
       "managedContentHash": "4521c86590513ef85ca03eccf8e552b9ee30bad09ab39e7f5673af3440b25f86",
       "nativeContentHash": "47c7a3b9c652918c0cf0aef538a4e910cc5e425d136909218bc8d70a6b1990ac"
     },
@@ -65,7 +65,7 @@
       "hasStaticNew": true,
       "inputHash": "618924c7ed1a24a959000b945d9fb4e1570db4c1a3891a94ed0a5f637d611b0d",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkParametricFunctionSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkParametricFunctionSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkParametricFunctionSource_export_gen.cpp",
       "managedContentHash": "7fa4489a1520f60810c30f16afba2ee46ea265352b3d5e49f169292309501580",
       "nativeContentHash": "5e741e5effd49f0614e761575cdf3dd1cca07c5e87cb9d18269c5d22b3fd91f2"
     },
@@ -76,7 +76,7 @@
       "hasStaticNew": true,
       "inputHash": "ebfc63f1add2db11e19d06043c6ec9562c28c372fc134a0fe0a0518d4ad93810",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkPlaneSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkPlaneSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkPlaneSource_export_gen.cpp",
       "managedContentHash": "0714fba776ac76bae676f826981f392db2d4ce4e467d7b3afa864432c9032ebd",
       "nativeContentHash": "272ea03b4ba63de98e798033f3b807aeda45e5b5a0630bf8bbb9e1845311f1bc"
     },
@@ -87,7 +87,7 @@
       "hasStaticNew": true,
       "inputHash": "55b8719b969cdaff05d3b7485922efa9d5e1cced1aa469d8fa29b1fe0263a2a7",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkRegularPolygonSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkRegularPolygonSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkRegularPolygonSource_export_gen.cpp",
       "managedContentHash": "c159eece9a9148bdd49adf0fa07a281d659b5024615b4f4f1f06710092721941",
       "nativeContentHash": "04205cf1ebd5926cde96e03be0fb2883b5a77144dbecc7cb95733836b2d9f9e4"
     },
@@ -98,7 +98,7 @@
       "hasStaticNew": true,
       "inputHash": "8d66788bcc8df3fee0101929a121d43225d790904f540cd28439fa157e3dacec",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkSphereSource_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersSources\\vtkSphereSource_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkSphereSource_export_gen.cpp",
       "managedContentHash": "7f175c162a33aa7f5bd91cc2ba5be15280b832f7fa49a0abef2bce1c2d6e2a90",
       "nativeContentHash": "7f12459fc8cff751ba12c7b58a496f41f749688c6ca848dff992866e7337997c"
     }

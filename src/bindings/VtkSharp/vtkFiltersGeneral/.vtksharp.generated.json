@@ -10,7 +10,7 @@
       "hasStaticNew": true,
       "inputHash": "5d327ae53e2c9b761f6c830650c839de4ff9f164e96a508ed8976702e50d9edc",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_export_gen.cpp",
       "managedContentHash": "9106cfed9bb2cbe39291730e17d7b4c4ad3b1bcb3c121a6d65aba423c9c1f918",
       "nativeContentHash": "6a6be96e6eae5db799f836519695b74bfa709633e3043b5035519489d4642fa4"
     },
@@ -21,7 +21,7 @@
       "hasStaticNew": true,
       "inputHash": "fba203bb91363f15390503d4dde0055760c0351680371e14f00bc295dcd5abcd",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkVertexGlyphFilter_gen.cs",
-      "nativePath": "native\\src\\vtkFiltersGeneral\\vtkVertexGlyphFilter_export_gen.cpp",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkVertexGlyphFilter_export_gen.cpp",
       "managedContentHash": "6e49926d56fffbf423deec2f5754d109a1e738828a96c37c5ea14a1b8f3fe880",
       "nativeContentHash": "becd2ed5c4a7e64c383dcba6882ea7b0d36fe6a6219b0477e37f5fbdb2ef33eb"
     }
