@@ -43,6 +43,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
     private TypeListItemViewModel? _selectedType;
 
     [ObservableProperty] private bool _isBusy;
+    [ObservableProperty] private bool _isFunctionListLoading;
     [ObservableProperty] private bool _isUnsupportedExpanded;
 
     [ObservableProperty] private string _logText = "";
@@ -201,17 +202,25 @@ public sealed partial class MainWindowViewModel : ObservableObject
         var typeName = this.SelectedType.TypeName;
         this.AppendLog($"Loading inventory for {typeName}");
 
-        var configPath = this.ConfigPath;
-        var inventory = await Task.Run(() => this._inventoryService.GetTypeInventory(configPath, typeName));
-        this._allExportedGroups.ReplaceWith(ToGroupViewModels(inventory.AlreadyExported));
-        this._allAvailableGroups.ReplaceWith(ToGroupViewModels(inventory.AvailableToAdd));
-        this._allUnsupportedGroups.ReplaceWith(ToGroupViewModels(inventory.Unsupported));
-        this.RefreshExportedGroups();
-        this.RefreshAvailableGroups();
-        this.RefreshUnsupportedGroups();
-        this.AppendLog(
-            $"Loaded {typeName}: {CountFunctions(this._allExportedGroups)} exported, " +
-            $"{CountFunctions(this._allAvailableGroups)} available, {CountFunctions(this._allUnsupportedGroups)} unsupported.");
+        try
+        {
+            this.IsFunctionListLoading = true;
+            var configPath = this.ConfigPath;
+            var inventory = await Task.Run(() => this._inventoryService.GetTypeInventory(configPath, typeName));
+            this._allExportedGroups.ReplaceWith(ToGroupViewModels(inventory.AlreadyExported));
+            this._allAvailableGroups.ReplaceWith(ToGroupViewModels(inventory.AvailableToAdd));
+            this._allUnsupportedGroups.ReplaceWith(ToGroupViewModels(inventory.Unsupported));
+            this.RefreshExportedGroups();
+            this.RefreshAvailableGroups();
+            this.RefreshUnsupportedGroups();
+            this.AppendLog(
+                $"Loaded {typeName}: {CountFunctions(this._allExportedGroups)} exported, " +
+                $"{CountFunctions(this._allAvailableGroups)} available, {CountFunctions(this._allUnsupportedGroups)} unsupported.");
+        }
+        finally
+        {
+            this.IsFunctionListLoading = false;
+        }
 
         if (string.Compare(typeName, this.TypeSearchText, StringComparison.OrdinalIgnoreCase) != 0)
         {

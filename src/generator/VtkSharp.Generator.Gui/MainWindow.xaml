@@ -13,6 +13,7 @@
   d:DataContext="{d:DesignInstance Type=viewModels:MainWindowViewModel, IsDesignTimeCreatable=False}">
 
   <Window.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <Style TargetType="TextBox">
       <Setter Property="Margin" Value="0,0,8,0" />
       <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -173,6 +174,22 @@
             </ScrollViewer>
           </DockPanel>
         </Expander>
+
+        <Border Grid.RowSpan="3"
+                Background="#CCFFFFFF"
+                Visibility="{Binding IsFunctionListLoading, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Panel.ZIndex="10">
+          <StackPanel Width="260"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+            <TextBlock Text="Loading functions..."
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,12"
+                       Foreground="#333" />
+            <ProgressBar Height="12"
+                         IsIndeterminate="True" />
+          </StackPanel>
+        </Border>
       </Grid>
     </Grid>
 
