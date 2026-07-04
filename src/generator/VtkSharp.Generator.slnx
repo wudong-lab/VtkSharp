@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="VtkSharp.Generator.Cli/VtkSharp.Generator.Cli.csproj" />
   <Project Path="VtkSharp.Generator.Core/VtkSharp.Generator.Core.csproj" />
+  <Project Path="VtkSharp.Generator.Gui/VtkSharp.Generator.Gui.csproj" />
   <Project Path="VtkSharp.Generator.Tests/VtkSharp.Generator.Tests.csproj" />
 </Solution>
