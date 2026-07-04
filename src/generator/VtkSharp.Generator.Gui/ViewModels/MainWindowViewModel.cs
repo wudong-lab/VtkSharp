@@ -1,6 +1,5 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
@@ -31,34 +30,34 @@ public sealed partial class MainWindowViewModel : ObservableObject
     [NotifyCanExecuteChangedFor(nameof(LoadTypesCommand))]
     [NotifyCanExecuteChangedFor(nameof(ApplyYamlCommand))]
     [NotifyCanExecuteChangedFor(nameof(RunGeneratorCommand))]
-    private string configPath = "";
+    private string _configPath = "";
 
-    [ObservableProperty]
-    private string typeSearchText = "";
-
-    [ObservableProperty]
-    private string exportedSearchText = "";
-
-    [ObservableProperty]
-    private string availableSearchText = "";
-
-    [ObservableProperty]
-    private string unsupportedSearchText = "";
+    [ObservableProperty] private string _typeSearchText = "";
+    [ObservableProperty] private string _exportedSearchText = "";
+    [ObservableProperty] private string _availableSearchText = "";
+    [ObservableProperty] private string _unsupportedSearchText = "";
 
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(LoadTypeInventoryCommand))]
-    private TypeListItemViewModel? selectedType;
+    private TypeListItemViewModel? _selectedType;
 
-    [ObservableProperty]
-    private bool isBusy;
+    [ObservableProperty] private bool _isBusy;
+    [ObservableProperty] private bool _isUnsupportedExpanded;
 
-    [ObservableProperty]
-    private bool isUnsupportedExpanded;
+    [ObservableProperty] private string _logText = "";
 
-    [ObservableProperty]
-    private string logText = "";
+    partial void OnTypeSearchTextChanged(string value)
+    {
+        if (!string.IsNullOrWhiteSpace(this.TypeSearchText) &&
+            this.SelectedType != null &&
+            string.Compare(this.SelectedType.TypeName, this.TypeSearchText, StringComparison.OrdinalIgnoreCase) == 0)
+        {
+            return;
+        }
 
-    partial void OnTypeSearchTextChanged(string value) => this.RefreshTypes();
+        this.RefreshTypes();
+    }
+
     partial void OnExportedSearchTextChanged(string value) => this.RefreshExportedGroups();
     partial void OnAvailableSearchTextChanged(string value) => this.RefreshAvailableGroups();
     partial void OnUnsupportedSearchTextChanged(string value) => this.RefreshUnsupportedGroups();
@@ -89,11 +88,14 @@ public sealed partial class MainWindowViewModel : ObservableObject
         await this.RunBusyAsync(async () =>
         {
             this.AppendLog($"Loading types from {this.ConfigPath}");
+
             var configPath = this.ConfigPath;
             var types = await Task.Run(() => this._inventoryService.ListTypes(configPath));
             this._allTypes.Clear();
             foreach (var type in types)
+            {
                 this._allTypes.Add(new TypeListItemViewModel(type));
+            }
 
             this.RefreshTypes();
             this.AppendLog($"Loaded {types.Count} type(s).");
@@ -103,13 +105,9 @@ public sealed partial class MainWindowViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanLoadTypeInventory))]
     private async Task LoadTypeInventoryAsync()
     {
-        if (this.SelectedType is null)
-            return;
+        if (this.SelectedType is null) return;
 
-        await this.RunBusyAsync(async () =>
-        {
-            await this.LoadTypeInventoryForSelectedTypeAsync();
-        });
+        await this.RunBusyAsync(async () => { await this.LoadTypeInventoryForSelectedTypeAsync(); });
     }
 
     [RelayCommand(CanExecute = nameof(CanApplyOrRun))]
@@ -125,7 +123,9 @@ public sealed partial class MainWindowViewModel : ObservableObject
             }
 
             foreach (var diagnostic in plan.Diagnostics)
+            {
                 this.AppendLog(diagnostic);
+            }
 
             var configPath = this.ConfigPath;
             await Task.Run(() => this._inventoryService.ApplyPlanToWhitelist(configPath, plan));
@@ -146,7 +146,9 @@ public sealed partial class MainWindowViewModel : ObservableObject
             }
 
             foreach (var diagnostic in plan.Diagnostics)
+            {
                 this.AppendLog(diagnostic);
+            }
 
             var configPath = this.ConfigPath;
             await Task.Run(() => this._inventoryService.ApplyPlanToWhitelist(configPath, plan));
@@ -168,8 +170,8 @@ public sealed partial class MainWindowViewModel : ObservableObject
                 return (ExitCode: exitCode, Output: output.ToString(), Error: error.ToString());
             });
 
-            AppendMultiline(result.Output);
-            AppendMultiline(result.Error);
+            this.AppendMultiline(result.Output);
+            this.AppendMultiline(result.Error);
 
             if (result.ExitCode == 0)
             {
@@ -193,11 +195,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     private async Task LoadTypeInventoryForSelectedTypeAsync()
     {
-        if (this.SelectedType is null)
-            return;
+        if (this.SelectedType is null) return;
 
         var typeName = this.SelectedType.TypeName;
         this.AppendLog($"Loading inventory for {typeName}");
+
         var configPath = this.ConfigPath;
         var inventory = await Task.Run(() => this._inventoryService.GetTypeInventory(configPath, typeName));
         this._allExportedGroups.ReplaceWith(ToGroupViewModels(inventory.AlreadyExported));
@@ -209,6 +211,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
         this.AppendLog(
             $"Loaded {typeName}: {CountFunctions(this._allExportedGroups)} exported, " +
             $"{CountFunctions(this._allAvailableGroups)} available, {CountFunctions(this._allUnsupportedGroups)} unsupported.");
+
+        if (string.Compare(typeName, this.TypeSearchText, StringComparison.OrdinalIgnoreCase) != 0)
+        {
+            this.TypeSearchText = typeName;
+        }
     }
 
     private IEnumerable<FunctionItemViewModel> GetSelectedFunctions()
@@ -218,8 +225,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     private async Task RunBusyAsync(Func<Task> action)
     {
-        if (this.IsBusy)
-            return;
+        if (this.IsBusy) return;
 
         try
         {
@@ -246,35 +252,37 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     private void RefreshTypes()
     {
+        if (string.IsNullOrWhiteSpace(this.TypeSearchText))
+        {
+            this.SelectedType = null;
+            this.Types.ReplaceCollection(this._allTypes);
+            return;
+        }
+
+        var items = this._allTypes.Where(type => IsMatch(type.TypeName, this.TypeSearchText)).ToList();
+        this.Types.ReplaceCollection(items);
+
         var selectedTypeName = this.SelectedType?.TypeName;
-        var items = this._allTypes
-            .Where(type => IsMatch(type.TypeName, this.TypeSearchText))
-            .ToList();
-        ReplaceCollection(this.Types, items);
         this.SelectedType = this.Types.FirstOrDefault(type => type.TypeName == selectedTypeName);
     }
 
     private void RefreshExportedGroups()
-        => ReplaceCollection(this.ExportedGroups, FilterGroups(this._allExportedGroups, this.ExportedSearchText));
+        => this.ExportedGroups.ReplaceCollection(FilterGroups(this._allExportedGroups, this.ExportedSearchText));
 
     private void RefreshAvailableGroups()
-        => ReplaceCollection(this.AvailableGroups, FilterGroups(this._allAvailableGroups, this.AvailableSearchText));
+        => this.AvailableGroups.ReplaceCollection(FilterGroups(this._allAvailableGroups, this.AvailableSearchText));
 
     private void RefreshUnsupportedGroups()
-        => ReplaceCollection(this.UnsupportedGroups, FilterGroups(this._allUnsupportedGroups, this.UnsupportedSearchText));
+        => this.UnsupportedGroups.ReplaceCollection(FilterGroups(this._allUnsupportedGroups, this.UnsupportedSearchText));
 
     private static IReadOnlyList<FunctionGroupViewModel> ToGroupViewModels(IReadOnlyList<FunctionExportGroup> groups)
-        => groups
-            .Select(group => new FunctionGroupViewModel(
+        => groups.Select(group => new FunctionGroupViewModel(
                 group.DeclaringTypeName,
                 group.Functions.Select(function => new FunctionItemViewModel(function)).ToList()))
             .ToList();
 
-    private static IReadOnlyList<FunctionGroupViewModel> FilterGroups(
-        IReadOnlyList<FunctionGroupViewModel> groups,
-        string searchText)
-        => groups
-            .Select(group => new FunctionGroupViewModel(
+    private static IReadOnlyList<FunctionGroupViewModel> FilterGroups(IReadOnlyList<FunctionGroupViewModel> groups, string searchText)
+        => groups.Select(group => new FunctionGroupViewModel(
                 group.DeclaringTypeName,
                 group.Functions.Where(function => IsMatch(function.Signature, searchText)).ToList()))
             .Where(group => group.Functions.Count > 0)
@@ -291,8 +299,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     private void AppendMultiline(string text)
     {
-        if (string.IsNullOrWhiteSpace(text))
-            return;
+        if (string.IsNullOrWhiteSpace(text)) return;
 
         foreach (var line in text.Replace("\r\n", "\n", StringComparison.Ordinal).Split('\n'))
         {
@@ -304,25 +311,16 @@ public sealed partial class MainWindowViewModel : ObservableObject
     private static int CountFunctions(IEnumerable<FunctionGroupViewModel> groups)
         => groups.Sum(group => group.Functions.Count);
 
-    private static void ReplaceCollection<T>(ObservableCollection<T> collection, IEnumerable<T> items)
-    {
-        collection.Clear();
-        foreach (var item in items)
-            collection.Add(item);
-    }
-
     private static string FindDefaultConfigPath()
     {
         var current = new DirectoryInfo(Environment.CurrentDirectory);
         while (current is not null)
         {
             var fromRepoRoot = Path.Combine(current.FullName, "src", "generator", "config", "vtksharp.generator.yml");
-            if (File.Exists(fromRepoRoot))
-                return fromRepoRoot;
+            if (File.Exists(fromRepoRoot)) return fromRepoRoot;
 
             var fromGeneratorRoot = Path.Combine(current.FullName, "config", "vtksharp.generator.yml");
-            if (File.Exists(fromGeneratorRoot))
-                return fromGeneratorRoot;
+            if (File.Exists(fromGeneratorRoot)) return fromGeneratorRoot;
 
             current = current.Parent;
         }
@@ -344,5 +342,17 @@ file static class ListExtensions
     {
         list.Clear();
         list.AddRange(items);
+    }
+}
+
+file static class ObservableCollectionExtensions
+{
+    public static void ReplaceCollection<T>(this ObservableCollection<T> collection, IEnumerable<T> items)
+    {
+        collection.Clear();
+        foreach (var item in items)
+        {
+            collection.Add(item);
+        }
     }
 }

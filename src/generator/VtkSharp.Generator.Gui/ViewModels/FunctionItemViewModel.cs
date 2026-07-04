@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using VtkSharp.Generator.Core.Exporting;
 
 namespace VtkSharp.Generator.Gui.ViewModels;
@@ -16,5 +16,5 @@ public sealed partial class FunctionItemViewModel : ObservableObject
     public bool CanSelectForExport => this.Candidate.CanSelectForExport;
 
     [ObservableProperty]
-    private bool isSelected;
+    private bool _isSelected;
 }
