@@ -11,8 +11,7 @@
     <Title>VtkSharp — VTK .NET Bindings</Title>
     <Description>
       VtkSharp is an unofficial open-source .NET binding for VTK (Visualization Toolkit).
-      Uses a C ABI shim and C# P/Invoke approach. Targets netstandard2.0 and net8.0.
-      Not affiliated with or endorsed by Kitware.
+      Uses a C ABI shim and C# P/Invoke approach. 
     </Description>
     <PackageTags>VTK;visualization;graphics;rendering;netstandard;cross-platform</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
