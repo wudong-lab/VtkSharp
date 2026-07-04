@@ -49,12 +49,12 @@ public sealed class NativeProjectEmitterTests
         var text = emitter.EmitCMakePresets();
 
         Assert.Contains("\"version\": 6", text);
-        Assert.Contains("\"windows-x64-vs2026\"", text);
+        Assert.Contains("\"win-x64-vs2026\"", text);
         Assert.Contains("\"Visual Studio 18 2026\"", text);
-        Assert.Contains("\"windows-x64-vs2022\"", text);
+        Assert.Contains("\"win-x64-vs2022\"", text);
         Assert.Contains("\"Visual Studio 17 2022\"", text);
-        Assert.Contains("\"windows-x64-vs2026-debug\"", text);
-        Assert.Contains("\"windows-x64-vs2022-debug\"", text);
+        Assert.Contains("\"win-x64-vs2026-debug\"", text);
+        Assert.Contains("\"win-x64-vs2022-debug\"", text);
         Assert.EndsWith("\n", text);
     }
 

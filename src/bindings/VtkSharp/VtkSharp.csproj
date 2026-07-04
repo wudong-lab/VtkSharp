@@ -44,8 +44,8 @@
   -->
   <PropertyGroup>
     <VtkSharpNativeDllName>VtkSharp.Native.dll</VtkSharpNativeDllName>
-    <VtkSharpNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2026\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeDefaultDllPath>
-    <VtkSharpNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2022\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeVs2022DllPath>
+    <VtkSharpNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\win-x64-vs2026\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeDefaultDllPath>
+    <VtkSharpNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\win-x64-vs2022\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeVs2022DllPath>
     <VtkSharpNativeDllPath Condition="Exists('$(VtkSharpNativeDefaultDllPath)')">$(VtkSharpNativeDefaultDllPath)</VtkSharpNativeDllPath>
     <VtkSharpNativeDllPath Condition="'$(VtkSharpNativeDllPath)' == '' And Exists('$(VtkSharpNativeVs2022DllPath)')">$(VtkSharpNativeVs2022DllPath)</VtkSharpNativeDllPath>
   </PropertyGroup>

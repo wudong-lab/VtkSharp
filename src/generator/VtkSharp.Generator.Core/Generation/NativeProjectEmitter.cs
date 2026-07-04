@@ -69,39 +69,39 @@ public sealed class NativeProjectEmitter
              "version": 6,
              "configurePresets": [
                {
-                 "name": "windows-x64-vs2026",
+                 "name": "win-x64-vs2026",
                  "displayName": "Windows x64 (Visual Studio 2026)",
                  "generator": "Visual Studio 18 2026",
                  "architecture": "x64",
-                 "binaryDir": "${sourceDir}/out/build/windows-x64-vs2026"
+                 "binaryDir": "${sourceDir}/out/build/win-x64-vs2026"
                },
                {
-                 "name": "windows-x64-vs2022",
+                 "name": "win-x64-vs2022",
                  "displayName": "Windows x64 (Visual Studio 2022)",
                  "generator": "Visual Studio 17 2022",
                  "architecture": "x64",
-                 "binaryDir": "${sourceDir}/out/build/windows-x64-vs2022"
+                 "binaryDir": "${sourceDir}/out/build/win-x64-vs2022"
                }
              ],
              "buildPresets": [
                {
-                 "name": "windows-x64-vs2026-debug",
-                 "configurePreset": "windows-x64-vs2026",
+                 "name": "win-x64-vs2026-debug",
+                 "configurePreset": "win-x64-vs2026",
                  "configuration": "Debug"
                },
                {
-                 "name": "windows-x64-vs2026-release",
-                 "configurePreset": "windows-x64-vs2026",
+                 "name": "win-x64-vs2026-release",
+                 "configurePreset": "win-x64-vs2026",
                  "configuration": "Release"
                },
                {
-                 "name": "windows-x64-vs2022-debug",
-                 "configurePreset": "windows-x64-vs2022",
+                 "name": "win-x64-vs2022-debug",
+                 "configurePreset": "win-x64-vs2022",
                  "configuration": "Debug"
                },
                {
-                 "name": "windows-x64-vs2022-release",
-                 "configurePreset": "windows-x64-vs2022",
+                 "name": "win-x64-vs2022-release",
+                 "configurePreset": "win-x64-vs2022",
                  "configuration": "Release"
                }
              ]

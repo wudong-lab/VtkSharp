@@ -68,8 +68,8 @@ Expected: all commands print `True`.
 Replace local native paths so they point from `src/bindings/VtkSharp/` to `src/bindings/VtkSharp.Native/`:
 
 ```xml
-<VtkSharpNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2026\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeDefaultDllPath>
-<VtkSharpNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2022\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeVs2022DllPath>
+<VtkSharpNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\win-x64-vs2026\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeDefaultDllPath>
+<VtkSharpNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\win-x64-vs2022\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeVs2022DllPath>
 ```
 
 - [ ] **Step 2: Update bindings solution**

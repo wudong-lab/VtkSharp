@@ -11,8 +11,8 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $nativeDir = Join-Path $repoRoot "src\bindings\VtkSharp.Native"
 
 $candidates = @(
-    @{ Name = "Visual Studio 2026"; ConfigurePreset = "windows-x64-vs2026"; BuildPreset = if ($Configuration -eq "Debug") { "windows-x64-vs2026-debug" } else { "windows-x64-vs2026-release" } },
-    @{ Name = "Visual Studio 2022"; ConfigurePreset = "windows-x64-vs2022"; BuildPreset = if ($Configuration -eq "Debug") { "windows-x64-vs2022-debug" } else { "windows-x64-vs2022-release" } }
+    @{ Name = "Visual Studio 2026"; ConfigurePreset = "win-x64-vs2026"; BuildPreset = if ($Configuration -eq "Debug") { "win-x64-vs2026-debug" } else { "win-x64-vs2026-release" } },
+    @{ Name = "Visual Studio 2022"; ConfigurePreset = "win-x64-vs2022"; BuildPreset = if ($Configuration -eq "Debug") { "win-x64-vs2022-debug" } else { "win-x64-vs2022-release" } }
 )
 
 function Invoke-CMakeConfigure {

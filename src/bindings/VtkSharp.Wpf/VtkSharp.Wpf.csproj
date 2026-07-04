@@ -30,8 +30,8 @@
   -->
   <PropertyGroup>
     <VtkSharpWpfNativeDllName>VtkSharp.Wpf.Native.dll</VtkSharpWpfNativeDllName>
-    <VtkSharpWpfNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2026\VtkSharp.Wpf.Native\$(Configuration)\$(VtkSharpWpfNativeDllName)</VtkSharpWpfNativeDefaultDllPath>
-    <VtkSharpWpfNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\windows-x64-vs2022\VtkSharp.Wpf.Native\$(Configuration)\$(VtkSharpWpfNativeDllName)</VtkSharpWpfNativeVs2022DllPath>
+    <VtkSharpWpfNativeDefaultDllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\win-x64-vs2026\VtkSharp.Wpf.Native\$(Configuration)\$(VtkSharpWpfNativeDllName)</VtkSharpWpfNativeDefaultDllPath>
+    <VtkSharpWpfNativeVs2022DllPath>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build\win-x64-vs2022\VtkSharp.Wpf.Native\$(Configuration)\$(VtkSharpWpfNativeDllName)</VtkSharpWpfNativeVs2022DllPath>
     <VtkSharpWpfNativeDllPath Condition="Exists('$(VtkSharpWpfNativeDefaultDllPath)')">$(VtkSharpWpfNativeDefaultDllPath)</VtkSharpWpfNativeDllPath>
     <VtkSharpWpfNativeDllPath Condition="'$(VtkSharpWpfNativeDllPath)' == '' And Exists('$(VtkSharpWpfNativeVs2022DllPath)')">$(VtkSharpWpfNativeVs2022DllPath)</VtkSharpWpfNativeDllPath>
   </PropertyGroup>
