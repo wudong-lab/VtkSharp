@@ -9,6 +9,8 @@ VTKSHARP_API void vtkImageData_AllocateScalars_int_int(vtkImageData* self, int d
 
 VTKSHARP_API void vtkImageData_AllocateScalars_vtkInformationPtr(vtkImageData* self, vtkInformation* pipeline_info) { self->AllocateScalars(pipeline_info); }
 
+VTKSHARP_API void vtkImageData_ComputeBounds(vtkImageData* self) { self->ComputeBounds(); }
+
 VTKSHARP_API int vtkImageData_GetScalarSize_(vtkImageData* self) { return self->GetScalarSize(); }
 
 VTKSHARP_API int vtkImageData_GetScalarSize_vtkInformationPtr(vtkImageData* self, vtkInformation* meta_data) { return self->GetScalarSize(meta_data); }

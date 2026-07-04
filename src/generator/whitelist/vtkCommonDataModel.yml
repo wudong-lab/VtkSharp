@@ -155,6 +155,11 @@ classes:
         parameters:
           - type: vtkInformation*
             name: pipeline_info
+      - name: ComputeBounds
+        cppSignature: void ComputeBounds()
+        return:
+          type: void
+        parameters: []
       - name: GetScalarSize
         cppSignature: int GetScalarSize()
         return:

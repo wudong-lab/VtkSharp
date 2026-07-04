@@ -28,6 +28,11 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
         vtkImageData_AllocateScalars_vtkInformationPtr(this.NativePointer, pipeline_info.NativePointer);
     }
 
+    public new void ComputeBounds()
+    {
+        vtkImageData_ComputeBounds(this.NativePointer);
+    }
+
     public new int GetScalarSize()
     {
         return vtkImageData_GetScalarSize_(this.NativePointer);
@@ -52,6 +57,9 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageData_AllocateScalars_vtkInformationPtr(nint self, nint pipeline_info);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_ComputeBounds(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageData_GetScalarSize_(nint self);
