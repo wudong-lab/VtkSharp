@@ -11,6 +11,7 @@ namespace VtkSharp.Generator.Gui.ViewModels;
 public sealed partial class MainWindowViewModel : ObservableObject
 {
     private readonly ExportInventoryService _inventoryService = new();
+
     private readonly ObservableCollection<TypeListItemViewModel> _allTypes = [];
     private readonly List<FunctionGroupViewModel> _allExportedGroups = [];
     private readonly List<FunctionGroupViewModel> _allAvailableGroups = [];
