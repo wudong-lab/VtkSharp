@@ -18,9 +18,19 @@ public unsafe partial class vtkActor : vtkProp3D
         return target;
     }
 
+    public new vtkProperty GetBackfaceProperty()
+    {
+        return vtkProperty.WeakReference(vtkActor_GetBackfaceProperty(this.NativePointer));
+    }
+
     public new vtkProperty GetProperty()
     {
         return vtkProperty.WeakReference(vtkActor_GetProperty(this.NativePointer));
+    }
+
+    public new void SetBackfaceProperty(vtkProperty lut)
+    {
+        vtkActor_SetBackfaceProperty(this.NativePointer, lut.NativePointer);
     }
 
     public new void SetMapper(vtkMapper mapper)
@@ -38,7 +48,13 @@ public unsafe partial class vtkActor : vtkProp3D
     private static extern nint vtkActor_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkActor_GetBackfaceProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkActor_GetProperty(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkActor_SetBackfaceProperty(nint self, nint lut);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkActor_SetMapper(nint self, nint mapper);

@@ -27,11 +27,23 @@ classes:
   - name: vtkActor
     header: vtkActor.h
     functions:
+      - name: GetBackfaceProperty
+        cppSignature: vtkProperty * GetBackfaceProperty()
+        return:
+          type: vtkProperty*
+        parameters: []
       - name: GetProperty
         cppSignature: vtkProperty * GetProperty()
         return:
           type: vtkProperty*
         parameters: []
+      - name: SetBackfaceProperty
+        cppSignature: void SetBackfaceProperty(vtkProperty * lut)
+        return:
+          type: void
+        parameters:
+          - type: vtkProperty*
+            name: lut
       - name: SetMapper
         cppSignature: void SetMapper(vtkMapper* mapper)
         return:

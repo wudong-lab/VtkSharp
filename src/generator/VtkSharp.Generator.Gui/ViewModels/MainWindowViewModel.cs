@@ -44,6 +44,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty] private bool _isBusy;
     [ObservableProperty] private bool _isFunctionListLoading;
+    [ObservableProperty] private bool _isGeneratorRunning;
     [ObservableProperty] private bool _isUnsupportedExpanded;
 
     [ObservableProperty] private string _logText = "";
@@ -138,54 +139,62 @@ public sealed partial class MainWindowViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanApplyOrRun))]
     private async Task RunGeneratorAsync()
     {
-        await this.RunBusyAsync(async () =>
+        try
         {
-            var plan = this.CreateCurrentPlan();
-            if (plan.Functions.Count == 0)
+            this.IsGeneratorRunning = true;
+            await this.RunBusyAsync(async () =>
             {
-                this.AppendLog("No selected functions to apply.");
-                return;
-            }
+                var plan = this.CreateCurrentPlan();
+                if (plan.Functions.Count == 0)
+                {
+                    this.AppendLog("No selected functions to apply.");
+                    return;
+                }
 
-            foreach (var diagnostic in plan.Diagnostics)
-            {
-                this.AppendLog(diagnostic);
-            }
+                foreach (var diagnostic in plan.Diagnostics)
+                {
+                    this.AppendLog(diagnostic);
+                }
 
-            var configPath = this.ConfigPath;
-            await Task.Run(() => this._inventoryService.ApplyPlanToWhitelist(configPath, plan));
-            this.AppendLog("Whitelist YAML updated.");
+                var configPath = this.ConfigPath;
+                await Task.Run(() => this._inventoryService.ApplyPlanToWhitelist(configPath, plan));
+                this.AppendLog("Whitelist YAML updated.");
 
-            var outputRoot = GetDefaultOutputRoot(configPath);
-            var result = await Task.Run(() =>
-            {
-                using var output = new StringWriter();
-                using var error = new StringWriter();
-                var exitCode = new BindingGenerationService().Generate(
-                    configPath,
-                    outputRoot,
-                    continueOnError: false,
-                    incremental: true,
-                    force: false,
-                    output,
-                    error);
-                return (ExitCode: exitCode, Output: output.ToString(), Error: error.ToString());
+                var outputRoot = GetDefaultOutputRoot(configPath);
+                var result = await Task.Run(() =>
+                {
+                    using var output = new StringWriter();
+                    using var error = new StringWriter();
+                    var exitCode = new BindingGenerationService().Generate(
+                        configPath,
+                        outputRoot,
+                        continueOnError: false,
+                        incremental: true,
+                        force: false,
+                        output,
+                        error);
+                    return (ExitCode: exitCode, Output: output.ToString(), Error: error.ToString());
+                });
+
+                this.AppendMultiline(result.Output);
+                this.AppendMultiline(result.Error);
+
+                if (result.ExitCode == 0)
+                {
+                    this.AppendLog("Generation succeeded. Rescanning current type.");
+                    if (this.SelectedType is not null)
+                        await this.LoadTypeInventoryForSelectedTypeAsync();
+                }
+                else
+                {
+                    this.AppendLog($"Generation failed with exit code {result.ExitCode}. YAML changes were not rolled back.");
+                }
             });
-
-            this.AppendMultiline(result.Output);
-            this.AppendMultiline(result.Error);
-
-            if (result.ExitCode == 0)
-            {
-                this.AppendLog("Generation succeeded. Rescanning current type.");
-                if (this.SelectedType is not null)
-                    await this.LoadTypeInventoryForSelectedTypeAsync();
-            }
-            else
-            {
-                this.AppendLog($"Generation failed with exit code {result.ExitCode}. YAML changes were not rolled back.");
-            }
-        });
+        }
+        finally
+        {
+            this.IsGeneratorRunning = false;
+        }
     }
 
     private bool CanLoadTypes() => !this.IsBusy && File.Exists(this.ConfigPath);

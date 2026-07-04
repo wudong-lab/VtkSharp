@@ -52,11 +52,11 @@
       "header": "vtkActor.h",
       "baseClassName": "vtkProp3D",
       "hasStaticNew": true,
-      "inputHash": "2a413ff5064de405f405c202c53e95737feb160ca0b74c0f11375c449acca87f",
+      "inputHash": "318652e82f021fd2931938cc77ad6086a858d3f94801477055c407106e982d89",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkActor_export_gen.cpp",
-      "managedContentHash": "87a432b6755f8d9f570d979077402a2b77b75786b0e1b5a19ddf893abc6631d2",
-      "nativeContentHash": "1e9925fd02d5a25a052626ff6d06012b15d5bcd52fbfce5c86d7c8314a3c0d09"
+      "managedContentHash": "1e4b2fcb43e6b6cda79acb6581c646fc3b4c5bdf2cd5b7d50706701cb855f9ff",
+      "nativeContentHash": "903786b7e9f826de6b18b973aa6cf579a6da9ba0a05d7b0e226d4f1d2ce792f4"
     },
     {
       "className": "vtkActor2D",

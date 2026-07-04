@@ -6,7 +6,11 @@
 
 VTKSHARP_API vtkActor* vtkActor_New() { return vtkActor::New(); }
 
+VTKSHARP_API vtkProperty* vtkActor_GetBackfaceProperty(vtkActor* self) { return self->GetBackfaceProperty(); }
+
 VTKSHARP_API vtkProperty* vtkActor_GetProperty(vtkActor* self) { return self->GetProperty(); }
+
+VTKSHARP_API void vtkActor_SetBackfaceProperty(vtkActor* self, vtkProperty* lut) { self->SetBackfaceProperty(lut); }
 
 VTKSHARP_API void vtkActor_SetMapper(vtkActor* self, vtkMapper* mapper) { self->SetMapper(mapper); }
 
