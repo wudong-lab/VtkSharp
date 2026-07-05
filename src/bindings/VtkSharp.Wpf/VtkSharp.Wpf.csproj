@@ -37,7 +37,11 @@
   </PropertyGroup>
 
   <ItemGroup Condition="Exists('$(VtkSharpWpfNativeDllPath)')">
-    <None Include="$(VtkSharpWpfNativeDllPath)" Link="$(VtkSharpWpfNativeDllName)" TargetPath="$(VtkSharpWpfNativeDllName)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="$(VtkSharpWpfNativeDllPath)" 
+             Link="native\$(VtkSharpWpfNativeDllName)" 
+             TargetPath="$(VtkSharpWpfNativeDllName)" 
+             CopyToOutputDirectory="PreserveNewest" 
+             CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists('$(VtkSharpWpfNativeDllPath)')">

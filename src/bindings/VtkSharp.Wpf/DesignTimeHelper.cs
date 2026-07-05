@@ -9,7 +9,7 @@ internal static class DesignTimeHelper
     {
         if (width <= 0 || height <= 0) return;
 
-        drawingContext.DrawRectangle(null, new Pen(Brushes.Black, 1), new Rect(0, 0, width, height));
+        drawingContext.DrawRectangle(Brushes.SlateGray, null, new Rect(0, 0, width, height));
         drawingContext.DrawLine(new Pen(Brushes.Red, 1), new Point(0, 0), new Point(width, height));
         drawingContext.DrawLine(new Pen(Brushes.Green, 1), new Point(0, height), new Point(width, 0));
     }
