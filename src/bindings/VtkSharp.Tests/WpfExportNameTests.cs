@@ -183,6 +183,21 @@ public sealed class WpfExportNameTests
         Assert.Contains("private static int ClampPixelCoordinate(int value, int length)", wpfControl);
     }
 
+    [Fact]
+    public void WpfD3DImageControl_FitsRendererOnLeftButtonDoubleClick()
+    {
+        var wpfControl = ReadWpfControlText();
+
+        var mouseDownBody = GetMethodBody(wpfControl, "OnMouseDown");
+        Assert.Contains("e.ChangedButton == MouseButton.Left && e.ClickCount == 2", mouseDownBody);
+        Assert.Contains("this.FitIntoView();", mouseDownBody);
+
+        var fitIntoViewBody = GetMethodBody(wpfControl, "FitIntoView");
+        Assert.Contains("this.Renderer.ResetCamera();", fitIntoViewBody);
+        Assert.Contains("this.Renderer.ResetCameraClippingRange();", fitIntoViewBody);
+        Assert.Contains("this.RequestRender();", fitIntoViewBody);
+    }
+
     private static DirectoryInfo FindRepositoryRoot()
     {
         var directory = new DirectoryInfo(AppContext.BaseDirectory);

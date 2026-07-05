@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using VtkSharp.Wpf.Utils;
 
@@ -9,18 +8,25 @@ namespace VtkSharp.Wpf;
 
 public sealed partial class VtkRenderControl
 {
+    public void FitIntoView()
+    {
+        if (this.Renderer is null) return;
+
+        this.Renderer.ResetCamera();
+        this.Renderer.ResetCameraClippingRange();
+        this.RequestRender();
+    }
+
     public void RequestRender()
     {
         if (this._isDisposed || this._renderRequested || this._isInDesignMode) return;
 
         this._renderRequested = true;
-        this.Dispatcher.BeginInvoke(
-            DispatcherPriority.Render,
-            new Action(() =>
-            {
-                this._renderRequested = false;
-                this.Render();
-            }));
+        this.Dispatcher.BeginInvoke(DispatcherPriority.Render, () =>
+        {
+            this._renderRequested = false;
+            this.Render();
+        });
     }
 
     public void Render()
@@ -84,6 +90,7 @@ public sealed partial class VtkRenderControl
         finally
         {
             this._image.Unlock();
+
             if (renderFailure is not null)
             {
                 this.OnRenderFailed(renderFailure);

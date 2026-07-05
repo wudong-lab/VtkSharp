@@ -34,6 +34,14 @@ public sealed partial class VtkRenderControl
     {
         base.OnMouseDown(e);
 
+        if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+        {
+            this.Focus();
+            this.FitIntoView();
+            e.Handled = true;
+            return;
+        }
+
         if (e.ChangedButton is MouseButton.Left or MouseButton.Right or MouseButton.Middle)
         {
             this.Focus();
@@ -215,7 +223,7 @@ public sealed partial class VtkRenderControl
             MouseButton.Left => pressed ? vtkCommand.LeftButtonPressEvent : vtkCommand.LeftButtonReleaseEvent,
             MouseButton.Middle => pressed ? vtkCommand.MiddleButtonPressEvent : vtkCommand.MiddleButtonReleaseEvent,
             MouseButton.Right => pressed ? vtkCommand.RightButtonPressEvent : vtkCommand.RightButtonReleaseEvent,
-            _ => vtkCommand.NoEvent
+            _ => vtkCommand.NoEvent,
         };
     }
 
