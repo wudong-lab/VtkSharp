@@ -11,6 +11,14 @@ VTKSHARP_API void vtkImageData_AllocateScalars_vtkInformationPtr(vtkImageData* s
 
 VTKSHARP_API void vtkImageData_ComputeBounds(vtkImageData* self) { self->ComputeBounds(); }
 
+VTKSHARP_API void* vtkImageData_GetScalarPointer_(vtkImageData* self) { return self->GetScalarPointer(); }
+
+VTKSHARP_API void* vtkImageData_GetScalarPointer_int_int_int(vtkImageData* self, int x, int y, int z) { return self->GetScalarPointer(x, y, z); }
+
+VTKSHARP_API void* vtkImageData_GetScalarPointer_intArray3(vtkImageData* self, int* coordinates) { return self->GetScalarPointer(coordinates); }
+
+VTKSHARP_API void* vtkImageData_GetScalarPointerForExtent(vtkImageData* self, int* extent) { return self->GetScalarPointerForExtent(extent); }
+
 VTKSHARP_API int vtkImageData_GetScalarSize_(vtkImageData* self) { return self->GetScalarSize(); }
 
 VTKSHARP_API int vtkImageData_GetScalarSize_vtkInformationPtr(vtkImageData* self, vtkInformation* meta_data) { return self->GetScalarSize(meta_data); }

@@ -33,6 +33,32 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
         vtkImageData_ComputeBounds(this.NativePointer);
     }
 
+    public new nint GetScalarPointer()
+    {
+        return vtkImageData_GetScalarPointer_(this.NativePointer);
+    }
+
+    public new nint GetScalarPointer(int x, int y, int z)
+    {
+        return vtkImageData_GetScalarPointer_int_int_int(this.NativePointer, x, y, z);
+    }
+
+    public new nint GetScalarPointer(Span<int> coordinates)
+    {
+        fixed (int* coordinatesPtr = coordinates)
+        {
+            return vtkImageData_GetScalarPointer_intArray3(this.NativePointer, coordinatesPtr);
+        }
+    }
+
+    public new nint GetScalarPointerForExtent(Span<int> extent)
+    {
+        fixed (int* extentPtr = extent)
+        {
+            return vtkImageData_GetScalarPointerForExtent(this.NativePointer, extentPtr);
+        }
+    }
+
     public new int GetScalarSize()
     {
         return vtkImageData_GetScalarSize_(this.NativePointer);
@@ -60,6 +86,18 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageData_ComputeBounds(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageData_GetScalarPointer_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageData_GetScalarPointer_int_int_int(nint self, int x, int y, int z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageData_GetScalarPointer_intArray3(nint self, int* coordinates);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkImageData_GetScalarPointerForExtent(nint self, int* extent);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageData_GetScalarSize_(nint self);
