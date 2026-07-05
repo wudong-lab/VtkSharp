@@ -45,8 +45,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="Exists('$(VtkSharpWpfNativeDllPath)')">
-    <Content Include="$(VtkSharpWpfNativeDllPath)"
-             PackagePath="runtimes/win-x64/native/VtkSharp.Wpf.Native.dll"
+    <Content Include="$(VtkSharpWpfNativeDllPath)" 
+             PackagePath="runtimes/win-x64/native/VtkSharp.Wpf.Native.dll" 
              Visible="false" />
   </ItemGroup>
 

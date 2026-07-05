@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Windows.Threading;
 
 namespace VtkSharp.Wpf;
 
-public sealed partial class VtkOpenGlD3DImageRenderControl
+public sealed partial class VtkRenderControl
 {
     private void AttachTimerObservers(vtkRenderWindowInteractor interactor)
     {

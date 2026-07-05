@@ -1,11 +1,10 @@
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
 namespace VtkSharp.Wpf;
 
-public sealed partial class VtkOpenGlD3DImageRenderControl
+public sealed partial class VtkRenderControl
 {
     protected override void OnMouseEnter(MouseEventArgs e)
     {

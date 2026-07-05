@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -6,10 +6,10 @@ using VtkSharp.Wpf;
 
 namespace VtkSharp.ExampleBrowser.ExtraExamples;
 
-[Example("WPF VTK D3DImage Lifecycle", "WPF",
+[Example("VtkRenderControl Lifecycle", "WPF",
     Description = "Manual lifecycle stress checks for the WPF OpenGL/D3DImage VTK viewport.",
-    SourceFiles = new[] { "ExtraExamples/WpfOpenGLD3DImageLifecycle/WpfOpenGLD3DImageLifecycle.cs" })]
-internal sealed class WpfOpenGLD3DImageLifecycle : IExample
+    SourceFiles = new[] { "ExtraExamples/VtkRenderControlLifecycle/VtkRenderControlLifecycle.cs" })]
+internal sealed class VtkRenderControlLifecycle : IExample
 {
     public void Run()
     {
@@ -18,7 +18,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
 
         dispatcher.Invoke(() =>
         {
-            var window = new WpfOpenGLD3DImageLifecycleWindow
+            var window = new VtkRenderControlLifecycleWindow
             {
                 Owner = Application.Current.MainWindow
             };
@@ -26,7 +26,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
         });
     }
 
-    private sealed class WpfOpenGLD3DImageLifecycleWindow : Window
+    private sealed class VtkRenderControlLifecycleWindow : Window
     {
         private readonly Grid _viewportHost = new();
         private readonly TextBlock _statusText = new();
@@ -34,7 +34,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
         private readonly DispatcherTimer _hideTimer;
         private readonly DispatcherTimer _resizeTimer;
 
-        private VtkOpenGlD3DImageRenderControl? _viewport;
+        private VtkRenderControl? _viewport;
         private vtkConeSource? _cone;
         private vtkPolyDataMapper? _mapper;
         private vtkActor? _actor;
@@ -47,7 +47,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
         private bool _resizeStressEnabled;
         private bool _cacheOnUnload = true;
 
-        public WpfOpenGLD3DImageLifecycleWindow()
+        public VtkRenderControlLifecycleWindow()
         {
             this.Title = "VtkSharp WPF OpenGL D3DImage Lifecycle";
             this.Width = 980;
@@ -145,7 +145,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
         {
             this.DisposeViewportContent();
 
-            this._viewport = new VtkOpenGlD3DImageRenderControl();
+            this._viewport = new VtkRenderControl();
             this._viewport.DisposeOnUnload = !this._cacheOnUnload;
             this._viewport.VtkRenderInitialized += this.OnVtkRenderInitialized;
             this._viewport.VtkRenderFailed += this.OnVtkRenderFailed;
@@ -277,7 +277,7 @@ internal sealed class WpfOpenGLD3DImageLifecycle : IExample
             e.Renderer.AddActor(this._actor);
             e.Renderer.ResetCamera();
 
-            if (sender is VtkOpenGlD3DImageRenderControl control)
+            if (sender is VtkRenderControl control)
             {
                 control.Render();
             }

@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Media;
 
-namespace VtkSharp.Wpf;
+namespace VtkSharp.Wpf.Utils;
 
 internal static class DesignTimeHelper
 {

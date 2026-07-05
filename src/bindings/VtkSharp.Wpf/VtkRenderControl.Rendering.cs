@@ -2,10 +2,11 @@
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
+using VtkSharp.Wpf.Utils;
 
 namespace VtkSharp.Wpf;
 
-public sealed partial class VtkOpenGlD3DImageRenderControl
+public sealed partial class VtkRenderControl
 {
     public void RequestRender()
     {

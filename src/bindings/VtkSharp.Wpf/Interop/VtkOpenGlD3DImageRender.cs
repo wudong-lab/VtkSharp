@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace VtkSharp.Wpf;
+namespace VtkSharp.Wpf.Interop;
 
 internal sealed class VtkOpenGlD3DImageRender : IDisposable
 {

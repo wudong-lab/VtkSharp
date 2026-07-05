@@ -2,13 +2,14 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using VtkSharp.Wpf.Interop;
 
 namespace VtkSharp.Wpf;
 
 /// <summary>
 /// Recommended WPF VTK control that renders through OpenGL/D3D9Ex interop into a WPF D3DImage.
 /// </summary>
-public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, IDisposable
+public sealed partial class VtkRenderControl : FrameworkElement, IDisposable
 {
     private readonly D3DImage _image = new();
     private readonly Dictionary<int, VtkDispatcherTimer> _timers = new();
@@ -27,7 +28,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, I
     private MouseButton? _activeMouseButton;
     private readonly bool _isInDesignMode = false;
 
-    public VtkOpenGlD3DImageRenderControl()
+    public VtkRenderControl()
     {
         this._isInDesignMode = DesignerProperties.GetIsInDesignMode(this);
         if (this._isInDesignMode) return;
@@ -48,7 +49,7 @@ public sealed partial class VtkOpenGlD3DImageRenderControl : FrameworkElement, I
     public bool IsVtkRenderInitialized { get; private set; }
 
     public static readonly DependencyProperty DisposeOnUnloadProperty = DependencyProperty.Register(
-        nameof(DisposeOnUnload), typeof(bool), typeof(VtkOpenGlD3DImageRenderControl), new PropertyMetadata(true));
+        nameof(DisposeOnUnload), typeof(bool), typeof(VtkRenderControl), new PropertyMetadata(true));
 
     /// <summary>
     /// Gets or sets a value indicating whether the VTK render should be disposed when the control is unloaded.

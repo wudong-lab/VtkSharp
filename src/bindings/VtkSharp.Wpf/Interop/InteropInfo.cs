@@ -1,4 +1,4 @@
-namespace VtkSharp.Wpf;
+﻿namespace VtkSharp.Wpf.Interop;
 
 internal static class InteropInfo
 {

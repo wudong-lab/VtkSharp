@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
@@ -7,10 +7,10 @@ using VtkSharp.Wpf;
 
 namespace VtkSharp.ExampleBrowser.ExtraExamples;
 
-[Example("WPF VTK D3DImage Viewport", "WPF",
+[Example("VtkRenderControl Viewport", "WPF",
     Description = "Recommended WPF VTK viewport using OpenGL/D3D9Ex interop and D3DImage.",
-    SourceFiles = new[] { "ExtraExamples/WpfOpenGLD3DImageViewport/WpfOpenGLD3DImageViewport.cs" })]
-internal sealed class WpfOpenGLD3DImageViewport : IExample
+    SourceFiles = new[] { "ExtraExamples/VtkRenderControlViewport/VtkRenderControlViewport.cs" })]
+internal sealed class VtkRenderControlViewport : IExample
 {
     public void Run()
     {
@@ -19,7 +19,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
 
         dispatcher.Invoke(() =>
         {
-            var window = new WpfOpenGLD3DImageViewportWindow
+            var window = new VtkRenderControlViewportWindow
             {
                 Owner = Application.Current.MainWindow
             };
@@ -27,7 +27,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
         });
     }
 
-    private sealed class WpfOpenGLD3DImageViewportWindow : Window
+    private sealed class VtkRenderControlViewportWindow : Window
     {
         private vtkConeSource? _cone;
         private vtkPolyDataMapper? _mapper;
@@ -36,13 +36,13 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
         private vtkOrientationMarkerWidget? _orientationWidget;
         private vtkPropPicker? _picker;
         private Button? _statusButton;
-        private VtkOpenGlD3DImageRenderControl? _viewport;
+        private VtkRenderControl? _viewport;
         private VtkObserverHandle? _timerObserver;
         private int _animationTimerId;
         private Point? _leftButtonDownPosition;
         private bool _isPicked;
 
-        public WpfOpenGLD3DImageViewportWindow()
+        public VtkRenderControlViewportWindow()
         {
             this.Title = "VtkSharp WPF OpenGL D3DImage Viewport";
             this.Width = 1000;
@@ -50,7 +50,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
             this.MinWidth = 480;
             this.MinHeight = 360;
 
-            this._viewport = new VtkOpenGlD3DImageRenderControl();
+            this._viewport = new VtkRenderControl();
             this._viewport.VtkRenderInitialized += this.OnVtkRenderInitialized;
             this._viewport.AddHandler(
                 UIElement.MouseLeftButtonDownEvent,
@@ -119,7 +119,7 @@ internal sealed class WpfOpenGLD3DImageViewport : IExample
                 this._animationTimerId = e.RenderWindowInteractor.CreateRepeatingTimer(33);
             }
 
-            if (sender is VtkOpenGlD3DImageRenderControl control)
+            if (sender is VtkRenderControl control)
             {
                 control.Render();
             }

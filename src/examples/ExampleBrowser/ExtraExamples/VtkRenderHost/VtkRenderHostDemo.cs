@@ -3,10 +3,10 @@ using VtkSharp.Wpf;
 
 namespace VtkSharp.ExampleBrowser.ExtraExamples;
 
-[Example("WPF Viewport", "WPF",
+[Example("VtkRenderHost Demo", "WPF",
     Description = "Hosts a VTK render window inside a WPF HwndHost control.",
-    SourceFiles = new[] { "ExtraExamples/WpfViewport/WpfViewport.cs" })]
-internal sealed class WpfVtkRenderHost : IExample
+    SourceFiles = new[] { "ExtraExamples/VtkRenderHost/VtkRenderHost.cs" })]
+internal sealed class VtkRenderHostDemo : IExample
 {
     public void Run()
     {
@@ -15,7 +15,7 @@ internal sealed class WpfVtkRenderHost : IExample
 
         dispatcher.Invoke(() =>
         {
-            var window = new WpfViewportWindow
+            var window = new VtkRenderHostDemoWindow
             {
                 Owner = Application.Current.MainWindow
             };
@@ -23,13 +23,13 @@ internal sealed class WpfVtkRenderHost : IExample
         });
     }
 
-    private sealed class WpfViewportWindow : Window
+    private sealed class VtkRenderHostDemoWindow : Window
     {
         private vtkConeSource? _cone;
         private vtkPolyDataMapper? _mapper;
         private vtkActor? _actor;
 
-        public WpfViewportWindow()
+        public VtkRenderHostDemoWindow()
         {
             this.Title = "VtkSharp WPF Viewport";
             this.Width = 1000;

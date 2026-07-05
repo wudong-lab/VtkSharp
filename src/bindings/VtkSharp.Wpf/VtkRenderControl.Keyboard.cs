@@ -1,8 +1,8 @@
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace VtkSharp.Wpf;
 
-public sealed partial class VtkOpenGlD3DImageRenderControl
+public sealed partial class VtkRenderControl
 {
     protected override void OnKeyDown(KeyEventArgs e)
     {

@@ -2,10 +2,11 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using VtkSharp.Wpf.Interop;
 
 namespace VtkSharp.Wpf;
 
-public sealed partial class VtkOpenGlD3DImageRenderControl
+public sealed partial class VtkRenderControl
 {
     public void Dispose()
     {
