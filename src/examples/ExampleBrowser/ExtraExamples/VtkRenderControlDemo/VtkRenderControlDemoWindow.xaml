@@ -12,18 +12,41 @@
   Height="720" Width="1000">
 
   <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*" />
-      <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
 
-    <Border BorderBrush="DarkGray" BorderThickness="1">
-      <wpf:VtkRenderControl x:Name="VtkRenderControl"
-                            VtkRenderInitialized="VtkRenderControl_OnVtkRenderInitialized" />
-    </Border>
+    <Grid Margin="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
 
-    <StackPanel Grid.Column="1" Width="120" Margin="4">
-      <Button Content="Render" Click="ButtonRender_OnClick" Height="32" Margin="2" HorizontalAlignment="Stretch" />
-    </StackPanel>
+      <Border BorderBrush="Black" BorderThickness="1">
+        <wpf:VtkRenderControl x:Name="VtkRenderControl1"
+                              VtkRenderInitialized="VtkRenderControl1_OnVtkRenderInitialized" 
+                              VtkRenderFailed="VtkRenderControl1_OnVtkRenderFailed"/>
+      </Border>
+      <StackPanel Grid.Column="1" MinWidth="120" Margin="4">
+        <Button Content="Render 1" Click="ButtonRender1_OnClick" Height="32" />
+      </StackPanel>
+    </Grid>
+
+    <Grid Grid.Row="1" Margin="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+
+      <Border BorderBrush="Black" BorderThickness="1">
+        <wpf:VtkRenderControl x:Name="VtkRenderControl2"
+                              VtkRenderInitialized="VtkRenderControl2_OnVtkRenderInitialized" 
+                              VtkRenderFailed="VtkRenderControl2_OnVtkRenderFailed"/>
+      </Border>
+      <StackPanel Grid.Column="1" MinWidth="120" Margin="4">
+        <Button Content="Render 2" Click="ButtonRender2_OnClick" Height="32" />
+      </StackPanel>
+    </Grid>
   </Grid>
 </Window>
