@@ -36,6 +36,11 @@ public unsafe partial class vtkAbstractArray : vtkObject
         vtkAbstractArray_SetNumberOfComponents(this.NativePointer, _arg);
     }
 
+    public new void SetNumberOfTuples(long numTuples)
+    {
+        vtkAbstractArray_SetNumberOfTuples(this.NativePointer, numTuples);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAbstractArray_GetName(nint self);
@@ -50,5 +55,8 @@ public unsafe partial class vtkAbstractArray : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractArray_SetNumberOfComponents(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAbstractArray_SetNumberOfTuples(nint self, long numTuples);
     #endregion
 }

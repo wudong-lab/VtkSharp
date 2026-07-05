@@ -1,6 +1,9 @@
-﻿namespace VtkSharp;
+﻿using System;
+using System.Runtime.InteropServices;
 
-public partial class vtkUnsignedCharArray
+namespace VtkSharp;
+
+public unsafe partial class vtkUnsignedCharArray
 {
     public void InsertNextColor(VtkColor3d color)
     {
@@ -10,34 +13,16 @@ public partial class vtkUnsignedCharArray
         this.InsertNextTuple3(r, g, b); // TODO:
     }
 
-    //public void SetTypedTuple(long tupleIdx, ReadOnlySpan<byte> tuple)
-    //{
-    //    vtkUnsignedCharArray_SetTypedTuple(this.NativePointer, tupleIdx, tuple);
-    //}
+    public void SetUnsignedCharTuple(long tupleIdx, ReadOnlySpan<byte> unsignedCharTuple)
+    {
+        fixed (byte* tuplePtr = unsignedCharTuple)
+        {
+            vtkUnsignedCharArray_SetUnsignedCharTuple(this.NativePointer, tupleIdx, tuplePtr);
+        }
+    }
 
-    //public void SetNumberOfTuples(long number)
-    //{
-    //    vtkUnsignedCharArray_SetNumberOfTuples(this.NativePointer, number);
-    //}
-
-    //public static vtkUnsignedCharArray CreateRgbColorArray(IReadOnlyCollection<VtkColor3d> rgbColors)
-    //{
-    //    var array = vtkUnsignedCharArray.New();
-    //    array.SetNumberOfComponents(3);
-    //    array.SetNumberOfTuples(rgbColors.Count);
-
-    //    var i = 0;
-    //    foreach (var color in rgbColors)
-    //    {
-    //        ReadOnlySpan<byte> rgb =
-    //        [
-    //            (byte)(color.R * 255D),
-    //            (byte)(color.G * 255D),
-    //            (byte)(color.B * 255D),
-    //        ];
-    //        array.SetTypedTuple(i++, rgb);
-    //    }
-
-    //    return array;
-    //}
+    #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkUnsignedCharArray_SetUnsignedCharTuple(nint self, long tupleIdx, byte* tuple);
+    #endregion
 }

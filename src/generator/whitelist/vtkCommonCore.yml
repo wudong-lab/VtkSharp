@@ -24,6 +24,13 @@ classes:
         parameters:
           - type: int
             name: _arg
+      - name: SetNumberOfTuples
+        cppSignature: void SetNumberOfTuples(vtkIdType numTuples)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: numTuples
   - name: vtkCollection
     header: vtkCollection.h
     functions: []

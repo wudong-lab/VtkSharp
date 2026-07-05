@@ -7,3 +7,5 @@ VTKSHARP_API char* vtkAbstractArray_GetName(vtkAbstractArray* self) { return sel
 VTKSHARP_API void vtkAbstractArray_SetName(vtkAbstractArray* self, const char* _arg) { self->SetName(_arg); }
 
 VTKSHARP_API void vtkAbstractArray_SetNumberOfComponents(vtkAbstractArray* self, int _arg) { self->SetNumberOfComponents(_arg); }
+
+VTKSHARP_API void vtkAbstractArray_SetNumberOfTuples(vtkAbstractArray* self, vtkIdType numTuples) { self->SetNumberOfTuples(numTuples); }
