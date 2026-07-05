@@ -3,14 +3,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
 namespace VtkSharp.ExampleBrowser;
 
 public partial class MainWindow : Window
 {
-    private static readonly string ExamplesRoot = Path.Combine(
-        AppContext.BaseDirectory, "..", "..", "..", "..", "..", "examples", "ExampleBrowser");
+    private static readonly string ExamplesRoot = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "examples", "ExampleBrowser");
 
     private readonly Dictionary<string, List<ExampleInfo>> _examples;
     private ExampleInfo? _selectedExample;
@@ -24,7 +22,6 @@ public partial class MainWindow : Window
         this.CodeEditor.Options.ConvertTabsToSpaces = true;
         this.CodeEditor.Options.IndentationSize = 4;
         this.CodeEditor.Text = "// Select an example from the tree to view its source code.";
-        this.CodeEditor.SyntaxHighlighting = CreateDarkCSharpHighlighting();
 
         this._examples = ExampleDiscovery.DiscoverAll();
         this.PopulateTreeView();
@@ -105,34 +102,6 @@ public partial class MainWindow : Window
 
         this.CodeEditor.Text = File.ReadAllText(filePath);
         this.StatusText.Text = $"{this._selectedExample.Name} - {fileName}";
-    }
-
-    private static IHighlightingDefinition CreateDarkCSharpHighlighting()
-    {
-        using var stream = typeof(HighlightingManager).Assembly
-            .GetManifestResourceStream("ICSharpCode.AvalonEdit.Highlighting.Resources.CSharp-Mode.xshd")
-            ?? throw new InvalidOperationException("AvalonEdit C# highlighting definition was not found.");
-        using var reader = new System.Xml.XmlTextReader(stream);
-        var highlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
-
-        foreach (var color in highlighting.NamedHighlightingColors)
-        {
-            color.Background = null;
-            color.Foreground = color.Name switch
-            {
-                "Comment" => Brush("#8B949E"),
-                "String" or "StringInterpolation" or "Char" => Brush("#A5D6FF"),
-                "Preprocessor" => Brush("#FFA657"),
-                "NumberLiteral" or "Number" => Brush("#79C0FF"),
-                "Keywords" or "ValueTypeKeywords" or "ReferenceTypeKeywords" or "NullOrValueKeywords" or "Modifiers" => Brush("#FF7B72"),
-                "ThisOrBaseReference" => Brush("#D2A8FF"),
-                "MethodCall" => Brush("#D2A8FF"),
-                "TypeKeywords" => Brush("#FFA657"),
-                _ => Brush("#E6EDF3")
-            };
-        }
-
-        return highlighting;
     }
 
     private static SimpleHighlightingBrush Brush(string hex)

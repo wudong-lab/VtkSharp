@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 using VtkSharp.Wpf.Utils;
 
@@ -108,7 +109,8 @@ public sealed partial class VtkRenderControl
             return;
         }
 
-        drawingContext.PushTransform(new MatrixTransform(1.0, 0.0, 0.0, -1.0, 0.0, this.ActualHeight));
+        var transform = new MatrixTransform(1.0, 0.0, 0.0, -1.0, 0.0, this.ActualHeight);
+        drawingContext.PushTransform(transform);
         drawingContext.DrawImage(this._image, new Rect(0, 0, this.ActualWidth, this.ActualHeight));
         drawingContext.Pop();
     }

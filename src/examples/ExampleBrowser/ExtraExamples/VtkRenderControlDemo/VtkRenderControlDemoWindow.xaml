@@ -9,9 +9,7 @@
   mc:Ignorable="d"
   FontFamily="Microsoft YaHei UI" FontSize="14"
   Title="VtkRenderControlDemoWindow" WindowStartupLocation="CenterOwner"
-  Height="720" Width="1000"
-  Background="{StaticResource AppBackgroundBrush}"
-  Foreground="{StaticResource TextBrush}">
+  Height="720" Width="1000">
 
   <Grid>
     <Grid.ColumnDefinitions>
@@ -19,7 +17,7 @@
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
 
-    <Border Background="DimGray">
+    <Border BorderBrush="DarkGray" BorderThickness="1">
       <wpf:VtkRenderControl x:Name="VtkRenderControl" />
     </Border>
 

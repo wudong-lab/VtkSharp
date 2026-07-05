@@ -68,15 +68,9 @@ file sealed class VtkRenderControlLifecycleWindow : Window
         };
         this._resizeTimer.Tick += this.OnResizeTimerTick;
 
-        var root = new DockPanel
-        {
-            Background = new SolidColorBrush(Color.FromRgb(10, 12, 16))
-        };
+        var root = new DockPanel();
 
-        var toolbar = new WrapPanel
-        {
-            Margin = new Thickness(10)
-        };
+        var toolbar = new WrapPanel { Margin = new Thickness(10) };
         DockPanel.SetDock(toolbar, Dock.Top);
         root.Children.Add(toolbar);
 
@@ -92,7 +86,6 @@ file sealed class VtkRenderControlLifecycleWindow : Window
             Content = "Cache VTK on Unload",
             IsChecked = this._cacheOnUnload,
             Margin = new Thickness(8, 4, 8, 8),
-            Foreground = Brushes.White,
             VerticalAlignment = VerticalAlignment.Center
         };
         cacheCheckBox.Checked += (_, _) => this.SetCacheOnUnload(true);
@@ -100,16 +93,15 @@ file sealed class VtkRenderControlLifecycleWindow : Window
         toolbar.Children.Add(cacheCheckBox);
 
         this._statusText.Margin = new Thickness(12, 0, 12, 10);
-        this._statusText.Foreground = Brushes.White;
         DockPanel.SetDock(this._statusText, Dock.Bottom);
         root.Children.Add(this._statusText);
 
-        this._viewportHost.Background = Brushes.Black;
+        //this._viewportHost.Background = Brushes.Black;
         this._tabControl.Margin = new Thickness(10, 0, 10, 10);
         this._tabControl.Items.Add(new TabItem
         {
             Header = "VTK",
-            Content = this._viewportHost
+            Content = this._viewportHost,
         });
         this._tabControl.Items.Add(new TabItem
         {
@@ -118,8 +110,7 @@ file sealed class VtkRenderControlLifecycleWindow : Window
             {
                 Text = "Switch back to the VTK tab and check whether initialized count changes.",
                 Margin = new Thickness(16),
-                Foreground = Brushes.White
-            }
+            },
         });
         root.Children.Add(this._tabControl);
 
@@ -272,9 +263,9 @@ file sealed class VtkRenderControlLifecycleWindow : Window
 
         this._actor = vtkActor.New();
         this._actor.SetMapper(this._mapper);
-        this._actor.GetProperty().SetColor(0.25, 0.72, 1.0);
+        this._actor.GetProperty().SetColor(VtkColor3d.Green);
 
-        e.Renderer.SetBackground(0.08, 0.1, 0.13);
+        e.Renderer.SetBackground(VtkColor3d.DimGrey);
         e.Renderer.AddActor(this._actor);
         e.Renderer.ResetCamera();
 

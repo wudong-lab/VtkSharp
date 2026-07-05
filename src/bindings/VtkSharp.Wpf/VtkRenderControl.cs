@@ -34,6 +34,7 @@ public sealed partial class VtkRenderControl : FrameworkElement, IDisposable
         if (this._isInDesignMode) return;
 
         this.Focusable = true;
+
         this.Loaded += this.OnLoaded;
         this.Unloaded += this.OnUnloaded;
         this._image.IsFrontBufferAvailableChanged += this.OnIsFrontBufferAvailableChanged;

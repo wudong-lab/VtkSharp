@@ -25,6 +25,14 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
         throw new InvalidOperationException($"Failed to create internal VTK OpenGL/D3DImage render. {detail}");
     }
 
+    public void Dispose()
+    {
+        if (this._nativePointer == IntPtr.Zero) return;
+
+        VtkOpenGlD3DImageRender_Delete(this._nativePointer);
+        this._nativePointer = IntPtr.Zero;
+    }
+
     public vtkRenderWindow RenderWindow => vtkRenderWindow.WeakReference(VtkOpenGlD3DImageRender_GetRenderWindow(this._nativePointer));
     public vtkRenderer Renderer => vtkRenderer.WeakReference(VtkOpenGlD3DImageRender_GetRenderer(this._nativePointer));
 
@@ -53,14 +61,6 @@ internal sealed class VtkOpenGlD3DImageRender : IDisposable
     {
         var nativeError = Marshal.PtrToStringAnsi(VtkOpenGlD3DImageRender_GetLastError());
         return string.IsNullOrWhiteSpace(nativeError) ? null : nativeError;
-    }
-
-    public void Dispose()
-    {
-        if (this._nativePointer == IntPtr.Zero) return;
-
-        VtkOpenGlD3DImageRender_Delete(this._nativePointer);
-        this._nativePointer = IntPtr.Zero;
     }
 
     #region Interop

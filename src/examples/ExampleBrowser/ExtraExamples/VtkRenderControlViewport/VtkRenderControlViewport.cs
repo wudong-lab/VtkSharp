@@ -21,7 +21,7 @@ internal sealed class VtkRenderControlViewport : IExample
         {
             var window = new VtkRenderControlViewportWindow
             {
-                Owner = Application.Current.MainWindow
+                Owner = Application.Current.MainWindow,
             };
             window.Show();
         });
@@ -69,16 +69,12 @@ file sealed class VtkRenderControlViewportWindow : Window
             VerticalAlignment = VerticalAlignment.Top,
             Margin = new Thickness(16),
             Padding = new Thickness(14, 8, 14, 8),
-            Background = new SolidColorBrush(Color.FromRgb(248, 250, 252)),
-            BorderBrush = new SolidColorBrush(Color.FromRgb(51, 65, 85)),
             BorderThickness = new Thickness(1),
-            Foreground = new SolidColorBrush(Color.FromRgb(15, 23, 42))
         };
 
-        var root = new Grid
-        {
-            Background = new SolidColorBrush(Color.FromRgb(8, 10, 13))
-        };
+        var root = new Grid();
+        root.Background = Brushes.Black;
+
         root.Children.Add(this._viewport);
         root.Children.Add(this._statusButton);
         this.Content = root;
@@ -98,10 +94,10 @@ file sealed class VtkRenderControlViewportWindow : Window
 
         this._actor = vtkActor.New();
         this._actor.SetMapper(this._mapper);
-        this._actor.GetProperty().SetColor(0.95, 0.58, 0.22);
+        this._actor.GetProperty().SetColor(VtkColor3d.Green);
         this._picker = vtkPropPicker.New();
 
-        e.Renderer.SetBackground(0.08, 0.1, 0.13);
+        e.Renderer.SetBackground(VtkColor3d.DimGrey);
         e.Renderer.AddActor(this._actor);
         e.Renderer.ResetCamera();
 
