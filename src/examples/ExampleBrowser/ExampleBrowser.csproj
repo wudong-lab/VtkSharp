@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -10,6 +10,11 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="AvalonEdit" Version="6.3.1.120" />
+		<PackageReference Include="WPF-UI" Version="4.3.0" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\bindings\VtkSharp\VtkSharp.csproj" />
     <ProjectReference Include="..\..\bindings\VtkSharp.Wpf\VtkSharp.Wpf.csproj" />
@@ -18,15 +23,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Examples\**\*.cs" />
     <EmbeddedResource Include="ExtraExamples\**\*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.3.1.120" />
-    <PackageReference Include="WPF-UI" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ExtraExamples\VtkRenderControlDemo\" />
   </ItemGroup>
 
 </Project>
