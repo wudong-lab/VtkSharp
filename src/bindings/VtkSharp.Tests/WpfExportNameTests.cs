@@ -28,6 +28,7 @@ public sealed class WpfExportNameTests
             "src",
             "bindings",
             "VtkSharp.Wpf",
+            "Interop",
             "VtkOpenGlD3DImageRender.cs"));
 
         Assert.DoesNotContain(LegacyBridgePrefix, nativeExport);
@@ -87,7 +88,7 @@ public sealed class WpfExportNameTests
     public void WpfInterop_UsesSeparateNativeLibrary()
     {
         var coreInterop = ReadRepositoryText("src", "bindings", "VtkSharp", "InteropInfo.cs");
-        var wpfInterop = ReadRepositoryText("src", "bindings", "VtkSharp.Wpf", "InteropInfo.cs");
+        var wpfInterop = ReadRepositoryText("src", "bindings", "VtkSharp.Wpf", "Interop", "InteropInfo.cs");
         var coreCMake = ReadRepositoryText("src", "bindings", "VtkSharp.Native", "CMakeLists.txt");
         var wpfCMake = ReadRepositoryText("src", "bindings", "VtkSharp.Wpf.Native", "CMakeLists.txt");
 
@@ -207,7 +208,7 @@ public sealed class WpfExportNameTests
         return string.Join(
             Environment.NewLine,
             Directory
-                .EnumerateFiles(directory, "VtkOpenGlD3DImageRenderControl*.cs")
+                .EnumerateFiles(directory, "VtkRenderControl*.cs")
                 .OrderBy(Path.GetFileName)
                 .Select(File.ReadAllText));
     }
