@@ -45,14 +45,14 @@ public partial class VtkRenderControlDemoWindow : Window
 
     private void ButtonRender2_OnClick(object sender, RoutedEventArgs e)
     {
-        using var cone = vtkConeSource.New();
+        using var cone = vtkCubeSource.New();
 
         using var mapper = vtkPolyDataMapper.New();
         mapper.SetInputConnection(cone.GetOutputPort());
 
         using var actor = vtkActor.New();
         actor.SetMapper(mapper);
-        actor.GetProperty().SetColor(VtkColor3d.LimeGreen);
+        actor.GetProperty().SetColor(VtkColor3d.DarkMagenta);
 
         var renderer = this.VtkRenderControl2.Renderer!;
         renderer.AddActor(actor);

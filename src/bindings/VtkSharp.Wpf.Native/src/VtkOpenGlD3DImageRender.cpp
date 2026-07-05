@@ -204,6 +204,12 @@ bool VtkOpenGlD3DImageRender::InitializeVtk()
 
 bool VtkOpenGlD3DImageRender::CreateInteropResource(int width, int height)
 {
+    if (!this->m_wglContext.MakeCurrent())
+    {
+        this->SetError("Failed to make OpenGL context current.");
+        return false;
+    }
+
     this->ReleaseInteropResource();
 
     this->m_width = std::max(1, width);
