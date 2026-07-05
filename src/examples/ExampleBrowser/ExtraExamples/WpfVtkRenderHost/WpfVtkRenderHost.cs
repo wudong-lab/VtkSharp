@@ -6,7 +6,7 @@ namespace VtkSharp.ExampleBrowser.ExtraExamples;
 [Example("WPF Viewport", "WPF",
     Description = "Hosts a VTK render window inside a WPF HwndHost control.",
     SourceFiles = new[] { "ExtraExamples/WpfViewport/WpfViewport.cs" })]
-internal sealed class WpfViewport : IExample
+internal sealed class WpfVtkRenderHost : IExample
 {
     public void Run()
     {
