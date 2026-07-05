@@ -38,6 +38,8 @@ public sealed class NativeWpfD3DImageRenderTargetTests
         Assert.Contains("CreateDeviceEx", targetSource);
         Assert.Contains("CreateTexture", targetSource);
         Assert.Contains("GetSurfaceLevel", targetSource);
+        Assert.Contains("D3DFMT_X8R8G8B8", targetSource);
+        Assert.DoesNotContain("D3DFMT_A8R8G8B8", targetSource);
     }
 
     private static DirectoryInfo FindRepositoryRoot()

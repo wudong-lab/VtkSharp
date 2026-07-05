@@ -96,7 +96,6 @@ file sealed class VtkRenderControlLifecycleWindow : Window
         DockPanel.SetDock(this._statusText, Dock.Bottom);
         root.Children.Add(this._statusText);
 
-        //this._viewportHost.Background = Brushes.Black;
         this._tabControl.Margin = new Thickness(10, 0, 10, 10);
         this._tabControl.Items.Add(new TabItem
         {
@@ -265,7 +264,7 @@ file sealed class VtkRenderControlLifecycleWindow : Window
         this._actor.SetMapper(this._mapper);
         this._actor.GetProperty().SetColor(VtkColor3d.Green);
 
-        e.Renderer.SetBackground(VtkColor3d.DimGrey);
+        e.Renderer.SetBackground(VtkColor3d.LightSkyBlue);
         e.Renderer.AddActor(this._actor);
         e.Renderer.ResetCamera();
 

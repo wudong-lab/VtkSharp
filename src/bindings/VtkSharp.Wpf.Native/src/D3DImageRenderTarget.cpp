@@ -28,7 +28,7 @@ bool D3DImageRenderTarget::CreateDevice()
     presentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
     presentParameters.hDeviceWindow = ::GetDesktopWindow();
     presentParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-    presentParameters.BackBufferFormat = D3DFMT_A8R8G8B8;
+    presentParameters.BackBufferFormat = D3DFMT_X8R8G8B8;
     presentParameters.BackBufferWidth = 1;
     presentParameters.BackBufferHeight = 1;
 
@@ -49,7 +49,7 @@ bool D3DImageRenderTarget::CreateTexture(int width, int height)
 
     if (!this->CheckHr(
         this->m_device->CreateTexture(clampedWidth, clampedHeight, 1, D3DUSAGE_RENDERTARGET,
-                                      D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &this->m_texture, &this->m_shareHandle),
+                                      D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, &this->m_texture, &this->m_shareHandle),
         "IDirect3DDevice9Ex::CreateTexture failed."))
     {
         return false;

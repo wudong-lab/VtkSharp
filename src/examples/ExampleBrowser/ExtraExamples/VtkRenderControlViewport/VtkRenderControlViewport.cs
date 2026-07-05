@@ -73,8 +73,6 @@ file sealed class VtkRenderControlViewportWindow : Window
         };
 
         var root = new Grid();
-        root.Background = Brushes.Black;
-
         root.Children.Add(this._viewport);
         root.Children.Add(this._statusButton);
         this.Content = root;
@@ -97,7 +95,7 @@ file sealed class VtkRenderControlViewportWindow : Window
         this._actor.GetProperty().SetColor(VtkColor3d.Green);
         this._picker = vtkPropPicker.New();
 
-        e.Renderer.SetBackground(VtkColor3d.DimGrey);
+        e.Renderer.SetBackground(VtkColor3d.LightSkyBlue);
         e.Renderer.AddActor(this._actor);
         e.Renderer.ResetCamera();
 

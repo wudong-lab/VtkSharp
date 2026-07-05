@@ -18,7 +18,8 @@
     </Grid.ColumnDefinitions>
 
     <Border BorderBrush="DarkGray" BorderThickness="1">
-      <wpf:VtkRenderControl x:Name="VtkRenderControl" />
+      <wpf:VtkRenderControl x:Name="VtkRenderControl"
+                            VtkRenderInitialized="VtkRenderControl_OnVtkRenderInitialized" />
     </Border>
 
     <StackPanel Grid.Column="1" Width="120" Margin="4">
