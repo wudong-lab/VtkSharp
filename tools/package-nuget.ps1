@@ -14,8 +14,14 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $bindingsDir = Join-Path (Join-Path $repoRoot "src") "bindings"
 
+# Compute version once so both packages share the same timestamp.
+# Hour is mapped to 1–24 range (0 o'clock → 24).
+$now = Get-Date
+$hour = if ($now.Hour -eq 0) { 24 } else { $now.Hour }
+$version = "$($now.ToString('yy.Mdd')).$hour$($now.ToString('mm'))"
+
 if (-not $OutputDirectory) {
-    $OutputDirectory = Join-Path $repoRoot "artifacts"
+    $OutputDirectory = Join-Path $repoRoot "artifacts\nuget\$version"
 }
 
 if (-not (Test-Path $OutputDirectory)) {
@@ -40,11 +46,6 @@ else {
     Write-Host "=== Skipping native build (--SkipNativeBuild) ==="
 }
 
-# 2. Compute version once so both packages share the same timestamp.
-# Hour is mapped to 1–24 range (0 o'clock → 24).
-$now = Get-Date
-$hour = if ($now.Hour -eq 0) { 24 } else { $now.Hour }
-$version = "$($now.ToString('yy.Mdd')).$hour$($now.ToString('mm'))"
 Write-Host "Package version: $version"
 
 # 3. Pack VtkSharp (core bindings)

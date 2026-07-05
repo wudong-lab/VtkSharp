@@ -76,6 +76,14 @@ dotnet build src/bindings/VtkSharp.slnx --configuration Debug
 dotnet build src/bindings/VtkSharp.slnx
 ```
 
+### 一键构建 + 收集产物
+```
+.\tools\build-all.ps1                          # Debug（默认）
+.\tools\build-all.ps1 -Configuration Release
+.\tools\build-all.ps1 -SkipNativeBuild         # 跳过 native 构建
+```
+编译 VtkSharp / VtkSharp.Native / VtkSharp.Wpf / VtkSharp.Wpf.Native，将产物按 TFM 复制到 `artifacts/bin/net48/` 和 `artifacts/bin/net8.0-windows/`，每个目录均包含 native dll。
+
 ### 示例浏览器
 ```
 dotnet build src/examples/ExampleBrowser/ExampleBrowser.csproj
