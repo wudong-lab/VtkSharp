@@ -16,6 +16,8 @@ public sealed partial class VtkRenderControl
         this.Loaded -= this.OnLoaded;
         this.Unloaded -= this.OnUnloaded;
         this._image.IsFrontBufferAvailableChanged -= this.OnIsFrontBufferAvailableChanged;
+
+        //
         this._isDisposed = true;
 
         //
@@ -56,23 +58,27 @@ public sealed partial class VtkRenderControl
     {
         if (this.IsVtkRenderInitialized) return;
 
-        this._render = VtkOpenGlD3DImageRender.Create();
-        this.RenderWindow = this._render.RenderWindow;
-        this.Renderer = this._render.Renderer;
+        Debug.Assert(this._internalRender == null);
+        this._internalRender = VtkOpenGlD3DImageRender.Create();
+
+        //
+        this.RenderWindow = this._internalRender.RenderWindow;
+        this.Renderer = this._internalRender.Renderer;
+
         this.AttachCursorObserver(this.RenderWindow);
 
+        //
         var interactor = vtkGenericRenderWindowInteractor.New();
         interactor.TimerEventResetsTimerOff();
 
         this.RenderWindowInteractor = interactor;
         this.RenderWindowInteractor.SetRenderWindow(this.RenderWindow);
-
-        this._interactorStyle = vtkInteractorStyleTrackballCamera.New();
-        this.RenderWindowInteractor.SetInteractorStyle(this._interactorStyle);
         this.RenderWindowInteractor.EnableRenderOff();
+
         this.AttachTimerObservers(this.RenderWindowInteractor);
         this.RenderWindowInteractor.Initialize();
 
+        //
         this.IsVtkRenderInitialized = true;
 
         //
@@ -90,12 +96,11 @@ public sealed partial class VtkRenderControl
 
         this.DetachTimerObservers();
         this.DetachCursorObserver();
-        this.RenderWindowInteractor?.Dispose();
-        this._interactorStyle?.Dispose();
-        this.RenderWindowInteractor = null;
-        this._interactorStyle = null;
 
-        if (this._render is not null)
+        this.RenderWindowInteractor?.Dispose();
+        this.RenderWindowInteractor = null;
+
+        if (this._internalRender is not null)
         {
             if (this._image.IsFrontBufferAvailable)
             {
@@ -110,12 +115,13 @@ public sealed partial class VtkRenderControl
                 }
             }
 
-            this._render.Dispose();
-            this._render = null;
+            this._internalRender.Dispose();
+            this._internalRender = null;
         }
 
         this._backBuffer = IntPtr.Zero;
         this.Cursor = null;
+
         this.RenderWindow = null;
         this.Renderer = null;
 

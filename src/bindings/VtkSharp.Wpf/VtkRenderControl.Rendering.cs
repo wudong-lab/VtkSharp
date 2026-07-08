@@ -34,7 +34,7 @@ public sealed partial class VtkRenderControl
         if (this._isDisposed ||
             !this.IsLoaded ||
             !this.IsVtkRenderInitialized ||
-            this._render is null ||
+            this._internalRender is null ||
             !this._image.IsFrontBufferAvailable ||
             this.ActualWidth <= 0 ||
             this.ActualHeight <= 0)
@@ -53,7 +53,7 @@ public sealed partial class VtkRenderControl
             }
 
             var sizeChanged = pixelSize != this._pixelSize;
-            if (!this._render.SetSize(pixelSize.Width, pixelSize.Height))
+            if (!this._internalRender.SetSize(pixelSize.Width, pixelSize.Height))
             {
                 renderFailure = this.GetRenderError("Failed to resize the VTK D3DImage render target.");
                 return;
@@ -66,7 +66,7 @@ public sealed partial class VtkRenderControl
 
             this._pixelSize = pixelSize;
 
-            var backBuffer = this._render.GetBackBuffer();
+            var backBuffer = this._internalRender.GetBackBuffer();
             if (backBuffer == IntPtr.Zero)
             {
                 renderFailure = this.GetRenderError("The VTK D3DImage render target did not provide a back buffer.");
@@ -79,7 +79,7 @@ public sealed partial class VtkRenderControl
                 this._backBuffer = backBuffer;
             }
 
-            if (!this._render.Render())
+            if (!this._internalRender.Render())
             {
                 renderFailure = this.GetRenderError("Failed to render the VTK scene.");
                 return;
@@ -130,7 +130,7 @@ public sealed partial class VtkRenderControl
 
     private string GetRenderError(string fallbackMessage)
     {
-        var nativeError = this._render?.GetLastError();
+        var nativeError = this._internalRender?.GetLastError();
         return string.IsNullOrWhiteSpace(nativeError) ? fallbackMessage : nativeError!;
     }
 

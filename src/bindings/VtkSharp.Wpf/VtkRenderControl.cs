@@ -14,8 +14,8 @@ public sealed partial class VtkRenderControl : FrameworkElement, IDisposable
     private readonly D3DImage _image = new();
     private readonly Dictionary<int, VtkDispatcherTimer> _timers = new();
 
-    private VtkOpenGlD3DImageRender? _render;
-    private vtkInteractorStyleTrackballCamera? _interactorStyle;
+    private VtkOpenGlD3DImageRender? _internalRender;
+
     private VtkObserverHandle? _createTimerObserver;
     private VtkObserverHandle? _destroyTimerObserver;
     private VtkObserverHandle? _cursorChangedObserver;

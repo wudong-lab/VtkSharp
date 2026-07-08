@@ -11,7 +11,12 @@ public partial class VtkRenderControlDemoWindow : Window
         this.InitializeComponent();
     }
 
-    private void VtkRenderControl1_OnVtkRenderInitialized(object? sender, VtkRenderInitializedEventArgs e) { }
+    private void VtkRenderControl1_OnVtkRenderInitialized(object? sender, VtkRenderInitializedEventArgs e)
+    {
+        var interactor = e.RenderWindowInteractor;
+        using var interactorStyle = vtkInteractorStyleTrackballCamera.New();
+        interactor.SetInteractorStyle(interactorStyle);
+    }
 
     private void VtkRenderControl1_OnVtkRenderFailed(object? sender, VtkRenderFailedEventArgs e)
     {
@@ -36,7 +41,12 @@ public partial class VtkRenderControlDemoWindow : Window
         this.VtkRenderControl1.Render();
     }
 
-    private void VtkRenderControl2_OnVtkRenderInitialized(object? sender, VtkRenderInitializedEventArgs e) { }
+    private void VtkRenderControl2_OnVtkRenderInitialized(object? sender, VtkRenderInitializedEventArgs e)
+    {
+        var interactor = e.RenderWindowInteractor;
+        using var interactorStyle = vtkInteractorStyleTrackballCamera.New();
+        interactor.SetInteractorStyle(interactorStyle);
+    }
 
     private void VtkRenderControl2_OnVtkRenderFailed(object? sender, VtkRenderFailedEventArgs e)
     {
