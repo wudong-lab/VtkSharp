@@ -27,6 +27,6 @@
 
 ## Deviations from C++ original
 
-- Uses vtkNamedColors::GetColorRGB(name, Span<double>) instead of GetColor3d(name).GetData() (value-type vtkColor3d not bound; fixed-array overload used instead).
-  - Cornsilk via `colors.GetColorRGB("Cornsilk", stackalloc double[3])`
-  - DarkGreen via `colors.GetColorRGB("DarkGreen", stackalloc double[3])`
+- Uses `vtkNamedColors.GetColor3d(name)`, which returns the `VtkColor3d` value type directly.
+  - Cornsilk via `colors.GetColor3d("Cornsilk")`
+  - DarkGreen via `colors.GetColor3d("DarkGreen")`

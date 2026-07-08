@@ -22,7 +22,8 @@
 
 ## Deviations from C++ original
 
-- **vtkNamedColors** not bound; MidnightBlue = (25/255 ≈ 0.098, 25/255 ≈ 0.098, 112/255 ≈ 0.439) inlined as constants.
+- At the time this example was ported, MidnightBlue was inlined as constants: (25/255 ≈ 0.098, 25/255 ≈ 0.098, 112/255 ≈ 0.439).
+- Current VtkSharp also supports `vtkNamedColors.GetColor3d(name)` and `VtkColor3d.MidnightBlue` for named-color access.
 - The duplicate `renderWindow->SetWindowName("Arrow");` call in the original is omitted (appears to be a copy-paste artifact; it is called once before the duplicate).
 
 ## Generator fix

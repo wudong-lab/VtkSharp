@@ -30,7 +30,8 @@
 
 ## Deviations from C++ original
 
-- **vtkNamedColors** not bound; color values are inlined directly:
+- At the time this example was ported, the color values were inlined directly:
   - Tomato = (1.0, 0.388, 0.278)
   - BkgColor = (26/255 ≈ 0.102, 51/255 = 0.2, 102/255 = 0.4)
-- Window title "Cylinder" set via SetWindowName (vtkNamedColors is a named-color registry, not essential to the example).
+- Current VtkSharp also supports `vtkNamedColors.GetColor3d(name)` and `VtkColor3d` presets for named-color access.
+- Window title "Cylinder" set via SetWindowName.
