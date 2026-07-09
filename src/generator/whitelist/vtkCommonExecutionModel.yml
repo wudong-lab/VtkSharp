@@ -79,6 +79,22 @@ classes:
         parameters:
           - type: int
             name: _arg1
+      - name: SetInputData
+        cppSignature: void SetInputData(int _arg1, vtkDataObject * _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: vtkDataObject*
+            name: _arg2
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataObject * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: _arg1
   - name: vtkPassInputTypeAlgorithm
     header: vtkPassInputTypeAlgorithm.h
     functions: []

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-07-01.incremental-v1",
+  "module": "vtkImagingCore",
+  "classes": [
+    {
+      "className": "vtkImageCast",
+      "header": "vtkImageCast.h",
+      "baseClassName": "vtkThreadedImageAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "5217c45b22ace25639c48be8470f43facecdd60ee4a5d7feffac5d8fbddb596a",
+      "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageCast_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageCast_export_gen.cpp",
+      "managedContentHash": "f5b4ed9e669ccb9eab59e14659e869f34d11628fa12ffe0f5b6bc26dfe437f93",
+      "nativeContentHash": "cb07d76ffc55d73236fae20f4bd5cec68260e41b17a86be33e6de3c191d3ae4a"
+    },
+    {
+      "className": "vtkImageShiftScale",
+      "header": "vtkImageShiftScale.h",
+      "baseClassName": "vtkThreadedImageAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "fd1bc47fe1f3c3dbbb21f0f2a4c4b58831a383f640a2a836dc6a6287d0bd1973",
+      "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageShiftScale_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageShiftScale_export_gen.cpp",
+      "managedContentHash": "8e3e90738d196dfa43ffc74efe6cd7ca5be5e559ecc29fe54df71d062977b0c9",
+      "nativeContentHash": "9bf234dae703a66d7166d80b0089162a11473a03bec49ffe439bb4a42c5b2ef9"
+    }
+  ]
+}

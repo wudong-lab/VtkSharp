@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkImagingCore
+classes:
+  - name: vtkImageCast
+    header: vtkImageCast.h
+    functions:
+      - name: SetOutputScalarTypeToUnsignedChar
+        cppSignature: void SetOutputScalarTypeToUnsignedChar()
+        return:
+          type: void
+        parameters: []
+  - name: vtkImageShiftScale
+    header: vtkImageShiftScale.h
+    functions:
+      - name: SetOutputScalarType
+        cppSignature: void SetOutputScalarType(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetOutputScalarTypeToChar
+        cppSignature: void SetOutputScalarTypeToChar()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToDouble
+        cppSignature: void SetOutputScalarTypeToDouble()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToFloat
+        cppSignature: void SetOutputScalarTypeToFloat()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToInt
+        cppSignature: void SetOutputScalarTypeToInt()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToLong
+        cppSignature: void SetOutputScalarTypeToLong()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToShort
+        cppSignature: void SetOutputScalarTypeToShort()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToUnsignedChar
+        cppSignature: void SetOutputScalarTypeToUnsignedChar()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToUnsignedInt
+        cppSignature: void SetOutputScalarTypeToUnsignedInt()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToUnsignedLong
+        cppSignature: void SetOutputScalarTypeToUnsignedLong()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputScalarTypeToUnsignedShort
+        cppSignature: void SetOutputScalarTypeToUnsignedShort()
+        return:
+          type: void
+        parameters: []

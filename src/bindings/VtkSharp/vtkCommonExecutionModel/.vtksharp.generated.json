@@ -30,11 +30,11 @@
       "header": "vtkImageAlgorithm.h",
       "baseClassName": "vtkAlgorithm",
       "hasStaticNew": false,
-      "inputHash": "82a358db62dad298402d71d0b957309f86a137d1ab40b060425e42ae6fad754f",
+      "inputHash": "d4748ec4bad54b56799c74313b361f571b18392ff7852b3cbeb0edf6d3775f3c",
       "managedPath": "bindings\\VtkSharp\\vtkCommonExecutionModel\\vtkImageAlgorithm_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonExecutionModel\\vtkImageAlgorithm_export_gen.cpp",
-      "managedContentHash": "c405acaa455c6a8985fa2b3db52b2bcfa15998d3b3e907d52a5332cfc8609f72",
-      "nativeContentHash": "5dee95fd856543357aa127e098dfdaefa9a2c18777f3c7fa88505b8db7ec09b7"
+      "managedContentHash": "24120fd8b5c6d85d119e8f96eb0cb134221dcd4ef139ff5cb85f07284f5a2df7",
+      "nativeContentHash": "8ee646171c01843fde639397cd8df8ab50ab4c7c7d5a9d78245b77e736f5bdfe"
     },
     {
       "className": "vtkPassInputTypeAlgorithm",

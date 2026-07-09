@@ -74,7 +74,7 @@
       "header": "vtkActor2DCollection.h",
       "baseClassName": "vtkPropCollection",
       "hasStaticNew": true,
-      "inputHash": "c6a9461a190b9b71c6f155c9a002128a6f6af32bea175519834856051afe0bad",
+      "inputHash": "65ee5af4df8a7cbc3a4a18ddef72060f727093ad7066035852a0ea26dd998421",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkActor2DCollection_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkActor2DCollection_export_gen.cpp",
       "managedContentHash": "622117d5558be8ab04e5184e988329b45bf3f79fd08d180b59abab2b785133c6",

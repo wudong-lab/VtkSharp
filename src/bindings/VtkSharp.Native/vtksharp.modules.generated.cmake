@@ -12,6 +12,7 @@ set(VTKSHARP_VTK_COMPONENTS
   FiltersModeling
   FiltersSources
   IOImage
+  ImagingCore
   ImagingMath
   InteractionImage
   InteractionStyle
@@ -36,6 +37,7 @@ set(VTKSHARP_VTK_TARGETS
   VTK::FiltersModeling
   VTK::FiltersSources
   VTK::IOImage
+  VTK::ImagingCore
   VTK::ImagingMath
   VTK::InteractionImage
   VTK::InteractionStyle
