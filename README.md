@@ -23,7 +23,34 @@ src/examples/         # WPF 示例浏览器 + 翻译案例
 
 ### 构建
 
-首次构建前，请先按 [VTK 构建说明](docs/build/vtk.md) 编译并安装项目使用的 VTK 9.6.2。
+首次构建前，先在仓库根目录运行 VTK 构建脚本。脚本根据 `VtkSharp` 与 VTK 工作目录的固定相对位置查找 `VtkGitSource`，默认完成 VTK 9.6.2 的 Release 配置、构建和安装：
+
+VTK 工作目录结构如下：
+
+```text
+D:\Code\VTK\
+├── VtkGitSource\         # VTK 9.6.2 源码
+└── VtkGitBuild\          # CMake 构建目录
+    └── install\          # 安装目录，供生成器和 VtkSharp.Native 使用
+```
+
+```powershell
+.\tools\build-vtk-for-vtksharp.ps1
+```
+
+需要同时构建并安装 Debug 和 Release 时：
+
+```powershell
+.\tools\build-vtk-for-vtksharp.ps1 -Configuration Both
+```
+
+只生成 Visual Studio 2026 构建工程、不执行编译和安装时：
+
+```powershell
+.\tools\build-vtk-for-vtksharp.ps1 -Action Configure
+```
+
+详细的模块和目录约定见 [VTK 构建说明](docs/build/vtk.md)。VTK 安装完成后再构建 VtkSharp：
 
 ```powershell
 # Debug
