@@ -1596,9 +1596,9 @@ classes:
           type: void
         parameters: []
       - name: ResetCamera
-        cppSignature: void ResetCamera()
+        cppSignature: bool ResetCamera()
         return:
-          type: void
+          type: bool
         parameters: []
       - name: ResetCamera
         cppSignature: void ResetCamera(double const[6] bounds)

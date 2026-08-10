@@ -188,9 +188,9 @@ public unsafe partial class vtkRenderer : vtkViewport
         vtkRenderer_Render(this.NativePointer);
     }
 
-    public new void ResetCamera()
+    public new bool ResetCamera()
     {
-        vtkRenderer_ResetCamera_(this.NativePointer);
+        return vtkRenderer_ResetCamera_(this.NativePointer);
     }
 
     public new void ResetCamera(ReadOnlySpan<double> bounds)
@@ -424,7 +424,8 @@ public unsafe partial class vtkRenderer : vtkViewport
     private static extern void vtkRenderer_Render(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkRenderer_ResetCamera_(nint self);
+    [return: MarshalAs(UnmanagedType.U1)]
+    private static extern bool vtkRenderer_ResetCamera_(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_ResetCamera_doubleConstArray6(nint self, double* bounds);

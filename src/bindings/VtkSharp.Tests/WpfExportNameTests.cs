@@ -75,9 +75,9 @@ public sealed class WpfExportNameTests
         Assert.Contains("VTKSHARP_API bool VtkOpenGlD3DImageRender_SetSize", nativeExport);
         Assert.Contains("VTKSHARP_API bool VtkOpenGlD3DImageRender_Render", nativeExport);
         Assert.Contains("[return: MarshalAs(UnmanagedType.U1)]", managedWrapper);
-        Assert.Contains("if (!this._render.SetSize(pixelSize.Width, pixelSize.Height))", wpfControl);
+        Assert.Contains("if (!this._internalRender.SetSize(pixelSize.Width, pixelSize.Height))", wpfControl);
         Assert.Contains("renderFailure = this.GetRenderError(\"Failed to resize the VTK D3DImage render target.\");", wpfControl);
-        Assert.Contains("if (!this._render.Render())", wpfControl);
+        Assert.Contains("if (!this._internalRender.Render())", wpfControl);
         Assert.Contains("renderFailure = this.GetRenderError(\"Failed to render the VTK scene.\");", wpfControl);
         Assert.Contains("public void Dispose()", managedWrapper);
         Assert.DoesNotContain("DllImport", wpfControl);

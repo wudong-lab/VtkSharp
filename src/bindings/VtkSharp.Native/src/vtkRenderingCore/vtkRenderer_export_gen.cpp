@@ -80,7 +80,7 @@ VTKSHARP_API void vtkRenderer_RemoveVolume(vtkRenderer* self, vtkProp* p) { self
 
 VTKSHARP_API void vtkRenderer_Render(vtkRenderer* self) { self->Render(); }
 
-VTKSHARP_API void vtkRenderer_ResetCamera_(vtkRenderer* self) { self->ResetCamera(); }
+VTKSHARP_API bool vtkRenderer_ResetCamera_(vtkRenderer* self) { return self->ResetCamera(); }
 
 VTKSHARP_API void vtkRenderer_ResetCamera_doubleConstArray6(vtkRenderer* self, const double* bounds) { self->ResetCamera(bounds); }
 

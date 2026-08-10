@@ -8,7 +8,7 @@
       "header": "vtkLinearExtrusionFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "85435eb0de683d0778c55a14e2f3cf176f4af88cf792e5e1f124569b9ec304fe",
+      "inputHash": "a548f8af7eb3842beb58b343860ba814e6eee3640896414e2cb2133e5c1e5179",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkLinearExtrusionFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkLinearExtrusionFilter_export_gen.cpp",
       "managedContentHash": "398de7fdca2ab166ce537d4383631890c8f11d118e4db2d0aad2c4f45c6d10b7",
