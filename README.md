@@ -23,6 +23,8 @@ src/examples/         # WPF 示例浏览器 + 翻译案例
 
 ### 构建
 
+首次构建前，请先按 [VTK 构建说明](docs/build/vtk.md) 编译并安装项目使用的 VTK 9.6.2。
+
 ```powershell
 # Debug
 .\tools\build-native.ps1 -Configuration Debug
