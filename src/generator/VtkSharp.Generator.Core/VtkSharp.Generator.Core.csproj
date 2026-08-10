@@ -5,14 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CppAst" Version="0.26.0" />
     <PackageReference Include="ClangSharp" Version="21.1.8.3" />
     <PackageReference Include="YamlDotNet" Version="18.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="CppAst">
-      <HintPath>..\lib\CppAst_Net10\CppAst.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
