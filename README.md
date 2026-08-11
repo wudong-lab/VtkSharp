@@ -8,16 +8,17 @@
 
 - 基于白名单的绑定生成器，按需导出 VTK API
 - 支持 `netstandard2.0` 和 `net8.0` 多目标框架
-- WPF 渲染控件（`VtkSharp.Wpf`），提供 `VTKRenderControl`
 - 示例浏览器，包含几何对象、建模等分类示例
 
 ## 结构
 
 ```
 src/generator/        # 绑定生成器（CLI / 核心 / 白名单 / 配置）
-src/bindings/         # C# 绑定输出 + C++ export（VtkSharp / VtkSharp.Native / VtkSharp.Wpf）
-src/examples/         # WPF 示例浏览器 + 翻译案例
+src/bindings/         # VTK 官方 API 的 C# 绑定输出 + C++ export
+src/examples/         # 示例浏览器 + VTK 官方示例翻译
 ```
+
+WPF 控件和 BRDI 私有扩展在独立私有仓库中维护；本仓库只保留 VTK 官方类型及其绑定接口。
 
 ## 快速开始
 

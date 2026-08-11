@@ -14,7 +14,7 @@ $ErrorActionPreference = "Stop"
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $bindingsDir = Join-Path (Join-Path $repoRoot "src") "bindings"
 
-# Compute version once so both packages share the same timestamp.
+# Compute the package version from the current timestamp.
 # Hour is mapped to 1–24 range (0 o'clock → 24).
 $now = Get-Date
 $hour = if ($now.Hour -eq 0) { 24 } else { $now.Hour }
@@ -48,7 +48,7 @@ else {
 
 Write-Host "Package version: $version"
 
-# 3. Pack VtkSharp (core bindings)
+# 2. Pack VtkSharp (core bindings)
 Write-Host "`n=== Packing VtkSharp ==="
 dotnet pack (Join-Path (Join-Path $bindingsDir "VtkSharp") "VtkSharp.csproj") `
     --configuration $Configuration `
@@ -58,18 +58,6 @@ dotnet pack (Join-Path (Join-Path $bindingsDir "VtkSharp") "VtkSharp.csproj") `
     -p:SymbolPackageFormat=snupkg
 if ($LASTEXITCODE -ne 0) {
     throw "VtkSharp pack failed."
-}
-
-# 4. Pack VtkSharp.Wpf
-Write-Host "`n=== Packing VtkSharp.Wpf ==="
-dotnet pack (Join-Path (Join-Path $bindingsDir "VtkSharp.Wpf") "VtkSharp.Wpf.csproj") `
-    --configuration $Configuration `
-    --output $OutputDirectory `
-    -p:Version=$version `
-    -p:IncludeSymbols=true `
-    -p:SymbolPackageFormat=snupkg
-if ($LASTEXITCODE -ne 0) {
-    throw "VtkSharp.Wpf pack failed."
 }
 
 # Summary
