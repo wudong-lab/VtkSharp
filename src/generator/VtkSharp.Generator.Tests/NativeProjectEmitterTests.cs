@@ -19,7 +19,6 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("${VTKSHARP_ALL_VTK_TARGETS}", text);
         Assert.Contains("${VTKSHARP_EXTRA_NATIVE_LIBRARIES}", text);
         Assert.Contains("vtk_module_autoinit(", text);
-        Assert.DoesNotContain("VtkSharp.Wpf.Native", text);
         Assert.EndsWith("\n", text);
     }
 

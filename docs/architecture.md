@@ -2,14 +2,12 @@
 
 ## 项目边界
 
-`VtkSharp` 是 VTK 官方 C++ API 的非官方 .NET 封装。公开仓库负责：
+`VtkSharp` 是 VTK 官方 C++ API 的非官方 .NET 封装，项目包含：
 
 - VTK 官方类型及其 public API 的 C ABI 导出和 C# wrapper。
 - 为官方类型手工补充、但生成器暂不适合生成的接口。
 - 对象生命周期、事件、字符串和数组等通用互操作基础设施。
 - 绑定生成器、白名单、测试和官方 API 示例。
-
-WPF 控件、组织内部派生类型和业务可视化能力不属于公开仓库。
 
 ## 运行时分层
 
@@ -23,7 +21,7 @@ VtkSharp.Native.dll          # C ABI shim
 VTK                          # 一份静态 VTK runtime
 ```
 
-公开构建不会生成 UI 框架专用程序集。`VtkSharp.Native.dll` 是唯一直接承载 VTK runtime 的 native DLL。
+`VtkSharp.Native.dll` 是唯一直接承载 VTK runtime 的 native DLL。
 
 ## 源码布局
 
@@ -45,19 +43,3 @@ native 对象所有权以 VTK 引用计数语义为准：
 - native 侧长期保存的指针、回调或委托必须有明确的保活和解绑顺序。
 - 指针、字符串、数组和结构体跨边界传递时必须明确内存归属、编码与布局。
 - 不通过异常捕获掩盖所有权或 ABI 不确定性，应以最小生命周期测试验证。
-
-## 聚合构建扩展入口
-
-公开 native CMake 提供默认空值的通用源码聚合入口：
-
-```text
-VTKSHARP_EXTRA_NATIVE_SOURCES
-VTKSHARP_EXTRA_NATIVE_HEADERS
-VTKSHARP_EXTRA_INCLUDE_DIRECTORIES
-VTKSHARP_EXTRA_VTK_COMPONENTS
-VTKSHARP_EXTRA_NATIVE_LIBRARIES
-```
-
-这些变量允许外部源码树复用同一个 `VtkSharp.Native` target。额外 VTK 模块会同时进入 `find_package`、`target_link_libraries` 和 `vtk_module_autoinit`，避免模块发现、链接和自动初始化集合不一致。
-
-该入口不改变公开仓库的默认产物，也不允许在公开源码中硬编码具体扩展项目、组织或产品信息。
