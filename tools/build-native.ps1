@@ -2,13 +2,19 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Debug",
 
-    [string]$VtkDir
+    [string]$VtkDir = (Join-Path $PSScriptRoot "..\..\..\VTK\VtkGitBuild\install\lib\cmake\vtk-9.6")
 )
 
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $nativeDir = Join-Path $repoRoot "src\bindings\VtkSharp.Native"
+$VtkDir = [IO.Path]::GetFullPath($VtkDir)
+
+$vtkConfigFiles = @("vtk-config.cmake", "VTKConfig.cmake")
+if (-not ($vtkConfigFiles | Where-Object { Test-Path -LiteralPath (Join-Path $VtkDir $_) -PathType Leaf })) {
+    throw "VTK CMake package was not found in: $VtkDir. Build and install VTK first, or pass -VtkDir explicitly."
+}
 
 $candidates = @(
     @{ Name = "Visual Studio 2026"; ConfigurePreset = "win-x64-vs2026"; BuildPreset = if ($Configuration -eq "Debug") { "win-x64-vs2026-debug" } else { "win-x64-vs2026-release" } },
@@ -26,12 +32,17 @@ function Invoke-CMakeConfigure {
         $arguments += "--fresh"
     }
 
-    if ($VtkDir) {
-        $arguments += "-DVTK_DIR=$VtkDir"
-    }
+    $arguments += "-DVTK_DIR=$VtkDir"
 
-    & cmake @arguments 2>&1 | ForEach-Object { Write-Host $_ }
-    return $LASTEXITCODE
+    $output = & cmake @arguments 2>&1
+    $exitCode = $LASTEXITCODE
+    $output | ForEach-Object { Write-Host $_ }
+
+    $outputText = $output | Out-String
+    return [pscustomobject]@{
+        ExitCode = $exitCode
+        GeneratorUnavailable = $outputText -match "could not find any instance of Visual Studio|Could not create named generator"
+    }
 }
 
 Push-Location $nativeDir
@@ -39,15 +50,18 @@ try {
     foreach ($candidate in $candidates) {
         Write-Host "Configuring native project with $($candidate.Name)..."
 
-        $exitCode = Invoke-CMakeConfigure -Preset $candidate.ConfigurePreset -Fresh $false
-        if ($exitCode -ne 0) {
+        $result = Invoke-CMakeConfigure -Preset $candidate.ConfigurePreset -Fresh $false
+        if ($result.ExitCode -ne 0) {
             Write-Host "Retrying $($candidate.Name) with a fresh CMake cache..."
-            $exitCode = Invoke-CMakeConfigure -Preset $candidate.ConfigurePreset -Fresh $true
+            $result = Invoke-CMakeConfigure -Preset $candidate.ConfigurePreset -Fresh $true
         }
 
-        if ($exitCode -ne 0) {
+        if ($result.ExitCode -ne 0 -and $result.GeneratorUnavailable) {
             Write-Warning "$($candidate.Name) is not available. Trying next candidate."
             continue
+        }
+        if ($result.ExitCode -ne 0) {
+            throw "CMake configuration failed with $($candidate.Name). See the CMake errors above."
         }
 
         Write-Host "Building native project with $($candidate.Name) ($Configuration)..."

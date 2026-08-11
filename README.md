@@ -54,13 +54,16 @@ D:\Code\VTK\
 详细的模块和目录约定见 [VTK 构建说明](docs/build/vtk.md)。VTK 安装完成后再构建 VtkSharp：
 
 ```powershell
-# Debug
-.\tools\build-native.ps1 -Configuration Debug
-dotnet build src/bindings/VtkSharp.slnx --configuration Debug
-
 # Release
 .\tools\build-all.ps1 -Configuration Release
+
+# Debug（需要先使用 -Configuration Both 构建并安装 Debug VTK）
+.\tools\build-native.ps1 -Configuration Debug
+dotnet build src/bindings/VtkSharp.slnx --configuration Debug
 ```
+
+`build-native.ps1` 默认使用上述目录中的 VTK CMake package。使用其他安装目录时，通过
+`-VtkDir` 显式指定，例如 `-VtkDir D:\VTK\install\lib\cmake\vtk-9.6`。
 
 ### 示例浏览器
 
