@@ -2,18 +2,20 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Debug",
 
-    [string]$VtkDir = (Join-Path $PSScriptRoot "..\..\..\VTK\VtkGitBuild\install\lib\cmake\vtk-9.6")
+    [string]$VtkDir
 )
 
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $nativeDir = Join-Path $repoRoot "src\bindings\VtkSharp.Native"
-$VtkDir = [IO.Path]::GetFullPath($VtkDir)
 
-$vtkConfigFiles = @("vtk-config.cmake", "VTKConfig.cmake")
-if (-not ($vtkConfigFiles | Where-Object { Test-Path -LiteralPath (Join-Path $VtkDir $_) -PathType Leaf })) {
-    throw "VTK CMake package was not found in: $VtkDir. Build and install VTK first, or pass -VtkDir explicitly."
+if ($VtkDir) {
+    $VtkDir = [IO.Path]::GetFullPath($VtkDir)
+    $vtkConfigFiles = @("vtk-config.cmake", "VTKConfig.cmake")
+    if (-not ($vtkConfigFiles | Where-Object { Test-Path -LiteralPath (Join-Path $VtkDir $_) -PathType Leaf })) {
+        throw "VTK CMake package was not found in: $VtkDir. Build and install VTK first, or pass a valid -VtkDir."
+    }
 }
 
 $candidates = @(
@@ -32,7 +34,9 @@ function Invoke-CMakeConfigure {
         $arguments += "--fresh"
     }
 
-    $arguments += "-DVTK_DIR=$VtkDir"
+    if ($VtkDir) {
+        $arguments += "-DVTK_DIR=$VtkDir"
+    }
 
     $output = & cmake @arguments 2>&1
     $exitCode = $LASTEXITCODE

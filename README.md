@@ -51,19 +51,23 @@ D:\Code\VTK\
 .\tools\build-vtk-for-vtksharp.ps1 -Action Configure
 ```
 
-详细的模块和目录约定见 [VTK 构建说明](docs/build/vtk.md)。VTK 安装完成后再构建 VtkSharp：
+详细的模块和目录约定见 [VTK 构建说明](docs/build/vtk.md)。VTK 安装完成后，先设置
+`VtkDir`。它必须指向包含 `VTKConfig.cmake`（或 `vtk-config.cmake`）的 CMake package
+目录；VTK 构建脚本完成安装时也会输出这个目录：
 
 ```powershell
+$vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.6"
+
 # Release
-.\tools\build-all.ps1 -Configuration Release
+.\tools\build-all.ps1 -Configuration Release -VtkDir $vtkDir
 
 # Debug（需要先使用 -Configuration Both 构建并安装 Debug VTK）
-.\tools\build-native.ps1 -Configuration Debug
+.\tools\build-native.ps1 -Configuration Debug -VtkDir $vtkDir
 dotnet build src/bindings/VtkSharp.slnx --configuration Debug
 ```
 
-`build-native.ps1` 默认使用上述目录中的 VTK CMake package。使用其他安装目录时，通过
-`-VtkDir` 显式指定，例如 `-VtkDir D:\VTK\install\lib\cmake\vtk-9.6`。
+构建脚本不写死 VTK 安装目录。未传入 `-VtkDir` 时，CMake 只能通过已有缓存或自身的
+package 搜索规则查找 VTK，因此推荐始终显式传入。
 
 ### 示例浏览器
 
