@@ -15,7 +15,7 @@ src/bindings/VtkSharp/            # C# 绑定输出目录（含手写 partial）
 src/bindings/VtkSharp.Native/src/ # C++ export 输出目录
 
 
-docs/superpowers/specs/           # 设计文档
+docs/                             # 当前架构、生成器、构建与协作文档
 src/examples/
   ExampleBrowser/                 # 示例浏览器（WPF 桌面应用）
     Examples/                     # 示例翻译案例（按 VTK 分类）
@@ -92,7 +92,7 @@ dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj
 
 ## AI 示例翻译流程（8 步）
 
-设计文档: `docs/superpowers/specs/2026-06-23-vtksharp-generator-design.md` 行 801-811。
+详细规则见 `docs/generator.md`。
 
 1. 选择 VTK C++ 示例，翻译到 C#，放入 `src/examples/ExampleBrowser/Examples/<Category>/<Name>/`
 2. 实现 `IExample` 接口，标注 `[Example]` Attribute（含 Name、Category、Description、SourceFiles）
