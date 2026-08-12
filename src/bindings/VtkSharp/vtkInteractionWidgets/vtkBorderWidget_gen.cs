@@ -9,7 +9,8 @@ public unsafe partial class vtkBorderWidget : vtkAbstractWidget
 {
     protected vtkBorderWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkBorderWidget New() => new(vtkBorderWidget_New(), ownsReference: true);
-    public new static vtkBorderWidget WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkBorderWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkBorderWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkBorderWidget Register(vtkBorderWidget sourceObject)
     {
@@ -25,7 +26,7 @@ public unsafe partial class vtkBorderWidget : vtkAbstractWidget
 
     public new vtkBorderRepresentation GetBorderRepresentation()
     {
-        return vtkBorderRepresentation.WeakReference(vtkBorderWidget_GetBorderRepresentation(this.NativePointer));
+        return vtkBorderRepresentation.FromBorrowedPointer(vtkBorderWidget_GetBorderRepresentation(this.NativePointer));
     }
 
     public new bool GetResizable()

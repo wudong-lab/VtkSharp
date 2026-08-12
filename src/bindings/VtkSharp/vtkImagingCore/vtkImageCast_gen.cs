@@ -9,7 +9,8 @@ public unsafe partial class vtkImageCast : vtkThreadedImageAlgorithm
 {
     protected vtkImageCast(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageCast New() => new(vtkImageCast_New(), ownsReference: true);
-    public new static vtkImageCast WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageCast FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageCast TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageCast Register(vtkImageCast sourceObject)
     {

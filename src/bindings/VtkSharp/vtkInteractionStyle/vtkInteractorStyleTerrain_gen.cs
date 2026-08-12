@@ -9,7 +9,8 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 {
     protected vtkInteractorStyleTerrain(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleTerrain New() => new(vtkInteractorStyleTerrain_New(), ownsReference: true);
-    public new static vtkInteractorStyleTerrain WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleTerrain FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleTerrain TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleTerrain Register(vtkInteractorStyleTerrain sourceObject)
     {
@@ -58,7 +59,7 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 
     public new vtkInteractorStyleTerrain NewInstance()
     {
-        return vtkInteractorStyleTerrain.WeakReference(vtkInteractorStyleTerrain_NewInstance(this.NativePointer));
+        return vtkInteractorStyleTerrain.FromBorrowedPointer(vtkInteractorStyleTerrain_NewInstance(this.NativePointer));
     }
 
     public new void OnChar()

@@ -9,7 +9,8 @@ public unsafe partial class vtkPropPicker : vtkAbstractPropPicker
 {
     protected vtkPropPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPropPicker New() => new(vtkPropPicker_New(), ownsReference: true);
-    public new static vtkPropPicker WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPropPicker FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPropPicker TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPropPicker Register(vtkPropPicker sourceObject)
     {

@@ -9,7 +9,8 @@ public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
 {
     protected vtkGlyph3D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkGlyph3D New() => new(vtkGlyph3D_New(), ownsReference: true);
-    public new static vtkGlyph3D WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkGlyph3D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkGlyph3D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkGlyph3D Register(vtkGlyph3D sourceObject)
     {

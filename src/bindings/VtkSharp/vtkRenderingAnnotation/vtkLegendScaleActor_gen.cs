@@ -9,7 +9,8 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
 {
     protected vtkLegendScaleActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLegendScaleActor New() => new(vtkLegendScaleActor_New(), ownsReference: true);
-    public new static vtkLegendScaleActor WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLegendScaleActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLegendScaleActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLegendScaleActor Register(vtkLegendScaleActor sourceObject)
     {
@@ -20,27 +21,27 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
 
     public new vtkProperty2D GetAxesProperty()
     {
-        return vtkProperty2D.WeakReference(vtkLegendScaleActor_GetAxesProperty(this.NativePointer));
+        return vtkProperty2D.FromBorrowedPointer(vtkLegendScaleActor_GetAxesProperty(this.NativePointer));
     }
 
     public new vtkAxisActor2D GetBottomAxis()
     {
-        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetBottomAxis(this.NativePointer));
+        return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetBottomAxis(this.NativePointer));
     }
 
     public new vtkAxisActor2D GetLeftAxis()
     {
-        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetLeftAxis(this.NativePointer));
+        return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetLeftAxis(this.NativePointer));
     }
 
     public new vtkAxisActor2D GetRightAxis()
     {
-        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetRightAxis(this.NativePointer));
+        return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetRightAxis(this.NativePointer));
     }
 
     public new vtkAxisActor2D GetTopAxis()
     {
-        return vtkAxisActor2D.WeakReference(vtkLegendScaleActor_GetTopAxis(this.NativePointer));
+        return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetTopAxis(this.NativePointer));
     }
 
     #region Interop

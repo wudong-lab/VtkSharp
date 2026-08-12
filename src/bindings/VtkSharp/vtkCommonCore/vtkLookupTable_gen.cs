@@ -9,7 +9,8 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
 {
     protected vtkLookupTable(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLookupTable New() => new(vtkLookupTable_New(), ownsReference: true);
-    public new static vtkLookupTable WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLookupTable FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLookupTable TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLookupTable Register(vtkLookupTable sourceObject)
     {

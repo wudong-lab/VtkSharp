@@ -9,7 +9,8 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
 {
     protected vtkLabeledDataMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLabeledDataMapper New() => new(vtkLabeledDataMapper_New(), ownsReference: true);
-    public new static vtkLabeledDataMapper WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLabeledDataMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLabeledDataMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLabeledDataMapper Register(vtkLabeledDataMapper sourceObject)
     {
@@ -20,12 +21,12 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
 
     public new vtkTextProperty GetLabelTextProperty()
     {
-        return vtkTextProperty.WeakReference(vtkLabeledDataMapper_GetLabelTextProperty_(this.NativePointer));
+        return vtkTextProperty.FromBorrowedPointer(vtkLabeledDataMapper_GetLabelTextProperty_(this.NativePointer));
     }
 
     public new vtkTextProperty GetLabelTextProperty(int type)
     {
-        return vtkTextProperty.WeakReference(vtkLabeledDataMapper_GetLabelTextProperty_int(this.NativePointer, type));
+        return vtkTextProperty.FromBorrowedPointer(vtkLabeledDataMapper_GetLabelTextProperty_int(this.NativePointer, type));
     }
 
     public new void SetFieldDataName(string _arg)

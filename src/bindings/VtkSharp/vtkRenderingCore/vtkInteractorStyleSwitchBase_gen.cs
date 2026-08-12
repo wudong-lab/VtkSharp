@@ -9,7 +9,8 @@ public unsafe partial class vtkInteractorStyleSwitchBase : vtkInteractorStyle
 {
     protected vtkInteractorStyleSwitchBase(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleSwitchBase New() => new(vtkInteractorStyleSwitchBase_New(), ownsReference: true);
-    public new static vtkInteractorStyleSwitchBase WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleSwitchBase FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleSwitchBase TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleSwitchBase Register(vtkInteractorStyleSwitchBase sourceObject)
     {

@@ -9,7 +9,8 @@ public unsafe partial class vtkScalarBarWidget : vtkBorderWidget
 {
     protected vtkScalarBarWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkScalarBarWidget New() => new(vtkScalarBarWidget_New(), ownsReference: true);
-    public new static vtkScalarBarWidget WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkScalarBarWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkScalarBarWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkScalarBarWidget Register(vtkScalarBarWidget sourceObject)
     {
@@ -30,12 +31,12 @@ public unsafe partial class vtkScalarBarWidget : vtkBorderWidget
 
     public new vtkScalarBarActor GetScalarBarActor()
     {
-        return vtkScalarBarActor.WeakReference(vtkScalarBarWidget_GetScalarBarActor(this.NativePointer));
+        return vtkScalarBarActor.FromBorrowedPointer(vtkScalarBarWidget_GetScalarBarActor(this.NativePointer));
     }
 
     public new vtkScalarBarRepresentation GetScalarBarRepresentation()
     {
-        return vtkScalarBarRepresentation.WeakReference(vtkScalarBarWidget_GetScalarBarRepresentation(this.NativePointer));
+        return vtkScalarBarRepresentation.FromBorrowedPointer(vtkScalarBarWidget_GetScalarBarRepresentation(this.NativePointer));
     }
 
     public new void RepositionableOff()

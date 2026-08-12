@@ -9,7 +9,8 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
 {
     protected vtkPlaneSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPlaneSource New() => new(vtkPlaneSource_New(), ownsReference: true);
-    public new static vtkPlaneSource WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPlaneSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPlaneSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPlaneSource Register(vtkPlaneSource sourceObject)
     {

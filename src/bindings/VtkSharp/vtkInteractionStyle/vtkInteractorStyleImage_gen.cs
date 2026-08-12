@@ -9,7 +9,8 @@ public unsafe partial class vtkInteractorStyleImage : vtkInteractorStyleTrackbal
 {
     protected vtkInteractorStyleImage(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleImage New() => new(vtkInteractorStyleImage_New(), ownsReference: true);
-    public new static vtkInteractorStyleImage WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleImage FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleImage TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleImage Register(vtkInteractorStyleImage sourceObject)
     {

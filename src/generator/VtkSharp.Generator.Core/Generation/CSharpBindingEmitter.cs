@@ -27,7 +27,8 @@ public sealed class CSharpBindingEmitter
             sb.AppendLine($"    public new static {className} New() => new({className}_New(), ownsReference: true);");
         }
 
-        sb.AppendLine($"    public new static {className} WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);");
+        sb.AppendLine($"    internal new static {className} FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);");
+        sb.AppendLine($"    internal new static {className} TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);");
         sb.AppendLine();
         sb.AppendLine($"    public new static {className} Register({className} sourceObject)");
         sb.AppendLine("    {");
@@ -177,13 +178,11 @@ public sealed class CSharpBindingEmitter
         {
             if (ownership == "owned")
             {
-                sb.AppendLine($"{indent}var result = {returnClassName}.Register({returnClassName}.WeakReference({call}));");
-                sb.AppendLine($"{indent}result.UnRegister();");
-                sb.AppendLine($"{indent}return result;");
+                sb.AppendLine($"{indent}return {returnClassName}.TakeReference({call});");
             }
             else
             {
-                sb.AppendLine($"{indent}return {returnClassName}.WeakReference({call});");
+                sb.AppendLine($"{indent}return {returnClassName}.FromBorrowedPointer({call});");
             }
         }
         else if (BindingTypeMapper.IsStringPointer(returnType))

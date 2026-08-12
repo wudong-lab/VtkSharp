@@ -11,7 +11,7 @@
       "inputHash": "c531514740f574f84e7e91f9d46a992dcbdbc2291178bf05d4b6f60348511667",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkAbstractWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkAbstractWidget_export_gen.cpp",
-      "managedContentHash": "8cd3e9e03038f71a06fd510e3281c3ecebfbe887c4f896c0d6008eaf61ca86e0",
+      "managedContentHash": "ac18ff0c760ca5860ede86097f69f4a786dba4bdab2788500dee59fb7ab348b6",
       "nativeContentHash": "8636f8aefc53e5bf4dcd75207b2db80b562bee871909865084fc961ddcf1a9cc"
     },
     {
@@ -22,7 +22,7 @@
       "inputHash": "24c25094c578e06089d84a3919c19e4861d1af3510e654dc8861fe8667f4e495",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkBorderRepresentation_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkBorderRepresentation_export_gen.cpp",
-      "managedContentHash": "3e9474c16698d0d5ac830e4e0445dd48bd2ad8917d372e22d2bb658ad81a2df9",
+      "managedContentHash": "8d39b0085764e3a731165b7bbf47e33656f3b3f103482831901b5bf5a8cc3933",
       "nativeContentHash": "0f7fdd0a1d5bce9ab9f6e2470adfdd1ddea88d28d535b011576b908b2135128e"
     },
     {
@@ -33,7 +33,7 @@
       "inputHash": "18a00df31582d3c6d64d618b426b0a1372cf099b62e8dd89316ebedb534c80ca",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkBorderWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkBorderWidget_export_gen.cpp",
-      "managedContentHash": "a054f301897c23ad90e612d1fc202701c2f98a84015785e37017a5ec9f640db7",
+      "managedContentHash": "d38e946fde1c48669dc00d923af3aed2a2fc92db48429ae62dd82017b5da1ee5",
       "nativeContentHash": "e94b2dee6b5317edbbcf936ae282504b3402f96af081743a508daba3198f54ad"
     },
     {
@@ -44,7 +44,7 @@
       "inputHash": "d55523957538988e400cf47aeacc6ffa4d0f48bc6f87a1a4348508709962f6bd",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkOrientationMarkerWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkOrientationMarkerWidget_export_gen.cpp",
-      "managedContentHash": "d023094b5ae61456b40b10c684087667d41a40b775cda1284a3c1c3c5a404d4f",
+      "managedContentHash": "67d42091c8f8cda1c80925adb3c811468675d2c319b5141bf42a1c464c0daaf5",
       "nativeContentHash": "39d7f95a07adeae879cee42a81e72b3ae9a11f95422e2c4768a17b2bef7108d4"
     },
     {
@@ -55,7 +55,7 @@
       "inputHash": "93d010f0b67dd4384799871b4330f4b4557142e697df1d4505aaa0de13de9704",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkScalarBarRepresentation_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkScalarBarRepresentation_export_gen.cpp",
-      "managedContentHash": "4bc13c7b32bbf18b88330e4d00d8588a1e4cd4ad3831b3e3d7e86f1e8551ba57",
+      "managedContentHash": "9b6957c65da4a980d81776e6e39662a8a0813d539a68fdad69d06e5b4a31f943",
       "nativeContentHash": "119a68f11e84564024fad76d15d9c8a94bbb093a650f6ebb4924e4d7c1df7b92"
     },
     {
@@ -66,7 +66,7 @@
       "inputHash": "5da8485b29efcf83710a6118632e323bb432b59663d52b7024a1d0f10c80f73e",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkScalarBarWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkScalarBarWidget_export_gen.cpp",
-      "managedContentHash": "ef323e7bd6f2cb2a43b7b1391737ada1b823fb4f4cbae3cb2ccfa38374221677",
+      "managedContentHash": "0cace7c02bd8153babf61901211e2c8c4acd994ac01a61f9ad0fd3dee0101e95",
       "nativeContentHash": "7edc3c5cfdcdc6be91380db122102b31dd3f08b136150812e5b8d827d86fa29c"
     },
     {
@@ -77,7 +77,7 @@
       "inputHash": "03e82db3d1380ab79cefb8b33fab58b45ce03d2707955018823e1c5548650ecc",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkWidgetRepresentation_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkWidgetRepresentation_export_gen.cpp",
-      "managedContentHash": "011b425ce8687e1292b097fcf64180c97952b5ad1ba2b3e0bcfb501de92f7215",
+      "managedContentHash": "26dbe4ffdf2626faa456f55818734dab038243ef392ee434dc3daf600fa6f2af",
       "nativeContentHash": "0da5d4e0ee92f11f93a65e2033899cadab91c94809258da406d3edffa9e52633"
     }
   ]

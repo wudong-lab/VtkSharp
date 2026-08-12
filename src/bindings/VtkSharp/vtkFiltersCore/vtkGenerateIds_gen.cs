@@ -9,7 +9,8 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
 {
     protected vtkGenerateIds(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkGenerateIds New() => new(vtkGenerateIds_New(), ownsReference: true);
-    public new static vtkGenerateIds WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkGenerateIds FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkGenerateIds TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkGenerateIds Register(vtkGenerateIds sourceObject)
     {

@@ -9,7 +9,8 @@ public unsafe partial class vtkTriangle : vtkCell
 {
     protected vtkTriangle(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTriangle New() => new(vtkTriangle_New(), ownsReference: true);
-    public new static vtkTriangle WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTriangle FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTriangle TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTriangle Register(vtkTriangle sourceObject)
     {

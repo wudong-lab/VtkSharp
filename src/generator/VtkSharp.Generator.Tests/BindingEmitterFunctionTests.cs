@@ -22,6 +22,9 @@ public sealed class BindingEmitterFunctionTests
         ]);
 
         Assert.Contains("public new void SetInputConnection(vtkAlgorithmOutput input)", text);
+        Assert.Contains("internal new static vtkAlgorithm FromBorrowedPointer(nint nativePointer)", text);
+        Assert.Contains("internal new static vtkAlgorithm TakeReference(nint nativePointer)", text);
+        Assert.DoesNotContain("WeakReference", text);
         Assert.Contains("public new static vtkAlgorithm Register(vtkAlgorithm sourceObject)", text);
         Assert.Contains("vtkAlgorithm_SetInputConnection(this.NativePointer, input.NativePointer);", text);
         Assert.Contains("private static extern void vtkAlgorithm_SetInputConnection(nint self, nint input);", text);
@@ -45,7 +48,7 @@ public sealed class BindingEmitterFunctionTests
         ]);
 
         Assert.Contains("public new vtkAlgorithmOutput GetOutputPort()", text);
-        Assert.Contains("return vtkAlgorithmOutput.WeakReference(vtkAlgorithm_GetOutputPort(this.NativePointer));", text);
+        Assert.Contains("return vtkAlgorithmOutput.FromBorrowedPointer(vtkAlgorithm_GetOutputPort(this.NativePointer));", text);
         Assert.Contains("private static extern nint vtkAlgorithm_GetOutputPort(nint self);", text);
     }
 
@@ -628,10 +631,8 @@ public sealed class BindingEmitterFunctionTests
         ]);
 
         Assert.Contains(
-            "var result = vtkLookupTable.Register(vtkLookupTable.WeakReference(vtkFactory_CreateLookupTable(this.NativePointer)));",
+            "return vtkLookupTable.TakeReference(vtkFactory_CreateLookupTable(this.NativePointer));",
             text);
-        Assert.Contains("result.UnRegister();", text);
-        Assert.Contains("return result;", text);
     }
 
     [Theory]

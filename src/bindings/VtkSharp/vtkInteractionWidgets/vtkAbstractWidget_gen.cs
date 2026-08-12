@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkAbstractWidget : vtkInteractorObserver
 {
     protected vtkAbstractWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkAbstractWidget WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAbstractWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAbstractWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAbstractWidget Register(vtkAbstractWidget sourceObject)
     {
@@ -34,7 +35,7 @@ public unsafe partial class vtkAbstractWidget : vtkInteractorObserver
 
     public new vtkWidgetRepresentation GetRepresentation()
     {
-        return vtkWidgetRepresentation.WeakReference(vtkAbstractWidget_GetRepresentation(this.NativePointer));
+        return vtkWidgetRepresentation.FromBorrowedPointer(vtkAbstractWidget_GetRepresentation(this.NativePointer));
     }
 
     public new void ManagesCursorOff()

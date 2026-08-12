@@ -9,7 +9,8 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
 {
     protected vtkRenderWindowInteractor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkRenderWindowInteractor New() => new(vtkRenderWindowInteractor_New(), ownsReference: true);
-    public new static vtkRenderWindowInteractor WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkRenderWindowInteractor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkRenderWindowInteractor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkRenderWindowInteractor Register(vtkRenderWindowInteractor sourceObject)
     {

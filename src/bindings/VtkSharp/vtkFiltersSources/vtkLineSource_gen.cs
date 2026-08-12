@@ -9,7 +9,8 @@ public unsafe partial class vtkLineSource : vtkPolyDataAlgorithm
 {
     protected vtkLineSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLineSource New() => new(vtkLineSource_New(), ownsReference: true);
-    public new static vtkLineSource WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLineSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLineSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLineSource Register(vtkLineSource sourceObject)
     {

@@ -9,7 +9,8 @@ public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
 {
     protected vtkConeSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkConeSource New() => new(vtkConeSource_New(), ownsReference: true);
-    public new static vtkConeSource WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkConeSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkConeSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkConeSource Register(vtkConeSource sourceObject)
     {

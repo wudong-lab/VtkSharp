@@ -9,7 +9,8 @@ public unsafe partial class vtkActor : vtkProp3D
 {
     protected vtkActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkActor New() => new(vtkActor_New(), ownsReference: true);
-    public new static vtkActor WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkActor Register(vtkActor sourceObject)
     {
@@ -20,12 +21,12 @@ public unsafe partial class vtkActor : vtkProp3D
 
     public new vtkProperty GetBackfaceProperty()
     {
-        return vtkProperty.WeakReference(vtkActor_GetBackfaceProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkActor_GetBackfaceProperty(this.NativePointer));
     }
 
     public new vtkProperty GetProperty()
     {
-        return vtkProperty.WeakReference(vtkActor_GetProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkActor_GetProperty(this.NativePointer));
     }
 
     public new void SetBackfaceProperty(vtkProperty lut)

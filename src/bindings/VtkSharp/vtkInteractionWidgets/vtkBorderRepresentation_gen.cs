@@ -9,7 +9,8 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
 {
     protected vtkBorderRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkBorderRepresentation New() => new(vtkBorderRepresentation_New(), ownsReference: true);
-    public new static vtkBorderRepresentation WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkBorderRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkBorderRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkBorderRepresentation Register(vtkBorderRepresentation sourceObject)
     {
@@ -30,7 +31,7 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
 
     public new vtkProperty2D GetBorderProperty()
     {
-        return vtkProperty2D.WeakReference(vtkBorderRepresentation_GetBorderProperty(this.NativePointer));
+        return vtkProperty2D.FromBorrowedPointer(vtkBorderRepresentation_GetBorderProperty(this.NativePointer));
     }
 
     internal new double* GetMinimumNormalizedViewportSize_Internal()
@@ -76,12 +77,12 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
 
     public new vtkCoordinate GetPosition2Coordinate()
     {
-        return vtkCoordinate.WeakReference(vtkBorderRepresentation_GetPosition2Coordinate(this.NativePointer));
+        return vtkCoordinate.FromBorrowedPointer(vtkBorderRepresentation_GetPosition2Coordinate(this.NativePointer));
     }
 
     public new vtkCoordinate GetPositionCoordinate()
     {
-        return vtkCoordinate.WeakReference(vtkBorderRepresentation_GetPositionCoordinate(this.NativePointer));
+        return vtkCoordinate.FromBorrowedPointer(vtkBorderRepresentation_GetPositionCoordinate(this.NativePointer));
     }
 
     public new bool GetProportionalResize()

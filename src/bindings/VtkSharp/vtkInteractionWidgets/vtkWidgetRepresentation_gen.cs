@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkWidgetRepresentation : vtkProp
 {
     protected vtkWidgetRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkWidgetRepresentation WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkWidgetRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkWidgetRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkWidgetRepresentation Register(vtkWidgetRepresentation sourceObject)
     {
@@ -39,7 +40,7 @@ public unsafe partial class vtkWidgetRepresentation : vtkProp
 
     public new vtkRenderer GetRenderer()
     {
-        return vtkRenderer.WeakReference(vtkWidgetRepresentation_GetRenderer(this.NativePointer));
+        return vtkRenderer.FromBorrowedPointer(vtkWidgetRepresentation_GetRenderer(this.NativePointer));
     }
 
     public new void NeedToRenderOff()

@@ -9,7 +9,8 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
 {
     protected vtkWindowToImageFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkWindowToImageFilter New() => new(vtkWindowToImageFilter_New(), ownsReference: true);
-    public new static vtkWindowToImageFilter WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkWindowToImageFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkWindowToImageFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkWindowToImageFilter Register(vtkWindowToImageFilter sourceObject)
     {
@@ -30,7 +31,7 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
 
     public new vtkImageData GetOutput()
     {
-        return vtkImageData.WeakReference(vtkWindowToImageFilter_GetOutput(this.NativePointer));
+        return vtkImageData.FromBorrowedPointer(vtkWindowToImageFilter_GetOutput(this.NativePointer));
     }
 
     internal new int* GetScale_Internal()

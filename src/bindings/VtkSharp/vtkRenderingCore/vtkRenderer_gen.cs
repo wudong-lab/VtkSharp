@@ -9,7 +9,8 @@ public unsafe partial class vtkRenderer : vtkViewport
 {
     protected vtkRenderer(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkRenderer New() => new(vtkRenderer_New(), ownsReference: true);
-    public new static vtkRenderer WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkRenderer FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkRenderer TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkRenderer Register(vtkRenderer sourceObject)
     {
@@ -95,17 +96,17 @@ public unsafe partial class vtkRenderer : vtkViewport
 
     public new vtkCamera GetActiveCamera()
     {
-        return vtkCamera.WeakReference(vtkRenderer_GetActiveCamera(this.NativePointer));
+        return vtkCamera.FromBorrowedPointer(vtkRenderer_GetActiveCamera(this.NativePointer));
     }
 
     public new vtkActorCollection GetActors()
     {
-        return vtkActorCollection.WeakReference(vtkRenderer_GetActors(this.NativePointer));
+        return vtkActorCollection.FromBorrowedPointer(vtkRenderer_GetActors(this.NativePointer));
     }
 
     public new vtkRenderWindow GetRenderWindow()
     {
-        return vtkRenderWindow.WeakReference(vtkRenderer_GetRenderWindow(this.NativePointer));
+        return vtkRenderWindow.FromBorrowedPointer(vtkRenderer_GetRenderWindow(this.NativePointer));
     }
 
     public new double GetTiledAspectRatio()
@@ -115,7 +116,7 @@ public unsafe partial class vtkRenderer : vtkViewport
 
     public new vtkWindow GetVTKWindow()
     {
-        return vtkWindow.WeakReference(vtkRenderer_GetVTKWindow(this.NativePointer));
+        return vtkWindow.FromBorrowedPointer(vtkRenderer_GetVTKWindow(this.NativePointer));
     }
 
     public new double GetZ(int x, int y)
@@ -145,17 +146,17 @@ public unsafe partial class vtkRenderer : vtkViewport
 
     public new vtkLight MakeLight()
     {
-        return vtkLight.WeakReference(vtkRenderer_MakeLight(this.NativePointer));
+        return vtkLight.FromBorrowedPointer(vtkRenderer_MakeLight(this.NativePointer));
     }
 
     public new vtkAssemblyPath PickProp(double selectionX, double selectionY)
     {
-        return vtkAssemblyPath.WeakReference(vtkRenderer_PickProp_double_double(this.NativePointer, selectionX, selectionY));
+        return vtkAssemblyPath.FromBorrowedPointer(vtkRenderer_PickProp_double_double(this.NativePointer, selectionX, selectionY));
     }
 
     public new vtkAssemblyPath PickProp(double selectionX1, double selectionY1, double selectionX2, double selectionY2)
     {
-        return vtkAssemblyPath.WeakReference(vtkRenderer_PickProp_double_double_double_double(this.NativePointer, selectionX1, selectionY1, selectionX2, selectionY2));
+        return vtkAssemblyPath.FromBorrowedPointer(vtkRenderer_PickProp_double_double_double_double(this.NativePointer, selectionX1, selectionY1, selectionX2, selectionY2));
     }
 
     public new void RemoveActor(vtkProp p)

@@ -9,7 +9,8 @@ public unsafe partial class vtkCellCenters : vtkPolyDataAlgorithm
 {
     protected vtkCellCenters(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCellCenters New() => new(vtkCellCenters_New(), ownsReference: true);
-    public new static vtkCellCenters WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCellCenters FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCellCenters TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCellCenters Register(vtkCellCenters sourceObject)
     {

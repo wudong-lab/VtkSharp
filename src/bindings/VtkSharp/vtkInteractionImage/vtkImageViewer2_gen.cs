@@ -9,7 +9,8 @@ public unsafe partial class vtkImageViewer2 : vtkObject
 {
     protected vtkImageViewer2(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageViewer2 New() => new(vtkImageViewer2_New(), ownsReference: true);
-    public new static vtkImageViewer2 WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageViewer2 FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageViewer2 TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageViewer2 Register(vtkImageViewer2 sourceObject)
     {
@@ -20,17 +21,17 @@ public unsafe partial class vtkImageViewer2 : vtkObject
 
     public new vtkImageActor GetImageActor()
     {
-        return vtkImageActor.WeakReference(vtkImageViewer2_GetImageActor(this.NativePointer));
+        return vtkImageActor.FromBorrowedPointer(vtkImageViewer2_GetImageActor(this.NativePointer));
     }
 
     public new vtkRenderWindow GetRenderWindow()
     {
-        return vtkRenderWindow.WeakReference(vtkImageViewer2_GetRenderWindow(this.NativePointer));
+        return vtkRenderWindow.FromBorrowedPointer(vtkImageViewer2_GetRenderWindow(this.NativePointer));
     }
 
     public new vtkRenderer GetRenderer()
     {
-        return vtkRenderer.WeakReference(vtkImageViewer2_GetRenderer(this.NativePointer));
+        return vtkRenderer.FromBorrowedPointer(vtkImageViewer2_GetRenderer(this.NativePointer));
     }
 
     public new void Render()

@@ -9,7 +9,8 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
 {
     protected vtkLinearExtrusionFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLinearExtrusionFilter New() => new(vtkLinearExtrusionFilter_New(), ownsReference: true);
-    public new static vtkLinearExtrusionFilter WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLinearExtrusionFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLinearExtrusionFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLinearExtrusionFilter Register(vtkLinearExtrusionFilter sourceObject)
     {

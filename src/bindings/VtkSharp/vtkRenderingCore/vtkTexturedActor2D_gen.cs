@@ -9,7 +9,8 @@ public unsafe partial class vtkTexturedActor2D : vtkActor2D
 {
     protected vtkTexturedActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTexturedActor2D New() => new(vtkTexturedActor2D_New(), ownsReference: true);
-    public new static vtkTexturedActor2D WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTexturedActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTexturedActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTexturedActor2D Register(vtkTexturedActor2D sourceObject)
     {

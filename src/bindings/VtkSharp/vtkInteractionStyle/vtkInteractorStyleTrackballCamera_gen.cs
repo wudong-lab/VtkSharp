@@ -9,7 +9,8 @@ public unsafe partial class vtkInteractorStyleTrackballCamera : vtkInteractorSty
 {
     protected vtkInteractorStyleTrackballCamera(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleTrackballCamera New() => new(vtkInteractorStyleTrackballCamera_New(), ownsReference: true);
-    public new static vtkInteractorStyleTrackballCamera WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleTrackballCamera FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleTrackballCamera TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleTrackballCamera Register(vtkInteractorStyleTrackballCamera sourceObject)
     {

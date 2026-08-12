@@ -9,7 +9,8 @@ public unsafe partial class vtkParametricEnneper : vtkParametricFunction
 {
     protected vtkParametricEnneper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkParametricEnneper New() => new(vtkParametricEnneper_New(), ownsReference: true);
-    public new static vtkParametricEnneper WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkParametricEnneper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkParametricEnneper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkParametricEnneper Register(vtkParametricEnneper sourceObject)
     {

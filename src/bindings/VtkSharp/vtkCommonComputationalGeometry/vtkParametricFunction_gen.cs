@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkParametricFunction : vtkObject
 {
     protected vtkParametricFunction(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkParametricFunction WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkParametricFunction FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkParametricFunction TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkParametricFunction Register(vtkParametricFunction sourceObject)
     {

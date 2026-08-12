@@ -9,7 +9,8 @@ public unsafe partial class vtkInteractorStyleRubberBandPick : vtkInteractorStyl
 {
     protected vtkInteractorStyleRubberBandPick(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleRubberBandPick New() => new(vtkInteractorStyleRubberBandPick_New(), ownsReference: true);
-    public new static vtkInteractorStyleRubberBandPick WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleRubberBandPick FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleRubberBandPick TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleRubberBandPick Register(vtkInteractorStyleRubberBandPick sourceObject)
     {

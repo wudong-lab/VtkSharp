@@ -9,7 +9,8 @@ public unsafe partial class vtkTextProperty : vtkObject
 {
     protected vtkTextProperty(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTextProperty New() => new(vtkTextProperty_New(), ownsReference: true);
-    public new static vtkTextProperty WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTextProperty FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTextProperty TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTextProperty Register(vtkTextProperty sourceObject)
     {

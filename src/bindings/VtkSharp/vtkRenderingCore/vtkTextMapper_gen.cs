@@ -9,7 +9,8 @@ public unsafe partial class vtkTextMapper : vtkMapper2D
 {
     protected vtkTextMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTextMapper New() => new(vtkTextMapper_New(), ownsReference: true);
-    public new static vtkTextMapper WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTextMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTextMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTextMapper Register(vtkTextMapper sourceObject)
     {
@@ -20,7 +21,7 @@ public unsafe partial class vtkTextMapper : vtkMapper2D
 
     public new vtkTextProperty GetTextProperty()
     {
-        return vtkTextProperty.WeakReference(vtkTextMapper_GetTextProperty(this.NativePointer));
+        return vtkTextProperty.FromBorrowedPointer(vtkTextMapper_GetTextProperty(this.NativePointer));
     }
 
     public new void SetInput(string _arg)

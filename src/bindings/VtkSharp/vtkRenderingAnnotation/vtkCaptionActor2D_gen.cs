@@ -9,7 +9,8 @@ public unsafe partial class vtkCaptionActor2D : vtkActor2D
 {
     protected vtkCaptionActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCaptionActor2D New() => new(vtkCaptionActor2D_New(), ownsReference: true);
-    public new static vtkCaptionActor2D WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCaptionActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCaptionActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCaptionActor2D Register(vtkCaptionActor2D sourceObject)
     {
@@ -20,12 +21,12 @@ public unsafe partial class vtkCaptionActor2D : vtkActor2D
 
     public new vtkTextProperty GetCaptionTextProperty()
     {
-        return vtkTextProperty.WeakReference(vtkCaptionActor2D_GetCaptionTextProperty(this.NativePointer));
+        return vtkTextProperty.FromBorrowedPointer(vtkCaptionActor2D_GetCaptionTextProperty(this.NativePointer));
     }
 
     public new vtkTextActor GetTextActor()
     {
-        return vtkTextActor.WeakReference(vtkCaptionActor2D_GetTextActor(this.NativePointer));
+        return vtkTextActor.FromBorrowedPointer(vtkCaptionActor2D_GetTextActor(this.NativePointer));
     }
 
     #region Interop

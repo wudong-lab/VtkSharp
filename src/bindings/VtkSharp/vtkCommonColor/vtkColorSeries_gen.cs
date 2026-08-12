@@ -9,7 +9,8 @@ public unsafe partial class vtkColorSeries : vtkObject
 {
     protected vtkColorSeries(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkColorSeries New() => new(vtkColorSeries_New(), ownsReference: true);
-    public new static vtkColorSeries WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkColorSeries FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkColorSeries TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkColorSeries Register(vtkColorSeries sourceObject)
     {
@@ -30,9 +31,7 @@ public unsafe partial class vtkColorSeries : vtkObject
 
     public new vtkLookupTable CreateLookupTable(int lutIndexing)
     {
-        var result = vtkLookupTable.Register(vtkLookupTable.WeakReference(vtkColorSeries_CreateLookupTable(this.NativePointer, lutIndexing)));
-        result.UnRegister();
-        return result;
+        return vtkLookupTable.TakeReference(vtkColorSeries_CreateLookupTable(this.NativePointer, lutIndexing));
     }
 
     public new void DeepCopy(vtkColorSeries chartColors)

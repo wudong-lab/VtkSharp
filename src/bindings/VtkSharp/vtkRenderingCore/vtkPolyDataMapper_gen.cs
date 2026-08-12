@@ -9,7 +9,8 @@ public unsafe partial class vtkPolyDataMapper : vtkMapper
 {
     protected vtkPolyDataMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPolyDataMapper New() => new(vtkPolyDataMapper_New(), ownsReference: true);
-    public new static vtkPolyDataMapper WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPolyDataMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPolyDataMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPolyDataMapper Register(vtkPolyDataMapper sourceObject)
     {

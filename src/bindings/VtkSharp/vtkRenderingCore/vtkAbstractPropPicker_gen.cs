@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkAbstractPropPicker : vtkAbstractPicker
 {
     protected vtkAbstractPropPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkAbstractPropPicker WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAbstractPropPicker FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAbstractPropPicker TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAbstractPropPicker Register(vtkAbstractPropPicker sourceObject)
     {
@@ -19,12 +20,12 @@ public unsafe partial class vtkAbstractPropPicker : vtkAbstractPicker
 
     public new vtkActor GetActor()
     {
-        return vtkActor.WeakReference(vtkAbstractPropPicker_GetActor(this.NativePointer));
+        return vtkActor.FromBorrowedPointer(vtkAbstractPropPicker_GetActor(this.NativePointer));
     }
 
     public new vtkProp GetViewProp()
     {
-        return vtkProp.WeakReference(vtkAbstractPropPicker_GetViewProp(this.NativePointer));
+        return vtkProp.FromBorrowedPointer(vtkAbstractPropPicker_GetViewProp(this.NativePointer));
     }
 
     #region Interop

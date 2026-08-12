@@ -9,7 +9,8 @@ public unsafe partial class vtkAxisActor2D : vtkActor2D
 {
     protected vtkAxisActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkAxisActor2D New() => new(vtkAxisActor2D_New(), ownsReference: true);
-    public new static vtkAxisActor2D WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAxisActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAxisActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAxisActor2D Register(vtkAxisActor2D sourceObject)
     {

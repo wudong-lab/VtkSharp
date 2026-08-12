@@ -9,7 +9,8 @@ public unsafe partial class vtkParametricFunctionSource : vtkPolyDataAlgorithm
 {
     protected vtkParametricFunctionSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkParametricFunctionSource New() => new(vtkParametricFunctionSource_New(), ownsReference: true);
-    public new static vtkParametricFunctionSource WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkParametricFunctionSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkParametricFunctionSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkParametricFunctionSource Register(vtkParametricFunctionSource sourceObject)
     {

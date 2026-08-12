@@ -9,7 +9,8 @@ public unsafe partial class vtkPolyLine : vtkCell
 {
     protected vtkPolyLine(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPolyLine New() => new(vtkPolyLine_New(), ownsReference: true);
-    public new static vtkPolyLine WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPolyLine FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPolyLine TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPolyLine Register(vtkPolyLine sourceObject)
     {

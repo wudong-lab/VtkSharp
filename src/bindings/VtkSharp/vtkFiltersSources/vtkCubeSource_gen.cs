@@ -9,7 +9,8 @@ public unsafe partial class vtkCubeSource : vtkPolyDataAlgorithm
 {
     protected vtkCubeSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCubeSource New() => new(vtkCubeSource_New(), ownsReference: true);
-    public new static vtkCubeSource WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCubeSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCubeSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCubeSource Register(vtkCubeSource sourceObject)
     {

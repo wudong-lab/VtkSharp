@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkAbstractArray : vtkObject
 {
     protected vtkAbstractArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkAbstractArray WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAbstractArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAbstractArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAbstractArray Register(vtkAbstractArray sourceObject)
     {

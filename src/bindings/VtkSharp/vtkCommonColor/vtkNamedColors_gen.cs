@@ -9,7 +9,8 @@ public unsafe partial class vtkNamedColors : vtkObject
 {
     protected vtkNamedColors(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkNamedColors New() => new(vtkNamedColors_New(), ownsReference: true);
-    public new static vtkNamedColors WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkNamedColors FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkNamedColors TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkNamedColors Register(vtkNamedColors sourceObject)
     {

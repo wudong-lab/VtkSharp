@@ -11,7 +11,7 @@
       "inputHash": "b44a7498c9caedd378b1c11c6c6091c83bf2278cf6238ab76c926b416c240317",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkImageWriter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkImageWriter_export_gen.cpp",
-      "managedContentHash": "4a80876d10c2ba3cd3d28139a60d69ce968bfdfb5219784afe980cd1a09ecbbd",
+      "managedContentHash": "05cd91b2069beb503dca15e21525262d8dde608d0e00ab775c34e65ff78c4642",
       "nativeContentHash": "4f35a1dd88e36707ae2eb0e39f38fe21cca0923b85d361b5e990f5f9f04cfc6e"
     },
     {
@@ -22,7 +22,7 @@
       "inputHash": "321950148c79777f874823ea0b3416522ebe8095dd6fc951d7b6cff90bba1523",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkJPEGWriter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkJPEGWriter_export_gen.cpp",
-      "managedContentHash": "6635c1394d6c5960682f1b5de392e0dc9452003760bacf67dc8ea823c26c1342",
+      "managedContentHash": "87b82d791bf17095bf94a3a9a3a8233f929bf7779b106441ee8c21f81530806f",
       "nativeContentHash": "deaf9ca57805ba5ce1286a73f77f80f7883e940121a4ee5dcb817e933b025513"
     },
     {
@@ -33,7 +33,7 @@
       "inputHash": "933326dc1b923c8c5740b36fe27eb461072ac433cde66c24794a074ba7a39f5e",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkPNGWriter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkPNGWriter_export_gen.cpp",
-      "managedContentHash": "cd0d1f866e54148830fb717a8175f2d0ae9a9f42b2c872a76fb5ec7c7c33593d",
+      "managedContentHash": "16e64c926fd67b2b5ab74c3ddc8f1fd0bc859d99f2131d156325e37646e54c73",
       "nativeContentHash": "70d9a0e3d85058121ab972b3877aac172c8d590b67655161f61d40733d04083d"
     }
   ]

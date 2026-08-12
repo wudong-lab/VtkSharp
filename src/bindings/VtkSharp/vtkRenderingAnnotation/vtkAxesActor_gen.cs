@@ -9,7 +9,8 @@ public unsafe partial class vtkAxesActor : vtkProp3D
 {
     protected vtkAxesActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkAxesActor New() => new(vtkAxesActor_New(), ownsReference: true);
-    public new static vtkAxesActor WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAxesActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAxesActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAxesActor Register(vtkAxesActor sourceObject)
     {
@@ -20,47 +21,47 @@ public unsafe partial class vtkAxesActor : vtkProp3D
 
     public new vtkCaptionActor2D GetXAxisCaptionActor2D()
     {
-        return vtkCaptionActor2D.WeakReference(vtkAxesActor_GetXAxisCaptionActor2D(this.NativePointer));
+        return vtkCaptionActor2D.FromBorrowedPointer(vtkAxesActor_GetXAxisCaptionActor2D(this.NativePointer));
     }
 
     public new vtkProperty GetXAxisShaftProperty()
     {
-        return vtkProperty.WeakReference(vtkAxesActor_GetXAxisShaftProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetXAxisShaftProperty(this.NativePointer));
     }
 
     public new vtkProperty GetXAxisTipProperty()
     {
-        return vtkProperty.WeakReference(vtkAxesActor_GetXAxisTipProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetXAxisTipProperty(this.NativePointer));
     }
 
     public new vtkCaptionActor2D GetYAxisCaptionActor2D()
     {
-        return vtkCaptionActor2D.WeakReference(vtkAxesActor_GetYAxisCaptionActor2D(this.NativePointer));
+        return vtkCaptionActor2D.FromBorrowedPointer(vtkAxesActor_GetYAxisCaptionActor2D(this.NativePointer));
     }
 
     public new vtkProperty GetYAxisShaftProperty()
     {
-        return vtkProperty.WeakReference(vtkAxesActor_GetYAxisShaftProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetYAxisShaftProperty(this.NativePointer));
     }
 
     public new vtkProperty GetYAxisTipProperty()
     {
-        return vtkProperty.WeakReference(vtkAxesActor_GetYAxisTipProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetYAxisTipProperty(this.NativePointer));
     }
 
     public new vtkCaptionActor2D GetZAxisCaptionActor2D()
     {
-        return vtkCaptionActor2D.WeakReference(vtkAxesActor_GetZAxisCaptionActor2D(this.NativePointer));
+        return vtkCaptionActor2D.FromBorrowedPointer(vtkAxesActor_GetZAxisCaptionActor2D(this.NativePointer));
     }
 
     public new vtkProperty GetZAxisShaftProperty()
     {
-        return vtkProperty.WeakReference(vtkAxesActor_GetZAxisShaftProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetZAxisShaftProperty(this.NativePointer));
     }
 
     public new vtkProperty GetZAxisTipProperty()
     {
-        return vtkProperty.WeakReference(vtkAxesActor_GetZAxisTipProperty(this.NativePointer));
+        return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetZAxisTipProperty(this.NativePointer));
     }
 
     public new void SetAxisLabels(bool _arg)

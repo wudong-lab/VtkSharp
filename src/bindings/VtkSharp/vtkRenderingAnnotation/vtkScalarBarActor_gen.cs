@@ -9,7 +9,8 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 {
     protected vtkScalarBarActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkScalarBarActor New() => new(vtkScalarBarActor_New(), ownsReference: true);
-    public new static vtkScalarBarActor WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkScalarBarActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkScalarBarActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkScalarBarActor Register(vtkScalarBarActor sourceObject)
     {
@@ -80,12 +81,12 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     public new vtkTextProperty GetAnnotationTextProperty()
     {
-        return vtkTextProperty.WeakReference(vtkScalarBarActor_GetAnnotationTextProperty(this.NativePointer));
+        return vtkTextProperty.FromBorrowedPointer(vtkScalarBarActor_GetAnnotationTextProperty(this.NativePointer));
     }
 
     public new vtkProperty2D GetBackgroundProperty()
     {
-        return vtkProperty2D.WeakReference(vtkScalarBarActor_GetBackgroundProperty(this.NativePointer));
+        return vtkProperty2D.FromBorrowedPointer(vtkScalarBarActor_GetBackgroundProperty(this.NativePointer));
     }
 
     public new double GetBarRatio()
@@ -100,7 +101,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     public new vtkDoubleArray GetCustomLabels()
     {
-        return vtkDoubleArray.WeakReference(vtkScalarBarActor_GetCustomLabels(this.NativePointer));
+        return vtkDoubleArray.FromBorrowedPointer(vtkScalarBarActor_GetCustomLabels(this.NativePointer));
     }
 
     public new bool GetDrawAboveRangeSwatch()
@@ -135,7 +136,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     public new vtkProperty2D GetFrameProperty()
     {
-        return vtkProperty2D.WeakReference(vtkScalarBarActor_GetFrameProperty(this.NativePointer));
+        return vtkProperty2D.FromBorrowedPointer(vtkScalarBarActor_GetFrameProperty(this.NativePointer));
     }
 
     public new string GetLabelFormat()
@@ -145,12 +146,12 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     public new vtkTextProperty GetLabelTextProperty()
     {
-        return vtkTextProperty.WeakReference(vtkScalarBarActor_GetLabelTextProperty(this.NativePointer));
+        return vtkTextProperty.FromBorrowedPointer(vtkScalarBarActor_GetLabelTextProperty(this.NativePointer));
     }
 
     public new vtkScalarsToColors GetLookupTable()
     {
-        return vtkScalarsToColors.WeakReference(vtkScalarBarActor_GetLookupTable(this.NativePointer));
+        return vtkScalarsToColors.FromBorrowedPointer(vtkScalarBarActor_GetLookupTable(this.NativePointer));
     }
 
     public new int GetMaximumHeightInPixels()
@@ -208,7 +209,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     public new vtkTextProperty GetTitleTextProperty()
     {
-        return vtkTextProperty.WeakReference(vtkScalarBarActor_GetTitleTextProperty(this.NativePointer));
+        return vtkTextProperty.FromBorrowedPointer(vtkScalarBarActor_GetTitleTextProperty(this.NativePointer));
     }
 
     public new bool GetUnconstrainedFontSize()

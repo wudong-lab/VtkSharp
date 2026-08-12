@@ -9,7 +9,8 @@ public unsafe partial class vtkPNGWriter : vtkImageWriter
 {
     protected vtkPNGWriter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPNGWriter New() => new(vtkPNGWriter_New(), ownsReference: true);
-    public new static vtkPNGWriter WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPNGWriter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPNGWriter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPNGWriter Register(vtkPNGWriter sourceObject)
     {

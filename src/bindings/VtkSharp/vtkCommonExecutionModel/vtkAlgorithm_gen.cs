@@ -9,7 +9,8 @@ public unsafe partial class vtkAlgorithm : vtkObject
 {
     protected vtkAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkAlgorithm New() => new(vtkAlgorithm_New(), ownsReference: true);
-    public new static vtkAlgorithm WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAlgorithm Register(vtkAlgorithm sourceObject)
     {
@@ -20,12 +21,12 @@ public unsafe partial class vtkAlgorithm : vtkObject
 
     public new vtkAlgorithmOutput GetOutputPort(int index)
     {
-        return vtkAlgorithmOutput.WeakReference(vtkAlgorithm_GetOutputPort_int(this.NativePointer, index));
+        return vtkAlgorithmOutput.FromBorrowedPointer(vtkAlgorithm_GetOutputPort_int(this.NativePointer, index));
     }
 
     public new vtkAlgorithmOutput GetOutputPort()
     {
-        return vtkAlgorithmOutput.WeakReference(vtkAlgorithm_GetOutputPort_(this.NativePointer));
+        return vtkAlgorithmOutput.FromBorrowedPointer(vtkAlgorithm_GetOutputPort_(this.NativePointer));
     }
 
     public new void SetInputConnection(int port, vtkAlgorithmOutput input)

@@ -9,7 +9,8 @@ public unsafe partial class vtkInteractorStyleJoystickCamera : vtkInteractorStyl
 {
     protected vtkInteractorStyleJoystickCamera(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleJoystickCamera New() => new(vtkInteractorStyleJoystickCamera_New(), ownsReference: true);
-    public new static vtkInteractorStyleJoystickCamera WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleJoystickCamera FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleJoystickCamera TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleJoystickCamera Register(vtkInteractorStyleJoystickCamera sourceObject)
     {

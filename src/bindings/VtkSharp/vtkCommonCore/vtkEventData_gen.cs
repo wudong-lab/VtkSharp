@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkEventData : vtkObjectBase
 {
     protected vtkEventData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkEventData WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkEventData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkEventData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkEventData Register(vtkEventData sourceObject)
     {

@@ -9,7 +9,8 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
 {
     protected vtkTextActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTextActor New() => new(vtkTextActor_New(), ownsReference: true);
-    public new static vtkTextActor WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTextActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTextActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTextActor Register(vtkTextActor sourceObject)
     {
@@ -20,7 +21,7 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
 
     public new vtkTextProperty GetTextProperty()
     {
-        return vtkTextProperty.WeakReference(vtkTextActor_GetTextProperty(this.NativePointer));
+        return vtkTextProperty.FromBorrowedPointer(vtkTextActor_GetTextProperty(this.NativePointer));
     }
 
     public new void SetInput(string inputString)

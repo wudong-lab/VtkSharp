@@ -9,7 +9,8 @@ public unsafe partial class vtkActor2D : vtkProp
 {
     protected vtkActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkActor2D New() => new(vtkActor2D_New(), ownsReference: true);
-    public new static vtkActor2D WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkActor2D Register(vtkActor2D sourceObject)
     {
@@ -20,12 +21,12 @@ public unsafe partial class vtkActor2D : vtkProp
 
     public new vtkCoordinate GetPositionCoordinate()
     {
-        return vtkCoordinate.WeakReference(vtkActor2D_GetPositionCoordinate(this.NativePointer));
+        return vtkCoordinate.FromBorrowedPointer(vtkActor2D_GetPositionCoordinate(this.NativePointer));
     }
 
     public new vtkProperty2D GetProperty()
     {
-        return vtkProperty2D.WeakReference(vtkActor2D_GetProperty(this.NativePointer));
+        return vtkProperty2D.FromBorrowedPointer(vtkActor2D_GetProperty(this.NativePointer));
     }
 
     public new void SetDisplayPosition(int _arg1, int _arg2)

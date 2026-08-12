@@ -14,7 +14,8 @@ public class vtkObject : vtkObjectBase
 
     protected vtkObject(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
 
-    public static vtkObject WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal static vtkObject FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal static vtkObject TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public override void Delete()
     {
@@ -128,7 +129,7 @@ public class vtkObject : vtkObjectBase
             {
                 var callerObject = caller == state.Owner.NativePointer
                     ? state.Owner
-                    : WeakReference(caller);
+                    : FromBorrowedPointer(caller);
 
                 if (state.DataCallback is not null)
                 {

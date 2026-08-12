@@ -9,7 +9,8 @@ public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
 {
     protected vtkImageMathematics(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageMathematics New() => new(vtkImageMathematics_New(), ownsReference: true);
-    public new static vtkImageMathematics WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageMathematics FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageMathematics TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageMathematics Register(vtkImageMathematics sourceObject)
     {
@@ -40,12 +41,12 @@ public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
 
     public new vtkDataObject GetInput()
     {
-        return vtkDataObject.WeakReference(vtkImageMathematics_GetInput_(this.NativePointer));
+        return vtkDataObject.FromBorrowedPointer(vtkImageMathematics_GetInput_(this.NativePointer));
     }
 
     public new vtkDataObject GetInput(int idx)
     {
-        return vtkDataObject.WeakReference(vtkImageMathematics_GetInput_int(this.NativePointer, idx));
+        return vtkDataObject.FromBorrowedPointer(vtkImageMathematics_GetInput_int(this.NativePointer, idx));
     }
 
     public new int GetNumberOfInputs()

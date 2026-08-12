@@ -9,7 +9,8 @@ public unsafe partial class vtkLight : vtkObject
 {
     protected vtkLight(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLight New() => new(vtkLight_New(), ownsReference: true);
-    public new static vtkLight WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLight FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLight TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLight Register(vtkLight sourceObject)
     {

@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkDataSet : vtkDataObject
 {
     protected vtkDataSet(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkDataSet WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkDataSet FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkDataSet TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkDataSet Register(vtkDataSet sourceObject)
     {
@@ -19,7 +20,7 @@ public unsafe partial class vtkDataSet : vtkDataObject
 
     public new vtkPointData GetPointData()
     {
-        return vtkPointData.WeakReference(vtkDataSet_GetPointData(this.NativePointer));
+        return vtkPointData.FromBorrowedPointer(vtkDataSet_GetPointData(this.NativePointer));
     }
 
     #region Interop

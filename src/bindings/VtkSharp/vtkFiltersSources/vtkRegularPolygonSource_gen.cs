@@ -9,7 +9,8 @@ public unsafe partial class vtkRegularPolygonSource : vtkPolyDataAlgorithm
 {
     protected vtkRegularPolygonSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkRegularPolygonSource New() => new(vtkRegularPolygonSource_New(), ownsReference: true);
-    public new static vtkRegularPolygonSource WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkRegularPolygonSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkRegularPolygonSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkRegularPolygonSource Register(vtkRegularPolygonSource sourceObject)
     {

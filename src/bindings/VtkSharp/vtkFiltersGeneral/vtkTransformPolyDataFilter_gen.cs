@@ -9,7 +9,8 @@ public unsafe partial class vtkTransformPolyDataFilter : vtkPolyDataAlgorithm
 {
     protected vtkTransformPolyDataFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTransformPolyDataFilter New() => new(vtkTransformPolyDataFilter_New(), ownsReference: true);
-    public new static vtkTransformPolyDataFilter WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTransformPolyDataFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkTransformPolyDataFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTransformPolyDataFilter Register(vtkTransformPolyDataFilter sourceObject)
     {

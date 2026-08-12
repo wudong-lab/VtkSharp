@@ -9,7 +9,8 @@ public unsafe partial class vtkScalarBarRepresentation : vtkBorderRepresentation
 {
     protected vtkScalarBarRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkScalarBarRepresentation New() => new(vtkScalarBarRepresentation_New(), ownsReference: true);
-    public new static vtkScalarBarRepresentation WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkScalarBarRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkScalarBarRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkScalarBarRepresentation Register(vtkScalarBarRepresentation sourceObject)
     {
@@ -35,7 +36,7 @@ public unsafe partial class vtkScalarBarRepresentation : vtkBorderRepresentation
 
     public new vtkScalarBarActor GetScalarBarActor()
     {
-        return vtkScalarBarActor.WeakReference(vtkScalarBarRepresentation_GetScalarBarActor(this.NativePointer));
+        return vtkScalarBarActor.FromBorrowedPointer(vtkScalarBarRepresentation_GetScalarBarActor(this.NativePointer));
     }
 
     public new bool GetVisibility()

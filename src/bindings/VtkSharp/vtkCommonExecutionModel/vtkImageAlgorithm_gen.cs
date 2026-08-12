@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
 {
     protected vtkImageAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkImageAlgorithm WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageAlgorithm Register(vtkImageAlgorithm sourceObject)
     {
@@ -19,12 +20,12 @@ public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
 
     public new vtkImageData GetOutput()
     {
-        return vtkImageData.WeakReference(vtkImageAlgorithm_GetOutput_(this.NativePointer));
+        return vtkImageData.FromBorrowedPointer(vtkImageAlgorithm_GetOutput_(this.NativePointer));
     }
 
     public new vtkImageData GetOutput(int _arg1)
     {
-        return vtkImageData.WeakReference(vtkImageAlgorithm_GetOutput_int(this.NativePointer, _arg1));
+        return vtkImageData.FromBorrowedPointer(vtkImageAlgorithm_GetOutput_int(this.NativePointer, _arg1));
     }
 
     public new void SetInputData(int _arg1, vtkDataObject _arg2)

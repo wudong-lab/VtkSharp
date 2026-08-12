@@ -9,7 +9,8 @@ public unsafe partial class vtkExtractEdges : vtkPolyDataAlgorithm
 {
     protected vtkExtractEdges(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkExtractEdges New() => new(vtkExtractEdges_New(), ownsReference: true);
-    public new static vtkExtractEdges WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkExtractEdges FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkExtractEdges TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkExtractEdges Register(vtkExtractEdges sourceObject)
     {

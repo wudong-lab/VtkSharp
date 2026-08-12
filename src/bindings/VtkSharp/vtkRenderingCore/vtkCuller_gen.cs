@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkCuller : vtkObject
 {
     protected vtkCuller(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkCuller WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCuller FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCuller TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCuller Register(vtkCuller sourceObject)
     {

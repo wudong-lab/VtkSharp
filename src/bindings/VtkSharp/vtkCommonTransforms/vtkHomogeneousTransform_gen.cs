@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkHomogeneousTransform : vtkAbstractTransform
 {
     protected vtkHomogeneousTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkHomogeneousTransform WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkHomogeneousTransform FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkHomogeneousTransform TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkHomogeneousTransform Register(vtkHomogeneousTransform sourceObject)
     {

@@ -9,7 +9,8 @@ public unsafe partial class vtkLine : vtkCell
 {
     protected vtkLine(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLine New() => new(vtkLine_New(), ownsReference: true);
-    public new static vtkLine WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLine FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkLine TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLine Register(vtkLine sourceObject)
     {

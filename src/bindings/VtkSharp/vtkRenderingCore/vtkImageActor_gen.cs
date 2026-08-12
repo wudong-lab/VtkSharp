@@ -9,7 +9,8 @@ public unsafe partial class vtkImageActor : vtkImageSlice
 {
     protected vtkImageActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageActor New() => new(vtkImageActor_New(), ownsReference: true);
-    public new static vtkImageActor WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkImageActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageActor Register(vtkImageActor sourceObject)
     {

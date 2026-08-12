@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkCell : vtkObject
 {
     protected vtkCell(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkCell WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCell FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkCell TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCell Register(vtkCell sourceObject)
     {
@@ -19,7 +20,7 @@ public unsafe partial class vtkCell : vtkObject
 
     public new vtkIdList GetPointIds()
     {
-        return vtkIdList.WeakReference(vtkCell_GetPointIds(this.NativePointer));
+        return vtkIdList.FromBorrowedPointer(vtkCell_GetPointIds(this.NativePointer));
     }
 
     #region Interop

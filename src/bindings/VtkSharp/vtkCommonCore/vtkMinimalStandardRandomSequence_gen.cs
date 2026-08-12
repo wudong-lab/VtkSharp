@@ -9,7 +9,8 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
 {
     protected vtkMinimalStandardRandomSequence(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkMinimalStandardRandomSequence New() => new(vtkMinimalStandardRandomSequence_New(), ownsReference: true);
-    public new static vtkMinimalStandardRandomSequence WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkMinimalStandardRandomSequence FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkMinimalStandardRandomSequence TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkMinimalStandardRandomSequence Register(vtkMinimalStandardRandomSequence sourceObject)
     {

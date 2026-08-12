@@ -9,7 +9,8 @@ public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
 {
     protected vtkPolyDataAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPolyDataAlgorithm New() => new(vtkPolyDataAlgorithm_New(), ownsReference: true);
-    public new static vtkPolyDataAlgorithm WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPolyDataAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkPolyDataAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPolyDataAlgorithm Register(vtkPolyDataAlgorithm sourceObject)
     {
@@ -20,12 +21,12 @@ public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
 
     public new vtkPolyData GetOutput()
     {
-        return vtkPolyData.WeakReference(vtkPolyDataAlgorithm_GetOutput_(this.NativePointer));
+        return vtkPolyData.FromBorrowedPointer(vtkPolyDataAlgorithm_GetOutput_(this.NativePointer));
     }
 
     public new vtkPolyData GetOutput(int _arg1)
     {
-        return vtkPolyData.WeakReference(vtkPolyDataAlgorithm_GetOutput_int(this.NativePointer, _arg1));
+        return vtkPolyData.FromBorrowedPointer(vtkPolyDataAlgorithm_GetOutput_int(this.NativePointer, _arg1));
     }
 
     public new void SetInputData(int _arg1, vtkDataObject _arg2)

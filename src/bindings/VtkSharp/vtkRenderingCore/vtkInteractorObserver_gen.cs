@@ -8,7 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkInteractorObserver : vtkObject
 {
     protected vtkInteractorObserver(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    public new static vtkInteractorObserver WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorObserver FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorObserver TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorObserver Register(vtkInteractorObserver sourceObject)
     {

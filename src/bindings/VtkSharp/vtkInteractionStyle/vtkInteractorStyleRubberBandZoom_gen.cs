@@ -9,7 +9,8 @@ public unsafe partial class vtkInteractorStyleRubberBandZoom : vtkInteractorStyl
 {
     protected vtkInteractorStyleRubberBandZoom(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleRubberBandZoom New() => new(vtkInteractorStyleRubberBandZoom_New(), ownsReference: true);
-    public new static vtkInteractorStyleRubberBandZoom WeakReference(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleRubberBandZoom FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    internal new static vtkInteractorStyleRubberBandZoom TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleRubberBandZoom Register(vtkInteractorStyleRubberBandZoom sourceObject)
     {
