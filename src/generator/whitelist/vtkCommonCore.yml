@@ -148,6 +148,431 @@ classes:
   - name: vtkInformationVector
     header: vtkInformationVector.h
     functions: []
+  - name: vtkLookupTable
+    header: vtkLookupTable.h
+    functions:
+      - name: Build
+        cppSignature: void Build()
+        return:
+          type: void
+        parameters: []
+      - name: ForceBuild
+        cppSignature: void ForceBuild()
+        return:
+          type: void
+        parameters: []
+      - name: GetAboveRangeColor
+        cppSignature: double * GetAboveRangeColor()
+        return:
+          type: double*
+        parameters: []
+      - name: GetAboveRangeColor
+        cppSignature: void GetAboveRangeColor(double[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[4]
+            name: _arg
+      - name: GetAlphaRange
+        cppSignature: double * GetAlphaRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetAlphaRange
+        cppSignature: void GetAlphaRange(double[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: _arg
+      - name: GetBelowRangeColor
+        cppSignature: double * GetBelowRangeColor()
+        return:
+          type: double*
+        parameters: []
+      - name: GetBelowRangeColor
+        cppSignature: void GetBelowRangeColor(double[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[4]
+            name: _arg
+      - name: GetHueRange
+        cppSignature: double * GetHueRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetHueRange
+        cppSignature: void GetHueRange(double[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: _arg
+      - name: GetNanColor
+        cppSignature: double * GetNanColor()
+        return:
+          type: double*
+        parameters: []
+      - name: GetNanColor
+        cppSignature: void GetNanColor(double[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[4]
+            name: _arg
+      - name: GetNumberOfAvailableColors
+        cppSignature: vtkIdType GetNumberOfAvailableColors()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GetNumberOfTableValues
+        cppSignature: vtkIdType GetNumberOfTableValues()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GetRamp
+        cppSignature: int GetRamp()
+        return:
+          type: int
+        parameters: []
+      - name: GetRange
+        cppSignature: double * GetRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetSaturationRange
+        cppSignature: double * GetSaturationRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetSaturationRange
+        cppSignature: void GetSaturationRange(double[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: _arg
+      - name: GetScale
+        cppSignature: int GetScale()
+        return:
+          type: int
+        parameters: []
+      - name: GetTableRange
+        cppSignature: double * GetTableRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetTableRange
+        cppSignature: void GetTableRange(double[2] data)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: data
+      - name: GetTableValue
+        cppSignature: double * GetTableValue(vtkIdType indx)
+        return:
+          type: double*
+        parameters:
+          - type: vtkIdType
+            name: indx
+      - name: GetTableValue
+        cppSignature: void GetTableValue(vtkIdType indx, double[4] rgba)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: indx
+          - type: double[4]
+            name: rgba
+      - name: GetUseAboveRangeColor
+        cppSignature: vtkTypeBool GetUseAboveRangeColor()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetUseBelowRangeColor
+        cppSignature: vtkTypeBool GetUseBelowRangeColor()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetValueRange
+        cppSignature: double * GetValueRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetValueRange
+        cppSignature: void GetValueRange(double[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: _arg
+      - name: SetAboveRangeColor
+        cppSignature: void SetAboveRangeColor(double _arg1, double _arg2, double _arg3, double _arg4)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+          - type: double
+            name: _arg4
+      - name: SetAboveRangeColor
+        cppSignature: void SetAboveRangeColor(double const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[4]
+            name: _arg
+      - name: SetAlphaRange
+        cppSignature: void SetAlphaRange(double _arg1, double _arg2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+      - name: SetAlphaRange
+        cppSignature: void SetAlphaRange(double const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: _arg
+      - name: SetBelowRangeColor
+        cppSignature: void SetBelowRangeColor(double _arg1, double _arg2, double _arg3, double _arg4)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+          - type: double
+            name: _arg4
+      - name: SetBelowRangeColor
+        cppSignature: void SetBelowRangeColor(double const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[4]
+            name: _arg
+      - name: SetHueRange
+        cppSignature: void SetHueRange(double _arg1, double _arg2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+      - name: SetHueRange
+        cppSignature: void SetHueRange(double const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: _arg
+      - name: SetNanColor
+        cppSignature: void SetNanColor(double _arg1, double _arg2, double _arg3, double _arg4)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+          - type: double
+            name: _arg4
+      - name: SetNanColor
+        cppSignature: void SetNanColor(double const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[4]
+            name: _arg
+      - name: SetNumberOfTableValues
+        cppSignature: void SetNumberOfTableValues(vtkIdType number)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: number
+      - name: SetRamp
+        cppSignature: void SetRamp(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetRampToLinear
+        cppSignature: void SetRampToLinear()
+        return:
+          type: void
+        parameters: []
+      - name: SetRampToSCurve
+        cppSignature: void SetRampToSCurve()
+        return:
+          type: void
+        parameters: []
+      - name: SetRampToSQRT
+        cppSignature: void SetRampToSQRT()
+        return:
+          type: void
+        parameters: []
+      - name: SetRange
+        cppSignature: void SetRange(double const[2] rng)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: rng
+      - name: SetRange
+        cppSignature: void SetRange(double min, double max)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: min
+          - type: double
+            name: max
+      - name: SetSaturationRange
+        cppSignature: void SetSaturationRange(double _arg1, double _arg2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+      - name: SetSaturationRange
+        cppSignature: void SetSaturationRange(double const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: _arg
+      - name: SetScale
+        cppSignature: void SetScale(int scale)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: scale
+      - name: SetScaleToLinear
+        cppSignature: void SetScaleToLinear()
+        return:
+          type: void
+        parameters: []
+      - name: SetScaleToLog10
+        cppSignature: void SetScaleToLog10()
+        return:
+          type: void
+        parameters: []
+      - name: SetTableRange
+        cppSignature: void SetTableRange(double const[2] r)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: r
+      - name: SetTableRange
+        cppSignature: void SetTableRange(double min, double max)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: min
+          - type: double
+            name: max
+      - name: SetTableValue
+        cppSignature: void SetTableValue(vtkIdType indx, double const[4] rgba)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: indx
+          - type: const double[4]
+            name: rgba
+      - name: SetTableValue
+        cppSignature: void SetTableValue(vtkIdType indx, double r, double g, double b, double a)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: indx
+          - type: double
+            name: r
+          - type: double
+            name: g
+          - type: double
+            name: b
+          - type: double
+            name: a
+      - name: SetUseAboveRangeColor
+        cppSignature: void SetUseAboveRangeColor(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetUseBelowRangeColor
+        cppSignature: void SetUseBelowRangeColor(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetValueRange
+        cppSignature: void SetValueRange(double _arg1, double _arg2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+      - name: SetValueRange
+        cppSignature: void SetValueRange(double const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: _arg
+      - name: UseAboveRangeColorOff
+        cppSignature: void UseAboveRangeColorOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseAboveRangeColorOn
+        cppSignature: void UseAboveRangeColorOn()
+        return:
+          type: void
+        parameters: []
+      - name: UseBelowRangeColorOff
+        cppSignature: void UseBelowRangeColorOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseBelowRangeColorOn
+        cppSignature: void UseBelowRangeColorOn()
+        return:
+          type: void
+        parameters: []
+      - name: UsingLogScale
+        cppSignature: vtkTypeBool UsingLogScale()
+        return:
+          type: vtkTypeBool
+        parameters: []
   - name: vtkMinimalStandardRandomSequence
     header: vtkMinimalStandardRandomSequence.h
     functions:
@@ -352,6 +777,102 @@ classes:
   - name: vtkRandomSequence
     header: vtkRandomSequence.h
     functions: []
+  - name: vtkScalarsToColors
+    header: vtkScalarsToColors.h
+    functions:
+      - name: Build
+        cppSignature: void Build()
+        return:
+          type: void
+        parameters: []
+      - name: GetAlpha
+        cppSignature: double GetAlpha()
+        return:
+          type: double
+        parameters: []
+      - name: GetColor
+        cppSignature: double * GetColor(double v)
+        return:
+          type: double*
+        parameters:
+          - type: double
+            name: v
+      - name: GetColor
+        cppSignature: void GetColor(double v, double[3] rgb)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: v
+          - type: double[3]
+            name: rgb
+      - name: GetIndexedLookup
+        cppSignature: vtkTypeBool GetIndexedLookup()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetNumberOfAvailableColors
+        cppSignature: vtkIdType GetNumberOfAvailableColors()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GetOpacity
+        cppSignature: double GetOpacity(double v)
+        return:
+          type: double
+        parameters:
+          - type: double
+            name: v
+      - name: GetRange
+        cppSignature: double * GetRange()
+        return:
+          type: double*
+        parameters: []
+      - name: IndexedLookupOff
+        cppSignature: void IndexedLookupOff()
+        return:
+          type: void
+        parameters: []
+      - name: IndexedLookupOn
+        cppSignature: void IndexedLookupOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetAlpha
+        cppSignature: void SetAlpha(double alpha)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: alpha
+      - name: SetIndexedLookup
+        cppSignature: void SetIndexedLookup(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetRange
+        cppSignature: void SetRange(double const[2] rng)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: rng
+      - name: SetRange
+        cppSignature: void SetRange(double min, double max)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: min
+          - type: double
+            name: max
+      - name: UsingLogScale
+        cppSignature: vtkTypeBool UsingLogScale()
+        return:
+          type: vtkTypeBool
+        parameters: []
   - name: vtkStringArray
     header: vtkStringArray.h
     functions: []

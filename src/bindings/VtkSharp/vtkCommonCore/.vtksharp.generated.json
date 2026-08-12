@@ -92,6 +92,17 @@
       "nativeContentHash": "eb14134a9ed2d8e4f73bdc348a0ccfd8e28a4ccc79c435cb14d54589b8c6c747"
     },
     {
+      "className": "vtkLookupTable",
+      "header": "vtkLookupTable.h",
+      "baseClassName": "vtkScalarsToColors",
+      "hasStaticNew": true,
+      "inputHash": "91789efac1a56af10b24f7fc696d33b860f3cea2cd2cbafc7da790a055d32fd0",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkLookupTable_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkLookupTable_export_gen.cpp",
+      "managedContentHash": "f564818640dd62d7545d32b5b3fff5da07c59e769714b55fb553f0fd066d719e",
+      "nativeContentHash": "09f4e4f429879c5f2e6687b5fca12c5cd356ffa420f23c618a709e3ef566cd42"
+    },
+    {
       "className": "vtkMinimalStandardRandomSequence",
       "header": "vtkMinimalStandardRandomSequence.h",
       "baseClassName": "vtkRandomSequence",
@@ -123,6 +134,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkRandomSequence_export_gen.cpp",
       "managedContentHash": "d20a0cc8b07152ed2f40a6be70336fe2c6c1d3345b423c5a6d9eb4cae01e3a1d",
       "nativeContentHash": "4ff982ad7b245e75888e7e31dfd131994367160fd2ce5b04d1663d9a1a054bea"
+    },
+    {
+      "className": "vtkScalarsToColors",
+      "header": "vtkScalarsToColors.h",
+      "baseClassName": "vtkObject",
+      "hasStaticNew": true,
+      "inputHash": "a70dca4b257028ed86f1b004e7b4b99b3666e9f99a092e4f352a78d6439320c3",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkScalarsToColors_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkScalarsToColors_export_gen.cpp",
+      "managedContentHash": "9daa05d88c2a459214e4325eae4deb917a2e98f878eb553034ba81e9e8442c45",
+      "nativeContentHash": "084e9ec585054cae9d3272dda60568cf393a9cbc1aad9f1d06c27bcc853a82ea"
     },
     {
       "className": "vtkStringArray",

@@ -245,3 +245,451 @@ classes:
         return:
           type: vtkAxisActor2D*
         parameters: []
+  - name: vtkScalarBarActor
+    header: vtkScalarBarActor.h
+    functions:
+      - name: DrawAboveRangeSwatchOff
+        cppSignature: void DrawAboveRangeSwatchOff()
+        return:
+          type: void
+        parameters: []
+      - name: DrawAboveRangeSwatchOn
+        cppSignature: void DrawAboveRangeSwatchOn()
+        return:
+          type: void
+        parameters: []
+      - name: DrawBackgroundOff
+        cppSignature: void DrawBackgroundOff()
+        return:
+          type: void
+        parameters: []
+      - name: DrawBackgroundOn
+        cppSignature: void DrawBackgroundOn()
+        return:
+          type: void
+        parameters: []
+      - name: DrawBelowRangeSwatchOff
+        cppSignature: void DrawBelowRangeSwatchOff()
+        return:
+          type: void
+        parameters: []
+      - name: DrawBelowRangeSwatchOn
+        cppSignature: void DrawBelowRangeSwatchOn()
+        return:
+          type: void
+        parameters: []
+      - name: DrawColorBarOff
+        cppSignature: void DrawColorBarOff()
+        return:
+          type: void
+        parameters: []
+      - name: DrawColorBarOn
+        cppSignature: void DrawColorBarOn()
+        return:
+          type: void
+        parameters: []
+      - name: DrawFrameOff
+        cppSignature: void DrawFrameOff()
+        return:
+          type: void
+        parameters: []
+      - name: DrawFrameOn
+        cppSignature: void DrawFrameOn()
+        return:
+          type: void
+        parameters: []
+      - name: DrawTickLabelsOff
+        cppSignature: void DrawTickLabelsOff()
+        return:
+          type: void
+        parameters: []
+      - name: DrawTickLabelsOn
+        cppSignature: void DrawTickLabelsOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetAnnotationTextProperty
+        cppSignature: vtkTextProperty * GetAnnotationTextProperty()
+        return:
+          type: vtkTextProperty*
+        parameters: []
+      - name: GetBackgroundProperty
+        cppSignature: vtkProperty2D * GetBackgroundProperty()
+        return:
+          type: vtkProperty2D*
+        parameters: []
+      - name: GetBarRatio
+        cppSignature: double GetBarRatio()
+        return:
+          type: double
+        parameters: []
+      - name: GetComponentTitle
+        cppSignature: char * GetComponentTitle()
+        return:
+          type: char*
+        parameters: []
+      - name: GetCustomLabels
+        cppSignature: vtkDoubleArray * GetCustomLabels()
+        return:
+          type: vtkDoubleArray*
+        parameters: []
+      - name: GetDrawAboveRangeSwatch
+        cppSignature: bool GetDrawAboveRangeSwatch()
+        return:
+          type: bool
+        parameters: []
+      - name: GetDrawBackground
+        cppSignature: vtkTypeBool GetDrawBackground()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetDrawBelowRangeSwatch
+        cppSignature: bool GetDrawBelowRangeSwatch()
+        return:
+          type: bool
+        parameters: []
+      - name: GetDrawColorBar
+        cppSignature: vtkTypeBool GetDrawColorBar()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetDrawFrame
+        cppSignature: vtkTypeBool GetDrawFrame()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetDrawTickLabels
+        cppSignature: vtkTypeBool GetDrawTickLabels()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetFrameProperty
+        cppSignature: vtkProperty2D * GetFrameProperty()
+        return:
+          type: vtkProperty2D*
+        parameters: []
+      - name: GetLabelFormat
+        cppSignature: char * GetLabelFormat()
+        return:
+          type: char*
+        parameters: []
+      - name: GetLabelTextProperty
+        cppSignature: vtkTextProperty * GetLabelTextProperty()
+        return:
+          type: vtkTextProperty*
+        parameters: []
+      - name: GetLookupTable
+        cppSignature: vtkScalarsToColors * GetLookupTable()
+        return:
+          type: vtkScalarsToColors*
+        parameters: []
+      - name: GetMaximumHeightInPixels
+        cppSignature: int GetMaximumHeightInPixels()
+        return:
+          type: int
+        parameters: []
+      - name: GetMaximumNumberOfColors
+        cppSignature: int GetMaximumNumberOfColors()
+        return:
+          type: int
+        parameters: []
+      - name: GetMaximumWidthInPixels
+        cppSignature: int GetMaximumWidthInPixels()
+        return:
+          type: int
+        parameters: []
+      - name: GetNumberOfLabels
+        cppSignature: int GetNumberOfLabels()
+        return:
+          type: int
+        parameters: []
+      - name: GetOrientation
+        cppSignature: int GetOrientation()
+        return:
+          type: int
+        parameters: []
+      - name: GetScalarBarRect
+        cppSignature: void GetScalarBarRect(int[4] rect, vtkViewport * viewport)
+        return:
+          type: void
+        parameters:
+          - type: int[4]
+            name: rect
+          - type: vtkViewport*
+            name: viewport
+      - name: GetTextPad
+        cppSignature: int GetTextPad()
+        return:
+          type: int
+        parameters: []
+      - name: GetTextPosition
+        cppSignature: int GetTextPosition()
+        return:
+          type: int
+        parameters: []
+      - name: GetTitle
+        cppSignature: char * GetTitle()
+        return:
+          type: char*
+        parameters: []
+      - name: GetTitleRatio
+        cppSignature: double GetTitleRatio()
+        return:
+          type: double
+        parameters: []
+      - name: GetTitleTextProperty
+        cppSignature: vtkTextProperty * GetTitleTextProperty()
+        return:
+          type: vtkTextProperty*
+        parameters: []
+      - name: GetUnconstrainedFontSize
+        cppSignature: bool GetUnconstrainedFontSize()
+        return:
+          type: bool
+        parameters: []
+      - name: GetUseCustomLabels
+        cppSignature: bool GetUseCustomLabels()
+        return:
+          type: bool
+        parameters: []
+      - name: GetVerticalTitleSeparation
+        cppSignature: int GetVerticalTitleSeparation()
+        return:
+          type: int
+        parameters: []
+      - name: SetAnnotationTextProperty
+        cppSignature: void SetAnnotationTextProperty(vtkTextProperty * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkTextProperty*
+            name: p
+      - name: SetBackgroundProperty
+        cppSignature: void SetBackgroundProperty(vtkProperty2D * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkProperty2D*
+            name: p
+      - name: SetBarRatio
+        cppSignature: void SetBarRatio(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetComponentTitle
+        cppSignature: void SetComponentTitle(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetCustomLabels
+        cppSignature: void SetCustomLabels(vtkDoubleArray * labels)
+        return:
+          type: void
+        parameters:
+          - type: vtkDoubleArray*
+            name: labels
+      - name: SetDrawAboveRangeSwatch
+        cppSignature: void SetDrawAboveRangeSwatch(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg
+      - name: SetDrawBackground
+        cppSignature: void SetDrawBackground(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetDrawBelowRangeSwatch
+        cppSignature: void SetDrawBelowRangeSwatch(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg
+      - name: SetDrawColorBar
+        cppSignature: void SetDrawColorBar(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetDrawFrame
+        cppSignature: void SetDrawFrame(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetDrawTickLabels
+        cppSignature: void SetDrawTickLabels(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetFrameProperty
+        cppSignature: void SetFrameProperty(vtkProperty2D * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkProperty2D*
+            name: p
+      - name: SetLabelFormat
+        cppSignature: void SetLabelFormat(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetLabelTextProperty
+        cppSignature: void SetLabelTextProperty(vtkTextProperty * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkTextProperty*
+            name: p
+      - name: SetLookupTable
+        cppSignature: void SetLookupTable(vtkScalarsToColors * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkScalarsToColors*
+            name: _arg1
+      - name: SetMaximumHeightInPixels
+        cppSignature: void SetMaximumHeightInPixels(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetMaximumNumberOfColors
+        cppSignature: void SetMaximumNumberOfColors(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetMaximumWidthInPixels
+        cppSignature: void SetMaximumWidthInPixels(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetNumberOfLabels
+        cppSignature: void SetNumberOfLabels(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetOrientation
+        cppSignature: void SetOrientation(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetOrientationToHorizontal
+        cppSignature: void SetOrientationToHorizontal()
+        return:
+          type: void
+        parameters: []
+      - name: SetOrientationToVertical
+        cppSignature: void SetOrientationToVertical()
+        return:
+          type: void
+        parameters: []
+      - name: SetTextPad
+        cppSignature: void SetTextPad(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetTextPosition
+        cppSignature: void SetTextPosition(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetTextPositionToPrecedeScalarBar
+        cppSignature: void SetTextPositionToPrecedeScalarBar()
+        return:
+          type: void
+        parameters: []
+      - name: SetTextPositionToSucceedScalarBar
+        cppSignature: void SetTextPositionToSucceedScalarBar()
+        return:
+          type: void
+        parameters: []
+      - name: SetTitle
+        cppSignature: void SetTitle(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetTitleRatio
+        cppSignature: void SetTitleRatio(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetTitleTextProperty
+        cppSignature: void SetTitleTextProperty(vtkTextProperty * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkTextProperty*
+            name: p
+      - name: SetUnconstrainedFontSize
+        cppSignature: void SetUnconstrainedFontSize(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg
+      - name: SetUseCustomLabels
+        cppSignature: void SetUseCustomLabels(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg
+      - name: SetVerticalTitleSeparation
+        cppSignature: void SetVerticalTitleSeparation(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: UnconstrainedFontSizeOff
+        cppSignature: void UnconstrainedFontSizeOff()
+        return:
+          type: void
+        parameters: []
+      - name: UnconstrainedFontSizeOn
+        cppSignature: void UnconstrainedFontSizeOn()
+        return:
+          type: void
+        parameters: []
+      - name: UseCustomLabelsOff
+        cppSignature: void UseCustomLabelsOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseCustomLabelsOn
+        cppSignature: void UseCustomLabelsOn()
+        return:
+          type: void
+        parameters: []

@@ -2,6 +2,368 @@
 
 module: vtkInteractionWidgets
 classes:
+  - name: vtkAbstractWidget
+    header: vtkAbstractWidget.h
+    functions:
+      - name: CreateDefaultRepresentation
+        cppSignature: void CreateDefaultRepresentation()
+        return:
+          type: void
+        parameters: []
+      - name: GetManagesCursor
+        cppSignature: vtkTypeBool GetManagesCursor()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetProcessEvents
+        cppSignature: vtkTypeBool GetProcessEvents()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetRepresentation
+        cppSignature: vtkWidgetRepresentation * GetRepresentation()
+        return:
+          type: vtkWidgetRepresentation*
+        parameters: []
+      - name: ManagesCursorOff
+        cppSignature: void ManagesCursorOff()
+        return:
+          type: void
+        parameters: []
+      - name: ManagesCursorOn
+        cppSignature: void ManagesCursorOn()
+        return:
+          type: void
+        parameters: []
+      - name: ProcessEventsOff
+        cppSignature: void ProcessEventsOff()
+        return:
+          type: void
+        parameters: []
+      - name: ProcessEventsOn
+        cppSignature: void ProcessEventsOn()
+        return:
+          type: void
+        parameters: []
+      - name: Render
+        cppSignature: void Render()
+        return:
+          type: void
+        parameters: []
+      - name: SetEnabled
+        cppSignature: void SetEnabled(int _arg1)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+      - name: SetManagesCursor
+        cppSignature: void SetManagesCursor(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetPriority
+        cppSignature: void SetPriority(float _arg1)
+        return:
+          type: void
+        parameters:
+          - type: float
+            name: _arg1
+      - name: SetProcessEvents
+        cppSignature: void SetProcessEvents(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+  - name: vtkBorderRepresentation
+    header: vtkBorderRepresentation.h
+    functions:
+      - name: BuildRepresentation
+        cppSignature: void BuildRepresentation()
+        return:
+          type: void
+        parameters: []
+      - name: ComputeInteractionState
+        cppSignature: int ComputeInteractionState(int X, int Y, int modify)
+        return:
+          type: int
+        parameters:
+          - type: int
+            name: X
+          - type: int
+            name: Y
+          - type: int
+            name: modify
+      - name: GetBorderProperty
+        cppSignature: vtkProperty2D * GetBorderProperty()
+        return:
+          type: vtkProperty2D*
+        parameters: []
+      - name: GetMinimumNormalizedViewportSize
+        cppSignature: double * GetMinimumNormalizedViewportSize()
+        return:
+          type: double*
+        parameters: []
+      - name: GetMinimumNormalizedViewportSize
+        cppSignature: void GetMinimumNormalizedViewportSize(double[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: _arg
+      - name: GetMinimumSize
+        cppSignature: int * GetMinimumSize()
+        return:
+          type: int*
+        parameters: []
+      - name: GetMinimumSize
+        cppSignature: void GetMinimumSize(int[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: int[2]
+            name: _arg
+      - name: GetMoving
+        cppSignature: vtkTypeBool GetMoving()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetPosition
+        cppSignature: double * GetPosition()
+        return:
+          type: double*
+        parameters: []
+      - name: GetPosition2
+        cppSignature: double * GetPosition2()
+        return:
+          type: double*
+        parameters: []
+      - name: GetPosition2Coordinate
+        cppSignature: vtkCoordinate * GetPosition2Coordinate()
+        return:
+          type: vtkCoordinate*
+        parameters: []
+      - name: GetPositionCoordinate
+        cppSignature: vtkCoordinate * GetPositionCoordinate()
+        return:
+          type: vtkCoordinate*
+        parameters: []
+      - name: GetProportionalResize
+        cppSignature: vtkTypeBool GetProportionalResize()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetShowBorder
+        cppSignature: int GetShowBorder()
+        return:
+          type: int
+        parameters: []
+      - name: GetTolerance
+        cppSignature: int GetTolerance()
+        return:
+          type: int
+        parameters: []
+      - name: MovingOff
+        cppSignature: void MovingOff()
+        return:
+          type: void
+        parameters: []
+      - name: MovingOn
+        cppSignature: void MovingOn()
+        return:
+          type: void
+        parameters: []
+      - name: ProportionalResizeOff
+        cppSignature: void ProportionalResizeOff()
+        return:
+          type: void
+        parameters: []
+      - name: ProportionalResizeOn
+        cppSignature: void ProportionalResizeOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetInteractionState
+        cppSignature: void SetInteractionState(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetMinimumNormalizedViewportSize
+        cppSignature: void SetMinimumNormalizedViewportSize(double _arg1, double _arg2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+      - name: SetMinimumNormalizedViewportSize
+        cppSignature: void SetMinimumNormalizedViewportSize(double const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: _arg
+      - name: SetMinimumSize
+        cppSignature: void SetMinimumSize(int _arg1, int _arg2)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
+          - type: int
+            name: _arg2
+      - name: SetMinimumSize
+        cppSignature: void SetMinimumSize(int const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const int[2]
+            name: _arg
+      - name: SetMoving
+        cppSignature: void SetMoving(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetPosition
+        cppSignature: void SetPosition(double x, double y)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+      - name: SetPosition
+        cppSignature: void SetPosition(double[2] x)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: x
+      - name: SetPosition2
+        cppSignature: void SetPosition2(double x, double y)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+      - name: SetPosition2
+        cppSignature: void SetPosition2(double[2] x)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: x
+      - name: SetProportionalResize
+        cppSignature: void SetProportionalResize(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetShowBorder
+        cppSignature: void SetShowBorder(int border)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: border
+      - name: SetShowBorderToActive
+        cppSignature: void SetShowBorderToActive()
+        return:
+          type: void
+        parameters: []
+      - name: SetShowBorderToOff
+        cppSignature: void SetShowBorderToOff()
+        return:
+          type: void
+        parameters: []
+      - name: SetShowBorderToOn
+        cppSignature: void SetShowBorderToOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetTolerance
+        cppSignature: void SetTolerance(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+  - name: vtkBorderWidget
+    header: vtkBorderWidget.h
+    functions:
+      - name: CreateDefaultRepresentation
+        cppSignature: void CreateDefaultRepresentation()
+        return:
+          type: void
+        parameters: []
+      - name: GetBorderRepresentation
+        cppSignature: vtkBorderRepresentation * GetBorderRepresentation()
+        return:
+          type: vtkBorderRepresentation*
+        parameters: []
+      - name: GetResizable
+        cppSignature: vtkTypeBool GetResizable()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetSelectable
+        cppSignature: vtkTypeBool GetSelectable()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: ResizableOff
+        cppSignature: void ResizableOff()
+        return:
+          type: void
+        parameters: []
+      - name: ResizableOn
+        cppSignature: void ResizableOn()
+        return:
+          type: void
+        parameters: []
+      - name: SelectableOff
+        cppSignature: void SelectableOff()
+        return:
+          type: void
+        parameters: []
+      - name: SelectableOn
+        cppSignature: void SelectableOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetRepresentation
+        cppSignature: void SetRepresentation(vtkBorderRepresentation * r)
+        return:
+          type: void
+        parameters:
+          - type: vtkBorderRepresentation*
+            name: r
+      - name: SetResizable
+        cppSignature: void SetResizable(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetSelectable
+        cppSignature: void SetSelectable(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
   - name: vtkOrientationMarkerWidget
     header: vtkOrientationMarkerWidget.h
     functions:
@@ -42,3 +404,179 @@ classes:
         parameters:
           - type: const double[4]
             name: _arg
+  - name: vtkScalarBarRepresentation
+    header: vtkScalarBarRepresentation.h
+    functions:
+      - name: BuildRepresentation
+        cppSignature: void BuildRepresentation()
+        return:
+          type: void
+        parameters: []
+      - name: GetAutoOrient
+        cppSignature: bool GetAutoOrient()
+        return:
+          type: bool
+        parameters: []
+      - name: GetOrientation
+        cppSignature: int GetOrientation()
+        return:
+          type: int
+        parameters: []
+      - name: GetScalarBarActor
+        cppSignature: vtkScalarBarActor * GetScalarBarActor()
+        return:
+          type: vtkScalarBarActor*
+        parameters: []
+      - name: GetVisibility
+        cppSignature: vtkTypeBool GetVisibility()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: SetAutoOrient
+        cppSignature: void SetAutoOrient(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg
+      - name: SetOrientation
+        cppSignature: void SetOrientation(int orient)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: orient
+      - name: SetScalarBarActor
+        cppSignature: void SetScalarBarActor(vtkScalarBarActor * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkScalarBarActor*
+            name: _arg1
+      - name: SetVisibility
+        cppSignature: void SetVisibility(vtkTypeBool _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg1
+  - name: vtkScalarBarWidget
+    header: vtkScalarBarWidget.h
+    functions:
+      - name: CreateDefaultRepresentation
+        cppSignature: void CreateDefaultRepresentation()
+        return:
+          type: void
+        parameters: []
+      - name: GetRepositionable
+        cppSignature: vtkTypeBool GetRepositionable()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetScalarBarActor
+        cppSignature: vtkScalarBarActor * GetScalarBarActor()
+        return:
+          type: vtkScalarBarActor*
+        parameters: []
+      - name: GetScalarBarRepresentation
+        cppSignature: vtkScalarBarRepresentation * GetScalarBarRepresentation()
+        return:
+          type: vtkScalarBarRepresentation*
+        parameters: []
+      - name: RepositionableOff
+        cppSignature: void RepositionableOff()
+        return:
+          type: void
+        parameters: []
+      - name: RepositionableOn
+        cppSignature: void RepositionableOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetRepositionable
+        cppSignature: void SetRepositionable(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetRepresentation
+        cppSignature: void SetRepresentation(vtkScalarBarRepresentation * rep)
+        return:
+          type: void
+        parameters:
+          - type: vtkScalarBarRepresentation*
+            name: rep
+      - name: SetScalarBarActor
+        cppSignature: void SetScalarBarActor(vtkScalarBarActor * actor)
+        return:
+          type: void
+        parameters:
+          - type: vtkScalarBarActor*
+            name: actor
+  - name: vtkWidgetRepresentation
+    header: vtkWidgetRepresentation.h
+    functions:
+      - name: BuildRepresentation
+        cppSignature: void BuildRepresentation()
+        return:
+          type: void
+        parameters: []
+      - name: GetInteractionState
+        cppSignature: int GetInteractionState()
+        return:
+          type: int
+        parameters: []
+      - name: GetNeedToRender
+        cppSignature: vtkTypeBool GetNeedToRender()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetPlaceFactor
+        cppSignature: double GetPlaceFactor()
+        return:
+          type: double
+        parameters: []
+      - name: GetRenderer
+        cppSignature: vtkRenderer * GetRenderer()
+        return:
+          type: vtkRenderer*
+        parameters: []
+      - name: NeedToRenderOff
+        cppSignature: void NeedToRenderOff()
+        return:
+          type: void
+        parameters: []
+      - name: NeedToRenderOn
+        cppSignature: void NeedToRenderOn()
+        return:
+          type: void
+        parameters: []
+      - name: PlaceWidget
+        cppSignature: void PlaceWidget(double[6] _arg1)
+        return:
+          type: void
+        parameters:
+          - type: double[6]
+            name: _arg1
+      - name: SetNeedToRender
+        cppSignature: void SetNeedToRender(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetPlaceFactor
+        cppSignature: void SetPlaceFactor(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetRenderer
+        cppSignature: void SetRenderer(vtkRenderer * ren)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderer*
+            name: ren

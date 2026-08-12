@@ -46,6 +46,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkLegendScaleActor_export_gen.cpp",
       "managedContentHash": "2866e281faacf96e56495cc198c48e430fe75e384ec9d80fc5ffc87be1f82906",
       "nativeContentHash": "c4dfa5a3275682b25af0105e68a06d093b34f24c520f2e9725633563badb326d"
+    },
+    {
+      "className": "vtkScalarBarActor",
+      "header": "vtkScalarBarActor.h",
+      "baseClassName": "vtkActor2D",
+      "hasStaticNew": true,
+      "inputHash": "45723631dc18123b9579ac46b5115b0a33c3d3b1bbc5c2d7b9e0a3a3eb60dcc7",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkScalarBarActor_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkScalarBarActor_export_gen.cpp",
+      "managedContentHash": "b63f853ca11b2927cd2d200c56d472775ba68f9b726102d23ecaeb8053dc2343",
+      "nativeContentHash": "e85dda6373500490a0aa794ebea09f5a997bacfead4d798b301a093fb733dd8f"
     }
   ]
 }
