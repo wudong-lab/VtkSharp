@@ -114,6 +114,17 @@
       "nativeContentHash": "d624efe990537e5fb61ef47a2fa38bf1d02e32f3ff39291abcd45f56b8567bf1"
     },
     {
+      "className": "vtkColorTransferFunction",
+      "header": "vtkColorTransferFunction.h",
+      "baseClassName": "vtkScalarsToColors",
+      "hasStaticNew": true,
+      "inputHash": "53131b7ddf8799c4f7b8b1b49680ec2005e92b002a9caec96c4ed49167c5adcc",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkColorTransferFunction_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkColorTransferFunction_export_gen.cpp",
+      "managedContentHash": "d8b679e1ea0940fef9a164a4a81679894e9fa658dfe403e4453f7d3c0f180252",
+      "nativeContentHash": "4e0c7faba4d32acea674fed462c977d94e159c75db631a9cb84384dcad0fb01b"
+    },
+    {
       "className": "vtkCoordinate",
       "header": "vtkCoordinate.h",
       "baseClassName": "vtkObject",
@@ -134,6 +145,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkCuller_export_gen.cpp",
       "managedContentHash": "1202a146188e8cc438538ce519984e979aca452cf3ba9f31e870e38165af1cee",
       "nativeContentHash": "87123d1c4bc82a883837c2f9cc8aa804be0742d3a41c934e5c5716f2c38e2ff5"
+    },
+    {
+      "className": "vtkDiscretizableColorTransferFunction",
+      "header": "vtkDiscretizableColorTransferFunction.h",
+      "baseClassName": "vtkColorTransferFunction",
+      "hasStaticNew": true,
+      "inputHash": "c9c4e2918acb6a537360de2f5067dc2226d35d6620a84a7e60f1147ba60b2f9b",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkDiscretizableColorTransferFunction_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkDiscretizableColorTransferFunction_export_gen.cpp",
+      "managedContentHash": "989579afc836df266228c24e67fabba56f1d8f0bfb7292ee6f723aff6ec49871",
+      "nativeContentHash": "f0dc39d80e5135e6d48d4ff71cdc47fdfec8d1ee91e7c067aac7984dcda05c3d"
     },
     {
       "className": "vtkImageActor",

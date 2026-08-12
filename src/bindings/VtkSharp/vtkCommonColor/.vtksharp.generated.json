@@ -4,6 +4,17 @@
   "module": "vtkCommonColor",
   "classes": [
     {
+      "className": "vtkColorSeries",
+      "header": "vtkColorSeries.h",
+      "baseClassName": "vtkObject",
+      "hasStaticNew": true,
+      "inputHash": "d3e72491953a20ce0c11aa4035d65529ca0dbe66746a922d96e218430a5da87a",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkColorSeries_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkColorSeries_export_gen.cpp",
+      "managedContentHash": "32d101299969790de832cc9e9613fda02a985382198115a3d21bc7bb28a68b6f",
+      "nativeContentHash": "8c156a861f4b1f57255c0698597686b2a31a9f23c46778d9b4574629e0240e7d"
+    },
+    {
       "className": "vtkNamedColors",
       "header": "vtkNamedColors.h",
       "baseClassName": "vtkObject",

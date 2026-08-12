@@ -2,6 +2,88 @@
 
 module: vtkCommonColor
 classes:
+  - name: vtkColorSeries
+    header: vtkColorSeries.h
+    functions:
+      - name: BuildLookupTable
+        cppSignature: void BuildLookupTable(vtkLookupTable * lkup, int lutIndexing)
+        return:
+          type: void
+        parameters:
+          - type: vtkLookupTable*
+            name: lkup
+          - type: int
+            name: lutIndexing
+      - name: ClearColors
+        cppSignature: void ClearColors()
+        return:
+          type: void
+        parameters: []
+      - name: CreateLookupTable
+        cppSignature: vtkLookupTable * CreateLookupTable(int lutIndexing)
+        return:
+          type: vtkLookupTable*
+          ownership: owned
+        parameters:
+          - type: int
+            name: lutIndexing
+      - name: DeepCopy
+        cppSignature: void DeepCopy(vtkColorSeries * chartColors)
+        return:
+          type: void
+        parameters:
+          - type: vtkColorSeries*
+            name: chartColors
+      - name: GetColorScheme
+        cppSignature: int GetColorScheme()
+        return:
+          type: int
+        parameters: []
+      - name: GetNumberOfColorSchemes
+        cppSignature: int GetNumberOfColorSchemes()
+        return:
+          type: int
+        parameters: []
+      - name: GetNumberOfColors
+        cppSignature: int GetNumberOfColors()
+        return:
+          type: int
+        parameters: []
+      - name: RemoveColor
+        cppSignature: void RemoveColor(int index)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: index
+      - name: SetColorScheme
+        cppSignature: void SetColorScheme(int scheme)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: scheme
+      - name: SetColorSchemeByName
+        cppSignature: int SetColorSchemeByName(vtkStdString const& schemeName)
+        return:
+          type: int
+        parameters:
+          - type: const char*
+            name: schemeName
+      - name: SetColorSchemeName
+        cppSignature: void SetColorSchemeName(vtkStdString const& name)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: name
+      - name: SetNumberOfColors
+        cppSignature: void SetNumberOfColors(int numColors)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: numColors
   - name: vtkNamedColors
     header: vtkNamedColors.h
     functions:

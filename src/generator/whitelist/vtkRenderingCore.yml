@@ -361,6 +361,508 @@ classes:
         parameters:
           - type: double
             name: factor
+  - name: vtkColorTransferFunction
+    header: vtkColorTransferFunction.h
+    functions:
+      - name: AddHSVPoint
+        cppSignature: int AddHSVPoint(double x, double h, double s, double v)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: h
+          - type: double
+            name: s
+          - type: double
+            name: v
+      - name: AddHSVPoint
+        cppSignature: int AddHSVPoint(double x, double h, double s, double v, double midpoint, double sharpness)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: h
+          - type: double
+            name: s
+          - type: double
+            name: v
+          - type: double
+            name: midpoint
+          - type: double
+            name: sharpness
+      - name: AddHSVSegment
+        cppSignature: void AddHSVSegment(double x1, double h1, double s1, double v1, double x2, double h2, double s2, double v2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x1
+          - type: double
+            name: h1
+          - type: double
+            name: s1
+          - type: double
+            name: v1
+          - type: double
+            name: x2
+          - type: double
+            name: h2
+          - type: double
+            name: s2
+          - type: double
+            name: v2
+      - name: AddRGBPoint
+        cppSignature: int AddRGBPoint(double x, double r, double g, double b)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: r
+          - type: double
+            name: g
+          - type: double
+            name: b
+      - name: AddRGBPoint
+        cppSignature: int AddRGBPoint(double x, double r, double g, double b, double midpoint, double sharpness)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: r
+          - type: double
+            name: g
+          - type: double
+            name: b
+          - type: double
+            name: midpoint
+          - type: double
+            name: sharpness
+      - name: AddRGBSegment
+        cppSignature: void AddRGBSegment(double x1, double r1, double g1, double b1, double x2, double r2, double g2, double b2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x1
+          - type: double
+            name: r1
+          - type: double
+            name: g1
+          - type: double
+            name: b1
+          - type: double
+            name: x2
+          - type: double
+            name: r2
+          - type: double
+            name: g2
+          - type: double
+            name: b2
+      - name: AdjustRange
+        cppSignature: int AdjustRange(double[2] range)
+        return:
+          type: int
+        parameters:
+          - type: double[2]
+            name: range
+      - name: AllowDuplicateScalarsOff
+        cppSignature: void AllowDuplicateScalarsOff()
+        return:
+          type: void
+        parameters: []
+      - name: AllowDuplicateScalarsOn
+        cppSignature: void AllowDuplicateScalarsOn()
+        return:
+          type: void
+        parameters: []
+      - name: ClampingOff
+        cppSignature: void ClampingOff()
+        return:
+          type: void
+        parameters: []
+      - name: ClampingOn
+        cppSignature: void ClampingOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetAboveRangeColor
+        cppSignature: double * GetAboveRangeColor()
+        return:
+          type: double*
+        parameters: []
+      - name: GetAboveRangeColor
+        cppSignature: void GetAboveRangeColor(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetAllowDuplicateScalars
+        cppSignature: vtkTypeBool GetAllowDuplicateScalars()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetBelowRangeColor
+        cppSignature: double * GetBelowRangeColor()
+        return:
+          type: double*
+        parameters: []
+      - name: GetBelowRangeColor
+        cppSignature: void GetBelowRangeColor(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetBlueValue
+        cppSignature: double GetBlueValue(double x)
+        return:
+          type: double
+        parameters:
+          - type: double
+            name: x
+      - name: GetClamping
+        cppSignature: vtkTypeBool GetClamping()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetColor
+        cppSignature: double * GetColor(double x)
+        return:
+          type: double*
+        parameters:
+          - type: double
+            name: x
+      - name: GetColor
+        cppSignature: void GetColor(double x, double[3] rgb)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double[3]
+            name: rgb
+      - name: GetColorSpace
+        cppSignature: int GetColorSpace()
+        return:
+          type: int
+        parameters: []
+      - name: GetGreenValue
+        cppSignature: double GetGreenValue(double x)
+        return:
+          type: double
+        parameters:
+          - type: double
+            name: x
+      - name: GetHSVWrap
+        cppSignature: vtkTypeBool GetHSVWrap()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetNanColor
+        cppSignature: double * GetNanColor()
+        return:
+          type: double*
+        parameters: []
+      - name: GetNanColor
+        cppSignature: void GetNanColor(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: GetNanOpacity
+        cppSignature: double GetNanOpacity()
+        return:
+          type: double
+        parameters: []
+      - name: GetNodeValue
+        cppSignature: int GetNodeValue(int index, double[6] val)
+        return:
+          type: int
+        parameters:
+          - type: int
+            name: index
+          - type: double[6]
+            name: val
+      - name: GetNumberOfAvailableColors
+        cppSignature: vtkIdType GetNumberOfAvailableColors()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GetRange
+        cppSignature: double * GetRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetRange
+        cppSignature: void GetRange(double[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: _arg
+      - name: GetRedValue
+        cppSignature: double GetRedValue(double x)
+        return:
+          type: double
+        parameters:
+          - type: double
+            name: x
+      - name: GetScale
+        cppSignature: int GetScale()
+        return:
+          type: int
+        parameters: []
+      - name: GetSize
+        cppSignature: int GetSize()
+        return:
+          type: int
+        parameters: []
+      - name: GetUseAboveRangeColor
+        cppSignature: vtkTypeBool GetUseAboveRangeColor()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetUseBelowRangeColor
+        cppSignature: vtkTypeBool GetUseBelowRangeColor()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: HSVWrapOff
+        cppSignature: void HSVWrapOff()
+        return:
+          type: void
+        parameters: []
+      - name: HSVWrapOn
+        cppSignature: void HSVWrapOn()
+        return:
+          type: void
+        parameters: []
+      - name: RemoveAllPoints
+        cppSignature: void RemoveAllPoints()
+        return:
+          type: void
+        parameters: []
+      - name: RemovePoint
+        cppSignature: int RemovePoint(double x)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: x
+      - name: SetAboveRangeColor
+        cppSignature: void SetAboveRangeColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetAboveRangeColor
+        cppSignature: void SetAboveRangeColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetAllowDuplicateScalars
+        cppSignature: void SetAllowDuplicateScalars(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetBelowRangeColor
+        cppSignature: void SetBelowRangeColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetBelowRangeColor
+        cppSignature: void SetBelowRangeColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetClamping
+        cppSignature: void SetClamping(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetColorSpace
+        cppSignature: void SetColorSpace(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetColorSpaceToDiverging
+        cppSignature: void SetColorSpaceToDiverging()
+        return:
+          type: void
+        parameters: []
+      - name: SetColorSpaceToHSV
+        cppSignature: void SetColorSpaceToHSV()
+        return:
+          type: void
+        parameters: []
+      - name: SetColorSpaceToLab
+        cppSignature: void SetColorSpaceToLab()
+        return:
+          type: void
+        parameters: []
+      - name: SetColorSpaceToLabCIEDE2000
+        cppSignature: void SetColorSpaceToLabCIEDE2000()
+        return:
+          type: void
+        parameters: []
+      - name: SetColorSpaceToProlab
+        cppSignature: void SetColorSpaceToProlab()
+        return:
+          type: void
+        parameters: []
+      - name: SetColorSpaceToRGB
+        cppSignature: void SetColorSpaceToRGB()
+        return:
+          type: void
+        parameters: []
+      - name: SetColorSpaceToStep
+        cppSignature: void SetColorSpaceToStep()
+        return:
+          type: void
+        parameters: []
+      - name: SetHSVWrap
+        cppSignature: void SetHSVWrap(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetNanColor
+        cppSignature: void SetNanColor(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetNanColor
+        cppSignature: void SetNanColor(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetNanColorRGBA
+        cppSignature: void SetNanColorRGBA(double r, double g, double b, double a)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: r
+          - type: double
+            name: g
+          - type: double
+            name: b
+          - type: double
+            name: a
+      - name: SetNanColorRGBA
+        cppSignature: void SetNanColorRGBA(double[4] rgba)
+        return:
+          type: void
+        parameters:
+          - type: double[4]
+            name: rgba
+      - name: SetNanOpacity
+        cppSignature: void SetNanOpacity(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetNodeValue
+        cppSignature: int SetNodeValue(int index, double[6] val)
+        return:
+          type: int
+        parameters:
+          - type: int
+            name: index
+          - type: double[6]
+            name: val
+      - name: SetScale
+        cppSignature: void SetScale(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetScaleToLinear
+        cppSignature: void SetScaleToLinear()
+        return:
+          type: void
+        parameters: []
+      - name: SetScaleToLog10
+        cppSignature: void SetScaleToLog10()
+        return:
+          type: void
+        parameters: []
+      - name: SetUseAboveRangeColor
+        cppSignature: void SetUseAboveRangeColor(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetUseBelowRangeColor
+        cppSignature: void SetUseBelowRangeColor(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: UseAboveRangeColorOff
+        cppSignature: void UseAboveRangeColorOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseAboveRangeColorOn
+        cppSignature: void UseAboveRangeColorOn()
+        return:
+          type: void
+        parameters: []
+      - name: UseBelowRangeColorOff
+        cppSignature: void UseBelowRangeColorOff()
+        return:
+          type: void
+        parameters: []
+      - name: UseBelowRangeColorOn
+        cppSignature: void UseBelowRangeColorOn()
+        return:
+          type: void
+        parameters: []
   - name: vtkCoordinate
     header: vtkCoordinate.h
     functions:
@@ -429,6 +931,172 @@ classes:
   - name: vtkCuller
     header: vtkCuller.h
     functions: []
+  - name: vtkDiscretizableColorTransferFunction
+    header: vtkDiscretizableColorTransferFunction.h
+    functions:
+      - name: Build
+        cppSignature: void Build()
+        return:
+          type: void
+        parameters: []
+      - name: DiscretizeOff
+        cppSignature: void DiscretizeOff()
+        return:
+          type: void
+        parameters: []
+      - name: DiscretizeOn
+        cppSignature: void DiscretizeOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetColor
+        cppSignature: void GetColor(double v, double[3] rgb)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: v
+          - type: double[3]
+            name: rgb
+      - name: GetDiscretize
+        cppSignature: vtkTypeBool GetDiscretize()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: GetIndexedColor
+        cppSignature: void GetIndexedColor(vtkIdType i, double[4] rgba)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: i
+          - type: double[4]
+            name: rgba
+      - name: GetNumberOfAvailableColors
+        cppSignature: vtkIdType GetNumberOfAvailableColors()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GetNumberOfIndexedColors
+        cppSignature: unsigned int GetNumberOfIndexedColors()
+        return:
+          type: unsigned int
+        parameters: []
+      - name: GetNumberOfValues
+        cppSignature: vtkIdType GetNumberOfValues()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GetOpacity
+        cppSignature: double GetOpacity(double v)
+        return:
+          type: double
+        parameters:
+          - type: double
+            name: v
+      - name: GetUseLogScale
+        cppSignature: vtkTypeBool GetUseLogScale()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: SetAlpha
+        cppSignature: void SetAlpha(double alpha)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: alpha
+      - name: SetDiscretize
+        cppSignature: void SetDiscretize(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
+      - name: SetIndexedColor
+        cppSignature: void SetIndexedColor(unsigned int index, double r, double g, double b, double a)
+        return:
+          type: void
+        parameters:
+          - type: unsigned int
+            name: index
+          - type: double
+            name: r
+          - type: double
+            name: g
+          - type: double
+            name: b
+          - type: double
+            name: a
+      - name: SetIndexedColorRGB
+        cppSignature: void SetIndexedColorRGB(unsigned int index, double const[3] rgb)
+        return:
+          type: void
+        parameters:
+          - type: unsigned int
+            name: index
+          - type: const double[3]
+            name: rgb
+      - name: SetIndexedColorRGBA
+        cppSignature: void SetIndexedColorRGBA(unsigned int index, double const[4] rgba)
+        return:
+          type: void
+        parameters:
+          - type: unsigned int
+            name: index
+          - type: const double[4]
+            name: rgba
+      - name: SetNanColor
+        cppSignature: void SetNanColor(double const[3] rgb)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: rgb
+      - name: SetNanColor
+        cppSignature: void SetNanColor(double r, double g, double b)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: r
+          - type: double
+            name: g
+          - type: double
+            name: b
+      - name: SetNanOpacity
+        cppSignature: void SetNanOpacity(double a)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: a
+      - name: SetNumberOfIndexedColors
+        cppSignature: void SetNumberOfIndexedColors(unsigned int count)
+        return:
+          type: void
+        parameters:
+          - type: unsigned int
+            name: count
+      - name: SetNumberOfValues
+        cppSignature: void SetNumberOfValues(vtkIdType _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: _arg
+      - name: SetUseLogScale
+        cppSignature: void SetUseLogScale(vtkTypeBool useLogScale)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: useLogScale
+      - name: UsingLogScale
+        cppSignature: vtkTypeBool UsingLogScale()
+        return:
+          type: vtkTypeBool
+        parameters: []
   - name: vtkImageActor
     header: vtkImageActor.h
     functions:

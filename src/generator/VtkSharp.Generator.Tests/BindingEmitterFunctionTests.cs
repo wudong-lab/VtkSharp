@@ -613,6 +613,27 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains($"private static extern void vtkFoo_SetHandle(nint self, nint h);", text);
     }
 
+    [Fact]
+    public void CSharpEmitter_TransfersOwnedVtkObjectReturnToManagedWrapper()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFactory", "vtkObject", hasStaticNew: false,
+        [
+            new WhitelistFunction
+            {
+                Name = "CreateLookupTable",
+                CppSignature = "vtkLookupTable* CreateLookupTable()",
+                Return = new WhitelistReturn { Type = "vtkLookupTable*", Ownership = "owned" },
+                Parameters = [],
+            },
+        ]);
+
+        Assert.Contains(
+            "var result = vtkLookupTable.Register(vtkLookupTable.WeakReference(vtkFactory_CreateLookupTable(this.NativePointer)));",
+            text);
+        Assert.Contains("result.UnRegister();", text);
+        Assert.Contains("return result;", text);
+    }
+
     [Theory]
     [InlineData("HWND")]
     [InlineData("HDC")]

@@ -120,17 +120,17 @@ public sealed class CSharpBindingEmitter
         {
             sb.AppendLine($"{indent}#if NET8_0_OR_GREATER");
             var call10 = FormatCall(exportName, function.Parameters, p => ToInteropArgument(p), outVarName);
-            EmitCall(sb, indent, function.Return.Type, call10, outVarName);
+            EmitCall(sb, indent, function.Return.Type, call10, outVarName, function.Return.Ownership);
             sb.AppendLine($"{indent}#else");
             var call20 = FormatCall(exportName, function.Parameters, p =>
                 BindingTypeMapper.IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({EscapeIdentifier(p.Name)})" : ToInteropArgument(p), outVarName);
-            EmitCall(sb, indent, function.Return.Type, call20, outVarName);
+            EmitCall(sb, indent, function.Return.Type, call20, outVarName, function.Return.Ownership);
             sb.AppendLine($"{indent}#endif");
         }
         else
         {
             var call = FormatCall(exportName, function.Parameters, ToInteropArgument, outVarName);
-            EmitCall(sb, indent, function.Return.Type, call, outVarName);
+            EmitCall(sb, indent, function.Return.Type, call, outVarName, function.Return.Ownership);
         }
 
         for (var i = fixedParameters.Count - 1; i >= 0; i--)
@@ -151,7 +151,13 @@ public sealed class CSharpBindingEmitter
         return $"{exportName}({string.Join(", ", args)})";
     }
 
-    private static void EmitCall(StringBuilder sb, string indent, string returnType, string call, string? outVarName = null)
+    private static void EmitCall(
+        StringBuilder sb,
+        string indent,
+        string returnType,
+        string call,
+        string? outVarName = null,
+        string? ownership = null)
     {
         if (TypeClassifier.IsVtkValueStruct(returnType))
         {
@@ -169,7 +175,16 @@ public sealed class CSharpBindingEmitter
         }
         else if (TypeClassifier.TryGetVtkClassPointerName(returnType, out var returnClassName))
         {
-            sb.AppendLine($"{indent}return {returnClassName}.WeakReference({call});");
+            if (ownership == "owned")
+            {
+                sb.AppendLine($"{indent}var result = {returnClassName}.Register({returnClassName}.WeakReference({call}));");
+                sb.AppendLine($"{indent}result.UnRegister();");
+                sb.AppendLine($"{indent}return result;");
+            }
+            else
+            {
+                sb.AppendLine($"{indent}return {returnClassName}.WeakReference({call});");
+            }
         }
         else if (BindingTypeMapper.IsStringPointer(returnType))
         {
