@@ -9,8 +9,8 @@ public unsafe partial class vtkTransform : vtkLinearTransform
 {
     protected vtkTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTransform New() => new(vtkTransform_New(), ownsReference: true);
-    internal new static vtkTransform FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkTransform TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkTransform FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkTransform TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTransform Register(vtkTransform sourceObject)
     {

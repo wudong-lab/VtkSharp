@@ -9,8 +9,8 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
 {
     protected vtkLabeledDataMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLabeledDataMapper New() => new(vtkLabeledDataMapper_New(), ownsReference: true);
-    internal new static vtkLabeledDataMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkLabeledDataMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkLabeledDataMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkLabeledDataMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLabeledDataMapper Register(vtkLabeledDataMapper sourceObject)
     {

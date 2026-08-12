@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkCartesianGrid : vtkDataSet
 {
     protected vtkCartesianGrid(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkCartesianGrid FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkCartesianGrid TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkCartesianGrid FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkCartesianGrid TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCartesianGrid Register(vtkCartesianGrid sourceObject)
     {

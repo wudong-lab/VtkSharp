@@ -9,8 +9,8 @@ public unsafe partial class vtkQuad : vtkCell
 {
     protected vtkQuad(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkQuad New() => new(vtkQuad_New(), ownsReference: true);
-    internal new static vtkQuad FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkQuad TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkQuad FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkQuad TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkQuad Register(vtkQuad sourceObject)
     {

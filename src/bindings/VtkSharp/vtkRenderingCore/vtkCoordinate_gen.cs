@@ -9,8 +9,8 @@ public unsafe partial class vtkCoordinate : vtkObject
 {
     protected vtkCoordinate(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCoordinate New() => new(vtkCoordinate_New(), ownsReference: true);
-    internal new static vtkCoordinate FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkCoordinate TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkCoordinate FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkCoordinate TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCoordinate Register(vtkCoordinate sourceObject)
     {

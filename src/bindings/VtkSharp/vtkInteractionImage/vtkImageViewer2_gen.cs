@@ -9,8 +9,8 @@ public unsafe partial class vtkImageViewer2 : vtkObject
 {
     protected vtkImageViewer2(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageViewer2 New() => new(vtkImageViewer2_New(), ownsReference: true);
-    internal new static vtkImageViewer2 FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkImageViewer2 TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkImageViewer2 FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkImageViewer2 TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageViewer2 Register(vtkImageViewer2 sourceObject)
     {

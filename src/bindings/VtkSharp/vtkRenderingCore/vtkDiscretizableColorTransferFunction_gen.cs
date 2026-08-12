@@ -9,8 +9,8 @@ public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTran
 {
     protected vtkDiscretizableColorTransferFunction(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkDiscretizableColorTransferFunction New() => new(vtkDiscretizableColorTransferFunction_New(), ownsReference: true);
-    internal new static vtkDiscretizableColorTransferFunction FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkDiscretizableColorTransferFunction TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkDiscretizableColorTransferFunction FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkDiscretizableColorTransferFunction TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkDiscretizableColorTransferFunction Register(vtkDiscretizableColorTransferFunction sourceObject)
     {

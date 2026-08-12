@@ -9,8 +9,8 @@ public unsafe partial class vtkSelectVisiblePoints : vtkPolyDataAlgorithm
 {
     protected vtkSelectVisiblePoints(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkSelectVisiblePoints New() => new(vtkSelectVisiblePoints_New(), ownsReference: true);
-    internal new static vtkSelectVisiblePoints FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkSelectVisiblePoints TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkSelectVisiblePoints FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkSelectVisiblePoints TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkSelectVisiblePoints Register(vtkSelectVisiblePoints sourceObject)
     {

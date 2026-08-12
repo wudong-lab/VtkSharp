@@ -9,8 +9,8 @@ public unsafe partial class vtkOrientationMarkerWidget : vtkInteractorObserver
 {
     protected vtkOrientationMarkerWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkOrientationMarkerWidget New() => new(vtkOrientationMarkerWidget_New(), ownsReference: true);
-    internal new static vtkOrientationMarkerWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkOrientationMarkerWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkOrientationMarkerWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkOrientationMarkerWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkOrientationMarkerWidget Register(vtkOrientationMarkerWidget sourceObject)
     {

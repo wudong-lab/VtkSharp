@@ -9,8 +9,8 @@ public unsafe partial class vtkInteractorStyle : vtkInteractorObserver
 {
     protected vtkInteractorStyle(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyle New() => new(vtkInteractorStyle_New(), ownsReference: true);
-    internal new static vtkInteractorStyle FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkInteractorStyle TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkInteractorStyle FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkInteractorStyle TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyle Register(vtkInteractorStyle sourceObject)
     {

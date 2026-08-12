@@ -9,8 +9,8 @@ public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
 {
     protected vtkImageMathematics(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageMathematics New() => new(vtkImageMathematics_New(), ownsReference: true);
-    internal new static vtkImageMathematics FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkImageMathematics TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkImageMathematics FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkImageMathematics TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageMathematics Register(vtkImageMathematics sourceObject)
     {

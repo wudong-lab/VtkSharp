@@ -9,8 +9,8 @@ public unsafe partial class vtkActor : vtkProp3D
 {
     protected vtkActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkActor New() => new(vtkActor_New(), ownsReference: true);
-    internal new static vtkActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkActor Register(vtkActor sourceObject)
     {

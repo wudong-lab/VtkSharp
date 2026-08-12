@@ -9,8 +9,8 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
 {
     protected vtkWindowToImageFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkWindowToImageFilter New() => new(vtkWindowToImageFilter_New(), ownsReference: true);
-    internal new static vtkWindowToImageFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkWindowToImageFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkWindowToImageFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkWindowToImageFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkWindowToImageFilter Register(vtkWindowToImageFilter sourceObject)
     {

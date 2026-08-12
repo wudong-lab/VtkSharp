@@ -14,8 +14,8 @@ public class vtkObject : vtkObjectBase
 
     protected vtkObject(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
 
-    internal static vtkObject FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal static vtkObject TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public static vtkObject FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public static vtkObject TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public override void Delete()
     {

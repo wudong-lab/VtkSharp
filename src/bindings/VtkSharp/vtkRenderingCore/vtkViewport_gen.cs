@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkViewport : vtkObject
 {
     protected vtkViewport(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkViewport FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkViewport TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkViewport FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkViewport TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkViewport Register(vtkViewport sourceObject)
     {

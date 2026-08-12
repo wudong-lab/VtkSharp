@@ -9,8 +9,8 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
 {
     protected vtkCellArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCellArray New() => new(vtkCellArray_New(), ownsReference: true);
-    internal new static vtkCellArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkCellArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkCellArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkCellArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCellArray Register(vtkCellArray sourceObject)
     {

@@ -9,8 +9,8 @@ public unsafe partial class vtkCamera : vtkObject
 {
     protected vtkCamera(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCamera New() => new(vtkCamera_New(), ownsReference: true);
-    internal new static vtkCamera FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkCamera TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkCamera FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkCamera TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCamera Register(vtkCamera sourceObject)
     {

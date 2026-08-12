@@ -9,8 +9,8 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
 {
     protected vtkSphereSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkSphereSource New() => new(vtkSphereSource_New(), ownsReference: true);
-    internal new static vtkSphereSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkSphereSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkSphereSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkSphereSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkSphereSource Register(vtkSphereSource sourceObject)
     {

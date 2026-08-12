@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkAbstractMapper : vtkAlgorithm
 {
     protected vtkAbstractMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkAbstractMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkAbstractMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkAbstractMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkAbstractMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAbstractMapper Register(vtkAbstractMapper sourceObject)
     {

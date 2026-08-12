@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkAbstractPropPicker : vtkAbstractPicker
 {
     protected vtkAbstractPropPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkAbstractPropPicker FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkAbstractPropPicker TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkAbstractPropPicker FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkAbstractPropPicker TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAbstractPropPicker Register(vtkAbstractPropPicker sourceObject)
     {

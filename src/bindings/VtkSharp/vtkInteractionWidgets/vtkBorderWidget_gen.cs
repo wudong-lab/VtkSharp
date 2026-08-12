@@ -9,8 +9,8 @@ public unsafe partial class vtkBorderWidget : vtkAbstractWidget
 {
     protected vtkBorderWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkBorderWidget New() => new(vtkBorderWidget_New(), ownsReference: true);
-    internal new static vtkBorderWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkBorderWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkBorderWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkBorderWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkBorderWidget Register(vtkBorderWidget sourceObject)
     {

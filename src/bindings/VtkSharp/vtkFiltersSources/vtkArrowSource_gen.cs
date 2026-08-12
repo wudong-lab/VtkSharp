@@ -9,8 +9,8 @@ public unsafe partial class vtkArrowSource : vtkPolyDataAlgorithm
 {
     protected vtkArrowSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkArrowSource New() => new(vtkArrowSource_New(), ownsReference: true);
-    internal new static vtkArrowSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkArrowSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkArrowSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkArrowSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkArrowSource Register(vtkArrowSource sourceObject)
     {

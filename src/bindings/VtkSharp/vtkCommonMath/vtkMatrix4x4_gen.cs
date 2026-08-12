@@ -9,8 +9,8 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
 {
     protected vtkMatrix4x4(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkMatrix4x4 New() => new(vtkMatrix4x4_New(), ownsReference: true);
-    internal new static vtkMatrix4x4 FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkMatrix4x4 TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkMatrix4x4 FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkMatrix4x4 TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkMatrix4x4 Register(vtkMatrix4x4 sourceObject)
     {

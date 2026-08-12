@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkThreadedImageAlgorithm : vtkImageAlgorithm
 {
     protected vtkThreadedImageAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkThreadedImageAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkThreadedImageAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkThreadedImageAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkThreadedImageAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkThreadedImageAlgorithm Register(vtkThreadedImageAlgorithm sourceObject)
     {

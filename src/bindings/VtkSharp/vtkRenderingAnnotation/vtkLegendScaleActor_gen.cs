@@ -9,8 +9,8 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
 {
     protected vtkLegendScaleActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkLegendScaleActor New() => new(vtkLegendScaleActor_New(), ownsReference: true);
-    internal new static vtkLegendScaleActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkLegendScaleActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkLegendScaleActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkLegendScaleActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkLegendScaleActor Register(vtkLegendScaleActor sourceObject)
     {

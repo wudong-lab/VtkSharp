@@ -9,8 +9,8 @@ public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
 {
     protected vtkPolyDataAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPolyDataAlgorithm New() => new(vtkPolyDataAlgorithm_New(), ownsReference: true);
-    internal new static vtkPolyDataAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkPolyDataAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkPolyDataAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkPolyDataAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPolyDataAlgorithm Register(vtkPolyDataAlgorithm sourceObject)
     {

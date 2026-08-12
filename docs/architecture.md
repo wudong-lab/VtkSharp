@@ -43,3 +43,5 @@ native 对象所有权以 VTK 引用计数语义为准：
 - native 侧长期保存的指针、回调或委托必须有明确的保活和解绑顺序。
 - 指针、字符串、数组和结构体跨边界传递时必须明确内存归属、编码与布局。
 - 不通过异常捕获掩盖所有权或 ABI 不确定性，应以最小生命周期测试验证。
+
+从外部 native 指针创建 wrapper 时，使用 `FromBorrowedPointer` 或 `TakeReference`，具体所有权约定见 [Native 指针封装与所有权](native-pointer-ownership.md)。

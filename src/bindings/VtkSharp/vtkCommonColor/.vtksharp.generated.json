@@ -11,7 +11,7 @@
       "inputHash": "9c3a28b75e7c09d85120b18b9165e9a688040d3bec06a17366feb18b38d4169b",
       "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkColorSeries_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkColorSeries_export_gen.cpp",
-      "managedContentHash": "03f5f8b736660416579a3784b0d64ca4c74fa7986a14795c428cabba7cffadf5",
+      "managedContentHash": "8aa308e95fbac7e31548aff5b10c87a956c998b7b457da3667aa4ff4af8ffd5b",
       "nativeContentHash": "191abd11928d4f1649346bc077eb660262cb7043b4ccd151bb297624221dacee"
     },
     {
@@ -22,7 +22,7 @@
       "inputHash": "9163b5874a1ebcaa951322b454ba7587bf70c843e54204ab107a2ef9b8ddae48",
       "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkNamedColors_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkNamedColors_export_gen.cpp",
-      "managedContentHash": "1f60110987083ac927d1bc447bd9492cd2f552ad5794dc9c0200c38b95462883",
+      "managedContentHash": "6389311005fa463b88b5cf64ae7ecfa17f2db0c7cbb4a81e291f7ba61e751d89",
       "nativeContentHash": "d507ee92eeba5702c455e1506f8e91a791941447b67e206fc40f1f9749462b90"
     }
   ]

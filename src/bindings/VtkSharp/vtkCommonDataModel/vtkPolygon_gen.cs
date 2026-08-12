@@ -9,8 +9,8 @@ public unsafe partial class vtkPolygon : vtkCell
 {
     protected vtkPolygon(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPolygon New() => new(vtkPolygon_New(), ownsReference: true);
-    internal new static vtkPolygon FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkPolygon TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkPolygon FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkPolygon TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPolygon Register(vtkPolygon sourceObject)
     {

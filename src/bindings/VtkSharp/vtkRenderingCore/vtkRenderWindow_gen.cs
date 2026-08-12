@@ -9,8 +9,8 @@ public unsafe partial class vtkRenderWindow : vtkWindow
 {
     protected vtkRenderWindow(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkRenderWindow New() => new(vtkRenderWindow_New(), ownsReference: true);
-    internal new static vtkRenderWindow FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkRenderWindow TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkRenderWindow FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkRenderWindow TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkRenderWindow Register(vtkRenderWindow sourceObject)
     {

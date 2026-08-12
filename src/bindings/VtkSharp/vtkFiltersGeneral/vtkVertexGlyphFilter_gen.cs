@@ -9,8 +9,8 @@ public unsafe partial class vtkVertexGlyphFilter : vtkPolyDataAlgorithm
 {
     protected vtkVertexGlyphFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkVertexGlyphFilter New() => new(vtkVertexGlyphFilter_New(), ownsReference: true);
-    internal new static vtkVertexGlyphFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkVertexGlyphFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkVertexGlyphFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkVertexGlyphFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkVertexGlyphFilter Register(vtkVertexGlyphFilter sourceObject)
     {

@@ -9,8 +9,8 @@ public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
 {
     protected vtkCylinderSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCylinderSource New() => new(vtkCylinderSource_New(), ownsReference: true);
-    internal new static vtkCylinderSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkCylinderSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkCylinderSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkCylinderSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCylinderSource Register(vtkCylinderSource sourceObject)
     {

@@ -9,8 +9,8 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 {
     protected vtkScalarBarActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkScalarBarActor New() => new(vtkScalarBarActor_New(), ownsReference: true);
-    internal new static vtkScalarBarActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkScalarBarActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkScalarBarActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkScalarBarActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkScalarBarActor Register(vtkScalarBarActor sourceObject)
     {

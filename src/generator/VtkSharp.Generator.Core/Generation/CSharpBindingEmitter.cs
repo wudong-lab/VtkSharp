@@ -27,8 +27,8 @@ public sealed class CSharpBindingEmitter
             sb.AppendLine($"    public new static {className} New() => new({className}_New(), ownsReference: true);");
         }
 
-        sb.AppendLine($"    internal new static {className} FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);");
-        sb.AppendLine($"    internal new static {className} TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);");
+        sb.AppendLine($"    public new static {className} FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);");
+        sb.AppendLine($"    public new static {className} TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);");
         sb.AppendLine();
         sb.AppendLine($"    public new static {className} Register({className} sourceObject)");
         sb.AppendLine("    {");

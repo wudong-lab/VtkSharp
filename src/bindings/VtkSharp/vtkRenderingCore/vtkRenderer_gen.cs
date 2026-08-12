@@ -9,8 +9,8 @@ public unsafe partial class vtkRenderer : vtkViewport
 {
     protected vtkRenderer(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkRenderer New() => new(vtkRenderer_New(), ownsReference: true);
-    internal new static vtkRenderer FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkRenderer TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkRenderer FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkRenderer TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkRenderer Register(vtkRenderer sourceObject)
     {

@@ -22,8 +22,8 @@ public sealed class BindingEmitterFunctionTests
         ]);
 
         Assert.Contains("public new void SetInputConnection(vtkAlgorithmOutput input)", text);
-        Assert.Contains("internal new static vtkAlgorithm FromBorrowedPointer(nint nativePointer)", text);
-        Assert.Contains("internal new static vtkAlgorithm TakeReference(nint nativePointer)", text);
+        Assert.Contains("public new static vtkAlgorithm FromBorrowedPointer(nint nativePointer)", text);
+        Assert.Contains("public new static vtkAlgorithm TakeReference(nint nativePointer)", text);
         Assert.DoesNotContain("WeakReference", text);
         Assert.Contains("public new static vtkAlgorithm Register(vtkAlgorithm sourceObject)", text);
         Assert.Contains("vtkAlgorithm_SetInputConnection(this.NativePointer, input.NativePointer);", text);

@@ -9,8 +9,8 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
 {
     protected vtkImageData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageData New() => new(vtkImageData_New(), ownsReference: true);
-    internal new static vtkImageData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkImageData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkImageData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkImageData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageData Register(vtkImageData sourceObject)
     {

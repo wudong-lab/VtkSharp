@@ -9,8 +9,8 @@ public unsafe partial class vtkActor2DCollection : vtkPropCollection
 {
     protected vtkActor2DCollection(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkActor2DCollection New() => new(vtkActor2DCollection_New(), ownsReference: true);
-    internal new static vtkActor2DCollection FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkActor2DCollection TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkActor2DCollection FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkActor2DCollection TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkActor2DCollection Register(vtkActor2DCollection sourceObject)
     {

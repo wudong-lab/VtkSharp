@@ -9,8 +9,8 @@ public unsafe partial class vtkPointSet : vtkDataSet
 {
     protected vtkPointSet(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPointSet New() => new(vtkPointSet_New(), ownsReference: true);
-    internal new static vtkPointSet FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkPointSet TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkPointSet FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkPointSet TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPointSet Register(vtkPointSet sourceObject)
     {

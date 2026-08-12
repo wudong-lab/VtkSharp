@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkAbstractTransform : vtkObject
 {
     protected vtkAbstractTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkAbstractTransform FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkAbstractTransform TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkAbstractTransform FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkAbstractTransform TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAbstractTransform Register(vtkAbstractTransform sourceObject)
     {

@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkWindow : vtkObject
 {
     protected vtkWindow(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkWindow FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkWindow TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkWindow FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkWindow TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkWindow Register(vtkWindow sourceObject)
     {

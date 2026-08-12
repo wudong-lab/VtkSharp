@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkRandomSequence : vtkObject
 {
     protected vtkRandomSequence(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkRandomSequence FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkRandomSequence TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkRandomSequence FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkRandomSequence TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkRandomSequence Register(vtkRandomSequence sourceObject)
     {

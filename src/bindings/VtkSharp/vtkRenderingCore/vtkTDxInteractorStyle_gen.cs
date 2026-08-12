@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkTDxInteractorStyle : vtkObject
 {
     protected vtkTDxInteractorStyle(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkTDxInteractorStyle FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkTDxInteractorStyle TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkTDxInteractorStyle FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkTDxInteractorStyle TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTDxInteractorStyle Register(vtkTDxInteractorStyle sourceObject)
     {

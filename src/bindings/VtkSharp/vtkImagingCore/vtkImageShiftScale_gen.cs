@@ -9,8 +9,8 @@ public unsafe partial class vtkImageShiftScale : vtkThreadedImageAlgorithm
 {
     protected vtkImageShiftScale(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkImageShiftScale New() => new(vtkImageShiftScale_New(), ownsReference: true);
-    internal new static vtkImageShiftScale FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkImageShiftScale TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkImageShiftScale FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkImageShiftScale TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkImageShiftScale Register(vtkImageShiftScale sourceObject)
     {

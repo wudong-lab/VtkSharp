@@ -9,8 +9,8 @@ public unsafe partial class vtkScalarsToColors : vtkObject
 {
     protected vtkScalarsToColors(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkScalarsToColors New() => new(vtkScalarsToColors_New(), ownsReference: true);
-    internal new static vtkScalarsToColors FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkScalarsToColors TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkScalarsToColors FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkScalarsToColors TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkScalarsToColors Register(vtkScalarsToColors sourceObject)
     {

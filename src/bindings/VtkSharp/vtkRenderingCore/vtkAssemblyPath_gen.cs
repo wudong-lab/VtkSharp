@@ -9,8 +9,8 @@ public unsafe partial class vtkAssemblyPath : vtkCollection
 {
     protected vtkAssemblyPath(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkAssemblyPath New() => new(vtkAssemblyPath_New(), ownsReference: true);
-    internal new static vtkAssemblyPath FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkAssemblyPath TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkAssemblyPath FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkAssemblyPath TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkAssemblyPath Register(vtkAssemblyPath sourceObject)
     {

@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkDataSet : vtkDataObject
 {
     protected vtkDataSet(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkDataSet FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkDataSet TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkDataSet FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkDataSet TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkDataSet Register(vtkDataSet sourceObject)
     {

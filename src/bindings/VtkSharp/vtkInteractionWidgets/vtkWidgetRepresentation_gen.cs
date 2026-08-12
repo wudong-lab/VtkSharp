@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkWidgetRepresentation : vtkProp
 {
     protected vtkWidgetRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkWidgetRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkWidgetRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkWidgetRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkWidgetRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkWidgetRepresentation Register(vtkWidgetRepresentation sourceObject)
     {

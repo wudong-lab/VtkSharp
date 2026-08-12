@@ -9,8 +9,8 @@ public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
 {
     protected vtkDelaunay2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkDelaunay2D New() => new(vtkDelaunay2D_New(), ownsReference: true);
-    internal new static vtkDelaunay2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkDelaunay2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkDelaunay2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkDelaunay2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkDelaunay2D Register(vtkDelaunay2D sourceObject)
     {

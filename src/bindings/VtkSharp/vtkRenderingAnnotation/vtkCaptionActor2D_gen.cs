@@ -9,8 +9,8 @@ public unsafe partial class vtkCaptionActor2D : vtkActor2D
 {
     protected vtkCaptionActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkCaptionActor2D New() => new(vtkCaptionActor2D_New(), ownsReference: true);
-    internal new static vtkCaptionActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkCaptionActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkCaptionActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkCaptionActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCaptionActor2D Register(vtkCaptionActor2D sourceObject)
     {

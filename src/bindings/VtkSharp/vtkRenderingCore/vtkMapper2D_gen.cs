@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkMapper2D : vtkAbstractMapper
 {
     protected vtkMapper2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkMapper2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkMapper2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkMapper2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkMapper2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkMapper2D Register(vtkMapper2D sourceObject)
     {

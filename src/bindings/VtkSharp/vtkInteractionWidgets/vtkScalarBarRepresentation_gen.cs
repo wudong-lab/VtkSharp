@@ -9,8 +9,8 @@ public unsafe partial class vtkScalarBarRepresentation : vtkBorderRepresentation
 {
     protected vtkScalarBarRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkScalarBarRepresentation New() => new(vtkScalarBarRepresentation_New(), ownsReference: true);
-    internal new static vtkScalarBarRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkScalarBarRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkScalarBarRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkScalarBarRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkScalarBarRepresentation Register(vtkScalarBarRepresentation sourceObject)
     {

@@ -9,8 +9,8 @@ public unsafe partial class vtkPassInputTypeAlgorithm : vtkAlgorithm
 {
     protected vtkPassInputTypeAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkPassInputTypeAlgorithm New() => new(vtkPassInputTypeAlgorithm_New(), ownsReference: true);
-    internal new static vtkPassInputTypeAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkPassInputTypeAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkPassInputTypeAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkPassInputTypeAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkPassInputTypeAlgorithm Register(vtkPassInputTypeAlgorithm sourceObject)
     {

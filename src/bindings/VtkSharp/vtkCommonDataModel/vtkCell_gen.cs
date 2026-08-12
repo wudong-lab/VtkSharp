@@ -8,8 +8,8 @@ namespace VtkSharp;
 public unsafe partial class vtkCell : vtkObject
 {
     protected vtkCell(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
-    internal new static vtkCell FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkCell TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkCell FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkCell TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkCell Register(vtkCell sourceObject)
     {

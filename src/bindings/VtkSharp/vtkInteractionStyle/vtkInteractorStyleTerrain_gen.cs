@@ -9,8 +9,8 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
 {
     protected vtkInteractorStyleTerrain(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkInteractorStyleTerrain New() => new(vtkInteractorStyleTerrain_New(), ownsReference: true);
-    internal new static vtkInteractorStyleTerrain FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkInteractorStyleTerrain TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkInteractorStyleTerrain FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkInteractorStyleTerrain TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkInteractorStyleTerrain Register(vtkInteractorStyleTerrain sourceObject)
     {

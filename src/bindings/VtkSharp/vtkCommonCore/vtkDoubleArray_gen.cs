@@ -9,8 +9,8 @@ public unsafe partial class vtkDoubleArray : vtkDataArray
 {
     protected vtkDoubleArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkDoubleArray New() => new(vtkDoubleArray_New(), ownsReference: true);
-    internal new static vtkDoubleArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkDoubleArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkDoubleArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkDoubleArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkDoubleArray Register(vtkDoubleArray sourceObject)
     {

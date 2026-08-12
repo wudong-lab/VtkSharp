@@ -9,8 +9,8 @@ public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
 {
     protected vtkTubeFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkTubeFilter New() => new(vtkTubeFilter_New(), ownsReference: true);
-    internal new static vtkTubeFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkTubeFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkTubeFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkTubeFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkTubeFilter Register(vtkTubeFilter sourceObject)
     {

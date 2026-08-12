@@ -9,8 +9,8 @@ public unsafe partial class vtkUnsignedCharArray : vtkDataArray
 {
     protected vtkUnsignedCharArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     public new static vtkUnsignedCharArray New() => new(vtkUnsignedCharArray_New(), ownsReference: true);
-    internal new static vtkUnsignedCharArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
-    internal new static vtkUnsignedCharArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
+    public new static vtkUnsignedCharArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    public new static vtkUnsignedCharArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public new static vtkUnsignedCharArray Register(vtkUnsignedCharArray sourceObject)
     {
