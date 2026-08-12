@@ -205,6 +205,31 @@ public sealed class VtkClassInspectorTests
     }
 
     [Fact]
+    public void InspectHeader_ReportsTypeSupportUsingBindingTypeMapper()
+    {
+        var directory = CreateHeader("""
+            class vtkStdString {};
+            class vtkColor3ub {};
+            class vtkThing
+            {
+            public:
+                void SetName(vtkStdString const& name);
+                vtkStdString GetName();
+                vtkColor3ub GetColor();
+                void SetValue(int value);
+            };
+            """);
+        var inspector = new VtkClassInspector();
+
+        var inspected = inspector.InspectHeader(directory, "vtkThing.h", "vtkThing");
+
+        Assert.True(inspected.Functions.Single(function => function.Name == "SetName").IsSupported);
+        Assert.True(inspected.Functions.Single(function => function.Name == "SetValue").IsSupported);
+        Assert.False(inspected.Functions.Single(function => function.Name == "GetName").IsSupported);
+        Assert.False(inspected.Functions.Single(function => function.Name == "GetColor").IsSupported);
+    }
+
+    [Fact]
     public void InspectHeader_ReturnsFinalClassAfterInspectFileCachedRawClass()
     {
         var directory = CreateHeader("""

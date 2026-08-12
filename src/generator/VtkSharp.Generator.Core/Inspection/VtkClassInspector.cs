@@ -114,6 +114,8 @@ public sealed class VtkClassInspector
                     .Select(p => new InspectedParameter(canonicalizer.Canonicalize(p.Type).Text, p.Name))
                     .ToList();
                 var returnType = canonicalizer.Canonicalize(rawReturnType).Text;
+                var isSupported = BindingTypeMapper.IsSupportedType(returnType) &&
+                                  parameters.All(parameter => BindingTypeMapper.IsSupportedType(parameter.Type));
                 var deps = GetDependencyTypes([returnType, .. parameters.Select(p => p.Type)], cppClass.Name);
 
                 return new InspectedFunction(
@@ -121,7 +123,7 @@ public sealed class VtkClassInspector
                     signature,
                     returnType,
                     parameters,
-                    IsSupported: true,
+                    IsSupported: isSupported,
                     CanonicalSignature: $"{returnType} {function.Name}(" +
                                         string.Join(", ", parameters.Select(p => $"{p.Type} {p.Name}")) +
                                         ")",
