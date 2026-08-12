@@ -14,6 +14,13 @@ classes:
             name: lkup
           - type: int
             name: lutIndexing
+      - name: AddColor
+        cppSignature: void AddColor(vtkColor3ub const& color)
+        return:
+          type: void
+        parameters:
+          - type: vtkColor3ub
+            name: color
       - name: ClearColors
         cppSignature: void ClearColors()
         return:
@@ -70,6 +77,24 @@ classes:
         parameters:
           - type: int
             name: index
+      - name: InsertColor
+        cppSignature: void InsertColor(int index, vtkColor3ub const& color)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: index
+          - type: vtkColor3ub
+            name: color
+      - name: SetColor
+        cppSignature: void SetColor(int index, vtkColor3ub const& color)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: index
+          - type: vtkColor3ub
+            name: color
       - name: SetColorScheme
         cppSignature: void SetColorScheme(int scheme)
         return:

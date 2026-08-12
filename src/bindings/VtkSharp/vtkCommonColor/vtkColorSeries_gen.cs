@@ -24,6 +24,11 @@ public unsafe partial class vtkColorSeries : vtkObject
         vtkColorSeries_BuildLookupTable(this.NativePointer, lkup.NativePointer, lutIndexing);
     }
 
+    public new void AddColor(VtkColor3ub color)
+    {
+        vtkColorSeries_AddColor(this.NativePointer, color.R, color.G, color.B);
+    }
+
     public new void ClearColors()
     {
         vtkColorSeries_ClearColors(this.NativePointer);
@@ -73,6 +78,16 @@ public unsafe partial class vtkColorSeries : vtkObject
         vtkColorSeries_RemoveColor(this.NativePointer, index);
     }
 
+    public new void InsertColor(int index, VtkColor3ub color)
+    {
+        vtkColorSeries_InsertColor(this.NativePointer, index, color.R, color.G, color.B);
+    }
+
+    public new void SetColor(int index, VtkColor3ub color)
+    {
+        vtkColorSeries_SetColor(this.NativePointer, index, color.R, color.G, color.B);
+    }
+
     public new void SetColorScheme(int scheme)
     {
         vtkColorSeries_SetColorScheme(this.NativePointer, scheme);
@@ -109,6 +124,9 @@ public unsafe partial class vtkColorSeries : vtkObject
     private static extern void vtkColorSeries_BuildLookupTable(nint self, nint lkup, int lutIndexing);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkColorSeries_AddColor(nint self, byte colorR, byte colorG, byte colorB);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_ClearColors(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
@@ -134,6 +152,12 @@ public unsafe partial class vtkColorSeries : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_RemoveColor(nint self, int index);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkColorSeries_InsertColor(nint self, int index, byte colorR, byte colorG, byte colorB);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkColorSeries_SetColor(nint self, int index, byte colorR, byte colorG, byte colorB);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_SetColorScheme(nint self, int scheme);

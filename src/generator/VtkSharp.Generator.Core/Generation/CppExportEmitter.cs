@@ -19,7 +19,8 @@ public sealed class CppExportEmitter
             sb.AppendLine("#include <cstdint>");
         }
         foreach (var valueStructHeader in functions
-                     .Select(f => TypeClassifier.GetValueStructCppHeader(f.Return.Type))
+                     .SelectMany(f => new[] { f.Return.Type }.Concat(f.Parameters.Select(p => p.Type)))
+                     .Select(TypeClassifier.GetValueStructCppHeader)
                      .Where(h => h is not null)
                      .Distinct(StringComparer.Ordinal))
         {
@@ -50,7 +51,7 @@ public sealed class CppExportEmitter
             var elementType = TypeClassifier.GetValueStructCppElementType(function.Return.Type);
             var outParamName = $"__out{function.Name}";
             var paramList = new List<string> { $"{className}* self" };
-            paramList.AddRange(function.Parameters.Select(p => $"{BindingTypeMapper.ToCppType(p.Type)} {p.Name}"));
+            paramList.AddRange(function.Parameters.SelectMany(ToCppExportParameters));
             paramList.Add($"{elementType}* {outParamName}");
 
             var args = string.Join(", ", function.Parameters.Select(p => p.Name));
@@ -64,7 +65,7 @@ public sealed class CppExportEmitter
 
         var returnType = BindingTypeMapper.ToCppExportType(function.Return.Type);
         var parameters = new[] { $"{className}* self" }
-            .Concat(function.Parameters.Select(parameter => $"{BindingTypeMapper.ToCppExportType(parameter.Type)} {parameter.Name}"));
+            .Concat(function.Parameters.SelectMany(ToCppExportParameters));
 
         var arguments = string.Join(", ", function.Parameters.Select(ToCppArgument));
         var call = $"self->{function.Name}({arguments})";
@@ -77,9 +78,30 @@ public sealed class CppExportEmitter
     }
 
     private static string ToCppArgument(WhitelistParameter parameter)
-        => parameter.Type == "unsigned long"
+    {
+        if (TypeClassifier.IsVtkValueStruct(parameter.Type))
+        {
+            var components = TypeClassifier.GetValueStructComponentNames(parameter.Type)
+                .Select(component => parameter.Name + component);
+            return $"{parameter.Type}({string.Join(", ", components)})";
+        }
+
+        return parameter.Type == "unsigned long"
             ? $"static_cast<unsigned long>({parameter.Name})"
             : parameter.Name;
+    }
+
+    private static IEnumerable<string> ToCppExportParameters(WhitelistParameter parameter)
+    {
+        if (TypeClassifier.IsVtkValueStruct(parameter.Type))
+        {
+            var elementType = TypeClassifier.GetValueStructCppElementType(parameter.Type);
+            return TypeClassifier.GetValueStructComponentNames(parameter.Type)
+                .Select(component => $"{elementType} {parameter.Name}{component}");
+        }
+
+        return [$"{BindingTypeMapper.ToCppExportType(parameter.Type)} {parameter.Name}"];
+    }
 
     private static bool UsesUnsignedLong(WhitelistFunction function)
         => function.Return.Type == "unsigned long" ||

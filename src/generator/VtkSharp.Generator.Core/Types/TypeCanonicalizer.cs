@@ -9,6 +9,7 @@ public sealed partial class TypeCanonicalizer
         var text = NormalizeWhitespace(typeName);
         text = NormalizeWin32Handle(text);
         text = NormalizeVtkStdString(text);
+        text = NormalizeVtkValueStructReference(text);
         text = NormalizeArray(text);
         text = NormalizePointer(text);
         text = NormalizeConstPointer(text);
@@ -48,6 +49,9 @@ public sealed partial class TypeCanonicalizer
 
     private static string NormalizeVtkStdString(string text)
         => text == "vtkStdString const&" ? "const char*" : text;
+
+    private static string NormalizeVtkValueStructReference(string text)
+        => text == "vtkColor3ub const&" ? "vtkColor3ub" : text;
 
     [GeneratedRegex(@"\s+")]
     private static partial Regex WhitespaceRegex();

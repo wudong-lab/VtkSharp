@@ -2,6 +2,14 @@ namespace VtkSharp.Generator.Core.Generation;
 
 public static class TypeClassifier
 {
+    private sealed record ValueStructInfo(
+        int ComponentCount,
+        string CSharpName,
+        string CppHeader,
+        string CppElementType,
+        string CSharpElementType,
+        IReadOnlyList<string> ComponentNames);
+
     private static readonly HashSet<string> VtkScalarTypes = new(StringComparer.Ordinal)
     {
         "vtkTypeBool",
@@ -24,10 +32,10 @@ public static class TypeClassifier
         "vtkIdType",
     };
 
-    private static readonly Dictionary<string, (int Count, string CSharpName, string CppHeader, string CppElementType, string CSharpElementType)> ValueStructInfo = new()
+    private static readonly Dictionary<string, ValueStructInfo> ValueStructs = new()
     {
-        ["vtkColor3d"] = (3, "VtkColor3d", "vtkColor", "double", "double"),
-        ["vtkColor3ub"] = (3, "VtkColor3ub", "vtkColor", "unsigned char", "byte"),
+        ["vtkColor3d"] = new(3, "VtkColor3d", "vtkColor", "double", "double", ["R", "G", "B"]),
+        ["vtkColor3ub"] = new(3, "VtkColor3ub", "vtkColor", "unsigned char", "byte", ["R", "G", "B"]),
     };
 
     public static bool IsVtkValueStruct(string type) => VtkValueStructs.Contains(type);
@@ -77,17 +85,20 @@ public static class TypeClassifier
     }
 
     public static int GetValueStructComponentCount(string type)
-        => ValueStructInfo.TryGetValue(type, out var info) ? info.Count : throw new NotSupportedException($"Unknown value struct type '{type}'.");
+        => ValueStructs.TryGetValue(type, out var info) ? info.ComponentCount : throw new NotSupportedException($"Unknown value struct type '{type}'.");
 
     public static string GetValueStructCSharpName(string type)
-        => ValueStructInfo.TryGetValue(type, out var info) ? info.CSharpName : throw new NotSupportedException($"Unknown value struct type '{type}'.");
+        => ValueStructs.TryGetValue(type, out var info) ? info.CSharpName : throw new NotSupportedException($"Unknown value struct type '{type}'.");
 
     public static string? GetValueStructCppHeader(string type)
-        => ValueStructInfo.TryGetValue(type, out var info) ? info.CppHeader : null;
+        => ValueStructs.TryGetValue(type, out var info) ? info.CppHeader : null;
 
     public static string GetValueStructCppElementType(string type)
-        => ValueStructInfo.TryGetValue(type, out var info) ? info.CppElementType : throw new NotSupportedException($"Unknown value struct type '{type}'.");
+        => ValueStructs.TryGetValue(type, out var info) ? info.CppElementType : throw new NotSupportedException($"Unknown value struct type '{type}'.");
 
     public static string GetValueStructCSharpElementType(string type)
-        => ValueStructInfo.TryGetValue(type, out var info) ? info.CSharpElementType : throw new NotSupportedException($"Unknown value struct type '{type}'.");
+        => ValueStructs.TryGetValue(type, out var info) ? info.CSharpElementType : throw new NotSupportedException($"Unknown value struct type '{type}'.");
+
+    public static IReadOnlyList<string> GetValueStructComponentNames(string type)
+        => ValueStructs.TryGetValue(type, out var info) ? info.ComponentNames : throw new NotSupportedException($"Unknown value struct type '{type}'.");
 }

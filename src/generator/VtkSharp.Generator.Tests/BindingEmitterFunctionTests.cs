@@ -94,6 +94,48 @@ public sealed class BindingEmitterFunctionTests
     }
 
     [Fact]
+    public void CSharpEmitter_ExpandsUnsignedByteValueStructParameter()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkColorSeries", "vtkObject", hasStaticNew: true,
+        [
+            new WhitelistFunction
+            {
+                Name = "SetColor",
+                CppSignature = "void SetColor(int index, vtkColor3ub const& color)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters =
+                [
+                    new WhitelistParameter { Type = "int", Name = "index" },
+                    new WhitelistParameter { Type = "vtkColor3ub", Name = "color" },
+                ],
+            },
+        ]);
+
+        Assert.Contains("public new void SetColor(int index, VtkColor3ub color)", text);
+        Assert.Contains("vtkColorSeries_SetColor(this.NativePointer, index, color.R, color.G, color.B);", text);
+        Assert.Contains("private static extern void vtkColorSeries_SetColor(nint self, int index, byte colorR, byte colorG, byte colorB);", text);
+    }
+
+    [Fact]
+    public void CppEmitter_ExpandsAndReconstructsUnsignedByteValueStructParameter()
+    {
+        var text = new CppExportEmitter().Emit("vtkColorSeries", [], hasStaticNew: true,
+        [
+            new WhitelistFunction
+            {
+                Name = "AddColor",
+                CppSignature = "void AddColor(vtkColor3ub const& color)",
+                Return = new WhitelistReturn { Type = "void" },
+                Parameters = [new WhitelistParameter { Type = "vtkColor3ub", Name = "color" }],
+            },
+        ]);
+
+        Assert.Contains("#include <vtkColor.h>", text);
+        Assert.Contains("VTKSHARP_API void vtkColorSeries_AddColor(vtkColorSeries* self, unsigned char colorR, unsigned char colorG, unsigned char colorB)", text);
+        Assert.Contains("self->AddColor(vtkColor3ub(colorR, colorG, colorB));", text);
+    }
+
+    [Fact]
     public void CSharpEmitter_EmitsIntParameters()
     {
         var emitter = new CSharpBindingEmitter();

@@ -121,17 +121,19 @@ public sealed class CSharpBindingEmitter
         if (hasStringParameter)
         {
             sb.AppendLine($"{indent}#if NET8_0_OR_GREATER");
-            var call10 = FormatCall(exportName, function.Parameters, p => ToInteropArgument(p), outVarName);
+            var call10 = FormatCall(exportName, function.Parameters, ToInteropArguments, outVarName);
             EmitCall(sb, indent, function.Return.Type, call10, outVarName, function.Return.Ownership);
             sb.AppendLine($"{indent}#else");
             var call20 = FormatCall(exportName, function.Parameters, p =>
-                BindingTypeMapper.IsStringPointer(p.Type) ? $"VtkString.ToNullTerminatedUtf8({EscapeIdentifier(p.Name)})" : ToInteropArgument(p), outVarName);
+                BindingTypeMapper.IsStringPointer(p.Type)
+                    ? [$"VtkString.ToNullTerminatedUtf8({EscapeIdentifier(p.Name)})"]
+                    : ToInteropArguments(p), outVarName);
             EmitCall(sb, indent, function.Return.Type, call20, outVarName, function.Return.Ownership);
             sb.AppendLine($"{indent}#endif");
         }
         else
         {
-            var call = FormatCall(exportName, function.Parameters, ToInteropArgument, outVarName);
+            var call = FormatCall(exportName, function.Parameters, ToInteropArguments, outVarName);
             EmitCall(sb, indent, function.Return.Type, call, outVarName, function.Return.Ownership);
         }
 
@@ -144,10 +146,10 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine("    }");
     }
 
-    private static string FormatCall(string exportName, IReadOnlyList<WhitelistParameter> parameters, Func<WhitelistParameter, string> argumentSelector, string? extraArg = null)
+    private static string FormatCall(string exportName, IReadOnlyList<WhitelistParameter> parameters, Func<WhitelistParameter, IEnumerable<string>> argumentSelector, string? extraArg = null)
     {
         var args = new List<string> { "this.NativePointer" };
-        args.AddRange(parameters.Select(argumentSelector));
+        args.AddRange(parameters.SelectMany(argumentSelector));
         if (extraArg is not null)
             args.Add(extraArg);
         return $"{exportName}({string.Join(", ", args)})";
@@ -225,18 +227,18 @@ public sealed class CSharpBindingEmitter
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
             var net8Params = string.Join(", ", new[] { "nint self" }.Concat(
-                function.Parameters.Select(p => BindingTypeMapper.IsStringPointer(p.Type)
-                    ? $"string {EscapeIdentifier(p.Name)}"
-                    : ToInteropParameter(p)))) + extraParam;
+                function.Parameters.SelectMany(p => BindingTypeMapper.IsStringPointer(p.Type)
+                    ? [$"string {EscapeIdentifier(p.Name)}"]
+                    : ToInteropParameters(p)))) + extraParam;
             sb.AppendLine($"    private static partial {interopReturnType} {exportName}({net8Params});");
             sb.AppendLine("#else");
             sb.AppendLine($"    [DllImport(InteropInfo.NativeLibraryName)]");
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
             var ns20Params = string.Join(", ", new[] { "nint self" }.Concat(
-                function.Parameters.Select(p => BindingTypeMapper.IsStringPointer(p.Type)
-                    ? $"byte[] {EscapeIdentifier(p.Name)}"
-                    : ToInteropParameter(p)))) + extraParam;
+                function.Parameters.SelectMany(p => BindingTypeMapper.IsStringPointer(p.Type)
+                    ? [$"byte[] {EscapeIdentifier(p.Name)}"]
+                    : ToInteropParameters(p)))) + extraParam;
             sb.AppendLine($"    private static extern {interopReturnType} {exportName}({ns20Params});");
             sb.AppendLine("#endif");
         }
@@ -245,34 +247,44 @@ public sealed class CSharpBindingEmitter
             sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
-            var parameters = string.Join(", ", new[] { "nint self" }.Concat(function.Parameters.Select(ToInteropParameter))) + extraParam;
+            var parameters = string.Join(", ", new[] { "nint self" }.Concat(function.Parameters.SelectMany(ToInteropParameters))) + extraParam;
             sb.AppendLine($"    private static extern {interopReturnType} {exportName}({parameters});");
         }
     }
 
-    private static string ToInteropArgument(WhitelistParameter parameter)
+    private static IEnumerable<string> ToInteropArguments(WhitelistParameter parameter)
     {
         var name = EscapeIdentifier(parameter.Name);
+        if (TypeClassifier.IsVtkValueStruct(parameter.Type))
+            return TypeClassifier.GetValueStructComponentNames(parameter.Type).Select(component => $"{name}.{component}");
+
         if (TypeClassifier.TryGetVtkClassPointerName(parameter.Type, out _))
-            return $"{name}.NativePointer";
+            return [$"{name}.NativePointer"];
 
         if (IsSpanParameter(parameter))
-            return $"{parameter.Name}Ptr";
+            return [$"{parameter.Name}Ptr"];
 
         if (parameter.Type == "char")
-            return $"(byte){name}";
+            return [$"(byte){name}"];
 
         if (parameter.Type == "vtkTypeBool")
-            return $"{name} ? 1 : 0";
+            return [$"{name} ? 1 : 0"];
 
-        return name;
+        return [name];
     }
 
-    private static string ToInteropParameter(WhitelistParameter parameter)
+    private static IEnumerable<string> ToInteropParameters(WhitelistParameter parameter)
     {
+        if (TypeClassifier.IsVtkValueStruct(parameter.Type))
+        {
+            var elementType = TypeClassifier.GetValueStructCSharpElementType(parameter.Type);
+            return TypeClassifier.GetValueStructComponentNames(parameter.Type)
+                .Select(component => $"{elementType} {EscapeIdentifier(parameter.Name + component)}");
+        }
+
         var marshal = ToParameterMarshalAttribute(parameter.Type);
         var prefix = marshal is null ? "" : $"{marshal} ";
-        return $"{prefix}{ToInteropParameterType(parameter.Type)} {EscapeIdentifier(parameter.Name)}";
+        return [$"{prefix}{ToInteropParameterType(parameter.Type)} {EscapeIdentifier(parameter.Name)}"];
     }
 
     private static string ToInteropParameterType(string type)

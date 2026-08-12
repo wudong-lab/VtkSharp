@@ -59,4 +59,26 @@ public sealed class VtkColorMappingBindingsTests
         Assert.Equal(first.G, repeated.G);
         Assert.Equal(first.B, repeated.B);
     }
+
+    [Fact]
+    public void ColorSeries_AcceptsUnsignedByteColors()
+    {
+        using var colorSeries = vtkColorSeries.New();
+        colorSeries.SetNumberOfColors(1);
+
+        colorSeries.SetColor(0, new VtkColor3ub(10, 20, 30));
+        colorSeries.AddColor(new VtkColor3ub(40, 50, 60));
+        colorSeries.InsertColor(1, new VtkColor3ub(70, 80, 90));
+
+        AssertColor(colorSeries.GetColor(0), 10, 20, 30);
+        AssertColor(colorSeries.GetColor(1), 70, 80, 90);
+        AssertColor(colorSeries.GetColor(2), 40, 50, 60);
+    }
+
+    private static void AssertColor(VtkColor3ub color, byte r, byte g, byte b)
+    {
+        Assert.Equal(r, color.R);
+        Assert.Equal(g, color.G);
+        Assert.Equal(b, color.B);
+    }
 }

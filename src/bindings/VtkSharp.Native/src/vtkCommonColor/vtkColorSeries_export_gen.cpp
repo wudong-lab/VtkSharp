@@ -8,6 +8,8 @@ VTKSHARP_API vtkColorSeries* vtkColorSeries_New() { return vtkColorSeries::New()
 
 VTKSHARP_API void vtkColorSeries_BuildLookupTable(vtkColorSeries* self, vtkLookupTable* lkup, int lutIndexing) { self->BuildLookupTable(lkup, lutIndexing); }
 
+VTKSHARP_API void vtkColorSeries_AddColor(vtkColorSeries* self, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->AddColor(vtkColor3ub(colorR, colorG, colorB)); }
+
 VTKSHARP_API void vtkColorSeries_ClearColors(vtkColorSeries* self) { self->ClearColors(); }
 
 VTKSHARP_API vtkLookupTable* vtkColorSeries_CreateLookupTable(vtkColorSeries* self, int lutIndexing) { return self->CreateLookupTable(lutIndexing); }
@@ -35,6 +37,10 @@ VTKSHARP_API int vtkColorSeries_GetNumberOfColorSchemes(vtkColorSeries* self) { 
 VTKSHARP_API int vtkColorSeries_GetNumberOfColors(vtkColorSeries* self) { return self->GetNumberOfColors(); }
 
 VTKSHARP_API void vtkColorSeries_RemoveColor(vtkColorSeries* self, int index) { self->RemoveColor(index); }
+
+VTKSHARP_API void vtkColorSeries_InsertColor(vtkColorSeries* self, int index, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->InsertColor(index, vtkColor3ub(colorR, colorG, colorB)); }
+
+VTKSHARP_API void vtkColorSeries_SetColor(vtkColorSeries* self, int index, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->SetColor(index, vtkColor3ub(colorR, colorG, colorB)); }
 
 VTKSHARP_API void vtkColorSeries_SetColorScheme(vtkColorSeries* self, int scheme) { self->SetColorScheme(scheme); }
 

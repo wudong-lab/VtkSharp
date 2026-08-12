@@ -11,6 +11,7 @@ public sealed class TypeCanonicalizerTests
     [InlineData("double const[3]", "const double[3]")]
     [InlineData("double [3]", "double[3]")]
     [InlineData("HWND__ *", "HWND")]
+    [InlineData("vtkColor3ub const&", "vtkColor3ub")]
     public void Canonicalize_NormalizesSupportedSpelling(string input, string expected)
     {
         var canonicalizer = new TypeCanonicalizer();
