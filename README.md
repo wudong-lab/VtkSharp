@@ -13,9 +13,12 @@
 ## 结构
 
 ```
-src/generator/        # 绑定生成器（CLI / 核心 / 白名单 / 配置）
-src/bindings/         # VTK 官方 API 的 C# 绑定输出 + C++ export
-src/examples/         # 示例浏览器 + VTK 官方示例翻译
+src/generator/                    # 绑定生成器（CLI / 核心 / 白名单 / 配置）
+src/bindings/VtkSharp/            # C# wrapper（生成代码 + 手写 partial）
+src/bindings/VtkSharp.Native/src/ # C++ C ABI 导出
+src/examples/                     # 示例浏览器 + VTK 官方示例翻译
+.agents/skills/                   # 仓库级 AI 工作流
+docs/                             # 架构、生成器、构建与协作文档
 ```
 
 当前架构、生成规则和开发流程见 [项目文档](docs/README.md)。
@@ -68,6 +71,9 @@ dotnet build src/bindings/VtkSharp.slnx --configuration Debug
 
 构建脚本不写死 VTK 安装目录。未传入 `-VtkDir` 时，CMake 只能通过已有缓存或自身的
 package 搜索规则查找 VTK，因此推荐始终显式传入。
+
+VtkSharp 自身的 Debug/Release、CRT 匹配和产物收集规则见
+[VtkSharp 构建说明](docs/build/vtksharp.md)。
 
 ### 示例浏览器
 

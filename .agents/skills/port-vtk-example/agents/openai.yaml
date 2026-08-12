@@ -1,0 +1,4 @@
+interface:
+  display_name: "移植 VTK 示例"
+  short_description: "将 VTK C++ 示例移植到 VtkSharp，并按需补齐最小接口绑定"
+  default_prompt: "使用 $port-vtk-example 移植这个 VTK 示例，并通过 candidate 流程补齐所需绑定。"

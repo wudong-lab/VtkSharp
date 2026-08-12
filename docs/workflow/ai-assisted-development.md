@@ -136,7 +136,21 @@ dotnet test
 - 坐标系和单位转换。
 - 大数据量性能。
 
-## 10. 复盘清单
+## 10. VTK 示例翻译流程
+
+翻译 VTK C++ 示例时使用仓库技能 `port-vtk-example`，总体流程为：
+
+1. 读取原始 C++ 源码和说明，不根据记忆或截图补写调用。
+2. 按现有 `IExample`、`ExampleAttribute` 和目录约定完成最小 C# 翻译。
+3. 构建 ExampleBrowser，通过编译错误收集缺失类型和成员。
+4. 用生成器 CLI 确认成员的声明类并创建最小 candidate。
+5. 审核 `diff-whitelist` 后合并 candidate，重新生成绑定。
+6. 构建 native、managed 和示例项目，运行目标示例。
+7. 执行 `generate-bindings --check`，并记录翻译差异与新增 API。
+
+回调优先使用 VtkSharp 的 managed `AddObserver` 封装，不直接暴露 `vtkCallbackCommand`。不支持的复杂 native 签名应采用明确替代方案，并在 porting notes 中说明。
+
+## 11. 复盘清单
 
 每完成一个较大的迭代，可按以下问题复盘：
 
@@ -149,7 +163,7 @@ dotnet test
 - 构建、测试或手动验证是否充分。
 - 哪些规则应该写回本文档。
 
-## 11. 常用提示词模板
+## 12. 常用提示词模板
 
 ### 局部实现
 
@@ -191,7 +205,6 @@ dotnet test
 找到原因后，给出最小修改方案并说明验证方式。
 ```
 
-## 12. 后续建议
+## 13. 文档维护
 
-建议后续再将本文档中的稳定规则提炼到仓库根目录的 `AGENTS.md`。`AGENTS.md` 应保持短而硬，主要放强约束；本文档可以保留更多流程说明、复盘清单和提示词模板。
-
+仓库根目录的 `AGENTS.md` 只保留代理必须遵守的稳定约束；本文档维护协作流程、复盘清单和提示词模板。可重复的专门工作流放在 `.agents/skills`，避免与普通开发文档重复。

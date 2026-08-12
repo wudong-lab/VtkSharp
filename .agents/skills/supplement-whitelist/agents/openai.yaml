@@ -1,0 +1,4 @@
+interface:
+  display_name: "补充 VTK 白名单"
+  short_description: "从参考 native 导出中提取接口，并补充当前 VtkSharp 支持的绑定"
+  default_prompt: "使用 $supplement-whitelist 扫描参考导出目录，并通过 candidate 流程补充 VtkSharp 绑定。"
