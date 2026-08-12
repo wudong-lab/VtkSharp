@@ -78,6 +78,7 @@ public static class BindingTypeMapper
 
     public static bool IsSupportedType(string type)
         => CSharpPublicScalarTypes.ContainsKey(type) ||
+           IsVtkStringValue(type) ||
            TypeClassifier.IsVtkValueStruct(type) ||
            TypeClassifier.TryGetVtkClassPointerName(type, out _) ||
            IsFixedArrayWithSupportedElement(type) ||
@@ -85,6 +86,9 @@ public static class BindingTypeMapper
 
     public static bool IsStringPointer(string type)
         => type is "const char*" or "char*";
+
+    public static bool IsVtkStringValue(string type)
+        => type == "vtkStdString";
 
     public static bool IsFixedArray(string type)
         => type.EndsWith(']') && type.Contains('[', StringComparison.Ordinal);
@@ -100,6 +104,9 @@ public static class BindingTypeMapper
 
     public static string ToCSharpPublicType(string type)
     {
+        if (IsVtkStringValue(type))
+            return "string";
+
         if (TypeClassifier.IsVtkValueStruct(type))
             return TypeClassifier.GetValueStructCSharpName(type);
 
@@ -122,6 +129,9 @@ public static class BindingTypeMapper
 
     public static string ToCSharpInteropType(string type)
     {
+        if (IsVtkStringValue(type))
+            return "void";
+
         if (TypeClassifier.IsVtkValueStruct(type))
             return "void";
 
@@ -150,6 +160,9 @@ public static class BindingTypeMapper
 
     public static string ToCppType(string type)
     {
+        if (IsVtkStringValue(type))
+            return "void";
+
         if (CppTypes.TryGetValue(type, out var cppType))
             return cppType;
 

@@ -102,6 +102,11 @@ classes:
         parameters:
           - type: int
             name: scheme
+      - name: GetColorSchemeName
+        cppSignature: vtkStdString GetColorSchemeName()
+        return:
+          type: vtkStdString
+        parameters: []
       - name: SetColorSchemeByName
         cppSignature: int SetColorSchemeByName(vtkStdString const& schemeName)
         return:

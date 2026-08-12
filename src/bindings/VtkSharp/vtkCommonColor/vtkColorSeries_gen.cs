@@ -93,6 +93,13 @@ public unsafe partial class vtkColorSeries : vtkObject
         vtkColorSeries_SetColorScheme(this.NativePointer, scheme);
     }
 
+    public new string GetColorSchemeName()
+    {
+        NativeUtf8String __outGetColorSchemeName;
+        vtkColorSeries_GetColorSchemeName(this.NativePointer, out __outGetColorSchemeName);
+        return VtkString.FromOwnedUtf8(ref __outGetColorSchemeName);
+    }
+
     public new int SetColorSchemeByName(string schemeName)
     {
         #if NET8_0_OR_GREATER
@@ -161,6 +168,9 @@ public unsafe partial class vtkColorSeries : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_SetColorScheme(nint self, int scheme);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkColorSeries_GetColorSchemeName(nint self, out NativeUtf8String __outGetColorSchemeName);
 
 #if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]

@@ -75,6 +75,18 @@ public sealed class VtkColorMappingBindingsTests
         AssertColor(colorSeries.GetColor(2), 40, 50, 60);
     }
 
+    [Theory]
+    [InlineData("Custom scheme")]
+    [InlineData("自定义配色 🎨")]
+    public void ColorSeries_RoundTripsColorSchemeName(string name)
+    {
+        using var colorSeries = vtkColorSeries.New();
+
+        colorSeries.SetColorSchemeName(name);
+
+        Assert.Equal(name, colorSeries.GetColorSchemeName());
+    }
+
     private static void AssertColor(VtkColor3ub color, byte r, byte g, byte b)
     {
         Assert.Equal(r, color.R);

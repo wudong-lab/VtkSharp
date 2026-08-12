@@ -43,6 +43,15 @@ public sealed class BindingTypeMapperTests
     }
 
     [Fact]
+    public void MapsVtkStdStringReturn()
+    {
+        Assert.True(BindingTypeMapper.IsSupportedType("vtkStdString"));
+        Assert.Equal("string", BindingTypeMapper.ToCSharpPublicType("vtkStdString"));
+        Assert.Equal("void", BindingTypeMapper.ToCSharpInteropType("vtkStdString"));
+        Assert.Equal("void", BindingTypeMapper.ToCppExportType("vtkStdString"));
+    }
+
+    [Fact]
     public void MapsPrimitivePointersAndFixedArrays()
     {
         Assert.True(BindingTypeMapper.IsSupportedType("double*"));

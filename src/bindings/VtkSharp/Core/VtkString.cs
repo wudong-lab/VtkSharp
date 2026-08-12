@@ -1,10 +1,26 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace VtkSharp;
 
 internal static class VtkString
 {
+    public static unsafe string FromOwnedUtf8(ref NativeUtf8String value)
+    {
+        try
+        {
+            if (value.Data == IntPtr.Zero || value.Length == 0)
+                return string.Empty;
+
+            return Encoding.UTF8.GetString((byte*)value.Data, checked((int)value.Length));
+        }
+        finally
+        {
+            VtkSharpUtf8String_Free(ref value);
+        }
+    }
+
     public static unsafe string FromUtf8Pointer(nint ptr)
     {
         if (ptr == IntPtr.Zero)
@@ -26,4 +42,7 @@ internal static class VtkString
         Encoding.UTF8.GetBytes(s, 0, s.Length, bytes, 0);
         return bytes;
     }
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void VtkSharpUtf8String_Free(ref NativeUtf8String value);
 }

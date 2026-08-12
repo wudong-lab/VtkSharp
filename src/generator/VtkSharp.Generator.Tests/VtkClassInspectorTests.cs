@@ -228,7 +228,7 @@ public sealed class VtkClassInspectorTests
         Assert.True(inspected.Functions.Single(function => function.Name == "SetName").IsSupported);
         Assert.True(inspected.Functions.Single(function => function.Name == "SetValue").IsSupported);
         Assert.True(inspected.Functions.Single(function => function.Name == "GetColor").IsSupported);
-        Assert.False(inspected.Functions.Single(function => function.Name == "GetName").IsSupported);
+        Assert.True(inspected.Functions.Single(function => function.Name == "GetName").IsSupported);
         Assert.False(inspected.Functions.Single(function => function.Name == "GetUnsupportedColor").IsSupported);
     }
 

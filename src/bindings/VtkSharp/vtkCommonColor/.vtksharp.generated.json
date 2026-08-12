@@ -8,11 +8,11 @@
       "header": "vtkColorSeries.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "b28f76c938aadac9e215785e4284e1872e238948b433b6c3eb61398b7762c38b",
+      "inputHash": "9c3a28b75e7c09d85120b18b9165e9a688040d3bec06a17366feb18b38d4169b",
       "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkColorSeries_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkColorSeries_export_gen.cpp",
-      "managedContentHash": "63ff050af826db9172a495340b45396afdfb14b24b755413dc599b6d0824f954",
-      "nativeContentHash": "e210984ab81ff01d56a3ec28996c35a6eb50702bb8034fb3a8bd1006e5d3aab1"
+      "managedContentHash": "03f5f8b736660416579a3784b0d64ca4c74fa7986a14795c428cabba7cffadf5",
+      "nativeContentHash": "191abd11928d4f1649346bc077eb660262cb7043b4ccd151bb297624221dacee"
     },
     {
       "className": "vtkNamedColors",

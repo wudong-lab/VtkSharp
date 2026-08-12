@@ -94,6 +94,47 @@ public sealed class BindingEmitterFunctionTests
     }
 
     [Fact]
+    public void CSharpEmitter_EmitsOwnedUtf8StringReturn()
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkColorSeries", "vtkObject", hasStaticNew: true,
+        [
+            new WhitelistFunction
+            {
+                Name = "GetColorSchemeName",
+                CppSignature = "vtkStdString GetColorSchemeName()",
+                Return = new WhitelistReturn { Type = "vtkStdString" },
+                Parameters = [],
+            },
+        ]);
+
+        Assert.Contains("public new string GetColorSchemeName()", text);
+        Assert.Contains("NativeUtf8String __outGetColorSchemeName;", text);
+        Assert.Contains("vtkColorSeries_GetColorSchemeName(this.NativePointer, out __outGetColorSchemeName);", text);
+        Assert.Contains("return VtkString.FromOwnedUtf8(ref __outGetColorSchemeName);", text);
+        Assert.Contains("private static extern void vtkColorSeries_GetColorSchemeName(nint self, out NativeUtf8String __outGetColorSchemeName);", text);
+    }
+
+    [Fact]
+    public void CppEmitter_EmitsOwnedUtf8StringReturn()
+    {
+        var text = new CppExportEmitter().Emit("vtkColorSeries", [], hasStaticNew: true,
+        [
+            new WhitelistFunction
+            {
+                Name = "GetColorSchemeName",
+                CppSignature = "vtkStdString GetColorSchemeName()",
+                Return = new WhitelistReturn { Type = "vtkStdString" },
+                Parameters = [],
+            },
+        ]);
+
+        Assert.Contains("#include \"vtksharp_string.h\"", text);
+        Assert.Contains("VTKSHARP_API void vtkColorSeries_GetColorSchemeName(vtkColorSeries* self, VtkSharpUtf8String* __outGetColorSchemeName)", text);
+        Assert.Contains("const auto value = self->GetColorSchemeName();", text);
+        Assert.Contains("VtkSharpUtf8String_CopyFrom(__outGetColorSchemeName, value.data(), value.size());", text);
+    }
+
+    [Fact]
     public void CSharpEmitter_ExpandsUnsignedByteValueStructParameter()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkColorSeries", "vtkObject", hasStaticNew: true,
