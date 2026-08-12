@@ -210,12 +210,14 @@ public sealed class VtkClassInspectorTests
         var directory = CreateHeader("""
             class vtkStdString {};
             class vtkColor3ub {};
+            class vtkColor4ub {};
             class vtkThing
             {
             public:
                 void SetName(vtkStdString const& name);
                 vtkStdString GetName();
                 vtkColor3ub GetColor();
+                vtkColor4ub GetUnsupportedColor();
                 void SetValue(int value);
             };
             """);
@@ -225,8 +227,9 @@ public sealed class VtkClassInspectorTests
 
         Assert.True(inspected.Functions.Single(function => function.Name == "SetName").IsSupported);
         Assert.True(inspected.Functions.Single(function => function.Name == "SetValue").IsSupported);
+        Assert.True(inspected.Functions.Single(function => function.Name == "GetColor").IsSupported);
         Assert.False(inspected.Functions.Single(function => function.Name == "GetName").IsSupported);
-        Assert.False(inspected.Functions.Single(function => function.Name == "GetColor").IsSupported);
+        Assert.False(inspected.Functions.Single(function => function.Name == "GetUnsupportedColor").IsSupported);
     }
 
     [Fact]

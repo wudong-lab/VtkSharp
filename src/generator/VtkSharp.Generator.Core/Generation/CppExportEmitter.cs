@@ -47,10 +47,11 @@ public sealed class CppExportEmitter
         if (isValueStructReturn)
         {
             var componentCount = TypeClassifier.GetValueStructComponentCount(function.Return.Type);
+            var elementType = TypeClassifier.GetValueStructCppElementType(function.Return.Type);
             var outParamName = $"__out{function.Name}";
             var paramList = new List<string> { $"{className}* self" };
             paramList.AddRange(function.Parameters.Select(p => $"{BindingTypeMapper.ToCppType(p.Type)} {p.Name}"));
-            paramList.Add($"double* {outParamName}");
+            paramList.Add($"{elementType}* {outParamName}");
 
             var args = string.Join(", ", function.Parameters.Select(p => p.Name));
             sb.AppendLine($"VTKSHARP_API void {exportName}({string.Join(", ", paramList)}) {{");

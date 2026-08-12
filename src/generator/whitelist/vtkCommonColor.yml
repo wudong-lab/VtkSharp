@@ -39,6 +39,20 @@ classes:
         return:
           type: int
         parameters: []
+      - name: GetColor
+        cppSignature: vtkColor3ub GetColor(int index)
+        return:
+          type: vtkColor3ub
+        parameters:
+          - type: int
+            name: index
+      - name: GetColorRepeating
+        cppSignature: vtkColor3ub GetColorRepeating(int index)
+        return:
+          type: vtkColor3ub
+        parameters:
+          - type: int
+            name: index
       - name: GetNumberOfColorSchemes
         cppSignature: int GetNumberOfColorSchemes()
         return:

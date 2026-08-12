@@ -46,4 +46,17 @@ public sealed class VtkColorMappingBindingsTests
         Assert.Equal(1, lookupTable.ReferenceCount);
         Assert.Equal(colorSeries.GetNumberOfColors(), lookupTable.GetNumberOfTableValues());
     }
+
+    [Fact]
+    public void ColorSeries_ReturnsUnsignedByteColors()
+    {
+        using var colorSeries = vtkColorSeries.New();
+
+        var first = colorSeries.GetColor(0);
+        var repeated = colorSeries.GetColorRepeating(colorSeries.GetNumberOfColors());
+
+        Assert.Equal(first.R, repeated.R);
+        Assert.Equal(first.G, repeated.G);
+        Assert.Equal(first.B, repeated.B);
+    }
 }

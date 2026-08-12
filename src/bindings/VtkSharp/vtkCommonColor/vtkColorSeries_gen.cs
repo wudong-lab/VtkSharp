@@ -44,6 +44,20 @@ public unsafe partial class vtkColorSeries : vtkObject
         return vtkColorSeries_GetColorScheme(this.NativePointer);
     }
 
+    public new VtkColor3ub GetColor(int index)
+    {
+        byte* __outGetColor = stackalloc byte[3];
+        vtkColorSeries_GetColor(this.NativePointer, index, __outGetColor);
+        return new VtkColor3ub(__outGetColor[0], __outGetColor[1], __outGetColor[2]);
+    }
+
+    public new VtkColor3ub GetColorRepeating(int index)
+    {
+        byte* __outGetColorRepeating = stackalloc byte[3];
+        vtkColorSeries_GetColorRepeating(this.NativePointer, index, __outGetColorRepeating);
+        return new VtkColor3ub(__outGetColorRepeating[0], __outGetColorRepeating[1], __outGetColorRepeating[2]);
+    }
+
     public new int GetNumberOfColorSchemes()
     {
         return vtkColorSeries_GetNumberOfColorSchemes(this.NativePointer);
@@ -105,6 +119,12 @@ public unsafe partial class vtkColorSeries : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkColorSeries_GetColorScheme(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkColorSeries_GetColor(nint self, int index, byte* __outGetColor);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkColorSeries_GetColorRepeating(nint self, int index, byte* __outGetColorRepeating);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkColorSeries_GetNumberOfColorSchemes(nint self);

@@ -33,6 +33,16 @@ public sealed class BindingTypeMapperTests
     }
 
     [Fact]
+    public void MapsVtkColor3ubValueStruct()
+    {
+        Assert.True(BindingTypeMapper.IsSupportedType("vtkColor3ub"));
+        Assert.Equal("VtkColor3ub", BindingTypeMapper.ToCSharpPublicType("vtkColor3ub"));
+        Assert.Equal("void", BindingTypeMapper.ToCSharpInteropType("vtkColor3ub"));
+        Assert.Equal("unsigned char", TypeClassifier.GetValueStructCppElementType("vtkColor3ub"));
+        Assert.Equal("byte", TypeClassifier.GetValueStructCSharpElementType("vtkColor3ub"));
+    }
+
+    [Fact]
     public void MapsPrimitivePointersAndFixedArrays()
     {
         Assert.True(BindingTypeMapper.IsSupportedType("double*"));

@@ -112,7 +112,8 @@ public sealed class CSharpBindingEmitter
         if (isValueStructReturn)
         {
             var componentCount = TypeClassifier.GetValueStructComponentCount(function.Return.Type);
-            sb.AppendLine($"{indent}double* {outVarName} = stackalloc double[{componentCount}];");
+            var elementType = TypeClassifier.GetValueStructCSharpElementType(function.Return.Type);
+            sb.AppendLine($"{indent}{elementType}* {outVarName} = stackalloc {elementType}[{componentCount}];");
         }
 
         var hasStringParameter = function.Parameters.Any(p => BindingTypeMapper.IsStringPointer(p.Type));
@@ -213,7 +214,8 @@ public sealed class CSharpBindingEmitter
         string extraParam = "";
         if (isValueStructReturn)
         {
-            extraParam = $", double* __out{function.Name}";
+            var elementType = TypeClassifier.GetValueStructCSharpElementType(function.Return.Type);
+            extraParam = $", {elementType}* __out{function.Name}";
         }
 
         if (hasStringParameter)
