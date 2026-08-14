@@ -3,4 +3,12 @@
 #include <vtkPointData.h>
 #include <vtkDataSet.h>
 
+VTKSHARP_API double* vtkDataSet_GetBounds_(vtkDataSet* self) { return self->GetBounds(); }
+
+VTKSHARP_API void vtkDataSet_GetBounds_doubleArray6(vtkDataSet* self, double* bounds) { self->GetBounds(bounds); }
+
 VTKSHARP_API vtkPointData* vtkDataSet_GetPointData(vtkDataSet* self) { return self->GetPointData(); }
+
+VTKSHARP_API double* vtkDataSet_GetScalarRange_(vtkDataSet* self) { return self->GetScalarRange(); }
+
+VTKSHARP_API void vtkDataSet_GetScalarRange_doubleArray2(vtkDataSet* self, double* range) { self->GetScalarRange(range); }

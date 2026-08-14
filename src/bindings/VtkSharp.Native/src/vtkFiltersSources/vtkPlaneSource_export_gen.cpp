@@ -27,3 +27,13 @@ VTKSHARP_API void vtkPlaneSource_SetNormal_doubleArray3(vtkPlaneSource* self, do
 VTKSHARP_API void vtkPlaneSource_SetOrigin_double_double_double(vtkPlaneSource* self, double _arg1, double _arg2, double _arg3) { self->SetOrigin(_arg1, _arg2, _arg3); }
 
 VTKSHARP_API void vtkPlaneSource_SetOrigin_doubleConstArray3(vtkPlaneSource* self, const double* _arg) { self->SetOrigin(_arg); }
+
+VTKSHARP_API void vtkPlaneSource_SetPoint1_double_double_double(vtkPlaneSource* self, double x, double y, double z) { self->SetPoint1(x, y, z); }
+
+VTKSHARP_API void vtkPlaneSource_SetPoint1_doubleArray3(vtkPlaneSource* self, double* pnt) { self->SetPoint1(pnt); }
+
+VTKSHARP_API void vtkPlaneSource_SetPoint2_double_double_double(vtkPlaneSource* self, double x, double y, double z) { self->SetPoint2(x, y, z); }
+
+VTKSHARP_API void vtkPlaneSource_SetPoint2_doubleArray3(vtkPlaneSource* self, double* pnt) { self->SetPoint2(pnt); }
+
+VTKSHARP_API void vtkPlaneSource_SetResolution(vtkPlaneSource* self, int xR, int yR) { self->SetResolution(xR, yR); }

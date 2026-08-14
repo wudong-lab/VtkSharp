@@ -1,0 +1,2 @@
+# USGS DEM files use fixed-width records with significant padding.
+src/examples/ExampleBrowser/Examples/Meshes/FitToHeightMap/Data/*.dem -whitespace

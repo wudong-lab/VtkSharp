@@ -97,6 +97,37 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
         }
     }
 
+    public new void SetPoint1(double x, double y, double z)
+    {
+        vtkPlaneSource_SetPoint1_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetPoint1(Span<double> pnt)
+    {
+        fixed (double* pntPtr = pnt)
+        {
+            vtkPlaneSource_SetPoint1_doubleArray3(this.NativePointer, pntPtr);
+        }
+    }
+
+    public new void SetPoint2(double x, double y, double z)
+    {
+        vtkPlaneSource_SetPoint2_double_double_double(this.NativePointer, x, y, z);
+    }
+
+    public new void SetPoint2(Span<double> pnt)
+    {
+        fixed (double* pntPtr = pnt)
+        {
+            vtkPlaneSource_SetPoint2_doubleArray3(this.NativePointer, pntPtr);
+        }
+    }
+
+    public new void SetResolution(int xR, int yR)
+    {
+        vtkPlaneSource_SetResolution(this.NativePointer, xR, yR);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPlaneSource_New();
@@ -136,5 +167,20 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPlaneSource_SetOrigin_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetPoint1_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetPoint1_doubleArray3(nint self, double* pnt);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetPoint2_double_double_double(nint self, double x, double y, double z);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetPoint2_doubleArray3(nint self, double* pnt);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPlaneSource_SetResolution(nint self, int xR, int yR);
     #endregion
 }

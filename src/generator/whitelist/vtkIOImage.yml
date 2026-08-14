@@ -2,6 +2,16 @@
 
 module: vtkIOImage
 classes:
+  - name: vtkDEMReader
+    header: vtkDEMReader.h
+    functions:
+      - name: SetFileName
+        cppSignature: void SetFileName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
   - name: vtkImageWriter
     header: vtkImageWriter.h
     functions:

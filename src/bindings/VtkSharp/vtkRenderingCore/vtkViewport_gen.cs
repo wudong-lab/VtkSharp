@@ -130,6 +130,19 @@ public unsafe partial class vtkViewport : vtkObject
         }
     }
 
+    public new void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)
+    {
+        vtkViewport_SetViewport_double_double_double_double(this.NativePointer, _arg1, _arg2, _arg3, _arg4);
+    }
+
+    public new void SetViewport(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkViewport_SetViewport_doubleConstArray4(this.NativePointer, _argPtr);
+        }
+    }
+
     public new void ViewToDisplay()
     {
         vtkViewport_ViewToDisplay(this.NativePointer);
@@ -210,6 +223,12 @@ public unsafe partial class vtkViewport : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_SetBackground2_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_SetViewport_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkViewport_SetViewport_doubleConstArray4(nint self, double* _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_ViewToDisplay(nint self);

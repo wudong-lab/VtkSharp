@@ -126,6 +126,16 @@ classes:
         parameters:
           - type: vtkAlgorithmOutput*
             name: algOutput
+  - name: vtkProbeFilter
+    header: vtkProbeFilter.h
+    functions:
+      - name: SetSourceData
+        cppSignature: void SetSourceData(vtkDataObject * source)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: source
   - name: vtkTubeFilter
     header: vtkTubeFilter.h
     functions:

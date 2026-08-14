@@ -422,6 +422,51 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+      - name: SetPoint1
+        cppSignature: void SetPoint1(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetPoint1
+        cppSignature: void SetPoint1(double[3] pnt)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: pnt
+      - name: SetPoint2
+        cppSignature: void SetPoint2(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetPoint2
+        cppSignature: void SetPoint2(double[3] pnt)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: pnt
+      - name: SetResolution
+        cppSignature: void SetResolution(int xR, int yR)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: xR
+          - type: int
+            name: yR
   - name: vtkRegularPolygonSource
     header: vtkRegularPolygonSource.h
     functions:

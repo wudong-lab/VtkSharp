@@ -64,6 +64,9 @@ classes:
   - name: vtkAlgorithmOutput
     header: vtkAlgorithmOutput.h
     functions: []
+  - name: vtkDataSetAlgorithm
+    header: vtkDataSetAlgorithm.h
+    functions: []
   - name: vtkImageAlgorithm
     header: vtkImageAlgorithm.h
     functions:
@@ -97,6 +100,9 @@ classes:
             name: _arg1
   - name: vtkPassInputTypeAlgorithm
     header: vtkPassInputTypeAlgorithm.h
+    functions: []
+  - name: vtkPointSetAlgorithm
+    header: vtkPointSetAlgorithm.h
     functions: []
   - name: vtkPolyDataAlgorithm
     header: vtkPolyDataAlgorithm.h

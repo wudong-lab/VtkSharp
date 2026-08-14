@@ -24,6 +24,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkVertexGlyphFilter_export_gen.cpp",
       "managedContentHash": "50e71603714358f48f9610656af1b8e9a24be99d004e2e8c4dba9b4eb56dd050",
       "nativeContentHash": "becd2ed5c4a7e64c383dcba6882ea7b0d36fe6a6219b0477e37f5fbdb2ef33eb"
+    },
+    {
+      "className": "vtkWarpScalar",
+      "header": "vtkWarpScalar.h",
+      "baseClassName": "vtkPointSetAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "302b7cfb5de7d4b26c30805a83dd422ebf8314b055feee9ef8f153510037a8b7",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkWarpScalar_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkWarpScalar_export_gen.cpp",
+      "managedContentHash": "9b12fd6f5d06c5453a105c36a8daed71b149cadba546c75ec192605bfe101d9e",
+      "nativeContentHash": "2469867f8a060cb12252e52eac55b9aece3c20a9a20238ba5eab2809d76c1277"
     }
   ]
 }

@@ -45,6 +45,10 @@ VTKSHARP_API void vtkViewport_SetBackground2_double_double_double(vtkViewport* s
 
 VTKSHARP_API void vtkViewport_SetBackground2_doubleConstArray3(vtkViewport* self, const double* _arg) { self->SetBackground2(_arg); }
 
+VTKSHARP_API void vtkViewport_SetViewport_double_double_double_double(vtkViewport* self, double _arg1, double _arg2, double _arg3, double _arg4) { self->SetViewport(_arg1, _arg2, _arg3, _arg4); }
+
+VTKSHARP_API void vtkViewport_SetViewport_doubleConstArray4(vtkViewport* self, const double* _arg) { self->SetViewport(_arg); }
+
 VTKSHARP_API void vtkViewport_ViewToDisplay(vtkViewport* self) { self->ViewToDisplay(); }
 
 VTKSHARP_API void vtkViewport_ViewToWorld(vtkViewport* self) { self->ViewToWorld(); }

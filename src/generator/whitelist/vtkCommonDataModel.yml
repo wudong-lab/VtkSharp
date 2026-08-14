@@ -118,11 +118,35 @@ classes:
   - name: vtkDataSet
     header: vtkDataSet.h
     functions:
+      - name: GetBounds
+        cppSignature: double * GetBounds()
+        return:
+          type: double*
+        parameters: []
+      - name: GetBounds
+        cppSignature: void GetBounds(double[6] bounds)
+        return:
+          type: void
+        parameters:
+          - type: double[6]
+            name: bounds
       - name: GetPointData
         cppSignature: vtkPointData * GetPointData()
         return:
           type: vtkPointData*
         parameters: []
+      - name: GetScalarRange
+        cppSignature: double * GetScalarRange()
+        return:
+          type: double*
+        parameters: []
+      - name: GetScalarRange
+        cppSignature: void GetScalarRange(double[2] range)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: range
   - name: vtkDataSetAttributes
     header: vtkDataSetAttributes.h
     functions:

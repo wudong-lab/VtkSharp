@@ -18,6 +18,40 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
         return target;
     }
 
+    public new void ScalarVisibilityOn()
+    {
+        vtkMapper_ScalarVisibilityOn(this.NativePointer);
+    }
+
+    public new void SetLookupTable(vtkScalarsToColors lut)
+    {
+        vtkMapper_SetLookupTable(this.NativePointer, lut.NativePointer);
+    }
+
+    public new void SetScalarRange(double _arg1, double _arg2)
+    {
+        vtkMapper_SetScalarRange_double_double(this.NativePointer, _arg1, _arg2);
+    }
+
+    public new void SetScalarRange(ReadOnlySpan<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkMapper_SetScalarRange_doubleConstArray2(this.NativePointer, _argPtr);
+        }
+    }
+
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_ScalarVisibilityOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetLookupTable(nint self, nint lut);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarRange_double_double(nint self, double _arg1, double _arg2);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarRange_doubleConstArray2(nint self, double* _arg);
     #endregion
 }

@@ -4,6 +4,17 @@
   "module": "vtkIOImage",
   "classes": [
     {
+      "className": "vtkDEMReader",
+      "header": "vtkDEMReader.h",
+      "baseClassName": "vtkImageAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "7a65294122a906bd27c478cde87f2430b2a601c57197c5b5d1c14088073afb16",
+      "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkDEMReader_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkDEMReader_export_gen.cpp",
+      "managedContentHash": "829486acebf25f861b5991b49c343adad78a903f6b2a7725fab21c8c785bfa0e",
+      "nativeContentHash": "656bd9686b22f7450a4f4726f003c12f30e980b8fef452b6eadb5c9d86fefc4c"
+    },
+    {
       "className": "vtkImageWriter",
       "header": "vtkImageWriter.h",
       "baseClassName": "vtkImageAlgorithm",

@@ -1146,7 +1146,35 @@ classes:
     functions: []
   - name: vtkMapper
     header: vtkMapper.h
-    functions: []
+    functions:
+      - name: ScalarVisibilityOn
+        cppSignature: void ScalarVisibilityOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetLookupTable
+        cppSignature: void SetLookupTable(vtkScalarsToColors * lut)
+        return:
+          type: void
+        parameters:
+          - type: vtkScalarsToColors*
+            name: lut
+      - name: SetScalarRange
+        cppSignature: void SetScalarRange(double _arg1, double _arg2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+      - name: SetScalarRange
+        cppSignature: void SetScalarRange(double const[2] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[2]
+            name: _arg
   - name: vtkMapper2D
     header: vtkMapper2D.h
     functions: []
@@ -2819,6 +2847,26 @@ classes:
           type: void
         parameters:
           - type: const double[3]
+            name: _arg
+      - name: SetViewport
+        cppSignature: void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+          - type: double
+            name: _arg4
+      - name: SetViewport
+        cppSignature: void SetViewport(double const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[4]
             name: _arg
       - name: ViewToDisplay
         cppSignature: void ViewToDisplay()

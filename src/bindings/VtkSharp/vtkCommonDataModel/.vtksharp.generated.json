@@ -63,11 +63,11 @@
       "header": "vtkDataSet.h",
       "baseClassName": "vtkDataObject",
       "hasStaticNew": false,
-      "inputHash": "1b3c75779d8500b1e4cebc2c4b9abe456597a3dc69ac27355095f15c1712ee6f",
+      "inputHash": "6b7e0a58671f5cfd8a73af5dbb06d46d1b9776d3f9f840627e038688d55d1536",
       "managedPath": "bindings\\VtkSharp\\vtkCommonDataModel\\vtkDataSet_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonDataModel\\vtkDataSet_export_gen.cpp",
-      "managedContentHash": "58c0c5d10ddc9bc14f402f00d908b78efe87b8ad0a0cd58b804fa3d4e519adab",
-      "nativeContentHash": "ff47c969cc204dd39810ded712fd9ba82791cf09944afca0ee741a110ea46b79"
+      "managedContentHash": "fb762ca3112a833fb968967d176bbc4aace736952bf1f7611ebdb4ccd3ea2629",
+      "nativeContentHash": "baa67e5457f8e31ae56d9e58be43c79caefe01f9a97a0a2695fb91f17eca404f"
     },
     {
       "className": "vtkDataSetAttributes",

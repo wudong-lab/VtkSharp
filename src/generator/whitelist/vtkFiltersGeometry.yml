@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkFiltersGeometry
+classes:
+  - name: vtkImageDataGeometryFilter
+    header: vtkImageDataGeometryFilter.h
+    functions:
+      - name: SetOutputTriangles
+        cppSignature: void SetOutputTriangles(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg

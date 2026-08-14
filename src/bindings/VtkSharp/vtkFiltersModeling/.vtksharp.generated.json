@@ -4,6 +4,17 @@
   "module": "vtkFiltersModeling",
   "classes": [
     {
+      "className": "vtkFitToHeightMapFilter",
+      "header": "vtkFitToHeightMapFilter.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "911ff441dc195d1a1fe59eb2e4edc9215da0c4706ea9547a0dbcc51d1197f00e",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkFitToHeightMapFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkFitToHeightMapFilter_export_gen.cpp",
+      "managedContentHash": "7f677cc54ae0e4c14f5364adcbc282dc897a73bca386c03479baf59c5c33efaa",
+      "nativeContentHash": "aad7e5578911388014157a6851eebcf7a6ed7c0cd9a1a87171077488d25ef1b7"
+    },
+    {
       "className": "vtkLinearExtrusionFilter",
       "header": "vtkLinearExtrusionFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",

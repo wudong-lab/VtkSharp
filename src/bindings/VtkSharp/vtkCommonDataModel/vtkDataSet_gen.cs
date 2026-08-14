@@ -18,13 +18,51 @@ public unsafe partial class vtkDataSet : vtkDataObject
         return target;
     }
 
+    internal new double* GetBounds_Internal()
+    {
+        return vtkDataSet_GetBounds_(this.NativePointer);
+    }
+
+    public new void GetBounds(Span<double> bounds)
+    {
+        fixed (double* boundsPtr = bounds)
+        {
+            vtkDataSet_GetBounds_doubleArray6(this.NativePointer, boundsPtr);
+        }
+    }
+
     public new vtkPointData GetPointData()
     {
         return vtkPointData.FromBorrowedPointer(vtkDataSet_GetPointData(this.NativePointer));
     }
 
+    internal new double* GetScalarRange_Internal()
+    {
+        return vtkDataSet_GetScalarRange_(this.NativePointer);
+    }
+
+    public new void GetScalarRange(Span<double> range)
+    {
+        fixed (double* rangePtr = range)
+        {
+            vtkDataSet_GetScalarRange_doubleArray2(this.NativePointer, rangePtr);
+        }
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkDataSet_GetBounds_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataSet_GetBounds_doubleArray6(nint self, double* bounds);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataSet_GetPointData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkDataSet_GetScalarRange_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataSet_GetScalarRange_doubleArray2(nint self, double* range);
     #endregion
 }

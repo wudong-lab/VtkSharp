@@ -1,0 +1,187 @@
+# yaml-language-server: $schema=../../../../../generator/schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: FitToHeightMap
+  original: "https://examples.vtk.org/site/Cxx/Meshes/FitToHeightMap/"
+
+requirements:
+  - module: vtkCommonDataModel
+    class: vtkDataSet
+    header: vtkDataSet.h
+    functions:
+      - name: GetBounds
+        cppSignature: "double * GetBounds()"
+        return: { type: "double*" }
+        parameters: []
+      - name: GetBounds
+        cppSignature: "void GetBounds(double[6] bounds)"
+        return: { type: void }
+        parameters:
+          - { type: "double[6]", name: bounds }
+      - name: GetScalarRange
+        cppSignature: "void GetScalarRange(double[2] range)"
+        return: { type: void }
+        parameters:
+          - { type: "double[2]", name: range }
+      - name: GetScalarRange
+        cppSignature: "double * GetScalarRange()"
+        return: { type: "double*" }
+        parameters: []
+
+  - module: vtkFiltersCore
+    class: vtkProbeFilter
+    header: vtkProbeFilter.h
+    functions:
+      - name: SetSourceData
+        cppSignature: "void SetSourceData(vtkDataObject * source)"
+        return: { type: void }
+        parameters:
+          - { type: "vtkDataObject*", name: source }
+
+  - module: vtkFiltersGeneral
+    class: vtkWarpScalar
+    header: vtkWarpScalar.h
+    functions:
+      - name: SetScaleFactor
+        cppSignature: "void SetScaleFactor(double _arg)"
+        return: { type: void }
+        parameters:
+          - { type: double, name: _arg }
+      - name: UseNormalOn
+        cppSignature: "void UseNormalOn()"
+        return: { type: void }
+        parameters: []
+      - name: SetNormal
+        cppSignature: "void SetNormal(double _arg1, double _arg2, double _arg3)"
+        return: { type: void }
+        parameters:
+          - { type: double, name: _arg1 }
+          - { type: double, name: _arg2 }
+          - { type: double, name: _arg3 }
+      - name: SetNormal
+        cppSignature: "void SetNormal(double const[3] _arg)"
+        return: { type: void }
+        parameters:
+          - { type: "const double[3]", name: _arg }
+
+  - module: vtkFiltersGeometry
+    class: vtkImageDataGeometryFilter
+    header: vtkImageDataGeometryFilter.h
+    functions:
+      - name: SetOutputTriangles
+        cppSignature: "void SetOutputTriangles(vtkTypeBool _arg)"
+        return: { type: void }
+        parameters:
+          - { type: vtkTypeBool, name: _arg }
+
+  - module: vtkFiltersModeling
+    class: vtkFitToHeightMapFilter
+    header: vtkFitToHeightMapFilter.h
+    functions:
+      - name: SetHeightMapConnection
+        cppSignature: "void SetHeightMapConnection(vtkAlgorithmOutput * algOutput)"
+        return: { type: void }
+        parameters:
+          - { type: "vtkAlgorithmOutput*", name: algOutput }
+      - name: SetFittingStrategyToPointProjection
+        cppSignature: "void SetFittingStrategyToPointProjection()"
+        return: { type: void }
+        parameters: []
+      - name: SetFittingStrategyToCellAverageHeight
+        cppSignature: "void SetFittingStrategyToCellAverageHeight()"
+        return: { type: void }
+        parameters: []
+      - name: UseHeightMapOffsetOn
+        cppSignature: "void UseHeightMapOffsetOn()"
+        return: { type: void }
+        parameters: []
+
+  - module: vtkFiltersSources
+    class: vtkPlaneSource
+    header: vtkPlaneSource.h
+    functions:
+      - name: SetPoint1
+        cppSignature: "void SetPoint1(double _arg1, double _arg2, double _arg3)"
+        return: { type: void }
+        parameters:
+          - { type: double, name: _arg1 }
+          - { type: double, name: _arg2 }
+          - { type: double, name: _arg3 }
+      - name: SetPoint1
+        cppSignature: "void SetPoint1(double[3] pnt)"
+        return: { type: void }
+        parameters:
+          - { type: "double[3]", name: pnt }
+      - name: SetPoint2
+        cppSignature: "void SetPoint2(double _arg1, double _arg2, double _arg3)"
+        return: { type: void }
+        parameters:
+          - { type: double, name: _arg1 }
+          - { type: double, name: _arg2 }
+          - { type: double, name: _arg3 }
+      - name: SetPoint2
+        cppSignature: "void SetPoint2(double[3] pnt)"
+        return: { type: void }
+        parameters:
+          - { type: "double[3]", name: pnt }
+      - name: SetResolution
+        cppSignature: "void SetResolution(int xR, int yR)"
+        return: { type: void }
+        parameters:
+          - { type: int, name: xR }
+          - { type: int, name: yR }
+
+  - module: vtkIOImage
+    class: vtkDEMReader
+    header: vtkDEMReader.h
+    functions:
+      - name: SetFileName
+        cppSignature: "void SetFileName(char const * _arg)"
+        return: { type: void }
+        parameters:
+          - { type: "const char*", name: _arg }
+
+  - module: vtkRenderingCore
+    class: vtkMapper
+    header: vtkMapper.h
+    functions:
+      - name: SetLookupTable
+        cppSignature: "void SetLookupTable(vtkScalarsToColors * lut)"
+        return: { type: void }
+        parameters:
+          - { type: "vtkScalarsToColors*", name: lut }
+      - name: ScalarVisibilityOn
+        cppSignature: "void ScalarVisibilityOn()"
+        return: { type: void }
+        parameters: []
+      - name: SetScalarRange
+        cppSignature: "void SetScalarRange(double _arg1, double _arg2)"
+        return: { type: void }
+        parameters:
+          - { type: double, name: _arg1 }
+          - { type: double, name: _arg2 }
+      - name: SetScalarRange
+        cppSignature: "void SetScalarRange(double const[2] _arg)"
+        return: { type: void }
+        parameters:
+          - { type: "const double[2]", name: _arg }
+
+  - module: vtkRenderingCore
+    class: vtkViewport
+    header: vtkViewport.h
+    functions:
+      - name: SetViewport
+        cppSignature: "void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)"
+        return: { type: void }
+        parameters:
+          - { type: double, name: _arg1 }
+          - { type: double, name: _arg2 }
+          - { type: double, name: _arg3 }
+          - { type: double, name: _arg4 }
+      - name: SetViewport
+        cppSignature: "void SetViewport(double const[4] _arg)"
+        return: { type: void }
+        parameters:
+          - { type: "const double[4]", name: _arg }

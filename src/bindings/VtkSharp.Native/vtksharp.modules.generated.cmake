@@ -9,6 +9,7 @@ set(VTKSHARP_VTK_COMPONENTS
   CommonTransforms
   FiltersCore
   FiltersGeneral
+  FiltersGeometry
   FiltersModeling
   FiltersSources
   IOImage
@@ -34,6 +35,7 @@ set(VTKSHARP_VTK_TARGETS
   VTK::CommonTransforms
   VTK::FiltersCore
   VTK::FiltersGeneral
+  VTK::FiltersGeometry
   VTK::FiltersModeling
   VTK::FiltersSources
   VTK::IOImage

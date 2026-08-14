@@ -70,6 +70,17 @@
       "nativeContentHash": "580fc8be1ce8fe979af6218b36dbd61c914073b3ad92e70922be453d1fd5e72a"
     },
     {
+      "className": "vtkProbeFilter",
+      "header": "vtkProbeFilter.h",
+      "baseClassName": "vtkDataSetAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "6f5b9934c1896135b9a4ed65f4cf53b76e1d8ca3e778203163582c5af4f08ec5",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkProbeFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkProbeFilter_export_gen.cpp",
+      "managedContentHash": "015787e59f5af8ba9ff205183171e30243c5a81a485a9308c99873555adf34e7",
+      "nativeContentHash": "6ff8ea914b5b095ec01ed4e4f3c6109d929c2988581826a020e6f8b869c98af2"
+    },
+    {
       "className": "vtkTubeFilter",
       "header": "vtkTubeFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",

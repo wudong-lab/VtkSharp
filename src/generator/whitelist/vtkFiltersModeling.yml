@@ -2,6 +2,31 @@
 
 module: vtkFiltersModeling
 classes:
+  - name: vtkFitToHeightMapFilter
+    header: vtkFitToHeightMapFilter.h
+    functions:
+      - name: SetFittingStrategyToCellAverageHeight
+        cppSignature: void SetFittingStrategyToCellAverageHeight()
+        return:
+          type: void
+        parameters: []
+      - name: SetFittingStrategyToPointProjection
+        cppSignature: void SetFittingStrategyToPointProjection()
+        return:
+          type: void
+        parameters: []
+      - name: SetHeightMapConnection
+        cppSignature: void SetHeightMapConnection(vtkAlgorithmOutput * algOutput)
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: algOutput
+      - name: UseHeightMapOffsetOn
+        cppSignature: void UseHeightMapOffsetOn()
+        return:
+          type: void
+        parameters: []
   - name: vtkLinearExtrusionFilter
     header: vtkLinearExtrusionFilter.h
     functions:

@@ -26,6 +26,17 @@
       "nativeContentHash": "9d2902015023240d0ecb70ae99e85dda9d8c3daa2fd1ae8f1960ff999ec72778"
     },
     {
+      "className": "vtkDataSetAlgorithm",
+      "header": "vtkDataSetAlgorithm.h",
+      "baseClassName": "vtkAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "afcb1a2dac637f9ecce9be0069c8d8e4a508ab29c8df11af2a4b9cd31b36eaea",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonExecutionModel\\vtkDataSetAlgorithm_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonExecutionModel\\vtkDataSetAlgorithm_export_gen.cpp",
+      "managedContentHash": "60c1ae3f7bcd56bf6ab798e9eec045cf55a1d578c63a811c0ebd548fa7344d96",
+      "nativeContentHash": "902402d2e217a175bb764296f7b0c5ddb230962dd374e390e5317d9b947e9276"
+    },
+    {
       "className": "vtkImageAlgorithm",
       "header": "vtkImageAlgorithm.h",
       "baseClassName": "vtkAlgorithm",
@@ -46,6 +57,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonExecutionModel\\vtkPassInputTypeAlgorithm_export_gen.cpp",
       "managedContentHash": "9ef705f2b96c690703f9a83eb46189c7f79506eafc93ef137a750d2913e1f458",
       "nativeContentHash": "fe2e720d70be0d2c87aa9a5728c6ad58da7dbda42c460b07e68c37dc2fae93bd"
+    },
+    {
+      "className": "vtkPointSetAlgorithm",
+      "header": "vtkPointSetAlgorithm.h",
+      "baseClassName": "vtkAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "e7c0823b628feeb65eb8c47f4ba3a615d1982ad0f42f6574ed7e8e9daabd0823",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonExecutionModel\\vtkPointSetAlgorithm_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonExecutionModel\\vtkPointSetAlgorithm_export_gen.cpp",
+      "managedContentHash": "6b9192c4a43c7d9fce79852545e9543d969fc0cd190f50c294c09887e9db8a94",
+      "nativeContentHash": "666c7983f89b61fa8f4ad138b5e6d93f907a29eb92618be0103a8eccc1a955a6"
     },
     {
       "className": "vtkPolyDataAlgorithm",

@@ -15,3 +15,36 @@ classes:
   - name: vtkVertexGlyphFilter
     header: vtkVertexGlyphFilter.h
     functions: []
+  - name: vtkWarpScalar
+    header: vtkWarpScalar.h
+    functions:
+      - name: SetNormal
+        cppSignature: void SetNormal(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetNormal
+        cppSignature: void SetNormal(double const[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: _arg
+      - name: SetScaleFactor
+        cppSignature: void SetScaleFactor(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: UseNormalOn
+        cppSignature: void UseNormalOn()
+        return:
+          type: void
+        parameters: []
