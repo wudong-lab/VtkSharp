@@ -91,6 +91,120 @@ public async Task LoadDataAsync()
 
 原因是 `async void` 无法被调用方 `await`，异常也更难管理。
 
+### 3.1 什么时候使用 async Task，什么时候使用 async void
+
+只要调用方需要知道操作何时完成、处理异常、等待结果、组合多个异步操作，方法就应该返回 `Task`：
+
+```csharp
+public async Task OpenAsync()
+{
+    await LoadModelAsync();
+    await InitializeRendererAsync();
+}
+```
+
+调用方可以正常等待并处理异常：
+
+```csharp
+try
+{
+    await OpenAsync();
+}
+catch (IOException ex)
+{
+    logger.LogError(ex, "Open failed.");
+}
+```
+
+`async Task` 应作为普通异步业务方法、服务方法、ViewModel 方法和可复用 API 的默认选择。有返回值时使用 `async Task<T>`。
+
+`async void` 只用于调用约定必须返回 `void` 的事件处理器，例如 WPF 按钮事件：
+
+```csharp
+private async void OpenButton_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        await OpenAsync();
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Open failed.");
+    }
+}
+```
+
+这里事件处理器只是异步调用链的入口，实际业务逻辑仍放在返回 `Task` 的 `OpenAsync` 中。这样业务方法可以被等待、测试和复用，事件入口也能集中处理异常。
+
+可按下面的规则判断：
+
+- 普通方法：使用 `Task` / `Task<T>`。
+- WPF、WinForms 等框架要求返回 `void` 的事件处理器：可以使用 `async void`。
+- 自己定义的回调或委托：如果可以控制签名，优先设计为返回 `Task`，不要因为它是回调就直接使用 `async void`。
+
+### 3.2 同步调用 async void 的问题
+
+假设有下面的方法：
+
+```csharp
+public async void Open()
+{
+    Console.WriteLine("Start");
+    await LoadModelAsync();
+    Console.WriteLine("Completed");
+}
+```
+
+像普通同步方法一样调用它：
+
+```csharp
+Open();
+Console.WriteLine("Continue");
+```
+
+这并不会让 `Open` 同步执行完成。`Open()` 只会同步执行到第一个尚未完成的 `await`，然后立即返回；异步操作完成后，其余代码再继续执行。因此常见输出顺序是：
+
+```text
+Start
+Continue
+Completed
+```
+
+这种调用方式有以下问题：
+
+- **无法等待完成**：方法没有返回 `Task`，调用方不能使用 `await`、`.Wait()` 或 `.Result`。后续代码可能在模型尚未打开时就开始执行，形成时序错误和竞态条件。
+- **无法观察执行状态**：调用方不知道操作是正在运行、已经成功还是已经失败，也不能把它传给 `Task.WhenAll`、超时控制等异步组合 API。
+- **异常无法由调用方正常捕获**：`async void` 方法体内抛出的异常不会通过返回值交给调用者。调用处外层的 `try` / `catch` 通常捕获不到它；异常通常会被发送到调用时捕获的 `SynchronizationContext`，在 WPF 中可能成为 UI 线程未处理异常并导致程序退出。
+- **调用方生命周期可能提前结束**：测试、控制台程序、窗口关闭流程或资源释放代码可能先执行完，使异步操作尚未完成就失去所需上下文或资源。
+- **容易发生重复进入**：UI 或业务代码无法可靠判断上一次调用是否完成，可能再次调用 `Open()`，导致重复加载、状态覆盖或同时访问同一资源。
+
+例如，下面的 `try` / `catch` 不能捕获 `await` 之后发生的异常：
+
+```csharp
+try
+{
+    Open();
+}
+catch (Exception ex)
+{
+    // 通常捕获不到 async void 方法体内抛出的异常，
+    // 包括 await 之前和 await 之后的异常。
+}
+```
+
+正确做法是让方法返回 `Task`，并让异步调用沿调用链向上传播：
+
+```csharp
+public async Task OpenAsync()
+{
+    await LoadModelAsync();
+}
+
+await OpenAsync();
+```
+
+不要试图用 `Thread.Sleep`、循环轮询或其他阻塞方式等待 `async void`。这既无法可靠获知完成状态，在 UI 线程上还可能阻塞异步 continuation 返回 UI 线程，造成卡死。根本解决办法是把方法签名改为 `Task`，然后使用 `await`。
+
 ## 4. await 的执行模型
 
 当执行到：
