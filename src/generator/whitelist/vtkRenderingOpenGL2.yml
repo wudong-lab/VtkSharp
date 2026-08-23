@@ -2,6 +2,19 @@
 
 module: vtkRenderingOpenGL2
 classes:
+  - name: vtkCameraPass
+    header: vtkCameraPass.h
+    functions:
+      - name: SetDelegatePass
+        cppSignature: void SetDelegatePass(vtkRenderPass * delegatePass)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderPass*
+            name: delegatePass
+  - name: vtkOpenGLRenderPass
+    header: vtkOpenGLRenderPass.h
+    functions: []
   - name: vtkOpenGLRenderWindow
     header: vtkOpenGLRenderWindow.h
     functions:
@@ -10,6 +23,68 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkRenderPassCollection
+    header: vtkRenderPassCollection.h
+    functions:
+      - name: AddItem
+        cppSignature: void AddItem(vtkRenderPass * pass)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderPass*
+            name: pass
+  - name: vtkSequencePass
+    header: vtkSequencePass.h
+    functions:
+      - name: SetPasses
+        cppSignature: void SetPasses(vtkRenderPassCollection * passes)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderPassCollection*
+            name: passes
+  - name: vtkValuePass
+    header: vtkValuePass.h
+    functions:
+      - name: GetFloatImageDataArray
+        cppSignature: vtkFloatArray * GetFloatImageDataArray(vtkRenderer * ren)
+        return:
+          type: vtkFloatArray*
+        parameters:
+          - type: vtkRenderer*
+            name: ren
+      - name: ReleaseGraphicsResources
+        cppSignature: void ReleaseGraphicsResources(vtkWindow * win)
+        return:
+          type: void
+        parameters:
+          - type: vtkWindow*
+            name: win
+      - name: SetInputArrayToProcess
+        cppSignature: void SetInputArrayToProcess(int fieldAssociation, char const * name)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: fieldAssociation
+          - type: const char*
+            name: name
+      - name: SetInputArrayToProcess
+        cppSignature: void SetInputArrayToProcess(int fieldAssociation, int fieldId)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: fieldAssociation
+          - type: int
+            name: fieldId
+      - name: SetInputComponentToProcess
+        cppSignature: void SetInputComponentToProcess(int component)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: component
   - name: vtkWin32OpenGLRenderWindow
     header: vtkWin32OpenGLRenderWindow.h
     functions:

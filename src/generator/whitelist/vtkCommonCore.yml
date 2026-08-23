@@ -37,6 +37,13 @@ classes:
   - name: vtkDataArray
     header: vtkDataArray.h
     functions:
+      - name: GetTuple1
+        cppSignature: double GetTuple1(vtkIdType tupleIdx)
+        return:
+          type: double
+        parameters:
+          - type: vtkIdType
+            name: tupleIdx
       - name: InsertNextTuple1
         cppSignature: void InsertNextTuple1(double value)
         return:
@@ -122,6 +129,9 @@ classes:
     functions: []
   - name: vtkEventData
     header: vtkEventData.h
+    functions: []
+  - name: vtkFloatArray
+    header: vtkFloatArray.h
     functions: []
   - name: vtkIdList
     header: vtkIdList.h

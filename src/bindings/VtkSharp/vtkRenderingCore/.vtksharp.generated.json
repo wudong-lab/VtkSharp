@@ -334,6 +334,17 @@
       "nativeContentHash": "6a6a63fc9b18e9dbcf2cd3b074eec45f6ba2ca88cdec07446b15f8fb50501420"
     },
     {
+      "className": "vtkRenderPass",
+      "header": "vtkRenderPass.h",
+      "baseClassName": "vtkObject",
+      "hasStaticNew": false,
+      "inputHash": "e853c43e245fd8bfbd0ca85d823ccbf3c14ae1d3a79401f0b55e36752e4ab6eb",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkRenderPass_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkRenderPass_export_gen.cpp",
+      "managedContentHash": "990a163cf7a9c1d53863d28453a902e8321fa90d4e8b6d4f7ff709c4a182c6e3",
+      "nativeContentHash": "41ebc5801ac4d8e3452e29e22cf8b68e69c07213b5c60e20a6ac4e2cc90d5b30"
+    },
+    {
       "className": "vtkRenderWindow",
       "header": "vtkRenderWindow.h",
       "baseClassName": "vtkWindow",
@@ -360,11 +371,11 @@
       "header": "vtkRenderer.h",
       "baseClassName": "vtkViewport",
       "hasStaticNew": true,
-      "inputHash": "5ce851a04e8d1c859e2c9a51e266509a24650ba4591537ee017b171b7537fd46",
+      "inputHash": "a33d914a095a3fbb513a162f6f65c6026d560648d684361e21eabf13bc414834",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkRenderer_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkRenderer_export_gen.cpp",
-      "managedContentHash": "5c893a78f5396f46a79f15eb47ef8db80ecf8ea9ad479713ffe0ed15a5098099",
-      "nativeContentHash": "de52fff17753f6eb2000a7026c7bbe0117db52d38cd6116211586a35058ae0d2"
+      "managedContentHash": "889a2f1dd877bca560f4a299f2bac8b67dc493b72cbb2f240cfc6322a52fdfaf",
+      "nativeContentHash": "6929dd9e522499d961c2c4182ce15b12cd2c1c366ab21dc8e559bdfcdd23b9e2"
     },
     {
       "className": "vtkSelectVisiblePoints",

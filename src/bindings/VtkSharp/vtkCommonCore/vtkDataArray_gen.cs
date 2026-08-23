@@ -18,6 +18,11 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
         return target;
     }
 
+    public new double GetTuple1(long tupleIdx)
+    {
+        return vtkDataArray_GetTuple1(this.NativePointer, tupleIdx);
+    }
+
     public new void InsertNextTuple1(double value)
     {
         vtkDataArray_InsertNextTuple1(this.NativePointer, value);
@@ -49,6 +54,9 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
     }
 
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkDataArray_GetTuple1(nint self, long tupleIdx);
+
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple1(nint self, double value);
 

@@ -2,6 +2,8 @@
 #include "vtksharp_api.h"
 #include <vtkDataArray.h>
 
+VTKSHARP_API double vtkDataArray_GetTuple1(vtkDataArray* self, vtkIdType tupleIdx) { return self->GetTuple1(tupleIdx); }
+
 VTKSHARP_API void vtkDataArray_InsertNextTuple1(vtkDataArray* self, double value) { self->InsertNextTuple1(value); }
 
 VTKSHARP_API void vtkDataArray_InsertNextTuple2(vtkDataArray* self, double val0, double val1) { self->InsertNextTuple2(val0, val1); }

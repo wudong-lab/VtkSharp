@@ -253,6 +253,11 @@ public unsafe partial class vtkRenderer : vtkViewport
         }
     }
 
+    public new void SetPass(vtkRenderPass p)
+    {
+        vtkRenderer_SetPass(this.NativePointer, p.NativePointer);
+    }
+
     public new void SetRenderWindow(vtkRenderWindow _arg1)
     {
         vtkRenderer_SetRenderWindow(this.NativePointer, _arg1.NativePointer);
@@ -457,6 +462,9 @@ public unsafe partial class vtkRenderer : vtkViewport
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_SetAmbient_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_SetPass(nint self, nint p);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_SetRenderWindow(nint self, nint _arg1);

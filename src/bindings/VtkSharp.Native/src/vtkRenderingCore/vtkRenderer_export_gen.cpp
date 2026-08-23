@@ -6,6 +6,7 @@
 #include <vtkCuller.h>
 #include <vtkLight.h>
 #include <vtkProp.h>
+#include <vtkRenderPass.h>
 #include <vtkRenderWindow.h>
 #include <vtkWindow.h>
 #include <vtkRenderer.h>
@@ -101,6 +102,8 @@ VTKSHARP_API void vtkRenderer_SetActiveCamera(vtkRenderer* self, vtkCamera* _arg
 VTKSHARP_API void vtkRenderer_SetAmbient_double_double_double(vtkRenderer* self, double _arg1, double _arg2, double _arg3) { self->SetAmbient(_arg1, _arg2, _arg3); }
 
 VTKSHARP_API void vtkRenderer_SetAmbient_doubleConstArray3(vtkRenderer* self, const double* _arg) { self->SetAmbient(_arg); }
+
+VTKSHARP_API void vtkRenderer_SetPass(vtkRenderer* self, vtkRenderPass* p) { self->SetPass(p); }
 
 VTKSHARP_API void vtkRenderer_SetRenderWindow(vtkRenderer* self, vtkRenderWindow* _arg1) { self->SetRenderWindow(_arg1); }
 

@@ -1746,6 +1746,9 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+  - name: vtkRenderPass
+    header: vtkRenderPass.h
+    functions: []
   - name: vtkRenderWindow
     header: vtkRenderWindow.h
     functions:
@@ -2384,6 +2387,13 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+      - name: SetPass
+        cppSignature: void SetPass(vtkRenderPass * p)
+        return:
+          type: void
+        parameters:
+          - type: vtkRenderPass*
+            name: p
       - name: SetRenderWindow
         cppSignature: void SetRenderWindow(vtkRenderWindow * _arg1)
         return:
