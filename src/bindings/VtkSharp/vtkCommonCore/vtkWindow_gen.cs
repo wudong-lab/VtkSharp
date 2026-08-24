@@ -18,6 +18,11 @@ public unsafe partial class vtkWindow : vtkObject
         return target;
     }
 
+    public new int GetCurrentCursor()
+    {
+        return vtkWindow_GetCurrentCursor(this.NativePointer);
+    }
+
     public new string GetWindowName()
     {
         return VtkString.FromUtf8Pointer(vtkWindow_GetWindowName(this.NativePointer));
@@ -51,6 +56,11 @@ public unsafe partial class vtkWindow : vtkObject
         }
     }
 
+    public new void SetCurrentCursor(int _arg1)
+    {
+        vtkWindow_SetCurrentCursor(this.NativePointer, _arg1);
+    }
+
     public new void SetWindowName(string _arg)
     {
         #if NET8_0_OR_GREATER
@@ -72,6 +82,9 @@ public unsafe partial class vtkWindow : vtkObject
 
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkWindow_GetCurrentCursor(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWindow_GetWindowName(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
@@ -88,6 +101,9 @@ public unsafe partial class vtkWindow : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWindow_SetSize_intArray2(nint self, int* a);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_SetCurrentCursor(nint self, int _arg1);
 
 #if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]

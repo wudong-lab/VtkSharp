@@ -39,14 +39,14 @@ public unsafe partial class vtkAlgorithm : vtkObject
         vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(this.NativePointer, input.NativePointer);
     }
 
-    public new void Update()
+    public new bool Update()
     {
-        vtkAlgorithm_Update_(this.NativePointer);
+        return vtkAlgorithm_Update_(this.NativePointer);
     }
 
-    public new void Update(int port)
+    public new bool Update(int port)
     {
-        vtkAlgorithm_Update_int(this.NativePointer, port);
+        return vtkAlgorithm_Update_int(this.NativePointer, port);
     }
 
     public new bool Update(int port, vtkInformationVector requests)
@@ -76,10 +76,12 @@ public unsafe partial class vtkAlgorithm : vtkObject
     private static extern void vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAlgorithm_Update_(nint self);
+    [return: MarshalAs(UnmanagedType.U1)]
+    private static extern bool vtkAlgorithm_Update_(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkAlgorithm_Update_int(nint self, int port);
+    [return: MarshalAs(UnmanagedType.U1)]
+    private static extern bool vtkAlgorithm_Update_int(nint self, int port);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkAlgorithm_Update_int_vtkInformationVectorPtr(nint self, int port, nint requests);

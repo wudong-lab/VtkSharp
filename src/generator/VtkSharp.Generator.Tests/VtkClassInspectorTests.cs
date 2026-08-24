@@ -41,6 +41,23 @@ public sealed class VtkClassInspectorTests
     }
 
     [Fact]
+    public void InspectHeader_ProvidesVectorForVtkHeadersThatUseItTransitively()
+    {
+        var directory = CreateHeader("""
+            class vtkThing
+            {
+            public:
+                void SetValues(std::vector<int> values);
+            };
+            """);
+        var inspector = new VtkClassInspector();
+
+        var inspected = inspector.InspectHeader(directory, "vtkThing.h", "vtkThing");
+
+        Assert.Contains(inspected.Functions, function => function.Name == "SetValues");
+    }
+
+    [Fact]
     public void InspectHeader_DoesNotIncludeInheritedBaseClassFunctions()
     {
         var directory = CreateHeader("""

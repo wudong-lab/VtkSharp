@@ -1,11 +1,11 @@
 # 构建 VtkSharp 使用的 VTK
 
-VtkSharp 当前以 VTK 9.6.2 为开发基线。在 Windows 上使用 Visual Studio 2026、x64 和静态 VTK 库，VTK 最终链接到 `VtkSharp.Native.dll`，避免发布时携带大量 VTK 动态库。
+VtkSharp 当前以 VTK 9.7.0 为开发基线。在 Windows 上使用 Visual Studio 2026、x64 和静态 VTK 库，VTK 最终链接到 `VtkSharp.Native.dll`，避免发布时携带大量 VTK 动态库。
 
 ## 目录约定
 
 ```text
-D:\Code\VTK\VtkGitSource         # VTK v9.6.2 源码
+D:\Code\VTK\VtkGitSource         # VTK v9.7.0 源码
 D:\Code\VTK\VtkGitBuild          # CMake 构建目录
 D:\Code\VTK\VtkGitBuild\install  # 安装目录，供生成器和 VtkSharp.Native 使用
 ```
@@ -91,7 +91,7 @@ Debug 和 Release 可以安装到同一个目录。Windows 下 VTK 的 Debug 库
 ```powershell
 .\tools\build-native.ps1 `
     -Configuration Release `
-    -VtkDir "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.6"
+    -VtkDir "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7"
 ```
 
 ## 后续增加 VTK 模块

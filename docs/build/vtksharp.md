@@ -18,7 +18,7 @@ native DLL、VTK 静态库和消费它的 managed 构建必须使用一致配置
 先按 [VTK 构建说明](vtk.md) 安装对应配置的 VTK，再执行：
 
 ```powershell
-$vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.6"
+$vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7"
 
 .\tools\build-native.ps1 -Configuration Release -VtkDir $vtkDir
 dotnet build src/bindings/VtkSharp.slnx --configuration Release

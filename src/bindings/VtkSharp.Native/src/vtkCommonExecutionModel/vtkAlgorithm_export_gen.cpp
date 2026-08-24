@@ -15,9 +15,9 @@ VTKSHARP_API void vtkAlgorithm_SetInputConnection_int_vtkAlgorithmOutputPtr(vtkA
 
 VTKSHARP_API void vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(vtkAlgorithm* self, vtkAlgorithmOutput* input) { self->SetInputConnection(input); }
 
-VTKSHARP_API void vtkAlgorithm_Update_(vtkAlgorithm* self) { self->Update(); }
+VTKSHARP_API bool vtkAlgorithm_Update_(vtkAlgorithm* self) { return self->Update(); }
 
-VTKSHARP_API void vtkAlgorithm_Update_int(vtkAlgorithm* self, int port) { self->Update(port); }
+VTKSHARP_API bool vtkAlgorithm_Update_int(vtkAlgorithm* self, int port) { return self->Update(port); }
 
 VTKSHARP_API vtkTypeBool vtkAlgorithm_Update_int_vtkInformationVectorPtr(vtkAlgorithm* self, int port, vtkInformationVector* requests) { return self->Update(port, requests); }
 

@@ -17,4 +17,17 @@ public sealed class VtkHierarchyReaderTests
         Assert.Equal("vtkActor.h", actor.Header);
         Assert.Equal("vtkRenderingCore", actor.Module);
     }
+
+    [Fact]
+    public void ReadFile_MapsConcreteAosArrayToManagedDataArrayBase()
+    {
+        var path = Path.GetTempFileName();
+        File.WriteAllText(path, "vtkDoubleArray : vtkAOSDataArrayTemplate<double> ; vtkDoubleArray.h ; vtkCommonCore");
+        var reader = new VtkHierarchyReader();
+
+        var entry = Assert.Single(reader.ReadFile(path));
+
+        Assert.Equal("vtkDoubleArray", entry.ClassName);
+        Assert.Equal("vtkDataArray", entry.BaseClassName);
+    }
 }

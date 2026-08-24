@@ -28,13 +28,13 @@ docs/                             # 架构、生成器、构建与协作文档
 ### 构建 VTK
 
 首次构建 VtkSharp 前，需要先配置、构建并安装 VTK。构建脚本根据 `VtkSharp` 与 VTK
-工作目录的固定相对位置查找 `VtkGitSource`，使用的 VTK 版本为 9.6.2。
+工作目录的固定相对位置查找 `VtkGitSource`，使用的 VTK 版本为 9.7.0。
 
 VTK 工作目录结构如下：
 
 ```text
 D:\Code\VTK\
-├── VtkGitSource\         # VTK 9.6.2 源码
+├── VtkGitSource\         # VTK 9.7.0 源码
 └── VtkGitBuild\          # CMake 构建目录
     └── install\          # 安装目录，供生成器和 VtkSharp.Native 使用
 ```
@@ -73,7 +73,7 @@ D:\Code\VTK\
 `vtk-config.cmake`）的 CMake package 目录；VTK 构建脚本完成安装时也会输出这个目录：
 
 ```powershell
-$vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.6"
+$vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7"
 ```
 
 #### Release

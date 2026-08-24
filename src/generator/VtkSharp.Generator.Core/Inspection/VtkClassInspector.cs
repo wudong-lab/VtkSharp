@@ -25,6 +25,10 @@ public sealed class VtkClassInspector
         var options = new CppParserOptions();
         options.ConfigureForWindowsMsvc(CppTargetCpu.X86_64, CppVisualStudioVersion.VS2022);
         options.IncludeFolders.Add(fullIncludeDir);
+        // VTK 9.7's vtkDataSetAttributesFieldList.h uses std::vector without
+        // including <vector>; real VTK translation units obtain it transitively.
+        options.AdditionalArguments.Add("-include");
+        options.AdditionalArguments.Add("vector");
 
         var headerPath = Path.Combine(fullIncludeDir, headerFileName);
         var compilation = CppParser.ParseFile(headerPath, options);

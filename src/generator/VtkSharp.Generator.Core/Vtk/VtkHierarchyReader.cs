@@ -35,11 +35,23 @@ public sealed partial class VtkHierarchyReader
 
         return new VtkHierarchyEntry(
             match.Groups["class"].Value,
-            match.Groups["base"].Value,
+            NormalizeBaseClassName(match.Groups["base"].Value),
             match.Groups["header"].Value,
             match.Groups["module"].Value);
     }
 
-    [GeneratedRegex(@"^\s*(?<class>vtk[\w-]+)\s*:\s*(?<base>vtk[\w-]+)\s*;\s*(?<header>vtk[\w-]+\.h)\s*;\s*(?<module>vtk[\w-]+)\s*$")]
+    private static string NormalizeBaseClassName(string baseClassName)
+    {
+        var templateStart = baseClassName.IndexOf('<');
+        if (templateStart < 0)
+            return baseClassName;
+
+        var templateName = baseClassName[..templateStart];
+        return templateName is "vtkAOSDataArrayTemplate" or "vtkSOADataArrayTemplate" or "vtkScaledSOADataArrayTemplate"
+            ? "vtkDataArray"
+            : "vtkObject";
+    }
+
+    [GeneratedRegex(@"^\s*(?<class>vtk[\w-]+)\s*:\s*(?<base>vtk[^;]+?)\s*;\s*(?<header>vtk[\w-]+\.h)\s*;\s*(?<module>vtk[\w-]+)\s*$")]
     private static partial Regex ClassLineRegex();
 }

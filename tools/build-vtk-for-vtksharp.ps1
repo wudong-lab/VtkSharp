@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-为 VtkSharp 配置、构建并安装 VTK 9.6.2。
+为 VtkSharp 配置、构建并安装 VTK 9.7.0。
 
 .DESCRIPTION
 使用 Visual Studio 2026、x64、静态 VTK 库和动态 MSVC CRT。默认执行 Release
@@ -38,7 +38,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-$expectedVtkVersion = "9.6.2"
+$expectedVtkVersion = "9.7.0"
 $generator = "Visual Studio 18 2026"
 $architecture = "x64"
 
@@ -213,8 +213,8 @@ if ($Action -in @("Install", "All")) {
         )
     }
 
-    $vtkPackageDirectory = Join-Path $InstallDirectory "lib\cmake\vtk-9.6"
-    $hierarchyDirectory = Join-Path $InstallDirectory "lib\vtk-9.6\hierarchy\VTK"
+    $vtkPackageDirectory = Join-Path $InstallDirectory "lib\cmake\vtk-9.7"
+    $hierarchyDirectory = Join-Path $InstallDirectory "lib\vtk-9.7\hierarchy\VTK"
     if (-not (Test-Path -LiteralPath (Join-Path $vtkPackageDirectory "vtk-config.cmake") -PathType Leaf)) {
         throw "VTK CMake package was not installed: $vtkPackageDirectory"
     }
@@ -224,4 +224,4 @@ if ($Action -in @("Install", "All")) {
 }
 
 Write-Host "VTK action '$Action' completed." -ForegroundColor Green
-Write-Host "VTK_DIR=$($InstallDirectory.Replace('\', '/'))/lib/cmake/vtk-9.6"
+Write-Host "VTK_DIR=$($InstallDirectory.Replace('\', '/'))/lib/cmake/vtk-9.7"

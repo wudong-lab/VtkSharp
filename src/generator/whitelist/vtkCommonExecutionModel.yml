@@ -34,14 +34,14 @@ classes:
           - type: vtkAlgorithmOutput*
             name: input
       - name: Update
-        cppSignature: void Update()
+        cppSignature: bool Update()
         return:
-          type: void
+          type: bool
         parameters: []
       - name: Update
-        cppSignature: void Update(int port)
+        cppSignature: bool Update(int port)
         return:
-          type: void
+          type: bool
         parameters:
           - type: int
             name: port

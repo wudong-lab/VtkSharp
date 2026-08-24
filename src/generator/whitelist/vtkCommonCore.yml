@@ -892,6 +892,11 @@ classes:
   - name: vtkWindow
     header: vtkWindow.h
     functions:
+      - name: GetCurrentCursor
+        cppSignature: int GetCurrentCursor()
+        return:
+          type: int
+        parameters: []
       - name: GetWindowName
         cppSignature: char * GetWindowName()
         return:
@@ -928,6 +933,13 @@ classes:
         parameters:
           - type: int[2]
             name: a
+      - name: SetCurrentCursor
+        cppSignature: void SetCurrentCursor(int _arg1)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
       - name: SetWindowName
         cppSignature: void SetWindowName(char const * _arg)
         return:
