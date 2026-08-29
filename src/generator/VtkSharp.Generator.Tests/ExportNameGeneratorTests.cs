@@ -30,6 +30,19 @@ public sealed class ExportNameGeneratorTests
     }
 
     [Fact]
+    public void Create_WithPostfixConstUnsignedCharArray_UsesValidSuffix()
+    {
+        var generator = new ExportNameGenerator();
+        var name = generator.Create(
+            "vtkImageMapToColors",
+            "SetNaNColor",
+            [new("unsigned char const[4]")],
+            hasOverloads: true);
+
+        Assert.Equal("vtkImageMapToColors_SetNaNColor_unsignedcharConstArray4", name);
+    }
+
+    [Fact]
     public void CreateAll_SingleFunction_UsesSimpleName()
     {
         var generator = new ExportNameGenerator();

@@ -184,6 +184,18 @@ classes:
         return:
           type: void
         parameters: []
+      - name: GetOrigin
+        cppSignature: double * GetOrigin()
+        return:
+          type: double*
+        parameters: []
+      - name: GetOrigin
+        cppSignature: void GetOrigin(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
       - name: GetScalarPointer
         cppSignature: void * GetScalarPointer()
         return:
@@ -226,6 +238,36 @@ classes:
         parameters:
           - type: vtkInformation*
             name: meta_data
+      - name: GetSpacing
+        cppSignature: double * GetSpacing()
+        return:
+          type: double*
+        parameters: []
+      - name: GetSpacing
+        cppSignature: void GetSpacing(double[3] _arg)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: _arg
+      - name: SetOrigin
+        cppSignature: void SetOrigin(double const[3] ijk)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: ijk
+      - name: SetOrigin
+        cppSignature: void SetOrigin(double i, double j, double k)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: i
+          - type: double
+            name: j
+          - type: double
+            name: k
       - name: SetScalarComponentFromDouble
         cppSignature: void SetScalarComponentFromDouble(int x, int y, int z, int component, double v)
         return:
@@ -241,6 +283,24 @@ classes:
             name: component
           - type: double
             name: v
+      - name: SetSpacing
+        cppSignature: void SetSpacing(double const[3] ijk)
+        return:
+          type: void
+        parameters:
+          - type: const double[3]
+            name: ijk
+      - name: SetSpacing
+        cppSignature: void SetSpacing(double i, double j, double k)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: i
+          - type: double
+            name: j
+          - type: double
+            name: k
   - name: vtkLine
     header: vtkLine.h
     functions: []

@@ -348,7 +348,7 @@ public sealed class CSharpBindingEmitter
     {
         var elementType = GetSpanElementType(parameter.Type);
         var isReadOnly = BindingTypeMapper.IsFixedArray(parameter.Type)
-            ? parameter.Type.StartsWith("const ", StringComparison.Ordinal)
+            ? BindingTypeMapper.IsConstFixedArray(parameter.Type)
             : parameter.Direction == "in";
         return isReadOnly ? $"ReadOnlySpan<{elementType}>" : $"Span<{elementType}>";
     }
@@ -356,7 +356,7 @@ public sealed class CSharpBindingEmitter
     private static string GetSpanElementType(string type)
     {
         if (BindingTypeMapper.IsFixedArray(type))
-            return BindingTypeMapper.GetArrayElementType(type);
+            return BindingTypeMapper.ToCSharpPublicType(BindingTypeMapper.GetArrayElementType(type));
         if (TypeClassifier.IsSupportedPrimitivePointerType(type))
             return BindingTypeMapper.ToCSharpPublicType(TypeClassifier.GetPointerElementType(type));
         throw new ArgumentException($"Cannot get span element type from '{type}'.", nameof(type));

@@ -7,6 +7,7 @@ public sealed class BindingTypeMapperTests
     [Theory]
     [InlineData("void", "void", "void", "void")]
     [InlineData("char", "char", "char", "char")]
+    [InlineData("unsigned char", "byte", "byte", "unsigned char")]
     [InlineData("unsigned int", "uint", "uint", "unsigned int")]
     [InlineData("unsigned long", "ulong", "ulong", "std::uint64_t")]
     [InlineData("long long", "long", "long", "long long")]
@@ -61,6 +62,14 @@ public sealed class BindingTypeMapperTests
         Assert.Equal("double*", BindingTypeMapper.ToCSharpInteropType("const double[3]"));
         Assert.Equal("const double*", BindingTypeMapper.ToCppExportType("const double[3]"));
         Assert.Equal("double", BindingTypeMapper.GetArrayElementType("const double[3]"));
+        Assert.True(BindingTypeMapper.IsSupportedType("unsigned char*"));
+        Assert.True(BindingTypeMapper.IsSupportedType("const unsigned char[4]"));
+        Assert.Equal("byte*", BindingTypeMapper.ToCSharpPublicType("unsigned char*"));
+        Assert.Equal("ReadOnlySpan<byte>", BindingTypeMapper.ToCSharpPublicType("const unsigned char[4]"));
+        Assert.Equal("const unsigned char*", BindingTypeMapper.ToCppExportType("const unsigned char[4]"));
+        Assert.True(BindingTypeMapper.IsSupportedType("unsigned char const[4]"));
+        Assert.Equal("ReadOnlySpan<byte>", BindingTypeMapper.ToCSharpPublicType("unsigned char const[4]"));
+        Assert.Equal("const unsigned char*", BindingTypeMapper.ToCppExportType("unsigned char const[4]"));
     }
 
     [Fact]

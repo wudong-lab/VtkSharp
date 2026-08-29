@@ -11,6 +11,10 @@ VTKSHARP_API void vtkImageData_AllocateScalars_vtkInformationPtr(vtkImageData* s
 
 VTKSHARP_API void vtkImageData_ComputeBounds(vtkImageData* self) { self->ComputeBounds(); }
 
+VTKSHARP_API double* vtkImageData_GetOrigin_(vtkImageData* self) { return self->GetOrigin(); }
+
+VTKSHARP_API void vtkImageData_GetOrigin_doubleArray3(vtkImageData* self, double* _arg) { self->GetOrigin(_arg); }
+
 VTKSHARP_API void* vtkImageData_GetScalarPointer_(vtkImageData* self) { return self->GetScalarPointer(); }
 
 VTKSHARP_API void* vtkImageData_GetScalarPointer_int_int_int(vtkImageData* self, int x, int y, int z) { return self->GetScalarPointer(x, y, z); }
@@ -23,4 +27,16 @@ VTKSHARP_API int vtkImageData_GetScalarSize_(vtkImageData* self) { return self->
 
 VTKSHARP_API int vtkImageData_GetScalarSize_vtkInformationPtr(vtkImageData* self, vtkInformation* meta_data) { return self->GetScalarSize(meta_data); }
 
+VTKSHARP_API double* vtkImageData_GetSpacing_(vtkImageData* self) { return self->GetSpacing(); }
+
+VTKSHARP_API void vtkImageData_GetSpacing_doubleArray3(vtkImageData* self, double* _arg) { self->GetSpacing(_arg); }
+
+VTKSHARP_API void vtkImageData_SetOrigin_doubleConstArray3(vtkImageData* self, const double* ijk) { self->SetOrigin(ijk); }
+
+VTKSHARP_API void vtkImageData_SetOrigin_double_double_double(vtkImageData* self, double i, double j, double k) { self->SetOrigin(i, j, k); }
+
 VTKSHARP_API void vtkImageData_SetScalarComponentFromDouble(vtkImageData* self, int x, int y, int z, int component, double v) { self->SetScalarComponentFromDouble(x, y, z, component, v); }
+
+VTKSHARP_API void vtkImageData_SetSpacing_doubleConstArray3(vtkImageData* self, const double* ijk) { self->SetSpacing(ijk); }
+
+VTKSHARP_API void vtkImageData_SetSpacing_double_double_double(vtkImageData* self, double i, double j, double k) { self->SetSpacing(i, j, k); }

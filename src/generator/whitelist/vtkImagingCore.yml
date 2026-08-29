@@ -10,6 +10,119 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkImageMapToColors
+    header: vtkImageMapToColors.h
+    functions:
+      - name: GetActiveComponent
+        cppSignature: int GetActiveComponent()
+        return:
+          type: int
+        parameters: []
+      - name: GetLookupTable
+        cppSignature: vtkScalarsToColors * GetLookupTable()
+        return:
+          type: vtkScalarsToColors*
+        parameters: []
+      - name: GetNaNColor
+        cppSignature: unsigned char * GetNaNColor()
+        return:
+          type: unsigned char*
+        parameters: []
+      - name: GetNaNColor
+        cppSignature: void GetNaNColor(unsigned char[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: unsigned char[4]
+            name: _arg
+      - name: GetOutputFormat
+        cppSignature: int GetOutputFormat()
+        return:
+          type: int
+        parameters: []
+      - name: GetPassAlphaToOutput
+        cppSignature: vtkTypeBool GetPassAlphaToOutput()
+        return:
+          type: vtkTypeBool
+        parameters: []
+      - name: PassAlphaToOutputOff
+        cppSignature: void PassAlphaToOutputOff()
+        return:
+          type: void
+        parameters: []
+      - name: PassAlphaToOutputOn
+        cppSignature: void PassAlphaToOutputOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetActiveComponent
+        cppSignature: void SetActiveComponent(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetLookupTable
+        cppSignature: void SetLookupTable(vtkScalarsToColors * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkScalarsToColors*
+            name: _arg1
+      - name: SetNaNColor
+        cppSignature: void SetNaNColor(unsigned char _arg1, unsigned char _arg2, unsigned char _arg3, unsigned char _arg4)
+        return:
+          type: void
+        parameters:
+          - type: unsigned char
+            name: _arg1
+          - type: unsigned char
+            name: _arg2
+          - type: unsigned char
+            name: _arg3
+          - type: unsigned char
+            name: _arg4
+      - name: SetNaNColor
+        cppSignature: void SetNaNColor(unsigned char const[4] _arg)
+        return:
+          type: void
+        parameters:
+          - type: unsigned char const[4]
+            name: _arg
+      - name: SetOutputFormat
+        cppSignature: void SetOutputFormat(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetOutputFormatToLuminance
+        cppSignature: void SetOutputFormatToLuminance()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputFormatToLuminanceAlpha
+        cppSignature: void SetOutputFormatToLuminanceAlpha()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputFormatToRGB
+        cppSignature: void SetOutputFormatToRGB()
+        return:
+          type: void
+        parameters: []
+      - name: SetOutputFormatToRGBA
+        cppSignature: void SetOutputFormatToRGBA()
+        return:
+          type: void
+        parameters: []
+      - name: SetPassAlphaToOutput
+        cppSignature: void SetPassAlphaToOutput(vtkTypeBool _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkTypeBool
+            name: _arg
   - name: vtkImageShiftScale
     header: vtkImageShiftScale.h
     functions:

@@ -34,6 +34,19 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
         vtkImageData_ComputeBounds(this.NativePointer);
     }
 
+    internal new double* GetOrigin_Internal()
+    {
+        return vtkImageData_GetOrigin_(this.NativePointer);
+    }
+
+    public new void GetOrigin(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkImageData_GetOrigin_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
     public new nint GetScalarPointer()
     {
         return vtkImageData_GetScalarPointer_(this.NativePointer);
@@ -70,9 +83,48 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
         return vtkImageData_GetScalarSize_vtkInformationPtr(this.NativePointer, meta_data.NativePointer);
     }
 
+    internal new double* GetSpacing_Internal()
+    {
+        return vtkImageData_GetSpacing_(this.NativePointer);
+    }
+
+    public new void GetSpacing(Span<double> _arg)
+    {
+        fixed (double* _argPtr = _arg)
+        {
+            vtkImageData_GetSpacing_doubleArray3(this.NativePointer, _argPtr);
+        }
+    }
+
+    public new void SetOrigin(ReadOnlySpan<double> ijk)
+    {
+        fixed (double* ijkPtr = ijk)
+        {
+            vtkImageData_SetOrigin_doubleConstArray3(this.NativePointer, ijkPtr);
+        }
+    }
+
+    public new void SetOrigin(double i, double j, double k)
+    {
+        vtkImageData_SetOrigin_double_double_double(this.NativePointer, i, j, k);
+    }
+
     public new void SetScalarComponentFromDouble(int x, int y, int z, int component, double v)
     {
         vtkImageData_SetScalarComponentFromDouble(this.NativePointer, x, y, z, component, v);
+    }
+
+    public new void SetSpacing(ReadOnlySpan<double> ijk)
+    {
+        fixed (double* ijkPtr = ijk)
+        {
+            vtkImageData_SetSpacing_doubleConstArray3(this.NativePointer, ijkPtr);
+        }
+    }
+
+    public new void SetSpacing(double i, double j, double k)
+    {
+        vtkImageData_SetSpacing_double_double_double(this.NativePointer, i, j, k);
     }
 
     #region Interop
@@ -87,6 +139,12 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageData_ComputeBounds(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkImageData_GetOrigin_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_GetOrigin_doubleArray3(nint self, double* _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageData_GetScalarPointer_(nint self);
@@ -107,6 +165,24 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
     private static extern int vtkImageData_GetScalarSize_vtkInformationPtr(nint self, nint meta_data);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double* vtkImageData_GetSpacing_(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_GetSpacing_doubleArray3(nint self, double* _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_SetOrigin_doubleConstArray3(nint self, double* ijk);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_SetOrigin_double_double_double(nint self, double i, double j, double k);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageData_SetScalarComponentFromDouble(nint self, int x, int y, int z, int component, double v);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_SetSpacing_doubleConstArray3(nint self, double* ijk);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkImageData_SetSpacing_double_double_double(nint self, double i, double j, double k);
     #endregion
 }

@@ -29,6 +29,7 @@ public static class TypeClassifier
         "double",
         "float",
         "int",
+        "unsigned char",
         "vtkIdType",
     };
 

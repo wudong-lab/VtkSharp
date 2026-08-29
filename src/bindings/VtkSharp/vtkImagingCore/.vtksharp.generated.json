@@ -15,6 +15,17 @@
       "nativeContentHash": "cb07d76ffc55d73236fae20f4bd5cec68260e41b17a86be33e6de3c191d3ae4a"
     },
     {
+      "className": "vtkImageMapToColors",
+      "header": "vtkImageMapToColors.h",
+      "baseClassName": "vtkThreadedImageAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "50a24f07add99c464dbf8bd6405bb1d8b6a56502535b107cd747e279cae5b084",
+      "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageMapToColors_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageMapToColors_export_gen.cpp",
+      "managedContentHash": "57c0e59d89b0d2b583b4b13d62daffa421b0ab4df075271dd2e8ff1fd76d5d4f",
+      "nativeContentHash": "0345d0e4f179375376ccd27d1a21200ebf1a9c7dc705912f5f2016b0b9193d45"
+    },
+    {
       "className": "vtkImageShiftScale",
       "header": "vtkImageShiftScale.h",
       "baseClassName": "vtkThreadedImageAlgorithm",

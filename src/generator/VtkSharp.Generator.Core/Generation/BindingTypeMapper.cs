@@ -6,6 +6,7 @@ public static class BindingTypeMapper
     {
         ["void"] = "void",
         ["char"] = "char",
+        ["unsigned char"] = "byte",
         ["int"] = "int",
         ["unsigned int"] = "uint",
         ["unsigned long"] = "ulong",
@@ -29,6 +30,7 @@ public static class BindingTypeMapper
     {
         ["void"] = "void",
         ["char"] = "char",
+        ["unsigned char"] = "byte",
         ["int"] = "int",
         ["unsigned int"] = "uint",
         ["unsigned long"] = "ulong",
@@ -52,6 +54,7 @@ public static class BindingTypeMapper
     {
         ["void"] = "void",
         ["char"] = "char",
+        ["unsigned char"] = "unsigned char",
         ["int"] = "int",
         ["unsigned int"] = "unsigned int",
         ["unsigned long"] = "unsigned long",
@@ -73,7 +76,7 @@ public static class BindingTypeMapper
 
     private static readonly HashSet<string> FixedArrayElementTypes = new(StringComparer.Ordinal)
     {
-        "double", "float", "int",
+        "double", "float", "int", "unsigned char",
     };
 
     public static bool IsSupportedType(string type)
@@ -99,7 +102,7 @@ public static class BindingTypeMapper
     public static string GetArrayElementType(string type)
     {
         var bracketIndex = type.IndexOf('[', StringComparison.Ordinal);
-        return type[..bracketIndex].Replace("const ", "", StringComparison.Ordinal).Trim();
+        return type[..bracketIndex].Replace("const", "", StringComparison.Ordinal).Trim();
     }
 
     public static string ToCSharpPublicType(string type)
@@ -120,9 +123,9 @@ public static class BindingTypeMapper
             return $"{ToCSharpPublicType(TypeClassifier.GetPointerElementType(type))}*";
 
         if (IsFixedArray(type))
-            return type.StartsWith("const ", StringComparison.Ordinal)
-                ? $"ReadOnlySpan<{GetArrayElementType(type)}>"
-                : $"Span<{GetArrayElementType(type)}>";
+            return IsConstFixedArray(type)
+                ? $"ReadOnlySpan<{ToCSharpPublicType(GetArrayElementType(type))}>"
+                : $"Span<{ToCSharpPublicType(GetArrayElementType(type))}>";
 
         throw new NotSupportedException($"C# public type '{type}' is not supported by the MVP emitter.");
     }
@@ -145,7 +148,7 @@ public static class BindingTypeMapper
             return $"{ToCSharpInteropType(TypeClassifier.GetPointerElementType(type))}*";
 
         if (IsFixedArray(type))
-            return $"{GetArrayElementType(type)}*";
+            return $"{ToCSharpInteropType(GetArrayElementType(type))}*";
 
         throw new NotSupportedException($"C# interop type '{type}' is not supported by the MVP emitter.");
     }
@@ -186,9 +189,15 @@ public static class BindingTypeMapper
 
     public static string ToCppArrayPointerType(string type)
     {
-        var isConst = type.StartsWith("const ", StringComparison.Ordinal);
+        var isConst = IsConstFixedArray(type);
         var elementType = GetArrayElementType(type);
         return isConst ? $"const {elementType}*" : $"{elementType}*";
+    }
+
+    public static bool IsConstFixedArray(string type)
+    {
+        var bracketIndex = type.IndexOf('[', StringComparison.Ordinal);
+        return bracketIndex >= 0 && type[..bracketIndex].Contains("const", StringComparison.Ordinal);
     }
 
     private static bool IsVtkPointer(string type)

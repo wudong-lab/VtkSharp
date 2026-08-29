@@ -81,11 +81,14 @@ public sealed class ExportNameGenerator
             return text.StartsWith("const ", StringComparison.Ordinal) ? $"{core}ConstPtr" : $"{core}Ptr";
         }
 
-        if (text.StartsWith("const ", StringComparison.Ordinal) && text.Contains('[', StringComparison.Ordinal))
-            return text.Replace("const ", "", StringComparison.Ordinal).Replace("[", "ConstArray", StringComparison.Ordinal).Replace("]", "", StringComparison.Ordinal);
-
-        if (text.Contains('[', StringComparison.Ordinal))
-            return text.Replace("[", "Array", StringComparison.Ordinal).Replace("]", "", StringComparison.Ordinal);
+        if (BindingTypeMapper.IsFixedArray(text))
+        {
+            var elementType = BindingTypeMapper.GetArrayElementType(text).Replace(" ", "", StringComparison.Ordinal);
+            var bracketIndex = text.IndexOf('[', StringComparison.Ordinal);
+            var length = text[(bracketIndex + 1)..^1];
+            var arrayKind = BindingTypeMapper.IsConstFixedArray(text) ? "ConstArray" : "Array";
+            return $"{elementType}{arrayKind}{length}";
+        }
 
         return text switch
         {
