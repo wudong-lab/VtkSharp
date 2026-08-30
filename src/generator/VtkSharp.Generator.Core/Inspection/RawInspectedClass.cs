@@ -6,9 +6,11 @@ internal sealed record RawInspectedClass(
     bool HasStaticNew,
     IReadOnlyList<string> BaseClassNames,
     ApiDocumentation? Documentation,
-    ApiDocumentation? NewDocumentation)
+    ApiDocumentation? NewDocumentation,
+    IReadOnlyList<string> DeclaredMemberNames)
 {
     public InspectedClass ToInspectedClassWithBaseClassNames()
         => new(this.Name, this.Functions, this.HasStaticNew, BaseClassNames: this.BaseClassNames,
-            Documentation: this.Documentation, NewDocumentation: this.NewDocumentation);
+            Documentation: this.Documentation, NewDocumentation: this.NewDocumentation,
+            DeclaredMemberNames: this.DeclaredMemberNames, HasMultipleBaseClasses: this.BaseClassNames.Count > 1);
 }

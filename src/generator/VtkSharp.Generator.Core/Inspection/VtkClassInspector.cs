@@ -81,7 +81,8 @@ public sealed class VtkClassInspector
 
         var directBaseClassName = raw.BaseClassNames.FirstOrDefault();
         var result = new InspectedClass(className, raw.Functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(raw.Functions),
-            Documentation: raw.Documentation, NewDocumentation: raw.NewDocumentation);
+            Documentation: raw.Documentation, NewDocumentation: raw.NewDocumentation,
+            DeclaredMemberNames: raw.DeclaredMemberNames, HasMultipleBaseClasses: raw.BaseClassNames.Count > 1);
         this._classCache[cacheKey] = result;
         return result;
     }
@@ -141,7 +142,9 @@ public sealed class VtkClassInspector
 
         return new RawInspectedClass(cppClass.Name, functions, staticNew is not null, baseClassNames,
             this.GetDocumentation(cppClass)?.GetClassDocumentation(cppClass.Name, cppClass.Span.Start.Offset),
-            staticNew is null ? null : this.GetDocumentation(staticNew)?.GetDeclarationDocumentation(staticNew.Span.Start.Offset));
+            staticNew is null ? null : this.GetDocumentation(staticNew)?.GetDeclarationDocumentation(staticNew.Span.Start.Offset),
+            cppClass.Functions.Select(function => function.Name).Concat(cppClass.Fields.Select(field => field.Name))
+                .Distinct(StringComparer.Ordinal).ToList());
     }
 
     private VtkDocumentationExtractor? GetDocumentation(CppElement element)

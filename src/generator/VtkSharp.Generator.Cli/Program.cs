@@ -43,10 +43,15 @@ internal class Program
         });
 
         var functionArgument = new Argument<string>("function-name");
+        var resolveOption = new Option<bool>("--resolve")
+        {
+            Description = "Resolve the nearest declaring class and report export status and signature IDs",
+        };
         var inspectFunctionCommand = new Command("inspect-function", "Inspect a VTK method and show suggested whitelist entry")
         {
             classArgument,
             functionArgument,
+            resolveOption,
             formatOption,
             configOption,
         };
@@ -59,7 +64,9 @@ internal class Program
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
 
-            return InspectFunction(configPath, className, functionName, format);
+            return parseResult.GetValue(resolveOption)
+                ? new BindingRequestPlanner().Inspect(configPath, className, functionName, format, Console.Out)
+                : InspectFunction(configPath, className, functionName, format);
         });
 
         var listModulesCommand = new Command("list-modules", "List VTK modules in the hierarchy")
@@ -185,9 +192,11 @@ internal class Program
             Description = "Path to candidate whitelist YAML file",
         };
 
-        var diffWhitelistCommand = new Command("diff-whitelist", "Diff a candidate whitelist against the formal whitelist")
+        var summaryOption = new Option<bool>("--summary") { Description = "Omit already-present entries" };
+        var diffWhitelistCommand = new Command("diff-whitelist", "Preview the normalized merge, including dependency classes and metadata conflicts")
         {
             candidatePathArgument,
+            summaryOption,
             formatOption,
             configOption,
         };
@@ -199,7 +208,7 @@ internal class Program
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
 
-            return DiffWhitelist(configPath, candidatePath, format);
+            return new CandidateWhitelistService().Diff(configPath, candidatePath, format, Console.Out, parseResult.GetValue(summaryOption));
         });
 
         var outputOption = new Option<FileInfo>("--output")
@@ -225,7 +234,7 @@ internal class Program
 
         var supportedOnlyOption = new Option<bool>("--supported-only")
         {
-            Description = "Only include functions whose types are all supported (filters out basic_ostream, int&, etc.)",
+            Description = "Only include functions ready to generate without additional pointer metadata",
         };
         var skipMissingMethodsOption = new Option<bool>("--skip-missing-methods")
         {
@@ -237,6 +246,7 @@ internal class Program
             AllowMultipleArgumentsPerToken = true,
         };
 
+        var classOnlyOption = new Option<bool>("--class-only") { Description = "Create only the type, without ordinary methods; mutually exclusive with --methods" };
         var createCandidateCommand = new Command("create-candidate", "Create a candidate whitelist from VTK inspection")
         {
             classArgument,
@@ -246,6 +256,7 @@ internal class Program
             sourceOriginalOption,
             supportedOnlyOption,
             methodsOption,
+            classOnlyOption,
             skipMissingMethodsOption,
             configOption,
         };
@@ -263,8 +274,21 @@ internal class Program
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
 
-            return CreateCandidate(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal, supportedOnly, methods, skipMissingMethods);
+            return new CandidateWhitelistService().Create(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal,
+                supportedOnly, methods, skipMissingMethods, Console.Out, Console.Error, parseResult.GetValue(classOnlyOption));
         });
+
+        var requestsOption = new Option<FileInfo>("--requests") { Required = true, Description = "Binding requests JSON, or reference scan JSON with --reference-scan" };
+        var reportOption = new Option<FileInfo>("--report") { Required = true, Description = "Detailed JSON report path" };
+        var referenceScanOption = new Option<bool>("--reference-scan") { Description = "Read scan-reference-exports.ps1 output; select all supported overloads of scanned names" };
+        var planCommand = new Command("plan-bindings", "Batch requests into a candidate without modifying the formal whitelist")
+        {
+            requestsOption, outputOption, reportOption, referenceScanOption, configOption,
+        };
+        planCommand.SetAction(parseResult => new BindingRequestPlanner().Run(
+            parseResult.GetValue(configOption)?.FullName ?? GetDefaultConfigPath(),
+            parseResult.GetValue(requestsOption)!.FullName, parseResult.GetValue(outputOption)!.FullName,
+            parseResult.GetValue(reportOption)!.FullName, parseResult.GetValue(referenceScanOption), Console.Out));
 
         var mergeCandidateCommand = new Command("merge-candidate", "Merge a candidate whitelist into the formal whitelist")
         {
@@ -291,6 +315,7 @@ internal class Program
             normalizeCommand,
             diffWhitelistCommand,
             createCandidateCommand,
+            planCommand,
             mergeCandidateCommand,
             generateCommand,
         };
@@ -357,12 +382,6 @@ internal class Program
 
         return 0;
     }
-
-    private static int DiffWhitelist(string configPath, string candidatePath, string format)
-        => new CandidateWhitelistService().Diff(configPath, candidatePath, format, Console.Out);
-
-    private static int CreateCandidate(string configPath, string className, string outputPath, string sourceKind, string? sourceName, string? sourceOriginal, bool supportedOnly = false, IReadOnlyList<string>? methods = null, bool skipMissingMethods = false)
-        => new CandidateWhitelistService().Create(configPath, className, outputPath, sourceKind, sourceName, sourceOriginal, supportedOnly, methods, skipMissingMethods, Console.Out, Console.Error);
 
     private static int MergeCandidate(string configPath, string candidatePath)
         => new CandidateWhitelistService().Merge(configPath, candidatePath, Console.Out);

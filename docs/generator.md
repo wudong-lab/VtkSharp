@@ -34,7 +34,7 @@ src/bindings/VtkSharp.Native/     # CMake 与 module 集合
 ```powershell
 # 查询
 dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-class vtkActor
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground --resolve
 dotnet run --project src/generator/VtkSharp.Generator.Cli -- list-modules
 dotnet run --project src/generator/VtkSharp.Generator.Cli -- list-classes --module vtkFiltersSources
 
@@ -55,7 +55,8 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings -
 查询类命令支持 `--format json`，适合脚本和 AI 读取结构化结果。`create-candidate` 的常用参数：
 
 - `--methods`：只包含指定方法；不传时包含该类所有可导出方法。
-- `--supported-only`：排除当前类型映射不支持的签名。
+- `--supported-only`：排除不支持或缺少指针方向/长度元数据的签名，并报告原因。
+- `--class-only`：仅创建类型，不选择普通方法；与 `--methods` 互斥。
 - `--skip-missing-methods`：批处理时跳过当前 VTK 版本不存在的方法并输出警告。
 - `--source-kind`、`--source-name`、`--source-original`：记录候选来源。
 
@@ -106,8 +107,67 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings -
 
 - 不直接编辑正式 whitelist；通过 candidate、diff 和 merge 流程修改。
 - `New()` 由生成器识别，不作为普通 whitelist 方法添加。
-- 新类型的基类链必须已有 wrapper，否则生成的 C# 代码无法编译。
+- 合并时自动补齐新类型的基类链和签名依赖类型；`diff-whitelist` 提前显示这些新增项。无法解析的依赖会阻止合并。
 - 手写 partial、runtime helper 和手工 C ABI 导出不进入正式 whitelist。
 - 指针返回、引用参数、回调或其他复杂所有权边界必须单独审核；不能因为生成器能够解析就默认 public API 安全。
 
 YamlDotNet 直接反序列化的 DTO 集合应使用 `List<T>`、`Dictionary<TKey, TValue>` 等具体可变类型，避免接口集合无法构造或填充。
+
+## 批量接口规划
+
+优先把最小需求交给 `plan-bindings`，不需要逐类查询、手工拼接 candidate 或逐个补基类。该命令只写候选和报告，不修改正式白名单。
+
+```json
+{
+  "source": { "kind": "vtk-example", "name": "ExampleName" },
+  "requests": [
+    { "class": "vtkRenderer", "methods": ["ResetCamera"] },
+    { "class": "vtkViewport", "signatures": ["vtkViewport::void SetBackground(double,double,double)"] },
+    { "class": "vtkInteractorStyleTerrain", "classOnly": true }
+  ]
+}
+```
+
+```powershell
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
+    --requests artifacts/requests.json --output artifacts/candidate.yml --report artifacts/report.json
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist artifacts/candidate.yml --summary
+# 审核报告和完整变化后合并
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate artifacts/candidate.yml
+```
+
+- `methods` 按 C++ 大小写精确匹配。多重载返回 `ambiguous` 和签名 ID；从报告复制需要的 ID 到 `signatures`，或明确设置 `allOverloads: true` 选择该方法名的全部可直接生成重载。不会按参数个数或类型转换猜测调用。
+- `classOnly: true` 与 methods/signatures 互斥，只请求类型；`New()` 仍按头文件自动识别，没有 `New()` 的类型不会被虚构成可创建对象。空 methods/signatures 不代表全量导出。
+- 查找沿当前 hierarchy 的单继承链，在最近的同名声明处停止，包括 private/static 声明造成的隐藏；多继承无法确定时返回 `ambiguous`。这不是完整 C++ 调用解析器，不处理 `using` 引入的重载集合或模板实例化语义；这些情况应检查源码并显式请求声明类。
+- 每批复用配置、白名单、hierarchy 和 inspection 缓存。已导出的签名不重复加入；新接收类型即使只调用基类方法，也会作为空类型加入候选。
+- 状态包括 `ready`、`already-exported`、`needs-metadata`、`unsupported`、`not-found`、`ambiguous`、`invalid-request` 和 `inspection-failed`。已全部导出的重载集合无需再次选择；单个头文件失败会记录原因并继续其他请求。`ready` 仅表示可按现有规则生成，不表示所有权语义已审核。缺失的指针 direction/length、返回值 ownership 不会自动推断。
+- 标准输出只显示状态计数和待处理项，详细签名及新增类型写入 JSON 报告。存在未解决项或合并冲突时退出码为 1，但仍写入本批可处理部分的 candidate；必须审查报告，不得把部分成功当作完整导入。输入格式错误则不产出新结果。
+- 输入 JSON 字段拼写错误会被拒绝；输入、candidate、report 必须使用不同路径。需求格式见 `schemas/vtksharp.binding-requests.schema.json`。
+
+单个方法的声明类定位无需写需求文件：
+
+```powershell
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground --resolve --format json
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate vtkInteractorStyleTerrain `
+    --class-only --supported-only --source-kind manual -o artifacts/type-only.yml
+```
+
+不带 `--resolve` 的 `inspect-function` 保持只查当前类的行为。`create-candidate --methods` 保留按方法名选中全部重载的行为；`--supported-only` 现在同时过滤缺少指针元数据的签名，并说明原因。没有可选方法时不会隐式生成空类型，应明确使用 `--class-only`。
+
+参考导出继续使用技能附带的扫描脚本，无需重写解析器。其结果可以直接交给批量规划：
+
+```powershell
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
+    --reference-scan --requests artifacts/reference-scan.json `
+    --output artifacts/candidate.yml --report artifacts/report.json
+```
+
+此模式明确按扫描到的方法名选择全部可支持重载，空方法集合只请求类型。扫描警告必须先处理；扫描名称不作为当前 VTK 签名的依据。
+
+## 完整差异与合并边界
+
+`diff-whitelist` 和 `merge-candidate` 共用内存合并及 normalize 结果。diff 包括空类型、自动补齐的基类和签名依赖，原因分别标为 `explicit-request`、`base-of:...` 和 `signature-of:...`；模块随新增类型展示。`--summary` 省略已存在的函数明细，JSON 仍保留计数。
+
+签名按规范化类型比较。candidate 省略的 ownership/direction/length 沿用正式白名单；显式不同值报告冲突，禁止静默覆盖。要修改已有元数据需单独讨论契约变更，不能把添加接口的 merge 当作更新入口。
+
+merge 在写入前校验完整合并结果；有冲突或校验失败时不写正式白名单。通过后只写规范化结果一次，不再先写未规范化版本。写入仍使用既有白名单 writer，不提供跨多个文件的文件系统事务。常规 merge 后无需再运行 normalize；生成检查、native/managed 构建与示例验收仍需执行。

@@ -10,4 +10,6 @@ public sealed record InspectedClass(
     string? Module = null,
     string? Header = null,
     ApiDocumentation? Documentation = null,
-    ApiDocumentation? NewDocumentation = null);
+    ApiDocumentation? NewDocumentation = null,
+    IReadOnlyList<string>? DeclaredMemberNames = null,
+    bool HasMultipleBaseClasses = false);

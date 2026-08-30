@@ -143,8 +143,8 @@ dotnet test
 1. 读取原始 C++ 源码和说明，不根据记忆或截图补写调用。
 2. 按现有 `IExample`、`ExampleAttribute` 和目录约定完成最小 C# 翻译。
 3. 构建 ExampleBrowser，通过编译错误收集缺失类型和成员。
-4. 用生成器 CLI 确认成员的声明类并创建最小 candidate。
-5. 审核 `diff-whitelist` 后合并 candidate，重新生成绑定。
+4. 将最小需求交给 `plan-bindings`，由 CLI 定位声明类、比对现有绑定并创建 candidate；重载歧义和互操作元数据由开发者确认。
+5. 审核规划报告及包含依赖类型的 `diff-whitelist` 后合并 candidate，重新生成绑定。merge 自动校验、补齐依赖并规范化。
 6. 构建 native、managed 和示例项目，运行目标示例。
 7. 执行 `generate-bindings --check`，并记录翻译差异与新增 API。
 

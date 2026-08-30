@@ -146,6 +146,7 @@ public sealed class VtkClassInspectorTests
         var inspected = inspector.InspectHeader(directory, "vtkDerived.h", "vtkDerived");
 
         Assert.DoesNotContain(inspected.Functions, function => function.Name == "AddInputData");
+        Assert.Contains("AddInputData", inspected.DeclaredMemberNames!);
         Assert.Contains(inspected.Functions, function => function.Name == "Render");
         Assert.DoesNotContain(inspected.Functions, function => function.Name == "Update");
     }
@@ -170,6 +171,7 @@ public sealed class VtkClassInspectorTests
         Assert.Contains(inspected.Functions, function => function.Name == "Update");
         Assert.DoesNotContain(inspected.Functions, function => function.Name == "New");
         Assert.DoesNotContain(inspected.Functions, function => function.Name == "SetGlobalFlag");
+        Assert.Contains("SetGlobalFlag", inspected.DeclaredMemberNames!);
     }
 
     [Fact]

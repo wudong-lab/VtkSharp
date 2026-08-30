@@ -1,5 +1,6 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using VtkSharp.Generator.Core.Configuration;
+using VtkSharp.Generator.Core.Exporting;
 using VtkSharp.Generator.Core.Inspection;
 using VtkSharp.Generator.Core.Validation;
 using YamlDotNet.Serialization;
@@ -9,148 +10,83 @@ namespace VtkSharp.Generator.Core.Whitelist;
 
 public sealed class CandidateWhitelistService
 {
-    public int Diff(string configPath, string candidatePath, string format, TextWriter output)
+    internal static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        PropertyNameCaseInsensitive = true,
+        WriteIndented = true,
+    };
+
+    public int Diff(string configPath, string candidatePath, string format, TextWriter output, bool summary = false)
     {
         var workspace = GeneratorWorkspace.Load(configPath);
-        var formal = workspace.LoadWhitelist();
-        var candidate = LoadCandidateFile(candidatePath);
-
-        var formalFingerprints = BuildFingerprints(formal);
-        var candidateFingerprints = BuildCandidateFingerprints(candidate);
-
-        var added = candidateFingerprints.Keys.Except(formalFingerprints, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToList();
-        var unchanged = candidateFingerprints.Keys.Intersect(formalFingerprints, StringComparer.Ordinal).Order(StringComparer.Ordinal).ToList();
-
-        if (format.Equals("json", StringComparison.OrdinalIgnoreCase))
-        {
-            var result = new
-            {
-                added = added.Select(FingerprintToJson),
-                unchanged = unchanged.Select(FingerprintToJson),
-            };
-            output.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true }));
-            return 0;
-        }
-
-        output.WriteLine($"Candidate: {candidatePath}");
-        output.WriteLine($"Formal:    {workspace.WhitelistDirectory}");
-        output.WriteLine();
-        output.WriteLine($"Added ({added.Count}):");
-        foreach (var entry in added)
-            output.WriteLine($"  + {entry}");
-        output.WriteLine();
-        output.WriteLine($"Already present ({unchanged.Count}):");
-        foreach (var entry in unchanged)
-            output.WriteLine($"    {entry}");
-
-        return 0;
+        var plan = Prepare(workspace, LoadCandidateFile(candidatePath));
+        WriteDiff(plan, format, output, summary);
+        return plan.Conflicts.Count == 0 ? 0 : 1;
     }
 
     public int Create(
-        string configPath,
-        string className,
-        string outputPath,
-        string sourceKind,
-        string? sourceName,
-        string? sourceOriginal,
-        bool supportedOnly,
-        IReadOnlyList<string>? methods,
-        bool skipMissingMethods,
-        TextWriter output,
-        TextWriter error)
+        string configPath, string className, string outputPath, string sourceKind,
+        string? sourceName, string? sourceOriginal, bool supportedOnly, IReadOnlyList<string>? methods,
+        bool skipMissingMethods, TextWriter output, TextWriter error, bool classOnly = false)
     {
+        if (classOnly && methods is { Count: > 0 })
+        {
+            error.WriteLine("--class-only and --methods are mutually exclusive.");
+            return 1;
+        }
         var workspace = GeneratorWorkspace.Load(configPath);
         if (workspace.IncludeDirectory is null)
         {
             error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
             return 1;
         }
-
-        var hierarchyResolver = workspace.LoadHierarchyResolver();
-        var header = hierarchyResolver.GetHeader(className);
-        var entries = workspace.LoadHierarchyEntries();
-        var hierarchyModule = entries.TryGetValue(className, out var entry) ? entry.Module : "";
-        if (string.IsNullOrWhiteSpace(hierarchyModule))
+        if (workspace.Config.Binding.ManualBindingClasses.Contains(className))
         {
-            error.WriteLine($"Class '{className}' was not found in the VTK hierarchy.");
+            error.WriteLine($"unsupported: '{className}' is a manual binding class.");
             return 1;
         }
-
-        var inspected = new VtkClassInspector().InspectHeader(workspace.IncludeDirectory, header, className);
-
-        using var writer = new StringWriter();
-        writer.WriteLine("# yaml-language-server: $schema=../schemas/vtksharp.whitelist-candidate.schema.json");
-        writer.WriteLine();
-        writer.WriteLine("status: proposed");
-        writer.WriteLine("source:");
-        writer.WriteLine($"  kind: {sourceKind}");
-        if (!string.IsNullOrWhiteSpace(sourceName))
-            writer.WriteLine($"  name: {sourceName}");
-        if (!string.IsNullOrWhiteSpace(sourceOriginal))
-            writer.WriteLine($"  original: \"{sourceOriginal}\"");
-        writer.WriteLine();
-        writer.WriteLine("requirements:");
-        writer.WriteLine($"  - module: {hierarchyModule}");
-        writer.WriteLine($"    class: {className}");
-        writer.WriteLine($"    header: {header}");
-        writer.WriteLine("    functions:");
-
-        var functions = supportedOnly
-            ? inspected.Functions.Where(IsAllTypesSupported).ToList()
-            : inspected.Functions;
-
+        var entries = workspace.LoadHierarchyEntries();
+        if (!entries.TryGetValue(className, out var entry))
+        {
+            error.WriteLine($"not-found: class '{className}' was not found in the VTK hierarchy.");
+            return 1;
+        }
+        var inspected = new VtkClassInspector().InspectHeader(workspace.IncludeDirectory, entry.Header, className);
+        var functions = classOnly ? [] : inspected.Functions.ToList();
         if (methods is { Count: > 0 })
         {
-            var methodSet = methods.ToHashSet(StringComparer.OrdinalIgnoreCase);
-            var matched = functions.Where(f => methodSet.Contains(f.Name)).ToList();
-            var notFound = methodSet.Where(m => !functions.Any(f => f.Name.Equals(m, StringComparison.OrdinalIgnoreCase))).ToList();
-            if (notFound.Count > 0)
-            {
-                if (skipMissingMethods)
-                {
-                    foreach (var name in notFound)
-                        error.WriteLine($"Warning: method '{name}' not found on '{className}' — skipped.");
-                }
-                else
-                {
-                    error.WriteLine($"Method(s) not found on '{className}': {string.Join(", ", notFound)}");
-                    return 1;
-                }
-            }
-
-            functions = matched;
+            var methodSet = methods.ToHashSet(StringComparer.Ordinal);
+            var missing = methodSet.Where(name => !functions.Any(function => function.Name == name)).ToList();
+            foreach (var name in missing) error.WriteLine($"not-found: '{className}.{name}' is not directly declared; use plan-bindings to resolve its declaring class.");
+            if (missing.Count > 0 && !skipMissingMethods) return 1;
+            functions = functions.Where(function => methodSet.Contains(function.Name)).ToList();
         }
-
-        if (functions.Count == 0)
-        {
-            writer.WriteLine("      []");
-        }
-        else
+        if (supportedOnly)
         {
             foreach (var function in functions)
             {
-                writer.WriteLine($"      - name: {function.Name}");
-                writer.WriteLine($"        cppSignature: \"{EscapeYaml(function.CppSignature)}\"");
-                writer.WriteLine("        return:");
-                writer.WriteLine($"          type: {function.ReturnType}");
-                writer.WriteLine("        parameters:");
-                if (function.Parameters.Count == 0)
-                {
-                    writer.WriteLine("          []");
-                }
-                else
-                {
-                    foreach (var parameter in function.Parameters)
-                        writer.WriteLine($"          - {{ type: \"{EscapeYaml(parameter.Type)}\", name: {parameter.Name} }}");
-                }
+                var eligibility = FunctionEligibility.Evaluate(function);
+                if (eligibility.Status != "ready")
+                    error.WriteLine($"{eligibility.Status}: {className}::{function.CanonicalSignature}: {eligibility.Reason}");
             }
+            functions = functions.Where(function => FunctionEligibility.Evaluate(function).Status == "ready").ToList();
         }
-
-        var directory = Path.GetDirectoryName(outputPath);
-        if (directory is not null)
-            Directory.CreateDirectory(directory);
-
-        File.WriteAllText(outputPath, writer.ToString(), System.Text.Encoding.UTF8);
+        if (!classOnly && functions.Count == 0)
+        {
+            error.WriteLine("No functions selected. Use --class-only explicitly to request an empty wrapper.");
+            return 1;
+        }
+        WriteCandidate(outputPath, new CandidateDocument
+        {
+            Status = "proposed",
+            Source = new CandidateSource { Kind = sourceKind, Name = sourceName ?? "", Original = sourceOriginal ?? "" },
+            Requirements = [new CandidateRequirement
+            {
+                Module = entry.Module, Class = className, Header = entry.Header,
+                Functions = functions.Select(ToWhitelistFunction).ToList(),
+            }],
+        });
         output.WriteLine($"Candidate written to: {Path.GetFullPath(outputPath)}");
         return 0;
     }
@@ -158,127 +94,87 @@ public sealed class CandidateWhitelistService
     public int Merge(string configPath, string candidatePath, TextWriter output)
     {
         var workspace = GeneratorWorkspace.Load(configPath);
-        var formal = workspace.LoadWhitelist();
-        var candidate = LoadCandidateFile(candidatePath);
-
-        var documentsByModule = formal.ToDictionary(d => d.Module, StringComparer.Ordinal);
-        var formalFingerprints = BuildFingerprints(formal);
-        var addedCount = 0;
-        var newClassCount = 0;
-
-        foreach (var requirement in candidate.Requirements)
+        var plan = Prepare(workspace, LoadCandidateFile(candidatePath));
+        if (plan.Conflicts.Count > 0)
         {
-            if (!documentsByModule.TryGetValue(requirement.Module, out var document))
-            {
-                document = new WhitelistDocument { Module = requirement.Module, Classes = [] };
-                documentsByModule.Add(requirement.Module, document);
-            }
-
-            var whitelistClass = document.Classes.FirstOrDefault(c => c.Name == requirement.Class);
-            if (whitelistClass is null)
-            {
-                whitelistClass = new WhitelistClass { Name = requirement.Class, Header = requirement.Header, Functions = [] };
-                document.Classes.Add(whitelistClass);
-                newClassCount++;
-            }
-
-            foreach (var function in requirement.Functions)
-            {
-                var fingerprint = MakeFingerprint(requirement.Module, requirement.Class, function);
-                if (formalFingerprints.Contains(fingerprint))
-                    continue;
-
-                whitelistClass.Functions.Add(function);
-                formalFingerprints.Add(fingerprint);
-                addedCount++;
-            }
+            WriteDiff(plan, "text", output, summary: true);
+            return 1;
         }
-
-        if (addedCount == 0 && newClassCount == 0)
+        if (plan.Added.Count == 0 && plan.AddedClasses.Count == 0)
         {
             output.WriteLine("No new entries to merge.");
             return 0;
         }
-
-        new WhitelistWriter().WriteDirectory(workspace.WhitelistDirectory, documentsByModule.Values.ToList());
-
-        var hierarchyEntries = workspace.LoadHierarchyEntries();
-        if (hierarchyEntries.Count > 0)
+        if (workspace.IncludeDirectory is null)
         {
-            var normalized = new WhitelistNormalizer().Normalize(documentsByModule.Values.ToList(), hierarchyEntries, workspace.Config.Binding.ManualBindingClasses);
-            new WhitelistWriter().WriteDirectory(workspace.WhitelistDirectory, normalized);
+            output.WriteLine("VTK include directory was not found; merge requires validation before writing.");
+            return 1;
         }
-
-        var parts = new List<string>();
-        if (newClassCount > 0) parts.Add($"{newClassCount} class(es)");
-        if (addedCount > 0) parts.Add($"{addedCount} function(s)");
-        output.WriteLine($"Merged {string.Join(", ", parts)} from candidate into formal whitelist.");
+        // 写入前校验完整合并结果，防止缺少互操作元数据的候选污染正式白名单。
+        var inspector = new VtkClassInspector();
+        var inspected = plan.Documents.SelectMany(document => document.Classes)
+            .ToDictionary(item => item.Name, item => inspector.InspectHeader(workspace.IncludeDirectory, item.Header, item.Name), StringComparer.Ordinal);
+        var resolver = workspace.LoadHierarchyResolver();
+        var diagnostics = plan.Documents.SelectMany(document => new WhitelistValidator().Validate(document, inspected, resolver).Diagnostics).ToList();
+        if (diagnostics.Count > 0)
+        {
+            foreach (var diagnostic in diagnostics) output.WriteLine(diagnostic.Message);
+            return 1;
+        }
+        new WhitelistWriter().WriteDirectory(workspace.WhitelistDirectory, plan.Documents);
+        output.WriteLine($"Merged {plan.AddedClasses.Count} class(es), {plan.Added.Count} function(s), including dependencies.");
         output.WriteLine("Review the changes with git diff before committing.");
         return 0;
     }
 
-    private static CandidateDocument LoadCandidateFile(string path)
+    internal static CandidateMergePlan Prepare(GeneratorWorkspace workspace, CandidateDocument candidate)
+        => CandidateMergePlan.Build(workspace.LoadWhitelist(), candidate, workspace.LoadHierarchyEntries(), workspace.Config.Binding.ManualBindingClasses);
+
+    internal static void WriteDiff(CandidateMergePlan plan, string format, TextWriter output, bool summary)
+    {
+        if (format == "json")
+        {
+            var entries = plan.Documents.SelectMany(document => document.Classes.SelectMany(item => item.Functions.Select(function => new
+            {
+                id = CandidateMergePlan.FunctionId(item.Name, function),
+                path = $"{document.Module}/{item.Name}",
+                signature = $"{function.Name}({string.Join(",", function.Parameters.Select(parameter => parameter.Type))})->{function.Return.Type}",
+            }))).DistinctBy(item => item.id).ToDictionary(item => item.id, StringComparer.Ordinal);
+            output.WriteLine(JsonSerializer.Serialize(new
+            {
+                addedClasses = plan.AddedClasses, added = plan.Added.Select(id => entries[id]),
+                unchanged = (summary ? [] : plan.Unchanged).Select(id => entries[id]), unchangedCount = plan.Unchanged.Count,
+                conflicts = plan.Conflicts,
+            }, JsonOptions));
+            return;
+        }
+        output.WriteLine($"Added: {plan.AddedClasses.Count} class(es), {plan.Added.Count} function(s); already present: {plan.Unchanged.Count}; conflicts: {plan.Conflicts.Count}.");
+        foreach (var item in plan.AddedClasses) output.WriteLine($"  + {item.Module}/{item.Class} [{string.Join(", ", item.Reasons)}]");
+        foreach (var item in plan.Added) output.WriteLine($"  + {item}");
+        if (!summary) foreach (var item in plan.Unchanged) output.WriteLine($"    {item}");
+        foreach (var conflict in plan.Conflicts) output.WriteLine($"  ! {conflict}");
+    }
+
+    internal static CandidateDocument LoadCandidateFile(string path)
     {
         using var reader = File.OpenText(path);
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .IgnoreUnmatchedProperties()
-            .Build();
-        return deserializer.Deserialize<CandidateDocument>(reader);
+        return new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .IgnoreUnmatchedProperties().Build().Deserialize<CandidateDocument>(reader);
     }
 
-    private static HashSet<string> BuildFingerprints(IReadOnlyList<WhitelistDocument> documents)
+    internal static void WriteCandidate(string path, CandidateDocument candidate)
     {
-        var set = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var document in documents)
+        Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(path))!);
+        var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .WithIndentedSequences().ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull).DisableAliases().Build();
+        File.WriteAllText(path, serializer.Serialize(candidate));
+    }
+
+    internal static WhitelistFunction ToWhitelistFunction(InspectedFunction function)
+        => new()
         {
-            foreach (var whitelistClass in document.Classes)
-            {
-                foreach (var function in whitelistClass.Functions)
-                {
-                    set.Add(MakeFingerprint(document.Module, whitelistClass.Name, function));
-                }
-            }
-        }
-
-        return set;
-    }
-
-    private static Dictionary<string, string> BuildCandidateFingerprints(CandidateDocument candidate)
-    {
-        var dict = new Dictionary<string, string>(StringComparer.Ordinal);
-        foreach (var requirement in candidate.Requirements)
-        foreach (var function in requirement.Functions)
-        {
-            var fingerprint = MakeFingerprint(requirement.Module, requirement.Class, function);
-            dict[fingerprint] = requirement.Class;
-        }
-
-        return dict;
-    }
-
-    private static string MakeFingerprint(string module, string className, WhitelistFunction function)
-    {
-        var paramTypes = string.Join(",", function.Parameters.Select(p => p.Type));
-        return $"{module}/{className}::{function.Name}({paramTypes})->{function.Return.Type}";
-    }
-
-    private static object FingerprintToJson(string fingerprint)
-    {
-        var parts = fingerprint.Split("::", 2);
-        var path = parts[0];
-        var signature = parts.Length > 1 ? parts[1] : "";
-        return new { path, signature };
-    }
-
-    private static bool IsAllTypesSupported(InspectedFunction function)
-    {
-        var types = function.Parameters.Select(p => p.Type).Append(function.ReturnType);
-        return types.All(WhitelistValidator.IsSupportedType);
-    }
-
-    private static string EscapeYaml(string text)
-        => text.Contains('"', StringComparison.Ordinal)
-            ? text.Replace("\"", "\\\"", StringComparison.Ordinal)
-            : text;
+            Name = function.Name, CppSignature = function.CppSignature,
+            Return = new WhitelistReturn { Type = function.ReturnType },
+            Parameters = function.Parameters.Select(parameter => new WhitelistParameter { Type = parameter.Type, Name = parameter.Name }).ToList(),
+        };
 }

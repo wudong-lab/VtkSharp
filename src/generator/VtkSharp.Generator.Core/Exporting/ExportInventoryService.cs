@@ -1,7 +1,5 @@
 using VtkSharp.Generator.Core.Configuration;
-using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Inspection;
-using VtkSharp.Generator.Core.Validation;
 using VtkSharp.Generator.Core.Vtk;
 using VtkSharp.Generator.Core.Whitelist;
 
@@ -319,18 +317,6 @@ public sealed class ExportInventoryService
         if (hiddenTypeNames.Contains(declaringTypeName))
             return $"'{declaringTypeName}' is a manual binding class.";
 
-        foreach (var type in function.Parameters.Select(parameter => parameter.Type).Append(function.ReturnType))
-        {
-            if (!WhitelistValidator.IsSupportedType(type))
-                return $"Unsupported type '{type}'.";
-        }
-
-        foreach (var parameter in function.Parameters)
-        {
-            if (TypeClassifier.IsSupportedPrimitivePointerType(parameter.Type))
-                return $"Parameter '{parameter.Name}' ({parameter.Type}) requires direction and length metadata.";
-        }
-
-        return null;
+        return FunctionEligibility.Evaluate(function).Reason;
     }
 }
