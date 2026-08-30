@@ -15,7 +15,7 @@
       VtkSharp is an unofficial open-source .NET binding for VTK (Visualization Toolkit).
       Uses a C ABI shim and C# P/Invoke approach. 
     </Description>
-    <PackageTags>VTK;visualization;graphics;rendering;netstandard;cross-platform</PackageTags>
+    <PackageTags>VTK;visualization;graphics;rendering;netstandard;windows;x64</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
@@ -26,7 +26,7 @@
   <!--
     Native DLL resolution for local development builds.
     Tries VS2026 output first, falls back to VS2022.
-    The selected DLL is copied to the output directory.
+    The selected DLL is copied to the output directory and packed once as a win-x64 native asset.
   -->
   <PropertyGroup>
     <VtkSharpNativeDllName>VtkSharp.Native.dll</VtkSharpNativeDllName>
@@ -38,22 +38,18 @@
 
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
     <Content Include="$(VtkSharpNativeDllPath)" 
+             Pack="true"
+             PackagePath="runtimes/win-x64/native/VtkSharp.Native.dll"
              Link="native\$(VtkSharpNativeDllName)" 
              TargetPath="$(VtkSharpNativeDllName)" 
              CopyToOutputDirectory="PreserveNewest" 
              CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 
-  <!--
-    Native DLL bundling for NuGet package.
-    Placed under runtimes/win-x64/native/ so the .NET runtime automatically
-    resolves it via native library probing when the consumer's RID is win-x64.
-  -->
-  <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)')">
-    <Content Include="$(VtkSharpNativeDllPath)"
-             PackagePath="runtimes/win-x64/native/VtkSharp.Native.dll"
-             Visible="false" />
-  </ItemGroup>
+  <Target Name="ValidateNativePackageAsset" BeforeTargets="GenerateNuspec">
+    <Error Condition="!Exists('$(VtkSharpNativeDllPath)')"
+           Text="VtkSharp.Native.dll is required for packaging. Build native with the matching Configuration or run tools/package-nuget.ps1." />
+  </Target>
 
   <!-- Package README -->
   <ItemGroup>

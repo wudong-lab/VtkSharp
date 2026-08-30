@@ -2,12 +2,16 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Debug",
 
-    [string]$VtkDir,
+    [string]$VtkDir = $env:VTK_DIR,
 
     [switch]$SkipNativeBuild
 )
 
 $ErrorActionPreference = "Stop"
+
+if (-not $SkipNativeBuild -and [string]::IsNullOrWhiteSpace($VtkDir)) {
+    throw "Set VTK_DIR to the installed VTK CMake package directory, or pass -VtkDir. See README.md."
+}
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $artifactsDir = Join-Path $repoRoot "artifacts\bin"

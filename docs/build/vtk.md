@@ -1,118 +1,96 @@
 # 构建 VtkSharp 使用的 VTK
 
-VtkSharp 当前以 VTK 9.7.0 为开发基线。在 Windows 上使用 Visual Studio 2026、x64 和静态 VTK 库，VTK 最终链接到 `VtkSharp.Native.dll`，避免发布时携带大量 VTK 动态库。
+当前开发基线为 VTK `v9.7.0`，对应上游提交 `23f0a095621e91bbdbeace8451e22b950c8e5f46`。
+默认使用 Windows x64、Visual Studio 2026、静态 VTK 库和动态 MSVC CRT。
+VTK 静态库最终链接到 `VtkSharp.Native.dll`；这不表示无需 MSVC 运行库。
 
-## 目录约定
+## 工具与源码
 
-```text
-D:\Code\VTK\VtkGitSource         # VTK v9.7.0 源码
-D:\Code\VTK\VtkGitBuild          # CMake 构建目录
-D:\Code\VTK\VtkGitBuild\install  # 安装目录，供生成器和 VtkSharp.Native 使用
+安装 Git、PowerShell 7、Visual Studio 2026 的 C++ 桌面开发工作负载和 Windows SDK。
+CMake 至少使用 4.2，因为 [VS 2026 generator 从该版本加入](https://cmake.org/cmake/help/v4.2/generator/Visual%20Studio%2018%202026.html)。
+本脚本不提供 VS 2022 回退。
+
+从 VtkSharp 仓库根目录执行，路径可自行选择：
+
+```powershell
+$vtkWorkspace = "D:\Dependencies\VTK"
+$vtkSource = Join-Path $vtkWorkspace "source"
+$vtkBuild = Join-Path $vtkWorkspace "build"
+git clone --branch v9.7.0 --depth 1 https://gitlab.kitware.com/vtk/vtk.git $vtkSource
+
+.\tools\build-vtk-for-vtksharp.ps1 -Configuration Release `
+    -SourceDirectory $vtkSource -BuildDirectory $vtkBuild
 ```
 
-安装步骤不能省略。VtkSharp 生成器需要安装目录中的 VTK headers 和 hierarchy 文件，`VtkSharp.Native` 则通过安装后的 CMake package 查找 VTK。
+克隆目标应为尚不存在的目录。已有源码时先确认版本，不要直接覆盖本地修改。
+脚本检查源码中的版本号为 9.7.0，但不校验 Git 提交；上面的 tag 用于固定可复现的源码基线。
+
+## 目录与参数
+
+- `-SourceDirectory`：VTK 源码目录。
+- `-BuildDirectory`：CMake 工程和编译中间文件目录。
+- `-InstallDirectory`：安装根目录；省略时为构建目录下的 `install`。
+- 未指定源码/构建目录时，脚本保留历史默认值：相对脚本目录的 `../../../VTK/VtkGitSource` 和 `../../../VTK/VtkGitBuild`。公开用户推荐显式传参，不依赖仓库克隆位置。
+
+```text
+VTK/
+├── source/          # 下载的源码
+└── build/           # 构建目录
+    └── install/     # 安装根目录（VTK_ROOT）
+```
+
+安装步骤不能省略：生成器需要安装后的 headers 和 hierarchy 文件，native 构建需要 CMake package。
+安装后按 [README 环境变量说明](../../README.md#2-设置-vtk-环境变量) 设置 `VTK_ROOT` 和 `VTK_DIR`。
+这两个变量用于消费已安装的 VTK，不控制本脚本的源码或构建目录。
+
+## Release、Debug 与分步操作
+
+以下命令沿用上文的 `$vtkSource`、`$vtkBuild`：
+
+```powershell
+# Configure, build and install both configurations
+.\tools\build-vtk-for-vtksharp.ps1 -Configuration Both `
+    -SourceDirectory $vtkSource -BuildDirectory $vtkBuild
+
+# Configure only
+.\tools\build-vtk-for-vtksharp.ps1 -Action Configure `
+    -SourceDirectory $vtkSource -BuildDirectory $vtkBuild
+
+# Build and install Debug after configuration
+.\tools\build-vtk-for-vtksharp.ps1 -Action Build -Configuration Debug -BuildDirectory $vtkBuild -SourceDirectory $vtkSource
+.\tools\build-vtk-for-vtksharp.ps1 -Action Install -Configuration Debug -BuildDirectory $vtkBuild -SourceDirectory $vtkSource
+```
+
+`-Action` 默认为 `All`，`-Configuration` 默认为 `Release`。仅构建 Debug 时也可使用
+`-Configuration Debug` 一次完成配置、编译和安装。`-Parallel` 控制并行度；
+已有目录切换 generator 时使用新的构建目录，或确认兼容后使用 `-Fresh` 重建 CMake cache。
+
+Debug 和 Release 可安装到同一目录；Debug 库带 `d` 后缀，CMake 分配置引用。
+本脚本显式设置动态 MSVC CRT：Release 为 `/MD`，Debug 为 `/MDd`。
+native DLL 应链接同配置、匹配工具链与 CRT 的 VTK 静态库。
 
 ## 模块范围
 
-开发环境构建 VTK 的常规常用模块，不把模块范围严格限制为 VtkSharp 当前白名单。这样可以在持续补充 API 时减少重新编译 VTK 的次数。
+实际配置以 [构建脚本](../../tools/build-vtk-for-vtksharp.ps1) 为准，不在文档重复维护全部 CMake 开关。
 
-当前启用以下模块组：
+- `StandAlone`、`Rendering`、`Imaging`、`Views` 模块组设为 `WANT`，常用依赖满足时构建。
+- 脚本列出的必需模块设为 `YES`。
+- 禁用 Qt、MPI、Web、Tk、CUDA、HIP、Kokkos、WebGPU、remote modules，以及 Python/Java/JavaScript 等语言包装。
+- `VTK_ENABLE_WRAPPING=ON` 用于生成 hierarchy 文件，不代表启用其他语言 wrapper。
+- 禁用 VTK 测试、示例和文档构建，使用 `STDThread` SMP 实现。
 
-- `StandAlone`
-- `Rendering`
-- `Imaging`
-- `Views`
+VTK 安装中的模块不等于 VtkSharp 已绑定的模块；后者由正式白名单决定。
 
-明确排除 Qt、MPI、Web、JavaScript/WebAssembly、CUDA、HIP、Kokkos、WebGPU、Tk 和 remote modules。这些能力需要额外工具链或第三方运行环境，不属于当前 Windows 桌面 CAD/CAE 可视化开发范围。
+## 后续增加模块
 
-VTK 模块开关中，`WANT` 表示依赖满足时构建，`NO` 表示禁止构建。明确排除的模块组使用 `NO`；如果后续某个必需模块依赖被设为 `NO` 的模块，CMake 会在配置阶段报错，此时应先确认是否确实需要扩大项目范围。
-
-## 配置
-
-在 PowerShell 中执行：
+例如需要 `IOXML` 时，可在原目录重新配置并增量安装：
 
 ```powershell
-cmake `
-    -S D:/Code/VTK/VtkGitSource `
-    -B D:/Code/VTK/VtkGitBuild `
-    -G "Visual Studio 18 2026" `
-    -A x64 `
-    -DCMAKE_INSTALL_PREFIX=D:/Code/VTK/VtkGitBuild/install `
-    -DBUILD_SHARED_LIBS=OFF `
-    -DVTK_BUILD_ALL_MODULES=OFF `
-    -DVTK_GROUP_ENABLE_StandAlone=WANT `
-    -DVTK_GROUP_ENABLE_Rendering=WANT `
-    -DVTK_GROUP_ENABLE_Imaging=WANT `
-    -DVTK_GROUP_ENABLE_Views=WANT `
-    -DVTK_GROUP_ENABLE_Qt=NO `
-    -DVTK_GROUP_ENABLE_MPI=NO `
-    -DVTK_GROUP_ENABLE_Web=NO `
-    -DVTK_GROUP_ENABLE_Tk=NO `
-    -DVTK_USE_MPI=OFF `
-    -DVTK_USE_CUDA=OFF `
-    -DVTK_USE_HIP=OFF `
-    -DVTK_USE_KOKKOS=OFF `
-    -DVTK_ENABLE_WEBGPU=OFF `
-    -DVTK_WRAP_JAVASCRIPT=OFF `
-    -DVTK_WRAP_PYTHON=OFF `
-    -DVTK_WRAP_JAVA=OFF `
-    -DVTK_WRAP_SERIALIZATION=OFF `
-    -DVTK_ENABLE_REMOTE_MODULES=OFF `
-    -DVTK_BUILD_TESTING=OFF `
-    -DVTK_BUILD_EXAMPLES=OFF `
-    -DVTK_BUILD_DOCUMENTATION=OFF `
-    -DVTK_ENABLE_WRAPPING=ON `
-    -DVTK_ENABLE_KITS=OFF `
-    -DVTK_SMP_IMPLEMENTATION_TYPE=STDThread
+cmake -S $vtkSource -B $vtkBuild -DVTK_MODULE_ENABLE_VTK_IOXML=YES
+cmake --build $vtkBuild --config Release --parallel
+cmake --install $vtkBuild --config Release
 ```
 
-`VTK_ENABLE_WRAPPING=ON` 用于生成 hierarchy 文件，不表示需要启用 Python、Java 或 JavaScript wrapper。
-
-## 构建与安装
-
-优先完成 Release 构建：
-
-```powershell
-cmake --build D:/Code/VTK/VtkGitBuild --config Release --parallel
-cmake --install D:/Code/VTK/VtkGitBuild --config Release
-```
-
-需要调试 native 生命周期、渲染或互操作问题时，再构建 Debug：
-
-```powershell
-cmake --build D:/Code/VTK/VtkGitBuild --config Debug --parallel
-cmake --install D:/Code/VTK/VtkGitBuild --config Debug
-```
-
-Debug 和 Release 可以安装到同一个目录。Windows 下 VTK 的 Debug 库默认带 `d` 后缀，对应的 CMake target 配置会分别引用 Debug 和 Release 库。
-
-安装完成后，使用对应配置构建 VtkSharp native 层：
-
-```powershell
-.\tools\build-native.ps1 `
-    -Configuration Release `
-    -VtkDir "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7"
-```
-
-## 后续增加 VTK 模块
-
-如果补充 VtkSharp API 时发现安装的 VTK 缺少模块，不需要清空构建目录或完整重编全部模块。以新增 `VTK::IOXML` 为例，在原构建目录中重新配置：
-
-```powershell
-cmake `
-    -S D:/Code/VTK/VtkGitSource `
-    -B D:/Code/VTK/VtkGitBuild `
-    -DVTK_MODULE_ENABLE_VTK_IOXML=YES
-
-cmake --build D:/Code/VTK/VtkGitBuild --config Release --parallel
-cmake --install D:/Code/VTK/VtkGitBuild --config Release
-```
-
-CMake 会增量构建 `IOXML` 及尚未构建的必要依赖。随后执行以下流程：
-
-1. 在白名单中补充新模块的类和 API。
-2. 重新运行生成器，确认 `src/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake` 包含新模块。
-3. 重新配置并构建 `VtkSharp.Native`。
-4. 运行相关测试和最小渲染示例。
-
-新增模块通常可以直接增量构建。如果需要关闭已构建模块、切换编译器、平台、静态/动态库或 CRT 配置，应使用新的构建目录，避免旧 CMake cache 和二进制残留造成混用。
+随后通过 [候选白名单流程](../generator.md#白名单变更流程) 补充绑定、生成并验证。
+若该模块成为项目必需项，还应同步构建脚本的模块列表，确保新用户可以构建。
+切换编译器、架构、静态/动态库或 CRT 时应使用新构建目录，避免混用缓存和二进制。

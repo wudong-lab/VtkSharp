@@ -118,8 +118,8 @@ AI 新增封装能力时，优先同时补充一个小示例。示例应尽量�
 完成修改后应尽量执行相关验证：
 
 ```powershell
-dotnet build
-dotnet test
+dotnet build src/examples/ExampleBrowser/ExampleBrowser.csproj --configuration Release
+dotnet test src/bindings/VtkSharp.slnx --configuration Release
 ```
 
 绑定和示例任务优先使用 `tools/verify-workflow.ps1 -VtkDir <vtk-cmake-directory>`，需要重新生成时加 `-Regenerate`，目标示例支持自动验收时加 `-Example <Category/Name>`。脚本汇总构建、测试及生成一致性检查，完整日志落盘，失败后标明未执行阶段。具体选项和验收边界见 [统一验证与示例验收](verification.md)。普通局部任务仍只运行相关检查，无需每次执行完整链路。
@@ -209,4 +209,7 @@ dotnet test
 
 ## 13. 文档维护
 
-仓库根目录的 `AGENTS.md` 只保留代理必须遵守的稳定约束；本文档维护协作流程、复盘清单和提示词模板。可重复的专门工作流放在 `.agents/skills`，避免与普通开发文档重复。
+仓库根目录的 `AGENTS.md` 只保留代理必须遵守的稳定约束；本文档维护协作流程、复盘清单和提示词模板。
+可重复的专门工作流位于仓库根目录的 `.agents/skills/`：`port-vtk-example` 用于示例移植，
+`supplement-whitelist` 用于参考导出集的批量补充。它们是可选的 AI 辅助工具，不是构建依赖；
+普通贡献者可直接按生成器文档执行相同流程。技能实际目录保留原位，不移动到 `docs/`。

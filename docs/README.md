@@ -7,6 +7,10 @@
 - [绑定生成器](generator.md)：配置、白名单、导出规则和常用命令。
 - [VTK 构建](build/vtk.md)：Windows 静态 VTK 的配置、编译和安装。
 - [VtkSharp 构建](build/vtksharp.md)：native/managed 构建、CRT 匹配和产物收集。
+- [贡献指南](../CONTRIBUTING.md)：问题反馈、API 补充与 Pull Request 要求。
+- [统一验证与示例验收](workflow/verification.md)：构建、测试、生成检查和截图验收。
+- [互操作依据记录](workflow/interop-evidence.md)：方向、长度和所有权判断的依据。
+- [示例浏览器](../src/examples/README.md)：运行方式、分类和新增示例约定。
 - [AI 辅助开发](workflow/ai-assisted-development.md)：项目协作与验证约定。
 - `learning/`：C#、P/Invoke 和 native 互操作专题资料。
 

@@ -1,4 +1,0 @@
-# yaml-language-server: $schema=../schemas/vtksharp.generator.local.schema.json
-
-vtk:
-  rootDirectory: "D:/Code/VTK/VtkGitBuild/install"

@@ -4,18 +4,20 @@
 
 ## 常用入口
 
-在仓库根目录运行；`VtkDir` 必须指向当前安装中包含 `VTKConfig.cmake` 的目录。
+在仓库根目录运行；先按 [README](../../README.md#2-设置-vtk-环境变量) 设置 `VTK_ROOT` 和
+`VTK_DIR`。脚本默认读取环境变量 `VTK_DIR`，也可用 `-VtkDir` 覆盖，目录必须包含
+`VTKConfig.cmake` 或 `vtk-config.cmake`。未提供路径时在创建报告目录前报错。
 
 ```powershell
-.\tools\verify-workflow.ps1 -VtkDir <vtk-cmake-directory> -Example GeometricObjects/Cone
+.\tools\verify-workflow.ps1 -Example GeometricObjects/Cone
 
 # 合并 candidate 后，需要更新生成文件时显式启用
-.\tools\verify-workflow.ps1 -VtkDir <vtk-cmake-directory> -Regenerate -Example GeometricObjects/Cone
+.\tools\verify-workflow.ps1 -Regenerate -Example GeometricObjects/Cone
 ```
 
 默认使用 Release，依次构建 CLI、运行 generator 测试、按需增量生成、构建 native、运行 managed 测试、构建 ExampleBrowser、按需运行目标示例、检查生成一致性。没有指定 `-Example` 时，示例验收标记为 `not-run`，不会自动用 Cone 代替目标示例。
 
-可通过 `-Configuration`、`-GeneratorConfig`、`-VtkBinDirectory` 指定配置；默认 VTK DLL 目录是 CMake 包目录的 `../../../bin`，只加入子进程 PATH。生成器仍使用其配置中的 VTK 安装，调用者应确保它与 `-VtkDir` 是同一版本和安装。
+可通过 `-Configuration`、`-GeneratorConfig`、`-VtkBinDirectory` 指定配置；默认 VTK DLL 目录是 CMake 包目录的 `../../../bin`，只加入子进程 PATH。生成器使用 `VTK_ROOT` 或本地配置中的安装，脚本不会根据 `-VtkDir` 自动推导并覆盖它；调用者应确保两者是同一版本和安装。
 
 每次运行创建新的 `artifacts/verification/<timestamp-id>/`，也可用 `-OutputDirectory` 指定不存在的目录。保留完整 stdout/stderr、每阶段命令、退出码、耗时、警告摘要及 `verification.json`。报告记录提交和工作区状态，但不是源码快照；源码或配置变化后应重新验证。
 

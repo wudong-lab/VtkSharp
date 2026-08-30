@@ -13,7 +13,7 @@
 .\tools\build-vtk-for-vtksharp.ps1 -Configuration Both -Parallel 16
 
 .EXAMPLE
-.\tools\build-vtk-for-vtksharp.ps1 -Action Configure -BuildDirectory D:\Code\VTK\VtkGitBuild-vs2026
+.\tools\build-vtk-for-vtksharp.ps1 -Action Configure -SourceDirectory D:\Dependencies\VTK\source -BuildDirectory D:\Dependencies\VTK\build
 #>
 [CmdletBinding()]
 param(
@@ -224,4 +224,5 @@ if ($Action -in @("Install", "All")) {
 }
 
 Write-Host "VTK action '$Action' completed." -ForegroundColor Green
+Write-Host "VTK_ROOT=$($InstallDirectory.Replace('\', '/'))"
 Write-Host "VTK_DIR=$($InstallDirectory.Replace('\', '/'))/lib/cmake/vtk-9.7"

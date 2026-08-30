@@ -1,7 +1,6 @@
 #requires -Version 7.0
 param(
-    [Parameter(Mandatory)]
-    [string]$VtkDir,
+    [string]$VtkDir = $env:VTK_DIR,
 
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Release",
@@ -20,6 +19,10 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+if ([string]::IsNullOrWhiteSpace($VtkDir)) {
+    throw "Set VTK_DIR to the installed VTK CMake package directory, or pass -VtkDir. See README.md."
+}
+
 $repoRoot = Split-Path -Parent $PSScriptRoot
 if (-not $OutputDirectory) {
     $OutputDirectory = Join-Path $repoRoot "artifacts/verification/$([DateTime]::Now.ToString('yyyyMMdd-HHmmss'))-$([Guid]::NewGuid().ToString('N').Substring(0, 8))"

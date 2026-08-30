@@ -2,13 +2,17 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Debug",
 
-    [string]$VtkDir
+    [string]$VtkDir = $env:VTK_DIR
 )
 
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $nativeDir = Join-Path $repoRoot "src\bindings\VtkSharp.Native"
+
+if ([string]::IsNullOrWhiteSpace($VtkDir)) {
+    throw "Set VTK_DIR to the installed VTK CMake package directory, or pass -VtkDir. See README.md."
+}
 
 if ($VtkDir) {
     $VtkDir = [IO.Path]::GetFullPath($VtkDir)

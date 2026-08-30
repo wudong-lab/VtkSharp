@@ -2,6 +2,18 @@
 
 ## 职责与输入
 
+生成器与其测试需要 .NET 10 SDK，当前运行目标为 Windows x64。普通绑定库构建使用仓库中已有的
+生成文件，不需要先运行生成器。
+
+先按 [README](../README.md#2-设置-vtk-环境变量) 设置 `VTK_ROOT`，指向安装根目录；
+生成器不会把 `VTK_DIR` 或构建脚本的 `-VtkDir` 当作安装根目录。
+安装中必须有 `include/vtk-9.7` 头文件及 `lib/vtk-9.7/hierarchy/VTK` 类型信息。
+
+如不便使用环境变量，可复制 `config/vtksharp.generator.local.example.yml` 为同目录下的
+`vtksharp.generator.local.yml`，填写自己的 `vtk.rootDirectory`；本地文件被 Git 忽略，不应提交。
+环境变量 `VTK_ROOT` 优先于配置中的根目录；显式配置的 `includeDirectory` / `hierarchyDirectory`
+仍优先于从根目录推导的路径，切换安装时应检查这些覆盖项，避免混用不同版本。
+
 生成器位于 `src/generator`，其主要输入为：
 
 - `config/vtksharp.generator.yml`：VTK 版本、输出目录和生成行为。
