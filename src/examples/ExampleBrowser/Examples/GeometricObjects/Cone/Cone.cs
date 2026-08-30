@@ -6,9 +6,13 @@ namespace VtkSharp.ExampleBrowser.Examples;
 [Example("Cone", "GeometricObjects",
     Description = "Creates a cone with custom height/radius/resolution and renders it.",
     SourceFiles = new[] { "Examples/GeometricObjects/Cone/Cone.cs" })]
-internal class Cone : IExample
+internal class Cone : ISmokeExample
 {
-    public void Run()
+    public void Run() => Render(null);
+
+    public void RenderScreenshot(string screenshotPath) => Render(screenshotPath);
+
+    private static void Render(string? screenshotPath)
     {
         using var cone = vtkConeSource.New();
         cone.SetHeight(3.0);
@@ -32,6 +36,16 @@ internal class Cone : IExample
         interactor.SetRenderWindow(window);
 
         window.Render();
+        if (screenshotPath is not null)
+        {
+            using var image = window.GetRgbImageData();
+            using var writer = vtkPNGWriter.New();
+            writer.SetInputData(image);
+            writer.SetFileName(screenshotPath);
+            writer.Write();
+            return;
+        }
+
         Debug.WriteLine("Cone example running. Close the window to exit.");
         interactor.Start();
     }

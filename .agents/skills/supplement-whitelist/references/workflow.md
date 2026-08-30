@@ -15,7 +15,7 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
 
 参考模式明确选择扫描方法名的全部可直接生成重载，空方法集合只请求类型。CLI 查询当前安装的 VTK，不信任参考文件签名；只将未导出的受支持函数加入候选，并保留需要的新接收类型。
 
-先读终端摘要，只为待处理项打开详细 JSON：
+先读终端摘要，只为待处理项打开详细 JSON。使用 `tools/read-binding-report.ps1 -Path <report.json> -Class <VTKClass>` 或 `-Status needs-metadata` 筛选，不需要重复加载完整成功报告：
 
 - `already-exported`：无需添加。
 - `needs-metadata`：需查明指针方向、长度等契约，不按名称猜测。
@@ -30,7 +30,6 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
 dotnet run --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist <temporary-candidate.yml> --summary
 # 审核后执行
 dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate <temporary-candidate.yml>
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src --incremental
 ```
 
 完整 diff 包含基类、签名依赖和新增模块，merge 先校验再写入，并自动规范化。不再重复执行 normalize 或人工逐类补基类。所有权等元数据冲突不能通过新增接口流程覆盖。
@@ -38,10 +37,10 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings -
 从当前 VTK 安装确认 `VTKConfig.cmake` 所在目录，不照抄旧版本路径：
 
 ```powershell
-$vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7"
-.\tools\build-native.ps1 -Configuration Release -VtkDir $vtkDir
-dotnet test src/bindings/VtkSharp.slnx --configuration Release
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check
+$vtkDir = "<vtk-cmake-directory>"
+.\tools\verify-workflow.ps1 -VtkDir $vtkDir -Regenerate
 ```
 
 生成器负责模块列表；模块缺失应修正 generator/config 输入，不手改生成 CMake。报告引用扫描与规划统计、新增依赖、排除项及实际验证结果，不重新逐条抄写工具清单。
+
+统一验证脚本的阶段状态、日志和可选示例验收见 `docs/workflow/verification.md`。没有指定目标示例时截图验收为未执行，不应宣称渲染通过。方向、长度、所有权需要人工确认时，按 `docs/workflow/interop-evidence.md` 保存源码依据与复核条件，不只保存在临时报告中。

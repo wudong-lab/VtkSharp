@@ -122,6 +122,8 @@ dotnet build
 dotnet test
 ```
 
+绑定和示例任务优先使用 `tools/verify-workflow.ps1 -VtkDir <vtk-cmake-directory>`，需要重新生成时加 `-Regenerate`，目标示例支持自动验收时加 `-Example <Category/Name>`。脚本汇总构建、测试及生成一致性检查，完整日志落盘，失败后标明未执行阶段。具体选项和验收边界见 [统一验证与示例验收](verification.md)。普通局部任务仍只运行相关检查，无需每次执行完整链路。
+
 如果项目有特定示例启动方式，应运行对应示例。对于无法自动化验证的三维渲染效果，应至少说明：
 
 - 运行哪个示例。
@@ -144,9 +146,9 @@ dotnet test
 2. 按现有 `IExample`、`ExampleAttribute` 和目录约定完成最小 C# 翻译。
 3. 构建 ExampleBrowser，通过编译错误收集缺失类型和成员。
 4. 将最小需求交给 `plan-bindings`，由 CLI 定位声明类、比对现有绑定并创建 candidate；重载歧义和互操作元数据由开发者确认。
-5. 审核规划报告及包含依赖类型的 `diff-whitelist` 后合并 candidate，重新生成绑定。merge 自动校验、补齐依赖并规范化。
-6. 构建 native、managed 和示例项目，运行目标示例。
-7. 执行 `generate-bindings --check`，并记录翻译差异与新增 API。
+5. 先读规划摘要，按需展开诊断，审核 `diff-whitelist --summary` 的全部新增项及依赖后合并 candidate。merge 自动校验、补齐依赖并规范化。
+6. 用统一验证脚本重新生成、构建和测试；运行目标示例，区分自动截图与人工验收。
+7. 确认脚本中的 `generate-bindings --check` 通过，记录翻译差异、报告路径及排除项；人工确认的互操作语义按 [依据记录约定](interop-evidence.md) 留存。
 
 回调优先使用 VtkSharp 的 managed `AddObserver` 封装，不直接暴露 `vtkCallbackCommand`。不支持的复杂 native 签名应采用明确替代方案，并在 porting notes 中说明。
 

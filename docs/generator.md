@@ -144,6 +144,8 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate art
 - 标准输出只显示状态计数和待处理项，详细签名及新增类型写入 JSON 报告。存在未解决项或合并冲突时退出码为 1，但仍写入本批可处理部分的 candidate；必须审查报告，不得把部分成功当作完整导入。输入格式错误则不产出新结果。
 - 输入 JSON 字段拼写错误会被拒绝；输入、candidate、report 必须使用不同路径。需求格式见 `schemas/vtksharp.binding-requests.schema.json`。
 
+先审核摘要，详细诊断可用 `tools/read-binding-report.ps1 -Path <report.json> -Class <VTKClass>` 或 `-Status needs-metadata` 按需展开，避免重复读取全部成功项。合并前仍使用当前 `diff-whitelist --summary`。后续构建和验收见 [统一验证入口](workflow/verification.md)，人工确认的方向、长度和所有权按 [互操作依据记录](workflow/interop-evidence.md) 留存。
+
 单个方法的声明类定位无需写需求文件：
 
 ```powershell
