@@ -121,7 +121,7 @@ VTK 安装，不能互换；VTK 构建脚本完成安装时也会输出 `VTK_DIR
 dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj --configuration Release
 ```
 
-在浏览器中选择 `GeometricObjects / Cone` 并运行，应看到可交互的三维圆锥。
+在浏览器中选择 `GeometricObjects / Cone` 并运行，应看到品红色三维圆锥和 VtkSharp 说明文字。
 其他示例包括网格、图像、交互、背景渐变，以及 WPF 承载和事件回调，见 [示例说明](src/examples/README.md)。
 
 `build-all.ps1` 只构建绑定库和 native 项目，不构建生成器、测试或示例；它将产物收集到
@@ -135,20 +135,42 @@ dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj --configu
 
 下面是圆锥渲染的核心代码，完整可运行版本见 [Cone](src/examples/ExampleBrowser/Examples/GeometricObjects/Cone/Cone.cs)：
 
+运行截图（800×600，直接由示例的 VTK 渲染窗口导出）：
+
+![品红色圆锥及 VtkSharp 说明文字](docs/images/cone-example.png)
+
 ```csharp
 using VtkSharp;
 
 using var cone = vtkConeSource.New();
+cone.SetHeight(3.0);
+cone.SetRadius(1.0);
 cone.SetResolution(32);
+
 using var mapper = vtkPolyDataMapper.New();
 mapper.SetInputConnection(cone.GetOutputPort());
+
 using var actor = vtkActor.New();
 actor.SetMapper(mapper);
+actor.GetProperty().SetColor(VtkColor3d.Magenta);
+
+using var textActor = vtkTextActor.New();
+textActor.SetInput("VtkSharp - open-source .NET binding for VTK");
+textActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedViewport();
+textActor.SetPosition(0.025, 0.95);
+textActor.GetTextProperty().SetVerticalJustificationToTop();
+textActor.GetTextProperty().SetFontSize(28);
+textActor.GetTextProperty().SetColor(0.0, 0.0, 0.0);
+
 using var renderer = vtkRenderer.New();
+renderer.SetBackground(VtkColor3d.LightSkyBlue);
 renderer.AddActor(actor);
+renderer.AddViewProp(textActor);
+
 using var window = vtkRenderWindow.New();
 window.AddRenderer(renderer);
 window.SetSize(800, 600);
+
 using var interactor = vtkRenderWindowInteractor.New();
 interactor.SetRenderWindow(window);
 window.Render();

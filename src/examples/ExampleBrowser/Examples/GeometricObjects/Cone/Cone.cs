@@ -4,7 +4,7 @@ using VtkSharp;
 namespace VtkSharp.ExampleBrowser.Examples;
 
 [Example("Cone", "GeometricObjects",
-    Description = "Creates a cone with custom height/radius/resolution and renders it.",
+    Description = "Renders a magenta cone with a VtkSharp text annotation.",
     SourceFiles = new[] { "Examples/GeometricObjects/Cone/Cone.cs" })]
 internal class Cone : ISmokeExample
 {
@@ -17,16 +17,27 @@ internal class Cone : ISmokeExample
         using var cone = vtkConeSource.New();
         cone.SetHeight(3.0);
         cone.SetRadius(1.0);
-        cone.SetResolution(10);
+        cone.SetResolution(32);
 
         using var mapper = vtkPolyDataMapper.New();
         mapper.SetInputConnection(cone.GetOutputPort());
 
         using var actor = vtkActor.New();
         actor.SetMapper(mapper);
+        actor.GetProperty().SetColor(VtkColor3d.Magenta);
+
+        using var textActor = vtkTextActor.New();
+        textActor.SetInput("VtkSharp - open-source .NET binding for VTK");
+        textActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedViewport();
+        textActor.SetPosition(0.025, 0.95);
+        textActor.GetTextProperty().SetVerticalJustificationToTop();
+        textActor.GetTextProperty().SetFontSize(28);
+        textActor.GetTextProperty().SetColor(0.0, 0.0, 0.0);
 
         using var renderer = vtkRenderer.New();
+        renderer.SetBackground(VtkColor3d.LightSkyBlue);
         renderer.AddActor(actor);
+        renderer.AddViewProp(textActor);
 
         using var window = vtkRenderWindow.New();
         window.AddRenderer(renderer);
