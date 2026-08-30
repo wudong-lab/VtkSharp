@@ -71,6 +71,22 @@ public unsafe partial class vtkIdList : vtkObject
     }
 
     /// <summary>
+    /// Return the id at location i.
+    /// </summary>
+    public new long GetId(long i)
+    {
+        return vtkIdList_GetId(this.NativePointer, i);
+    }
+
+    /// <summary>
+    /// Return the number of id's in the list.
+    /// </summary>
+    public new long GetNumberOfIds()
+    {
+        return vtkIdList_GetNumberOfIds(this.NativePointer);
+    }
+
+    /// <summary>
     /// Set the id at location i. Doesn't do range checking so it's a bit
     /// faster than InsertId. Make sure you use SetNumberOfIds() to allocate
     /// memory prior to using SetId().
@@ -93,6 +109,12 @@ public unsafe partial class vtkIdList : vtkObject
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkIdList_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkIdList_GetId(nint self, long i);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkIdList_GetNumberOfIds(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkIdList_SetId(nint self, long i, long vtkid);

@@ -5,4 +5,8 @@
 
 VTKSHARP_API vtkPointSet* vtkPointSet_New() { return vtkPointSet::New(); }
 
+VTKSHARP_API vtkIdType vtkPointSet_GetNumberOfPoints(vtkPointSet* self) { return self->GetNumberOfPoints(); }
+
+VTKSHARP_API vtkPoints* vtkPointSet_GetPoints(vtkPointSet* self) { return self->GetPoints(); }
+
 VTKSHARP_API void vtkPointSet_SetPoints(vtkPointSet* self, vtkPoints* _arg1) { self->SetPoints(_arg1); }

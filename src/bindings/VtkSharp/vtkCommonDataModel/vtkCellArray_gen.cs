@@ -232,6 +232,19 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
         }
     }
 
+    /// <summary>
+    /// NewIterator returns a new instance of vtkCellArrayIterator that
+    /// is initialized to point at the first cell's data. The caller is responsible
+    /// for Delete()'ing the object.
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
+    public new vtkCellArrayIterator NewIterator()
+    {
+        return vtkCellArrayIterator.TakeReference(vtkCellArray_NewIterator(this.NativePointer));
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCellArray_New();
@@ -250,5 +263,8 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(nint self, long npts, long* pts);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkCellArray_NewIterator(nint self);
     #endregion
 }

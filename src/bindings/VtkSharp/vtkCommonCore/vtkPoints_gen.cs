@@ -75,6 +75,27 @@ public unsafe partial class vtkPoints : vtkObject
     }
 
     /// <summary>
+    /// Copy point components into user provided array v[3] for specified
+    /// id.
+    /// </summary>
+    /// <param name="id" />
+    /// <param name="x">
+    /// <para>
+    /// Output parameter.
+    /// </para>
+    /// <para>
+    /// Buffer length: 3 elements.
+    /// </para>
+    /// </param>
+    public new void GetPoint(long id, Span<double> x)
+    {
+        fixed (double* xPtr = x)
+        {
+            vtkPoints_GetPoint(this.NativePointer, id, xPtr);
+        }
+    }
+
+    /// <summary>
     /// Return object to instantiated state.
     /// </summary>
     public new void Initialize()
@@ -279,6 +300,9 @@ public unsafe partial class vtkPoints : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkPoints_GetNumberOfPoints(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPoints_GetPoint(nint self, long id, double* x);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPoints_Initialize(nint self);

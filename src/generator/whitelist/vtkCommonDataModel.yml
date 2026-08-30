@@ -105,6 +105,41 @@ classes:
             length:
               kind: parameter
               name: npts
+      - name: NewIterator
+        cppSignature: vtkCellArrayIterator * NewIterator()
+        return:
+          type: vtkCellArrayIterator*
+          ownership: owned
+        parameters: []
+  - name: vtkCellArrayIterator
+    header: vtkCellArrayIterator.h
+    functions:
+      - name: GetCurrentCell
+        cppSignature: vtkIdList * GetCurrentCell()
+        return:
+          type: vtkIdList*
+          ownership: borrowed
+        parameters: []
+      - name: GetCurrentCellId
+        cppSignature: vtkIdType GetCurrentCellId()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GoToFirstCell
+        cppSignature: void GoToFirstCell()
+        return:
+          type: void
+        parameters: []
+      - name: GoToNextCell
+        cppSignature: void GoToNextCell()
+        return:
+          type: void
+        parameters: []
+      - name: IsDoneWithTraversal
+        cppSignature: bool IsDoneWithTraversal()
+        return:
+          type: bool
+        parameters: []
   - name: vtkDataObject
     header: vtkDataObject.h
     functions:
@@ -150,6 +185,12 @@ classes:
   - name: vtkDataSetAttributes
     header: vtkDataSetAttributes.h
     functions:
+      - name: GetScalars
+        cppSignature: vtkDataArray * GetScalars()
+        return:
+          type: vtkDataArray*
+          ownership: borrowed
+        parameters: []
       - name: SetScalars
         cppSignature: int SetScalars(vtkDataArray * da)
         return:
@@ -310,6 +351,17 @@ classes:
   - name: vtkPointSet
     header: vtkPointSet.h
     functions:
+      - name: GetNumberOfPoints
+        cppSignature: vtkIdType GetNumberOfPoints()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: GetPoints
+        cppSignature: vtkPoints * GetPoints()
+        return:
+          type: vtkPoints*
+          ownership: borrowed
+        parameters: []
       - name: SetPoints
         cppSignature: void SetPoints(vtkPoints * _arg1)
         return:
@@ -320,6 +372,17 @@ classes:
   - name: vtkPolyData
     header: vtkPolyData.h
     functions:
+      - name: GetLines
+        cppSignature: vtkCellArray * GetLines()
+        return:
+          type: vtkCellArray*
+          ownership: borrowed
+        parameters: []
+      - name: GetNumberOfLines
+        cppSignature: vtkIdType GetNumberOfLines()
+        return:
+          type: vtkIdType
+        parameters: []
       - name: SetLines
         cppSignature: void SetLines(vtkCellArray * l)
         return:

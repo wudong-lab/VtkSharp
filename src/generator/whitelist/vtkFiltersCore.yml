@@ -61,6 +61,20 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkContourFilter
+    header: vtkContourFilter.h
+    functions:
+      - name: GenerateValues
+        cppSignature: void GenerateValues(int numContours, double rangeStart, double rangeEnd)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: numContours
+          - type: double
+            name: rangeStart
+          - type: double
+            name: rangeEnd
   - name: vtkDelaunay2D
     header: vtkDelaunay2D.h
     functions:
@@ -136,6 +150,9 @@ classes:
         parameters:
           - type: vtkDataObject*
             name: source
+  - name: vtkStripper
+    header: vtkStripper.h
+    functions: []
   - name: vtkTubeFilter
     header: vtkTubeFilter.h
     functions:

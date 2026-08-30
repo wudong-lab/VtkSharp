@@ -93,6 +93,14 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
     /// <summary>
     /// Turn on/off flag to control whether scalar data is used to color objects.
     /// </summary>
+    public new void ScalarVisibilityOff()
+    {
+        vtkMapper_ScalarVisibilityOff(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Turn on/off flag to control whether scalar data is used to color objects.
+    /// </summary>
     public new void ScalarVisibilityOn()
     {
         vtkMapper_ScalarVisibilityOn(this.NativePointer);
@@ -133,6 +141,9 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
     }
 
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_ScalarVisibilityOff(nint self);
+
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMapper_ScalarVisibilityOn(nint self);
 

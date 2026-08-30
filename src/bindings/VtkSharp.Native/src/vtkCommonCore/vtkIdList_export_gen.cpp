@@ -4,6 +4,10 @@
 
 VTKSHARP_API vtkIdList* vtkIdList_New() { return vtkIdList::New(); }
 
+VTKSHARP_API vtkIdType vtkIdList_GetId(vtkIdList* self, vtkIdType i) { return self->GetId(i); }
+
+VTKSHARP_API vtkIdType vtkIdList_GetNumberOfIds(vtkIdList* self) { return self->GetNumberOfIds(); }
+
 VTKSHARP_API void vtkIdList_SetId(vtkIdList* self, vtkIdType i, vtkIdType vtkid) { self->SetId(i, vtkid); }
 
 VTKSHARP_API void vtkIdList_SetNumberOfIds(vtkIdList* self, vtkIdType number) { self->SetNumberOfIds(number); }

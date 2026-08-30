@@ -113,6 +113,26 @@ public unsafe partial class vtkPolyData : vtkPointSet
     }
 
     /// <summary>
+    /// Get the cell array defining lines. If there are no lines, an
+    /// empty array will be returned (convenience to simplify traversal).
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkCellArray GetLines()
+    {
+        return vtkCellArray.FromBorrowedPointer(vtkPolyData_GetLines(this.NativePointer));
+    }
+
+    /// <summary>
+    /// Return the number of primitives of a particular type held.
+    /// </summary>
+    public new long GetNumberOfLines()
+    {
+        return vtkPolyData_GetNumberOfLines(this.NativePointer);
+    }
+
+    /// <summary>
     /// Set the cell array defining lines.
     /// </summary>
     public new void SetLines(vtkCellArray l)
@@ -131,6 +151,12 @@ public unsafe partial class vtkPolyData : vtkPointSet
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyData_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkPolyData_GetLines(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkPolyData_GetNumberOfLines(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyData_SetLines(nint self, nint l);

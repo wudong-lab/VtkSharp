@@ -5,4 +5,6 @@
 
 VTKSHARP_API vtkDataSetAttributes* vtkDataSetAttributes_New() { return vtkDataSetAttributes::New(); }
 
+VTKSHARP_API vtkDataArray* vtkDataSetAttributes_GetScalars(vtkDataSetAttributes* self) { return self->GetScalars(); }
+
 VTKSHARP_API int vtkDataSetAttributes_SetScalars(vtkDataSetAttributes* self, vtkDataArray* da) { return self->SetScalars(da); }

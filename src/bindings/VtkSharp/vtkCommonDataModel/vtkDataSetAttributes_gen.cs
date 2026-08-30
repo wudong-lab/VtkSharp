@@ -112,6 +112,17 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
     /// <summary>
     /// Set/Get the scalar data.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkDataArray GetScalars()
+    {
+        return vtkDataArray.FromBorrowedPointer(vtkDataSetAttributes_GetScalars(this.NativePointer));
+    }
+
+    /// <summary>
+    /// Set/Get the scalar data.
+    /// </summary>
     public new int SetScalars(vtkDataArray da)
     {
         return vtkDataSetAttributes_SetScalars(this.NativePointer, da.NativePointer);
@@ -120,6 +131,9 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataSetAttributes_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkDataSetAttributes_GetScalars(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkDataSetAttributes_SetScalars(nint self, nint da);

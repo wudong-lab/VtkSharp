@@ -24,6 +24,20 @@ classes:
         parameters:
           - type: const char*
             name: _arg
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataObject * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: _arg1
+      - name: SetLabelFormat
+        cppSignature: void SetLabelFormat(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
       - name: SetLabelModeToLabelFieldData
         cppSignature: void SetLabelModeToLabelFieldData()
         return:

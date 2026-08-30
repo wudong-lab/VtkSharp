@@ -3,6 +3,8 @@
 #include <vtkScalarsToColors.h>
 #include <vtkMapper.h>
 
+VTKSHARP_API void vtkMapper_ScalarVisibilityOff(vtkMapper* self) { self->ScalarVisibilityOff(); }
+
 VTKSHARP_API void vtkMapper_ScalarVisibilityOn(vtkMapper* self) { self->ScalarVisibilityOn(); }
 
 VTKSHARP_API void vtkMapper_SetLookupTable(vtkMapper* self, vtkScalarsToColors* lut) { self->SetLookupTable(lut); }

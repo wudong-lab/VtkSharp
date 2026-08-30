@@ -88,6 +88,20 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
     }
 
     /// <summary>
+    /// Convenient method to return a value in a specific range from the
+    /// range [0,1. There is an initial implementation that can be overridden
+    /// by a subclass.
+    /// There is no pre-condition on the range:
+    /// - it can be in increasing order: rangeMin&lt;rangeMax
+    /// - it can be empty: rangeMin=rangeMax
+    /// - it can be in decreasing order: rangeMin&gt;rangeMax
+    /// </summary>
+    public new double GetRangeValue(double rangeMin, double rangeMax)
+    {
+        return vtkMinimalStandardRandomSequence_GetRangeValue(this.NativePointer, rangeMin, rangeMax);
+    }
+
+    /// <summary>
     /// Current value
     /// </summary>
     public new double GetValue()
@@ -134,6 +148,9 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkMinimalStandardRandomSequence_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern double vtkMinimalStandardRandomSequence_GetRangeValue(nint self, double rangeMin, double rangeMax);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkMinimalStandardRandomSequence_GetValue(nint self);

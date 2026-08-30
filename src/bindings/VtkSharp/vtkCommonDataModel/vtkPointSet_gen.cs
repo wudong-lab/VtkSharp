@@ -103,6 +103,25 @@ public unsafe partial class vtkPointSet : vtkDataSet
     }
 
     /// <summary>
+    /// See vtkDataSet for additional information.
+    /// </summary>
+    public new long GetNumberOfPoints()
+    {
+        return vtkPointSet_GetNumberOfPoints(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Specify point array to define point coordinates.
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkPoints GetPoints()
+    {
+        return vtkPoints.FromBorrowedPointer(vtkPointSet_GetPoints(this.NativePointer));
+    }
+
+    /// <summary>
     /// Specify point array to define point coordinates.
     /// </summary>
     public new void SetPoints(vtkPoints _arg1)
@@ -113,6 +132,12 @@ public unsafe partial class vtkPointSet : vtkDataSet
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointSet_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern long vtkPointSet_GetNumberOfPoints(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkPointSet_GetPoints(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPointSet_SetPoints(nint self, nint _arg1);

@@ -4,6 +4,8 @@
 
 VTKSHARP_API vtkMinimalStandardRandomSequence* vtkMinimalStandardRandomSequence_New() { return vtkMinimalStandardRandomSequence::New(); }
 
+VTKSHARP_API double vtkMinimalStandardRandomSequence_GetRangeValue(vtkMinimalStandardRandomSequence* self, double rangeMin, double rangeMax) { return self->GetRangeValue(rangeMin, rangeMax); }
+
 VTKSHARP_API double vtkMinimalStandardRandomSequence_GetValue(vtkMinimalStandardRandomSequence* self) { return self->GetValue(); }
 
 VTKSHARP_API void vtkMinimalStandardRandomSequence_Initialize(vtkMinimalStandardRandomSequence* self, vtkTypeUInt32 seed) { self->Initialize(seed); }

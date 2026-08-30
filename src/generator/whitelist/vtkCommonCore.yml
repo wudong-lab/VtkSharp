@@ -136,6 +136,18 @@ classes:
   - name: vtkIdList
     header: vtkIdList.h
     functions:
+      - name: GetId
+        cppSignature: vtkIdType GetId(vtkIdType i)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: vtkIdType
+            name: i
+      - name: GetNumberOfIds
+        cppSignature: vtkIdType GetNumberOfIds()
+        return:
+          type: vtkIdType
+        parameters: []
       - name: SetId
         cppSignature: void SetId(vtkIdType i, vtkIdType vtkid)
         return:
@@ -586,6 +598,15 @@ classes:
   - name: vtkMinimalStandardRandomSequence
     header: vtkMinimalStandardRandomSequence.h
     functions:
+      - name: GetRangeValue
+        cppSignature: double GetRangeValue(double rangeMin, double rangeMax)
+        return:
+          type: double
+        parameters:
+          - type: double
+            name: rangeMin
+          - type: double
+            name: rangeMax
       - name: GetValue
         cppSignature: double GetValue()
         return:
@@ -618,6 +639,16 @@ classes:
         return:
           type: vtkIdType
         parameters: []
+      - name: GetPoint
+        cppSignature: void GetPoint(vtkIdType id, double[3] x)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: id
+          - type: double[3]
+            name: x
+            direction: out
       - name: Initialize
         cppSignature: void Initialize()
         return:

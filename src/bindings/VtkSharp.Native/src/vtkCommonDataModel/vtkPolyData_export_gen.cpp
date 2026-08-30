@@ -5,6 +5,10 @@
 
 VTKSHARP_API vtkPolyData* vtkPolyData_New() { return vtkPolyData::New(); }
 
+VTKSHARP_API vtkCellArray* vtkPolyData_GetLines(vtkPolyData* self) { return self->GetLines(); }
+
+VTKSHARP_API vtkIdType vtkPolyData_GetNumberOfLines(vtkPolyData* self) { return self->GetNumberOfLines(); }
+
 VTKSHARP_API void vtkPolyData_SetLines(vtkPolyData* self, vtkCellArray* l) { self->SetLines(l); }
 
 VTKSHARP_API void vtkPolyData_SetPolys(vtkPolyData* self, vtkCellArray* p) { self->SetPolys(p); }

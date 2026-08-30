@@ -143,6 +143,35 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     }
 
     /// <summary>
+    /// Set the input dataset to the mapper. This mapper handles any type of data.
+    /// </summary>
+    public new void SetInputData(vtkDataObject _arg1)
+    {
+        vtkLabeledDataMapper_SetInputData(this.NativePointer, _arg1.NativePointer);
+    }
+
+    /// <summary>
+    /// Set/Get the std::format or printf style format with which to print the labels.
+    /// </summary>
+    /// <remarks>
+    /// By default, the mapper will try to print each component of the
+    /// tuple using the std::format style format: {:d} for integers,
+    /// {:f} for floats, et cetera.  If you need a different
+    /// format, set it here.  You can do things like limit the number of
+    /// significant digits, add prefixes/suffixes, basically anything
+    /// that std::format can do. You can also use printf style formatting strings.
+    /// If you only want to print one component of a vector, see the ivar LabeledComponent.
+    /// </remarks>
+    public new void SetLabelFormat(string _arg)
+    {
+        #if NET8_0_OR_GREATER
+        vtkLabeledDataMapper_SetLabelFormat(this.NativePointer, _arg);
+        #else
+        vtkLabeledDataMapper_SetLabelFormat(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
+        #endif
+    }
+
+    /// <summary>
     /// Specify which data to plot: IDs, scalars, vectors, normals, texture coords,
     /// tensors, or field data. If the data has more than one component, use
     /// the method SetLabeledComponent to control which components to plot.
@@ -235,6 +264,17 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
 #else
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLabeledDataMapper_SetFieldDataName(nint self, byte[] _arg);
+#endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetInputData(nint self, nint _arg1);
+
+#if NET8_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkLabeledDataMapper_SetLabelFormat(nint self, string _arg);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelFormat(nint self, byte[] _arg);
 #endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
