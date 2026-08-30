@@ -8,4 +8,6 @@ public sealed record InspectedClass(
     IReadOnlyList<string>? Dependencies = null,
     IReadOnlyList<string>? BaseClassNames = null,
     string? Module = null,
-    string? Header = null);
+    string? Header = null,
+    ApiDocumentation? Documentation = null,
+    ApiDocumentation? NewDocumentation = null);

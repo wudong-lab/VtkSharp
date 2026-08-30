@@ -3,7 +3,8 @@
     <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>1701;1702;CS0109</NoWarn>
+    <NoWarn>1701;1702;CS0109;CS1591</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <RootNamespace>VtkSharp</RootNamespace>
 
@@ -57,6 +58,7 @@
   <!-- Package README -->
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="VTK-LICENSE.txt" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

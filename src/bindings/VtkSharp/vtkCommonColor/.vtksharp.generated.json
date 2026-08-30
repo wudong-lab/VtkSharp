@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-07-01.incremental-v1",
+  "generatorVersion": "2026-08-30.documentation-v1",
   "module": "vtkCommonColor",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkColorSeries.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "f8529b319e94c8c955ed41eda802b7ec222d93df37146053936940cea817ef5a",
+      "inputHash": "cb0bad3db2498227680867b67292105f71c04047c0166824b84568e25a54f6db",
       "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkColorSeries_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkColorSeries_export_gen.cpp",
-      "managedContentHash": "8aa308e95fbac7e31548aff5b10c87a956c998b7b457da3667aa4ff4af8ffd5b",
+      "managedContentHash": "18cda306032c64126d6b48f267f41904a2ebb504826569a7033888049555a871",
       "nativeContentHash": "191abd11928d4f1649346bc077eb660262cb7043b4ccd151bb297624221dacee"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkNamedColors.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "effe492193a70de263c9905065fe0c8e74a2dab8ec44cdb59098f7c32f8fc1a4",
+      "inputHash": "5b1f6a0d04a51497df16e2967916f0bb59f0394ab5d6d7ac00fd28cfabfa113a",
       "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkNamedColors_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkNamedColors_export_gen.cpp",
-      "managedContentHash": "6389311005fa463b88b5cf64ae7ecfa17f2db0c7cbb4a81e291f7ba61e751d89",
+      "managedContentHash": "613fc7859d2c77cb948f54db1dc5009fe78d24ebc1a5fe8fd6e04c87aeb7d0a3",
       "nativeContentHash": "d507ee92eeba5702c455e1506f8e91a791941447b67e206fc40f1f9749462b90"
     }
   ]

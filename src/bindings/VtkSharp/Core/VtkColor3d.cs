@@ -3,7 +3,7 @@ using System;
 namespace VtkSharp;
 
 /// <summary>
-/// VTK颜色值，对应<see cref="vtkColor3d"/>（RGB，分量范围 0.0–1.0）。
+/// VTK颜色值，对应<c>vtkColor3d</c>（RGB，分量范围 0.0–1.0）。
 /// <para>
 /// 静态预设值来源于 W3Schools HTML color names
 /// 以及与 Web 颜色无同值别名冲突的 VTK color Names；Web Grey 拼写别名和 ParaView color Names 不包含在内。

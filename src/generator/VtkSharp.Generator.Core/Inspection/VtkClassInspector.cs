@@ -1,4 +1,5 @@
 ﻿using CppAst;
+using System.Text;
 using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Types;
 
@@ -9,6 +10,7 @@ public sealed class VtkClassInspector
     private readonly TypeCanonicalizer _canonicalizer = new();
     private readonly Dictionary<string, RawInspectedClass> _rawClassCache = new(StringComparer.Ordinal);
     private readonly Dictionary<string, InspectedClass> _classCache = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, VtkDocumentationExtractor> _documentationCache = new(StringComparer.OrdinalIgnoreCase);
 
     public InspectedClass InspectHeader(string includeDirectory, string headerFileName, string className)
     {
@@ -46,7 +48,7 @@ public sealed class VtkClassInspector
                 continue;
 
             var baseClassNames = GetCppBaseClassNames(cppClass);
-            var rawClass = BuildRawClass(cppClass, baseClassNames, this._canonicalizer);
+            var rawClass = this.BuildRawClass(cppClass, baseClassNames, this._canonicalizer);
             this._rawClassCache[cacheKey] = rawClass;
             result[cppClass.Name] = rawClass.ToInspectedClassWithBaseClassNames();
         }
@@ -78,14 +80,15 @@ public sealed class VtkClassInspector
             : throw new InvalidOperationException($"Class '{className}' was not found in '{headerFileName}'.");
 
         var directBaseClassName = raw.BaseClassNames.FirstOrDefault();
-        var result = new InspectedClass(className, raw.Functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(raw.Functions));
+        var result = new InspectedClass(className, raw.Functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(raw.Functions),
+            Documentation: raw.Documentation, NewDocumentation: raw.NewDocumentation);
         this._classCache[cacheKey] = result;
         return result;
     }
 
-    private static RawInspectedClass BuildRawClass(CppClass cppClass, IReadOnlyList<string> baseClassNames, TypeCanonicalizer canonicalizer)
+    private RawInspectedClass BuildRawClass(CppClass cppClass, IReadOnlyList<string> baseClassNames, TypeCanonicalizer canonicalizer)
     {
-        var hasStaticNew = cppClass.Functions.Any(function =>
+        var staticNew = cppClass.Functions.FirstOrDefault(function =>
             function.Visibility == CppVisibility.Public &&
             function.Name == "New" &&
             function.IsStatic &&
@@ -131,11 +134,27 @@ public sealed class VtkClassInspector
                     CanonicalSignature: $"{returnType} {function.Name}(" +
                                         string.Join(", ", parameters.Select(p => $"{p.Type} {p.Name}")) +
                                         ")",
-                    DependencyTypes: deps);
+                    DependencyTypes: deps,
+                    Documentation: this.GetDocumentation(function)?.GetDeclarationDocumentation(function.Span.Start.Offset));
             })
             .ToList();
 
-        return new RawInspectedClass(cppClass.Name, functions, hasStaticNew, baseClassNames);
+        return new RawInspectedClass(cppClass.Name, functions, staticNew is not null, baseClassNames,
+            this.GetDocumentation(cppClass)?.GetClassDocumentation(cppClass.Name, cppClass.Span.Start.Offset),
+            staticNew is null ? null : this.GetDocumentation(staticNew)?.GetDeclarationDocumentation(staticNew.Span.Start.Offset));
+    }
+
+    private VtkDocumentationExtractor? GetDocumentation(CppElement element)
+    {
+        var path = element.SourceFile;
+        if (string.IsNullOrEmpty(path) || !File.Exists(path)) return null;
+        if (!this._documentationCache.TryGetValue(path, out var documentation))
+        {
+            // 保留 UTF-8 BOM，确保源码字节位置与 Clang 一致。
+            documentation = VtkDocumentationExtractor.Parse(Encoding.UTF8.GetString(File.ReadAllBytes(path)));
+            this._documentationCache.Add(path, documentation);
+        }
+        return documentation;
     }
 
     private static IReadOnlyList<string> GetCppBaseClassNames(CppClass cppClass)

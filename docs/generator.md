@@ -61,6 +61,21 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings -
 
 `validate-whitelist` 和生成命令支持 `--continue-on-error` 进行探索，但正式提交前必须在默认快速失败模式下通过。
 
+## XML API 注释
+
+绑定生成器自动从当前 VTK 安装目录的原始头文件提取英文注释，为生成的类型、`New()` 和方法输出 `summary` / `remarks`。这个过程完全由本地 C# 代码完成，不联网、不调用 AI、不消耗模型 token，也不需要 Doxygen。
+
+- 通过 `@class` 查找类型说明，通过 CppAst 声明的 UTF-8 源码偏移关联方法说明；不使用 Clang 自动继承的注释。
+- 支持 `/** ... */`、`/*! ... */`、`///`、`//!` 和 `///@{ ... ///@}` 共享组；宏展开的多个方法复用宏调用处的注释。
+- 首段（或 `@brief` 所在首段）作为 `summary`，其余段落作为 `remarks`；XML 特殊字符自动转义。
+- 方法按名称、规范化返回类型和参数类型匹配白名单，重载不混用注释，参数重命名不影响匹配。
+- 本阶段不生成 `param` / `returns` / `see cref`，相关 Doxygen 指令作为普通文本保留；不翻译、补写或推断缺失说明。
+- 不求值 C++ 条件编译，跨预处理指令清除待关联注释及共享组状态，避免把另一分支的说明串用到当前声明。无本地注释的 override 不自动继承基类文档。
+- 非共享组中的注释只用于紧随其后的声明；中间的其他声明（例如 `using`）会消耗该说明，不向后猜测关联。
+- 注释不写入白名单；头文件注释变化会使对应类型的增量缓存失效。
+
+`VtkSharp` 项目启用 XML documentation file 输出，NuGet 包包含各目标框架的 XML 文档及 `VTK-LICENSE.txt`。手写 API 或无上游说明的 API 允许没有注释，暂不检查 CS1591。
+
 ## 增量生成
 
 `--incremental` 使用模块目录中的 `.vtksharp.generated.json` 清单按类复用已有输出。以下内容变化时会重新生成相应类型：

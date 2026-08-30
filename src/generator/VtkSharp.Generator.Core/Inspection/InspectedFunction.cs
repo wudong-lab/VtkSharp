@@ -7,4 +7,5 @@ public sealed record InspectedFunction(
     IReadOnlyList<InspectedParameter> Parameters,
     bool IsSupported,
     string? CanonicalSignature = null,
-    IReadOnlyList<string>? DependencyTypes = null);
+    IReadOnlyList<string>? DependencyTypes = null,
+    ApiDocumentation? Documentation = null);

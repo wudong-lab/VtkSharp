@@ -50,7 +50,7 @@ foreach ($target in $targets) {
     New-Item -ItemType Directory -Path $outputDirectory -Force | Out-Null
 
     $managedDirectory = Join-Path $repoRoot $target.ManagedDirectory
-    foreach ($fileName in @("VtkSharp.dll", "VtkSharp.pdb")) {
+    foreach ($fileName in @("VtkSharp.dll", "VtkSharp.pdb", "VtkSharp.xml")) {
         $source = Join-Path $managedDirectory $fileName
         if (Test-Path $source) {
             Copy-Item $source -Destination $outputDirectory -Force

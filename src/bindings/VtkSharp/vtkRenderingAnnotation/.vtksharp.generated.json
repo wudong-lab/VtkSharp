@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-07-01.incremental-v1",
+  "generatorVersion": "2026-08-30.documentation-v1",
   "module": "vtkRenderingAnnotation",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkAxesActor.h",
       "baseClassName": "vtkProp3D",
       "hasStaticNew": true,
-      "inputHash": "c1f56ac5278530458573d93162bc1683a5c14e2693d7f4ebe59b88d7e83edb8b",
+      "inputHash": "997bdc3ac69d89fdf1d5c2dd6a0a085a2eb37f9ff2df515735a8a6647a45fe8a",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkAxesActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkAxesActor_export_gen.cpp",
-      "managedContentHash": "15e361e45f161bb7a2f9f70b416f6ed04591a252c6a5dc440e8fc0ec555788a5",
+      "managedContentHash": "adce21b4c5244407b6961a75f6ad8b39b94d88d0dac68d4b1ac8b3e234038e1d",
       "nativeContentHash": "8c89d8e44a1a5088694d3e70e6be5e248e08616f09d817f88936344e2e6ab9bd"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkAxisActor2D.h",
       "baseClassName": "vtkActor2D",
       "hasStaticNew": true,
-      "inputHash": "192ae58adfecfa55e19ca61d6a69e9b5a4c94475a08eb77c87e102f6a20a007c",
+      "inputHash": "09a722b8796ddc85fa8aa319146e82ba8489da0bb957e6b42139982ecd2469d4",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkAxisActor2D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkAxisActor2D_export_gen.cpp",
-      "managedContentHash": "03379e4402be4ea625abe5ea504a9599443e95d5e046ef07c8bd6b5e7ba0f6f3",
+      "managedContentHash": "515b37080c7ae7e877a6867075f3a082e3c15e0a90c0b6c064e3def6d745a9cd",
       "nativeContentHash": "7c3ec43bc28af2edeee1a02a4ff404b26cdc9a0eb2f96cb0a270d6e3c2fe341d"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkCaptionActor2D.h",
       "baseClassName": "vtkActor2D",
       "hasStaticNew": true,
-      "inputHash": "caf4c7e6a04de1221c689c9d35bf8abbe2fe02e0fa32dabe2f78d80e7a6499b6",
+      "inputHash": "d6b16f8a8a7f3c0b7b8bca31fdbf9931f1a35200fd6b2b169c32fd6cba8957a6",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkCaptionActor2D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkCaptionActor2D_export_gen.cpp",
-      "managedContentHash": "e7dca07068661e6519e72376f4aefcaa76d0b37c666b2b8520345a5be025bbfc",
+      "managedContentHash": "ec6c537d6303bbe5abf5a5c552556d8053473c292f1ffcbec775b19c51dcccc6",
       "nativeContentHash": "283b293388275ea8d2c67f468917802686109acf6ec76c0516dfe21ea1a7e543"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkLegendScaleActor.h",
       "baseClassName": "vtkProp",
       "hasStaticNew": true,
-      "inputHash": "514d9cbc50866c2d6b8f5e987252b699d5019d10d8bae477461de2c2e224282e",
+      "inputHash": "e558f04dc185a9aed7bae58e0d9880bfc96d9ee4abaef771f00edbda461bcc24",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkLegendScaleActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkLegendScaleActor_export_gen.cpp",
-      "managedContentHash": "96f31d0bacce4b1f3777aa64cdb340136322c9b7b0453408ca1a24af33188238",
+      "managedContentHash": "0cba6c0c6ec409465b2892c6cd2197f03a20acf5c5c8a48578620afe541efe6e",
       "nativeContentHash": "c4dfa5a3275682b25af0105e68a06d093b34f24c520f2e9725633563badb326d"
     },
     {
@@ -52,10 +52,10 @@
       "header": "vtkScalarBarActor.h",
       "baseClassName": "vtkActor2D",
       "hasStaticNew": true,
-      "inputHash": "d0bc19643ccfe87b77c21af64e949246ad9f36f96d32f21a0bdb2faadf6ab1c2",
+      "inputHash": "acdd98959dfe2517c9109cf4e3c6fed84a7a8db1cf59f4e50c47b26955575124",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkScalarBarActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkScalarBarActor_export_gen.cpp",
-      "managedContentHash": "41d52b240e5e33347b0b43ca349e91605207a33cf8db53784493e9eab10bd430",
+      "managedContentHash": "6aaf4aab001034a76882712abf3a4d161e2a33df96d77a6fb8dd88bf4e0a700f",
       "nativeContentHash": "e85dda6373500490a0aa794ebea09f5a997bacfead4d798b301a093fb733dd8f"
     }
   ]

@@ -7,7 +7,7 @@ namespace VtkSharp.Generator.Core.Generation;
 
 public sealed class BindingGenerationService
 {
-    public const string IncrementalCacheVersion = "2026-07-01.incremental-v1";
+    public const string IncrementalCacheVersion = "2026-08-30.documentation-v1";
 
     public int Generate(string configPath, string outputRoot, bool continueOnError, bool incremental, bool force, TextWriter output, TextWriter error)
         => incremental
@@ -94,7 +94,7 @@ public sealed class BindingGenerationService
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
 
-                WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions));
+                WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass));
                 WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions));
             }
         }
@@ -209,7 +209,7 @@ public sealed class BindingGenerationService
                     .Where(name => name != whitelistClass.Name)
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
-                var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions);
+                var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass);
                 var nativeContent = cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions);
 
                 WriteText(managedPath, managedContent);

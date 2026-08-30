@@ -32,7 +32,7 @@ Debug 构建使用相同命令并将配置改为 `Debug`。
 .\tools\build-all.ps1 -Configuration Release -VtkDir $vtkDir
 ```
 
-脚本构建 managed/native 项目，并将不同 TFM 的发布文件收集到 `artifacts/bin`。每个可部署目录均应包含与其配置匹配的 `VtkSharp.Native.dll`。
+脚本构建 managed/native 项目，成功后将不同 TFM 的发布文件收集到 `artifacts/bin`，包括与 `VtkSharp.dll` 同目录的 XML API 文档 `VtkSharp.xml`。每个可部署目录均应包含与其配置匹配的 `VtkSharp.Native.dll`。
 
 如已存在有效的 native 构建，可按脚本参数跳过 native 重建；跳过前必须确认 DLL 的 VTK 版本、工具集、平台和配置一致。
 
