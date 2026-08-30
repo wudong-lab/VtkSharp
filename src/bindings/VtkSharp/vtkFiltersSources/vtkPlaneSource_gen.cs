@@ -37,7 +37,7 @@ namespace VtkSharp;
 /// methods modify the Origin, Point1, and/or Point2 instance variables.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The normal to the plane will point in the direction of the cross product
 /// of the first axis (Origin-&gt;Point1) with the second (Origin-&gt;Point2). This
 /// also affects the normals to the generated polygons.
@@ -50,6 +50,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// Construct plane perpendicular to z-axis, resolution 1x1, width
     /// and height 1.0, and centered at the origin.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPlaneSource New() => new(vtkPlaneSource_New(), ownsReference: true);
     public new static vtkPlaneSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPlaneSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -76,6 +79,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// normal to position the plane. Don't use this method to define the plane.
     /// Instead, use it to move the plane to a new center point.
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetCenter(Span<double> data)
     {
         fixed (double* dataPtr = data)
@@ -99,6 +105,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// orient the plane. Don't use this method to define the plane. Instead, use
     /// it to rotate the plane around the current center point.
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetNormal(Span<double> data)
     {
         fixed (double* dataPtr = data)
@@ -118,6 +127,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Specify a point defining the origin of the plane.
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetOrigin(Span<double> data)
     {
         fixed (double* dataPtr = data)
@@ -141,6 +153,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// normal to position the plane. Don't use this method to define the plane.
     /// Instead, use it to move the plane to a new center point.
     /// </summary>
+    /// <param name="center">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetCenter(Span<double> center)
     {
         fixed (double* centerPtr = center)
@@ -164,6 +179,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// orient the plane. Don't use this method to define the plane. Instead, use
     /// it to rotate the plane around the current center point.
     /// </summary>
+    /// <param name="n">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetNormal(Span<double> n)
     {
         fixed (double* nPtr = n)
@@ -183,6 +201,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Specify a point defining the origin of the plane.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetOrigin(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -202,6 +223,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Specify a point defining the first axis of the plane.
     /// </summary>
+    /// <param name="pnt">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetPoint1(Span<double> pnt)
     {
         fixed (double* pntPtr = pnt)
@@ -221,6 +245,9 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Specify a point defining the second axis of the plane.
     /// </summary>
+    /// <param name="pnt">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetPoint2(Span<double> pnt)
     {
         fixed (double* pntPtr = pnt)

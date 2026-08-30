@@ -36,8 +36,7 @@ namespace VtkSharp;
 /// disabled.
 /// </para>
 /// <para>
-/// @sa
-/// vtk3DWidget vtkBoxWidget vtkLineWidget
+/// See also: vtk3DWidget vtkBoxWidget vtkLineWidget
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorObserver : vtkObject

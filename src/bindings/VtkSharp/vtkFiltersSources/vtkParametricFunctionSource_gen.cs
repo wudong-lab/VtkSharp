@@ -16,28 +16,19 @@ namespace VtkSharp;
 /// the resolution), and the mode to use to generate scalars.
 /// </para>
 /// <para>
-/// @par Thanks:
-/// Andrew Maclean andrew.amaclean@gmail.com for creating and contributing
-/// the class.
+/// See also: vtkParametricFunction
 /// </para>
 /// <para>
-/// @sa
-/// vtkParametricFunction
-/// </para>
-/// <para>
-/// @sa
-/// Implementation of parametrics for 1D lines:
+/// See also: Implementation of parametrics for 1D lines:
 /// vtkParametricSpline
 /// </para>
 /// <para>
-/// @sa
-/// Subclasses of vtkParametricFunction implementing non-orentable surfaces:
+/// See also: Subclasses of vtkParametricFunction implementing non-orentable surfaces:
 /// vtkParametricBoy vtkParametricCrossCap vtkParametricFigure8Klein
 /// vtkParametricKlein vtkParametricMobius vtkParametricRoman
 /// </para>
 /// <para>
-/// @sa
-/// Subclasses of vtkParametricFunction implementing orientable surfaces:
+/// See also: Subclasses of vtkParametricFunction implementing orientable surfaces:
 /// vtkParametricConicSpiral vtkParametricDini vtkParametricEllipsoid
 /// vtkParametricEnneper vtkParametricRandomHills vtkParametricSuperEllipsoid
 /// vtkParametricSuperToroid vtkParametricTorus
@@ -49,6 +40,9 @@ public unsafe partial class vtkParametricFunctionSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Create a new instance with (50,50,50) points in the (u-v-w) directions.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkParametricFunctionSource New() => new(vtkParametricFunctionSource_New(), ownsReference: true);
     public new static vtkParametricFunctionSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkParametricFunctionSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

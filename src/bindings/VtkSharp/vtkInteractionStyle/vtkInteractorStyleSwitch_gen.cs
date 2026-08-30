@@ -18,14 +18,16 @@ namespace VtkSharp;
 /// The default interactor style is joystick camera.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorStyleJoystickActor vtkInteractorStyleJoystickCamera
+/// See also: vtkInteractorStyleJoystickActor vtkInteractorStyleJoystickCamera
 /// vtkInteractorStyleTrackballActor vtkInteractorStyleTrackballCamera
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyleSwitch : vtkInteractorStyleSwitchBase
 {
     protected vtkInteractorStyleSwitch(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleSwitch New() => new(vtkInteractorStyleSwitch_New(), ownsReference: true);
     public new static vtkInteractorStyleSwitch FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleSwitch TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

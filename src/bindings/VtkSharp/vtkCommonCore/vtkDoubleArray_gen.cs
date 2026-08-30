@@ -17,6 +17,9 @@ namespace VtkSharp;
 public unsafe partial class vtkDoubleArray : vtkDataArray
 {
     protected vtkDoubleArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkDoubleArray New() => new(vtkDoubleArray_New(), ownsReference: true);
     public new static vtkDoubleArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkDoubleArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

@@ -15,7 +15,7 @@ namespace VtkSharp;
 /// (affine or 12 degree-of-freedom) geometric transformations.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Portions of this class (i.e., when transforming arrays of points and/or
 /// associated attributes such as normals and vectors) has been threaded with
 /// vtkSMPTools. Using TBB or other non-sequential type (set in the CMake
@@ -23,8 +23,7 @@ namespace VtkSharp;
 /// significantly.
 /// </para>
 /// <para>
-/// @sa
-/// vtkTransform vtkIdentityTransform
+/// See also: vtkTransform vtkIdentityTransform
 /// </para>
 /// </remarks>
 public unsafe partial class vtkLinearTransform : vtkHomogeneousTransform

@@ -31,7 +31,7 @@ namespace VtkSharp;
 /// then use vtkCellArray's InitTraversal() and GetNextCell() methods.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Because vtkPolyData is implemented with four separate instances of
 /// vtkCellArray to represent 0D vertices, 1D lines, 2D polygons, and 2D
 /// triangle strips, it is possible to create vtkPolyData instances that
@@ -45,7 +45,7 @@ namespace VtkSharp;
 /// strips (vtkTriangleStrip).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Some filters when processing vtkPolyData with mixed cell types may process
 /// the cells in differing ways. Some will convert one type into another
 /// (e.g., vtkTriangleStrip into vtkTriangles) or expect a certain type
@@ -54,7 +54,7 @@ namespace VtkSharp;
 /// understand how each part of vtkPolyData is processed.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Some of the methods specified here function properly only when the dataset
 /// has been specified as "Editable". They are documented as such.
 /// </para>
@@ -62,6 +62,9 @@ namespace VtkSharp;
 public unsafe partial class vtkPolyData : vtkPointSet
 {
     protected vtkPolyData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPolyData New() => new(vtkPolyData_New(), ownsReference: true);
     public new static vtkPolyData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPolyData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

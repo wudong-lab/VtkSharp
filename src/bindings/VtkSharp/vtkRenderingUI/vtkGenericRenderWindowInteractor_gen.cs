@@ -10,6 +10,7 @@ namespace VtkSharp;
 /// platform-independent programmable render window interactor.
 /// </summary>
 /// <remarks>
+///
 /// vtkGenericRenderWindowInteractor provides a way to translate native
 /// mouse and keyboard events into vtk Events.   By calling the methods on
 /// this class, vtk events will be invoked.   This will allow scripting
@@ -18,6 +19,9 @@ namespace VtkSharp;
 public unsafe partial class vtkGenericRenderWindowInteractor : vtkRenderWindowInteractor
 {
     protected vtkGenericRenderWindowInteractor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkGenericRenderWindowInteractor New() => new(vtkGenericRenderWindowInteractor_New(), ownsReference: true);
     public new static vtkGenericRenderWindowInteractor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkGenericRenderWindowInteractor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

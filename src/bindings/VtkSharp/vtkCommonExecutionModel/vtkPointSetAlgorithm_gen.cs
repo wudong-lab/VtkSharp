@@ -33,6 +33,9 @@ public unsafe partial class vtkPointSetAlgorithm : vtkAlgorithm
     /// Standard methods for instantiation, obtaining type information, and
     /// printing instances of the class.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPointSetAlgorithm New() => new(vtkPointSetAlgorithm_New(), ownsReference: true);
     public new static vtkPointSetAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPointSetAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

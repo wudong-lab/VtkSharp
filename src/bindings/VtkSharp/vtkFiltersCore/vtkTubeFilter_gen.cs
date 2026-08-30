@@ -32,24 +32,19 @@ namespace VtkSharp;
 /// streamtubes.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The number of tube sides must be greater than 3. If you wish to use fewer
 /// sides (i.e., a ribbon), use vtkRibbonFilter.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The input line must not have duplicate points, or normals at points that
 /// are parallel to the incoming/outgoing line segments. (Duplicate points
 /// can be removed with vtkCleanPolyData.) If a line does not meet this
 /// criteria, then that line is not tubed.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRibbonFilter vtkStreamTracer vtkTubeBender
-/// </para>
-/// <para>
-/// @par Thanks:
-/// Michael Finch for absolute scalar radius
+/// See also: vtkRibbonFilter vtkStreamTracer vtkTubeBender
 /// </para>
 /// </remarks>
 public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
@@ -59,6 +54,9 @@ public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
     /// Construct object with radius 0.5, radius variation turned off, the
     /// number of sides set to 3, and radius factor of 10.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTubeFilter New() => new(vtkTubeFilter_New(), ownsReference: true);
     public new static vtkTubeFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTubeFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

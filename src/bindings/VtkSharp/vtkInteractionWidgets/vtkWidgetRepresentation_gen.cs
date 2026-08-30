@@ -46,7 +46,7 @@ namespace VtkSharp;
 /// axis is rotated.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The separation of the widget event handling and representation enables
 /// users and developers to create new appearances for the widget. It also
 /// facilitates parallel processing, where the client application handles
@@ -130,6 +130,9 @@ public unsafe partial class vtkWidgetRepresentation : vtkProp
     /// in order to avoid reference loops.  Be sure that the representation
     /// lifetime does not extend beyond the renderer lifetime.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkRenderer GetRenderer()
     {
         return vtkRenderer.FromBorrowedPointer(vtkWidgetRepresentation_GetRenderer(this.NativePointer));
@@ -185,6 +188,9 @@ public unsafe partial class vtkWidgetRepresentation : vtkProp
     /// Note that subclasses may ignore some of these methods and implement their own
     /// depending on the specifics of the widget.
     /// </summary>
+    /// <param name="_arg1">
+    /// Buffer length: 6 elements.
+    /// </param>
     public new void PlaceWidget(Span<double> _arg1)
     {
         fixed (double* _arg1Ptr = _arg1)

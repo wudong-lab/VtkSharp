@@ -21,8 +21,7 @@ namespace VtkSharp;
 /// rendering features such as two-sided lighting can also be controlled.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderWindow vtkActor vtkCamera vtkLight vtkVolume
+/// See also: vtkRenderWindow vtkActor vtkCamera vtkLight vtkVolume
 /// </para>
 /// </remarks>
 public unsafe partial class vtkRenderer : vtkViewport
@@ -33,6 +32,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// two-sided lighting turned on, a viewport of (0,0,1,1), and backface
     /// culling turned off.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkRenderer New() => new(vtkRenderer_New(), ownsReference: true);
     public new static vtkRenderer FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkRenderer TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -200,6 +202,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// renderer already, a new one is created automatically.
     /// This does *not* reset the camera.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkCamera GetActiveCamera()
     {
         return vtkCamera.FromBorrowedPointer(vtkRenderer_GetActiveCamera(this.NativePointer));
@@ -208,6 +213,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// <summary>
     /// Return any actors in this renderer.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkActorCollection GetActors()
     {
         return vtkActorCollection.FromBorrowedPointer(vtkRenderer_GetActors(this.NativePointer));
@@ -218,6 +226,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// when the renderer is created by MakeRenderer.  The user probably
     /// shouldn't ever need to call this method.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkRenderWindow GetRenderWindow()
     {
         return vtkRenderWindow.FromBorrowedPointer(vtkRenderer_GetRenderWindow(this.NativePointer));
@@ -239,6 +250,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// when the renderer is created by MakeRenderer.  The user probably
     /// shouldn't ever need to call this method.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkWindow GetVTKWindow()
     {
         return vtkWindow.FromBorrowedPointer(vtkRenderer_GetVTKWindow(this.NativePointer));
@@ -325,6 +339,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// For example, a vtkMesaRenderer should create a vtkMesaLight
     /// in this function.   The default is to just call vtkLight::New.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkLight MakeLight()
     {
         return vtkLight.FromBorrowedPointer(vtkRenderer_MakeLight(this.NativePointer));
@@ -337,6 +354,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// If nothing was picked then NULL is returned.  This method selects from
     /// the renderer's Prop list.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAssemblyPath PickProp(double selectionX, double selectionY)
     {
         return vtkAssemblyPath.FromBorrowedPointer(vtkRenderer_PickProp_double_double(this.NativePointer, selectionX, selectionY));
@@ -349,6 +369,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// If nothing was picked then NULL is returned.  This method selects from
     /// the renderer's Prop list.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAssemblyPath PickProp(double selectionX1, double selectionY1, double selectionX2, double selectionY2)
     {
         return vtkAssemblyPath.FromBorrowedPointer(vtkRenderer_PickProp_double_double_double_double(this.NativePointer, selectionX1, selectionY1, selectionX2, selectionY2));
@@ -430,6 +453,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// the view plane is parallel to the view up axis, the view up axis will
     /// be reset to one of the three coordinate axes.
     /// </summary>
+    /// <param name="bounds">
+    /// Buffer length: 6 elements.
+    /// </param>
     public new void ResetCamera(ReadOnlySpan<double> bounds)
     {
         fixed (double* boundsPtr = bounds)
@@ -458,6 +484,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// <summary>
     /// Reset the camera clipping range based on a bounding box.
     /// </summary>
+    /// <param name="bounds">
+    /// Buffer length: 6 elements.
+    /// </param>
     public new void ResetCameraClippingRange(ReadOnlySpan<double> bounds)
     {
         fixed (double* boundsPtr = bounds)
@@ -517,6 +546,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     /// <summary>
     /// Set the intensity of ambient lighting.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetAmbient(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

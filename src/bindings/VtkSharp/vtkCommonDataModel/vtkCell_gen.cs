@@ -19,14 +19,13 @@ namespace VtkSharp;
 /// implicitly composed of cells (e.g., vtkStructuredPoints).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The \#define VTK_CELL_SIZE is a parameter used to construct cells and provide
 /// a general guideline for controlling object execution. This parameter is
 /// not a hard boundary: you can create cells with more points.
 /// </para>
 /// <para>
-/// @sa
-/// vtkHexahedron vtkLine vtkPixel vtkPolyLine vtkPolyVertex
+/// See also: vtkHexahedron vtkLine vtkPixel vtkPolyLine vtkPolyVertex
 /// vtkPolygon vtkQuad vtkTetra vtkTriangle
 /// vtkTriangleStrip vtkVertex vtkVoxel vtkWedge vtkPyramid
 /// </para>
@@ -47,6 +46,9 @@ public unsafe partial class vtkCell : vtkObject
     /// <summary>
     /// Return the list of point ids defining the cell.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkIdList GetPointIds()
     {
         return vtkIdList.FromBorrowedPointer(vtkCell_GetPointIds(this.NativePointer));

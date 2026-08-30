@@ -19,8 +19,7 @@ namespace VtkSharp;
 /// contents must be transposed when they are moved between OpenGL and VTK.
 /// </para>
 /// <para>
-/// @sa
-/// vtkTransform
+/// See also: vtkTransform
 /// </para>
 /// </remarks>
 public unsafe partial class vtkMatrix4x4 : vtkObject
@@ -29,6 +28,9 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
     /// <summary>
     /// Construct a 4x4 identity matrix.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkMatrix4x4 New() => new(vtkMatrix4x4_New(), ownsReference: true);
     public new static vtkMatrix4x4 FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkMatrix4x4 TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -61,6 +63,9 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
         vtkMatrix4x4_Invert(this.NativePointer);
     }
 
+    /// <param name="in">
+    /// Buffer length: 4 elements.
+    /// </param>
     internal new double* MultiplyPoint_Internal(ReadOnlySpan<double> @in)
     {
         fixed (double* inPtr = @in)
@@ -72,6 +77,9 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
     /// <summary>
     /// For use in Java or Python.
     /// </summary>
+    /// <param name="in">
+    /// Buffer length: 4 elements.
+    /// </param>
     internal new float* MultiplyPoint_Internal(ReadOnlySpan<float> @in)
     {
         fixed (float* inPtr = @in)
@@ -80,6 +88,12 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
         }
     }
 
+    /// <param name="in">
+    /// Buffer length: 4 elements.
+    /// </param>
+    /// <param name="out">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void MultiplyPoint(ReadOnlySpan<double> @in, Span<double> @out)
     {
         fixed (double* inPtr = @in)
@@ -95,6 +109,12 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
     /// Multiply a homogeneous coordinate by this matrix, i.e. out = A*in.
     /// The in[4] and out[4] can be the same array.
     /// </summary>
+    /// <param name="in">
+    /// Buffer length: 4 elements.
+    /// </param>
+    /// <param name="out">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void MultiplyPoint(ReadOnlySpan<float> @in, Span<float> @out)
     {
         fixed (float* inPtr = @in)
@@ -109,6 +129,9 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
     /// <summary>
     /// Copies data into the matrix.
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 16 elements.
+    /// </param>
     public new void SetData(ReadOnlySpan<double> data)
     {
         fixed (double* dataPtr = data)

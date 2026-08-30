@@ -20,6 +20,9 @@ namespace VtkSharp;
 public unsafe partial class vtkPolygon : vtkCell
 {
     protected vtkPolygon(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPolygon New() => new(vtkPolygon_New(), ownsReference: true);
     public new static vtkPolygon FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPolygon TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

@@ -10,6 +10,7 @@ namespace VtkSharp;
 /// Superclass for algorithms that produce only polydata as output
 /// </summary>
 /// <remarks>
+///
 /// vtkPolyDataAlgorithm is a convenience class to make writing algorithms
 /// easier. It is also designed to help transition old algorithms to the new
 /// pipeline architecture. There are some assumptions and defaults made by this
@@ -23,6 +24,9 @@ namespace VtkSharp;
 public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
 {
     protected vtkPolyDataAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPolyDataAlgorithm New() => new(vtkPolyDataAlgorithm_New(), ownsReference: true);
     public new static vtkPolyDataAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPolyDataAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -37,6 +41,9 @@ public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
     /// <summary>
     /// Get the output data object for a port on this algorithm.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkPolyData GetOutput()
     {
         return vtkPolyData.FromBorrowedPointer(vtkPolyDataAlgorithm_GetOutput_(this.NativePointer));
@@ -45,6 +52,9 @@ public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
     /// <summary>
     /// Get the output data object for a port on this algorithm.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkPolyData GetOutput(int _arg1)
     {
         return vtkPolyData.FromBorrowedPointer(vtkPolyDataAlgorithm_GetOutput_int(this.NativePointer, _arg1));

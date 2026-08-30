@@ -21,7 +21,7 @@ namespace VtkSharp;
 /// draping supports verts, lines, polygons, and triangle strips.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Since new point coordinates are generated, planar polygons may become
 /// non-planar. To guarantee planarity, use a triangle mesh as input. Also
 /// note that strategies based on averaging across a cell, or the points of a
@@ -34,31 +34,30 @@ namespace VtkSharp;
 /// the cells in a mesh).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The point normals are not passed through to the output as the projection
 /// process may distort the projected polydata surface.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The interior cell sampling is currently carried out by triangulating the
 /// cells, and then taking the centroid of each resulting triangle. Thus the
 /// number of samples for each cell is (number of cell points - 2). Future
 /// implementations may use a different sampling strategy.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Points outside of the height map image are clamped to the boundary of the
 /// height map. This may produce unexpected behavior in some cases.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// This class has been threaded with vtkSMPTools. Using TBB or other
 /// non-sequential type (set in the CMake variable
 /// VTK_SMP_IMPLEMENTATION_TYPE) may improve performance significantly.
 /// </para>
 /// <para>
-/// @sa
-/// vtkTrimmedExtrusionFilter vtkShrinkFilter vtkShrinkPolyData
+/// See also: vtkTrimmedExtrusionFilter vtkShrinkFilter vtkShrinkPolyData
 /// </para>
 /// </remarks>
 public unsafe partial class vtkFitToHeightMapFilter : vtkPolyDataAlgorithm
@@ -67,6 +66,9 @@ public unsafe partial class vtkFitToHeightMapFilter : vtkPolyDataAlgorithm
     /// <summary>
     /// Standard methods for construction, type and printing.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkFitToHeightMapFilter New() => new(vtkFitToHeightMapFilter_New(), ownsReference: true);
     public new static vtkFitToHeightMapFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkFitToHeightMapFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

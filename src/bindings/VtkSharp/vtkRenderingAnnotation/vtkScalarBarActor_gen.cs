@@ -44,13 +44,12 @@ namespace VtkSharp;
 /// vtkTextProperty objects associated to this actor.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// If a vtkLogLookupTable is specified as the lookup table to use, then the
 /// labels are created using a logarithmic scale.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkTextProperty vtkTextMapper vtkPolyDataMapper2D
+/// See also: vtkActor2D vtkTextProperty vtkTextMapper vtkPolyDataMapper2D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkScalarBarActor : vtkActor2D
@@ -61,6 +60,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// format, no title, and vertical orientation. The initial scalar bar
     /// size is (0.05 x 0.8) of the viewport size.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkScalarBarActor New() => new(vtkScalarBarActor_New(), ownsReference: true);
     public new static vtkScalarBarActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkScalarBarActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -74,7 +76,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Above range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new void DrawAboveRangeSwatchOff()
@@ -84,7 +86,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Above range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new void DrawAboveRangeSwatchOn()
@@ -112,7 +114,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Below range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new void DrawBelowRangeSwatchOff()
@@ -122,7 +124,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Below range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new void DrawBelowRangeSwatchOn()
@@ -185,6 +187,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the annotation text property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetAnnotationTextProperty()
     {
         return vtkTextProperty.FromBorrowedPointer(vtkScalarBarActor_GetAnnotationTextProperty(this.NativePointer));
@@ -193,6 +198,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the background property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty2D GetBackgroundProperty()
     {
         return vtkProperty2D.FromBorrowedPointer(vtkScalarBarActor_GetBackgroundProperty(this.NativePointer));
@@ -210,6 +218,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the title for the component that is selected,
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetComponentTitle()
     {
         return VtkString.FromUtf8Pointer(vtkScalarBarActor_GetComponentTitle(this.NativePointer));
@@ -218,6 +229,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the fixed locations to use.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkDoubleArray GetCustomLabels()
     {
         return vtkDoubleArray.FromBorrowedPointer(vtkScalarBarActor_GetCustomLabels(this.NativePointer));
@@ -225,7 +239,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Above range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new bool GetDrawAboveRangeSwatch()
@@ -244,7 +258,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Below range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new bool GetDrawBelowRangeSwatch()
@@ -281,6 +295,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the frame property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty2D GetFrameProperty()
     {
         return vtkProperty2D.FromBorrowedPointer(vtkScalarBarActor_GetFrameProperty(this.NativePointer));
@@ -290,6 +307,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// Set/Get the std::format or printf style format with which to print the labels on the scalar
     /// bar.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetLabelFormat()
     {
         return VtkString.FromUtf8Pointer(vtkScalarBarActor_GetLabelFormat(this.NativePointer));
@@ -298,6 +318,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the labels text property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetLabelTextProperty()
     {
         return vtkTextProperty.FromBorrowedPointer(vtkScalarBarActor_GetLabelTextProperty(this.NativePointer));
@@ -309,6 +332,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// and any annotated values.
     /// Annotated values are rendered using vtkTextActor.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkScalarsToColors GetLookupTable()
     {
         return vtkScalarsToColors.FromBorrowedPointer(vtkScalarBarActor_GetLookupTable(this.NativePointer));
@@ -369,6 +395,10 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// Only the color bar is considered -- text labels are not considered.
     /// rect is {xmin, xmax, width, height}
     /// </summary>
+    /// <param name="rect">
+    /// Buffer length: 4 elements.
+    /// </param>
+    /// <param name="viewport" />
     public new void GetScalarBarRect(Span<int> rect, vtkViewport viewport)
     {
         fixed (int* rectPtr = rect)
@@ -402,6 +432,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the title of the scalar bar actor,
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetTitle()
     {
         return VtkString.FromUtf8Pointer(vtkScalarBarActor_GetTitle(this.NativePointer));
@@ -409,7 +442,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get the ratio of the title height to the tick label height
-    /// (used only when the \a Orientation is horizontal).
+    /// (used only when the Orientation is horizontal).
     /// The default is 0.5, which attempts to make the labels and title
     /// the same size. This must be a number in the range ]0, 1[.
     /// </summary>
@@ -421,6 +454,9 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     /// <summary>
     /// Set/Get the title text property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetTitleTextProperty()
     {
         return vtkTextProperty.FromBorrowedPointer(vtkScalarBarActor_GetTitleTextProperty(this.NativePointer));
@@ -502,7 +538,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Above range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new void SetDrawAboveRangeSwatch(bool _arg)
@@ -521,7 +557,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get whether the Below range swatch should be rendered or not.
-    /// This only affects rendering when \a DrawAnnotations is true.
+    /// This only affects rendering when DrawAnnotations is true.
     /// The default is false.
     /// </summary>
     public new void SetDrawBelowRangeSwatch(bool _arg)
@@ -723,7 +759,7 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
 
     /// <summary>
     /// Set/get the ratio of the title height to the tick label height
-    /// (used only when the \a Orientation is horizontal).
+    /// (used only when the Orientation is horizontal).
     /// The default is 0.5, which attempts to make the labels and title
     /// the same size. This must be a number in the range ]0, 1[.
     /// </summary>

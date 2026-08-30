@@ -15,13 +15,15 @@ namespace VtkSharp;
 /// unsigned char or unsigned short
 /// </para>
 /// <para>
-/// @sa
-/// vtkPNGReader
+/// See also: vtkPNGReader
 /// </para>
 /// </remarks>
 public unsafe partial class vtkPNGWriter : vtkImageWriter
 {
     protected vtkPNGWriter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPNGWriter New() => new(vtkPNGWriter_New(), ownsReference: true);
     public new static vtkPNGWriter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPNGWriter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

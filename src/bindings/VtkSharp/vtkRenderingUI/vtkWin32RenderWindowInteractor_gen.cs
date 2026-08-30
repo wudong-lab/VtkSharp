@@ -11,6 +11,7 @@ namespace VtkSharp;
 /// required by vtkRenderWindowInteractor.
 /// </summary>
 /// <remarks>
+///
 /// By default the interactor installs a MessageProc callback which
 /// intercepts windows' messages to the window and controls interactions by
 /// routing them to the InteractoStyle classes.
@@ -24,6 +25,9 @@ public unsafe partial class vtkWin32RenderWindowInteractor : vtkRenderWindowInte
     /// <summary>
     /// Construct object so that light follows camera motion.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkWin32RenderWindowInteractor New() => new(vtkWin32RenderWindowInteractor_New(), ownsReference: true);
     public new static vtkWin32RenderWindowInteractor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkWin32RenderWindowInteractor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

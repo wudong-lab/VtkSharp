@@ -18,8 +18,7 @@ namespace VtkSharp;
 /// functionality, consider using vtkSimpleImageToImageFilter instead.
 /// </para>
 /// <para>
-/// @sa
-/// vtkSimpleImageToImageFilter
+/// See also: vtkSimpleImageToImageFilter
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
@@ -38,6 +37,9 @@ public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
     /// <summary>
     /// Get the output data object for a port on this algorithm.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkImageData GetOutput()
     {
         return vtkImageData.FromBorrowedPointer(vtkImageAlgorithm_GetOutput_(this.NativePointer));
@@ -46,6 +48,9 @@ public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
     /// <summary>
     /// Get the output data object for a port on this algorithm.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkImageData GetOutput(int _arg1)
     {
         return vtkImageData.FromBorrowedPointer(vtkImageAlgorithm_GetOutput_int(this.NativePointer, _arg1));

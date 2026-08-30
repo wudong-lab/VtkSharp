@@ -18,8 +18,7 @@ namespace VtkSharp;
 /// a vtkMapper2D object which does the rendering.
 /// </para>
 /// <para>
-/// @sa
-/// vtkProp  vtkMapper2D vtkProperty2D
+/// See also: vtkProp  vtkMapper2D vtkProperty2D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkActor2D : vtkProp
@@ -30,6 +29,9 @@ public unsafe partial class vtkActor2D : vtkProp
     /// position (0,0) (coordinate system is viewport);
     /// at layer 0.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkActor2D New() => new(vtkActor2D_New(), ownsReference: true);
     public new static vtkActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -46,6 +48,9 @@ public unsafe partial class vtkActor2D : vtkProp
     /// This is used for for complicated or relative positioning.
     /// The position variable controls the lower left corner of the Actor2D
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkCoordinate GetPositionCoordinate()
     {
         return vtkCoordinate.FromBorrowedPointer(vtkActor2D_GetPositionCoordinate(this.NativePointer));
@@ -55,6 +60,9 @@ public unsafe partial class vtkActor2D : vtkProp
     /// Returns this actor's vtkProperty2D.  Creates a property if one
     /// doesn't already exist.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty2D GetProperty()
     {
         return vtkProperty2D.FromBorrowedPointer(vtkActor2D_GetProperty(this.NativePointer));
@@ -109,6 +117,9 @@ public unsafe partial class vtkActor2D : vtkProp
     /// This is used for for complicated or relative positioning.
     /// The position variable controls the lower left corner of the Actor2D
     /// </summary>
+    /// <param name="x">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetPosition(Span<double> x)
     {
         fixed (double* xPtr = x)
@@ -134,6 +145,9 @@ public unsafe partial class vtkActor2D : vtkProp
     /// relative to Position and in normalized viewport coordinates.
     /// Some 2D actor subclasses ignore the position2 variable
     /// </summary>
+    /// <param name="x">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetPosition2(Span<double> x)
     {
         fixed (double* xPtr = x)

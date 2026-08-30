@@ -9,6 +9,9 @@ namespace VtkSharp;
 public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
 {
     protected vtkWin32OpenGLRenderWindow(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkWin32OpenGLRenderWindow New() => new(vtkWin32OpenGLRenderWindow_New(), ownsReference: true);
     public new static vtkWin32OpenGLRenderWindow FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkWin32OpenGLRenderWindow TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

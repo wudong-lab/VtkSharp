@@ -20,6 +20,9 @@ namespace VtkSharp;
 public unsafe partial class vtkVertexGlyphFilter : vtkPolyDataAlgorithm
 {
     protected vtkVertexGlyphFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkVertexGlyphFilter New() => new(vtkVertexGlyphFilter_New(), ownsReference: true);
     public new static vtkVertexGlyphFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkVertexGlyphFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

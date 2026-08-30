@@ -15,8 +15,7 @@ namespace VtkSharp;
 /// listing the point ids that make up each cell.
 /// </para>
 /// <para>
-/// @sa
-/// vtkCellArray vtkStructuredCellArray
+/// See also: vtkCellArray vtkStructuredCellArray
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAbstractCellArray : vtkObject

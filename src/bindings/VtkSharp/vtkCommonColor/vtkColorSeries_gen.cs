@@ -11,6 +11,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// The vtkColorSeries stores palettes of colors. There are several default
 /// palettes (or schemes) available and functions to control several aspects
 /// of what colors are returned. In essence a color scheme is set and then
@@ -26,9 +27,9 @@ namespace VtkSharp;
 /// </para>
 /// <para>
 /// It is also possible to add schemes beyond the default palettes.
-/// Whenever \a SetColorScheme is called with a string for which no palette
+/// Whenever SetColorScheme is called with a string for which no palette
 /// already exists, a new, empty palette is created.
-/// You may then use \a SetNumberOfColors and \a SetColor to populate the
+/// You may then use SetNumberOfColors and SetColor to populate the
 /// palette.
 /// You may not extend default palettes by calling functions that alter
 /// a scheme; if called while a predefined palette is in use, they
@@ -47,6 +48,9 @@ public unsafe partial class vtkColorSeries : vtkObject
     /// <summary>
     /// Create a new vtkColorSeries with the SPECTRUM color scheme.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkColorSeries New() => new(vtkColorSeries_New(), ownsReference: true);
     public new static vtkColorSeries FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkColorSeries TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -99,6 +103,9 @@ public unsafe partial class vtkColorSeries : vtkObject
     /// to ORDINAL to return ordinal data. Any other value for lutIndexing
     /// is treated as CATEGORICAL.
     /// </para>
+    /// <para>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </para>
     /// </remarks>
     public new vtkLookupTable CreateLookupTable(int lutIndexing)
     {
@@ -125,6 +132,9 @@ public unsafe partial class vtkColorSeries : vtkObject
     /// Get the color at the specified index. If the index is out of range then
     /// black will be returned.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a C# value type. The caller does not release native memory for this return value.
+    /// </remarks>
     public new VtkColor3ub GetColor(int index)
     {
         byte* __outGetColor = stackalloc byte[3];
@@ -136,6 +146,9 @@ public unsafe partial class vtkColorSeries : vtkObject
     /// Get the color at the specified index. If the index is out of range then
     /// the call wraps around, i.e. uses the mod operator.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a C# value type. The caller does not release native memory for this return value.
+    /// </remarks>
     public new VtkColor3ub GetColorRepeating(int index)
     {
         byte* __outGetColorRepeating = stackalloc byte[3];
@@ -199,6 +212,9 @@ public unsafe partial class vtkColorSeries : vtkObject
     /// <summary>
     /// Get the color scheme that is currently being used.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetColorSchemeName()
     {
         NativeUtf8String __outGetColorSchemeName;

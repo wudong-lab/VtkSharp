@@ -43,8 +43,7 @@ namespace VtkSharp;
 /// the class vtkFindCellStrategy for more information
 /// </para>
 /// <para>
-/// @sa
-/// vtkPolyData vtkStructuredGrid vtkUnstructuredGrid vtkFindCellStrategy
+/// See also: vtkPolyData vtkStructuredGrid vtkUnstructuredGrid vtkFindCellStrategy
 /// </para>
 /// </remarks>
 public unsafe partial class vtkPointSet : vtkDataSet
@@ -53,6 +52,9 @@ public unsafe partial class vtkPointSet : vtkDataSet
     /// <summary>
     /// Standard instantiation method.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPointSet New() => new(vtkPointSet_New(), ownsReference: true);
     public new static vtkPointSet FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPointSet TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

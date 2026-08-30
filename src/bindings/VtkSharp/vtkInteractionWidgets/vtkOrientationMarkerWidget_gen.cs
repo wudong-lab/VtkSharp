@@ -46,11 +46,7 @@ namespace VtkSharp;
 /// renderer by calling the widget's SetViewport method.
 /// </para>
 /// <para>
-/// @par Thanks:
-/// This class was based originally on Paraview's vtkPVAxesWidget.
-/// </para>
-/// <para>
-/// @warning
+/// Warning:
 /// The input orientation marker prop should calculate its bounds as though they
 /// are symmetric about it's origin.  This must currently be done to correctly
 /// implement the camera synchronization between the ivar renderer and the
@@ -61,14 +57,16 @@ namespace VtkSharp;
 /// required.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorObserver vtkXYPlotWidget vtkScalarBarWidget vtkAxesActor
+/// See also: vtkInteractorObserver vtkXYPlotWidget vtkScalarBarWidget vtkAxesActor
 /// vtkAnnotatedCubeActor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkOrientationMarkerWidget : vtkInteractorObserver
 {
     protected vtkOrientationMarkerWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkOrientationMarkerWidget New() => new(vtkOrientationMarkerWidget_New(), ownsReference: true);
     public new static vtkOrientationMarkerWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkOrientationMarkerWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -118,7 +116,7 @@ public unsafe partial class vtkOrientationMarkerWidget : vtkInteractorObserver
     /// render window.
     /// </summary>
     /// <remarks>
-    /// \sa SetCurrentRenderer()
+    /// See also: SetCurrentRenderer()
     /// </remarks>
     public new void SetViewport(double _arg1, double _arg2, double _arg3, double _arg4)
     {
@@ -137,8 +135,11 @@ public unsafe partial class vtkOrientationMarkerWidget : vtkInteractorObserver
     /// render window.
     /// </summary>
     /// <remarks>
-    /// \sa SetCurrentRenderer()
+    /// See also: SetCurrentRenderer()
     /// </remarks>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetViewport(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

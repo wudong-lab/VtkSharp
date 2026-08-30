@@ -19,13 +19,15 @@ namespace VtkSharp;
 /// instead of the vtkCylinderSource.
 /// </para>
 /// <para>
-/// @sa
-/// vtkCylinder
+/// See also: vtkCylinder
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
 {
     protected vtkCylinderSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCylinderSource New() => new(vtkCylinderSource_New(), ownsReference: true);
     public new static vtkCylinderSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCylinderSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -58,7 +60,7 @@ public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
     /// the ends of the cylinder.
     /// </summary>
     /// <remarks>
-    /// \sa SetCapping()
+    /// See also: SetCapping()
     /// </remarks>
     public new void CapsuleCapOff()
     {
@@ -70,7 +72,7 @@ public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
     /// the ends of the cylinder.
     /// </summary>
     /// <remarks>
-    /// \sa SetCapping()
+    /// See also: SetCapping()
     /// </remarks>
     public new void CapsuleCapOn()
     {
@@ -88,6 +90,9 @@ public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Set/Get cylinder center. Initial value is (0.0,0.0,0.0)
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetCenter(Span<double> data)
     {
         fixed (double* dataPtr = data)
@@ -131,6 +136,9 @@ public unsafe partial class vtkCylinderSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Set/Get cylinder center. Initial value is (0.0,0.0,0.0)
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetCenter(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

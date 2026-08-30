@@ -30,7 +30,7 @@ namespace VtkSharp;
 /// a window.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// You must carefully synchronize the execution of this filter. The
 /// filter refers to a renderer, which is modified every time a render
 /// occurs. Therefore, the filter is always out of date, and always
@@ -46,6 +46,9 @@ public unsafe partial class vtkSelectVisiblePoints : vtkPolyDataAlgorithm
     /// Instantiate object with no renderer; window selection turned off;
     /// tolerance set to 0.01; and select invisible off.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkSelectVisiblePoints New() => new(vtkSelectVisiblePoints_New(), ownsReference: true);
     public new static vtkSelectVisiblePoints FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkSelectVisiblePoints TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -115,6 +118,9 @@ public unsafe partial class vtkSelectVisiblePoints : vtkPolyDataAlgorithm
     /// Specify the selection window in display coordinates. You must specify
     /// a rectangular region using (xmin,xmax,ymin,ymax).
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetSelection(ReadOnlySpan<int> _arg)
     {
         fixed (int* _argPtr = _arg)

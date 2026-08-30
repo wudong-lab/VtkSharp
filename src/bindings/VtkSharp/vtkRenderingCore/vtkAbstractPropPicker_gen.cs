@@ -23,7 +23,7 @@ namespace VtkSharp;
 /// picked prop).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Because a vtkProp can be placed into different assemblies, or even in
 /// different leaf positions of the same assembly, the vtkAssemblyPath is
 /// used to fully qualify exactly which use of the vtkProp was picked,
@@ -31,7 +31,7 @@ namespace VtkSharp;
 /// matrix per node).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The class returns information about picked actors, props, etc. Note that
 /// what is returned by these methods is the top level of the assembly
 /// path. This can cause a lot of confusion! For example, if you pick a
@@ -45,7 +45,7 @@ namespace VtkSharp;
 /// used in different assemblies.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The returned assembly paths refer to assembly nodes that in turn refer
 /// to vtkProp and vtkMatrix. This association to vtkProp is not a reference
 /// counted association, meaning that dangling references are possible if
@@ -54,8 +54,7 @@ namespace VtkSharp;
 /// counting.)
 /// </para>
 /// <para>
-/// @sa
-/// vtkPropPicker vtkPicker vtkWorldPointPicker vtkCellPicker vtkPointPicker
+/// See also: vtkPropPicker vtkPicker vtkWorldPointPicker vtkCellPicker vtkPointPicker
 /// vtkAssemblyPath vtkAssemblyNode vtkAssemblyPaths vtkAbstractPicker
 /// vtkRenderer
 /// </para>
@@ -76,6 +75,9 @@ public unsafe partial class vtkAbstractPropPicker : vtkAbstractPicker
     /// <summary>
     /// Return the vtkActor that has been picked. If NULL, no actor was picked.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkActor GetActor()
     {
         return vtkActor.FromBorrowedPointer(vtkAbstractPropPicker_GetActor(this.NativePointer));
@@ -85,6 +87,9 @@ public unsafe partial class vtkAbstractPropPicker : vtkAbstractPicker
     /// Return the vtkProp that has been picked. If NULL, nothing was picked.
     /// If anything at all was picked, this method will return something.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProp GetViewProp()
     {
         return vtkProp.FromBorrowedPointer(vtkAbstractPropPicker_GetViewProp(this.NativePointer));

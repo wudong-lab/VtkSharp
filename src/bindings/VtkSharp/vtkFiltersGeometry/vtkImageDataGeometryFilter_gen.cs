@@ -22,7 +22,7 @@ namespace VtkSharp;
 /// a 50x50x50 volume is given by (0,49, 0,49, 0,0).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// If you don't know the dimensions of the input dataset, you can use a large
 /// number to specify extent (the number will be clamped appropriately). For
 /// example, if the dataset dimensions are 50x50x50, and you want a the fifth
@@ -30,8 +30,7 @@ namespace VtkSharp;
 /// automatically be clamped to 49.
 /// </para>
 /// <para>
-/// @sa
-/// vtkGeometryFilter vtkStructuredGridSource
+/// See also: vtkGeometryFilter vtkStructuredGridSource
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageDataGeometryFilter : vtkPolyDataAlgorithm
@@ -40,6 +39,9 @@ public unsafe partial class vtkImageDataGeometryFilter : vtkPolyDataAlgorithm
     /// <summary>
     /// Construct with initial extent of all the data
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageDataGeometryFilter New() => new(vtkImageDataGeometryFilter_New(), ownsReference: true);
     public new static vtkImageDataGeometryFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageDataGeometryFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

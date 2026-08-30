@@ -20,7 +20,7 @@ namespace VtkSharp;
 /// to convert RenderWindows or ImageWindows to an image format.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// A vtkWindow doesn't behave like other parts of the VTK pipeline: its
 /// modification time doesn't get updated when an image is rendered.  As a
 /// result, naive use of vtkWindowToImageFilter will produce an image of
@@ -29,12 +29,12 @@ namespace VtkSharp;
 /// general undesirable.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// To force an update of the output image, call vtkWindowToImageFilter's
 /// Modified method after rendering to the window.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// In VTK versions 4 and later, this filter is part of the canonical
 /// way to output an image of a window to a file (replacing the
 /// obsolete SaveImageAsPPM method for vtkRenderWindows that existed in
@@ -42,7 +42,7 @@ namespace VtkSharp;
 /// and filter's output to a writer such as vtkPNGWriter.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Reading back alpha planes is dependent on the correct operation of
 /// the render window's GetRGBACharPixelData method, which in turn is
 /// dependent on the configuration of the window's alpha planes.  As of
@@ -50,14 +50,16 @@ namespace VtkSharp;
 /// assured because of these dependencies.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRendererSource vtkRendererPointCloudSource vtkWindow
+/// See also: vtkRendererSource vtkRendererPointCloudSource vtkWindow
 /// vtkRenderLargeImage
 /// </para>
 /// </remarks>
 public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
 {
     protected vtkWindowToImageFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkWindowToImageFilter New() => new(vtkWindowToImageFilter_New(), ownsReference: true);
     public new static vtkWindowToImageFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkWindowToImageFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -92,6 +94,9 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
     /// <summary>
     /// Get the output data object for a port on this algorithm.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkImageData GetOutput()
     {
         return vtkImageData.FromBorrowedPointer(vtkWindowToImageFilter_GetOutput(this.NativePointer));
@@ -108,6 +113,9 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
     /// <summary>
     /// Get/Set the scale (or magnification) factors in X and Y.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetScale(Span<int> _arg)
     {
         fixed (int* _argPtr = _arg)
@@ -186,6 +194,9 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
     /// <summary>
     /// Get/Set the scale (or magnification) factors in X and Y.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetScale(ReadOnlySpan<int> _arg)
     {
         fixed (int* _argPtr = _arg)
@@ -207,6 +218,14 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
     /// Set/get the extents to be used to generate the image. Initial value is
     /// {0,0,1,1} (This option does not work if scale factor &gt; 1.)
     /// </summary>
+    /// <param name="_arg1">
+    /// <para>
+    /// Input parameter.
+    /// </para>
+    /// <para>
+    /// Buffer length: 4 elements.
+    /// </para>
+    /// </param>
     public new void SetViewport(ReadOnlySpan<double> _arg1)
     {
         fixed (double* _arg1Ptr = _arg1)

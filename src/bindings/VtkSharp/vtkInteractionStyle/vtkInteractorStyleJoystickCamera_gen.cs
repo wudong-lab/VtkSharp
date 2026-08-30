@@ -11,6 +11,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// vtkInteractorStyleJoystickCamera allows the user to move (rotate, pan,
 /// etc.) the camera, the point of view for the scene.  The position of the
 /// mouse relative to the center of the scene determines the speed at which
@@ -23,14 +24,16 @@ namespace VtkSharp;
 /// for zooming, and shift + left button is for panning.)
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorStyleJoystickActor vtkInteractorStyleTrackballCamera
+/// See also: vtkInteractorStyleJoystickActor vtkInteractorStyleTrackballCamera
 /// vtkInteractorStyleTrackballActor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyleJoystickCamera : vtkInteractorStyle
 {
     protected vtkInteractorStyleJoystickCamera(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleJoystickCamera New() => new(vtkInteractorStyleJoystickCamera_New(), ownsReference: true);
     public new static vtkInteractorStyleJoystickCamera FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleJoystickCamera TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

@@ -27,47 +27,7 @@ namespace VtkSharp;
 /// to pick objects or otherwise manipulate data interior to the widget.
 /// </para>
 /// <para>
-/// @par Event Bindings:
-/// By default, the widget responds to the following VTK events (i.e., it
-/// watches the vtkRenderWindowInteractor for these events):
-/// &lt;pre&gt;
-/// On the boundary of the widget:
-/// LeftButtonPressEvent - select boundary
-/// LeftButtonReleaseEvent - deselect boundary
-/// MouseMoveEvent - move/resize widget depending on which portion of the
-/// boundary was selected.
-/// On the interior of the widget:
-/// LeftButtonPressEvent - invoke SelectButton() callback (if the ivar
-/// Selectable is on)
-/// Anywhere on the widget:
-/// MiddleButtonPressEvent - move the widget
-/// &lt;/pre&gt;
-/// </para>
-/// <para>
-/// @par Event Bindings:
-/// Note that the event bindings described above can be changed using this
-/// class's vtkWidgetEventTranslator. This class translates VTK events
-/// into the vtkBorderWidget's widget events:
-/// &lt;pre&gt;
-/// vtkWidgetEvent::Select -- some part of the widget has been selected
-/// vtkWidgetEvent::EndSelect -- the selection process has completed
-/// vtkWidgetEvent::Translate -- the widget is to be translated
-/// vtkWidgetEvent::Move -- a request for slider motion has been invoked
-/// &lt;/pre&gt;
-/// </para>
-/// <para>
-/// @par Event Bindings:
-/// In turn, when these widget events are processed, this widget invokes the
-/// following VTK events on itself (which observers can listen for):
-/// &lt;pre&gt;
-/// vtkCommand::StartInteractionEvent (on vtkWidgetEvent::Select)
-/// vtkCommand::EndInteractionEvent (on vtkWidgetEvent::EndSelect)
-/// vtkCommand::InteractionEvent (on vtkWidgetEvent::Move)
-/// &lt;/pre&gt;
-/// </para>
-/// <para>
-/// @sa
-/// vtkInteractorObserver vtkCameraInterpolator
+/// See also: vtkInteractorObserver vtkCameraInterpolator
 /// </para>
 /// </remarks>
 public unsafe partial class vtkBorderWidget : vtkAbstractWidget
@@ -76,6 +36,9 @@ public unsafe partial class vtkBorderWidget : vtkAbstractWidget
     /// <summary>
     /// Method to instantiate class.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkBorderWidget New() => new(vtkBorderWidget_New(), ownsReference: true);
     public new static vtkBorderWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkBorderWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -98,6 +61,9 @@ public unsafe partial class vtkBorderWidget : vtkAbstractWidget
     /// <summary>
     /// Return the representation as a vtkBorderRepresentation.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkBorderRepresentation GetBorderRepresentation()
     {
         return vtkBorderRepresentation.FromBorrowedPointer(vtkBorderWidget_GetBorderRepresentation(this.NativePointer));

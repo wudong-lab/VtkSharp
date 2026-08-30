@@ -16,13 +16,15 @@ namespace VtkSharp;
 /// entries are not prevented.
 /// </para>
 /// <para>
-/// @sa
-/// vtkProp vtkCollection
+/// See also: vtkProp vtkCollection
 /// </para>
 /// </remarks>
 public unsafe partial class vtkPropCollection : vtkCollection
 {
     protected vtkPropCollection(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPropCollection New() => new(vtkPropCollection_New(), ownsReference: true);
     public new static vtkPropCollection FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPropCollection TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

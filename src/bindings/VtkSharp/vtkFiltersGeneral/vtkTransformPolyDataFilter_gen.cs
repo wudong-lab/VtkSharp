@@ -10,30 +10,7 @@ namespace VtkSharp;
 /// transform points and associated normals and vectors for polygonal dataset
 /// </summary>
 /// <remarks>
-/// <para>
-/// @deprecated vtkTransformPolyDataFilter is deprecated in favor of vtkTransformFilter.
-/// To get the output vtkPolyData, you should simply replace `GetOutput()` by `GetPolyDataOutput()`.
-/// </para>
-/// <para>
-/// vtkTransformPolyDataFilter is a filter to transform point
-/// coordinates and associated point and cell normals and
-/// vectors. Other point and cell data is passed through the filter
-/// unchanged. This filter is specialized for polygonal data. See
-/// vtkTransformFilter for more general data.
-/// </para>
-/// <para>
-/// An alternative method of transformation is to use vtkActor's methods
-/// to scale, rotate, and translate objects. The difference between the
-/// two methods is that vtkActor's transformation simply effects where
-/// objects are rendered (via the graphics pipeline), whereas
-/// vtkTransformPolyDataFilter actually modifies point coordinates in the
-/// visualization pipeline. This is necessary for some objects
-/// (e.g., vtkProbeFilter) that require point coordinates as input.
-/// </para>
-/// <para>
-/// @sa
-/// vtkTransform vtkTransformFilter vtkActor
-/// </para>
+/// See also: vtkTransform vtkTransformFilter vtkActor
 /// </remarks>
 public unsafe partial class vtkTransformPolyDataFilter : vtkPolyDataAlgorithm
 {
@@ -42,6 +19,9 @@ public unsafe partial class vtkTransformPolyDataFilter : vtkPolyDataAlgorithm
     /// Standard methods for instantiation, obtaining type information, and
     /// printing.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTransformPolyDataFilter New() => new(vtkTransformPolyDataFilter_New(), ownsReference: true);
     public new static vtkTransformPolyDataFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTransformPolyDataFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

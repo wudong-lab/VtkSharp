@@ -51,8 +51,7 @@ namespace VtkSharp;
 /// vtkCoordinate object may be specified in different coordinate systems!
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkScalarBarActor
+/// See also: vtkActor2D vtkScalarBarActor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCoordinate : vtkObject
@@ -62,6 +61,9 @@ public unsafe partial class vtkCoordinate : vtkObject
     /// Creates an instance of this class with the following defaults:
     /// value of  (0,0,0) in world coordinates.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCoordinate New() => new(vtkCoordinate_New(), ownsReference: true);
     public new static vtkCoordinate FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCoordinate TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -165,6 +167,9 @@ public unsafe partial class vtkCoordinate : vtkObject
     /// Set/get the value of this coordinate. This can be thought of as
     /// the position of this coordinate in its coordinate system.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetValue(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

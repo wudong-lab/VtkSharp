@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v1",
+  "generatorVersion": "2026-08-30.documentation-v2",
   "module": "vtkRenderingLabel",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkLabeledDataMapper.h",
       "baseClassName": "vtkMapper2D",
       "hasStaticNew": true,
-      "inputHash": "08e3b7af54e14a1bbe9f70e5331c3f732b5cdf7cfca5c6c3d32b46aba1a7b7cb",
+      "inputHash": "4562a64eca25d6b94308f48cb7e10bd57bbb5529d517d85737a350655a73b93c",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkLabeledDataMapper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkLabeledDataMapper_export_gen.cpp",
-      "managedContentHash": "ef5f9d7b6a66871dcb7d62b5966f77930fa2f76db578d367ccd7ea90c74862fa",
+      "managedContentHash": "fc24a880dc1d077b23db5d8281c1ac4b38c3dda1cacacd6e06c7ac9fba18b823",
       "nativeContentHash": "de81d7675cbfb99615de025b5bb5c5297d1daa0e73016e620fdec454ad03a67a"
     }
   ]

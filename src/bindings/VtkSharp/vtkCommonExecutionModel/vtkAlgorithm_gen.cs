@@ -28,6 +28,9 @@ namespace VtkSharp;
 public unsafe partial class vtkAlgorithm : vtkObject
 {
     protected vtkAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkAlgorithm New() => new(vtkAlgorithm_New(), ownsReference: true);
     public new static vtkAlgorithm FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkAlgorithm TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -45,11 +48,17 @@ public unsafe partial class vtkAlgorithm : vtkObject
     /// SetInputConnection(), AddInputConnection(), and
     /// RemoveInputConnection() methods to modify pipeline connectivity.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAlgorithmOutput GetOutputPort(int index)
     {
         return vtkAlgorithmOutput.FromBorrowedPointer(vtkAlgorithm_GetOutputPort_int(this.NativePointer, index));
     }
 
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAlgorithmOutput GetOutputPort()
     {
         return vtkAlgorithmOutput.FromBorrowedPointer(vtkAlgorithm_GetOutputPort_(this.NativePointer));
@@ -124,24 +133,8 @@ public unsafe partial class vtkAlgorithm : vtkObject
     /// before execution. This is equivalent to:
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// \verbatim
-    /// algorithm-&gt;UpdateInformation();
-    /// for (int i=0; i&lt;algorithm-&gt;GetNumberOfOutputPorts(); i++)
-    /// {
-    /// vtkInformation* portRequests = requests-&gt;GetInformationObject(i);
-    /// if (portRequests)
-    /// {
-    /// algorithm-&gt;GetOutputInformation(i)-&gt;Append(portRequests);
-    /// }
-    /// }
-    /// algorithm-&gt;Update();
-    /// </para>
-    /// <para>
-    /// \endverbatim
     /// Available requests include UPDATE_PIECE_NUMBER(), UPDATE_NUMBER_OF_PIECES()
     /// UPDATE_EXTENT() etc etc.
-    /// </para>
     /// </remarks>
     public new bool Update(int port, vtkInformationVector requests)
     {

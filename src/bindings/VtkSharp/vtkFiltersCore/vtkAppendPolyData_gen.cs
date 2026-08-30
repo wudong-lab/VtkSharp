@@ -11,6 +11,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// vtkAppendPolyData is a filter that appends one of more polygonal datasets
 /// into a single polygonal dataset. All geometry is extracted and appended,
 /// but point and cell attributes (i.e., scalars, vectors, normals) are
@@ -19,19 +20,21 @@ namespace VtkSharp;
 /// another does not, point scalars will not be appended.)
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The related filter vtkRemovePolyData enables the subtraction, or removal
 /// of the cells of a vtkPolyData. Hence vtkRemovePolyData functions like the
 /// inverse operation to vtkAppendPolyData.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAppendFilter vtkRemovePolyData
+/// See also: vtkAppendFilter vtkRemovePolyData
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAppendPolyData : vtkPolyDataAlgorithm
 {
     protected vtkAppendPolyData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkAppendPolyData New() => new(vtkAppendPolyData_New(), ownsReference: true);
     public new static vtkAppendPolyData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkAppendPolyData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

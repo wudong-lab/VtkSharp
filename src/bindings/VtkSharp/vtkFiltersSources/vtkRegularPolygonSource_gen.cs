@@ -26,6 +26,9 @@ public unsafe partial class vtkRegularPolygonSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Standard methods for instantiation, obtaining type and printing instance values.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkRegularPolygonSource New() => new(vtkRegularPolygonSource_New(), ownsReference: true);
     public new static vtkRegularPolygonSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkRegularPolygonSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -58,6 +61,9 @@ public unsafe partial class vtkRegularPolygonSource : vtkPolyDataAlgorithm
     /// Set/Get the center of the polygon. By default, the center is set at the
     /// origin (0,0,0).
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetCenter(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

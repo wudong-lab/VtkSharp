@@ -20,7 +20,7 @@ namespace VtkSharp;
 /// produce a tessellation using quadrilaterals.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Resolution means the number of latitude or longitude lines for a complete
 /// sphere. If you create partial spheres the number of latitude/longitude
 /// lines may be off by one.
@@ -33,6 +33,9 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
     /// Construct sphere with radius=0.5 and default resolution 8 in both Phi
     /// and Theta directions. Theta ranges from (0,360) and phi (0,180) degrees.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkSphereSource New() => new(vtkSphereSource_New(), ownsReference: true);
     public new static vtkSphereSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkSphereSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -107,6 +110,9 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Set the center of the sphere. Default is (0,0,0).
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetCenter(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

@@ -52,13 +52,15 @@ namespace VtkSharp;
 /// shift+'r' or control+'r' will reset the camera.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderWindow vtkRenderer vtkImageActor vtkImageMapToWindowLevelColors
+/// See also: vtkRenderWindow vtkRenderer vtkImageActor vtkImageMapToWindowLevelColors
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageViewer2 : vtkObject
 {
     protected vtkImageViewer2(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageViewer2 New() => new(vtkImageViewer2_New(), ownsReference: true);
     public new static vtkImageViewer2 FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageViewer2 TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -74,6 +76,9 @@ public unsafe partial class vtkImageViewer2 : vtkObject
     /// Get the internal render window, renderer, image actor, and
     /// image map instances.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkImageActor GetImageActor()
     {
         return vtkImageActor.FromBorrowedPointer(vtkImageViewer2_GetImageActor(this.NativePointer));
@@ -83,6 +88,9 @@ public unsafe partial class vtkImageViewer2 : vtkObject
     /// Get the internal render window, renderer, image actor, and
     /// image map instances.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkRenderWindow GetRenderWindow()
     {
         return vtkRenderWindow.FromBorrowedPointer(vtkImageViewer2_GetRenderWindow(this.NativePointer));
@@ -92,6 +100,9 @@ public unsafe partial class vtkImageViewer2 : vtkObject
     /// Get the internal render window, renderer, image actor, and
     /// image map instances.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkRenderer GetRenderer()
     {
         return vtkRenderer.FromBorrowedPointer(vtkImageViewer2_GetRenderer(this.NativePointer));

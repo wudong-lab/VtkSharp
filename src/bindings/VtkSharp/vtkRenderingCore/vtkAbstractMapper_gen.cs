@@ -17,8 +17,7 @@ namespace VtkSharp;
 /// data.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAbstractMapper3D vtkMapper vtkPolyDataMapper vtkVolumeMapper
+/// See also: vtkAbstractMapper3D vtkMapper vtkPolyDataMapper vtkVolumeMapper
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAbstractMapper : vtkAlgorithm

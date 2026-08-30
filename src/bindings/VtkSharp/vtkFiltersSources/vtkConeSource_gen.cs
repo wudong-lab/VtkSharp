@@ -28,6 +28,9 @@ public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
     /// capping on. The cone is centered at the origin and points down
     /// the x-axis.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkConeSource New() => new(vtkConeSource_New(), ownsReference: true);
     public new static vtkConeSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkConeSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -54,6 +57,9 @@ public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
     /// the cone. Warning: this is not the center of the base of the cone!
     /// The default is 0,0,0.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetCenter(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

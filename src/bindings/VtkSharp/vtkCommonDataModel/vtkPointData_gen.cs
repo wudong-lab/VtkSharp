@@ -24,6 +24,9 @@ namespace VtkSharp;
 public unsafe partial class vtkPointData : vtkDataSetAttributes
 {
     protected vtkPointData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPointData New() => new(vtkPointData_New(), ownsReference: true);
     public new static vtkPointData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPointData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

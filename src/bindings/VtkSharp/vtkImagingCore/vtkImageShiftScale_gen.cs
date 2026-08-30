@@ -18,6 +18,9 @@ namespace VtkSharp;
 public unsafe partial class vtkImageShiftScale : vtkThreadedImageAlgorithm
 {
     protected vtkImageShiftScale(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageShiftScale New() => new(vtkImageShiftScale_New(), ownsReference: true);
     public new static vtkImageShiftScale FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageShiftScale TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

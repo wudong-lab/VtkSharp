@@ -47,12 +47,12 @@ namespace VtkSharp;
 /// (0,255,0), the web color standard defines it as (0,128,0).
 /// </para>
 /// <para>
-/// The \a SetColor methods will overwrite existing colors if the name of the
+/// The SetColor methods will overwrite existing colors if the name of the
 /// color being set matches an existing color. Note that ColorExists() can be
 /// used to test for existence of the color being set.
 /// </para>
 /// <para>
-/// In the case of the \a GetColor methods returning doubles, alternative versions,
+/// In the case of the GetColor methods returning doubles, alternative versions,
 /// identified by the letters RGB in the names, are provided.
 /// These get functions return just the red, green and blue components of
 /// a color.
@@ -75,6 +75,9 @@ public unsafe partial class vtkNamedColors : vtkObject
     /// <summary>
     /// Create a new vtkNamedColors object.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkNamedColors New() => new(vtkNamedColors_New(), ownsReference: true);
     public new static vtkNamedColors FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkNamedColors TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -105,6 +108,10 @@ public unsafe partial class vtkNamedColors : vtkObject
     /// [red, green, blue, alpha]. The range of each element is 0...1.
     /// The color black is returned if the color is not found.
     /// </summary>
+    /// <param name="name" />
+    /// <param name="rgba">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void GetColor(string name, Span<double> rgba)
     {
         fixed (double* rgbaPtr = rgba)
@@ -123,6 +130,9 @@ public unsafe partial class vtkNamedColors : vtkObject
     /// The color is returned as a vtkColor3d class.
     /// The color black is returned if the color is not found.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a C# value type. The caller does not release native memory for this return value.
+    /// </remarks>
     public new VtkColor3d GetColor3d(string name)
     {
         double* __outGetColor3d = stackalloc double[3];
@@ -142,6 +152,10 @@ public unsafe partial class vtkNamedColors : vtkObject
     /// [red, green, blue]. The range of each element is 0...1.
     /// The color black is returned if the color is not found.
     /// </summary>
+    /// <param name="name" />
+    /// <param name="rgb">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetColorRGB(string name, Span<double> rgb)
     {
         fixed (double* rgbPtr = rgb)
@@ -194,6 +208,10 @@ public unsafe partial class vtkNamedColors : vtkObject
     /// [red, green, blue, alpha]. The range of each element is 0...1.
     /// No color is set if the name is empty.
     /// </summary>
+    /// <param name="name" />
+    /// <param name="rgba">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetColor(string name, ReadOnlySpan<double> rgba)
     {
         fixed (double* rgbaPtr = rgba)

@@ -55,7 +55,7 @@ namespace VtkSharp;
 /// map created for `LookupValue` may become obsolete and yield incorrect results.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// In VTK 9.4, new method `nlohmann::json vtkAbstractArray::SerializeValues()` was
 /// introduced which required exposing symbols from
 /// VTK::nlohmannjson library in public API. This method will be removed in VTK 9.5 as it caused
@@ -63,8 +63,7 @@ namespace VtkSharp;
 /// deprecated because doing so prevents fixing the underlying issue.
 /// </para>
 /// <para>
-/// @sa
-/// vtkDataArray vtkStringArray vtkCellArray
+/// See also: vtkDataArray vtkStringArray vtkCellArray
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAbstractArray : vtkObject
@@ -83,6 +82,9 @@ public unsafe partial class vtkAbstractArray : vtkObject
     /// <summary>
     /// Set/get array's name
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetName()
     {
         return VtkString.FromUtf8Pointer(vtkAbstractArray_GetName(this.NativePointer));

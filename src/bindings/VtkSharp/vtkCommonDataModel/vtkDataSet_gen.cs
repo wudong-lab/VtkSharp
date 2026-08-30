@@ -29,8 +29,7 @@ namespace VtkSharp;
 /// operate on cell data, both cell and point data, either one, or none.
 /// </para>
 /// <para>
-/// @sa
-/// vtkPointSet vtkStructuredPoints vtkStructuredGrid vtkUnstructuredGrid
+/// See also: vtkPointSet vtkStructuredPoints vtkStructuredGrid vtkUnstructuredGrid
 /// vtkRectilinearGrid vtkPolyData vtkPointData vtkCellData
 /// vtkDataObject vtkFieldData
 /// </para>
@@ -64,6 +63,9 @@ public unsafe partial class vtkDataSet : vtkDataObject
     /// THIS METHOD IS THREAD SAFE IF FIRST CALLED FROM A SINGLE THREAD AND
     /// THE DATASET IS NOT MODIFIED
     /// </summary>
+    /// <param name="bounds">
+    /// Buffer length: 6 elements.
+    /// </param>
     public new void GetBounds(Span<double> bounds)
     {
         fixed (double* boundsPtr = bounds)
@@ -76,6 +78,9 @@ public unsafe partial class vtkDataSet : vtkDataObject
     /// Return a pointer to this dataset's point data.
     /// THIS METHOD IS THREAD SAFE
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkPointData GetPointData()
     {
         return vtkPointData.FromBorrowedPointer(vtkDataSet_GetPointData(this.NativePointer));
@@ -105,6 +110,9 @@ public unsafe partial class vtkDataSet : vtkDataObject
     /// THIS METHOD IS THREAD SAFE IF FIRST CALLED FROM A SINGLE THREAD AND
     /// THE DATASET IS NOT MODIFIED
     /// </summary>
+    /// <param name="range">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetScalarRange(Span<double> range)
     {
         fixed (double* rangePtr = range)

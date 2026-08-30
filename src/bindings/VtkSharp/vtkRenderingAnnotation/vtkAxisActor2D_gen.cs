@@ -72,12 +72,10 @@ namespace VtkSharp;
 /// The tick marks are created so that they are perpendicular to the axis.
 /// </para>
 /// <para>
-/// @sa
-/// vtkCubeAxesActor2D can be used to create axes in world coordinate space.
+/// See also: vtkCubeAxesActor2D can be used to create axes in world coordinate space.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkTextMapper vtkPolyDataMapper2D vtkScalarBarActor
+/// See also: vtkActor2D vtkTextMapper vtkPolyDataMapper2D vtkScalarBarActor
 /// vtkCoordinate vtkTextProperty
 /// </para>
 /// </remarks>
@@ -87,6 +85,9 @@ public unsafe partial class vtkAxisActor2D : vtkActor2D
     /// <summary>
     /// Instantiate object.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkAxisActor2D New() => new(vtkAxisActor2D_New(), ownsReference: true);
     public new static vtkAxisActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkAxisActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

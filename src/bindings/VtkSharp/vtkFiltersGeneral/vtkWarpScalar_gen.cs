@@ -40,6 +40,9 @@ public unsafe partial class vtkWarpScalar : vtkPointSetAlgorithm
     /// Standard methods for instantiation, obtaining type information,
     /// and printing.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkWarpScalar New() => new(vtkWarpScalar_New(), ownsReference: true);
     public new static vtkWarpScalar FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkWarpScalar TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -64,6 +67,9 @@ public unsafe partial class vtkWarpScalar : vtkPointSetAlgorithm
     /// Normal (i.e., direction) along which to warp geometry. Only used
     /// if UseNormal boolean set to true or no normals available in data.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetNormal(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

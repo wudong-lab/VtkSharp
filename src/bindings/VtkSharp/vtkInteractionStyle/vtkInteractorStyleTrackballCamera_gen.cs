@@ -23,14 +23,16 @@ namespace VtkSharp;
 /// is for zooming, and shift + left button is for panning.)
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorStyleTrackballActor vtkInteractorStyleJoystickCamera
+/// See also: vtkInteractorStyleTrackballActor vtkInteractorStyleJoystickCamera
 /// vtkInteractorStyleJoystickActor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyleTrackballCamera : vtkInteractorStyle
 {
     protected vtkInteractorStyleTrackballCamera(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleTrackballCamera New() => new(vtkInteractorStyleTrackballCamera_New(), ownsReference: true);
     public new static vtkInteractorStyleTrackballCamera FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleTrackballCamera TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

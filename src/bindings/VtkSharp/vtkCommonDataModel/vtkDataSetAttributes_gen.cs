@@ -44,13 +44,13 @@ namespace VtkSharp;
 /// points or cells in a dataset.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// vtkDataSetAttributes is not in general thread safe due to the use of its
 /// vtkFieldData::BasicIterator RequiredArrays data member. The class
 /// vtkArrayListTemplate augments vtkDataSetAttributes for thread safety.
 /// </para>
 /// <para>
-/// @sa vtkArrayListTemplate
+/// See also: vtkArrayListTemplate
 /// </para>
 /// </remarks>
 public unsafe partial class vtkDataSetAttributes : vtkFieldData
@@ -59,6 +59,9 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
     /// <summary>
     /// Construct object with copying turned on for all data.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkDataSetAttributes New() => new(vtkDataSetAttributes_New(), ownsReference: true);
     public new static vtkDataSetAttributes FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkDataSetAttributes TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

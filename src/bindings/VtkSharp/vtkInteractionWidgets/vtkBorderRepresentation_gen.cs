@@ -21,7 +21,7 @@ namespace VtkSharp;
 /// the vtkBorderRepresentation interacts with to render itself in the scene.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The separation of the widget event handling (e.g., vtkBorderWidget) from
 /// the representation (vtkBorderRepresentation) enables users and developers
 /// to create new appearances for the widget. It also facilitates parallel
@@ -30,8 +30,7 @@ namespace VtkSharp;
 /// events).
 /// </para>
 /// <para>
-/// @sa
-/// vtkBorderWidget vtkTextWidget
+/// See also: vtkBorderWidget vtkTextWidget
 /// </para>
 /// </remarks>
 public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
@@ -40,6 +39,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// <summary>
     /// Instantiate this class.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkBorderRepresentation New() => new(vtkBorderRepresentation_New(), ownsReference: true);
     public new static vtkBorderRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkBorderRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -72,6 +74,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// <summary>
     /// Specify the properties of the border.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty2D GetBorderProperty()
     {
         return vtkProperty2D.FromBorrowedPointer(vtkBorderRepresentation_GetBorderProperty(this.NativePointer));
@@ -98,6 +103,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// <remarks>
     /// Default is { 0.0, 0.0 }.
     /// </remarks>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetMinimumNormalizedViewportSize(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -127,6 +135,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// <remarks>
     /// Default is { 1, 1 }.
     /// </remarks>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetMinimumSize(Span<int> _arg)
     {
         fixed (int* _argPtr = _arg)
@@ -182,6 +193,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// the representation is to be preserved (e.g., ProportionalResize is on),
     /// then the rectangle (Position,Position2) is a bounding rectangle.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkCoordinate GetPosition2Coordinate()
     {
         return vtkCoordinate.FromBorrowedPointer(vtkBorderRepresentation_GetPosition2Coordinate(this.NativePointer));
@@ -196,6 +210,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// the representation is to be preserved (e.g., ProportionalResize is on),
     /// then the rectangle (Position,Position2) is a bounding rectangle.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkCoordinate GetPositionCoordinate()
     {
         return vtkCoordinate.FromBorrowedPointer(vtkBorderRepresentation_GetPositionCoordinate(this.NativePointer));
@@ -321,6 +338,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// <remarks>
     /// Default is { 0.0, 0.0 }.
     /// </remarks>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetMinimumNormalizedViewportSize(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -350,6 +370,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// <remarks>
     /// Default is { 1, 1 }.
     /// </remarks>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetMinimumSize(ReadOnlySpan<int> _arg)
     {
         fixed (int* _argPtr = _arg)
@@ -391,6 +414,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// the representation is to be preserved (e.g., ProportionalResize is on),
     /// then the rectangle (Position,Position2) is a bounding rectangle.
     /// </summary>
+    /// <param name="x">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetPosition(Span<double> x)
     {
         fixed (double* xPtr = x)
@@ -422,6 +448,9 @@ public unsafe partial class vtkBorderRepresentation : vtkWidgetRepresentation
     /// the representation is to be preserved (e.g., ProportionalResize is on),
     /// then the rectangle (Position,Position2) is a bounding rectangle.
     /// </summary>
+    /// <param name="x">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetPosition2(Span<double> x)
     {
         fixed (double* xPtr = x)

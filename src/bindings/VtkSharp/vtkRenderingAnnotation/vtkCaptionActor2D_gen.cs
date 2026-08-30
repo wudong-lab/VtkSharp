@@ -45,14 +45,16 @@ namespace VtkSharp;
 /// with the leader moving with the AttachmentPoint.
 /// </para>
 /// <para>
-/// @sa
-/// vtkLegendBoxActor vtkTextMapper vtkTextActor vtkTextProperty
+/// See also: vtkLegendBoxActor vtkTextMapper vtkTextActor vtkTextProperty
 /// vtkCoordinate
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCaptionActor2D : vtkActor2D
 {
     protected vtkCaptionActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCaptionActor2D New() => new(vtkCaptionActor2D_New(), ownsReference: true);
     public new static vtkCaptionActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCaptionActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -67,6 +69,9 @@ public unsafe partial class vtkCaptionActor2D : vtkActor2D
     /// <summary>
     /// Set/Get the text property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetCaptionTextProperty()
     {
         return vtkTextProperty.FromBorrowedPointer(vtkCaptionActor2D_GetCaptionTextProperty(this.NativePointer));
@@ -76,6 +81,9 @@ public unsafe partial class vtkCaptionActor2D : vtkActor2D
     /// Get the text actor used by the caption. This is useful if you want to control
     /// justification and other characteristics of the text actor.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextActor GetTextActor()
     {
         return vtkTextActor.FromBorrowedPointer(vtkCaptionActor2D_GetTextActor(this.NativePointer));

@@ -108,7 +108,7 @@ internal sealed class VtkDocumentationExtractor
                 }
                 var classMatch = ClassCommand.Match(string.Join('\n', lines));
                 var targeted = lines.Any(line => TargetCommand.IsMatch(line));
-                var documentation = ParseDocumentation(lines);
+                var documentation = VtkDocumentationParser.Parse(lines);
                 if (classMatch.Success && documentation is not null)
                 {
                     result._classes[classMatch.Groups[1].Value] = documentation;
@@ -216,31 +216,4 @@ internal sealed class VtkDocumentationExtractor
             }).ToList();
     }
 
-    private static ApiDocumentation? ParseDocumentation(List<string> lines)
-    {
-        var paragraphs = new List<string>();
-        var paragraph = new List<string>();
-        void Flush()
-        {
-            if (paragraph.Count == 0) return;
-            paragraphs.Add(string.Join('\n', paragraph));
-            paragraph.Clear();
-        }
-        foreach (var original in lines)
-        {
-            var line = original;
-            if (line is "@{" or "@}" or "\\{" or "\\}" || TargetCommand.IsMatch(line)) continue;
-            if (line.StartsWith("@brief", StringComparison.Ordinal) || line.StartsWith("\\brief", StringComparison.Ordinal))
-                line = line[6..].TrimStart();
-            else if (line.StartsWith('@') || line.StartsWith('\\'))
-                Flush(); // 第二阶段再转换参数、返回值和链接；本阶段以普通文本保留。
-            if (line.Length == 0) Flush();
-            else paragraph.Add(line);
-        }
-        Flush();
-        if (paragraphs.Count == 0) return null;
-        var hasSummary = paragraphs[0][0] is not ('@' or '\\');
-        return new ApiDocumentation(hasSummary ? paragraphs[0] : null,
-            paragraphs.Count > (hasSummary ? 1 : 0) ? string.Join("\n\n", paragraphs.Skip(hasSummary ? 1 : 0)) : null);
-    }
 }

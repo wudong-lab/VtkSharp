@@ -46,7 +46,7 @@ public unsafe partial class vtkCartesianGrid : vtkDataSet
     /// Dimensions are computed from Extents during this call.
     /// </summary>
     /// <remarks>
-    /// \warning Non thread-safe, use second signature if you want it to be.
+    /// Warning: Non thread-safe, use second signature if you want it to be.
     /// </remarks>
     internal new int* GetDimensions_Internal()
     {
@@ -59,8 +59,11 @@ public unsafe partial class vtkCartesianGrid : vtkDataSet
     /// This method is thread-safe.
     /// </summary>
     /// <remarks>
-    /// \warning The Dimensions member variable is not updated during this call.
+    /// Warning: The Dimensions member variable is not updated during this call.
     /// </remarks>
+    /// <param name="dims">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetDimensions(Span<int> dims)
     {
         fixed (int* dimsPtr = dims)
@@ -92,6 +95,9 @@ public unsafe partial class vtkCartesianGrid : vtkDataSet
     /// Set dimensions of rectilinear grid dataset.
     /// This also sets the extent.
     /// </summary>
+    /// <param name="dim">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetDimensions(ReadOnlySpan<int> dim)
     {
         fixed (int* dimPtr = dim)

@@ -12,6 +12,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// vtkRenderWindowInteractor provides a platform-independent interaction
 /// mechanism for mouse/key/time events. It serves as a base class for
 /// platform-dependent implementations that handle routing of mouse/key/timer
@@ -27,7 +28,7 @@ namespace VtkSharp;
 /// Initialize/Start/Enable/Disable.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// vtkRenderWindowInteractor routes events through VTK's command/observer
 /// design pattern. That is, when vtkRenderWindowInteractor (actually, one of
 /// its subclasses) sees a platform-dependent event, it translates this into
@@ -35,13 +36,15 @@ namespace VtkSharp;
 /// registered for that event are expected to respond as appropriate.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorObserver
+/// See also: vtkInteractorObserver
 /// </para>
 /// </remarks>
 public unsafe partial class vtkRenderWindowInteractor : vtkObject
 {
     protected vtkRenderWindowInteractor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkRenderWindowInteractor New() => new(vtkRenderWindowInteractor_New(), ownsReference: true);
     public new static vtkRenderWindowInteractor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkRenderWindowInteractor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -66,9 +69,9 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     /// <summary>
     /// Create a one shot timer, with the specified duration (in milliseconds).
     /// </summary>
-    /// <remarks>
-    /// \return the timer id.
-    /// </remarks>
+    /// <returns>
+    /// the timer id.
+    /// </returns>
     public new int CreateOneShotTimer(ulong duration)
     {
         return vtkRenderWindowInteractor_CreateOneShotTimer(this.NativePointer, duration);
@@ -77,9 +80,9 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     /// <summary>
     /// Create a repeating timer, with the specified duration (in milliseconds).
     /// </summary>
-    /// <remarks>
-    /// \return the timer id.
-    /// </remarks>
+    /// <returns>
+    /// the timer id.
+    /// </returns>
     public new int CreateRepeatingTimer(ulong duration)
     {
         return vtkRenderWindowInteractor_CreateRepeatingTimer(this.NativePointer, duration);
@@ -88,9 +91,9 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     /// <summary>
     /// Destroy the timer specified by timerId.
     /// </summary>
-    /// <remarks>
-    /// \return 1 if the timer was destroyed.
-    /// </remarks>
+    /// <returns>
+    /// 1 if the timer was destroyed.
+    /// </returns>
     public new int DestroyTimer(int timerId)
     {
         return vtkRenderWindowInteractor_DestroyTimer(this.NativePointer, timerId);
@@ -230,6 +233,9 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     /// </para>
     /// <para>
     /// Default is nullptr.
+    /// </para>
+    /// <para>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
     /// </para>
     /// </remarks>
     public new string GetKeySym()

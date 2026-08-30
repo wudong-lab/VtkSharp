@@ -16,6 +16,9 @@ namespace VtkSharp;
 public unsafe partial class vtkTriangle : vtkCell
 {
     protected vtkTriangle(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTriangle New() => new(vtkTriangle_New(), ownsReference: true);
     public new static vtkTriangle FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTriangle TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

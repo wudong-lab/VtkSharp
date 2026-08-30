@@ -20,8 +20,7 @@ namespace VtkSharp;
 /// like backface properties can be set and manipulated with this object.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor vtkPropertyDevice
+/// See also: vtkActor vtkPropertyDevice
 /// </para>
 /// </remarks>
 public unsafe partial class vtkProperty : vtkObject
@@ -33,6 +32,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// coefficient=0; specular coefficient=0; specular power=1; Gouraud shading;
     /// and surface representation. Backface and frontface culling are off.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkProperty New() => new(vtkProperty_New(), ownsReference: true);
     public new static vtkProperty FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkProperty TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -128,7 +130,7 @@ public unsafe partial class vtkProperty : vtkObject
     /// Default is 1.
     /// </summary>
     /// <remarks>
-    /// @note When UseLineWidthForEdgeThickness is false, this property
+    /// Note: When UseLineWidthForEdgeThickness is false, this property
     /// controls the thickness of edges of cells.
     /// </remarks>
     public new float GetEdgeWidth()
@@ -269,6 +271,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// doesn't make too much sense to have both. For the rendering
     /// libraries that don't support both, the diffuse color is used.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetAmbientColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -303,6 +308,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// ambient diffuse and specular colors as well. This is basically
     /// a quick overall color setting method.
     /// </summary>
+    /// <param name="a">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetColor(Span<double> a)
     {
         fixed (double* aPtr = a)
@@ -332,6 +340,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// Set/Get the diffuse surface color.
     /// For PBR Interpolation, DiffuseColor is used as the base color
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetDiffuseColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -351,6 +362,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// <summary>
     /// Set/Get the color of primitive edges (if edge visibility is enabled).
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetEdgeColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -373,7 +387,7 @@ public unsafe partial class vtkProperty : vtkObject
     /// Default is 1.
     /// </summary>
     /// <remarks>
-    /// @note When UseLineWidthForEdgeThickness is false, this property
+    /// Note: When UseLineWidthForEdgeThickness is false, this property
     /// controls the thickness of edges of cells.
     /// </remarks>
     public new void SetEdgeWidth(float _arg)
@@ -398,6 +412,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// This parameter is only used by PBR Interpolation.
     /// Default value is [1.0, 1.0, 1.0]
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetEmissiveFactor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -514,6 +531,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// Set/Get the RGBA color of selection primitives (if a selection is active on the mapper).
     /// Default is red and opaque.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetSelectionColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -559,6 +579,9 @@ public unsafe partial class vtkProperty : vtkObject
     /// <summary>
     /// Set/Get the specular surface color.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetSpecularColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -618,7 +641,7 @@ public unsafe partial class vtkProperty : vtkObject
     /// is controlled by `EdgeWidth` property.
     /// </summary>
     /// <remarks>
-    /// @note Default value is true. Edge width is determined by the value of `LineWidth`
+    /// Note: Default value is true. Edge width is determined by the value of `LineWidth`
     /// </remarks>
     public new void UseLineWidthForEdgeThicknessOff()
     {
@@ -632,7 +655,7 @@ public unsafe partial class vtkProperty : vtkObject
     /// is controlled by `EdgeWidth` property.
     /// </summary>
     /// <remarks>
-    /// @note Default value is true. Edge width is determined by the value of `LineWidth`
+    /// Note: Default value is true. Edge width is determined by the value of `LineWidth`
     /// </remarks>
     public new void UseLineWidthForEdgeThicknessOn()
     {

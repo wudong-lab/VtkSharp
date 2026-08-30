@@ -15,6 +15,9 @@ namespace VtkSharp;
 public unsafe partial class vtkLine : vtkCell
 {
     protected vtkLine(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkLine New() => new(vtkLine_New(), ownsReference: true);
     public new static vtkLine FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkLine TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

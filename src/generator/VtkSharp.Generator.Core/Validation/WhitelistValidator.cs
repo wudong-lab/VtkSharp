@@ -57,9 +57,27 @@ public sealed class WhitelistValidator
         var diagnostics = new List<ValidationDiagnostic>();
 
         diagnostics.AddRange(CheckType(className, function.Name, "return", function.Return.Type));
+        if (function.Return.Ownership is not null &&
+            (function.Return.Ownership is not ("owned" or "borrowed") ||
+             !TypeClassifier.TryGetVtkClassPointerName(function.Return.Type, out _)))
+            diagnostics.Add(new ValidationDiagnostic($"Function '{className}.{function.Name}' ownership must be owned/borrowed and apply to a VTK object pointer return."));
         foreach (var parameter in function.Parameters)
         {
             diagnostics.AddRange(CheckParameterType(className, function.Name, parameter));
+            if (parameter.Length is { } length)
+            {
+                var valid = length.Kind switch
+                {
+                    "fixed" => length.Value is > 0 && length.Name is null,
+                    "parameter" => length.Value is null && function.Parameters.Count(p =>
+                        p.Name == length.Name && p.Name != parameter.Name &&
+                        p.Type is "char" or "unsigned char" or "int" or "unsigned int" or "short" or "unsigned short" or
+                            "long" or "unsigned long" or "long long" or "unsigned long long" or "vtkIdType" or "vtkTypeUInt32") == 1,
+                    _ => false,
+                };
+                if (!valid)
+                    diagnostics.Add(new ValidationDiagnostic($"Function '{className}.{function.Name}' parameter '{parameter.Name}' has invalid length metadata. Use a positive fixed value or reference an integer count parameter."));
+            }
         }
 
         return diagnostics;
@@ -69,12 +87,18 @@ public sealed class WhitelistValidator
     {
         var diagnostics = new List<ValidationDiagnostic>(CheckType(className, functionName, $"parameter '{parameter.Name}'", parameter.Type));
 
-        if (TypeClassifier.IsSupportedPrimitivePointerType(parameter.Type) && parameter.Direction is null && parameter.Length is null)
+        if (TypeClassifier.IsSupportedPrimitivePointerType(parameter.Type) && (parameter.Direction is null || parameter.Length is null))
         {
             diagnostics.Add(new ValidationDiagnostic(
                 $"Type '{className}.{functionName}' parameter '{parameter.Name}' ({parameter.Type}) is a primitive pointer " +
-                "but has no direction or length metadata. Add direction: in/out and length.kind: fixed/parameter to the whitelist entry."));
+                "but lacks complete direction and length metadata. Add direction: in/out/inout and length.kind: fixed/parameter to the whitelist entry."));
         }
+
+        if (parameter.Direction is not null && parameter.Direction is not ("in" or "out" or "inout"))
+            diagnostics.Add(new ValidationDiagnostic($"Function '{className}.{functionName}' parameter '{parameter.Name}' has invalid direction metadata."));
+        if ((parameter.Direction is not null || parameter.Length is not null) &&
+            !TypeClassifier.IsSupportedPrimitivePointerType(parameter.Type) && !BindingTypeMapper.IsFixedArray(parameter.Type))
+            diagnostics.Add(new ValidationDiagnostic($"Function '{className}.{functionName}' parameter '{parameter.Name}' direction/length metadata requires an array or primitive pointer."));
 
         return diagnostics;
     }

@@ -16,8 +16,7 @@ namespace VtkSharp;
 /// multiplying a 4x4 matrix with a homogeneous coordinate.
 /// </para>
 /// <para>
-/// @sa
-/// vtkPerspectiveTransform vtkLinearTransform vtkIdentityTransform
+/// See also: vtkPerspectiveTransform vtkLinearTransform vtkIdentityTransform
 /// </para>
 /// </remarks>
 public unsafe partial class vtkHomogeneousTransform : vtkAbstractTransform

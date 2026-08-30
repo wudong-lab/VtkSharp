@@ -24,13 +24,15 @@ namespace VtkSharp;
 /// position is moved close to another edge.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorObserver
+/// See also: vtkInteractorObserver
 /// </para>
 /// </remarks>
 public unsafe partial class vtkScalarBarWidget : vtkBorderWidget
 {
     protected vtkScalarBarWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkScalarBarWidget New() => new(vtkScalarBarWidget_New(), ownsReference: true);
     public new static vtkScalarBarWidget FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkScalarBarWidget TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -65,6 +67,9 @@ public unsafe partial class vtkScalarBarWidget : vtkBorderWidget
     /// <summary>
     /// Get the ScalarBar used by this Widget. One is created automatically.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkScalarBarActor GetScalarBarActor()
     {
         return vtkScalarBarActor.FromBorrowedPointer(vtkScalarBarWidget_GetScalarBarActor(this.NativePointer));
@@ -73,6 +78,9 @@ public unsafe partial class vtkScalarBarWidget : vtkBorderWidget
     /// <summary>
     /// Return the representation as a vtkScalarBarRepresentation.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkScalarBarRepresentation GetScalarBarRepresentation()
     {
         return vtkScalarBarRepresentation.FromBorrowedPointer(vtkScalarBarWidget_GetScalarBarRepresentation(this.NativePointer));

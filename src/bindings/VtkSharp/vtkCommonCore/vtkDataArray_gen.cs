@@ -11,6 +11,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// vtkDataArray is an abstract superclass for data array objects
 /// containing numeric data.  It extends the API defined in
 /// vtkAbstractArray.  vtkDataArray is an abstract superclass for data
@@ -23,8 +24,7 @@ namespace VtkSharp;
 /// data whose components are meaningful when cast to and from double.
 /// </para>
 /// <para>
-/// @sa
-/// vtkBitArray vtkGenericDataArray
+/// See also: vtkBitArray vtkGenericDataArray
 /// </para>
 /// </remarks>
 public unsafe partial class vtkDataArray : vtkAbstractArray

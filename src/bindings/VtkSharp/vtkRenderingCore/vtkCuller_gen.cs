@@ -17,8 +17,7 @@ namespace VtkSharp;
 /// to modify their AllocatedRenderTime and re-order them in the prop list.
 /// </para>
 /// <para>
-/// @sa
-/// vtkFrustumCoverageCuller
+/// See also: vtkFrustumCoverageCuller
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCuller : vtkObject

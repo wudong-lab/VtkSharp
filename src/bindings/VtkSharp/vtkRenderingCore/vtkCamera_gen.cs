@@ -19,8 +19,7 @@ namespace VtkSharp;
 /// camera perspective.
 /// </para>
 /// <para>
-/// @sa
-/// vtkPerspectiveTransform
+/// See also: vtkPerspectiveTransform
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCamera : vtkObject
@@ -31,6 +30,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// and position=(0,0,1). The view up is along the y-axis,
     /// view angle is 30 degrees, and the clipping range is (.1,1000).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCamera New() => new(vtkCamera_New(), ownsReference: true);
     public new static vtkCamera FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCamera TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -108,6 +110,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// Set/Get the focal of the camera in world coordinates.
     /// The default focal point is the origin.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetFocalPoint(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -139,7 +144,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// This method has no effect in perspective projection mode.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new double GetParallelScale()
@@ -160,6 +165,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// Set/Get the position of the camera in world coordinates.
     /// The default position is (0,0,1).
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetPosition(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -182,7 +190,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// near clipping plane.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new double GetThickness()
@@ -200,7 +208,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// distance from your eyes to the screen.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new double GetViewAngle()
@@ -223,6 +231,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// the direction of projection, unless you have created a sheared output
     /// view using SetViewShear/SetObliqueAngles.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetViewPlaneNormal(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -244,6 +255,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// Set/Get the view up direction for the camera.  The default
     /// is (0,1,0).
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetViewUp(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -260,7 +274,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// one large screen.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     internal new double* GetWindowCenter_Internal()
@@ -276,9 +290,12 @@ public unsafe partial class vtkCamera : vtkObject
     /// one large screen.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetWindowCenter(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -292,7 +309,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// determines if the camera should do a perspective or parallel projection.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new void ParallelProjectionOff()
@@ -305,7 +322,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// determines if the camera should do a perspective or parallel projection.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new void ParallelProjectionOn()
@@ -317,6 +334,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// Set/Get the focal of the camera in world coordinates.
     /// The default focal point is the origin.
     /// </summary>
+    /// <param name="a">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetFocalPoint(ReadOnlySpan<double> a)
     {
         fixed (double* aPtr = a)
@@ -342,7 +362,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// This method has no effect in perspective projection mode.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new void SetParallelScale(double scale)
@@ -354,6 +374,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// Set/Get the position of the camera in world coordinates.
     /// The default position is (0,0,1).
     /// </summary>
+    /// <param name="a">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetPosition(ReadOnlySpan<double> a)
     {
         fixed (double* aPtr = a)
@@ -375,6 +398,9 @@ public unsafe partial class vtkCamera : vtkObject
     /// Set/Get the view up direction for the camera.  The default
     /// is (0,1,0).
     /// </summary>
+    /// <param name="a">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetViewUp(ReadOnlySpan<double> a)
     {
         fixed (double* aPtr = a)
@@ -401,7 +427,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// keep the perspective transform unchanges.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new void UseHorizontalViewAngleOff()
@@ -418,7 +444,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// keep the perspective transform unchanges.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new void UseHorizontalViewAngleOn()
@@ -432,7 +458,7 @@ public unsafe partial class vtkCamera : vtkObject
     /// A value greater than 1 is a zoom-in, a value less than 1 is a zoom-out.
     /// </summary>
     /// <remarks>
-    /// @note This setting is ignored when UseExplicitProjectionTransformMatrix
+    /// Note: This setting is ignored when UseExplicitProjectionTransformMatrix
     /// is true.
     /// </remarks>
     public new void Zoom(double factor)

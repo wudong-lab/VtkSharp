@@ -10,6 +10,7 @@ namespace VtkSharp;
 /// Store zero or more vtkInformation instances.
 /// </summary>
 /// <remarks>
+///
 /// vtkInformationVector stores a vector of zero or more vtkInformation
 /// objects corresponding to the input or output information for a
 /// vtkAlgorithm.  An instance of this class is passed to
@@ -18,6 +19,9 @@ namespace VtkSharp;
 public unsafe partial class vtkInformationVector : vtkObject
 {
     protected vtkInformationVector(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInformationVector New() => new(vtkInformationVector_New(), ownsReference: true);
     public new static vtkInformationVector FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInformationVector TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

@@ -22,7 +22,7 @@ namespace VtkSharp;
 /// VRex projector, or the eye will be swapped.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// In VTK versions 4 and later, the vtkWindowToImageFilter class is
 /// part of the canonical way to output an image of a window to a file
 /// (replacing the obsolete SaveImageAsPPM method for vtkRenderWindows
@@ -31,8 +31,7 @@ namespace VtkSharp;
 /// vtkPNGWriter.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderer vtkRenderWindowInteractor vtkWindowToImageFilter
+/// See also: vtkRenderer vtkRenderWindowInteractor vtkWindowToImageFilter
 /// </para>
 /// </remarks>
 public unsafe partial class vtkRenderWindow : vtkWindow
@@ -43,6 +42,9 @@ public unsafe partial class vtkRenderWindow : vtkWindow
     /// set to 300x300, borders turned on, positioned at (0,0), double
     /// buffering turned on.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkRenderWindow New() => new(vtkRenderWindow_New(), ownsReference: true);
     public new static vtkRenderWindow FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkRenderWindow TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

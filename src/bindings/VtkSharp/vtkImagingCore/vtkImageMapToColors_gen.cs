@@ -18,13 +18,15 @@ namespace VtkSharp;
 /// data will be passed through if it is already of type VTK_UNSIGNED_CHAR.
 /// </para>
 /// <para>
-/// @sa
-/// vtkLookupTable vtkScalarsToColors
+/// See also: vtkLookupTable vtkScalarsToColors
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageMapToColors : vtkThreadedImageAlgorithm
 {
     protected vtkImageMapToColors(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageMapToColors New() => new(vtkImageMapToColors_New(), ownsReference: true);
     public new static vtkImageMapToColors FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageMapToColors TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -47,6 +49,9 @@ public unsafe partial class vtkImageMapToColors : vtkThreadedImageAlgorithm
     /// <summary>
     /// Set the lookup table.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkScalarsToColors GetLookupTable()
     {
         return vtkScalarsToColors.FromBorrowedPointer(vtkImageMapToColors_GetLookupTable(this.NativePointer));
@@ -65,6 +70,9 @@ public unsafe partial class vtkImageMapToColors : vtkThreadedImageAlgorithm
     /// Set/Get Color that should be used in case of UnMatching
     /// data.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void GetNaNColor(Span<byte> _arg)
     {
         fixed (byte* _argPtr = _arg)
@@ -137,6 +145,9 @@ public unsafe partial class vtkImageMapToColors : vtkThreadedImageAlgorithm
     /// Set/Get Color that should be used in case of UnMatching
     /// data.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetNaNColor(ReadOnlySpan<byte> _arg)
     {
         fixed (byte* _argPtr = _arg)

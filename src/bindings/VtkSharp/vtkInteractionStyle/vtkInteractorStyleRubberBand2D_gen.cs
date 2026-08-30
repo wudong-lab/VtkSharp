@@ -10,6 +10,7 @@ namespace VtkSharp;
 /// A rubber band interactor for a 2D view
 /// </summary>
 /// <remarks>
+///
 /// vtkInteractorStyleRubberBand2D manages interaction in a 2D view.
 /// Camera rotation is not allowed with this interactor style.
 /// Zooming affects the camera's parallel scale only, and assumes
@@ -27,6 +28,9 @@ namespace VtkSharp;
 public unsafe partial class vtkInteractorStyleRubberBand2D : vtkInteractorStyle
 {
     protected vtkInteractorStyleRubberBand2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleRubberBand2D New() => new(vtkInteractorStyleRubberBand2D_New(), ownsReference: true);
     public new static vtkInteractorStyleRubberBand2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleRubberBand2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

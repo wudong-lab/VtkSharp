@@ -31,7 +31,7 @@ namespace VtkSharp;
 /// it is set to a single whitespace.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Use this filter in combination with vtkSelectVisiblePoints if you want
 /// to label only points that are visible. If you want to label cells rather
 /// than points, use the filter vtkCellCenters to generate points at the
@@ -39,8 +39,7 @@ namespace VtkSharp;
 /// generate ids as scalars or field data, which can then be labeled.
 /// </para>
 /// <para>
-/// @sa
-/// vtkMapper2D vtkActor2D vtkTextMapper vtkTextProperty vtkSelectVisiblePoints
+/// See also: vtkMapper2D vtkActor2D vtkTextMapper vtkTextProperty vtkSelectVisiblePoints
 /// vtkGenerateIds vtkCellCenters
 /// </para>
 /// </remarks>
@@ -51,6 +50,9 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     /// Instantiate object with {:&lt;#6.3g} label format. By default, point ids
     /// are labeled.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkLabeledDataMapper New() => new(vtkLabeledDataMapper_New(), ownsReference: true);
     public new static vtkLabeledDataMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkLabeledDataMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -68,6 +70,9 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     /// properties for different label types. The type is determined by an
     /// optional type input array.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetLabelTextProperty()
     {
         return vtkTextProperty.FromBorrowedPointer(vtkLabeledDataMapper_GetLabelTextProperty_(this.NativePointer));
@@ -79,6 +84,9 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     /// properties for different label types. The type is determined by an
     /// optional type input array.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetLabelTextProperty(int type)
     {
         return vtkTextProperty.FromBorrowedPointer(vtkLabeledDataMapper_GetLabelTextProperty_int(this.NativePointer, type));

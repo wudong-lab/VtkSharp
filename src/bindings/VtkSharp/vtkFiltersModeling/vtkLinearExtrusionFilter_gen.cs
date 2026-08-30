@@ -39,14 +39,13 @@ namespace VtkSharp;
 /// create solid objects from 2D polygonal meshes.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Some polygonal objects have no free edges (e.g., sphere). When swept,
 /// this will result in two separate surfaces if capping is on, or no surface
 /// if capping is off.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRotationalExtrusionFilter
+/// See also: vtkRotationalExtrusionFilter
 /// </para>
 /// </remarks>
 public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
@@ -56,6 +55,9 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
     /// Create object with normal extrusion type, capping on, scale factor=1.0,
     /// vector (0,0,1), and extrusion point (0,0,0).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkLinearExtrusionFilter New() => new(vtkLinearExtrusionFilter_New(), ownsReference: true);
     public new static vtkLinearExtrusionFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkLinearExtrusionFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -96,6 +98,9 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
     /// Set/Get extrusion point. Only needs to be set if PointExtrusion is
     /// turned on. This is the point towards which extrusion occurs.
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetExtrusionPoint(Span<double> data)
     {
         fixed (double* dataPtr = data)
@@ -125,6 +130,9 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
     /// Set/Get extrusion vector. Only needs to be set if VectorExtrusion is
     /// turned on.
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetVector(Span<double> data)
     {
         fixed (double* dataPtr = data)
@@ -146,6 +154,9 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
     /// Set/Get extrusion point. Only needs to be set if PointExtrusion is
     /// turned on. This is the point towards which extrusion occurs.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetExtrusionPoint(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -199,6 +210,9 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
     /// Set/Get extrusion vector. Only needs to be set if VectorExtrusion is
     /// turned on.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetVector(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

@@ -20,8 +20,7 @@ namespace VtkSharp;
 /// vtkImageActor.
 /// </para>
 /// <para>
-/// @sa
-/// vtkImageData vtkImageSliceMapper vtkImageProperty
+/// See also: vtkImageData vtkImageSliceMapper vtkImageProperty
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageActor : vtkImageSlice
@@ -30,6 +29,9 @@ public unsafe partial class vtkImageActor : vtkImageSlice
     /// <summary>
     /// Instantiate the image actor.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageActor New() => new(vtkImageActor_New(), ownsReference: true);
     public new static vtkImageActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

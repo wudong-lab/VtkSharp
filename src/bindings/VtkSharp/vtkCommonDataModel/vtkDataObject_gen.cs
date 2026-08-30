@@ -23,14 +23,16 @@ namespace VtkSharp;
 /// concrete subclass of vtkDataSet before they can actually be displayed.
 /// </para>
 /// <para>
-/// @sa
-/// vtkDataSet vtkFieldData vtkDataObjectToDataSetFilter
+/// See also: vtkDataSet vtkFieldData vtkDataObjectToDataSetFilter
 /// vtkFieldDataToAttributeDataFilter
 /// </para>
 /// </remarks>
 public unsafe partial class vtkDataObject : vtkObject
 {
     protected vtkDataObject(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkDataObject New() => new(vtkDataObject_New(), ownsReference: true);
     public new static vtkDataObject FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkDataObject TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

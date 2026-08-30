@@ -23,32 +23,18 @@ namespace VtkSharp;
 /// </para>
 /// <para>
 /// Specific scalar values may be annotated with text strings that will
-/// be included in color legends using \a SetAnnotations, \a SetAnnotation,
+/// be included in color legends using SetAnnotations, SetAnnotation,
 /// </para>
 /// <para>
-/// \a GetNumberOfAnnotatedValues, \a GetAnnotatedValue, \a GetAnnotation,
-/// </para>
-/// <para>
-/// \a RemoveAnnotation, and \a ResetAnnotations.
-/// </para>
-/// <para>
-/// This class also has a method for indicating that the set of
-/// annotated values form a categorical color map; by setting \a
-/// IndexedLookup to true, you indicate that the annotated values are
-/// the only valid values for which entries in the color table should
-/// be returned. In this mode, subclasses should then assign colors to
-/// annotated values by taking the modulus of an annotated value's
-/// index in the list of annotations with the number of colors in the
-/// table.
-/// </para>
-/// <para>
-/// @sa
-/// vtkLookupTable vtkColorTransferFunction
+/// See also: vtkLookupTable vtkColorTransferFunction
 /// </para>
 /// </remarks>
 public unsafe partial class vtkScalarsToColors : vtkObject
 {
     protected vtkScalarsToColors(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkScalarsToColors New() => new(vtkScalarsToColors_New(), ownsReference: true);
     public new static vtkScalarsToColors FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkScalarsToColors TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -91,8 +77,12 @@ public unsafe partial class vtkScalarsToColors : vtkObject
 
     /// <summary>
     /// Map one value through the lookup table and store the color as
-    /// an RGB array of doubles between 0 and 1 in the \a rgb argument.
+    /// an RGB array of doubles between 0 and 1 in the rgb argument.
     /// </summary>
+    /// <param name="v" />
+    /// <param name="rgb">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetColor(double v, Span<double> rgb)
     {
         fixed (double* rgbPtr = rgb)
@@ -108,7 +98,7 @@ public unsafe partial class vtkScalarsToColors : vtkObject
     /// </summary>
     /// <remarks>
     /// When categorical data is present, only values in the lookup table will be
-    /// considered valid; all other values will be assigned \a NanColor.
+    /// considered valid; all other values will be assigned NanColor.
     /// </remarks>
     public new bool GetIndexedLookup()
     {
@@ -148,7 +138,7 @@ public unsafe partial class vtkScalarsToColors : vtkObject
     /// </summary>
     /// <remarks>
     /// When categorical data is present, only values in the lookup table will be
-    /// considered valid; all other values will be assigned \a NanColor.
+    /// considered valid; all other values will be assigned NanColor.
     /// </remarks>
     public new void IndexedLookupOff()
     {
@@ -162,7 +152,7 @@ public unsafe partial class vtkScalarsToColors : vtkObject
     /// </summary>
     /// <remarks>
     /// When categorical data is present, only values in the lookup table will be
-    /// considered valid; all other values will be assigned \a NanColor.
+    /// considered valid; all other values will be assigned NanColor.
     /// </remarks>
     public new void IndexedLookupOn()
     {
@@ -187,7 +177,7 @@ public unsafe partial class vtkScalarsToColors : vtkObject
     /// </summary>
     /// <remarks>
     /// When categorical data is present, only values in the lookup table will be
-    /// considered valid; all other values will be assigned \a NanColor.
+    /// considered valid; all other values will be assigned NanColor.
     /// </remarks>
     public new void SetIndexedLookup(bool _arg)
     {
@@ -197,6 +187,9 @@ public unsafe partial class vtkScalarsToColors : vtkObject
     /// <summary>
     /// Sets/Gets the range of scalars that will be mapped.
     /// </summary>
+    /// <param name="rng">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetRange(ReadOnlySpan<double> rng)
     {
         fixed (double* rngPtr = rng)

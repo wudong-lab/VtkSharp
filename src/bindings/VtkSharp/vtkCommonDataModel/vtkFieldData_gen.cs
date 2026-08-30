@@ -32,13 +32,15 @@ namespace VtkSharp;
 /// faster, more efficient algorithms that do not lose information.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAbstractArray vtkDataSetAttributes vtkPointData vtkCellData
+/// See also: vtkAbstractArray vtkDataSetAttributes vtkPointData vtkCellData
 /// </para>
 /// </remarks>
 public unsafe partial class vtkFieldData : vtkObject
 {
     protected vtkFieldData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkFieldData New() => new(vtkFieldData_New(), ownsReference: true);
     public new static vtkFieldData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkFieldData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

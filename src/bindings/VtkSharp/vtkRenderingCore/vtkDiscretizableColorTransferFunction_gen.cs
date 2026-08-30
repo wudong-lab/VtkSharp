@@ -11,43 +11,17 @@ namespace VtkSharp;
 /// vtkColorTransferFunction and vtkLookupTable.
 /// </summary>
 /// <remarks>
-/// <para>
 /// This is a cross between a vtkColorTransferFunction and a vtkLookupTable
 /// selectively combining the functionality of both. This class is a
 /// vtkColorTransferFunction allowing users to specify the RGB control points
 /// that control the color transfer function. At the same time, by setting
-/// </para>
-/// <para>
-/// \a Discretize to 1 (true), one can force the transfer function to only have
-/// </para>
-/// <para>
-/// \a NumberOfValues discrete colors.
-/// </para>
-/// <para>
-/// When \a IndexedLookup is true, this class behaves differently. The annotated
-/// values are considered to the be only valid values for which entries in the
-/// color table should be returned. The colors for annotated values are those
-/// specified using \a AddIndexedColors. Typically, there must be at least as many
-/// indexed colors specified as the annotations. For backwards compatibility, if
-/// no indexed-colors are specified, the colors in the lookup \a Table are assigned
-/// to annotated values by taking the modulus of their index in the list
-/// of annotations. If a scalar value is not present in \a AnnotatedValues,
-/// then \a NanColor will be used.
-/// </para>
-/// <para>
-/// One can set a scalar opacity function to map scalars to color types handling
-/// transparency (VTK_RGBA, VTK_LUMINANCE_ALPHA). Opacity mapping is off by
-/// default. Call EnableOpacityMappingOn() to handle mapping of alpha values.
-/// </para>
-/// <para>
-/// NOTE: One must call Build() after making any changes to the points
-/// in the ColorTransferFunction to ensure that the discrete and non-discrete
-/// versions match up.
-/// </para>
 /// </remarks>
 public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTransferFunction
 {
     protected vtkDiscretizableColorTransferFunction(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkDiscretizableColorTransferFunction New() => new(vtkDiscretizableColorTransferFunction_New(), ownsReference: true);
     public new static vtkDiscretizableColorTransferFunction FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkDiscretizableColorTransferFunction TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -96,6 +70,10 @@ public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTran
     /// Map one value through the lookup table and return the color as
     /// an RGB array of doubles between 0 and 1.
     /// </summary>
+    /// <param name="v" />
+    /// <param name="rgb">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetColor(double v, Span<double> rgb)
     {
         fixed (double* rgbPtr = rgb)
@@ -120,17 +98,21 @@ public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTran
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The index is used in \a IndexedLookup mode to assign colors to annotations (in the order
+    /// The index is used in IndexedLookup mode to assign colors to annotations (in the order
     /// the annotations were set).
     /// Subclasses must implement this and interpret how to treat the index.
-    /// vtkLookupTable simply returns GetTableValue(\a index % \a this-&gt;GetNumberOfTableValues()).
-    /// vtkColorTransferFunction returns the color associated with node \a index % \a this-&gt;GetSize().
+    /// vtkLookupTable simply returns GetTableValue(index % this-&gt;GetNumberOfTableValues()).
+    /// vtkColorTransferFunction returns the color associated with node index % this-&gt;GetSize().
     /// </para>
     /// <para>
     /// Note that implementations *must* set the opacity (alpha) component of the color, even if they
     /// do not provide opacity values in their colormaps. In that case, alpha = 1 should be used.
     /// </para>
     /// </remarks>
+    /// <param name="i" />
+    /// <param name="rgba">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void GetIndexedColor(long i, Span<double> rgba)
     {
         fixed (double* rgbaPtr = rgba)
@@ -213,14 +195,12 @@ public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTran
     }
 
     /// <summary>
-    /// Add colors to use when \a IndexedLookup is true.
+    /// Add colors to use when IndexedLookup is true.
     /// </summary>
-    /// <remarks>
-    /// \a SetIndexedColor() will automatically call
-    /// SetNumberOfIndexedColors(index+1) if the current number of indexed colors
-    /// is not sufficient for the specified index and all will be initialized to
-    /// the RGBA/RGB values passed to this call.
-    /// </remarks>
+    /// <param name="index" />
+    /// <param name="rgb">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetIndexedColorRGB(uint index, ReadOnlySpan<double> rgb)
     {
         fixed (double* rgbPtr = rgb)
@@ -229,6 +209,10 @@ public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTran
         }
     }
 
+    /// <param name="index" />
+    /// <param name="rgba">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetIndexedColorRGBA(uint index, ReadOnlySpan<double> rgba)
     {
         fixed (double* rgbaPtr = rgba)
@@ -242,6 +226,9 @@ public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTran
     /// RGB 3-tuple color of doubles in the range [0, 1].
     /// Overridden to pass the NanColor to the internal vtkLookupTable.
     /// </summary>
+    /// <param name="rgb">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetNanColor(ReadOnlySpan<double> rgb)
     {
         fixed (double* rgbPtr = rgb)

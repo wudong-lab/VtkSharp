@@ -34,6 +34,9 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
     /// Construct object with PointIds and CellIds on; and ids being generated
     /// as scalars.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkGenerateIds New() => new(vtkGenerateIds_New(), ownsReference: true);
     public new static vtkGenerateIds FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkGenerateIds TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -49,7 +52,7 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
     /// Enable/disable the generation of cell ids. Default is on.
     /// </summary>
     /// <remarks>
-    /// @note: Unused if the input is a vtkHyperTreeGrid instance
+    /// Note: : Unused if the input is a vtkHyperTreeGrid instance
     /// (we have only cell data on HTGs, always on).
     /// </remarks>
     public new void CellIdsOff()
@@ -61,7 +64,7 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
     /// Enable/disable the generation of cell ids. Default is on.
     /// </summary>
     /// <remarks>
-    /// @note: Unused if the input is a vtkHyperTreeGrid instance
+    /// Note: : Unused if the input is a vtkHyperTreeGrid instance
     /// (we have only cell data on HTGs, always on).
     /// </remarks>
     public new void CellIdsOn()
@@ -93,7 +96,7 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
     /// Enable/disable the generation of point ids. Default is on.
     /// </summary>
     /// <remarks>
-    /// @note: Unused if the input is a vtkHyperTreeGrid instance
+    /// Note: : Unused if the input is a vtkHyperTreeGrid instance
     /// (we do not have point data on HTGs, always off).
     /// </remarks>
     public new void PointIdsOff()
@@ -105,7 +108,7 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
     /// Enable/disable the generation of point ids. Default is on.
     /// </summary>
     /// <remarks>
-    /// @note: Unused if the input is a vtkHyperTreeGrid instance
+    /// Note: : Unused if the input is a vtkHyperTreeGrid instance
     /// (we do not have point data on HTGs, always off).
     /// </remarks>
     public new void PointIdsOn()

@@ -20,13 +20,15 @@ namespace VtkSharp;
 /// to an edge, it's orientation is flipped to match that edge.
 /// </para>
 /// <para>
-/// @sa
-/// vtkScalarBarWidget vtkWidgetRepresentation vtkScalarBarActor
+/// See also: vtkScalarBarWidget vtkWidgetRepresentation vtkScalarBarActor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkScalarBarRepresentation : vtkBorderRepresentation
 {
     protected vtkScalarBarRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkScalarBarRepresentation New() => new(vtkScalarBarRepresentation_New(), ownsReference: true);
     public new static vtkScalarBarRepresentation FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkScalarBarRepresentation TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -66,6 +68,9 @@ public unsafe partial class vtkScalarBarRepresentation : vtkBorderRepresentation
     /// <summary>
     /// The prop that is placed in the renderer.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkScalarBarActor GetScalarBarActor()
     {
         return vtkScalarBarActor.FromBorrowedPointer(vtkScalarBarRepresentation_GetScalarBarActor(this.NativePointer));

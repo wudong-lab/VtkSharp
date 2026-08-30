@@ -18,6 +18,9 @@ namespace VtkSharp;
 public unsafe partial class vtkQuad : vtkCell
 {
     protected vtkQuad(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkQuad New() => new(vtkQuad_New(), ownsReference: true);
     public new static vtkQuad FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkQuad TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

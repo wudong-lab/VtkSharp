@@ -22,8 +22,7 @@ namespace VtkSharp;
 /// matrix or transform, and no texture map.
 /// </para>
 /// <para>
-/// @sa
-/// vtkProp vtkActor vtkAssembly vtkVolume
+/// See also: vtkProp vtkActor vtkAssembly vtkVolume
 /// </para>
 /// </remarks>
 public unsafe partial class vtkProp3D : vtkProp
@@ -52,6 +51,9 @@ public unsafe partial class vtkProp3D : vtkProp
     /// Set/Get the scale of the actor. Scaling in performed independently on the
     /// X, Y and Z axis. A scale of zero is illegal and will be replaced with one.
     /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetScale(Span<double> data)
     {
         fixed (double* dataPtr = data)

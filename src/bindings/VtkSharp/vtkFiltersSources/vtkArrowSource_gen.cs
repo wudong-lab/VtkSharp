@@ -24,6 +24,9 @@ public unsafe partial class vtkArrowSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Construct cone with angle of 45 degrees.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkArrowSource New() => new(vtkArrowSource_New(), ownsReference: true);
     public new static vtkArrowSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkArrowSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

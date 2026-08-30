@@ -18,6 +18,9 @@ namespace VtkSharp;
 public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
 {
     protected vtkImageMathematics(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageMathematics New() => new(vtkImageMathematics_New(), ownsReference: true);
     public new static vtkImageMathematics FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageMathematics TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -66,6 +69,9 @@ public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
     /// old-style pipeline connections.  When writing new code you should
     /// use vtkAlgorithm::GetInputConnection(0, num).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkDataObject GetInput()
     {
         return vtkDataObject.FromBorrowedPointer(vtkImageMathematics_GetInput_(this.NativePointer));
@@ -76,6 +82,9 @@ public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
     /// old-style pipeline connections.  When writing new code you should
     /// use vtkAlgorithm::GetInputConnection(0, num).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkDataObject GetInput(int idx)
     {
         return vtkDataObject.FromBorrowedPointer(vtkImageMathematics_GetInput_int(this.NativePointer, idx));

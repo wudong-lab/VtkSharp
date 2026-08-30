@@ -31,13 +31,13 @@ namespace VtkSharp;
 /// prior to the PickEvent of vtkPicker.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// vtkAbstractPicker and its subclasses will not pick props that are
 /// "unpickable" (see vtkProp) or are fully transparent (if transparency
 /// is a property of the vtkProp).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// There are two classes of pickers: those that pick using geometric methods
 /// (typically a ray cast); and those that use rendering hardware. Geometric
 /// methods return more information but are slower. Hardware methods are much
@@ -46,8 +46,7 @@ namespace VtkSharp;
 /// pickers include vtkWorldPointPicker and vtkPropPicker.
 /// </para>
 /// <para>
-/// @sa
-/// vtkPropPicker uses hardware acceleration to pick an instance of vtkProp.
+/// See also: vtkPropPicker uses hardware acceleration to pick an instance of vtkProp.
 /// (This means that 2D and 3D props can be picked, and it's relatively fast.)
 /// If you need to pick cells or points, you might wish to use vtkCellPicker
 /// or vtkPointPicker. vtkWorldPointPicker is the fastest picker, returning

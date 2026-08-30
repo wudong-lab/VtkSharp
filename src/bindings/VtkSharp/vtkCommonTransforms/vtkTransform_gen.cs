@@ -33,8 +33,7 @@ namespace VtkSharp;
 /// libraries use left handed coordinate systems and rotations.
 /// </para>
 /// <para>
-/// @sa
-/// vtkPerspectiveTransform vtkGeneralTransform vtkMatrix4x4
+/// See also: vtkPerspectiveTransform vtkGeneralTransform vtkMatrix4x4
 /// vtkTransformCollection vtkTransformFilter vtkTransformFilter
 /// vtkImageReslice
 /// </para>
@@ -42,6 +41,9 @@ namespace VtkSharp;
 public unsafe partial class vtkTransform : vtkLinearTransform
 {
     protected vtkTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTransform New() => new(vtkTransform_New(), ownsReference: true);
     public new static vtkTransform FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTransform TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -57,6 +59,9 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// Concatenates the matrix with the current transformation according
     /// to PreMultiply or PostMultiply semantics.
     /// </summary>
+    /// <param name="elements">
+    /// Buffer length: 16 elements.
+    /// </param>
     public new void Concatenate(ReadOnlySpan<double> elements)
     {
         fixed (double* elementsPtr = elements)
@@ -93,6 +98,9 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// to make it possible to decompose a transformation into its
     /// constituents, for example to save a transformation to a file.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkLinearTransform GetConcatenatedTransform(int i)
     {
         return vtkLinearTransform.FromBorrowedPointer(vtkTransform_GetConcatenatedTransform(this.NativePointer, i));
@@ -154,6 +162,10 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// The angle is in degrees, and (x,y,z) specifies the axis that the
     /// rotation will be performed around.
     /// </summary>
+    /// <param name="angle" />
+    /// <param name="axis">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void RotateWXYZ(double angle, ReadOnlySpan<double> axis)
     {
         fixed (double* axisPtr = axis)
@@ -179,6 +191,10 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// The angle is in degrees, and (x,y,z) specifies the axis that the
     /// rotation will be performed around.
     /// </summary>
+    /// <param name="angle" />
+    /// <param name="axis">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void RotateWXYZ(double angle, ReadOnlySpan<float> axis)
     {
         fixed (float* axisPtr = axis)
@@ -222,6 +238,9 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// and concatenate it with the current transformation according to
     /// PreMultiply or PostMultiply semantics.
     /// </summary>
+    /// <param name="s">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void Scale(ReadOnlySpan<double> s)
     {
         fixed (double* sPtr = s)
@@ -245,6 +264,9 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// and concatenate it with the current transformation according to
     /// PreMultiply or PostMultiply semantics.
     /// </summary>
+    /// <param name="s">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void Scale(ReadOnlySpan<float> s)
     {
         fixed (float* sPtr = s)
@@ -270,6 +292,9 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// Set the current matrix directly. Note: First, the current
     /// matrix is set to the identity, then the input matrix is concatenated.
     /// </summary>
+    /// <param name="elements">
+    /// Buffer length: 16 elements.
+    /// </param>
     public new void SetMatrix(ReadOnlySpan<double> elements)
     {
         fixed (double* elementsPtr = elements)
@@ -291,6 +316,9 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// Create a translation matrix and concatenate it with the current
     /// transformation according to PreMultiply or PostMultiply semantics.
     /// </summary>
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void Translate(ReadOnlySpan<double> x)
     {
         fixed (double* xPtr = x)
@@ -312,6 +340,9 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     /// Create a translation matrix and concatenate it with the current
     /// transformation according to PreMultiply or PostMultiply semantics.
     /// </summary>
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void Translate(ReadOnlySpan<float> x)
     {
         fixed (float* xPtr = x)

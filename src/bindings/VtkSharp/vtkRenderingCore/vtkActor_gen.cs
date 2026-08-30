@@ -11,6 +11,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// vtkActor is used to represent an entity in a rendering scene.  It inherits
 /// functions related to the actors position, and orientation from
 /// vtkProp3D. The actor also has scaling and maintains a reference to the
@@ -20,8 +21,7 @@ namespace VtkSharp;
 /// Scale(scale) Rot(y) Rot(x) Rot (z) Trans(origin) Trans(position)
 /// </para>
 /// <para>
-/// @sa
-/// vtkProperty vtkTexture vtkMapper vtkAssembly vtkFollower vtkLODActor
+/// See also: vtkProperty vtkTexture vtkMapper vtkAssembly vtkFollower vtkLODActor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkActor : vtkProp3D
@@ -32,6 +32,9 @@ public unsafe partial class vtkActor : vtkProp3D
     /// position=(0,0,0) scale=(1,1,1) visibility=1 pickable=1 dragable=1
     /// orientation=(0,0,0). No user defined matrix and no texture map.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkActor New() => new(vtkActor_New(), ownsReference: true);
     public new static vtkActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -49,6 +52,9 @@ public unsafe partial class vtkActor : vtkProp3D
     /// isn't specified, then the front face properties will be used.  Multiple
     /// actors can share one property object.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetBackfaceProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkActor_GetBackfaceProperty(this.NativePointer));
@@ -61,6 +67,9 @@ public unsafe partial class vtkActor : vtkProp3D
     /// then one will be generated automatically. Multiple actors can share one
     /// property object.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkActor_GetProperty(this.NativePointer));

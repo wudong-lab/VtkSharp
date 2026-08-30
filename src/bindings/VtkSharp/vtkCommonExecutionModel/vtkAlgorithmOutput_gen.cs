@@ -21,6 +21,9 @@ namespace VtkSharp;
 public unsafe partial class vtkAlgorithmOutput : vtkObject
 {
     protected vtkAlgorithmOutput(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkAlgorithmOutput New() => new(vtkAlgorithmOutput_New(), ownsReference: true);
     public new static vtkAlgorithmOutput FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkAlgorithmOutput TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

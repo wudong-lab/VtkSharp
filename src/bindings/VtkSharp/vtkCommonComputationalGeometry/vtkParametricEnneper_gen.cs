@@ -20,11 +20,6 @@ namespace VtkSharp;
 /// technical description "Parametric surfaces" in http://www.vtk.org/publications
 /// in the "VTK Technical Documents" section in the VTk.org web pages.
 /// </para>
-/// <para>
-/// @par Thanks:
-/// Andrew Maclean andrew.amaclean@gmail.com for creating and contributing the
-/// class.
-/// </para>
 /// </remarks>
 public unsafe partial class vtkParametricEnneper : vtkParametricFunction
 {
@@ -38,6 +33,9 @@ public unsafe partial class vtkParametricEnneper : vtkParametricFunction
     /// ClockwiseOrdering = 0,
     /// DerivativesAvailable = 1
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkParametricEnneper New() => new(vtkParametricEnneper_New(), ownsReference: true);
     public new static vtkParametricEnneper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkParametricEnneper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

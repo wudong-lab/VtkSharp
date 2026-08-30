@@ -17,13 +17,15 @@ namespace VtkSharp;
 /// and vtkInteractorStyleSwitch is returned.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorStyleSwitchBase vtkRenderWindowInteractor
+/// See also: vtkInteractorStyleSwitchBase vtkRenderWindowInteractor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyleSwitchBase : vtkInteractorStyle
 {
     protected vtkInteractorStyleSwitchBase(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleSwitchBase New() => new(vtkInteractorStyleSwitchBase_New(), ownsReference: true);
     public new static vtkInteractorStyleSwitchBase FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleSwitchBase TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

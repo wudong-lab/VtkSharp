@@ -82,8 +82,7 @@ namespace VtkSharp;
 /// MouseMoveEvent,
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorStyleTrackball
+/// See also: vtkInteractorStyleTrackball
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyle : vtkInteractorObserver
@@ -94,6 +93,9 @@ public unsafe partial class vtkInteractorStyle : vtkInteractorObserver
     /// parent. This class should not normally be instantiated by application
     /// programmers.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyle New() => new(vtkInteractorStyle_New(), ownsReference: true);
     public new static vtkInteractorStyle FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyle TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

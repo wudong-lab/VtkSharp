@@ -28,26 +28,25 @@ namespace VtkSharp;
 /// UseAboveRangeColor is on.
 /// </para>
 /// <para>
-/// This class behaves differently depending on how \a IndexedLookup is set.
+/// This class behaves differently depending on how IndexedLookup is set.
 /// When true, vtkLookupTable enters a mode for representing categorical color maps.
-/// By setting \a IndexedLookup to true, you indicate that the annotated
+/// By setting IndexedLookup to true, you indicate that the annotated
 /// values are the only valid values for which entries in the color table
-/// should be returned. The colors in the lookup \a Table are assigned
+/// should be returned. The colors in the lookup Table are assigned
 /// to annotated values by taking the modulus of their index in the list
-/// of annotations. \a IndexedLookup changes the behavior of \a GetIndex,
-/// which in turn changes the way \a MapScalarsThroughTable behaves;
-/// when \a IndexedLookup is true, \a MapScalarsThroughTable will search for
-/// scalar values in \a AnnotatedValues and use the resulting index to
-/// determine the color. If a scalar value is not present in \a AnnotatedValues,
-/// then \a NanColor will be used.
+/// of annotations. IndexedLookup changes the behavior of GetIndex,
+/// which in turn changes the way MapScalarsThroughTable behaves;
+/// when IndexedLookup is true, MapScalarsThroughTable will search for
+/// scalar values in AnnotatedValues and use the resulting index to
+/// determine the color. If a scalar value is not present in AnnotatedValues,
+/// then NanColor will be used.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// You need to explicitly call Build() when constructing the LUT by hand.
 /// </para>
 /// <para>
-/// @sa
-/// vtkLogLookupTable vtkWindowLevelLookupTable
+/// See also: vtkLogLookupTable vtkWindowLevelLookupTable
 /// </para>
 /// </remarks>
 public unsafe partial class vtkLookupTable : vtkScalarsToColors
@@ -57,6 +56,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Construct with range=[0,1]; and hsv ranges set up for rainbow color table
     /// (from red to blue).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkLookupTable New() => new(vtkLookupTable_New(), ownsReference: true);
     public new static vtkLookupTable FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkLookupTable TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -102,6 +104,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the color to use when a value above the range is
     /// encountered. This is an RGBA 4-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void GetAboveRangeColor(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -123,6 +128,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in alpha (using automatic generation). Alpha ranges from
     /// [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetAlphaRange(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -144,6 +152,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the color to use when a value below the range is
     /// encountered. This is an RGBA 4-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void GetBelowRangeColor(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -165,6 +176,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in hue (using automatic generation). Hue ranges
     /// between [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetHueRange(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -186,6 +200,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the color to use when a NaN (not a number) is encountered.  This is an
     /// RGBA 4-tuple of doubles in the range [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void GetNanColor(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -254,6 +271,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in saturation (using automatic generation). Saturation
     /// ranges between [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetSaturationRange(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -279,7 +299,7 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// range value.
     /// </summary>
     /// <remarks>
-    /// The \a TableRange values are only used when \a IndexedLookup is false.
+    /// The TableRange values are only used when IndexedLookup is false.
     /// </remarks>
     internal new double* GetTableRange_Internal()
     {
@@ -293,8 +313,11 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// range value.
     /// </summary>
     /// <remarks>
-    /// The \a TableRange values are only used when \a IndexedLookup is false.
+    /// The TableRange values are only used when IndexedLookup is false.
     /// </remarks>
+    /// <param name="data">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetTableRange(Span<double> data)
     {
         fixed (double* dataPtr = data)
@@ -316,6 +339,10 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Return an RGBA color value for the given index into the lookup table. Color
     /// components are expressed as [0,1] double values.
     /// </summary>
+    /// <param name="indx" />
+    /// <param name="rgba">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void GetTableValue(long indx, Span<double> rgba)
     {
         fixed (double* rgbaPtr = rgba)
@@ -353,6 +380,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in value (using automatic generation). Value ranges
     /// between [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetValueRange(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -374,6 +404,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the color to use when a value above the range is
     /// encountered. This is an RGBA 4-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetAboveRangeColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -395,6 +428,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in alpha (using automatic generation). Alpha ranges from
     /// [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetAlphaRange(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -416,6 +452,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the color to use when a value below the range is
     /// encountered. This is an RGBA 4-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetBelowRangeColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -437,6 +476,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in hue (using automatic generation). Hue ranges
     /// between [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetHueRange(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -458,6 +500,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the color to use when a NaN (not a number) is encountered.  This is an
     /// RGBA 4-tuple of doubles in the range [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetNanColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -566,6 +611,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Sets/Gets the range of scalars which will be mapped.  This is a duplicate
     /// of Get/SetTableRange.
     /// </summary>
+    /// <param name="rng">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetRange(ReadOnlySpan<double> rng)
     {
         fixed (double* rngPtr = rng)
@@ -596,6 +644,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in saturation (using automatic generation). Saturation
     /// ranges between [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetSaturationRange(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -641,8 +692,11 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// range value.
     /// </summary>
     /// <remarks>
-    /// The \a TableRange values are only used when \a IndexedLookup is false.
+    /// The TableRange values are only used when IndexedLookup is false.
     /// </remarks>
+    /// <param name="r">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetTableRange(ReadOnlySpan<double> r)
     {
         fixed (double* rPtr = r)
@@ -658,7 +712,7 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// range value.
     /// </summary>
     /// <remarks>
-    /// The \a TableRange values are only used when \a IndexedLookup is false.
+    /// The TableRange values are only used when IndexedLookup is false.
     /// </remarks>
     public new void SetTableRange(double min, double max)
     {
@@ -671,6 +725,10 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Build() method or used SetNumberOfTableValues() prior to using this
     /// method.
     /// </summary>
+    /// <param name="indx" />
+    /// <param name="rgba">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetTableValue(long indx, ReadOnlySpan<double> rgba)
     {
         fixed (double* rgbaPtr = rgba)
@@ -717,6 +775,9 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     /// Set the range in value (using automatic generation). Value ranges
     /// between [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetValueRange(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

@@ -11,6 +11,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// vtkTDxInteractorStyle is an abstract class defining an event-driven
 /// interface to support 3DConnexion device events send by
 /// vtkRenderWindowInteractor.
@@ -19,8 +20,7 @@ namespace VtkSharp;
 /// vtkTDxInteractorStyle.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorStyle vtkRenderWindowInteractor
+/// See also: vtkInteractorStyle vtkRenderWindowInteractor
 /// vtkTDxInteractorStyleCamera
 /// </para>
 /// </remarks>

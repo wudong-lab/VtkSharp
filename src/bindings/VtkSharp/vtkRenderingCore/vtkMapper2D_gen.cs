@@ -15,8 +15,7 @@ namespace VtkSharp;
 /// which render two dimensional actors (vtkActor2D).
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D
+/// See also: vtkActor2D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkMapper2D : vtkAbstractMapper

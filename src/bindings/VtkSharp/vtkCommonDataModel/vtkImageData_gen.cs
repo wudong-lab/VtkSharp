@@ -20,13 +20,15 @@ namespace VtkSharp;
 /// that not all filters support oriented images. It also supports blanking.
 /// </para>
 /// <para>
-/// @sa
-/// vtkImageTransform
+/// See also: vtkImageTransform
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageData : vtkCartesianGrid
 {
     protected vtkImageData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageData New() => new(vtkImageData_New(), ownsReference: true);
     public new static vtkImageData FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageData TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -88,6 +90,9 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
     /// box.
     /// The origin plus spacing determine the position in space of the points.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetOrigin(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -115,6 +120,9 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
     /// <summary>
     /// Access the native pointer for the scalar data
     /// </summary>
+    /// <param name="coordinates">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new nint GetScalarPointer(Span<int> coordinates)
     {
         fixed (int* coordinatesPtr = coordinates)
@@ -126,6 +134,9 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
     /// <summary>
     /// Access the native pointer for the scalar data
     /// </summary>
+    /// <param name="extent">
+    /// Buffer length: 6 elements.
+    /// </param>
     public new nint GetScalarPointerForExtent(Span<int> extent)
     {
         fixed (int* extentPtr = extent)
@@ -163,6 +174,9 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
     /// Set the spacing (width,height,length) of the cubical cells that
     /// compose the data set.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetSpacing(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -179,6 +193,9 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
     /// box.
     /// The origin plus spacing determine the position in space of the points.
     /// </summary>
+    /// <param name="ijk">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetOrigin(ReadOnlySpan<double> ijk)
     {
         fixed (double* ijkPtr = ijk)
@@ -212,6 +229,9 @@ public unsafe partial class vtkImageData : vtkCartesianGrid
     /// Set the spacing (width,height,length) of the cubical cells that
     /// compose the data set.
     /// </summary>
+    /// <param name="ijk">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetSpacing(ReadOnlySpan<double> ijk)
     {
         fixed (double* ijkPtr = ijk)

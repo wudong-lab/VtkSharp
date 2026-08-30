@@ -31,7 +31,7 @@ namespace VtkSharp;
 /// that line or curve.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// A critical algorithmic component of vtkProbeFilter is the manner in which
 /// it finds the cell containing a probe point.
 /// </para>
@@ -44,7 +44,7 @@ namespace VtkSharp;
 /// CellLocator). For vtkCartesianGrid, this specifying a vtkAbstractCellLocator has no effect.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The vtkProbeFilter, once it finds the cell containing a query point, uses
 /// the cell's interpolation functions to perform the interpolate / compute
 /// the point attributes. Note that other interpolation processes with
@@ -54,14 +54,16 @@ namespace VtkSharp;
 /// kernels.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAbstractCellLocator vtkPointLocator vtkCellLocator vtkStaticPointLocator
+/// See also: vtkAbstractCellLocator vtkPointLocator vtkCellLocator vtkStaticPointLocator
 /// vtkStaticCellLocator vtkPointInterpolator vtkSPHInterpolator
 /// </para>
 /// </remarks>
 public unsafe partial class vtkProbeFilter : vtkDataSetAlgorithm
 {
     protected vtkProbeFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkProbeFilter New() => new(vtkProbeFilter_New(), ownsReference: true);
     public new static vtkProbeFilter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkProbeFilter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

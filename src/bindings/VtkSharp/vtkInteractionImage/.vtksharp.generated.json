@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v1",
+  "generatorVersion": "2026-08-30.documentation-v2",
   "module": "vtkInteractionImage",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkImageViewer2.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "df199d20b4a13967979bc7a5bea8241e0c1b1d797a771cc6707f07305d1b6daa",
+      "inputHash": "19653a0bc41f131a9a05dbb8ac6a2dc953b3018288ed09854fd2609363395fce",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionImage\\vtkImageViewer2_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionImage\\vtkImageViewer2_export_gen.cpp",
-      "managedContentHash": "142e67370cfd8a027b38fc27642649d1f9b659a911db4f49de6422997d0c778f",
+      "managedContentHash": "0d62f296c89d90d3db328ed1874385172dce7af2f9429142adf085e20788e368",
       "nativeContentHash": "63d00cba5002a66ff142552a6c1e4e56e1bf4a93556cb8ab221a99cc1eef6bcb"
     }
   ]

@@ -36,8 +36,7 @@ namespace VtkSharp;
 /// current vtkRenderState is the one it has in argument.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderState vtkRenderer
+/// See also: vtkRenderState vtkRenderer
 /// </para>
 /// </remarks>
 public unsafe partial class vtkRenderPass : vtkObject

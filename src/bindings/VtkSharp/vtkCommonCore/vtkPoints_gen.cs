@@ -16,6 +16,9 @@ namespace VtkSharp;
 public unsafe partial class vtkPoints : vtkObject
 {
     protected vtkPoints(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPoints New() => new(vtkPoints_New(), ownsReference: true);
     public new static vtkPoints FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPoints TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -43,6 +46,9 @@ public unsafe partial class vtkPoints : vtkObject
         vtkPoints_Initialize(this.NativePointer);
     }
 
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new long InsertNextPoint(ReadOnlySpan<double> x)
     {
         fixed (double* xPtr = x)
@@ -59,6 +65,9 @@ public unsafe partial class vtkPoints : vtkObject
     /// <summary>
     /// Insert point into next available slot. Returns id of slot.
     /// </summary>
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new long InsertNextPoint(ReadOnlySpan<float> x)
     {
         fixed (float* xPtr = x)
@@ -71,6 +80,10 @@ public unsafe partial class vtkPoints : vtkObject
     /// Insert point into object. Range checking performed and memory
     /// allocated as necessary.
     /// </summary>
+    /// <param name="id" />
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void InsertPoint(long id, ReadOnlySpan<double> x)
     {
         fixed (double* xPtr = x)
@@ -92,6 +105,10 @@ public unsafe partial class vtkPoints : vtkObject
     /// Insert point into object. Range checking performed and memory
     /// allocated as necessary.
     /// </summary>
+    /// <param name="id" />
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void InsertPoint(long id, ReadOnlySpan<float> x)
     {
         fixed (float* xPtr = x)
@@ -185,6 +202,10 @@ public unsafe partial class vtkPoints : vtkObject
         vtkPoints_SetNumberOfPoints(this.NativePointer, numPoints);
     }
 
+    /// <param name="id" />
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetPoint(long id, ReadOnlySpan<double> x)
     {
         fixed (double* xPtr = x)
@@ -204,6 +225,10 @@ public unsafe partial class vtkPoints : vtkObject
     /// to using SetPoint(). You should call Modified() finally after
     /// changing points using this method as it will not do it itself.
     /// </summary>
+    /// <param name="id" />
+    /// <param name="x">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetPoint(long id, ReadOnlySpan<float> x)
     {
         fixed (float* xPtr = x)

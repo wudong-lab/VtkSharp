@@ -100,7 +100,7 @@ namespace VtkSharp;
 /// an input transform is used.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Points arranged on a regular lattice (termed degenerate cases) can be
 /// triangulated in more than one way (at least according to the Delaunay
 /// criterion). The choice of triangulation (as implemented by
@@ -109,14 +109,14 @@ namespace VtkSharp;
 /// this triangle.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Points that are coincident (or nearly so) may be discarded by the algorithm.
 /// This is because the Delaunay triangulation requires unique input points.
 /// You can control the definition of coincidence with the "Tolerance" instance
 /// variable.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The output of the Delaunay triangulation is supposedly a convex hull. In
 /// certain cases this implementation may not generate the convex hull. This
 /// behavior can be controlled by the Offset instance variable. Offset is a
@@ -125,8 +125,7 @@ namespace VtkSharp;
 /// but the more likely you are to see numerical problems.
 /// </para>
 /// <para>
-/// @sa
-/// vtkContourTriangulator vtkDelaunay3D vtkTransformFilter vtkGaussianSplatter
+/// See also: vtkContourTriangulator vtkDelaunay3D vtkTransformFilter vtkGaussianSplatter
 /// </para>
 /// </remarks>
 public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
@@ -136,6 +135,9 @@ public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
     /// Construct object with Alpha = 0.0; Tolerance = 0.001; Offset = 1.25;
     /// BoundingTriangulation turned off.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkDelaunay2D New() => new(vtkDelaunay2D_New(), ownsReference: true);
     public new static vtkDelaunay2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkDelaunay2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

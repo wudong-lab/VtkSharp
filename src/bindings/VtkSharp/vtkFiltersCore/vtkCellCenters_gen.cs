@@ -19,19 +19,18 @@ namespace VtkSharp;
 /// attributes will be associated with the points on output.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// You can choose to generate just points or points and vertex cells.
 /// Vertex cells are drawn during rendering; points are not. Use the ivar
 /// VertexCells to generate cells.
 /// </para>
 /// <para>
-/// @note
+/// Note:
 /// Empty cells will be ignored but will require a one by one cell to
 /// point data copy that will make the processing slower.
 /// </para>
 /// <para>
-/// @sa
-/// vtkGlyph3D vtkLabeledDataMapper
+/// See also: vtkGlyph3D vtkLabeledDataMapper
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCellCenters : vtkPolyDataAlgorithm
@@ -40,6 +39,9 @@ public unsafe partial class vtkCellCenters : vtkPolyDataAlgorithm
     /// <summary>
     /// Construct object with vertex cell generation turned off.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCellCenters New() => new(vtkCellCenters_New(), ownsReference: true);
     public new static vtkCellCenters FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCellCenters TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -59,7 +61,7 @@ public unsafe partial class vtkCellCenters : vtkPolyDataAlgorithm
     /// It is ON by default.
     /// </summary>
     /// <remarks>
-    /// @sa vtkFieldData
+    /// See also: vtkFieldData
     /// </remarks>
     public new void ConvertGhostCellsToGhostPointsOff()
     {
@@ -74,7 +76,7 @@ public unsafe partial class vtkCellCenters : vtkPolyDataAlgorithm
     /// It is ON by default.
     /// </summary>
     /// <remarks>
-    /// @sa vtkFieldData
+    /// See also: vtkFieldData
     /// </remarks>
     public new void ConvertGhostCellsToGhostPointsOn()
     {

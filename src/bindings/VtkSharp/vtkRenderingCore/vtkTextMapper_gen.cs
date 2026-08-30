@@ -19,8 +19,7 @@ namespace VtkSharp;
 /// To use vtkTextMapper, specify an input text string.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkTextActor vtkTextActor3D vtkTextProperty vtkTextRenderer
+/// See also: vtkActor2D vtkTextActor vtkTextActor3D vtkTextProperty vtkTextRenderer
 /// </para>
 /// </remarks>
 public unsafe partial class vtkTextMapper : vtkMapper2D
@@ -29,6 +28,9 @@ public unsafe partial class vtkTextMapper : vtkMapper2D
     /// <summary>
     /// Creates a new text mapper.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTextMapper New() => new(vtkTextMapper_New(), ownsReference: true);
     public new static vtkTextMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTextMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -43,6 +45,9 @@ public unsafe partial class vtkTextMapper : vtkMapper2D
     /// <summary>
     /// Set/Get the text property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetTextProperty()
     {
         return vtkTextProperty.FromBorrowedPointer(vtkTextMapper_GetTextProperty(this.NativePointer));

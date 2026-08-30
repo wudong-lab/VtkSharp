@@ -10,19 +10,16 @@ namespace VtkSharp;
 /// a vtkAbstractArray subclass for strings
 /// </summary>
 /// <remarks>
-/// <para>
 /// Points and cells may sometimes have associated data that are stored
 /// as strings, e.g. labels for information visualization projects.
 /// This class provides a clean way to store and access those strings.
-/// </para>
-/// <para>
-/// @par Thanks:
-/// Andy Wilson (atwilso@sandia.gov) wrote this class.
-/// </para>
 /// </remarks>
 public unsafe partial class vtkStringArray : vtkAbstractArray
 {
     protected vtkStringArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkStringArray New() => new(vtkStringArray_New(), ownsReference: true);
     public new static vtkStringArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkStringArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

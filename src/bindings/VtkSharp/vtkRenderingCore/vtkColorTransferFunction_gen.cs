@@ -12,6 +12,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// vtkColorTransferFunction is a color mapping in RGB or HSV space that
 /// uses piecewise hermite functions to allow interpolation that can be
 /// piecewise constant, piecewise linear, or somewhere in-between
@@ -27,13 +28,15 @@ namespace VtkSharp;
 /// Note that transparency (alpha) is only supported in NanColorRGBA feature.
 /// </para>
 /// <para>
-/// @sa
-/// vtkPiecewiseFunction
+/// See also: vtkPiecewiseFunction
 /// </para>
 /// </remarks>
 public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
 {
     protected vtkColorTransferFunction(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkColorTransferFunction New() => new(vtkColorTransferFunction_New(), ownsReference: true);
     public new static vtkColorTransferFunction FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkColorTransferFunction TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -112,6 +115,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// at each end of that range.
     /// Returns 1 on success, 0 otherwise.
     /// </summary>
+    /// <param name="range">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new int AdjustRange(Span<double> range)
     {
         fixed (double* rangePtr = range)
@@ -177,6 +183,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// Set the color to use when a value above the range is
     /// encountered. This is an RGB 3-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetAboveRangeColor(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -207,6 +216,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// Set the color to use when a value below the range is
     /// encountered. This is an RGB 3-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetBelowRangeColor(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -244,6 +256,10 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
         return vtkColorTransferFunction_GetColor_double(this.NativePointer, x);
     }
 
+    /// <param name="x" />
+    /// <param name="rgb">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetColor(double x, Span<double> rgb)
     {
         fixed (double* rgbPtr = rgb)
@@ -309,6 +325,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// encountered.  This is an RGB 3-tuple color of doubles in the
     /// range [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetNanColor(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -331,6 +350,10 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// location (X), R, G, and B values, midpoint, and
     /// sharpness values at the node.
     /// </summary>
+    /// <param name="index" />
+    /// <param name="val">
+    /// Buffer length: 6 elements.
+    /// </param>
     public new int GetNodeValue(int index, Span<double> val)
     {
         fixed (double* valPtr = val)
@@ -358,6 +381,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// <summary>
     /// Returns min and max position of all function points.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void GetRange(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -474,6 +500,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// Set the color to use when a value above the range is
     /// encountered. This is an RGB 3-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetAboveRangeColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -504,6 +533,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// Set the color to use when a value below the range is
     /// encountered. This is an RGB 3-tuple of doubles in the range [0, 1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetBelowRangeColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -693,6 +725,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// encountered.  This is an RGB 3-tuple color of doubles in the
     /// range [0,1].
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetNanColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -716,6 +751,9 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// encountered.  This is an RGBA 4-tuple color of doubles in the
     /// range [0,1].
     /// </summary>
+    /// <param name="rgba">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetNanColorRGBA(Span<double> rgba)
     {
         fixed (double* rgbaPtr = rgba)
@@ -738,6 +776,10 @@ public unsafe partial class vtkColorTransferFunction : vtkScalarsToColors
     /// location (X), R, G, and B values, midpoint, and
     /// sharpness values at the node.
     /// </summary>
+    /// <param name="index" />
+    /// <param name="val">
+    /// Buffer length: 6 elements.
+    /// </param>
     public new int SetNodeValue(int index, Span<double> val)
     {
         fixed (double* valPtr = val)

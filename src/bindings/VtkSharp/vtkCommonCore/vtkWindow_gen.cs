@@ -15,8 +15,7 @@ namespace VtkSharp;
 /// rendering window.  It contains vtkViewports.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderWindow vtkViewport
+/// See also: vtkRenderWindow vtkViewport
 /// </para>
 /// </remarks>
 public unsafe partial class vtkWindow : vtkObject
@@ -43,6 +42,9 @@ public unsafe partial class vtkWindow : vtkObject
     /// <summary>
     /// Get name of rendering window
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetWindowName()
     {
         return VtkString.FromUtf8Pointer(vtkWindow_GetWindowName(this.NativePointer));
@@ -96,6 +98,9 @@ public unsafe partial class vtkWindow : vtkObject
     /// If the size has changed, this method will fire
     /// vtkCommand::WindowResizeEvent.
     /// </remarks>
+    /// <param name="a">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetSize(Span<int> a)
     {
         fixed (int* aPtr = a)

@@ -22,13 +22,7 @@ namespace VtkSharp;
 /// coordinates.
 /// </para>
 /// <para>
-/// @par Thanks:
-/// Thanks to David Gobbi at the Seaman Family MR Centre and Dept. of Clinical
-/// Neurosciences, Foothills Medical Centre, Calgary, for providing this class.
-/// </para>
-/// <para>
-/// @sa
-/// vtkImageMapper3D vtkImageProperty vtkProp3D
+/// See also: vtkImageMapper3D vtkImageProperty vtkProp3D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageSlice : vtkProp3D
@@ -39,6 +33,9 @@ public unsafe partial class vtkImageSlice : vtkProp3D
     /// position=(0,0,0) scale=1 visibility=1 pickable=1 dragable=1
     /// orientation=(0,0,0).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageSlice New() => new(vtkImageSlice_New(), ownsReference: true);
     public new static vtkImageSlice FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageSlice TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

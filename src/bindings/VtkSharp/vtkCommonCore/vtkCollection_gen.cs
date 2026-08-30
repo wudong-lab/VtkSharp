@@ -17,8 +17,7 @@ namespace VtkSharp;
 /// of objects.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActorCollection vtkAssemblyPaths vtkDataSetCollection
+/// See also: vtkActorCollection vtkAssemblyPaths vtkDataSetCollection
 /// vtkImplicitFunctionCollection vtkLightCollection vtkPolyDataCollection
 /// vtkRenderWindowCollection vtkRendererCollection
 /// vtkStructuredPointsCollection vtkTransformCollection vtkVolumeCollection
@@ -30,6 +29,9 @@ public unsafe partial class vtkCollection : vtkObject
     /// <summary>
     /// Construct an empty collection.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCollection New() => new(vtkCollection_New(), ownsReference: true);
     public new static vtkCollection FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCollection TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

@@ -12,6 +12,7 @@ namespace VtkSharp;
 /// </summary>
 /// <remarks>
 /// <para>
+///
 /// This interactor style allows the user to draw a rectangle in the render
 /// window by hitting 'r' and then using the left mouse button.
 /// When the mouse button is released, the attached picker operates on the pixel
@@ -21,13 +22,15 @@ namespace VtkSharp;
 /// In other respects it behaves the same as its parent class.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAreaPicker
+/// See also: vtkAreaPicker
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyleRubberBandPick : vtkInteractorStyleTrackballCamera
 {
     protected vtkInteractorStyleRubberBandPick(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleRubberBandPick New() => new(vtkInteractorStyleRubberBandPick_New(), ownsReference: true);
     public new static vtkInteractorStyleRubberBandPick FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleRubberBandPick TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

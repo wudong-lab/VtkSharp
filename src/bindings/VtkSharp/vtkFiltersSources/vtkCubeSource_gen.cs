@@ -17,6 +17,9 @@ namespace VtkSharp;
 public unsafe partial class vtkCubeSource : vtkPolyDataAlgorithm
 {
     protected vtkCubeSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCubeSource New() => new(vtkCubeSource_New(), ownsReference: true);
     public new static vtkCubeSource FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCubeSource TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -39,6 +42,9 @@ public unsafe partial class vtkCubeSource : vtkPolyDataAlgorithm
     /// <summary>
     /// Set the center of the cube.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetCenter(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

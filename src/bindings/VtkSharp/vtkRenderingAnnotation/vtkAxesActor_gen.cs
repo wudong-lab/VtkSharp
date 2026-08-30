@@ -23,13 +23,7 @@ namespace VtkSharp;
 /// left-handed axes representation.
 /// </para>
 /// <para>
-/// @par Thanks:
-/// Thanks to Goodwin Lawlor for posting a tcl script which featured the
-/// use of vtkCaptionActor2D to implement the text labels.  This class is
-/// based on Paraview's vtkPVAxesActor.
-/// </para>
-/// <para>
-/// @warning
+/// Warning:
 /// vtkAxesActor is primarily intended for use with vtkOrientationMarkerWidget.
 /// The bounds of this actor are calculated as though the geometry of the axes
 /// were symmetric: that is, although only positive axes are visible, bounds
@@ -38,14 +32,16 @@ namespace VtkSharp;
 /// in vtkOrientationMarkerWidget.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAnnotatedCubeActor vtkOrientationMarkerWidget vtkCaptionActor2D
+/// See also: vtkAnnotatedCubeActor vtkOrientationMarkerWidget vtkCaptionActor2D
 /// vtkTextProperty
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAxesActor : vtkProp3D
 {
     protected vtkAxesActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkAxesActor New() => new(vtkAxesActor_New(), ownsReference: true);
     public new static vtkAxesActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkAxesActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -61,6 +57,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// Retrieve handles to the X, Y and Z axis (so that you can set their text
     /// properties for example)
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkCaptionActor2D GetXAxisCaptionActor2D()
     {
         return vtkCaptionActor2D.FromBorrowedPointer(vtkAxesActor_GetXAxisCaptionActor2D(this.NativePointer));
@@ -69,6 +68,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Get the shaft properties.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetXAxisShaftProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetXAxisShaftProperty(this.NativePointer));
@@ -77,11 +79,17 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Get the tip properties.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetXAxisTipProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetXAxisTipProperty(this.NativePointer));
     }
 
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkCaptionActor2D GetYAxisCaptionActor2D()
     {
         return vtkCaptionActor2D.FromBorrowedPointer(vtkAxesActor_GetYAxisCaptionActor2D(this.NativePointer));
@@ -90,6 +98,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Get the shaft properties.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetYAxisShaftProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetYAxisShaftProperty(this.NativePointer));
@@ -98,11 +109,17 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Get the tip properties.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetYAxisTipProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetYAxisTipProperty(this.NativePointer));
     }
 
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkCaptionActor2D GetZAxisCaptionActor2D()
     {
         return vtkCaptionActor2D.FromBorrowedPointer(vtkAxesActor_GetZAxisCaptionActor2D(this.NativePointer));
@@ -111,6 +128,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Get the shaft properties.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetZAxisShaftProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetZAxisShaftProperty(this.NativePointer));
@@ -119,6 +139,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Get the tip properties.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty GetZAxisTipProperty()
     {
         return vtkProperty.FromBorrowedPointer(vtkAxesActor_GetZAxisTipProperty(this.NativePointer));
@@ -161,6 +184,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// Set the normalized (0-1) position of the label along the length of
     /// the shaft.  A value &gt; 1 is permissible.
     /// </summary>
+    /// <param name="v">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetNormalizedLabelPosition(Span<double> v)
     {
         fixed (double* vPtr = v)
@@ -180,6 +206,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Set the normalized (0-1) length of the shaft.
     /// </summary>
+    /// <param name="v">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetNormalizedShaftLength(Span<double> v)
     {
         fixed (double* vPtr = v)
@@ -201,6 +230,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// Set the normalized (0-1) length of the tip.  Normally, this would be
     /// 1 - the normalized length of the shaft.
     /// </summary>
+    /// <param name="v">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetNormalizedTipLength(Span<double> v)
     {
         fixed (double* vPtr = v)
@@ -276,6 +308,9 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     /// <summary>
     /// Set the total length of the axes in 3 dimensions.
     /// </summary>
+    /// <param name="v">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetTotalLength(Span<double> v)
     {
         fixed (double* vPtr = v)

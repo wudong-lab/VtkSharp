@@ -21,8 +21,7 @@ namespace VtkSharp;
 /// rendering features such as two-sided lighting can also be controlled.
 /// </para>
 /// <para>
-/// @sa
-/// vtkWindow vtkRenderer
+/// See also: vtkWindow vtkRenderer
 /// </para>
 /// </remarks>
 public unsafe partial class vtkViewport : vtkObject
@@ -68,6 +67,9 @@ public unsafe partial class vtkViewport : vtkObject
     /// Loops through the props and returns a collection of those
     /// that are vtkActor2D (or one of its subclasses).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkActor2DCollection GetActors2D()
     {
         return vtkActor2DCollection.FromBorrowedPointer(vtkViewport_GetActors2D(this.NativePointer));
@@ -86,6 +88,9 @@ public unsafe partial class vtkViewport : vtkObject
     /// Set/Get the background color of the rendering screen using an rgb color
     /// specification.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetBackground(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -107,6 +112,9 @@ public unsafe partial class vtkViewport : vtkObject
     /// Set/Get the second background color of the rendering screen
     /// for gradient backgrounds using an rgb color specification.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void GetBackground2(Span<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -118,6 +126,9 @@ public unsafe partial class vtkViewport : vtkObject
     /// <summary>
     /// Return any props in this viewport.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkPropCollection GetViewProps()
     {
         return vtkPropCollection.FromBorrowedPointer(vtkViewport_GetViewProps(this.NativePointer));
@@ -203,6 +214,9 @@ public unsafe partial class vtkViewport : vtkObject
     /// Set/Get the background color of the rendering screen using an rgb color
     /// specification.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetBackground(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -224,6 +238,9 @@ public unsafe partial class vtkViewport : vtkObject
     /// Set/Get the second background color of the rendering screen
     /// for gradient backgrounds using an rgb color specification.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetBackground2(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -247,6 +264,9 @@ public unsafe partial class vtkViewport : vtkObject
     /// Coordinates are expressed as (xmin,ymin,xmax,ymax), where each
     /// coordinate is 0 &lt;= coordinate &lt;= 1.0.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 4 elements.
+    /// </param>
     public new void SetViewport(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

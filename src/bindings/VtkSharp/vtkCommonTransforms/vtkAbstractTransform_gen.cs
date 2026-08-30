@@ -26,8 +26,7 @@ namespace VtkSharp;
 /// or the vtkTransform class.
 /// </para>
 /// <para>
-/// @sa
-/// vtkGeneralTransform vtkWarpTransform vtkHomogeneousTransform
+/// See also: vtkGeneralTransform vtkWarpTransform vtkHomogeneousTransform
 /// vtkLinearTransform vtkIdentityTransform
 /// vtkTransformFilter vtkTransformFilter vtkImageReslice
 /// vtkImplicitFunction
@@ -46,6 +45,9 @@ public unsafe partial class vtkAbstractTransform : vtkObject
         return target;
     }
 
+    /// <param name="point">
+    /// Buffer length: 3 elements.
+    /// </param>
     internal new double* TransformPoint_Internal(ReadOnlySpan<double> point)
     {
         fixed (double* pointPtr = point)
@@ -67,6 +69,12 @@ public unsafe partial class vtkAbstractTransform : vtkObject
     /// Apply the transformation to a double-precision coordinate.
     /// You can use the same array to store both the input and output point.
     /// </summary>
+    /// <param name="in">
+    /// Buffer length: 3 elements.
+    /// </param>
+    /// <param name="out">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void TransformPoint(ReadOnlySpan<double> @in, Span<double> @out)
     {
         fixed (double* inPtr = @in)
@@ -82,6 +90,12 @@ public unsafe partial class vtkAbstractTransform : vtkObject
     /// Apply the transformation to a coordinate.  You can use the same
     /// array to store both the input and output point.
     /// </summary>
+    /// <param name="in">
+    /// Buffer length: 3 elements.
+    /// </param>
+    /// <param name="out">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void TransformPoint(ReadOnlySpan<float> @in, Span<float> @out)
     {
         fixed (float* inPtr = @in)

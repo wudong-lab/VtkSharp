@@ -29,7 +29,7 @@ namespace VtkSharp;
 /// to which it responds.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Note that the pair ( vtkAbstractWidget / vtkWidgetRepresentation ) is an
 /// implementation of the second generation VTK Widgets design. In the first
 /// generation design, widgets were implemented in a single monolithic
@@ -43,8 +43,7 @@ namespace VtkSharp;
 /// slaves to the client (and do not handle events).
 /// </para>
 /// <para>
-/// @sa
-/// vtkWidgetRepresentation vtkWidgetEventTranslator vtkWidgetCallbackMapper
+/// See also: vtkWidgetRepresentation vtkWidgetEventTranslator vtkWidgetCallbackMapper
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAbstractWidget : vtkInteractorObserver
@@ -100,6 +99,9 @@ public unsafe partial class vtkAbstractWidget : vtkInteractorObserver
     /// vtkProp (typically a subclass of vtkWidgetRepresentation) so it can be
     /// added to the renderer independent of the widget.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkWidgetRepresentation GetRepresentation()
     {
         return vtkWidgetRepresentation.FromBorrowedPointer(vtkAbstractWidget_GetRepresentation(this.NativePointer));

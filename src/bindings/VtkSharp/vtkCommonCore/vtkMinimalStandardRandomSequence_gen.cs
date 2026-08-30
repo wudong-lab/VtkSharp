@@ -37,6 +37,9 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
     /// <summary>
     /// Standard methods for instantiation, type information, and printing.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkMinimalStandardRandomSequence New() => new(vtkMinimalStandardRandomSequence_New(), ownsReference: true);
     public new static vtkMinimalStandardRandomSequence FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkMinimalStandardRandomSequence TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -51,9 +54,6 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
     /// <summary>
     /// Current value
     /// </summary>
-    /// <remarks>
-    /// \post unit_range: result&gt;=0.0 &amp;&amp; result&lt;=1.0
-    /// </remarks>
     public new double GetValue()
     {
         return vtkMinimalStandardRandomSequence_GetValue(this.NativePointer);

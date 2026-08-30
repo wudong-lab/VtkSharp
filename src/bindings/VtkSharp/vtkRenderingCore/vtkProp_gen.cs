@@ -18,8 +18,7 @@ namespace VtkSharp;
 /// variables that control visibility, picking, and dragging.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkActor vtkVolume vtkProp3D
+/// See also: vtkActor2D vtkActor vtkVolume vtkProp3D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkProp : vtkObject

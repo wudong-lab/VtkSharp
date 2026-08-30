@@ -16,13 +16,15 @@ namespace VtkSharp;
 /// list. The list is ordered and duplicate entries are not prevented.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderPass vtkCollection
+/// See also: vtkRenderPass vtkCollection
 /// </para>
 /// </remarks>
 public unsafe partial class vtkRenderPassCollection : vtkCollection
 {
     protected vtkRenderPassCollection(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkRenderPassCollection New() => new(vtkRenderPassCollection_New(), ownsReference: true);
     public new static vtkRenderPassCollection FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkRenderPassCollection TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

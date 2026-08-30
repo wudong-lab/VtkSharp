@@ -17,8 +17,7 @@ namespace VtkSharp;
 /// styles.
 /// </para>
 /// <para>
-/// @sa
-/// vtkTextMapper vtkTextActor vtkLegendBoxActor vtkCaptionActor2D
+/// See also: vtkTextMapper vtkTextActor vtkLegendBoxActor vtkCaptionActor2D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkTextProperty : vtkObject
@@ -28,6 +27,9 @@ public unsafe partial class vtkTextProperty : vtkObject
     /// Creates a new text property with font size 12, bold off, italic off,
     /// and Arial font.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTextProperty New() => new(vtkTextProperty_New(), ownsReference: true);
     public new static vtkTextProperty FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTextProperty TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -115,6 +117,9 @@ public unsafe partial class vtkTextProperty : vtkObject
     /// <summary>
     /// Set the color of the text.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)
@@ -237,6 +242,9 @@ public unsafe partial class vtkTextProperty : vtkObject
     /// Set/Get the shadow offset, i.e. the distance from the text to
     /// its shadow, in the same unit as FontSize.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetShadowOffset(ReadOnlySpan<int> _arg)
     {
         fixed (int* _argPtr = _arg)

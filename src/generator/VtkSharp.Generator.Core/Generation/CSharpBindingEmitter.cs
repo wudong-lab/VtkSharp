@@ -10,7 +10,7 @@ public sealed class CSharpBindingEmitter
     private readonly ExportNameGenerator _exportNameGenerator = new();
 
     public string Emit(string namespaceName, string className, string baseClassName, bool hasStaticNew, IReadOnlyList<WhitelistFunction> functions,
-        InspectedClass? inspectedClass = null)
+        InspectedClass? inspectedClass = null, TextWriter? documentationWarnings = null)
     {
         var sb = new StringBuilder();
         var exportNames = this.CreateExportNames(className, functions);
@@ -29,7 +29,7 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine($"    protected {className}(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) {{ }}");
         if (hasStaticNew)
         {
-            XmlDocumentationEmitter.Emit(sb, inspectedClass?.NewDocumentation, "    ");
+            XmlDocumentationEmitter.Emit(sb, BindingDocumentation.ForNew(inspectedClass?.NewDocumentation), "    ");
             sb.AppendLine($"    public new static {className} New() => new({className}_New(), ownsReference: true);");
         }
 
@@ -50,7 +50,9 @@ public sealed class CSharpBindingEmitter
             var matches = inspectedClass?.Functions.Where(item => item.Name == function.Name &&
                 item.ReturnType == function.Return.Type &&
                 item.Parameters.Select(p => p.Type).SequenceEqual(function.Parameters.Select(p => p.Type))).ToList();
-            if (matches is { Count: 1 }) XmlDocumentationEmitter.Emit(sb, matches[0].Documentation, "    ");
+            var documentation = BindingDocumentation.ForMethod(function, matches is { Count: 1 } ? matches[0] : null,
+                message => documentationWarnings?.WriteLine($"Documentation warning: {className}.{function.Name}: {message}"));
+            XmlDocumentationEmitter.Emit(sb, documentation, "    ");
             this.EmitPublicMethod(sb, className, function, exportNames[function]);
             sb.AppendLine();
         }

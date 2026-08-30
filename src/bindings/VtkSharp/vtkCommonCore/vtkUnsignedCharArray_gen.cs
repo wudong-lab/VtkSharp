@@ -17,6 +17,9 @@ namespace VtkSharp;
 public unsafe partial class vtkUnsignedCharArray : vtkDataArray
 {
     protected vtkUnsignedCharArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkUnsignedCharArray New() => new(vtkUnsignedCharArray_New(), ownsReference: true);
     public new static vtkUnsignedCharArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkUnsignedCharArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

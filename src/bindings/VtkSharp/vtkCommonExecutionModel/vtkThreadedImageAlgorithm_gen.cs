@@ -18,8 +18,7 @@ namespace VtkSharp;
 /// functionality, consider using vtkSimpleImageToImageAlgorithm instead.
 /// </para>
 /// <para>
-/// @sa
-/// vtkSimpleImageToImageAlgorithm
+/// See also: vtkSimpleImageToImageAlgorithm
 /// </para>
 /// </remarks>
 public unsafe partial class vtkThreadedImageAlgorithm : vtkImageAlgorithm

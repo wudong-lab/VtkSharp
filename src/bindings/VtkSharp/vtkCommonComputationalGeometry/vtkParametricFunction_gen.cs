@@ -31,23 +31,15 @@ namespace VtkSharp;
 /// This class has also methods for defining a range of parametric values (u,v,w).
 /// </para>
 /// <para>
-/// @par Thanks:
-/// Andrew Maclean andrew.amaclean@gmail.com for creating and contributing the
-/// class.
+/// See also: vtkParametricFunctionSource - tessellates a parametric function
 /// </para>
 /// <para>
-/// @sa
-/// vtkParametricFunctionSource - tessellates a parametric function
-/// </para>
-/// <para>
-/// @sa
-/// Implementations of derived classes implementing non-orentable surfaces:
+/// See also: Implementations of derived classes implementing non-orentable surfaces:
 /// vtkParametricBoy vtkParametricCrossCap vtkParametricFigure8Klein
 /// vtkParametricKlein vtkParametricMobius vtkParametricRoman
 /// </para>
 /// <para>
-/// @sa
-/// Implementations of derived classes implementing orientable surfaces:
+/// See also: Implementations of derived classes implementing orientable surfaces:
 /// vtkParametricConicSpiral vtkParametricDini vtkParametricEllipsoid
 /// vtkParametricEnneper vtkParametricRandomHills vtkParametricSuperEllipsoid
 /// vtkParametricSuperToroid vtkParametricTorus

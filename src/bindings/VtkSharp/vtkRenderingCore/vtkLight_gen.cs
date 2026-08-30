@@ -46,6 +46,9 @@ public unsafe partial class vtkLight : vtkObject
     /// ConeAngle=30, AttenuationValues=(1,0,0), Exponent=1 and the
     /// TransformMatrix is NULL.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkLight New() => new(vtkLight_New(), ownsReference: true);
     public new static vtkLight FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkLight TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

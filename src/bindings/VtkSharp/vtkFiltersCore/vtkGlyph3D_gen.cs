@@ -31,7 +31,7 @@ namespace VtkSharp;
 /// vector magnitude.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The scaling of the glyphs is controlled by the ScaleFactor ivar multiplied
 /// by the scalar value at each point (if VTK_SCALE_BY_SCALAR is set), or
 /// multiplied by the vector magnitude (if VTK_SCALE_BY_VECTOR is set),
@@ -43,14 +43,14 @@ namespace VtkSharp;
 /// process includes clamping the scale value between (0,1).
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Typically this object operates on input data with scalar and/or vector
 /// data. However, scalar and/or vector aren't necessary, and it can be used
 /// to copy data from a single source to each point. In this case the scale
 /// factor can be used to uniformly scale the glyphs.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// The object uses "vector" data to scale glyphs, orient glyphs, and/or index
 /// into a table of glyphs. You can choose to use either the vector or normal
 /// data at each input point. Use the method SetVectorModeToUseVector() to use
@@ -58,26 +58,25 @@ namespace VtkSharp;
 /// normal input data.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// If you do use a table of glyphs, make sure to set the Range ivar to make
 /// sure the index into the glyph table is computed correctly.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// You can turn off scaling of the glyphs completely by using the Scaling
 /// ivar. You can also turn off scaling due to data (either vector or scalar)
 /// by using the SetScaleModeToDataScalingOff() method.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// You can set what arrays to use for the scalars, vectors, normals, and
 /// color scalars by using the SetInputArrayToProcess methods in
 /// vtkAlgorithm. The first array is scalars, the next vectors, the next
 /// normals and finally color scalars.
 /// </para>
 /// <para>
-/// @sa
-/// vtkTensorGlyph
+/// See also: vtkTensorGlyph
 /// </para>
 /// </remarks>
 public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
@@ -89,6 +88,9 @@ public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
     /// orientation is by vector. Clamping and indexing are turned off. No
     /// initial sources are defined.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkGlyph3D New() => new(vtkGlyph3D_New(), ownsReference: true);
     public new static vtkGlyph3D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkGlyph3D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

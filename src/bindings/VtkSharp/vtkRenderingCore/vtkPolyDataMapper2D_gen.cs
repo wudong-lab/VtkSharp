@@ -22,13 +22,15 @@ namespace VtkSharp;
 /// data from).
 /// </para>
 /// <para>
-/// @sa
-/// vtkMapper2D vtkActor2D
+/// See also: vtkMapper2D vtkActor2D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkPolyDataMapper2D : vtkMapper2D
 {
     protected vtkPolyDataMapper2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPolyDataMapper2D New() => new(vtkPolyDataMapper2D_New(), ownsReference: true);
     public new static vtkPolyDataMapper2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPolyDataMapper2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

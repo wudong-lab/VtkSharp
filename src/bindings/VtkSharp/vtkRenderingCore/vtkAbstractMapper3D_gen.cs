@@ -22,8 +22,7 @@ namespace VtkSharp;
 /// data it maps, such as the bounding box and center.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAbstractMapper vtkMapper vtkPolyDataMapper vtkVolumeMapper
+/// See also: vtkAbstractMapper vtkMapper vtkPolyDataMapper vtkVolumeMapper
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAbstractMapper3D : vtkAbstractMapper

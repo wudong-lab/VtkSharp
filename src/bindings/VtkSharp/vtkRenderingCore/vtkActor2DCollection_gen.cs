@@ -17,8 +17,7 @@ namespace VtkSharp;
 /// the vtkActor2D objects to be rendered in the correct order.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkCollection
+/// See also: vtkActor2D vtkCollection
 /// </para>
 /// </remarks>
 public unsafe partial class vtkActor2DCollection : vtkPropCollection
@@ -28,6 +27,9 @@ public unsafe partial class vtkActor2DCollection : vtkPropCollection
     /// Destructor for the vtkActor2DCollection class. This removes all
     /// objects from the collection.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkActor2DCollection New() => new(vtkActor2DCollection_New(), ownsReference: true);
     public new static vtkActor2DCollection FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkActor2DCollection TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

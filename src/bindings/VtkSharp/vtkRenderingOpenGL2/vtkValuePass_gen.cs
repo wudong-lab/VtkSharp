@@ -33,13 +33,15 @@ namespace VtkSharp;
 /// shaders are defined in order to adjust its behavior for either type of data.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderPass vtkOpenGLRenderPass
+/// See also: vtkRenderPass vtkOpenGLRenderPass
 /// </para>
 /// </remarks>
 public unsafe partial class vtkValuePass : vtkOpenGLRenderPass
 {
     protected vtkValuePass(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkValuePass New() => new(vtkValuePass_New(), ownsReference: true);
     public new static vtkValuePass FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkValuePass TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -56,7 +58,12 @@ public unsafe partial class vtkValuePass : vtkOpenGLRenderPass
     /// single component array containing the rendered values.
     /// </summary>
     /// <remarks>
-    /// \warning The returned array is owned by this class.
+    /// <para>
+    /// Warning: The returned array is owned by this class.
+    /// </para>
+    /// <para>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </para>
     /// </remarks>
     public new vtkFloatArray GetFloatImageDataArray(vtkRenderer ren)
     {

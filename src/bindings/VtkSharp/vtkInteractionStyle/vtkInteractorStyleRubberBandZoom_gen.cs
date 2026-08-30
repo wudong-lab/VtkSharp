@@ -18,6 +18,9 @@ namespace VtkSharp;
 public unsafe partial class vtkInteractorStyleRubberBandZoom : vtkInteractorStyle
 {
     protected vtkInteractorStyleRubberBandZoom(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleRubberBandZoom New() => new(vtkInteractorStyleRubberBandZoom_New(), ownsReference: true);
     public new static vtkInteractorStyleRubberBandZoom FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleRubberBandZoom TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

@@ -15,8 +15,7 @@ namespace VtkSharp;
 /// and annotations.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D
+/// See also: vtkActor2D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkProperty2D : vtkObject
@@ -26,6 +25,9 @@ public unsafe partial class vtkProperty2D : vtkObject
     /// Creates a vtkProperty2D with the following default values:
     /// Opacity 1, Color (1,1,1)
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkProperty2D New() => new(vtkProperty2D_New(), ownsReference: true);
     public new static vtkProperty2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkProperty2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -48,6 +50,9 @@ public unsafe partial class vtkProperty2D : vtkObject
     /// <summary>
     /// Set/Get the RGB color of this property.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 3 elements.
+    /// </param>
     public new void SetColor(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

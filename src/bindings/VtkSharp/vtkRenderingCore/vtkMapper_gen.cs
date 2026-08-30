@@ -38,8 +38,7 @@ namespace VtkSharp;
 /// ResolveCoincidentTopology-related methods.)
 /// </para>
 /// <para>
-/// @sa
-/// vtkDataSetMapper vtkPolyDataMapper
+/// See also: vtkDataSetMapper vtkPolyDataMapper
 /// </para>
 /// </remarks>
 public unsafe partial class vtkMapper : vtkAbstractMapper3D
@@ -86,6 +85,9 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
     /// values are used to map scalars into lookup table. Has no effect when
     /// UseLookupTableScalarRange is true.
     /// </summary>
+    /// <param name="_arg">
+    /// Buffer length: 2 elements.
+    /// </param>
     public new void SetScalarRange(ReadOnlySpan<double> _arg)
     {
         fixed (double* _argPtr = _arg)

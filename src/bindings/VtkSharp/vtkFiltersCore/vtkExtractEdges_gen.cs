@@ -23,7 +23,7 @@ namespace VtkSharp;
 /// may change, and any unused points are omitted from the filter output.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// If present in the filter input, output cell data is produced for the
 /// output edges. Since an edge may be used by more than one cell, this is
 /// potentially an undefined behavior. To ensure deterministic output, the
@@ -31,8 +31,7 @@ namespace VtkSharp;
 /// edge.
 /// </para>
 /// <para>
-/// @sa
-/// vtkFeatureEdges
+/// See also: vtkFeatureEdges
 /// </para>
 /// </remarks>
 public unsafe partial class vtkExtractEdges : vtkPolyDataAlgorithm
@@ -43,6 +42,9 @@ public unsafe partial class vtkExtractEdges : vtkPolyDataAlgorithm
     /// printing the state of an instance.
     /// default an instance of vtkMergePoints is used.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkExtractEdges New() => new(vtkExtractEdges_New(), ownsReference: true);
     public new static vtkExtractEdges FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkExtractEdges TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

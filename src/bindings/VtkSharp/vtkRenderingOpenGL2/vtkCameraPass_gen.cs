@@ -23,13 +23,15 @@ namespace VtkSharp;
 /// a list of passes for the geometry.
 /// </para>
 /// <para>
-/// @sa
-/// vtkRenderPass
+/// See also: vtkRenderPass
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCameraPass : vtkRenderPass
 {
     protected vtkCameraPass(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCameraPass New() => new(vtkCameraPass_New(), ownsReference: true);
     public new static vtkCameraPass FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCameraPass TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

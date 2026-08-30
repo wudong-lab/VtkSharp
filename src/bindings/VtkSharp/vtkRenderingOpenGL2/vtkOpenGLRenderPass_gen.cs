@@ -10,6 +10,7 @@ namespace VtkSharp;
 /// Abstract render pass with shader modifications.
 /// </summary>
 /// <remarks>
+///
 /// Allows a render pass to update shader code using a new virtual API.
 /// </remarks>
 public unsafe partial class vtkOpenGLRenderPass : vtkRenderPass

@@ -19,8 +19,7 @@ namespace VtkSharp;
 /// added, the matrices are concatenated to create a final, evaluated matrix.
 /// </para>
 /// <para>
-/// @sa
-/// vtkAssemblyNode vtkAssembly vtkActor vtkMatrix4x4 vtkProp vtkAbstractPicker
+/// See also: vtkAssemblyNode vtkAssembly vtkActor vtkMatrix4x4 vtkProp vtkAbstractPicker
 /// </para>
 /// </remarks>
 public unsafe partial class vtkAssemblyPath : vtkCollection
@@ -29,6 +28,9 @@ public unsafe partial class vtkAssemblyPath : vtkCollection
     /// <summary>
     /// Instantiate empty path with identify matrix.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkAssemblyPath New() => new(vtkAssemblyPath_New(), ownsReference: true);
     public new static vtkAssemblyPath FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkAssemblyPath TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

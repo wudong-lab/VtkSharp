@@ -24,8 +24,7 @@ namespace VtkSharp;
 /// this actor.
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkPolyDataMapper vtkTextProperty vtkTextRenderer
+/// See also: vtkActor2D vtkPolyDataMapper vtkTextProperty vtkTextRenderer
 /// </para>
 /// </remarks>
 public unsafe partial class vtkTextActor : vtkTexturedActor2D
@@ -35,6 +34,9 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
     /// Instantiate object with a rectangle in normaled view coordinates
     /// of (0.2,0.85, 0.8, 0.95).
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTextActor New() => new(vtkTextActor_New(), ownsReference: true);
     public new static vtkTextActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTextActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -49,6 +51,9 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
     /// <summary>
     /// Set/Get the text property.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkTextProperty GetTextProperty()
     {
         return vtkTextProperty.FromBorrowedPointer(vtkTextActor_GetTextProperty(this.NativePointer));

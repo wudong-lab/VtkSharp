@@ -20,6 +20,9 @@ public unsafe partial class vtkIdList : vtkObject
     /// <summary>
     /// Standard methods for instantiation, type information, and printing.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkIdList New() => new(vtkIdList_New(), ownsReference: true);
     public new static vtkIdList FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkIdList TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

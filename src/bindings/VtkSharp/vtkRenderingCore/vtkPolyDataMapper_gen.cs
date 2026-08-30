@@ -18,6 +18,9 @@ namespace VtkSharp;
 public unsafe partial class vtkPolyDataMapper : vtkMapper
 {
     protected vtkPolyDataMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkPolyDataMapper New() => new(vtkPolyDataMapper_New(), ownsReference: true);
     public new static vtkPolyDataMapper FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkPolyDataMapper TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

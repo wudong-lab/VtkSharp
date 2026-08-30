@@ -19,6 +19,9 @@ namespace VtkSharp;
 public unsafe partial class vtkImageWriter : vtkImageAlgorithm
 {
     protected vtkImageWriter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageWriter New() => new(vtkImageWriter_New(), ownsReference: true);
     public new static vtkImageWriter FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageWriter TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -50,6 +53,9 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
     /// a FileName or a FilePrefix. Use FilePrefix if the data is stored
     /// in multiple files.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetFileName()
     {
         return VtkString.FromUtf8Pointer(vtkImageWriter_GetFileName(this.NativePointer));
@@ -58,6 +64,9 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
     /// <summary>
     /// The std::format or printf style format used to build filename from FilePrefix and number.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetFilePattern()
     {
         return VtkString.FromUtf8Pointer(vtkImageWriter_GetFilePattern(this.NativePointer));
@@ -68,6 +77,9 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
     /// a FileName or FilePrefix. Use FilePrefix if the data is stored
     /// in multiple files.
     /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
     public new string GetFilePrefix()
     {
         return VtkString.FromUtf8Pointer(vtkImageWriter_GetFilePrefix(this.NativePointer));

@@ -108,6 +108,56 @@ public sealed class DocumentationTests : IDisposable
     }
 
     [Fact]
+    public void Inspect_MapsStructuredMacroAndOverloadCommentsToManagedParameters()
+    {
+        File.WriteAllText(Path.Combine(this._directory, "vtkThing.h"), """
+            #define ValueMacro() void SetValue(double value); double GetValue();
+            class vtkThing {
+            public:
+                ///@{
+                /** Value access.
+                 * @param value The scalar value.
+                 * @return The current value.
+                 */
+                ValueMacro();
+                ///@}
+                /** Integer value.
+                 * @param value Integer coordinate.
+                 */
+                void SetValue(int value);
+                /** Vector value.
+                 * @param values Coordinates.
+                 */
+                void SetVector(const double values[3]);
+            };
+            """);
+        var inspected = new VtkClassInspector().InspectHeader(this._directory, "vtkThing.h", "vtkThing");
+        var functions = inspected.Functions.Select(f => new WhitelistFunction
+        {
+            Name = f.Name, Return = new() { Type = f.ReturnType },
+            Parameters = f.Parameters.Select(p => new WhitelistParameter { Type = p.Type, Name = "renamed" }).ToList(),
+        }).ToList();
+        foreach (var function in functions)
+        {
+            var source = inspected.Functions.Single(f => f.Name == function.Name &&
+                f.Parameters.Select(p => p.Type).SequenceEqual(function.Parameters.Select(p => p.Type)));
+            var doc = BindingDocumentation.ForMethod(function, source);
+            if (function.Name == "GetValue")
+            {
+                Assert.Null(doc.Parameters);
+                Assert.Equal("The current value.", doc.Returns);
+            }
+            else
+            {
+                Assert.Null(doc.Returns);
+                Assert.Equal("renamed", Assert.Single(doc.Parameters!).Name);
+                if (function.Name == "SetVector") Assert.Contains("3 elements", doc.Parameters![0].Text);
+                else Assert.Contains(function.Parameters[0].Type == "int" ? "Integer coordinate." : "The scalar value.", doc.Parameters![0].Text);
+            }
+        }
+    }
+
+    [Fact]
     public void Extract_DoesNotLeakAcrossDeclarationsOrLexicalBoundaries()
     {
         const string source = """"
@@ -239,13 +289,15 @@ public sealed class DocumentationTests : IDisposable
                 header: vtkThing.h
                 functions:
                   - name: Update
-                    cppSignature: void Update()
+                    cppSignature: int Update(int value)
                     return:
-                      type: void
-                    parameters: []
+                      type: int
+                    parameters:
+                      - type: int
+                        name: renamed
             """);
         var header = Path.Combine(this._directory, "vtkThing.h");
-        File.WriteAllText(header, "class vtkThing { public: /** Original. */ void Update(); };");
+        File.WriteAllText(header, "class vtkThing { public: /** Original.\n@param value Original parameter.\n@return Result.\n*/ int Update(int value); };");
         var full = Path.Combine(this._directory, "full");
         var incremental = Path.Combine(this._directory, "incremental");
         var generator = new BindingGenerationService();
@@ -256,10 +308,12 @@ public sealed class DocumentationTests : IDisposable
         const string relative = "bindings/VtkSharp/vtkCommonCore/vtkThing_gen.cs";
         Assert.Equal(File.ReadAllText(Path.Combine(full, relative)), File.ReadAllText(Path.Combine(incremental, relative)));
         Assert.Contains("/// Original.", File.ReadAllText(Path.Combine(full, relative)));
+        Assert.Contains("<param name=\"renamed\">", File.ReadAllText(Path.Combine(full, relative)));
+        Assert.Contains("<returns>", File.ReadAllText(Path.Combine(full, relative)));
         output.GetStringBuilder().Clear();
         Assert.Equal(0, generator.Generate(config, incremental, false, true, false, output, error));
         Assert.Contains("generated 0 class(es), reused 1 class(es)", output.ToString());
-        File.WriteAllText(header, "class vtkThing { public: /** Revised. */ void Update(); };");
+        File.WriteAllText(header, "class vtkThing { public: /** Original.\n@param value Revised.\n@return Result.\n*/ int Update(int value); };");
         Assert.Equal(0, generator.Generate(config, incremental, false, true, false, output, error));
         Assert.Contains("/// Revised.", File.ReadAllText(Path.Combine(incremental, relative)));
         Assert.Equal("", error.ToString());

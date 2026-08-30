@@ -17,19 +17,21 @@ namespace VtkSharp;
 /// use "SetOutputScalarType" method.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// As vtkImageCast only casts values without rescaling them, its use is not
 /// recommended. vtkImageShiftScale is the recommended way to change the type
 /// of an image data.
 /// </para>
 /// <para>
-/// @sa
-/// vtkImageThreshold vtkImageShiftScale
+/// See also: vtkImageThreshold vtkImageShiftScale
 /// </para>
 /// </remarks>
 public unsafe partial class vtkImageCast : vtkThreadedImageAlgorithm
 {
     protected vtkImageCast(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkImageCast New() => new(vtkImageCast_New(), ownsReference: true);
     public new static vtkImageCast FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkImageCast TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

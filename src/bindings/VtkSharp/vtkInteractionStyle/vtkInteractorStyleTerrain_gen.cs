@@ -39,8 +39,7 @@ namespace VtkSharp;
 /// markers that can be used to estimate/control position.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorObserver vtkInteractorStyle vtk3DWidget
+/// See also: vtkInteractorObserver vtkInteractorStyle vtk3DWidget
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
@@ -49,6 +48,9 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
     /// <summary>
     /// Instantiate the object.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleTerrain New() => new(vtkInteractorStyleTerrain_New(), ownsReference: true);
     public new static vtkInteractorStyleTerrain FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleTerrain TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -107,6 +109,9 @@ public unsafe partial class vtkInteractorStyleTerrain : vtkInteractorStyle
         vtkInteractorStyleTerrain_LatLongLinesOn(this.NativePointer);
     }
 
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkInteractorStyleTerrain NewInstance()
     {
         return vtkInteractorStyleTerrain.FromBorrowedPointer(vtkInteractorStyleTerrain_NewInstance(this.NativePointer));

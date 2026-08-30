@@ -23,7 +23,7 @@ namespace VtkSharp;
 /// to display coordinate values.
 /// </para>
 /// <para>
-/// @warning
+/// Warning:
 /// Please be aware that the axes and scale values are subject to perspective
 /// effects. The distances are computed in the focal plane of the camera.
 /// When there are large view angles (i.e., perspective projection), the
@@ -37,6 +37,9 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
     /// <summary>
     /// Instantiate the class.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkLegendScaleActor New() => new(vtkLegendScaleActor_New(), ownsReference: true);
     public new static vtkLegendScaleActor FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkLegendScaleActor TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -52,6 +55,9 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
     /// Return the property used for the right axis
     /// which should be the same as the other ones if set using `SetAxesProperty`
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkProperty2D GetAxesProperty()
     {
         return vtkProperty2D.FromBorrowedPointer(vtkLegendScaleActor_GetAxesProperty(this.NativePointer));
@@ -62,6 +68,9 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
     /// the four axes that form this representation. Users may retrieve and
     /// then modify these axes to control their appearance.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAxisActor2D GetBottomAxis()
     {
         return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetBottomAxis(this.NativePointer));
@@ -72,6 +81,9 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
     /// the four axes that form this representation. Users may retrieve and
     /// then modify these axes to control their appearance.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAxisActor2D GetLeftAxis()
     {
         return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetLeftAxis(this.NativePointer));
@@ -82,6 +94,9 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
     /// the four axes that form this representation. Users may retrieve and
     /// then modify these axes to control their appearance.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAxisActor2D GetRightAxis()
     {
         return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetRightAxis(this.NativePointer));
@@ -92,6 +107,9 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
     /// the four axes that form this representation. Users may retrieve and
     /// then modify these axes to control their appearance.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
     public new vtkAxisActor2D GetTopAxis()
     {
         return vtkAxisActor2D.FromBorrowedPointer(vtkLegendScaleActor_GetTopAxis(this.NativePointer));

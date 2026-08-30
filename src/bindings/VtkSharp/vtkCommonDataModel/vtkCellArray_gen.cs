@@ -31,35 +31,12 @@ namespace VtkSharp;
 /// internal arrays will appear as follows:
 /// </para>
 /// <para>
-/// ```
-/// Topology:
-/// ---------
-/// Cell 0: Triangle | point ids: {0, 1, 2}
-/// Cell 1: Triangle | point ids: {5, 7, 2}
-/// Cell 2: Quad     | point ids: {3, 4, 6, 7}
-/// Cell 3: Line     | point ids: {5, 8}
-/// </para>
-/// <para>
-/// vtkCellArray (current):
-/// -----------------------
-/// Offsets:      {0, 3, 6, 10, 12}
-/// Connectivity: {0, 1, 2, 5, 7, 2, 3, 4, 6, 7, 5, 8}
-/// ```
-/// </para>
-/// <para>
 /// While this class provides traversal methods (the legacy InitTraversal(),
 /// GetNextCell() methods, and the newer method GetCellAtId()) these are in
 /// general not thread-safe. Whenever possible it is preferable to use a
 /// local thread-safe, vtkCellArrayIterator object, which can be obtained via:
 /// </para>
 /// <para>
-/// ```
-/// auto iter = vtk::TakeSmartPointer(cellArray-&gt;NewIterator());
-/// for (iter-&gt;GoToFirstCell(); !iter-&gt;IsDoneWithTraversal(); iter-&gt;GoToNextCell())
-/// {
-/// // do work with iter
-/// }
-/// ```
 /// (Note however that depending on the type and structure of internal
 /// storage, a cell array iterator may be significantly slower than direct
 /// traversal over the cell array due to extra data copying. Factors of 3-4X
@@ -137,7 +114,7 @@ namespace VtkSharp;
 /// are NOT in vtkArrayDispatch::ConnectivityArrays.
 /// </para>
 /// <para>
-/// @sa vtkAbstractCellArray vtkStructuredCellArray vtkCellTypes vtkCellLinks
+/// See also: vtkAbstractCellArray vtkStructuredCellArray vtkCellTypes vtkCellLinks
 /// </para>
 /// </remarks>
 public unsafe partial class vtkCellArray : vtkAbstractCellArray
@@ -147,6 +124,9 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
     /// Standard methods for instantiation, type information, and
     /// printing.
     /// </summary>
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkCellArray New() => new(vtkCellArray_New(), ownsReference: true);
     public new static vtkCellArray FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkCellArray TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
@@ -199,6 +179,15 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
     /// Create a cell by specifying the number of points and an array of point
     /// id's.  Return the cell id of the cell.
     /// </summary>
+    /// <param name="npts" />
+    /// <param name="pts">
+    /// <para>
+    /// Input parameter.
+    /// </para>
+    /// <para>
+    /// The number of buffer elements is specified by npts.
+    /// </para>
+    /// </param>
     public new long InsertNextCell(long npts, ReadOnlySpan<long> pts)
     {
         fixed (long* ptsPtr = pts)

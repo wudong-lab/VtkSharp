@@ -16,13 +16,15 @@ namespace VtkSharp;
 /// texture coordinates, and the texture must be set with SetTexture().
 /// </para>
 /// <para>
-/// @sa
-/// vtkActor2D vtkProp vtkMapper2D vtkProperty2D
+/// See also: vtkActor2D vtkProp vtkMapper2D vtkProperty2D
 /// </para>
 /// </remarks>
 public unsafe partial class vtkTexturedActor2D : vtkActor2D
 {
     protected vtkTexturedActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkTexturedActor2D New() => new(vtkTexturedActor2D_New(), ownsReference: true);
     public new static vtkTexturedActor2D FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkTexturedActor2D TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);

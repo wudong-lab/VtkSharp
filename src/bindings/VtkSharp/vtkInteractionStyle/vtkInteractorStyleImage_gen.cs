@@ -51,14 +51,16 @@ namespace VtkSharp;
 /// Note that the renderer's actors are not moved; instead the camera is moved.
 /// </para>
 /// <para>
-/// @sa
-/// vtkInteractorStyle vtkInteractorStyleTrackballActor
+/// See also: vtkInteractorStyle vtkInteractorStyleTrackballActor
 /// vtkInteractorStyleJoystickCamera vtkInteractorStyleJoystickActor
 /// </para>
 /// </remarks>
 public unsafe partial class vtkInteractorStyleImage : vtkInteractorStyleTrackballCamera
 {
     protected vtkInteractorStyleImage(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <remarks>
+    /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
+    /// </remarks>
     public new static vtkInteractorStyleImage New() => new(vtkInteractorStyleImage_New(), ownsReference: true);
     public new static vtkInteractorStyleImage FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
     public new static vtkInteractorStyleImage TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
