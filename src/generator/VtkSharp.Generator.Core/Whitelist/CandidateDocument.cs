@@ -22,4 +22,5 @@ public sealed record CandidateRequirement
     public string Class { get; init; } = "";
     public string Header { get; init; } = "";
     public List<WhitelistFunction> Functions { get; init; } = [];
+    public List<EnumProperty>? EnumProperties { get; set; }
 }

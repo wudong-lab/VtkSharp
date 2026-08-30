@@ -17,7 +17,7 @@ public sealed class GeneratorRunContextFactory
 
         var documents = workspace.LoadWhitelist();
         var hierarchyResolver = workspace.LoadHierarchyResolver();
-        var inspector = new VtkClassInspector();
+        var inspector = new VtkClassInspector(documents.SelectMany(d => d.Classes).Where(c => c.EnumProperties is { Count: > 0 }).Select(c => c.Header));
         var inspectedClasses = new Dictionary<string, InspectedClass>(StringComparer.Ordinal);
         var diagnostics = new List<ValidationDiagnostic>();
 

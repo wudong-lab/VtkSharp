@@ -15,6 +15,7 @@
         "properties": {
           "name": { "type": "string" },
           "header": { "type": "string" },
+          "enumProperties": { "type": "array", "items": { "$ref": "vtksharp.enum-property.schema.json" } },
           "functions": {
             "type": "array",
             "items": {

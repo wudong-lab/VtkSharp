@@ -4,4 +4,12 @@
 
 VTKSHARP_API vtkInteractorStyleImage* vtkInteractorStyleImage_New() { return vtkInteractorStyleImage::New(); }
 
+VTKSHARP_API int vtkInteractorStyleImage_GetInteractionMode(vtkInteractorStyleImage* self) { return self->GetInteractionMode(); }
+
+VTKSHARP_API void vtkInteractorStyleImage_SetInteractionMode(vtkInteractorStyleImage* self, int _arg) { self->SetInteractionMode(_arg); }
+
+VTKSHARP_API void vtkInteractorStyleImage_SetInteractionModeToImage2D(vtkInteractorStyleImage* self) { self->SetInteractionModeToImage2D(); }
+
+VTKSHARP_API void vtkInteractorStyleImage_SetInteractionModeToImage3D(vtkInteractorStyleImage* self) { self->SetInteractionModeToImage3D(); }
+
 VTKSHARP_API void vtkInteractorStyleImage_SetInteractionModeToImageSlicing(vtkInteractorStyleImage* self) { self->SetInteractionModeToImageSlicing(); }

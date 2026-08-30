@@ -74,6 +74,27 @@ public unsafe partial class vtkArrowSource : vtkPolyDataAlgorithm
         return target;
     }
 
+    /// <summary>Named values for SetArrowOrigin/GetArrowOrigin. Unnamed native values are preserved.</summary>
+    public enum ArrowOrigin : int
+    {
+        /// <summary>Native: vtkArrowSource::ArrowOrigins::Center.</summary>
+        Center = 1,
+        /// <summary>Native: vtkArrowSource::ArrowOrigins::Default.</summary>
+        Default = 0,
+    }
+
+    /// <summary>
+    /// Sets and Gets the location used for orienting and scaling the arrow.
+    /// Default is set to Default.
+    /// </summary>
+    public new ArrowOrigin GetArrowOrigin() => (ArrowOrigin)vtkArrowSource_GetArrowOrigin(this.NativePointer);
+
+    /// <summary>
+    /// Sets and Gets the location used for orienting and scaling the arrow.
+    /// Default is set to Default.
+    /// </summary>
+    public new void SetArrowOrigin(ArrowOrigin _arg) => vtkArrowSource_SetArrowOrigin(this.NativePointer, (int)_arg);
+
     public new void SetArrowOriginToCenter()
     {
         vtkArrowSource_SetArrowOriginToCenter(this.NativePointer);
@@ -138,6 +159,12 @@ public unsafe partial class vtkArrowSource : vtkPolyDataAlgorithm
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkArrowSource_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkArrowSource_GetArrowOrigin(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkArrowSource_SetArrowOrigin(nint self, int _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetArrowOriginToCenter(nint self);

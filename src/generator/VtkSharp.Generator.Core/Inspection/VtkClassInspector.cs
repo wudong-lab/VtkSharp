@@ -7,6 +7,13 @@ namespace VtkSharp.Generator.Core.Inspection;
 
 public sealed class VtkClassInspector
 {
+    private readonly HashSet<string>? _enumHeaders;
+
+    public VtkClassInspector(IEnumerable<string>? enumHeaders = null)
+    {
+        this._enumHeaders = enumHeaders?.ToHashSet(StringComparer.OrdinalIgnoreCase);
+    }
+
     private readonly TypeCanonicalizer _canonicalizer = new();
     private readonly Dictionary<string, RawInspectedClass> _rawClassCache = new(StringComparer.Ordinal);
     private readonly Dictionary<string, InspectedClass> _classCache = new(StringComparer.Ordinal);
@@ -24,36 +31,60 @@ public sealed class VtkClassInspector
     public IReadOnlyDictionary<string, InspectedClass> InspectFile(string includeDirectory, string headerFileName)
     {
         var fullIncludeDir = Path.GetFullPath(includeDirectory);
-        var options = new CppParserOptions();
-        options.ConfigureForWindowsMsvc(CppTargetCpu.X86_64, CppVisualStudioVersion.VS2022);
-        options.IncludeFolders.Add(fullIncludeDir);
-        // VTK 9.7's vtkDataSetAttributesFieldList.h uses std::vector without
-        // including <vector>; real VTK translation units obtain it transitively.
-        options.AdditionalArguments.Add("-include");
-        options.AdditionalArguments.Add("vector");
-
+        var options = CreateParserOptions(fullIncludeDir);
+        var analyzeEnums = this._enumHeaders is null || this._enumHeaders.Contains(headerFileName);
+        options.ParseFunctionBodies = analyzeEnums;
         var headerPath = Path.Combine(fullIncludeDir, headerFileName);
         var compilation = CppParser.ParseFile(headerPath, options);
+        string? bodyError = null;
+        if (compilation.HasErrors)
+        {
+            bodyError = string.Join("; ", compilation.Diagnostics.Messages.Where(d => d.Type == CppLogMessageType.Error).Take(3));
+            // 方法体解析仅用于可选增强，失败不能阻断原有声明解析。
+            options.ParseFunctionBodies = false;
+            compilation = CppParser.ParseFile(headerPath, options);
+        }
         if (compilation.HasErrors)
             throw new InvalidOperationException(string.Join(Environment.NewLine, compilation.Diagnostics));
 
         var result = new Dictionary<string, InspectedClass>(StringComparer.Ordinal);
         foreach (var cppClass in compilation.Classes)
         {
-            if (!cppClass.Name.StartsWith("vtk", StringComparison.Ordinal))
-                continue;
-
+            if (!cppClass.Name.StartsWith("vtk", StringComparison.Ordinal)) continue;
             var cacheKey = CreateCacheKey(fullIncludeDir, headerFileName, cppClass.Name);
-            if (this._rawClassCache.ContainsKey(cacheKey))
-                continue;
-
+            if (this._rawClassCache.ContainsKey(cacheKey)) continue;
             var baseClassNames = GetCppBaseClassNames(cppClass);
             var rawClass = this.BuildRawClass(cppClass, baseClassNames, this._canonicalizer);
+            if (analyzeEnums && Path.GetFullPath(cppClass.SourceFile).Equals(headerPath, StringComparison.OrdinalIgnoreCase))
+            {
+                var enums = EnumPropertyInspector.Inspect(cppClass, options, headerPath);
+                if (bodyError is not null && enums.Diagnostics.Count > 0)
+                    enums.Diagnostics.Add($"{cppClass.Name}: optional body analysis unavailable: {bodyError}");
+                rawClass = rawClass with
+                {
+                    EnumProperties = enums.Properties, EnumDiagnostics = enums.Diagnostics,
+                    Functions = rawClass.Functions.Select(f => enums.Properties.FirstOrDefault(p => p.Getter == f.Name || p.Setter == f.Name) is { } property
+                        ? f with { IsSupported = true, SupportedEnumType = property.NativeType, DependencyTypes = [] } : f).ToList(),
+                };
+            }
             this._rawClassCache[cacheKey] = rawClass;
             result[cppClass.Name] = rawClass.ToInspectedClassWithBaseClassNames();
         }
-
         return result;
+    }
+
+    internal static CppParserOptions CreateParserOptions(string fullIncludeDir)
+    {
+        var options = new CppParserOptions();
+        options.ConfigureForWindowsMsvc(CppTargetCpu.X86_64, CppVisualStudioVersion.VS2022);
+        options.IncludeFolders.Add(fullIncludeDir);
+        options.AdditionalArguments.Add("-std=c++17");
+        // VTK 9.7's vtkDataSetAttributesFieldList.h uses std::vector without
+        // including <vector>; real VTK translation units obtain it transitively.
+        options.AdditionalArguments.Add("-include");
+        options.AdditionalArguments.Add("vector");
+
+        return options;
     }
 
     private InspectedClass BuildClass(
@@ -82,7 +113,8 @@ public sealed class VtkClassInspector
         var directBaseClassName = raw.BaseClassNames.FirstOrDefault();
         var result = new InspectedClass(className, raw.Functions, raw.HasStaticNew, directBaseClassName, GetClassDependencies(raw.Functions),
             Documentation: raw.Documentation, NewDocumentation: raw.NewDocumentation,
-            DeclaredMemberNames: raw.DeclaredMemberNames, HasMultipleBaseClasses: raw.BaseClassNames.Count > 1);
+            DeclaredMemberNames: raw.DeclaredMemberNames, HasMultipleBaseClasses: raw.BaseClassNames.Count > 1,
+            EnumProperties: raw.EnumProperties, EnumDiagnostics: raw.EnumDiagnostics);
         this._classCache[cacheKey] = result;
         return result;
     }

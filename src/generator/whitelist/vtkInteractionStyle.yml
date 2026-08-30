@@ -5,11 +5,52 @@ classes:
   - name: vtkInteractorStyleImage
     header: vtkInteractorStyleImage.h
     functions:
+      - name: GetInteractionMode
+        cppSignature: int GetInteractionMode()
+        return:
+          type: int
+        parameters: []
+      - name: SetInteractionMode
+        cppSignature: void SetInteractionMode(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetInteractionModeToImage2D
+        cppSignature: void SetInteractionModeToImage2D()
+        return:
+          type: void
+        parameters: []
+      - name: SetInteractionModeToImage3D
+        cppSignature: void SetInteractionModeToImage3D()
+        return:
+          type: void
+        parameters: []
       - name: SetInteractionModeToImageSlicing
         cppSignature: void SetInteractionModeToImageSlicing()
         return:
           type: void
         parameters: []
+    enumProperties:
+      - name: InteractionMode
+        nativeType: int
+        getter: GetInteractionMode
+        setter: SetInteractionMode
+        values:
+          - name: Image2D
+            nativeExpression: VTKIS_IMAGE2D
+            value: 2
+          - name: Image3D
+            nativeExpression: VTKIS_IMAGE3D
+            value: 3
+          - name: ImageSlicing
+            nativeExpression: VTKIS_IMAGE_SLICING
+            value: 4
+        convenienceMethods:
+          - SetInteractionModeToImage2D
+          - SetInteractionModeToImage3D
+          - SetInteractionModeToImageSlicing
   - name: vtkInteractorStyleJoystickCamera
     header: vtkInteractorStyleJoystickCamera.h
     functions: []

@@ -10,7 +10,7 @@ public sealed class CSharpBindingEmitter
     private readonly ExportNameGenerator _exportNameGenerator = new();
 
     public string Emit(string namespaceName, string className, string baseClassName, bool hasStaticNew, IReadOnlyList<WhitelistFunction> functions,
-        InspectedClass? inspectedClass = null, TextWriter? documentationWarnings = null)
+        InspectedClass? inspectedClass = null, TextWriter? documentationWarnings = null, IReadOnlyList<EnumProperty>? enumProperties = null)
     {
         var sb = new StringBuilder();
         var exportNames = this.CreateExportNames(className, functions);
@@ -47,6 +47,20 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine("    }");
         sb.AppendLine();
 
+        foreach (var property in enumProperties ?? [])
+        {
+            sb.AppendLine($"    /// <summary>Named values for {property.Setter}/{property.Getter}. Unnamed native values are preserved.</summary>");
+            sb.AppendLine($"    public enum {EscapeIdentifier(property.Name)} : int");
+            sb.AppendLine("    {");
+            foreach (var value in property.Values)
+            {
+                sb.AppendLine($"        /// <summary>Native: {System.Security.SecurityElement.Escape(value.NativeExpression)}.</summary>");
+                sb.AppendLine($"        {EscapeIdentifier(value.Name)} = {value.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)},");
+            }
+            sb.AppendLine("    }");
+            sb.AppendLine();
+        }
+
         foreach (var function in functions)
         {
             // 与白名单校验使用同一签名匹配规则，不依赖参数名或 overload 顺序。
@@ -56,7 +70,16 @@ public sealed class CSharpBindingEmitter
             var documentation = BindingDocumentation.ForMethod(function, matches is { Count: 1 } ? matches[0] : null,
                 message => documentationWarnings?.WriteLine($"Documentation warning: {className}.{function.Name}: {message}"));
             XmlDocumentationEmitter.Emit(sb, documentation, "    ");
-            this.EmitPublicMethod(sb, className, function, exportNames[function]);
+            var enumProperty = enumProperties?.FirstOrDefault(p => p.Getter == function.Name || p.Setter == function.Name);
+            if (enumProperty is null)
+                this.EmitPublicMethod(sb, className, function, exportNames[function]);
+            else if (function.Name == enumProperty.Getter)
+                sb.AppendLine($"    public new {EscapeIdentifier(enumProperty.Name)} {function.Name}() => ({EscapeIdentifier(enumProperty.Name)}){exportNames[function]}(this.NativePointer);");
+            else
+            {
+                var parameter = EscapeIdentifier(function.Parameters[0].Name);
+                sb.AppendLine($"    public new void {function.Name}({EscapeIdentifier(enumProperty.Name)} {parameter}) => {exportNames[function]}(this.NativePointer, (int){parameter});");
+            }
             sb.AppendLine();
         }
 
@@ -70,7 +93,8 @@ public sealed class CSharpBindingEmitter
         {
             if (hasStaticNew || function != functions[0])
                 sb.AppendLine();
-            EmitInteropMethod(sb, className, function, exportNames[function]);
+            var enumProperty = enumProperties?.FirstOrDefault(p => p.Getter == function.Name || p.Setter == function.Name);
+            EmitInteropMethod(sb, className, enumProperty?.ToAbiFunction(function) ?? function, exportNames[function]);
         }
         sb.AppendLine("    #endregion");
         sb.AppendLine("}");

@@ -8,7 +8,8 @@ public sealed class CppExportEmitter
 {
     private readonly ExportNameGenerator _exportNameGenerator = new();
 
-    public string Emit(string className, IReadOnlyList<string> includeClassNames, bool hasStaticNew, IReadOnlyList<WhitelistFunction> functions)
+    public string Emit(string className, IReadOnlyList<string> includeClassNames, bool hasStaticNew, IReadOnlyList<WhitelistFunction> functions,
+        IReadOnlyList<EnumProperty>? enumProperties = null)
     {
         var sb = new StringBuilder();
         var exportNames = this.CreateExportNames(className, functions);
@@ -40,7 +41,13 @@ public sealed class CppExportEmitter
         {
             if (hasStaticNew || function != functions[0])
                 sb.AppendLine();
-            EmitFunction(sb, className, function, exportNames[function]);
+            var enumProperty = enumProperties?.FirstOrDefault(p => p.NativeType != "int" && (p.Getter == function.Name || p.Setter == function.Name));
+            if (enumProperty is null)
+                EmitFunction(sb, className, function, exportNames[function]);
+            else if (function.Name == enumProperty.Getter)
+                sb.AppendLine($"VTKSHARP_API int {exportNames[function]}({className}* self) {{ return static_cast<int>(self->{function.Name}()); }}");
+            else
+                sb.AppendLine($"VTKSHARP_API void {exportNames[function]}({className}* self, int value) {{ self->{function.Name}(static_cast<{enumProperty.NativeType}>(value)); }}");
         }
         return sb.ToString();
     }

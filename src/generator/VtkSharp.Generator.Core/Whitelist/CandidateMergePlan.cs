@@ -13,6 +13,7 @@ public sealed record CandidateMergePlan(
     IReadOnlyList<string> Unchanged,
     IReadOnlyList<string> Conflicts)
 {
+    public IReadOnlyList<string> AddedEnums { get; init; } = [];
     public static CandidateMergePlan Build(
         IReadOnlyList<WhitelistDocument> formal,
         CandidateDocument candidate,
@@ -29,6 +30,7 @@ public sealed record CandidateMergePlan(
         var added = new SortedSet<string>(StringComparer.Ordinal);
         var unchanged = new SortedSet<string>(StringComparer.Ordinal);
         var conflicts = new SortedSet<string>(StringComparer.Ordinal);
+        var addedEnums = new SortedSet<string>(StringComparer.Ordinal);
 
         foreach (var requirement in candidate.Requirements)
         {
@@ -62,6 +64,18 @@ public sealed record CandidateMergePlan(
                 document.Classes.Add(whitelistClass);
                 classes.Add(requirement.Class, (requirement.Module, whitelistClass));
             }
+            foreach (var property in requirement.EnumProperties ?? [])
+            {
+                whitelistClass.EnumProperties ??= [];
+                var existingProperty = whitelistClass.EnumProperties.FirstOrDefault(p => p.Name == property.Name);
+                if (existingProperty is null)
+                {
+                    whitelistClass.EnumProperties.Add(property);
+                    addedEnums.Add(requirement.Class + "." + property.Name);
+                }
+                else if (!existingProperty.SameContract(property))
+                    conflicts.Add($"{requirement.Class}.{property.Name}: enum contract changed; existing contract will not be overwritten.");
+            }
             foreach (var function in requirement.Functions)
             {
                 var id = FunctionId(requirement.Class, function);
@@ -92,7 +106,7 @@ public sealed record CandidateMergePlan(
         var addedClasses = normalized.SelectMany(document => document.Classes
             .Where(item => !originalClasses.Contains(item.Name))
             .Select(item => new AddedCandidateClass(document.Module, item.Name, Reasons(item.Name)))).ToList();
-        return new(normalized, addedClasses, added.ToList(), unchanged.ToList(), conflicts.ToList());
+        return new(normalized, addedClasses, added.ToList(), unchanged.ToList(), conflicts.ToList()) { AddedEnums = addedEnums.ToList() };
 
         IReadOnlyList<string> Reasons(string className)
         {

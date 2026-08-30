@@ -51,7 +51,7 @@ public sealed class BindingRequestPlanner
         File.WriteAllText(reportPath, JsonSerializer.Serialize(new
         {
             ok = !plan.HasUnresolved && merge.Conflicts.Count == 0,
-            diagnostics = plan.Diagnostics,
+            diagnostics = plan.Diagnostics, enumDiagnostics = plan.EnumDiagnostics, addedEnums = merge.AddedEnums,
             addedClasses = merge.AddedClasses, added = merge.Added, conflicts = merge.Conflicts,
         }, CandidateWhitelistService.JsonOptions));
         foreach (var group in plan.Diagnostics.GroupBy(item => item.Status).OrderBy(group => group.Key, StringComparer.Ordinal))
@@ -59,6 +59,8 @@ public sealed class BindingRequestPlanner
         foreach (var item in plan.Diagnostics.Where(item => item.Status is not ("ready" or "already-exported")))
             output.WriteLine($"  {item.Class}.{item.Request}: {item.Status} — {item.Reason}");
         foreach (var conflict in merge.Conflicts) output.WriteLine($"  conflict: {conflict}");
+        foreach (var diagnostic in plan.EnumDiagnostics) output.WriteLine(diagnostic);
+        foreach (var item in merge.AddedEnums) output.WriteLine($"Enum group: {item} (public get/set types change)");
         output.WriteLine($"Candidate: {Path.GetFullPath(outputPath)}");
         output.WriteLine($"Report: {Path.GetFullPath(reportPath)}");
         return plan.HasUnresolved || merge.Conflicts.Count > 0 ? 1 : 0;
@@ -120,7 +122,7 @@ public sealed class BindingRequestPlanner
             Status = "proposed", Source = requests.Source ?? new CandidateSource { Kind = "manual", Name = "plan-bindings" },
             Requirements = requirements.Values.OrderBy(item => item.Module, StringComparer.Ordinal).ThenBy(item => item.Class, StringComparer.Ordinal)
                 .Select(item => item with { Functions = item.Functions.OrderBy(function => CandidateMergePlan.FunctionId(item.Class, function), StringComparer.Ordinal).ToList() }).ToList(),
-        }, diagnostics);
+        }, diagnostics) { EnumDiagnostics = cache.Values.SelectMany(c => c.EnumDiagnostics ?? []).ToList() };
 
         InspectedClass? GetInspected(string className, string requestedClass)
         {
@@ -195,6 +197,9 @@ public sealed class BindingRequestPlanner
                             if (!item.Functions.Any(existing => CandidateMergePlan.FunctionId(current, existing) == id))
                                 item.Functions.Add(CandidateWhitelistService.ToWhitelistFunction(function));
                         }
+                        if (eligibility.Status is "ready" or "already-exported" &&
+                            inspected.EnumProperties?.Any(p => p.Methods.Contains(function.Name)) == true)
+                            EnumCandidateExpansion.Expand(AddClass(current), inspected, [function.Name]);
                     }
                     return;
                 }

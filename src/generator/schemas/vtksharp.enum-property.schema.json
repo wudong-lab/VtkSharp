@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VtkSharp enum property contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "nativeType", "getter", "setter", "values", "convenienceMethods"],
+  "properties": {
+    "name": { "type": "string", "pattern": "^[A-Za-z_][A-Za-z0-9_]*$" },
+    "nativeType": { "type": "string" },
+    "getter": { "type": "string" },
+    "setter": { "type": "string" },
+    "convenienceMethods": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+    "values": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["name", "nativeExpression", "value"],
+        "properties": {
+          "name": { "type": "string" },
+          "nativeExpression": { "type": "string" },
+          "value": { "type": "integer", "minimum": -2147483648, "maximum": 2147483647 }
+        }
+      }
+    }
+  }
+}

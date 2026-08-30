@@ -84,7 +84,10 @@ public sealed class ExportInventoryService
             {
                 var id = CreateFunctionId(declaringTypeName, function.ReturnType, function.Name, function.Parameters.Select(parameter => parameter.Type));
                 var signature = $"{declaringTypeName}::{function.CppSignature}";
-                var isExported = exportedIds.Contains(id);
+                var enumProperty = inspected.EnumProperties?.FirstOrDefault(p => p.Methods.Contains(function.Name));
+                var needsEnum = enumProperty is not null && !whitelist.SelectMany(d => d.Classes)
+                    .Any(c => c.Name == declaringTypeName && c.EnumProperties?.Any(p => p.Name == enumProperty.Name) == true);
+                var isExported = exportedIds.Contains(id) && !needsEnum;
                 var reason = GetUnsupportedReason(declaringTypeName, function, hiddenTypeNames);
                 var status = isExported
                     ? ExportStatus.AlreadyExported
@@ -104,7 +107,11 @@ public sealed class ExportInventoryService
                     Parameters: function.Parameters.Select(parameter => new ExportParameterCandidate(parameter.Type, parameter.Name)).ToList(),
                     Status: status,
                     CanSelectForExport: status == ExportStatus.AvailableToAdd,
-                    Reason: status == ExportStatus.AlreadyExported ? null : reason));
+                    Reason: status == ExportStatus.AlreadyExported ? null : reason ??
+                        (enumProperty is not null ? $"Enum group {declaringTypeName}.{enumProperty.Name}: selecting one adds the complete group." :
+                            string.Join(" ", inspected.EnumDiagnostics ?? [])),
+                    EnumProperty: enumProperty,
+                    EnumFunctions: enumProperty is null ? null : inspected.Functions.Where(f => enumProperty.Methods.Contains(f.Name)).ToList()));
             }
         }
 
@@ -119,6 +126,12 @@ public sealed class ExportInventoryService
     {
         var functions = selectedFunctions
             .Where(function => function.CanSelectForExport)
+            .SelectMany(function => function.EnumFunctions is null ? [function] : function.EnumFunctions.Select(f => function with
+            {
+                Id = CreateFunctionId(function.DeclaringTypeName, f.ReturnType, f.Name, f.Parameters.Select(p => p.Type)),
+                FunctionName = f.Name, ReturnType = f.ReturnType, Signature = function.DeclaringTypeName + "::" + f.CppSignature,
+                Parameters = f.Parameters.Select(p => new ExportParameterCandidate(p.Type, p.Name)).ToList(),
+            }))
             .GroupBy(function => function.Id, StringComparer.Ordinal)
             .Select(group => group.First())
             .OrderBy(function => function.Module, StringComparer.Ordinal)
@@ -131,6 +144,8 @@ public sealed class ExportInventoryService
             .GroupBy(function => (function.Module, function.DeclaringTypeName))
             .Select(group => $"{group.Key.Module}/{group.Key.DeclaringTypeName}: +{group.Count()} function(s)")
             .ToList();
+        diagnostics.AddRange(functions.Where(f => f.EnumProperty is not null)
+            .Select(f => $"Enum group: {f.DeclaringTypeName}.{f.EnumProperty!.Name}; public get/set types change.").Distinct());
 
         return new ExportPlan(functions, diagnostics);
     }
@@ -141,6 +156,35 @@ public sealed class ExportInventoryService
             return;
 
         var workspace = GeneratorWorkspace.Load(configPath);
+        if (plan.Functions.Any(f => f.EnumProperty is not null))
+        {
+            var candidate = new CandidateDocument
+            {
+                Status = "proposed",
+                Requirements = plan.Functions.GroupBy(f => f.DeclaringTypeName).Select(group => new CandidateRequirement
+                {
+                    Class = group.Key, Module = group.First().Module, Header = group.First().Header,
+                    EnumProperties = group.Select(f => f.EnumProperty).OfType<EnumProperty>().DistinctBy(p => p.Name).ToList(),
+                    Functions = group.Select(f => new WhitelistFunction
+                    {
+                        Name = f.FunctionName, CppSignature = f.Signature[(f.DeclaringTypeName.Length + 2)..],
+                        Return = new WhitelistReturn { Type = f.ReturnType },
+                        Parameters = f.Parameters.Select(p => new WhitelistParameter { Type = p.Type, Name = p.Name }).ToList(),
+                    }).ToList(),
+                }).ToList(),
+            };
+            var merge = CandidateWhitelistService.Prepare(workspace, candidate);
+            if (merge.Conflicts.Count > 0) throw new InvalidOperationException(string.Join(Environment.NewLine, merge.Conflicts));
+            if (workspace.IncludeDirectory is null) throw new InvalidOperationException("Enum merge requires current VTK headers.");
+            var inspector = new VtkClassInspector(merge.Documents.SelectMany(d => d.Classes).Where(c => c.EnumProperties is { Count: > 0 }).Select(c => c.Header));
+            var inspected = merge.Documents.SelectMany(d => d.Classes).ToDictionary(c => c.Name,
+                c => inspector.InspectHeader(workspace.IncludeDirectory, c.Header, c.Name));
+            var diagnostics = merge.Documents.SelectMany(d => new VtkSharp.Generator.Core.Validation.WhitelistValidator()
+                .Validate(d, inspected, workspace.LoadHierarchyResolver()).Diagnostics).ToList();
+            if (diagnostics.Count > 0) throw new InvalidOperationException(string.Join(Environment.NewLine, diagnostics.Select(d => d.Message)));
+            new WhitelistWriter().WriteDirectory(workspace.WhitelistDirectory, merge.Documents);
+            return;
+        }
         var documents = workspace.LoadWhitelist().ToDictionary(document => document.Module, StringComparer.Ordinal);
         var exportedIds = BuildExportedIds(documents.Values.ToList());
 

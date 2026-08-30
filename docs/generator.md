@@ -83,7 +83,37 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings -
 
 `VtkSharp` 项目启用 XML documentation file 输出，NuGet 包包含各目标框架的 XML 文档及 `VTK-LICENSE.txt`。手写 API 的注释由人工维护，生成器不修改手写文件，也不将 `_Internal` 方法注释自动移植到公开的手写包装。无上游说明的 API 允许没有语义注释，暂不检查 CS1591。
 
-## 增量生成
+## 枚举型接口（首版）
+
+枚举识别是普通函数导出之上的可选增强。`inspect-class --format json` 提供 `EnumProperties` 和 `EnumDiagnostics`；每项记录托管枚举名称、原生类型、Get/Set、便捷设置方法，以及原生常量表达式与整数值的对应关系。示例移植应查询该映射，不按名称相似度或数值猜测。
+
+首版支持当前类直接声明、无重载的标量 Get/Set 对：
+
+- 原生 `int` 属性，并且至少两个便捷方法分别仅调用同一个 setter，传入可由 Clang 求值的命名常量或十进制整数字面量，且至少有两个不同值；只有一个 `ToDefault()` 不足以认定枚举语义。
+- public C++ 枚举、底层类型为 `int` 的 Get/Set 对。枚举成员值按原生声明保留，包括负值与同值别名；不根据数值自动添加 `[Flags]`，不虚构零值成员或有效输入范围。
+
+方法体使用 C++17 解析。便捷函数包含其他语句、条件编译、复杂实参、重载、继承契约的重写/隐藏/扩展、多继承或不可表示的常量时，整组不做枚举转换；各函数仍按原有签名支持规则独立导出。原本不支持的 C++ 类型不会被擅自改成 `int`。C++ 方法体解析失败时回退到声明解析，不阻断普通函数检查，并在枚举诊断中报告原因。
+
+`create-candidate`、`plan-bindings` 和 GUI 都按明确枚举组扩展选择：请求 getter、setter 或任一个便捷方法，会补齐组内方法和枚举契约。即使请求的方法已经导出，也会检查是否缺少关联接口。GUI 日志显示组扩展；diff 的 `addedEnums` 单独显示枚举契约新增及公开签名变化。候选及正式白名单的 `enumProperties` 保存已确认契约，原生 `cppSignature`、参数类型与返回类型保持不变。
+
+生成的托管接口形式为：
+
+```csharp
+style.SetInteractionMode(vtkInteractorStyleImage.InteractionMode.ImageSlicing);
+vtkInteractorStyleImage.InteractionMode mode = style.GetInteractionMode();
+```
+
+枚举声明嵌套于 VTK wrapper 内，不同类独立声明；不生成同义属性或公开 `int` 重载，原有 `SetXXXToYYY()` 保留。直接继承的接口及枚举通过基类使用，不在派生类重复声明。首版不生成子类扩展枚举及其托管适配。
+
+首版名称接受 ASCII 字母或下划线开头、其后为字母/数字/下划线。成员后缀为 `2D` 等不支持的标识符时，不自动加前缀或重命名，整组回退普通导出并报告原因；C# 保留关键字用 `@` 转义。枚举成员与枚举类型同名也视为冲突。
+
+P/Invoke 使用 `int`；原生签名本身为 C++ 枚举时，C ABI shim 显式执行整数与该原生枚举类型的转换。调用仍使用 `self->Method(...)`，保留 native 虚函数分派；不缓存属性值，不增加合法值检查或修改通知，不改变原生 setter 的行为。对于原生 int 接口，未命名值按数值透传。
+
+公开函数从 `int` 改成枚举属于托管 API 兼容性变更，需要重新编译调用方。头文件、native DLL 与托管程序集必须配套。已有枚举契约与当前头文件不一致、关联函数不完整时，校验失败，不静默退回 `int`；merge 不覆盖已有枚举契约。枚举类在增量生成中始终重新解析并校验，暂不复用缓存，以覆盖传递 include 中常量变化；普通类仍使用既有缓存。
+
+新增识别/契约测试位于 `EnumPropertyTests`，实际原生调用测试位于 `VtkEnumBindingsTests`。当前白名单以 `vtkInteractorStyleImage.InteractionMode` 和 `vtkArrowSource.ArrowOrigin` 分别覆盖整数宏与真正 C++ 枚举两种路径。
+
+## 增量生成行为
 
 `--incremental` 使用模块目录中的 `.vtksharp.generated.json` 清单按类复用已有输出。以下内容变化时会重新生成相应类型：
 

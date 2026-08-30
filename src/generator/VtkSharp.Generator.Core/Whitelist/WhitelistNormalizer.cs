@@ -53,6 +53,7 @@ public sealed class WhitelistNormalizer
         {
             Name = whitelistClass.Name,
             Header = whitelistClass.Header,
+            EnumProperties = whitelistClass.EnumProperties?.OrderBy(p => p.Name, StringComparer.Ordinal).ToList(),
             Functions = whitelistClass.Functions.Select(CloneFunction).ToList(),
         };
 
@@ -104,7 +105,9 @@ public sealed class WhitelistNormalizer
         Dictionary<string, (WhitelistDocument document, WhitelistClass whitelistClass)> classesByName,
         HashSet<string> manualClasses)
     {
-        foreach (var dependencyClassName in whitelistClass.Functions.SelectMany(GetDependencyClassNames).Distinct(StringComparer.Ordinal))
+        foreach (var dependencyClassName in whitelistClass.Functions
+                     .Select(f => whitelistClass.EnumProperties?.FirstOrDefault(p => p.Getter == f.Name || p.Setter == f.Name)?.ToAbiFunction(f) ?? f)
+                     .SelectMany(GetDependencyClassNames).Distinct(StringComparer.Ordinal))
         {
             AddClass(dependencyClassName, hierarchyEntries, documentsByModule, classesByName, manualClasses);
             AddBaseClassChain(dependencyClassName, hierarchyEntries, documentsByModule, classesByName, manualClasses);

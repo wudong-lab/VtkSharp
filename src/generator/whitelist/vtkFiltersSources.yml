@@ -5,6 +5,18 @@ classes:
   - name: vtkArrowSource
     header: vtkArrowSource.h
     functions:
+      - name: GetArrowOrigin
+        cppSignature: vtkArrowSource::ArrowOrigins GetArrowOrigin()
+        return:
+          type: vtkArrowSource::ArrowOrigins
+        parameters: []
+      - name: SetArrowOrigin
+        cppSignature: void SetArrowOrigin(vtkArrowSource::ArrowOrigins _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkArrowSource::ArrowOrigins
+            name: _arg
       - name: SetArrowOriginToCenter
         cppSignature: void SetArrowOriginToCenter()
         return:
@@ -57,6 +69,21 @@ classes:
         parameters:
           - type: int
             name: _arg
+    enumProperties:
+      - name: ArrowOrigin
+        nativeType: vtkArrowSource::ArrowOrigins
+        getter: GetArrowOrigin
+        setter: SetArrowOrigin
+        values:
+          - name: Center
+            nativeExpression: vtkArrowSource::ArrowOrigins::Center
+            value: 1
+          - name: Default
+            nativeExpression: vtkArrowSource::ArrowOrigins::Default
+            value: 0
+        convenienceMethods:
+          - SetArrowOriginToCenter
+          - SetArrowOriginToDefault
   - name: vtkConeSource
     header: vtkConeSource.h
     functions:

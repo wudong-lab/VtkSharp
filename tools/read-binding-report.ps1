@@ -31,6 +31,8 @@ foreach ($item in $report.addedClasses) {
     Write-Output "  + $($item.module)/$($item.class) [$($item.reasons -join ', ')]"
 }
 foreach ($item in $report.added) { Write-Output "  + $item" }
+foreach ($item in $report.addedEnums) { Write-Output "  + enum $item (public get/set types change)" }
+foreach ($item in $report.enumDiagnostics) { Write-Output "  $item" }
 foreach ($item in $report.conflicts) { Write-Output "  conflict: $item" }
 foreach ($item in $report.diagnostics | Where-Object { $_.status -notin @("ready", "already-exported") }) {
     Write-Output "  $($item.class).$($item.request): $($item.status) - $($item.reason)"

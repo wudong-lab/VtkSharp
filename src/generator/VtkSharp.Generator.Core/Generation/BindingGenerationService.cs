@@ -7,7 +7,7 @@ namespace VtkSharp.Generator.Core.Generation;
 
 public sealed class BindingGenerationService
 {
-    public const string IncrementalCacheVersion = "2026-08-30.documentation-v3";
+    public const string IncrementalCacheVersion = "2026-08-30.enum-properties-v1";
 
     public int Generate(string configPath, string outputRoot, bool continueOnError, bool incremental, bool force, TextWriter output, TextWriter error)
         => incremental
@@ -94,8 +94,8 @@ public sealed class BindingGenerationService
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
 
-                WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error));
-                WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions));
+                WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties));
+                WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions, whitelistClass.EnumProperties));
             }
         }
 
@@ -124,7 +124,7 @@ public sealed class BindingGenerationService
         var config = workspace.Config;
         var documents = workspace.LoadWhitelist();
         var hierarchyResolver = workspace.LoadHierarchyResolver();
-        var inspector = new VtkClassInspector();
+        var inspector = new VtkClassInspector(documents.SelectMany(d => d.Classes).Where(c => c.EnumProperties is { Count: > 0 }).Select(c => c.Header));
         var validator = new WhitelistValidator();
         var csharpEmitter = new CSharpBindingEmitter();
         var cppEmitter = new CppExportEmitter();
@@ -164,9 +164,10 @@ public sealed class BindingGenerationService
                     whitelistClass.Header,
                     baseClassName,
                     GenerationInputFingerprint.HashFileText(headerPath),
-                    whitelistClass.Functions);
+                    whitelistClass.Functions, whitelistClass.EnumProperties);
 
-                if (!force && GeneratedManifestCache.TryGetReusableEntry(manifest, whitelistClass.Name, inputHash, managedPath, nativePath, out _))
+                // 枚举常量可能定义于传递 include；首版始终重新验证枚举类，避免漏掉跨头文件契约变化。
+                if (!force && whitelistClass.EnumProperties is not { Count: > 0 } && GeneratedManifestCache.TryGetReusableEntry(manifest, whitelistClass.Name, inputHash, managedPath, nativePath, out _))
                 {
                     skippedCount++;
                     continue;
@@ -209,8 +210,8 @@ public sealed class BindingGenerationService
                     .Where(name => name != whitelistClass.Name)
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
-                var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error);
-                var nativeContent = cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions);
+                var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties);
+                var nativeContent = cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions, whitelistClass.EnumProperties);
 
                 WriteText(managedPath, managedContent);
                 WriteText(nativePath, nativeContent);
@@ -278,6 +279,7 @@ public sealed class BindingGenerationService
         {
             foreach (var typeName in function.Parameters.Select(parameter => parameter.Type).Append(function.Return.Type))
             {
+                if (whitelistClass.EnumProperties?.Any(p => p.NativeType == typeName) == true) continue;
                 var className = TypeClassifier.ExtractVtkClassName(typeName);
                 if (className is not null)
                     yield return className;

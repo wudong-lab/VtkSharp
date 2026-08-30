@@ -12,4 +12,6 @@ public sealed record ExportFunctionCandidate(
     IReadOnlyList<ExportParameterCandidate> Parameters,
     ExportStatus Status,
     bool CanSelectForExport,
-    string? Reason);
+    string? Reason,
+    VtkSharp.Generator.Core.Whitelist.EnumProperty? EnumProperty = null,
+    IReadOnlyList<VtkSharp.Generator.Core.Inspection.InspectedFunction>? EnumFunctions = null);

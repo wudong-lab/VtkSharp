@@ -21,5 +21,6 @@ public sealed record BindingRequestDiagnostic(
 
 public sealed record BindingRequestPlan(CandidateDocument Candidate, IReadOnlyList<BindingRequestDiagnostic> Diagnostics)
 {
+    public IReadOnlyList<string> EnumDiagnostics { get; init; } = [];
     public bool HasUnresolved => Diagnostics.Any(item => item.Status is not ("ready" or "already-exported"));
 }

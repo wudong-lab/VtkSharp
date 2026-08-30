@@ -77,15 +77,19 @@ public sealed class CandidateWhitelistService
             error.WriteLine("No functions selected. Use --class-only explicitly to request an empty wrapper.");
             return 1;
         }
+        var requirement = new CandidateRequirement
+        {
+            Module = entry.Module, Class = className, Header = entry.Header,
+            Functions = functions.Select(ToWhitelistFunction).ToList(),
+        };
+        EnumCandidateExpansion.Expand(requirement, inspected);
+        foreach (var diagnostic in inspected.EnumDiagnostics ?? []) output.WriteLine(diagnostic);
+        foreach (var property in requirement.EnumProperties ?? []) output.WriteLine($"Enum group: {className}.{property.Name} [{string.Join(", ", property.Methods)}]");
         WriteCandidate(outputPath, new CandidateDocument
         {
             Status = "proposed",
             Source = new CandidateSource { Kind = sourceKind, Name = sourceName ?? "", Original = sourceOriginal ?? "" },
-            Requirements = [new CandidateRequirement
-            {
-                Module = entry.Module, Class = className, Header = entry.Header,
-                Functions = functions.Select(ToWhitelistFunction).ToList(),
-            }],
+            Requirements = [requirement],
         });
         output.WriteLine($"Candidate written to: {Path.GetFullPath(outputPath)}");
         return 0;
@@ -100,7 +104,7 @@ public sealed class CandidateWhitelistService
             WriteDiff(plan, "text", output, summary: true);
             return 1;
         }
-        if (plan.Added.Count == 0 && plan.AddedClasses.Count == 0)
+        if (plan.Added.Count == 0 && plan.AddedClasses.Count == 0 && plan.AddedEnums.Count == 0)
         {
             output.WriteLine("No new entries to merge.");
             return 0;
@@ -111,7 +115,7 @@ public sealed class CandidateWhitelistService
             return 1;
         }
         // 写入前校验完整合并结果，防止缺少互操作元数据的候选污染正式白名单。
-        var inspector = new VtkClassInspector();
+        var inspector = new VtkClassInspector(plan.Documents.SelectMany(d => d.Classes).Where(c => c.EnumProperties is { Count: > 0 }).Select(c => c.Header));
         var inspected = plan.Documents.SelectMany(document => document.Classes)
             .ToDictionary(item => item.Name, item => inspector.InspectHeader(workspace.IncludeDirectory, item.Header, item.Name), StringComparer.Ordinal);
         var resolver = workspace.LoadHierarchyResolver();
@@ -144,13 +148,14 @@ public sealed class CandidateWhitelistService
             {
                 addedClasses = plan.AddedClasses, added = plan.Added.Select(id => entries[id]),
                 unchanged = (summary ? [] : plan.Unchanged).Select(id => entries[id]), unchangedCount = plan.Unchanged.Count,
-                conflicts = plan.Conflicts,
+                conflicts = plan.Conflicts, addedEnums = plan.AddedEnums,
             }, JsonOptions));
             return;
         }
         output.WriteLine($"Added: {plan.AddedClasses.Count} class(es), {plan.Added.Count} function(s); already present: {plan.Unchanged.Count}; conflicts: {plan.Conflicts.Count}.");
         foreach (var item in plan.AddedClasses) output.WriteLine($"  + {item.Module}/{item.Class} [{string.Join(", ", item.Reasons)}]");
         foreach (var item in plan.Added) output.WriteLine($"  + {item}");
+        foreach (var item in plan.AddedEnums) output.WriteLine($"  + enum {item} (public get/set types change)");
         if (!summary) foreach (var item in plan.Unchanged) output.WriteLine($"    {item}");
         foreach (var conflict in plan.Conflicts) output.WriteLine($"  ! {conflict}");
     }

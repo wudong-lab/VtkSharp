@@ -12,4 +12,6 @@ public sealed record InspectedClass(
     ApiDocumentation? Documentation = null,
     ApiDocumentation? NewDocumentation = null,
     IReadOnlyList<string>? DeclaredMemberNames = null,
-    bool HasMultipleBaseClasses = false);
+    bool HasMultipleBaseClasses = false,
+    IReadOnlyList<VtkSharp.Generator.Core.Whitelist.EnumProperty>? EnumProperties = null,
+    IReadOnlyList<string>? EnumDiagnostics = null);

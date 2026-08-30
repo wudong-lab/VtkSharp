@@ -7,6 +7,14 @@
   "properties": {
     "status": { "type": "string", "enum": ["proposed"] },
     "source": { "type": "object" },
-    "requirements": { "type": "array" }
+    "requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "enumProperties": { "type": "array", "items": { "$ref": "vtksharp.enum-property.schema.json" } }
+        }
+      }
+    }
   }
 }

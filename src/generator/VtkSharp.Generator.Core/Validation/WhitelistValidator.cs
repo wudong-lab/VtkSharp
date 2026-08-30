@@ -32,6 +32,18 @@ public sealed class WhitelistValidator
                         $"Class '{whitelistClass.Name}' has header '{hierarchyHeader}' in hierarchy but whitelist declares '{whitelistClass.Header}'."));
             }
 
+            foreach (var property in whitelistClass.EnumProperties ?? [])
+            {
+                var current = inspectedClass.EnumProperties?.FirstOrDefault(p => p.Name == property.Name);
+                if (current is null || !current.SameContract(property))
+                    diagnostics.Add(new ValidationDiagnostic($"{whitelistClass.Name}.{property.Name}: enum contract cannot be verified against current headers; refusing to fall back to int."));
+                if (whitelistClass.EnumProperties!.Count(p => p.Name == property.Name) != 1)
+                    diagnostics.Add(new ValidationDiagnostic($"{whitelistClass.Name}.{property.Name}: duplicate enum contract."));
+                foreach (var method in property.Methods)
+                    if ((whitelistClass.Functions ?? []).Count(f => f.Name == method) != 1)
+                        diagnostics.Add(new ValidationDiagnostic($"{whitelistClass.Name}.{property.Name}: enum group requires exactly one '{method}' function."));
+            }
+
             foreach (var function in whitelistClass.Functions ?? [])
             {
                 var matches = inspectedClass.Functions
@@ -45,7 +57,8 @@ public sealed class WhitelistValidator
                 else if (matches.Count > 1)
                     diagnostics.Add(new ValidationDiagnostic($"Function '{whitelistClass.Name}.{function.Name}' matched multiple overloads."));
 
-                diagnostics.AddRange(ValidateTypes(whitelistClass.Name, function));
+                var enumProperty = whitelistClass.EnumProperties?.FirstOrDefault(p => p.Getter == function.Name || p.Setter == function.Name);
+                diagnostics.AddRange(ValidateTypes(whitelistClass.Name, enumProperty?.ToAbiFunction(function) ?? function));
             }
         }
 

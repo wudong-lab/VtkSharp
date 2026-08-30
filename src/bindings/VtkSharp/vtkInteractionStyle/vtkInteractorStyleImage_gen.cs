@@ -108,6 +108,55 @@ public unsafe partial class vtkInteractorStyleImage : vtkInteractorStyleTrackbal
         return target;
     }
 
+    /// <summary>Named values for SetInteractionMode/GetInteractionMode. Unnamed native values are preserved.</summary>
+    public enum InteractionMode : int
+    {
+        /// <summary>Native: VTKIS_IMAGE2D.</summary>
+        Image2D = 2,
+        /// <summary>Native: VTKIS_IMAGE3D.</summary>
+        Image3D = 3,
+        /// <summary>Native: VTKIS_IMAGE_SLICING.</summary>
+        ImageSlicing = 4,
+    }
+
+    /// <summary>
+    /// Set/Get current mode to 2D or 3D.  The default is 2D.  In 3D mode,
+    /// it is possible to rotate the camera to view oblique slices.  In Slicing
+    /// mode, it is possible to slice through the data, but not to generate oblique
+    /// views by rotating the camera.
+    /// </summary>
+    public new InteractionMode GetInteractionMode() => (InteractionMode)vtkInteractorStyleImage_GetInteractionMode(this.NativePointer);
+
+    /// <summary>
+    /// Set/Get current mode to 2D or 3D.  The default is 2D.  In 3D mode,
+    /// it is possible to rotate the camera to view oblique slices.  In Slicing
+    /// mode, it is possible to slice through the data, but not to generate oblique
+    /// views by rotating the camera.
+    /// </summary>
+    public new void SetInteractionMode(InteractionMode _arg) => vtkInteractorStyleImage_SetInteractionMode(this.NativePointer, (int)_arg);
+
+    /// <summary>
+    /// Set/Get current mode to 2D or 3D.  The default is 2D.  In 3D mode,
+    /// it is possible to rotate the camera to view oblique slices.  In Slicing
+    /// mode, it is possible to slice through the data, but not to generate oblique
+    /// views by rotating the camera.
+    /// </summary>
+    public new void SetInteractionModeToImage2D()
+    {
+        vtkInteractorStyleImage_SetInteractionModeToImage2D(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Set/Get current mode to 2D or 3D.  The default is 2D.  In 3D mode,
+    /// it is possible to rotate the camera to view oblique slices.  In Slicing
+    /// mode, it is possible to slice through the data, but not to generate oblique
+    /// views by rotating the camera.
+    /// </summary>
+    public new void SetInteractionModeToImage3D()
+    {
+        vtkInteractorStyleImage_SetInteractionModeToImage3D(this.NativePointer);
+    }
+
     /// <summary>
     /// Set/Get current mode to 2D or 3D.  The default is 2D.  In 3D mode,
     /// it is possible to rotate the camera to view oblique slices.  In Slicing
@@ -122,6 +171,18 @@ public unsafe partial class vtkInteractorStyleImage : vtkInteractorStyleTrackbal
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleImage_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkInteractorStyleImage_GetInteractionMode(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkInteractorStyleImage_SetInteractionMode(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkInteractorStyleImage_SetInteractionModeToImage2D(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkInteractorStyleImage_SetInteractionModeToImage3D(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkInteractorStyleImage_SetInteractionModeToImageSlicing(nint self);

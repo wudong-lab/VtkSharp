@@ -4,6 +4,10 @@
 
 VTKSHARP_API vtkArrowSource* vtkArrowSource_New() { return vtkArrowSource::New(); }
 
+VTKSHARP_API int vtkArrowSource_GetArrowOrigin(vtkArrowSource* self) { return static_cast<int>(self->GetArrowOrigin()); }
+
+VTKSHARP_API void vtkArrowSource_SetArrowOrigin(vtkArrowSource* self, int value) { self->SetArrowOrigin(static_cast<vtkArrowSource::ArrowOrigins>(value)); }
+
 VTKSHARP_API void vtkArrowSource_SetArrowOriginToCenter(vtkArrowSource* self) { self->SetArrowOriginToCenter(); }
 
 VTKSHARP_API void vtkArrowSource_SetArrowOriginToDefault(vtkArrowSource* self) { self->SetArrowOriginToDefault(); }

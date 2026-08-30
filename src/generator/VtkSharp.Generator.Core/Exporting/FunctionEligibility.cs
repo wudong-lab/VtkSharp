@@ -9,7 +9,7 @@ public sealed record FunctionEligibility(string Status, string? Reason = null)
     public static FunctionEligibility Evaluate(InspectedFunction function)
     {
         foreach (var type in function.Parameters.Select(parameter => parameter.Type).Append(function.ReturnType))
-            if (!WhitelistValidator.IsSupportedType(type))
+            if (!WhitelistValidator.IsSupportedType(type) && type != function.SupportedEnumType)
                 return new("unsupported", $"Unsupported type '{type}'.");
 
         foreach (var parameter in function.Parameters)

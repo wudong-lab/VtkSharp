@@ -8,4 +8,5 @@ public sealed record InspectedFunction(
     bool IsSupported,
     string? CanonicalSignature = null,
     IReadOnlyList<string>? DependencyTypes = null,
-    ApiDocumentation? Documentation = null);
+    ApiDocumentation? Documentation = null,
+    string? SupportedEnumType = null);
