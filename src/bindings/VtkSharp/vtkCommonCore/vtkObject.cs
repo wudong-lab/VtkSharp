@@ -14,7 +14,16 @@ public class vtkObject : vtkObjectBase
 
     protected vtkObject(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
 
+    /// <summary>Wraps a live native object without adding a reference or taking ownership.</summary>
+    /// <remarks>Dispose() does not release the borrowed reference. Keep the native object alive while using this wrapper.</remarks>
+    /// <param name="nativePointer">A non-null pointer to a live vtkObject.</param>
+    /// <returns>A wrapper that does not own a native reference.</returns>
     public static vtkObject FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+
+    /// <summary>Takes ownership of one existing native reference without incrementing the reference count.</summary>
+    /// <remarks>The caller transfers responsibility for releasing this reference to the wrapper; do not release it separately or transfer it twice. Call Dispose() when finished.</remarks>
+    /// <param name="nativePointer">A non-null pointer to a live vtkObject, with one owned reference to transfer.</param>
+    /// <returns>A wrapper that releases the transferred reference on Dispose().</returns>
     public static vtkObject TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
     public override void Delete()

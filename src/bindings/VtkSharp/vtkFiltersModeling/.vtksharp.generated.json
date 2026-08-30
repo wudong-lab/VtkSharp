@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v2",
+  "generatorVersion": "2026-08-30.documentation-v3",
   "module": "vtkFiltersModeling",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkFitToHeightMapFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "cf848e55cde3c2ec9148da21f092bf415b7c0b5dabef190f49e022b3b8c93ad7",
+      "inputHash": "41c5b25fe984956256c6b6ad7221e394dc7b7b4ff4eb9f10c08ebdc867f1fde7",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkFitToHeightMapFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkFitToHeightMapFilter_export_gen.cpp",
-      "managedContentHash": "80035ff76cc07bbdff83ec2a085b55877e1e3ab8823918d86e8192d529812538",
+      "managedContentHash": "ff6fa01ec23155bcb013dad956c1b175134db013c39363918ff2e60c04252c8d",
       "nativeContentHash": "aad7e5578911388014157a6851eebcf7a6ed7c0cd9a1a87171077488d25ef1b7"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkLinearExtrusionFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "1da5419f08c97a1da0c8fe24b15b14a07690370a9c9edd7c2b5fa55d4d6b0a7a",
+      "inputHash": "834c2842c96c620248ed7d7b262972baeb07e5bea5f9b7252c3380ade8f4b4c2",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkLinearExtrusionFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkLinearExtrusionFilter_export_gen.cpp",
-      "managedContentHash": "3b521f2868112f1d685974f33908510a1c7593ee5d4819e14e2212949cb54607",
+      "managedContentHash": "4c01ff437ccc381c4133ed3514bb766b3507785bb558dbf511ddeffa4ee0f7f2",
       "nativeContentHash": "bc069cafbb91f61389d65ea930e68ab4e55b74f7e3142c3a18c0a00681c6d900"
     }
   ]

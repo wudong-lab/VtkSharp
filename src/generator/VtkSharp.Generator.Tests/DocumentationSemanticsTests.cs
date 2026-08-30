@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using VtkSharp.Generator.Core.Generation;
 using VtkSharp.Generator.Core.Inspection;
@@ -9,6 +10,24 @@ namespace VtkSharp.Generator.Tests;
 
 public sealed class DocumentationSemanticsTests
 {
+    [Theory]
+    [InlineData("FromBorrowedPointer", "nativePointer", "without adding a reference", "does not release the borrowed reference")]
+    [InlineData("TakeReference", "nativePointer", "without incrementing the reference count", "do not release it separately or transfer it twice")]
+    [InlineData("Register", "sourceObject", "increments its reference count by one", "source wrapper's ownership is unchanged")]
+    public void Emit_StaticHelpersDocumentOwnershipAndRelease(string method, string parameter, string summary, string remarks)
+    {
+        var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkThing", "vtkObject", true, []);
+        var match = Regex.Match(text, @"(?<doc>(?:    ///[^\r\n]*\r?\n)+)    public new static vtkThing " + method + @"\(");
+        Assert.True(match.Success);
+        var xml = XElement.Parse("<doc>" + string.Join('\n', match.Groups["doc"].Value.Split('\n')
+            .Where(line => line.TrimStart().StartsWith("///", StringComparison.Ordinal)).Select(line => line.TrimStart()[3..])) + "</doc>");
+        Assert.Contains(summary, xml.Element("summary")!.Value);
+        Assert.Contains(remarks, xml.Element("remarks")!.Value);
+        Assert.Equal(parameter, xml.Element("param")!.Attribute("name")!.Value);
+        Assert.NotNull(xml.Element("returns"));
+        Assert.Contains("Dispose()", xml.Element("remarks")!.Value);
+    }
+
     [Theory]
     [InlineData("@")]
     [InlineData("\\")]

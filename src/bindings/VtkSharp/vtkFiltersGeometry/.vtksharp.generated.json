@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v2",
+  "generatorVersion": "2026-08-30.documentation-v3",
   "module": "vtkFiltersGeometry",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkImageDataGeometryFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "99dce5d66866c609b1d24328f6f96cda551855e709eafc924f95288e3eea42b6",
+      "inputHash": "f2e91f52f401e363d72dbb1756b98c207c1f389784784b9365e47b0e8967a745",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeometry\\vtkImageDataGeometryFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeometry\\vtkImageDataGeometryFilter_export_gen.cpp",
-      "managedContentHash": "fa2d041b955b06497dd6a90d3661280036345a75083b06a9869a49abf5f89f80",
+      "managedContentHash": "92b1850827c4c3fd551a45e99969fb99a6722c7ad46094c974b7813753e21a35",
       "nativeContentHash": "763ff4448b26cdd2430ee96c7651b675b415d3f29195f3664de29ec3b431802b"
     }
   ]

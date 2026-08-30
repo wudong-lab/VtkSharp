@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v2",
+  "generatorVersion": "2026-08-30.documentation-v3",
   "module": "vtkInteractionStyle",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkInteractorStyleImage.h",
       "baseClassName": "vtkInteractorStyleTrackballCamera",
       "hasStaticNew": true,
-      "inputHash": "cee76b83ef083f4abf1eaa8163c0ba2af8005d64749ddaaf3cf6315d6cf8e8ec",
+      "inputHash": "e96600c84752efd7bab69113b20deb1f1217511e3973dd344930195639dbfbb4",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleImage_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleImage_export_gen.cpp",
-      "managedContentHash": "5319c4b832bcc757df2a44e03fa074f3446ba639541cc313bd29f21ce2a66de1",
+      "managedContentHash": "4ebc6393dd447f7124e9a71adb479ec618704cddc01760181c19f76a2d758c67",
       "nativeContentHash": "88cd708a344e0d6ef63cad6512be62fc152cabca70938f1dca8505135fe2db55"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkInteractorStyleJoystickCamera.h",
       "baseClassName": "vtkInteractorStyle",
       "hasStaticNew": true,
-      "inputHash": "674458269a8b105b42d3ef8dcc98bc527aefbc7fb6c2a0e0849ca95a1982693f",
+      "inputHash": "9ea22d4cf1439cd876177604684a72aed745fda168fa257c28b106a7bc38a231",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleJoystickCamera_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleJoystickCamera_export_gen.cpp",
-      "managedContentHash": "3b7912944862c61700665516d44f0c6dc2c230ec9cb80333df0841e7d6be80dc",
+      "managedContentHash": "74cfb63715bcc0b09eb34ebda706b730268bb3afa9ad693e130263ab5e11511d",
       "nativeContentHash": "6ddc68bcb4c3ec52f3451376ef9c45cecda007b8c6f6b2e266a48f15f324e612"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkInteractorStyleRubberBand2D.h",
       "baseClassName": "vtkInteractorStyle",
       "hasStaticNew": true,
-      "inputHash": "2482e00ce5930010f0a8c5c28c85afafb52f75e8d623cddaffd970c6d39d410d",
+      "inputHash": "b47bb5b1f7aa135f6d57d0d73e2adcbbd18294c7eb6526958718d72cc4f25b61",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleRubberBand2D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleRubberBand2D_export_gen.cpp",
-      "managedContentHash": "7961db5fe68bbb12485f7467f77efc8a5884e2f7b19e74a2a1606e3144c9c730",
+      "managedContentHash": "ad1522b77479733c6472e1dfa241a6d003f49f3dcb660db10605b41a9bc2292f",
       "nativeContentHash": "c59bbed630cf9851b9088c8926e24ce83ffda9bd3b79641d41654d851391a906"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkInteractorStyleRubberBandPick.h",
       "baseClassName": "vtkInteractorStyleTrackballCamera",
       "hasStaticNew": true,
-      "inputHash": "99af75a93e5ea2b8fc1c1f6bb7e5fbab979e941afc83cdbc7aaacaea3b411064",
+      "inputHash": "853e69ade7dd0b1b7c68b47ba474dfd7602fc9457dcb6064ed6fc374ad5005d9",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleRubberBandPick_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleRubberBandPick_export_gen.cpp",
-      "managedContentHash": "d45c669aa6b6500db40d5fcc3ca506cf6b1aa104c218e23ba4da9f783c3ce315",
+      "managedContentHash": "2905f94416bf05c2ae2d3ebbad774d529808948eb0dd891362d5d3068587b566",
       "nativeContentHash": "d3f42555a2b6ab79b4f8b43732d0c0a24ed7ee85ad57f4bf348126a6efd58a15"
     },
     {
@@ -52,10 +52,10 @@
       "header": "vtkInteractorStyleRubberBandZoom.h",
       "baseClassName": "vtkInteractorStyle",
       "hasStaticNew": true,
-      "inputHash": "eb1d7eff274025cc3146d686a324506bd87df3b04e6884758efc411b899c8bb3",
+      "inputHash": "457591c4c98be7e36093d40a32d799ec4519a8912a1b073dffe8ffc0dada8fab",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleRubberBandZoom_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleRubberBandZoom_export_gen.cpp",
-      "managedContentHash": "bdfcd45959ab362114887c1d19eb802fd7a0d0c5b90b92bbdef591a892791fab",
+      "managedContentHash": "dc0c56c81ab3800595933ef49ee274a59fd6ce5ecf8ad3daea293a7fc146f722",
       "nativeContentHash": "98ae7c3afd93764c30b96522a960f17f954ba4a7f68d0e9d2155c962040c36dd"
     },
     {
@@ -63,10 +63,10 @@
       "header": "vtkInteractorStyleSwitch.h",
       "baseClassName": "vtkInteractorStyleSwitchBase",
       "hasStaticNew": true,
-      "inputHash": "5210444505266e08b19e0e221b8ee662be321fb292328f21bb0c0451ca7c7729",
+      "inputHash": "b2ca3558f503f617bfc9822bc5232ad67ce76f7b18a3986abb8fb486d45cbf5b",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleSwitch_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleSwitch_export_gen.cpp",
-      "managedContentHash": "7df61caaacd9ff4dc9ae73743f8cd14196627dc8c5e0f8d9c4d576bb59487f4b",
+      "managedContentHash": "bcd026dd64fc9703232b431ff887dc766333387e3f83dae362dad5aebe0d9d52",
       "nativeContentHash": "63d22fa350041818d565190931fd991d96a66a2c169c7696fe0d98b0421b1b57"
     },
     {
@@ -74,10 +74,10 @@
       "header": "vtkInteractorStyleTerrain.h",
       "baseClassName": "vtkInteractorStyle",
       "hasStaticNew": true,
-      "inputHash": "d8fe12c62e1d10f5195ca565f88476c1bd90681c3232a6404a48350d3496ebf2",
+      "inputHash": "32096db6d0a184471cd35bd44e282264f5422a41cc373d87795c02a3a23375f7",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleTerrain_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleTerrain_export_gen.cpp",
-      "managedContentHash": "8ef505160380d99758cf65c30377bd73df848233ee0e018928237b62d8a977fd",
+      "managedContentHash": "9f1343fa73cf1a4502ab3457888d97767cb002d5bb7459aac9574c770c3c0224",
       "nativeContentHash": "f1fc770af4f4ee9aab28b087810c2ea4cc374ff68838058e234dd8d8ffde1537"
     },
     {
@@ -85,10 +85,10 @@
       "header": "vtkInteractorStyleTrackballCamera.h",
       "baseClassName": "vtkInteractorStyle",
       "hasStaticNew": true,
-      "inputHash": "32a0336851937d73b72e826c37773de5d1422ae6332921595bda565aa3ead71e",
+      "inputHash": "586a0c57783060eeabda34bb8ed160a81d6f630a28b2a70629e06981939b10e5",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleTrackballCamera_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleTrackballCamera_export_gen.cpp",
-      "managedContentHash": "3a51f484e1afa58213d060aa024e18347405b9e0a8cba159d669b9b0cbca82c8",
+      "managedContentHash": "3697a5b155c1d86328956c5d2c6ec170e00d78975f2cb5a1d3f09a596f5a50d7",
       "nativeContentHash": "0b1a977a2b6a7785141d0c6bafe5b222f2f11f3626a47aaa97947dd24624f74d"
     }
   ]

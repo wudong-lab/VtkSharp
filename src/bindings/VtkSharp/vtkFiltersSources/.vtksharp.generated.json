@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v2",
+  "generatorVersion": "2026-08-30.documentation-v3",
   "module": "vtkFiltersSources",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkArrowSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "b8bf6f25108138f0da61c7227101cecbf26cd1376936bb9a2f1edb03e74bd814",
+      "inputHash": "86704b6e2b6fd1ab3f8cee111f1e539eb88e913caecb1724c1f5b8b9654bdc18",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkArrowSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkArrowSource_export_gen.cpp",
-      "managedContentHash": "6495aab139cc827911a136e9e7a7ad3fed27a8f67b6a2c592f6190337ce0b0dd",
+      "managedContentHash": "81217012fd03811546ce1a071093176670f2effd9f8ad895af9756634f083ce6",
       "nativeContentHash": "35ca101db183ab69de527605cb8482cf9efa9074cd94ccf55c2dc11b4fda6618"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkConeSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "d57bd53e92b8bfce8c152a8e1ded3ca37f1f25414f653a4ba669d442b4dc3b20",
+      "inputHash": "0e668a528aace39f4392372dddcb844b1a9fc21923afc6bfe868d0626b8e91a8",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkConeSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkConeSource_export_gen.cpp",
-      "managedContentHash": "36f68e7330da702671e506a59d20102c39f96c90f0dc7f80af1f2d8f2d1614ef",
+      "managedContentHash": "b4b64f3d418bfe5a645e577640a65984dc192582ed5fe989a611ca0735e66172",
       "nativeContentHash": "653f605b57ce45f98e2b24a9f3f75b17b1fdc0d04232a5f0afd77593ce0d9afe"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkCubeSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "17a2899aacb2ec302b273a6e9225910ac3af57cde13d4e3c06e75ac33a2d313f",
+      "inputHash": "eb912418e01a817f1fc88c97e029f12a7bd2f6647c2f806f1ccde72c59cf4d72",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkCubeSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkCubeSource_export_gen.cpp",
-      "managedContentHash": "58af2fe7454170db5da9f834764eac204f538fc0f923387f930406b0a895eb40",
+      "managedContentHash": "61157e7a1d4caf5281e0b906ac52ac1542cb077499c3e9e476aad99bed07765e",
       "nativeContentHash": "7df3a09a5904959676670e0a2cbec5ea23d51fd0037b70f27b0f3077ab224379"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkCylinderSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "37897e50411a368efa7217ff5220c78287647fcd3a773bb53f961cc8d098e8b7",
+      "inputHash": "81f8be2a3e746f45e365841006b1bcbb2cb4bfb96fffdcfbc7698336b7b46952",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkCylinderSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkCylinderSource_export_gen.cpp",
-      "managedContentHash": "36555681bd060c0b8289069c65b851c733aa208c9447ad155de85938a6571820",
+      "managedContentHash": "ceb7664e8d3ffe786dd1ff361239e61fced7fd62cb4a9f6a0a24ed3ac722b287",
       "nativeContentHash": "ef7b81a34d9a59cb3122d5e59b98493e6dc865da727c464663b4ec364d79d080"
     },
     {
@@ -52,10 +52,10 @@
       "header": "vtkLineSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "592e2c506aea321b0e7ea7883e463808cefe07310fcd45f7813d9d444f3162f1",
+      "inputHash": "d8d67c64a9aedb30954896811a908fd2eb6035b98a610ae659e940350fcff744",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkLineSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkLineSource_export_gen.cpp",
-      "managedContentHash": "1d7b85db967876c017711d7c2855ff95319060e420bd516378daddc61dfecd2c",
+      "managedContentHash": "fca69b0af48d83c47cad7572facfc374953a4b53ca4d5174e59fe8b3706165c2",
       "nativeContentHash": "47c7a3b9c652918c0cf0aef538a4e910cc5e425d136909218bc8d70a6b1990ac"
     },
     {
@@ -63,10 +63,10 @@
       "header": "vtkParametricFunctionSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "59132eee851c8e4a05e20b964a683d5d232ff2a3c39d59e505448555da20ccda",
+      "inputHash": "a8bc28fb3737915ebaceac6a46314cdad4d2443c9190561ee7beca1ccb11b24d",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkParametricFunctionSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkParametricFunctionSource_export_gen.cpp",
-      "managedContentHash": "917b430aecdfb52e6147be08598fb19c6be3ef0bec313e45287a62e2dd074e7e",
+      "managedContentHash": "b5e59a29a86366b7f803ab643959448b3dbb441acd1afd5a2d9a9bb28b541352",
       "nativeContentHash": "5e741e5effd49f0614e761575cdf3dd1cca07c5e87cb9d18269c5d22b3fd91f2"
     },
     {
@@ -74,10 +74,10 @@
       "header": "vtkPlaneSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "b2c42be53e50aff82dfeadb4be055a676c8c555e0e0cab1477a4b18546857348",
+      "inputHash": "adbf1d7ae8a58cd2dc54e540c39334a4cd6a8edf1d1b0b59cb7605593aa60167",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkPlaneSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkPlaneSource_export_gen.cpp",
-      "managedContentHash": "684e44cc78a2c8c5ba6be49acc2338de91c17af319b604085c1a3d10e4645b44",
+      "managedContentHash": "5ed5f47e5f5738c65d7fc44a6154276d6efd42ae977f1b8c248a5964feef4368",
       "nativeContentHash": "0cc595f9429b913d8b5b732f88bf1fb5c6b5315001b22a1faa5c51016b6e1b4c"
     },
     {
@@ -85,10 +85,10 @@
       "header": "vtkRegularPolygonSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "6a477a279b2580d7b8c47bc9fc30b9639d79ee27dda21e2e4abb3874788a3616",
+      "inputHash": "36c3d6e47916b75e9d243682061533546ed1cd0fbec8800af962c5fd03a6bcbd",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkRegularPolygonSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkRegularPolygonSource_export_gen.cpp",
-      "managedContentHash": "25ab829de19b42bdc692aab81d322155bf953ca48537963f61b8b675e94afc68",
+      "managedContentHash": "a9ca66c8cf852e3b1e0d09bd7540ba441890c71d511e86ef6050b90dad21a59c",
       "nativeContentHash": "04205cf1ebd5926cde96e03be0fb2883b5a77144dbecc7cb95733836b2d9f9e4"
     },
     {
@@ -96,10 +96,10 @@
       "header": "vtkSphereSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "398f92855a5a62e536ae8117693d88854f36af1f96e0e54dcfdb1417a6ee0aad",
+      "inputHash": "deb2062a0e31fa0e9562bccb570e1995b8294b8c97b25c0c7fcc636d367eaf4d",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkSphereSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkSphereSource_export_gen.cpp",
-      "managedContentHash": "11113427d585f20ec7627652b63ec7adc6a369e090d94cbd016f3fe4103d57bd",
+      "managedContentHash": "035d4ac4881af93aac360c6698d8a55d560f1a5e4a070e1eeacd86be1289dee5",
       "nativeContentHash": "7f12459fc8cff751ba12c7b58a496f41f749688c6ca848dff992866e7337997c"
     }
   ]

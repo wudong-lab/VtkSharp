@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v2",
+  "generatorVersion": "2026-08-30.documentation-v3",
   "module": "vtkFiltersGeneral",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkTransformPolyDataFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "87db8855785c62c3ed6c460216a2f22d47c5758a0a4276de4708922d715a08de",
+      "inputHash": "b2983b0f07a8b35622cd612da8fdfe1d65cd0d6d61512e87d9d15ec6dd0a2e64",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_export_gen.cpp",
-      "managedContentHash": "b49d7bc2beea5ea0eefd64beba2c01cd7937db9a012ffcd9a2925f3e01a53082",
+      "managedContentHash": "164a91217d1ef0d9326870ef42f157082d79c8771d604de91fbbced62ee90458",
       "nativeContentHash": "6a6be96e6eae5db799f836519695b74bfa709633e3043b5035519489d4642fa4"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkVertexGlyphFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "83921a445a57512450bdbf1a6e52b5615e23fc2215f2ca6fe4349b100acc61da",
+      "inputHash": "7343b05824f276ac151281ceb44df606759c9d9d0e9ef768dde6c1d3f92b8b5b",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkVertexGlyphFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkVertexGlyphFilter_export_gen.cpp",
-      "managedContentHash": "b63c7b64157e0ef3e4b68a27d559dbc6ff90a061ab2fc73d9e2e19db3eeae7b0",
+      "managedContentHash": "7e69e625aba9ecde362abd0fae8902d588c111ff5e796c28657b204576f68ee8",
       "nativeContentHash": "becd2ed5c4a7e64c383dcba6882ea7b0d36fe6a6219b0477e37f5fbdb2ef33eb"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkWarpScalar.h",
       "baseClassName": "vtkPointSetAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "c5ae3604152ccaf67fdd9ccef8b93f7e83fccea3dbf0db211f38af8ba35a35c1",
+      "inputHash": "81023b69aa1b7c2d52aff5554f65751c44baf68a093f9c9a25dce0f3a98ce4ee",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkWarpScalar_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkWarpScalar_export_gen.cpp",
-      "managedContentHash": "0ac43c17a7c092a8fd48beb7350d036e14a52071a4363a6322d751bc11aa2b7e",
+      "managedContentHash": "8ec84b7035888ed4f4d920f07b880a31e7fbf346884ff537f00454fad4589177",
       "nativeContentHash": "2469867f8a060cb12252e52eac55b9aece3c20a9a20238ba5eab2809d76c1277"
     }
   ]

@@ -14,6 +14,24 @@ internal static class BindingDocumentation
     public static ApiDocumentation ForNew(ApiDocumentation? source)
         => new(source?.Summary, Join(source?.Remarks, OwnedReference), Returns: source?.Returns);
 
+    public static ApiDocumentation FromBorrowedPointer { get; } = new(
+        "Wraps a live native object without adding a reference or taking ownership.",
+        "Dispose() does not release the borrowed reference. Keep the native object alive while using this wrapper.",
+        [new("nativePointer", "A non-null pointer to a live native object of the corresponding VTK type.")],
+        "A wrapper that does not own a native reference.");
+
+    public static ApiDocumentation TakeReference { get; } = new(
+        "Takes ownership of one existing native reference without incrementing the reference count.",
+        "The caller transfers responsibility for releasing this reference to the wrapper; do not release it separately or transfer it twice. Call Dispose() when finished.",
+        [new("nativePointer", "A non-null pointer to a live native object of the corresponding VTK type, with one owned reference to transfer.")],
+        "A wrapper that releases the transferred reference on Dispose().");
+
+    public static ApiDocumentation Register { get; } = new(
+        "Creates another wrapper for the same native object and increments its reference count by one.",
+        "The source wrapper's ownership is unchanged. Call Dispose() on the returned wrapper to release the additional reference. This does not copy the native object.",
+        [new("sourceObject", "A wrapper for a native object that is still alive.")],
+        "A wrapper that owns the additional native reference independently of the source wrapper.");
+
     public static ApiDocumentation ForMethod(WhitelistFunction function, InspectedFunction? inspected, Action<string>? warning = null)
     {
         var source = inspected?.Documentation;

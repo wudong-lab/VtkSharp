@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v2",
+  "generatorVersion": "2026-08-30.documentation-v3",
   "module": "vtkRenderingUI",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkGenericRenderWindowInteractor.h",
       "baseClassName": "vtkRenderWindowInteractor",
       "hasStaticNew": true,
-      "inputHash": "ab9df13f604bbf759aacc07a7d489731cbbdd9e28e081c9ad5fd69ac471d92c7",
+      "inputHash": "24ce649cc07cbdf496bba4381d38d3d85032163bf489089e0fb07d62ce99d9e7",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingUI\\vtkGenericRenderWindowInteractor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingUI\\vtkGenericRenderWindowInteractor_export_gen.cpp",
-      "managedContentHash": "9856c29c409cb7b298dd2fef0aacd13b40b36669ae7626d89e58fb9085179616",
+      "managedContentHash": "be1d7f3b3f3907977445adf82a95f0d0ac222f6e46076923cfdf67b3ce2d6dec",
       "nativeContentHash": "613242f4834afbc82cca3586a25b9ca6ea9e7e1a09e777c27e22d270d8e389be"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkWin32RenderWindowInteractor.h",
       "baseClassName": "vtkRenderWindowInteractor",
       "hasStaticNew": true,
-      "inputHash": "c97361020746c49af7f3b9bb7d9d98749a47132d6bab7a0695e8a35a534c495c",
+      "inputHash": "e14f89b28d971ae145a4aa56a6f3a6236bf44e436b692361d05ad8dc8a99d187",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingUI\\vtkWin32RenderWindowInteractor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingUI\\vtkWin32RenderWindowInteractor_export_gen.cpp",
-      "managedContentHash": "079089be0d810b2fbc5211f1c54715a00e7d646f4d8e307a7fb6124de3425788",
+      "managedContentHash": "7601c7f173546a17b4306c7b5a93c06654606cd97eac88c4d0ac89751bc9f8d4",
       "nativeContentHash": "97c74bc7a25087de7381da56420bb3705e0563ca32bfa6a99e93158d44ff1c5d"
     }
   ]

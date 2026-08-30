@@ -7,7 +7,7 @@ namespace VtkSharp.Generator.Core.Generation;
 
 public sealed class BindingGenerationService
 {
-    public const string IncrementalCacheVersion = "2026-08-30.documentation-v2";
+    public const string IncrementalCacheVersion = "2026-08-30.documentation-v3";
 
     public int Generate(string configPath, string outputRoot, bool continueOnError, bool incremental, bool force, TextWriter output, TextWriter error)
         => incremental

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v2",
+  "generatorVersion": "2026-08-30.documentation-v3",
   "module": "vtkCommonTransforms",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkAbstractTransform.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": false,
-      "inputHash": "fa6d74f47da27d2da7cd0e518437b197caed4b2fb9ef8978140163dd763561ac",
+      "inputHash": "ff8a1bc820a2c3efc9c66a1e3b807b5da8b72308a6291cb8163c7ea6484611f3",
       "managedPath": "bindings\\VtkSharp\\vtkCommonTransforms\\vtkAbstractTransform_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonTransforms\\vtkAbstractTransform_export_gen.cpp",
-      "managedContentHash": "5c3a623b2f7203aab74538cf570eec0490a2b865ddee8734064e8c120f37cebf",
+      "managedContentHash": "38bfa96299b09d44da7996b074e468de0c5c33d8707d4c92e112d4f9b66688f1",
       "nativeContentHash": "563dc97a96e4d78494d86800035c8be02551852f03f990a9b0242c2dc5b4d3be"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkHomogeneousTransform.h",
       "baseClassName": "vtkAbstractTransform",
       "hasStaticNew": false,
-      "inputHash": "42c8c075ad76b55c26207efab1b6abd5622e769f768dd4f5f9cee8ec18e01f7f",
+      "inputHash": "c784f7a96934fbaa2e3a09e8049b02a19abfc04604d2b6b695b3d53db1bffe2b",
       "managedPath": "bindings\\VtkSharp\\vtkCommonTransforms\\vtkHomogeneousTransform_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonTransforms\\vtkHomogeneousTransform_export_gen.cpp",
-      "managedContentHash": "4ae4a7e74e821679f67ca1fb0761162f34a33613e0870e9cee3507f55ac4b7ef",
+      "managedContentHash": "2c0883467820bd069c32a35f0ca641d672bfda801807502f9f2aa3bc20edfd91",
       "nativeContentHash": "19c3715ae8360e4bed787cc9ed992779113403416972a6bff3f1d629fc53df54"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkLinearTransform.h",
       "baseClassName": "vtkHomogeneousTransform",
       "hasStaticNew": false,
-      "inputHash": "d77c8e250858c57d815d512694e8803db1b25b0d74e4d359fb81263fd5254052",
+      "inputHash": "01d7aa5ff82ea328e8dc4a83392e4b9747707ee2456fb9ef5fe31acec1d95d2f",
       "managedPath": "bindings\\VtkSharp\\vtkCommonTransforms\\vtkLinearTransform_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonTransforms\\vtkLinearTransform_export_gen.cpp",
-      "managedContentHash": "e417cc1385b3e2c7daa7839b75a6520b9a66c40857493fd4639c7783f6e3b9f0",
+      "managedContentHash": "f9b0c7705946abd9e2afc13032fd667d427eb6e6097bd4fd9b63e72888d25453",
       "nativeContentHash": "9a81b356a9fe0903c4c6df7452e123c1da492169cbd7c1b8df7d4c98a78366bc"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkTransform.h",
       "baseClassName": "vtkLinearTransform",
       "hasStaticNew": true,
-      "inputHash": "9ca5746dae33f00a7385ff605a524dccb4bedcdf3cbbbdc295dea96738b35b49",
+      "inputHash": "11e6ea6cad81f6a4b64118fe1cde0c49c9b1d239beaafe65e79402d6f03e99b2",
       "managedPath": "bindings\\VtkSharp\\vtkCommonTransforms\\vtkTransform_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonTransforms\\vtkTransform_export_gen.cpp",
-      "managedContentHash": "d66c3c0163b8104304864fad4f1f7e48423b7709bfb0b007292d85ca63e26f91",
+      "managedContentHash": "6dacb48d0f7df59cd4bc6c4c65447e39cca0d29d9bd62fa355d830c51b04390d",
       "nativeContentHash": "e9e3d4f7e9cdbaaba7ff7fd96e21590504a80da97f4071eeb97373674a53ffec"
     }
   ]

@@ -33,9 +33,12 @@ public sealed class CSharpBindingEmitter
             sb.AppendLine($"    public new static {className} New() => new({className}_New(), ownsReference: true);");
         }
 
+        XmlDocumentationEmitter.Emit(sb, BindingDocumentation.FromBorrowedPointer, "    ");
         sb.AppendLine($"    public new static {className} FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);");
+        XmlDocumentationEmitter.Emit(sb, BindingDocumentation.TakeReference, "    ");
         sb.AppendLine($"    public new static {className} TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);");
         sb.AppendLine();
+        XmlDocumentationEmitter.Emit(sb, BindingDocumentation.Register, "    ");
         sb.AppendLine($"    public new static {className} Register({className} sourceObject)");
         sb.AppendLine("    {");
         sb.AppendLine($"        var target = new {className}(sourceObject.NativePointer, true);");

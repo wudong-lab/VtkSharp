@@ -35,9 +35,45 @@ namespace VtkSharp;
 public unsafe partial class vtkAbstractTransform : vtkObject
 {
     protected vtkAbstractTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
+    /// <summary>
+    /// Wraps a live native object without adding a reference or taking ownership.
+    /// </summary>
+    /// <remarks>
+    /// Dispose() does not release the borrowed reference. Keep the native object alive while using this wrapper.
+    /// </remarks>
+    /// <param name="nativePointer">
+    /// A non-null pointer to a live native object of the corresponding VTK type.
+    /// </param>
+    /// <returns>
+    /// A wrapper that does not own a native reference.
+    /// </returns>
     public new static vtkAbstractTransform FromBorrowedPointer(nint nativePointer) => new(nativePointer, ownsReference: false);
+    /// <summary>
+    /// Takes ownership of one existing native reference without incrementing the reference count.
+    /// </summary>
+    /// <remarks>
+    /// The caller transfers responsibility for releasing this reference to the wrapper; do not release it separately or transfer it twice. Call Dispose() when finished.
+    /// </remarks>
+    /// <param name="nativePointer">
+    /// A non-null pointer to a live native object of the corresponding VTK type, with one owned reference to transfer.
+    /// </param>
+    /// <returns>
+    /// A wrapper that releases the transferred reference on Dispose().
+    /// </returns>
     public new static vtkAbstractTransform TakeReference(nint nativePointer) => new(nativePointer, ownsReference: true);
 
+    /// <summary>
+    /// Creates another wrapper for the same native object and increments its reference count by one.
+    /// </summary>
+    /// <remarks>
+    /// The source wrapper's ownership is unchanged. Call Dispose() on the returned wrapper to release the additional reference. This does not copy the native object.
+    /// </remarks>
+    /// <param name="sourceObject">
+    /// A wrapper for a native object that is still alive.
+    /// </param>
+    /// <returns>
+    /// A wrapper that owns the additional native reference independently of the source wrapper.
+    /// </returns>
     public new static vtkAbstractTransform Register(vtkAbstractTransform sourceObject)
     {
         var target = new vtkAbstractTransform(sourceObject.NativePointer, true);
