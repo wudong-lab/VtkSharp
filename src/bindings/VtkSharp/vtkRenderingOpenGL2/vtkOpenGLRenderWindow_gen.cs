@@ -69,6 +69,14 @@ public unsafe partial class vtkOpenGLRenderWindow : vtkRenderWindow
     }
 
     /// <summary>
+    /// Set/Get the pixel data of an image, transmitted as RGBARGBA...
+    /// </summary>
+    public new int GetRGBAPixelData(int x, int y, int x2, int y2, int front, vtkFloatArray data, int right)
+    {
+        return vtkOpenGLRenderWindow_GetRGBAPixelData(this.NativePointer, x, y, x2, y2, front, data.NativePointer, right);
+    }
+
+    /// <summary>
     /// Handle opengl specific code and calls superclass
     /// </summary>
     public new void Render()
@@ -79,6 +87,9 @@ public unsafe partial class vtkOpenGLRenderWindow : vtkRenderWindow
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkOpenGLRenderWindow_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkOpenGLRenderWindow_GetRGBAPixelData(nint self, int x, int y, int x2, int y2, int front, nint data, int right);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkOpenGLRenderWindow_Render(nint self);

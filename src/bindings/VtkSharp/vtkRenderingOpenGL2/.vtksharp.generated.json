@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v3",
+  "generatorVersion": "2026-08-30.enum-properties-v1",
   "module": "vtkRenderingOpenGL2",
   "classes": [
     {
@@ -8,7 +8,7 @@
       "header": "vtkCameraPass.h",
       "baseClassName": "vtkRenderPass",
       "hasStaticNew": true,
-      "inputHash": "31477a3a342baa202d1423d50ebe383651f5ba7d2a3849530a360f16d265b320",
+      "inputHash": "8c9d37740bdc809fc682e19e41160cb438b27c58b322d88429e167c6e50e5a0e",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkCameraPass_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkCameraPass_export_gen.cpp",
       "managedContentHash": "13671b1d823e1c2f6b873ee6acbe40aca79b6ed60124487ed595f688b573f618",
@@ -19,7 +19,7 @@
       "header": "vtkOpenGLRenderPass.h",
       "baseClassName": "vtkRenderPass",
       "hasStaticNew": false,
-      "inputHash": "9da072096ba46e0be28e60e1e203a949c96bb24c9da05d90af11e7a9704ae49a",
+      "inputHash": "8b3520c5be202d181cdb6c5c33925f4c514e680f144537765304a171ddc5dac4",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkOpenGLRenderPass_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkOpenGLRenderPass_export_gen.cpp",
       "managedContentHash": "7e21b28f002b51251904ccf8a1f806602a87d5b4baadbf0bacb61d216edd27d8",
@@ -30,18 +30,18 @@
       "header": "vtkOpenGLRenderWindow.h",
       "baseClassName": "vtkRenderWindow",
       "hasStaticNew": true,
-      "inputHash": "fa685934ff58f8334068b1a446d64412ed729d541cc883a934f01ca26b169913",
+      "inputHash": "f4c7317150ef2c6c8d2319b11391151b4109ff22c3e522db29b1548c74761e56",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkOpenGLRenderWindow_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkOpenGLRenderWindow_export_gen.cpp",
-      "managedContentHash": "68956e1cbb232deb23db7b3bfe1dda772ceb6c400a765332f12db8706f66e9cf",
-      "nativeContentHash": "76d0db33abd36ead192abe88d0e86a256f26d394f42eb29beb773dc17ac29150"
+      "managedContentHash": "149517a906ae4b973d36633f9c018366b05bb1bdc6950ff550c7d5a73ec23104",
+      "nativeContentHash": "1bfd4a0467d14d829a66264fc7d40588cd8b925a6b5dfbfe5023e4c1ac723789"
     },
     {
       "className": "vtkRenderPassCollection",
       "header": "vtkRenderPassCollection.h",
       "baseClassName": "vtkCollection",
       "hasStaticNew": true,
-      "inputHash": "d1e672ba30a2b585d1447e62c3db91fd2f6eeb2d765bcb9147b9fa7066b34af8",
+      "inputHash": "77957d19ca53096717f21c983a4705c1086153d85928823cba510a03dfc1d488",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkRenderPassCollection_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkRenderPassCollection_export_gen.cpp",
       "managedContentHash": "26e072bcaf32a68ad77d9643a65abbbf680e4e0fb3412ca9793299e3d5976fc1",
@@ -52,7 +52,7 @@
       "header": "vtkSequencePass.h",
       "baseClassName": "vtkRenderPass",
       "hasStaticNew": true,
-      "inputHash": "59b49bea16ca8ca76bc8689bfc314ff485cb38e683161cb5f4ada4358dbc7e09",
+      "inputHash": "97f8917f9fbee738b7aed1ef4a1398aa1d77f2ce1c445923011a988ea856456e",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkSequencePass_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkSequencePass_export_gen.cpp",
       "managedContentHash": "a5b5dbbb235365c5f9f0d265f81a214a500ee0ca4022acfcdf2faa4a72d4c6ed",
@@ -63,7 +63,7 @@
       "header": "vtkValuePass.h",
       "baseClassName": "vtkOpenGLRenderPass",
       "hasStaticNew": true,
-      "inputHash": "97709fb01365fcbf28928fbf399ea80f4f293636c0e3d381a3e7f334f4d46db6",
+      "inputHash": "70f48daee56cd8eee6e2d20fcae67c10bef48f991a3da6f4b7933ace7b0745a2",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkValuePass_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkValuePass_export_gen.cpp",
       "managedContentHash": "d0ed4d4004b8b6fc408fb3dab7125b77cbb1272abb006835f72cd13e81fd13af",
@@ -74,11 +74,11 @@
       "header": "vtkWin32OpenGLRenderWindow.h",
       "baseClassName": "vtkOpenGLRenderWindow",
       "hasStaticNew": true,
-      "inputHash": "17d3fda91780940c34ad4e975ba06ed069761438ae57f5caf850cc8ce6863abd",
+      "inputHash": "2a42af9af9af0ec1487447ae57585f83fd6dbd6d58643dbd164709fd1a888830",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkWin32OpenGLRenderWindow_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkWin32OpenGLRenderWindow_export_gen.cpp",
-      "managedContentHash": "81679435c25996ca48a73d4eca30f4d0f3d5a14ce9fc5ca135e77e5e0cca10ca",
-      "nativeContentHash": "81a864d1dca313522564eb937a642a1d4b3b77044405fcaffc99d916d2d403d5"
+      "managedContentHash": "46d4c18541ae6d1d97eb59a5f8c8b95c0bdb1c3846e9ebe731fbce323e71ee00",
+      "nativeContentHash": "8b59568f5af9528bdea943c0c11321fceffc50c3024df898e25a9d067f4ba789"
     }
   ]
 }

@@ -18,6 +18,25 @@ classes:
   - name: vtkOpenGLRenderWindow
     header: vtkOpenGLRenderWindow.h
     functions:
+      - name: GetRGBAPixelData
+        cppSignature: int GetRGBAPixelData(int x, int y, int x2, int y2, int front, vtkFloatArray * data, int right)
+        return:
+          type: int
+        parameters:
+          - type: int
+            name: x
+          - type: int
+            name: y
+          - type: int
+            name: x2
+          - type: int
+            name: y2
+          - type: int
+            name: front
+          - type: vtkFloatArray*
+            name: data
+          - type: int
+            name: right
       - name: Render
         cppSignature: void Render()
         return:
@@ -88,6 +107,11 @@ classes:
   - name: vtkWin32OpenGLRenderWindow
     header: vtkWin32OpenGLRenderWindow.h
     functions:
+      - name: GetSize
+        cppSignature: int * GetSize()
+        return:
+          type: int*
+        parameters: []
       - name: GetWindowId
         cppSignature: HWND__ * GetWindowId()
         return:

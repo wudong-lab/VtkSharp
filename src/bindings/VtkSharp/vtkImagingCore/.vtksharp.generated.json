@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v3",
+  "generatorVersion": "2026-08-30.enum-properties-v1",
   "module": "vtkImagingCore",
   "classes": [
     {
@@ -8,7 +8,7 @@
       "header": "vtkImageCast.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "6c1d620b518bee8d85bdc7bace5756341483b0a3032e2889a434c243bf1e373f",
+      "inputHash": "21f618e6b6ef662fa4762750748abe72314b16a7e3c8013b433d7a047d6fd117",
       "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageCast_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageCast_export_gen.cpp",
       "managedContentHash": "4e9c9925dcb4f383c00338219a94b1cb7a0c6c4dd31ef871b4d7817533aa0ba2",
@@ -19,7 +19,7 @@
       "header": "vtkImageMapToColors.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "292bd29f5a1dd59ace965a22725c7fb78417616b4cdb47acd549867d6a63f23a",
+      "inputHash": "471f7b27a1c906c151995bc52b66a1103fcc1292cacbe3d0f303b9b23199c5e5",
       "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageMapToColors_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageMapToColors_export_gen.cpp",
       "managedContentHash": "a66cf656c297c9ca9a58ced3652aa1e874cf16e0b8e5edc43bda58028c614c3a",
@@ -30,7 +30,7 @@
       "header": "vtkImageShiftScale.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "a27cadd6540db4495c6a320b4b186c3592f930fcf463cfc32bfc0284f5cb07ec",
+      "inputHash": "d070a0ca9bcda1cadbd8956f304822fb07cc74df753ed3c7605a69083b8ce81a",
       "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageShiftScale_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageShiftScale_export_gen.cpp",
       "managedContentHash": "458671d04bbd66cfb969cec93b11dd50e850ad5496ea12d0a4c55db6bd9daddd",

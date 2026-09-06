@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.documentation-v3",
+  "generatorVersion": "2026-08-30.enum-properties-v1",
   "module": "vtkFiltersGeneral",
   "classes": [
     {
@@ -8,7 +8,7 @@
       "header": "vtkTransformPolyDataFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "b2983b0f07a8b35622cd612da8fdfe1d65cd0d6d61512e87d9d15ec6dd0a2e64",
+      "inputHash": "4db7e4b83b3578529c4862dca9d397cff6f227806c9bbd806a0f6bd93265374b",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_export_gen.cpp",
       "managedContentHash": "164a91217d1ef0d9326870ef42f157082d79c8771d604de91fbbced62ee90458",
@@ -19,7 +19,7 @@
       "header": "vtkVertexGlyphFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "7343b05824f276ac151281ceb44df606759c9d9d0e9ef768dde6c1d3f92b8b5b",
+      "inputHash": "d78ab9efaa2228cdcc535a1bc0f9ddeb187bd0556a6f2966b7f19a78b1c29833",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkVertexGlyphFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkVertexGlyphFilter_export_gen.cpp",
       "managedContentHash": "7e69e625aba9ecde362abd0fae8902d588c111ff5e796c28657b204576f68ee8",
@@ -30,7 +30,7 @@
       "header": "vtkWarpScalar.h",
       "baseClassName": "vtkPointSetAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "81023b69aa1b7c2d52aff5554f65751c44baf68a093f9c9a25dce0f3a98ce4ee",
+      "inputHash": "15c5d55a36993ba745057a16cde66fb46be88e3aa1a5f8f9bc6441ce183e22fd",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkWarpScalar_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkWarpScalar_export_gen.cpp",
       "managedContentHash": "8ec84b7035888ed4f4d920f07b880a31e7fbf346884ff537f00454fad4589177",

@@ -60,6 +60,15 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
     }
 
     /// <summary>
+    /// Get the size (width and height) of the rendering window in
+    /// screen coordinates (in pixels).
+    /// </summary>
+    internal new int* GetSize_Internal()
+    {
+        return vtkWin32OpenGLRenderWindow_GetSize(this.NativePointer);
+    }
+
+    /// <summary>
     /// Get the window id.
     /// </summary>
     public new nint GetWindowId()
@@ -91,6 +100,9 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32OpenGLRenderWindow_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int* vtkWin32OpenGLRenderWindow_GetSize(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32OpenGLRenderWindow_GetWindowId(nint self);

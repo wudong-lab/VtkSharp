@@ -6,6 +6,19 @@ namespace VtkSharp.Tests;
 public sealed class VtkImageColorMappingBindingsTests
 {
     [Fact]
+    public unsafe void FloatArray_GetPointer_ReturnsBorrowedValueBuffer()
+    {
+        using var values = vtkFloatArray.New();
+        values.InsertNextTuple1(1.25);
+        values.InsertNextTuple1(-2.5);
+
+        var pointer = values.GetPointer(0);
+
+        Assert.Equal(1.25f, pointer[0]);
+        Assert.Equal(-2.5f, pointer[1]);
+    }
+
+    [Fact]
     public void ImageData_RoundTripsOriginAndSpacing()
     {
         using var image = vtkImageData.New();

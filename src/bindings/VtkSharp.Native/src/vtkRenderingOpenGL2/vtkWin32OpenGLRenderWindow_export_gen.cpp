@@ -4,6 +4,8 @@
 
 VTKSHARP_API vtkWin32OpenGLRenderWindow* vtkWin32OpenGLRenderWindow_New() { return vtkWin32OpenGLRenderWindow::New(); }
 
+VTKSHARP_API int* vtkWin32OpenGLRenderWindow_GetSize(vtkWin32OpenGLRenderWindow* self) { return self->GetSize(); }
+
 VTKSHARP_API void* vtkWin32OpenGLRenderWindow_GetWindowId(vtkWin32OpenGLRenderWindow* self) { return self->GetWindowId(); }
 
 VTKSHARP_API void vtkWin32OpenGLRenderWindow_SetParentId(vtkWin32OpenGLRenderWindow* self, void* _arg1) { self->SetParentId(_arg1); }
