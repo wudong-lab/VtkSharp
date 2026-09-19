@@ -99,6 +99,14 @@ public unsafe partial class vtkColorSeries : vtkObject
     }
 
     /// <summary>
+    /// Adds the color to the end of the list.
+    /// </summary>
+    public new void AddColor(VtkColor3ub color)
+    {
+        vtkColorSeries_AddColor(this.NativePointer, color.R, color.G, color.B);
+    }
+
+    /// <summary>
     /// Populate a lookup table with all the colors in the current scheme.
     /// </summary>
     /// <remarks>
@@ -109,14 +117,6 @@ public unsafe partial class vtkColorSeries : vtkObject
     public new void BuildLookupTable(vtkLookupTable lkup, int lutIndexing)
     {
         vtkColorSeries_BuildLookupTable(this.NativePointer, lkup.NativePointer, lutIndexing);
-    }
-
-    /// <summary>
-    /// Adds the color to the end of the list.
-    /// </summary>
-    public new void AddColor(VtkColor3ub color)
-    {
-        vtkColorSeries_AddColor(this.NativePointer, color.R, color.G, color.B);
     }
 
     /// <summary>
@@ -157,14 +157,6 @@ public unsafe partial class vtkColorSeries : vtkObject
     }
 
     /// <summary>
-    /// Return the ID of the color scheme currently in use.
-    /// </summary>
-    public new int GetColorScheme()
-    {
-        return vtkColorSeries_GetColorScheme(this.NativePointer);
-    }
-
-    /// <summary>
     /// Get the color at the specified index. If the index is out of range then
     /// black will be returned.
     /// </summary>
@@ -193,6 +185,27 @@ public unsafe partial class vtkColorSeries : vtkObject
     }
 
     /// <summary>
+    /// Return the ID of the color scheme currently in use.
+    /// </summary>
+    public new int GetColorScheme()
+    {
+        return vtkColorSeries_GetColorScheme(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Get the color scheme that is currently being used.
+    /// </summary>
+    /// <remarks>
+    /// The result is copied to a managed string. The caller does not release native memory for this return value.
+    /// </remarks>
+    public new string GetColorSchemeName()
+    {
+        NativeUtf8String __outGetColorSchemeName;
+        vtkColorSeries_GetColorSchemeName(this.NativePointer, out __outGetColorSchemeName);
+        return VtkString.FromOwnedUtf8(ref __outGetColorSchemeName);
+    }
+
+    /// <summary>
     /// Return the number of schemes currently defined.
     /// </summary>
     public new int GetNumberOfColorSchemes()
@@ -209,19 +222,19 @@ public unsafe partial class vtkColorSeries : vtkObject
     }
 
     /// <summary>
-    /// Removes the color at the specified index in the list.
-    /// </summary>
-    public new void RemoveColor(int index)
-    {
-        vtkColorSeries_RemoveColor(this.NativePointer, index);
-    }
-
-    /// <summary>
     /// Inserts the color at the specified index in the list.
     /// </summary>
     public new void InsertColor(int index, VtkColor3ub color)
     {
         vtkColorSeries_InsertColor(this.NativePointer, index, color.R, color.G, color.B);
+    }
+
+    /// <summary>
+    /// Removes the color at the specified index in the list.
+    /// </summary>
+    public new void RemoveColor(int index)
+    {
+        vtkColorSeries_RemoveColor(this.NativePointer, index);
     }
 
     /// <summary>
@@ -243,19 +256,6 @@ public unsafe partial class vtkColorSeries : vtkObject
     public new void SetColorScheme(int scheme)
     {
         vtkColorSeries_SetColorScheme(this.NativePointer, scheme);
-    }
-
-    /// <summary>
-    /// Get the color scheme that is currently being used.
-    /// </summary>
-    /// <remarks>
-    /// The result is copied to a managed string. The caller does not release native memory for this return value.
-    /// </remarks>
-    public new string GetColorSchemeName()
-    {
-        NativeUtf8String __outGetColorSchemeName;
-        vtkColorSeries_GetColorSchemeName(this.NativePointer, out __outGetColorSchemeName);
-        return VtkString.FromOwnedUtf8(ref __outGetColorSchemeName);
     }
 
     /// <summary>
@@ -301,10 +301,10 @@ public unsafe partial class vtkColorSeries : vtkObject
     private static extern nint vtkColorSeries_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkColorSeries_BuildLookupTable(nint self, nint lkup, int lutIndexing);
+    private static extern void vtkColorSeries_AddColor(nint self, byte colorR, byte colorG, byte colorB);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkColorSeries_AddColor(nint self, byte colorR, byte colorG, byte colorB);
+    private static extern void vtkColorSeries_BuildLookupTable(nint self, nint lkup, int lutIndexing);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_ClearColors(nint self);
@@ -316,13 +316,16 @@ public unsafe partial class vtkColorSeries : vtkObject
     private static extern void vtkColorSeries_DeepCopy(nint self, nint chartColors);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern int vtkColorSeries_GetColorScheme(nint self);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_GetColor(nint self, int index, byte* __outGetColor);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_GetColorRepeating(nint self, int index, byte* __outGetColorRepeating);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkColorSeries_GetColorScheme(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkColorSeries_GetColorSchemeName(nint self, out NativeUtf8String __outGetColorSchemeName);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkColorSeries_GetNumberOfColorSchemes(nint self);
@@ -331,19 +334,16 @@ public unsafe partial class vtkColorSeries : vtkObject
     private static extern int vtkColorSeries_GetNumberOfColors(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkColorSeries_RemoveColor(nint self, int index);
+    private static extern void vtkColorSeries_InsertColor(nint self, int index, byte colorR, byte colorG, byte colorB);
 
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkColorSeries_InsertColor(nint self, int index, byte colorR, byte colorG, byte colorB);
+    private static extern void vtkColorSeries_RemoveColor(nint self, int index);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_SetColor(nint self, int index, byte colorR, byte colorG, byte colorB);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkColorSeries_SetColorScheme(nint self, int scheme);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkColorSeries_GetColorSchemeName(nint self, out NativeUtf8String __outGetColorSchemeName);
 
 #if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]

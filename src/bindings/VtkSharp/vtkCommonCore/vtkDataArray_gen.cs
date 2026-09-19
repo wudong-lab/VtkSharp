@@ -77,6 +77,25 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
     }
 
     /// <summary>
+    /// The range of the data array values will be returned in the provided
+    /// range array argument. If the data array has multiple components, then
+    /// this will return the range of only the first component (component zero).
+    /// The range is computend and then cached, and will not be re-computed on
+    /// subsequent calls to GetRange() unless the array is modified.
+    /// THIS METHOD IS NOT THREAD SAFE.
+    /// </summary>
+    /// <param name="range">
+    /// Buffer length: 2 elements.
+    /// </param>
+    public new void GetRange(Span<double> range)
+    {
+        fixed (double* rangePtr = range)
+        {
+            vtkDataArray_GetRange(this.NativePointer, rangePtr);
+        }
+    }
+
+    /// <summary>
     /// These methods are included as convenience for the wrappers.
     /// GetTuple() and SetTuple() which return/take arrays can not be
     /// used from wrapped languages. These methods can be used instead.
@@ -147,6 +166,9 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
     }
 
     #region Interop
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_GetRange(nint self, double* range);
+
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkDataArray_GetTuple1(nint self, long tupleIdx);
 

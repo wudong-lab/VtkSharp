@@ -37,6 +37,13 @@ classes:
   - name: vtkDataArray
     header: vtkDataArray.h
     functions:
+      - name: GetRange
+        cppSignature: void GetRange(double[2] range)
+        return:
+          type: void
+        parameters:
+          - type: double[2]
+            name: range
       - name: GetTuple1
         cppSignature: double GetTuple1(vtkIdType tupleIdx)
         return:
@@ -948,6 +955,13 @@ classes:
         return:
           type: void
         parameters: []
+      - name: SetCurrentCursor
+        cppSignature: void SetCurrentCursor(int _arg1)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg1
       - name: SetSize
         cppSignature: void SetSize(int width, int height)
         return:
@@ -964,13 +978,6 @@ classes:
         parameters:
           - type: int[2]
             name: a
-      - name: SetCurrentCursor
-        cppSignature: void SetCurrentCursor(int _arg1)
-        return:
-          type: void
-        parameters:
-          - type: int
-            name: _arg1
       - name: SetWindowName
         cppSignature: void SetWindowName(char const * _arg)
         return:

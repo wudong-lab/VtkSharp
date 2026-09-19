@@ -77,8 +77,21 @@ public unsafe partial class vtkDataSetAlgorithm : vtkAlgorithm
         return target;
     }
 
+    /// <summary>
+    /// Assign a data object as input. Note that this method does not
+    /// establish a pipeline connection. Use SetInputConnection() to
+    /// setup a pipeline connection.
+    /// </summary>
+    public new void SetInputData(vtkDataSet _arg1)
+    {
+        vtkDataSetAlgorithm_SetInputData(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataSetAlgorithm_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataSetAlgorithm_SetInputData(nint self, nint _arg1);
     #endregion
 }

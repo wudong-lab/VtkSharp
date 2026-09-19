@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkIOInfovis
+classes:
+  - name: vtkDelimitedTextReader
+    header: vtkDelimitedTextReader.h
+    functions:
+      - name: DetectNumericColumnsOn
+        cppSignature: void DetectNumericColumnsOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetFieldDelimiterCharacters
+        cppSignature: void SetFieldDelimiterCharacters(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetFileName
+        cppSignature: void SetFileName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetHaveHeaders
+        cppSignature: void SetHaveHeaders(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg

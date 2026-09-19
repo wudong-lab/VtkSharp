@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkIOCore
+classes:
+  - name: vtkAbstractPolyDataReader
+    header: vtkAbstractPolyDataReader.h
+    functions:
+      - name: SetFileName
+        cppSignature: void SetFileName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg

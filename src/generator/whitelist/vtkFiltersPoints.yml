@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkFiltersPoints
+classes:
+  - name: vtkGaussianKernel
+    header: vtkGaussianKernel.h
+    functions:
+      - name: SetSharpness
+        cppSignature: void SetSharpness(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+  - name: vtkGeneralizedKernel
+    header: vtkGeneralizedKernel.h
+    functions:
+      - name: SetRadius
+        cppSignature: void SetRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+  - name: vtkInterpolationKernel
+    header: vtkInterpolationKernel.h
+    functions: []
+  - name: vtkPointInterpolator
+    header: vtkPointInterpolator.h
+    functions:
+      - name: SetKernel
+        cppSignature: void SetKernel(vtkInterpolationKernel * kernel)
+        return:
+          type: void
+        parameters:
+          - type: vtkInterpolationKernel*
+            name: kernel
+      - name: SetSourceData
+        cppSignature: void SetSourceData(vtkDataObject * source)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: source

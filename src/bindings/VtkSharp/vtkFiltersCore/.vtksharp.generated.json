@@ -114,6 +114,17 @@
       "nativeContentHash": "d6df406899f827b8aa046e19d71c9d30abf8859d99fbc9e6a3a9eee0821456c4"
     },
     {
+      "className": "vtkTriangleFilter",
+      "header": "vtkTriangleFilter.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "8cc930a1b2baf61b9866708f598e667e2e02093400c7afb67ff90ad0384b4218",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkTriangleFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkTriangleFilter_export_gen.cpp",
+      "managedContentHash": "0cc185b063cc7b9082de7bc7825dfe16256d5ba9f975bf1150cdf824875946ef",
+      "nativeContentHash": "2b7d054452b4e8519c6198bd64f3a11b6eb1bb335fa2ba032fdddc6c65400726"
+    },
+    {
       "className": "vtkTubeFilter",
       "header": "vtkTubeFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",

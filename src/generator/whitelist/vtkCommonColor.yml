@@ -5,6 +5,13 @@ classes:
   - name: vtkColorSeries
     header: vtkColorSeries.h
     functions:
+      - name: AddColor
+        cppSignature: void AddColor(vtkColor3ub const& color)
+        return:
+          type: void
+        parameters:
+          - type: vtkColor3ub
+            name: color
       - name: BuildLookupTable
         cppSignature: void BuildLookupTable(vtkLookupTable * lkup, int lutIndexing)
         return:
@@ -14,13 +21,6 @@ classes:
             name: lkup
           - type: int
             name: lutIndexing
-      - name: AddColor
-        cppSignature: void AddColor(vtkColor3ub const& color)
-        return:
-          type: void
-        parameters:
-          - type: vtkColor3ub
-            name: color
       - name: ClearColors
         cppSignature: void ClearColors()
         return:
@@ -41,11 +41,6 @@ classes:
         parameters:
           - type: vtkColorSeries*
             name: chartColors
-      - name: GetColorScheme
-        cppSignature: int GetColorScheme()
-        return:
-          type: int
-        parameters: []
       - name: GetColor
         cppSignature: vtkColor3ub GetColor(int index)
         return:
@@ -60,6 +55,16 @@ classes:
         parameters:
           - type: int
             name: index
+      - name: GetColorScheme
+        cppSignature: int GetColorScheme()
+        return:
+          type: int
+        parameters: []
+      - name: GetColorSchemeName
+        cppSignature: vtkStdString GetColorSchemeName()
+        return:
+          type: vtkStdString
+        parameters: []
       - name: GetNumberOfColorSchemes
         cppSignature: int GetNumberOfColorSchemes()
         return:
@@ -70,13 +75,6 @@ classes:
         return:
           type: int
         parameters: []
-      - name: RemoveColor
-        cppSignature: void RemoveColor(int index)
-        return:
-          type: void
-        parameters:
-          - type: int
-            name: index
       - name: InsertColor
         cppSignature: void InsertColor(int index, vtkColor3ub const& color)
         return:
@@ -86,6 +84,13 @@ classes:
             name: index
           - type: vtkColor3ub
             name: color
+      - name: RemoveColor
+        cppSignature: void RemoveColor(int index)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: index
       - name: SetColor
         cppSignature: void SetColor(int index, vtkColor3ub const& color)
         return:
@@ -102,11 +107,6 @@ classes:
         parameters:
           - type: int
             name: scheme
-      - name: GetColorSchemeName
-        cppSignature: vtkStdString GetColorSchemeName()
-        return:
-          type: vtkStdString
-        parameters: []
       - name: SetColorSchemeByName
         cppSignature: int SetColorSchemeByName(vtkStdString const& schemeName)
         return:

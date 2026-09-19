@@ -11,8 +11,12 @@ set(VTKSHARP_VTK_COMPONENTS
   FiltersGeneral
   FiltersGeometry
   FiltersModeling
+  FiltersPoints
   FiltersSources
+  IOCore
+  IOGeometry
   IOImage
+  IOInfovis
   ImagingCore
   ImagingMath
   InteractionImage
@@ -37,8 +41,12 @@ set(VTKSHARP_VTK_TARGETS
   VTK::FiltersGeneral
   VTK::FiltersGeometry
   VTK::FiltersModeling
+  VTK::FiltersPoints
   VTK::FiltersSources
+  VTK::IOCore
+  VTK::IOGeometry
   VTK::IOImage
+  VTK::IOInfovis
   VTK::ImagingCore
   VTK::ImagingMath
   VTK::InteractionImage

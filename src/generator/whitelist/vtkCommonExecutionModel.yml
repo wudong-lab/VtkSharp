@@ -66,7 +66,14 @@ classes:
     functions: []
   - name: vtkDataSetAlgorithm
     header: vtkDataSetAlgorithm.h
-    functions: []
+    functions:
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataSet * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataSet*
+            name: _arg1
   - name: vtkImageAlgorithm
     header: vtkImageAlgorithm.h
     functions:
@@ -135,6 +142,9 @@ classes:
         parameters:
           - type: vtkDataObject*
             name: _arg1
+  - name: vtkTableAlgorithm
+    header: vtkTableAlgorithm.h
+    functions: []
   - name: vtkThreadedImageAlgorithm
     header: vtkThreadedImageAlgorithm.h
     functions: []

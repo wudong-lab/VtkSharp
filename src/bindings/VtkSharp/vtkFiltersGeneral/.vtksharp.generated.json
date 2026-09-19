@@ -4,6 +4,17 @@
   "module": "vtkFiltersGeneral",
   "classes": [
     {
+      "className": "vtkTableToPolyData",
+      "header": "vtkTableToPolyData.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "34c7179bdd26aba38d290b8d1de5a6ccf85761383c3aa253abba3854af086123",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTableToPolyData_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTableToPolyData_export_gen.cpp",
+      "managedContentHash": "c5d97cf94186ce17d44aaad4e638d00652ce0bbd896158bb8bc9cc7d53a1ca5c",
+      "nativeContentHash": "e1826c0cc7f078639d1d18150dc61e17d4db10ae6989b9a00c54a7c5a18caace"
+    },
+    {
       "className": "vtkTransformPolyDataFilter",
       "header": "vtkTransformPolyDataFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",

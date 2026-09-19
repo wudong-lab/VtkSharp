@@ -1256,6 +1256,28 @@ classes:
   - name: vtkMapper2D
     header: vtkMapper2D.h
     functions: []
+  - name: vtkPointGaussianMapper
+    header: vtkPointGaussianMapper.h
+    functions:
+      - name: EmissiveOff
+        cppSignature: void EmissiveOff()
+        return:
+          type: void
+        parameters: []
+      - name: SetScaleFactor
+        cppSignature: void SetScaleFactor(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetSplatShaderCode
+        cppSignature: void SetSplatShaderCode(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
   - name: vtkPolyDataMapper
     header: vtkPolyDataMapper.h
     functions:
@@ -1474,6 +1496,11 @@ classes:
         return:
           type: float
         parameters: []
+      - name: GetRepresentation
+        cppSignature: int GetRepresentation()
+        return:
+          type: int
+        parameters: []
       - name: GetSelectionLineWidth
         cppSignature: float GetSelectionLineWidth()
         return:
@@ -1675,6 +1702,13 @@ classes:
         parameters:
           - type: float
             name: _arg
+      - name: SetRepresentation
+        cppSignature: void SetRepresentation(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
       - name: SetRepresentationToPoints
         cppSignature: void SetRepresentationToPoints()
         return:
@@ -1803,6 +1837,25 @@ classes:
         return:
           type: void
         parameters: []
+    enumProperties:
+      - name: Representation
+        nativeType: int
+        getter: GetRepresentation
+        setter: SetRepresentation
+        values:
+          - name: Points
+            nativeExpression: VTK_POINTS
+            value: 0
+          - name: Surface
+            nativeExpression: VTK_SURFACE
+            value: 2
+          - name: Wireframe
+            nativeExpression: VTK_WIREFRAME
+            value: 1
+        convenienceMethods:
+          - SetRepresentationToPoints
+          - SetRepresentationToSurface
+          - SetRepresentationToWireframe
   - name: vtkProperty2D
     header: vtkProperty2D.h
     functions:

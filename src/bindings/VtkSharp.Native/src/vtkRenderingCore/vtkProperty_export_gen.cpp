@@ -30,6 +30,8 @@ VTKSHARP_API double vtkProperty_GetOpacity(vtkProperty* self) { return self->Get
 
 VTKSHARP_API float vtkProperty_GetPointSize(vtkProperty* self) { return self->GetPointSize(); }
 
+VTKSHARP_API int vtkProperty_GetRepresentation(vtkProperty* self) { return self->GetRepresentation(); }
+
 VTKSHARP_API float vtkProperty_GetSelectionLineWidth(vtkProperty* self) { return self->GetSelectionLineWidth(); }
 
 VTKSHARP_API void vtkProperty_LightingOff(vtkProperty* self) { self->LightingOff(); }
@@ -87,6 +89,8 @@ VTKSHARP_API void vtkProperty_SetLineWidth(vtkProperty* self, float _arg) { self
 VTKSHARP_API void vtkProperty_SetOpacity(vtkProperty* self, double _arg) { self->SetOpacity(_arg); }
 
 VTKSHARP_API void vtkProperty_SetPointSize(vtkProperty* self, float _arg) { self->SetPointSize(_arg); }
+
+VTKSHARP_API void vtkProperty_SetRepresentation(vtkProperty* self, int _arg) { self->SetRepresentation(_arg); }
 
 VTKSHARP_API void vtkProperty_SetRepresentationToPoints(vtkProperty* self) { self->SetRepresentationToPoints(); }
 

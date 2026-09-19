@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "module": "vtkIOCore",
+  "classes": [
+    {
+      "className": "vtkAbstractPolyDataReader",
+      "header": "vtkAbstractPolyDataReader.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": false,
+      "inputHash": "2106b3c7871a0cfa501fbe177884bd840aca3b428bc4fa3ee56b20ad15cea6d3",
+      "managedPath": "bindings\\VtkSharp\\vtkIOCore\\vtkAbstractPolyDataReader_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOCore\\vtkAbstractPolyDataReader_export_gen.cpp",
+      "managedContentHash": "465392ec6017bbff50246b34cf42c1f14e9f8f2839f211e9a82617e40e2d4fba",
+      "nativeContentHash": "a0b4182cdf56cfbe65003c8066375275e5e21b940740832b2bc68438c6ef9f47"
+    }
+  ]
+}

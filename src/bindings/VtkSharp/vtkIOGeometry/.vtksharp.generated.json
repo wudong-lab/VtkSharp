@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "module": "vtkIOGeometry",
+  "classes": [
+    {
+      "className": "vtkSTLReader",
+      "header": "vtkSTLReader.h",
+      "baseClassName": "vtkAbstractPolyDataReader",
+      "hasStaticNew": true,
+      "inputHash": "7a324b01eb2636b49517a707a4611401f2fb27cd3c274a9dffa4aa1edffeb69d",
+      "managedPath": "bindings\\VtkSharp\\vtkIOGeometry\\vtkSTLReader_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOGeometry\\vtkSTLReader_export_gen.cpp",
+      "managedContentHash": "f1baad3f0f6104bdd360c68e063eee74284801fc2724fa68709cced9d5ccb5f4",
+      "nativeContentHash": "b491ae6b86ab2983e034702e397fccb51ac679b9625e57552e11551460add4bd"
+    }
+  ]
+}

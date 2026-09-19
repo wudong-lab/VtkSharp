@@ -123,6 +123,18 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
     /// <summary>
     /// Set/Get the scalar data.
     /// </summary>
+    public new int SetActiveScalars(string name)
+    {
+        #if NET8_0_OR_GREATER
+        return vtkDataSetAttributes_SetActiveScalars(this.NativePointer, name);
+        #else
+        return vtkDataSetAttributes_SetActiveScalars(this.NativePointer, VtkString.ToNullTerminatedUtf8(name));
+        #endif
+    }
+
+    /// <summary>
+    /// Set/Get the scalar data.
+    /// </summary>
     public new int SetScalars(vtkDataArray da)
     {
         return vtkDataSetAttributes_SetScalars(this.NativePointer, da.NativePointer);
@@ -134,6 +146,14 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataSetAttributes_GetScalars(nint self);
+
+#if NET8_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial int vtkDataSetAttributes_SetActiveScalars(nint self, string name);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkDataSetAttributes_SetActiveScalars(nint self, byte[] name);
+#endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkDataSetAttributes_SetScalars(nint self, nint da);

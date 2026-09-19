@@ -112,6 +112,14 @@ public unsafe partial class vtkWindow : vtkObject
     }
 
     /// <summary>
+    /// Change the shape of the cursor.
+    /// </summary>
+    public new void SetCurrentCursor(int _arg1)
+    {
+        vtkWindow_SetCurrentCursor(this.NativePointer, _arg1);
+    }
+
+    /// <summary>
     /// Set the size (width and height) of the rendering window in
     /// screen coordinates (in pixels). This resizes the operating
     /// system's view/window and redraws it.
@@ -143,14 +151,6 @@ public unsafe partial class vtkWindow : vtkObject
         {
             vtkWindow_SetSize_intArray2(this.NativePointer, aPtr);
         }
-    }
-
-    /// <summary>
-    /// Change the shape of the cursor.
-    /// </summary>
-    public new void SetCurrentCursor(int _arg1)
-    {
-        vtkWindow_SetCurrentCursor(this.NativePointer, _arg1);
     }
 
     /// <summary>
@@ -198,13 +198,13 @@ public unsafe partial class vtkWindow : vtkObject
     private static extern void vtkWindow_Render(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkWindow_SetCurrentCursor(nint self, int _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWindow_SetSize_int_int(nint self, int width, int height);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWindow_SetSize_intArray2(nint self, int* a);
-
-    [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern void vtkWindow_SetCurrentCursor(nint self, int _arg1);
 
 #if NET8_0_OR_GREATER
     [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]

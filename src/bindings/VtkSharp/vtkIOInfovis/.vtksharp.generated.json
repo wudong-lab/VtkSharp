@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "module": "vtkIOInfovis",
+  "classes": [
+    {
+      "className": "vtkDelimitedTextReader",
+      "header": "vtkDelimitedTextReader.h",
+      "baseClassName": "vtkTableAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "10fff646e8219de5602d7641b78409b5560ce347b7f114297afc92e50e3d2204",
+      "managedPath": "bindings\\VtkSharp\\vtkIOInfovis\\vtkDelimitedTextReader_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOInfovis\\vtkDelimitedTextReader_export_gen.cpp",
+      "managedContentHash": "cc2078f85a8e984301a64168aa1f94d579d2ea86e9bb9d8b73de1948757fbd78",
+      "nativeContentHash": "72aef76a76da69596b18446dffa318ed3adad1f68bcbf2cca6b9fbcbecf551c8"
+    }
+  ]
+}

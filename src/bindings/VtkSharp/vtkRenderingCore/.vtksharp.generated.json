@@ -246,6 +246,17 @@
       "nativeContentHash": "f89896bbc3bb7c689923336e47b29d61074581eb76897d7827ee6503034d99a9"
     },
     {
+      "className": "vtkPointGaussianMapper",
+      "header": "vtkPointGaussianMapper.h",
+      "baseClassName": "vtkPolyDataMapper",
+      "hasStaticNew": true,
+      "inputHash": "fb034d34580ddc51d878b65b5f2c38984e7c64921368eb6c83095196cc3094e8",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPointGaussianMapper_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPointGaussianMapper_export_gen.cpp",
+      "managedContentHash": "fa83902eb765b808470168393d08955e8350f11eec75754d6f089c34131ce5a6",
+      "nativeContentHash": "7d9430b09f11e40e229cc9c9f730971426c799d0548bb48a3b4c9223c58dedb7"
+    },
+    {
       "className": "vtkPolyDataMapper",
       "header": "vtkPolyDataMapper.h",
       "baseClassName": "vtkMapper",
@@ -316,11 +327,11 @@
       "header": "vtkProperty.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "1c29638736c2527c5d5611ba2f8e191dd094b0325c876421faa08ed4dcbc5cb4",
+      "inputHash": "c1d911fe460dffcb7991508a71ede88780fa0d583ff9cd9b77b7723d858ce915",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkProperty_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkProperty_export_gen.cpp",
-      "managedContentHash": "837599445cd477af5a49a7e3c7e54132acf2795917158606457192081865e190",
-      "nativeContentHash": "8490f7cfbb6009c17d87f95d6aaf0bdd8eb01f0bf856bd681f313b7aafd7d5ab"
+      "managedContentHash": "4ed04f29e9ad3824c94abf37d3584ea9ee8765af87aef9516180393b8a1a9d5f",
+      "nativeContentHash": "e1fab85de87fc778fb4199013bdf92ec153079156e81350cec187327deaf569c"
     },
     {
       "className": "vtkProperty2D",

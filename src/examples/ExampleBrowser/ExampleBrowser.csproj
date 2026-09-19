@@ -28,6 +28,12 @@
     <Content Include="Examples\Meshes\FitToHeightMap\Data\SainteHelens.dem"
              Link="Data\SainteHelens.dem"
              CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Examples\Meshes\PointInterpolator\Data\sparsePoints.txt"
+             Link="Data\sparsePoints.txt"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Examples\Meshes\PointInterpolator\Data\InterpolatingOnSTL_final.stl"
+             Link="Data\InterpolatingOnSTL_final.stl"
+             CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

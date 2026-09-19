@@ -191,6 +191,13 @@ classes:
           type: vtkDataArray*
           ownership: borrowed
         parameters: []
+      - name: SetActiveScalars
+        cppSignature: int SetActiveScalars(char const * name)
+        return:
+          type: int
+        parameters:
+          - type: const char*
+            name: name
       - name: SetScalars
         cppSignature: int SetScalars(vtkDataArray * da)
         return:

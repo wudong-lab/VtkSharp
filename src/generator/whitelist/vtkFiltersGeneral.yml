@@ -2,6 +2,30 @@
 
 module: vtkFiltersGeneral
 classes:
+  - name: vtkTableToPolyData
+    header: vtkTableToPolyData.h
+    functions:
+      - name: SetXColumn
+        cppSignature: void SetXColumn(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetYColumn
+        cppSignature: void SetYColumn(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+      - name: SetZColumn
+        cppSignature: void SetZColumn(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
   - name: vtkTransformPolyDataFilter
     header: vtkTransformPolyDataFilter.h
     functions:

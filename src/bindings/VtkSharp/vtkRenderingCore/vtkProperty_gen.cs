@@ -82,6 +82,17 @@ public unsafe partial class vtkProperty : vtkObject
         return target;
     }
 
+    /// <summary>Named values for SetRepresentation/GetRepresentation. Unnamed native values are preserved.</summary>
+    public enum Representation : int
+    {
+        /// <summary>Native: VTK_POINTS.</summary>
+        Points = 0,
+        /// <summary>Native: VTK_SURFACE.</summary>
+        Surface = 2,
+        /// <summary>Native: VTK_WIREFRAME.</summary>
+        Wireframe = 1,
+    }
+
     /// <summary>
     /// Turn on/off fast culling of polygons based on orientation of normal
     /// with respect to camera. If backface culling is on, polygons facing
@@ -210,6 +221,11 @@ public unsafe partial class vtkProperty : vtkObject
     {
         return vtkProperty_GetPointSize(this.NativePointer);
     }
+
+    /// <summary>
+    /// Control the surface geometry representation for the object.
+    /// </summary>
+    public new Representation GetRepresentation() => (Representation)vtkProperty_GetRepresentation(this.NativePointer);
 
     /// <summary>
     /// Set/Get the selection line width.
@@ -521,6 +537,11 @@ public unsafe partial class vtkProperty : vtkObject
     /// <summary>
     /// Control the surface geometry representation for the object.
     /// </summary>
+    public new void SetRepresentation(Representation _arg) => vtkProperty_SetRepresentation(this.NativePointer, (int)_arg);
+
+    /// <summary>
+    /// Control the surface geometry representation for the object.
+    /// </summary>
     public new void SetRepresentationToPoints()
     {
         vtkProperty_SetRepresentationToPoints(this.NativePointer);
@@ -762,6 +783,9 @@ public unsafe partial class vtkProperty : vtkObject
     private static extern float vtkProperty_GetPointSize(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkProperty_GetRepresentation(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern float vtkProperty_GetSelectionLineWidth(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
@@ -847,6 +871,9 @@ public unsafe partial class vtkProperty : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProperty_SetPointSize(nint self, float _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProperty_SetRepresentation(nint self, int _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProperty_SetRepresentationToPoints(nint self);

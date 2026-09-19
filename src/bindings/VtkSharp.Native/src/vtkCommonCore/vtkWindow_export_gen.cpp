@@ -12,11 +12,11 @@ VTKSHARP_API void vtkWindow_OffScreenRenderingOn(vtkWindow* self) { self->OffScr
 
 VTKSHARP_API void vtkWindow_Render(vtkWindow* self) { self->Render(); }
 
+VTKSHARP_API void vtkWindow_SetCurrentCursor(vtkWindow* self, int _arg1) { self->SetCurrentCursor(_arg1); }
+
 VTKSHARP_API void vtkWindow_SetSize_int_int(vtkWindow* self, int width, int height) { self->SetSize(width, height); }
 
 VTKSHARP_API void vtkWindow_SetSize_intArray2(vtkWindow* self, int* a) { self->SetSize(a); }
-
-VTKSHARP_API void vtkWindow_SetCurrentCursor(vtkWindow* self, int _arg1) { self->SetCurrentCursor(_arg1); }
 
 VTKSHARP_API void vtkWindow_SetWindowName(vtkWindow* self, const char* _arg) { self->SetWindowName(_arg); }
 

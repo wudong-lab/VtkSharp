@@ -85,11 +85,11 @@
       "header": "vtkDataSetAttributes.h",
       "baseClassName": "vtkFieldData",
       "hasStaticNew": true,
-      "inputHash": "14cee3d3cee439d2c4ae17946c2f1d5e313286f0d28cc0a25978d2461aceff02",
+      "inputHash": "1598bd11e4191d0652328d2830c4e1abca67d7119bc14249196c1397636689ca",
       "managedPath": "bindings\\VtkSharp\\vtkCommonDataModel\\vtkDataSetAttributes_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonDataModel\\vtkDataSetAttributes_export_gen.cpp",
-      "managedContentHash": "2b3afe994aa4c74c5591a288b21e93a228accf5d1155de05c94b5b1e843daf2a",
-      "nativeContentHash": "bf9984add0f318941b7d3f4148f320b5020fa490022e92614d3f8f890a31b38f"
+      "managedContentHash": "6463fcb4672d84a18443610117bd1b3d493b7627cc72bf7909ded1a94687e3e2",
+      "nativeContentHash": "efc33256a3f5b5d5e4df017749e6259ed71aa09485cca716794630ad2940e59d"
     },
     {
       "className": "vtkFieldData",

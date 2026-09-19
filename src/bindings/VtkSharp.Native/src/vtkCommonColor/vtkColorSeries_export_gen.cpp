@@ -8,17 +8,15 @@
 
 VTKSHARP_API vtkColorSeries* vtkColorSeries_New() { return vtkColorSeries::New(); }
 
-VTKSHARP_API void vtkColorSeries_BuildLookupTable(vtkColorSeries* self, vtkLookupTable* lkup, int lutIndexing) { self->BuildLookupTable(lkup, lutIndexing); }
-
 VTKSHARP_API void vtkColorSeries_AddColor(vtkColorSeries* self, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->AddColor(vtkColor3ub(colorR, colorG, colorB)); }
+
+VTKSHARP_API void vtkColorSeries_BuildLookupTable(vtkColorSeries* self, vtkLookupTable* lkup, int lutIndexing) { self->BuildLookupTable(lkup, lutIndexing); }
 
 VTKSHARP_API void vtkColorSeries_ClearColors(vtkColorSeries* self) { self->ClearColors(); }
 
 VTKSHARP_API vtkLookupTable* vtkColorSeries_CreateLookupTable(vtkColorSeries* self, int lutIndexing) { return self->CreateLookupTable(lutIndexing); }
 
 VTKSHARP_API void vtkColorSeries_DeepCopy(vtkColorSeries* self, vtkColorSeries* chartColors) { self->DeepCopy(chartColors); }
-
-VTKSHARP_API int vtkColorSeries_GetColorScheme(vtkColorSeries* self) { return self->GetColorScheme(); }
 
 VTKSHARP_API void vtkColorSeries_GetColor(vtkColorSeries* self, int index, unsigned char* __outGetColor) {
     auto c = self->GetColor(index);
@@ -34,22 +32,24 @@ VTKSHARP_API void vtkColorSeries_GetColorRepeating(vtkColorSeries* self, int ind
     __outGetColorRepeating[2] = c[2];
 }
 
-VTKSHARP_API int vtkColorSeries_GetNumberOfColorSchemes(vtkColorSeries* self) { return self->GetNumberOfColorSchemes(); }
-
-VTKSHARP_API int vtkColorSeries_GetNumberOfColors(vtkColorSeries* self) { return self->GetNumberOfColors(); }
-
-VTKSHARP_API void vtkColorSeries_RemoveColor(vtkColorSeries* self, int index) { self->RemoveColor(index); }
-
-VTKSHARP_API void vtkColorSeries_InsertColor(vtkColorSeries* self, int index, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->InsertColor(index, vtkColor3ub(colorR, colorG, colorB)); }
-
-VTKSHARP_API void vtkColorSeries_SetColor(vtkColorSeries* self, int index, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->SetColor(index, vtkColor3ub(colorR, colorG, colorB)); }
-
-VTKSHARP_API void vtkColorSeries_SetColorScheme(vtkColorSeries* self, int scheme) { self->SetColorScheme(scheme); }
+VTKSHARP_API int vtkColorSeries_GetColorScheme(vtkColorSeries* self) { return self->GetColorScheme(); }
 
 VTKSHARP_API void vtkColorSeries_GetColorSchemeName(vtkColorSeries* self, VtkSharpUtf8String* __outGetColorSchemeName) {
     const auto value = self->GetColorSchemeName();
     VtkSharpUtf8String_CopyFrom(__outGetColorSchemeName, value.data(), value.size());
 }
+
+VTKSHARP_API int vtkColorSeries_GetNumberOfColorSchemes(vtkColorSeries* self) { return self->GetNumberOfColorSchemes(); }
+
+VTKSHARP_API int vtkColorSeries_GetNumberOfColors(vtkColorSeries* self) { return self->GetNumberOfColors(); }
+
+VTKSHARP_API void vtkColorSeries_InsertColor(vtkColorSeries* self, int index, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->InsertColor(index, vtkColor3ub(colorR, colorG, colorB)); }
+
+VTKSHARP_API void vtkColorSeries_RemoveColor(vtkColorSeries* self, int index) { self->RemoveColor(index); }
+
+VTKSHARP_API void vtkColorSeries_SetColor(vtkColorSeries* self, int index, unsigned char colorR, unsigned char colorG, unsigned char colorB) { self->SetColor(index, vtkColor3ub(colorR, colorG, colorB)); }
+
+VTKSHARP_API void vtkColorSeries_SetColorScheme(vtkColorSeries* self, int scheme) { self->SetColorScheme(scheme); }
 
 VTKSHARP_API int vtkColorSeries_SetColorSchemeByName(vtkColorSeries* self, const char* schemeName) { return self->SetColorSchemeByName(schemeName); }
 

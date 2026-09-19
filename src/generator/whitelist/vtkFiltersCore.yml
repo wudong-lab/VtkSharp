@@ -181,6 +181,9 @@ classes:
   - name: vtkStripper
     header: vtkStripper.h
     functions: []
+  - name: vtkTriangleFilter
+    header: vtkTriangleFilter.h
+    functions: []
   - name: vtkTubeFilter
     header: vtkTubeFilter.h
     functions:
