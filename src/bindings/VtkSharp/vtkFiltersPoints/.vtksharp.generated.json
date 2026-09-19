@@ -34,7 +34,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkFiltersPoints\\vtkInterpolationKernel_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersPoints\\vtkInterpolationKernel_export_gen.cpp",
       "managedContentHash": "881454ba46110661292808a57b5ddb199aa43184946afada1b65ec740d1d4d62",
-      "nativeContentHash": "ea9cd0f389bfc5c9b5da894b2f5075c2b328f205fc3c9743f465ca403c826aa2"
+      "nativeContentHash": "154ecfd6b6d9101d027187d0b36d46f9aa494198d2c59240e10c35442c92fb6d"
     },
     {
       "className": "vtkPointInterpolator",

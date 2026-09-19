@@ -49,6 +49,153 @@ public sealed class BindingGenerationService
         return 1;
     }
 
+    public int CheckGeneratedOutputIncremental(string configPath, TextWriter output, TextWriter error)
+    {
+        var workspace = GeneratorWorkspace.Load(configPath);
+        if (workspace.IncludeDirectory is null)
+        {
+            error.WriteLine("VTK include directory was not found. Set VTK_ROOT or vtk.includeDirectory in local config.");
+            return 1;
+        }
+
+        var documents = workspace.LoadWhitelist();
+        var hierarchyResolver = workspace.LoadHierarchyResolver();
+        var inspector = new VtkClassInspector(documents.SelectMany(d => d.Classes)
+            .Where(c => c.EnumProperties is { Count: > 0 }).Select(c => c.Header));
+        var validator = new WhitelistValidator();
+        var csharpEmitter = new CSharpBindingEmitter();
+        var cppEmitter = new CppExportEmitter();
+        var manifestStore = new GeneratedManifestStore();
+        var config = workspace.Config;
+        var managedDirectory = workspace.GetManagedOutputDirectory();
+        var nativeDirectory = workspace.GetNativeOutputDirectory();
+        var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
+        var expectedManagedFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var expectedNativeFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var differences = new List<GeneratedOutputDifference>();
+        var reusedCount = 0;
+        var checkedCount = 0;
+
+        foreach (var document in documents)
+        {
+            var manifest = manifestStore.Load(
+                Path.Combine(managedDirectory, document.Module, GeneratedManifestStore.FileName),
+                document.Module,
+                IncrementalCacheVersion);
+
+            foreach (var whitelistClass in document.Classes)
+            {
+                if (manualClasses.Contains(whitelistClass.Name))
+                    continue;
+
+                var managedPath = Path.Combine(managedDirectory, document.Module, $"{whitelistClass.Name}_gen.cs");
+                var nativePath = Path.Combine(nativeDirectory, document.Module, $"{whitelistClass.Name}_export_gen.cpp");
+                expectedManagedFiles.Add(Path.GetFullPath(managedPath));
+                expectedNativeFiles.Add(Path.GetFullPath(nativePath));
+
+                var baseClassName = hierarchyResolver.GetBaseClassName(whitelistClass.Name);
+                var headerPath = Path.Combine(workspace.IncludeDirectory, whitelistClass.Header);
+                var inputHash = GenerationInputFingerprint.Compute(
+                    IncrementalCacheVersion,
+                    config.Vtk.Version,
+                    config.Binding.Namespace,
+                    config.Binding.NativeLibraryName,
+                    document.Module,
+                    whitelistClass.Name,
+                    whitelistClass.Header,
+                    baseClassName,
+                    GenerationInputFingerprint.HashFileText(headerPath),
+                    whitelistClass.Functions,
+                    whitelistClass.EnumProperties);
+
+                if (whitelistClass.EnumProperties is not { Count: > 0 } &&
+                    GeneratedManifestCache.TryGetReusableEntry(
+                        manifest, whitelistClass.Name, inputHash, managedPath, nativePath, out _))
+                {
+                    reusedCount++;
+                    continue;
+                }
+
+                InspectedClass inspectedClass;
+                try
+                {
+                    inspectedClass = inspector.InspectHeader(
+                        workspace.IncludeDirectory, whitelistClass.Header, whitelistClass.Name);
+                }
+                catch (Exception ex) when (ex is IOException or InvalidOperationException or ArgumentException)
+                {
+                    error.WriteLine($"Class '{whitelistClass.Name}' could not be inspected from '{whitelistClass.Header}': {ex.Message}");
+                    return 1;
+                }
+
+                var validationDocument = new WhitelistDocument
+                {
+                    Module = document.Module,
+                    Classes = [whitelistClass],
+                };
+                var validationResult = validator.Validate(
+                    validationDocument,
+                    new Dictionary<string, InspectedClass>(StringComparer.Ordinal) { [whitelistClass.Name] = inspectedClass },
+                    hierarchyResolver);
+                if (validationResult.Diagnostics.Count > 0)
+                {
+                    foreach (var diagnostic in validationResult.Diagnostics)
+                        error.WriteLine(diagnostic.Message);
+                    return 1;
+                }
+
+                var includeClassNames = GetIncludeClassNames(whitelistClass)
+                    .Where(name => name != whitelistClass.Name)
+                    .Distinct(StringComparer.Ordinal)
+                    .ToList();
+                CompareGeneratedText(
+                    managedPath,
+                    csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName,
+                        inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error,
+                        whitelistClass.EnumProperties),
+                    Path.GetRelativePath(managedDirectory, managedPath),
+                    differences);
+                CompareGeneratedText(
+                    nativePath,
+                    cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew,
+                        whitelistClass.Functions, whitelistClass.EnumProperties),
+                    Path.GetRelativePath(nativeDirectory, nativePath),
+                    differences);
+                checkedCount++;
+            }
+        }
+
+        AddUnexpectedGeneratedFiles(managedDirectory, "*_gen.cs", expectedManagedFiles, differences);
+        AddUnexpectedGeneratedFiles(nativeDirectory, "*_export_gen.cpp", expectedNativeFiles, differences);
+
+        var vtkModules = documents
+            .Select(document => document.Module)
+            .Concat(config.Vtk.RuntimeModules)
+            .Distinct(StringComparer.Ordinal)
+            .ToList();
+        CompareGeneratedText(
+            workspace.GetNativeModulesFile(),
+            new CMakeModulesEmitter().Emit(vtkModules),
+            "bindings/VtkSharp.Native/vtksharp.modules.generated.cmake",
+            differences);
+        CompareGeneratedText(
+            workspace.GetNativeProjectFile(),
+            new NativeProjectEmitter().EmitCMakeLists(config.Binding.NativeLibraryName),
+            "bindings/VtkSharp.Native/CMakeLists.txt",
+            differences);
+
+        if (differences.Count == 0)
+        {
+            output.WriteLine($"Generated output is up to date. Incremental check reused {reusedCount} class(es) and inspected {checkedCount} class(es).");
+            return 0;
+        }
+
+        error.WriteLine("Generated output differs from current files:");
+        foreach (var difference in differences.OrderBy(item => item.RelativePath, StringComparer.Ordinal))
+            error.WriteLine($"  {difference.RelativePath.Replace('\\', '/')}: {difference.Message}");
+        return 1;
+    }
+
     private int GenerateFull(string configPath, string outputRoot, bool continueOnError, TextWriter output, TextWriter error)
     {
         var context = new GeneratorRunContextFactory().Create(configPath, error);
@@ -284,6 +431,42 @@ public sealed class BindingGenerationService
                 if (className is not null)
                     yield return className;
             }
+        }
+    }
+
+    private static void CompareGeneratedText(
+        string currentPath,
+        string generatedText,
+        string relativePath,
+        ICollection<GeneratedOutputDifference> differences)
+    {
+        if (!File.Exists(currentPath))
+        {
+            differences.Add(new GeneratedOutputDifference(relativePath, "Missing from current output."));
+            return;
+        }
+
+        var currentHash = GenerationInputFingerprint.HashFileText(currentPath);
+        var generatedHash = GenerationInputFingerprint.HashGeneratedText(generatedText);
+        if (!currentHash.Equals(generatedHash, StringComparison.Ordinal))
+            differences.Add(new GeneratedOutputDifference(relativePath, "Content differs."));
+    }
+
+    private static void AddUnexpectedGeneratedFiles(
+        string directory,
+        string searchPattern,
+        IReadOnlySet<string> expectedFiles,
+        ICollection<GeneratedOutputDifference> differences)
+    {
+        if (!Directory.Exists(directory))
+            return;
+
+        foreach (var path in Directory.GetFiles(directory, searchPattern, SearchOption.AllDirectories))
+        {
+            var fullPath = Path.GetFullPath(path);
+            if (!expectedFiles.Contains(fullPath))
+                differences.Add(new GeneratedOutputDifference(
+                    Path.GetRelativePath(directory, fullPath), "Only exists in current output."));
         }
     }
 }

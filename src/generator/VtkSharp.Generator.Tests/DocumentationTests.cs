@@ -320,6 +320,60 @@ public sealed class DocumentationTests : IDisposable
     }
 
     [Fact]
+    public void CheckGeneratedOutputIncremental_ReusesValidEntriesAndDetectsEditedOrUnexpectedFiles()
+    {
+        var config = Path.Combine(this._directory, "incremental-check.yml");
+        var whitelist = Path.Combine(this._directory, "incremental-check-whitelist");
+        var outputRoot = Path.Combine(this._directory, "incremental-check-output");
+        Directory.CreateDirectory(whitelist);
+        File.WriteAllText(config, $$"""
+            vtk:
+              version: "9.7"
+              includeDirectory: '{{this._directory}}'
+            binding:
+              namespace: VtkSharp
+              nativeLibraryName: VtkSharp.Native
+            paths:
+              whitelistDirectory: incremental-check-whitelist
+              managedOutputDirectory: incremental-check-output/bindings/VtkSharp
+              nativeOutputDirectory: incremental-check-output/bindings/VtkSharp.Native/src
+              nativeProjectFile: incremental-check-output/bindings/VtkSharp.Native/CMakeLists.txt
+              nativeModulesFile: incremental-check-output/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake
+            """);
+        File.WriteAllText(Path.Combine(whitelist, "vtkCommonCore.yml"), """
+            module: vtkCommonCore
+            classes:
+              - name: vtkThing
+                header: vtkThing.h
+                functions: []
+            """);
+        File.WriteAllText(Path.Combine(this._directory, "vtkThing.h"),
+            "class vtkThing { public: static vtkThing* New(); };");
+
+        var generator = new BindingGenerationService();
+        var output = new StringWriter();
+        var error = new StringWriter();
+        Assert.Equal(0, generator.Generate(config, outputRoot, false, true, false, output, error));
+
+        output.GetStringBuilder().Clear();
+        Assert.Equal(0, generator.CheckGeneratedOutputIncremental(config, output, error));
+        Assert.Contains("reused 1 class(es) and inspected 0 class(es)", output.ToString());
+
+        var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", "vtkCommonCore", "vtkThing_gen.cs");
+        File.AppendAllText(managedPath, "// manual edit");
+        error.GetStringBuilder().Clear();
+        Assert.Equal(1, generator.CheckGeneratedOutputIncremental(config, output, error));
+        Assert.Contains("vtkThing_gen.cs: Content differs.", error.ToString());
+
+        Assert.Equal(0, generator.Generate(config, outputRoot, false, true, false, output, error));
+        var unexpectedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", "vtkCommonCore", "vtkUnexpected_gen.cs");
+        File.WriteAllText(unexpectedPath, "// unexpected");
+        error.GetStringBuilder().Clear();
+        Assert.Equal(1, generator.CheckGeneratedOutputIncremental(config, output, error));
+        Assert.Contains("vtkUnexpected_gen.cs: Only exists in current output.", error.ToString());
+    }
+
+    [Fact]
     public void XmlEmitter_EscapesMarkupAndPreservesUnimplementedCommandsAsText()
     {
         var output = new StringBuilder();

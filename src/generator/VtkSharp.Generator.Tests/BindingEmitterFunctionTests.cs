@@ -6,6 +6,15 @@ namespace VtkSharp.Generator.Tests;
 public sealed class BindingEmitterFunctionTests
 {
     [Fact]
+    public void CppEmitter_DoesNotAddBlankLineAfterEmptyAbstractClassIncludes()
+    {
+        var text = new CppExportEmitter().Emit("vtkThing", [], hasStaticNew: false, []);
+
+        Assert.EndsWith("#include <vtkThing.h>" + Environment.NewLine, text, StringComparison.Ordinal);
+        Assert.False(text.EndsWith(Environment.NewLine + Environment.NewLine, StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void CSharpEmitter_EmitsVoidMethodWithVtkObjectParameter()
     {
         var emitter = new CSharpBindingEmitter();

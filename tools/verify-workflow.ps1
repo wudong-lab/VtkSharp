@@ -5,6 +5,9 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Release",
 
+    [ValidateSet("Fast", "Final", "CI")]
+    [string]$Mode = "Final",
+
     [string]$VtkBinDirectory,
     [string]$GeneratorConfig,
     [string]$Example,
@@ -38,6 +41,7 @@ $report = [ordered]@{
     startedAt = [DateTimeOffset]::Now.ToString("o")
     repository = $repoRoot
     configuration = $Configuration
+    mode = $Mode
     vtkDir = $VtkDir
     vtkBinDirectory = $VtkBinDirectory
     generatorConfig = $GeneratorConfig
@@ -147,14 +151,16 @@ try {
     $cli = @("run", "--no-build", "--project", $cliProject, "--configuration", $Configuration, "--")
     $configArgs = if ($GeneratorConfig) { @("--config", $GeneratorConfig) } else { @() }
     Add-Stage "generator-build" "dotnet" @("build", $cliProject, "--configuration", $Configuration, "--nologo")
-    Add-Stage "generator-tests" "dotnet" @("test", "src/generator/VtkSharp.Generator.Tests", "--configuration", $Configuration, "--nologo")
+    Add-Stage "generator-tests" "dotnet" @("test", "src/generator/VtkSharp.Generator.Tests", "--configuration", $Configuration, "--nologo") ($Mode -ne "Fast")
     Add-Stage "generate" "dotnet" ($cli + @("generate-bindings", "--output-root", "src", "--incremental") + $configArgs) ([bool]$Regenerate)
     Add-Stage "native-build" "pwsh" @("-NoProfile", "-File", "$PSScriptRoot/build-native.ps1", "-Configuration", $Configuration, "-VtkDir", $VtkDir)
     Add-Stage "managed-tests" "dotnet" @("test", "src/bindings/VtkSharp.slnx", "--configuration", $Configuration, "--nologo")
     Add-Stage "example-build" "dotnet" @("build", "src/examples/ExampleBrowser/ExampleBrowser.csproj", "--configuration", $Configuration, "--nologo")
     $exampleExe = Join-Path $repoRoot "src/examples/ExampleBrowser/bin/$Configuration/net8.0-windows/ExampleBrowser.exe"
     Add-Stage "example-smoke" $exampleExe @("--smoke", $Example, "--output", (Join-Path $OutputDirectory "example")) ([bool]$Example) $ExampleTimeoutSeconds
-    Add-Stage "generated-check" "dotnet" ($cli + @("generate-bindings", "--check") + $configArgs)
+    $generatedCheckArgs = @("generate-bindings", "--check")
+    if ($Mode -ne "CI") { $generatedCheckArgs += "--incremental" }
+    Add-Stage "generated-check" "dotnet" ($cli + $generatedCheckArgs + $configArgs)
 
     $failed = $false
     foreach ($stage in $report.stages) {

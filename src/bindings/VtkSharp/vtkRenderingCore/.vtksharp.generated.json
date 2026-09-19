@@ -12,7 +12,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractMapper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractMapper_export_gen.cpp",
       "managedContentHash": "5900812807e6066038f73fa30e87a02c583d1b8085fcf517f74fca522d6d5c8a",
-      "nativeContentHash": "23cfad5757537f8ecd9749d5289c7dbafb80ac2a6cffb650d849130313a49717"
+      "nativeContentHash": "77601101a4f6783aa6522ed6ac2111142f28358c9095e40a742fa09530b6aec5"
     },
     {
       "className": "vtkAbstractMapper3D",
@@ -23,7 +23,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractMapper3D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractMapper3D_export_gen.cpp",
       "managedContentHash": "c0b293eaf38912bc44a2c5687810006210c9ad4c6e59fab87cd8e74cc0c346fa",
-      "nativeContentHash": "ac2439ced2a456230a4c9087a34f0eff68c556899b1ec653704a1a26b9cbf077"
+      "nativeContentHash": "0f74b739557f6ab97febb19c7c8776ed7db179d8aaf88853091fa2b311d6d14e"
     },
     {
       "className": "vtkAbstractPicker",
@@ -34,7 +34,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractPicker_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractPicker_export_gen.cpp",
       "managedContentHash": "3c3f677afbd13f63cb70bb72d10c2a4b6a5710dc05613dd063008e55ba82beeb",
-      "nativeContentHash": "c8121d9e4a6465932b881da7790a3a0d2e4da4d327bb8bd58ed66968c8cd226d"
+      "nativeContentHash": "9b74700b5b063d9402fd3b43b098c053a5fcccc1ae5da7fb10f4e40098de1e23"
     },
     {
       "className": "vtkAbstractPropPicker",
@@ -144,7 +144,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkCuller_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkCuller_export_gen.cpp",
       "managedContentHash": "9eb1c40f25e886fb3032584fba2ec60ae9ca31c21969cb71025f22d165a0ea11",
-      "nativeContentHash": "87123d1c4bc82a883837c2f9cc8aa804be0742d3a41c934e5c5716f2c38e2ff5"
+      "nativeContentHash": "82182058cba0eda8a06c5851dcb10f7a551f43d98f5268b16e53e6e86e7307c3"
     },
     {
       "className": "vtkDiscretizableColorTransferFunction",
@@ -243,7 +243,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkMapper2D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkMapper2D_export_gen.cpp",
       "managedContentHash": "524e87db647a099cff9b6a3924083e09d0baabbbbacc169928c75a7221a24a7c",
-      "nativeContentHash": "f89896bbc3bb7c689923336e47b29d61074581eb76897d7827ee6503034d99a9"
+      "nativeContentHash": "1fbfebd52e46e74b3cb876d79255dc09321641a2a66c389bdf32326d04a07311"
     },
     {
       "className": "vtkPointGaussianMapper",
@@ -353,7 +353,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkRenderPass_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkRenderPass_export_gen.cpp",
       "managedContentHash": "08f0f1aa078f69c85ebf274c28f8072102992ae8ad240900f8fb334496db8ab2",
-      "nativeContentHash": "41ebc5801ac4d8e3452e29e22cf8b68e69c07213b5c60e20a6ac4e2cc90d5b30"
+      "nativeContentHash": "cfb1946acbf9cbd31bd18cb54b7488560fc1d5b2f54939027c53d06a73a1a46c"
     },
     {
       "className": "vtkRenderWindow",
@@ -408,7 +408,7 @@
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkTDxInteractorStyle_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkTDxInteractorStyle_export_gen.cpp",
       "managedContentHash": "dda516c34579cf105f5200b59ad1b6f828021328622831f3f3a2b1a5338df326",
-      "nativeContentHash": "68c940cb45675fd23b27242845c6f28b7afbd2bb596a4db9074ab2173d0d1784"
+      "nativeContentHash": "8138298ed55fd2c5ca7122ff18f4d90d01f2e0a23792fa623687a491068045b0"
     },
     {
       "className": "vtkTextActor",

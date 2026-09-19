@@ -34,7 +34,8 @@ public sealed class CppExportEmitter
         foreach (var include in includeClassNames.Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal))
             sb.AppendLine($"#include <{include}.h>");
         sb.AppendLine($"#include <{className}.h>");
-        sb.AppendLine();
+        if (hasStaticNew || functions.Count > 0)
+            sb.AppendLine();
         if (hasStaticNew)
             sb.AppendLine($"VTKSHARP_API {className}* {className}_New() {{ return {className}::New(); }}");
         foreach (var function in functions)

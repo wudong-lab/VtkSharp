@@ -60,9 +60,12 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- normalize-whitelist
 # 生成与一致性检查
 dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src --incremental
 dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check --incremental
 ```
 
-日常迭代使用 `--incremental`。提交前使用 `--check` 全量生成到临时目录并与当前输出比较。
+`--check --incremental` 使用现有 manifest、输入指纹和生成文件内容哈希复用未变化类型，并检查缺失、被编辑或多余的生成文件；日常本地验证优先使用该模式。单独 `--check` 会在临时目录完整生成并比较全部输出，生成器实现、缓存协议或 VTK 版本变化后应使用全量模式。
+
+日常生成使用 `--incremental`，本地交付前使用 `--check --incremental`。生成器实现、缓存协议或 VTK 版本变化后，以及 CI 中，使用 `--check` 全量生成到临时目录并与当前输出比较。
 
 查询类命令支持 `--format json`，适合脚本和 AI 读取结构化结果。`create-candidate` 的常用参数：
 

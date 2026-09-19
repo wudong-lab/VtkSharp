@@ -145,7 +145,7 @@ internal class Program
         };
         var checkOption = new Option<bool>("--check")
         {
-            Description = "Generate to a temporary directory and compare with current generated files",
+            Description = "Compare current generated files with expected output; combine with --incremental to reuse manifests",
         };
         var incrementalOption = new Option<bool>("--incremental")
         {
@@ -175,6 +175,9 @@ internal class Program
             var force = parseResult.GetValue(forceOption);
             var configPath = parseResult.GetValue(configOption)?.FullName
                              ?? GetDefaultConfigPath();
+            if (check && incremental)
+                return CheckGeneratedOutputIncremental(configPath);
+
             var outputRootPath = outputRoot?.FullName
                                  ?? (check
                                      ? Path.Combine(Path.GetTempPath(), "VtkSharp.Generator", "check", Guid.NewGuid().ToString("N"))
@@ -511,6 +514,9 @@ internal class Program
 
     private static int CheckGeneratedOutput(string configPath, string outputRoot)
         => new BindingGenerationService().CheckGeneratedOutput(configPath, outputRoot, Console.Out, Console.Error);
+
+    private static int CheckGeneratedOutputIncremental(string configPath)
+        => new BindingGenerationService().CheckGeneratedOutputIncremental(configPath, Console.Out, Console.Error);
 
     private static int ValidateWhitelist(string configPath, bool continueOnError, string format)
     {

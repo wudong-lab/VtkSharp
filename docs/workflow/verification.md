@@ -13,9 +13,19 @@
 
 # 合并 candidate 后，需要更新生成文件时显式启用
 .\tools\verify-workflow.ps1 -Regenerate -Example GeometricObjects/Cone
+
+# 日常迭代：跳过 generator 测试，使用 manifest 增量检查生成一致性
+.\tools\verify-workflow.ps1 -Mode Fast -Regenerate -Example GeometricObjects/Cone
+
+# CI 或生成器/缓存协议变更：从头生成并完整比较全部输出
+.\tools\verify-workflow.ps1 -Mode CI -Regenerate -Example GeometricObjects/Cone
 ```
 
-默认使用 Release，依次构建 CLI、运行 generator 测试、按需增量生成、构建 native、运行 managed 测试、构建 ExampleBrowser、按需运行目标示例、检查生成一致性。没有指定 `-Example` 时，示例验收标记为 `not-run`，不会自动用 Cone 代替目标示例。
+默认使用 Release 和 `Final` 模式，依次构建 CLI、运行 generator 测试、按需增量生成、构建 native、运行 managed 测试、构建 ExampleBrowser、按需运行目标示例，并使用 manifest 增量检查生成一致性。没有指定 `-Example` 时，示例验收标记为 `not-run`，不会自动用 Cone 代替目标示例。
+
+- `Fast`：跳过 generator 测试，其余构建、托管测试、目标 smoke 和增量生成检查仍执行，适合修改示例和白名单时快速反馈。
+- `Final`：默认模式，运行全部测试，并使用增量生成检查，适合本地最终交付。
+- `CI`：运行全部测试，并在临时目录完整生成所有绑定后比较，适合 CI、生成器实现变更、增量缓存协议变更和 VTK 升级。增量检查依赖 manifest 和逐类输入指纹，不能替代这些场景的全量检查。
 
 可通过 `-Configuration`、`-GeneratorConfig`、`-VtkBinDirectory` 指定配置；默认 VTK DLL 目录是 CMake 包目录的 `../../../bin`，只加入子进程 PATH。生成器使用 `VTK_ROOT` 或本地配置中的安装，脚本不会根据 `-VtkDir` 自动推导并覆盖它；调用者应确保两者是同一版本和安装。
 
