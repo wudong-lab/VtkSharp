@@ -3,11 +3,27 @@
 #include <vtkScalarsToColors.h>
 #include <vtkMapper.h>
 
+VTKSHARP_API int vtkMapper_GetScalarMode(vtkMapper* self) { return self->GetScalarMode(); }
+
 VTKSHARP_API void vtkMapper_ScalarVisibilityOff(vtkMapper* self) { self->ScalarVisibilityOff(); }
 
 VTKSHARP_API void vtkMapper_ScalarVisibilityOn(vtkMapper* self) { self->ScalarVisibilityOn(); }
 
 VTKSHARP_API void vtkMapper_SetLookupTable(vtkMapper* self, vtkScalarsToColors* lut) { self->SetLookupTable(lut); }
+
+VTKSHARP_API void vtkMapper_SetScalarMode(vtkMapper* self, int _arg) { self->SetScalarMode(_arg); }
+
+VTKSHARP_API void vtkMapper_SetScalarModeToDefault(vtkMapper* self) { self->SetScalarModeToDefault(); }
+
+VTKSHARP_API void vtkMapper_SetScalarModeToUseCellData(vtkMapper* self) { self->SetScalarModeToUseCellData(); }
+
+VTKSHARP_API void vtkMapper_SetScalarModeToUseCellFieldData(vtkMapper* self) { self->SetScalarModeToUseCellFieldData(); }
+
+VTKSHARP_API void vtkMapper_SetScalarModeToUseFieldData(vtkMapper* self) { self->SetScalarModeToUseFieldData(); }
+
+VTKSHARP_API void vtkMapper_SetScalarModeToUsePointData(vtkMapper* self) { self->SetScalarModeToUsePointData(); }
+
+VTKSHARP_API void vtkMapper_SetScalarModeToUsePointFieldData(vtkMapper* self) { self->SetScalarModeToUsePointFieldData(); }
 
 VTKSHARP_API void vtkMapper_SetScalarRange_double_double(vtkMapper* self, double _arg1, double _arg2) { self->SetScalarRange(_arg1, _arg2); }
 

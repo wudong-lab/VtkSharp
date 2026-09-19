@@ -59,6 +59,17 @@
       "nativeContentHash": "981796e0161df6b808ed074e22e1a3ed5abe478028b90134862440b6537a5230"
     },
     {
+      "className": "vtkFeatureEdges",
+      "header": "vtkFeatureEdges.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "8f60ef4eed63725fbbe79b23a2cdd6a4ae2737c35e5c17cf522a260a8e74127b",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkFeatureEdges_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkFeatureEdges_export_gen.cpp",
+      "managedContentHash": "e21a2546e0ddcbe6d8607ea574435b5accb2b5c5307f4d252a2f2ddb283bdbdc",
+      "nativeContentHash": "38b352de82a8bd16d2fbe1b01bff08a03de562594d6b9ad60234673f01c2623a"
+    },
+    {
       "className": "vtkGenerateIds",
       "header": "vtkGenerateIds.h",
       "baseClassName": "vtkPassInputTypeAlgorithm",

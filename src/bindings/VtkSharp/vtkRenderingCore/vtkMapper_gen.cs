@@ -90,6 +90,25 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
         return target;
     }
 
+    /// <summary>Named values for SetScalarMode/GetScalarMode. Unnamed native values are preserved.</summary>
+    public enum ScalarMode : int
+    {
+        /// <summary>Native: VTK_SCALAR_MODE_DEFAULT.</summary>
+        Default = 0,
+        /// <summary>Native: VTK_SCALAR_MODE_USE_CELL_DATA.</summary>
+        UseCellData = 2,
+        /// <summary>Native: VTK_SCALAR_MODE_USE_CELL_FIELD_DATA.</summary>
+        UseCellFieldData = 4,
+        /// <summary>Native: VTK_SCALAR_MODE_USE_FIELD_DATA.</summary>
+        UseFieldData = 5,
+        /// <summary>Native: VTK_SCALAR_MODE_USE_POINT_DATA.</summary>
+        UsePointData = 1,
+        /// <summary>Native: VTK_SCALAR_MODE_USE_POINT_FIELD_DATA.</summary>
+        UsePointFieldData = 3,
+    }
+
+    public new ScalarMode GetScalarMode() => (ScalarMode)vtkMapper_GetScalarMode(this.NativePointer);
+
     /// <summary>
     /// Turn on/off flag to control whether scalar data is used to color objects.
     /// </summary>
@@ -112,6 +131,38 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
     public new void SetLookupTable(vtkScalarsToColors lut)
     {
         vtkMapper_SetLookupTable(this.NativePointer, lut.NativePointer);
+    }
+
+    public new void SetScalarMode(ScalarMode _arg) => vtkMapper_SetScalarMode(this.NativePointer, (int)_arg);
+
+    public new void SetScalarModeToDefault()
+    {
+        vtkMapper_SetScalarModeToDefault(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUseCellData()
+    {
+        vtkMapper_SetScalarModeToUseCellData(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUseCellFieldData()
+    {
+        vtkMapper_SetScalarModeToUseCellFieldData(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUseFieldData()
+    {
+        vtkMapper_SetScalarModeToUseFieldData(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUsePointData()
+    {
+        vtkMapper_SetScalarModeToUsePointData(this.NativePointer);
+    }
+
+    public new void SetScalarModeToUsePointFieldData()
+    {
+        vtkMapper_SetScalarModeToUsePointFieldData(this.NativePointer);
     }
 
     /// <summary>
@@ -142,6 +193,9 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
 
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkMapper_GetScalarMode(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMapper_ScalarVisibilityOff(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
@@ -149,6 +203,27 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMapper_SetLookupTable(nint self, nint lut);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarMode(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarModeToDefault(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarModeToUseCellData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarModeToUseCellFieldData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarModeToUseFieldData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarModeToUsePointData(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SetScalarModeToUsePointFieldData(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMapper_SetScalarRange_double_double(nint self, double _arg1, double _arg2);

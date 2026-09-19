@@ -1147,6 +1147,11 @@ classes:
   - name: vtkMapper
     header: vtkMapper.h
     functions:
+      - name: GetScalarMode
+        cppSignature: int GetScalarMode()
+        return:
+          type: int
+        parameters: []
       - name: ScalarVisibilityOff
         cppSignature: void ScalarVisibilityOff()
         return:
@@ -1164,6 +1169,43 @@ classes:
         parameters:
           - type: vtkScalarsToColors*
             name: lut
+      - name: SetScalarMode
+        cppSignature: void SetScalarMode(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetScalarModeToDefault
+        cppSignature: void SetScalarModeToDefault()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUseCellData
+        cppSignature: void SetScalarModeToUseCellData()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUseCellFieldData
+        cppSignature: void SetScalarModeToUseCellFieldData()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUseFieldData
+        cppSignature: void SetScalarModeToUseFieldData()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUsePointData
+        cppSignature: void SetScalarModeToUsePointData()
+        return:
+          type: void
+        parameters: []
+      - name: SetScalarModeToUsePointFieldData
+        cppSignature: void SetScalarModeToUsePointFieldData()
+        return:
+          type: void
+        parameters: []
       - name: SetScalarRange
         cppSignature: void SetScalarRange(double _arg1, double _arg2)
         return:
@@ -1180,6 +1222,37 @@ classes:
         parameters:
           - type: const double[2]
             name: _arg
+    enumProperties:
+      - name: ScalarMode
+        nativeType: int
+        getter: GetScalarMode
+        setter: SetScalarMode
+        values:
+          - name: Default
+            nativeExpression: VTK_SCALAR_MODE_DEFAULT
+            value: 0
+          - name: UseCellData
+            nativeExpression: VTK_SCALAR_MODE_USE_CELL_DATA
+            value: 2
+          - name: UseCellFieldData
+            nativeExpression: VTK_SCALAR_MODE_USE_CELL_FIELD_DATA
+            value: 4
+          - name: UseFieldData
+            nativeExpression: VTK_SCALAR_MODE_USE_FIELD_DATA
+            value: 5
+          - name: UsePointData
+            nativeExpression: VTK_SCALAR_MODE_USE_POINT_DATA
+            value: 1
+          - name: UsePointFieldData
+            nativeExpression: VTK_SCALAR_MODE_USE_POINT_FIELD_DATA
+            value: 3
+        convenienceMethods:
+          - SetScalarModeToDefault
+          - SetScalarModeToUseCellData
+          - SetScalarModeToUseCellFieldData
+          - SetScalarModeToUseFieldData
+          - SetScalarModeToUsePointData
+          - SetScalarModeToUsePointFieldData
   - name: vtkMapper2D
     header: vtkMapper2D.h
     functions: []

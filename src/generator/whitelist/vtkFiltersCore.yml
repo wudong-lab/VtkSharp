@@ -88,6 +88,34 @@ classes:
   - name: vtkExtractEdges
     header: vtkExtractEdges.h
     functions: []
+  - name: vtkFeatureEdges
+    header: vtkFeatureEdges.h
+    functions:
+      - name: BoundaryEdgesOn
+        cppSignature: void BoundaryEdgesOn()
+        return:
+          type: void
+        parameters: []
+      - name: ColoringOn
+        cppSignature: void ColoringOn()
+        return:
+          type: void
+        parameters: []
+      - name: FeatureEdgesOff
+        cppSignature: void FeatureEdgesOff()
+        return:
+          type: void
+        parameters: []
+      - name: ManifoldEdgesOff
+        cppSignature: void ManifoldEdgesOff()
+        return:
+          type: void
+        parameters: []
+      - name: NonManifoldEdgesOff
+        cppSignature: void NonManifoldEdgesOff()
+        return:
+          type: void
+        parameters: []
   - name: vtkGenerateIds
     header: vtkGenerateIds.h
     functions:

@@ -257,6 +257,9 @@ classes:
         parameters:
           - type: int
             name: _arg
+  - name: vtkDiskSource
+    header: vtkDiskSource.h
+    functions: []
   - name: vtkLineSource
     header: vtkLineSource.h
     functions:

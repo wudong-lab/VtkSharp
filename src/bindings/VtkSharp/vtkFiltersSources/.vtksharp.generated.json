@@ -48,6 +48,17 @@
       "nativeContentHash": "ef7b81a34d9a59cb3122d5e59b98493e6dc865da727c464663b4ec364d79d080"
     },
     {
+      "className": "vtkDiskSource",
+      "header": "vtkDiskSource.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "421c8b14b9cdac6f5a6755f296e403a35b4c91d29762852b206f3afd74ab9c7f",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkDiskSource_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkDiskSource_export_gen.cpp",
+      "managedContentHash": "443bd8483514b8d3054f1c292188eff50f4cb37cfefb1b5c53b273c16eeef7da",
+      "nativeContentHash": "8b76b073311ee1030648cf0188ec9fbb344df96edbd2b5f9786a95da4bceac0f"
+    },
+    {
       "className": "vtkLineSource",
       "header": "vtkLineSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",

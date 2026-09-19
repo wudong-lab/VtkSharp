@@ -228,11 +228,11 @@
       "header": "vtkMapper.h",
       "baseClassName": "vtkAbstractMapper3D",
       "hasStaticNew": false,
-      "inputHash": "1ed71dcd8120ab978b8f7edd489c13be8ef9e8c859a31449346a52e07098d75c",
+      "inputHash": "49b2cf8e965f25ab908b0dcbe974ac1f5b388045e42c48b9eb75ba4c770abd83",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkMapper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkMapper_export_gen.cpp",
-      "managedContentHash": "8803108c4670b3534dd234bd3a391f5760ed2a9fbf0e344a16a7b5f61c35d995",
-      "nativeContentHash": "437daac921b9f0d9400edaaadd7702fd92dd00e1e2579fb2cd144561ddca1c01"
+      "managedContentHash": "6fb3dfd3f589208f0f36fae361b899abeaa2e904ee4f3f0f94ef5922afaff94b",
+      "nativeContentHash": "01e5d82da25b17e43dde6f0d6d6683cdb3e75876080b6bf95df150cbbd1bdd0a"
     },
     {
       "className": "vtkMapper2D",
