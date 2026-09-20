@@ -147,6 +147,17 @@
       "nativeContentHash": "82182058cba0eda8a06c5851dcb10f7a551f43d98f5268b16e53e6e86e7307c3"
     },
     {
+      "className": "vtkDataSetMapper",
+      "header": "vtkDataSetMapper.h",
+      "baseClassName": "vtkMapper",
+      "hasStaticNew": true,
+      "inputHash": "6e02e7d73f7b8d38aea2fb7b40dc8544174ac74754742d8ab10817fbc8cc4e96",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkDataSetMapper_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkDataSetMapper_export_gen.cpp",
+      "managedContentHash": "6e9882809eac5260e8e345f7358fd3c17f31e89f23af85a89ade58d5a2d938b6",
+      "nativeContentHash": "b3b04cbac1eb217b13c2b9e75d8b63d3ac0316db1df840041e018e86eb77e673"
+    },
+    {
       "className": "vtkDiscretizableColorTransferFunction",
       "header": "vtkDiscretizableColorTransferFunction.h",
       "baseClassName": "vtkColorTransferFunction",

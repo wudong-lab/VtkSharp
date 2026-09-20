@@ -92,6 +92,17 @@
       "nativeContentHash": "580fc8be1ce8fe979af6218b36dbd61c914073b3ad92e70922be453d1fd5e72a"
     },
     {
+      "className": "vtkMarchingSquares",
+      "header": "vtkMarchingSquares.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "0b71b95f708b0faf250f85bba25642b9863a6b5d697e5e6309de60e970dbc7d2",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkMarchingSquares_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkMarchingSquares_export_gen.cpp",
+      "managedContentHash": "6c075dcfefbd340dabf1f15bac31e1f3aacfec4faecef1f51be4ff3da492187b",
+      "nativeContentHash": "e17363e6ab7b18c8b09b30d83831b5d54dfe745c38877d4a5f07fbd489dd4904"
+    },
+    {
       "className": "vtkProbeFilter",
       "header": "vtkProbeFilter.h",
       "baseClassName": "vtkDataSetAlgorithm",

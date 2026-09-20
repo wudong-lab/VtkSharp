@@ -168,6 +168,18 @@ classes:
         parameters:
           - type: vtkAlgorithmOutput*
             name: algOutput
+  - name: vtkMarchingSquares
+    header: vtkMarchingSquares.h
+    functions:
+      - name: SetValue
+        cppSignature: void SetValue(int i, double value)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: i
+          - type: double
+            name: value
   - name: vtkProbeFilter
     header: vtkProbeFilter.h
     functions:

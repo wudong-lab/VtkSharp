@@ -931,6 +931,9 @@ classes:
   - name: vtkCuller
     header: vtkCuller.h
     functions: []
+  - name: vtkDataSetMapper
+    header: vtkDataSetMapper.h
+    functions: []
   - name: vtkDiscretizableColorTransferFunction
     header: vtkDiscretizableColorTransferFunction.h
     functions:

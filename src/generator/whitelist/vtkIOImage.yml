@@ -12,6 +12,16 @@ classes:
         parameters:
           - type: const char*
             name: _arg
+  - name: vtkImageReader2
+    header: vtkImageReader2.h
+    functions:
+      - name: SetFileName
+        cppSignature: void SetFileName(char const * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg1
   - name: vtkImageWriter
     header: vtkImageWriter.h
     functions:
@@ -118,6 +128,16 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkPNGReader
+    header: vtkPNGReader.h
+    functions:
+      - name: CanReadFile
+        cppSignature: int CanReadFile(char const * fname)
+        return:
+          type: int
+        parameters:
+          - type: const char*
+            name: fname
   - name: vtkPNGWriter
     header: vtkPNGWriter.h
     functions:

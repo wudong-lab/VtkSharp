@@ -34,6 +34,9 @@
     <Content Include="Examples\Meshes\PointInterpolator\Data\InterpolatingOnSTL_final.stl"
              Link="Data\InterpolatingOnSTL_final.stl"
              CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Examples\Modelling\ContourTriangulator\Data\fullhead15.png"
+             Link="Data\fullhead15.png"
+             CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

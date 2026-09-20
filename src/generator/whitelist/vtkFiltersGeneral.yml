@@ -2,6 +2,9 @@
 
 module: vtkFiltersGeneral
 classes:
+  - name: vtkContourTriangulator
+    header: vtkContourTriangulator.h
+    functions: []
   - name: vtkTableToPolyData
     header: vtkTableToPolyData.h
     functions:

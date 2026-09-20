@@ -4,6 +4,17 @@
   "module": "vtkFiltersGeneral",
   "classes": [
     {
+      "className": "vtkContourTriangulator",
+      "header": "vtkContourTriangulator.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "2c043366f52df1484230ac51de040ab8b11f0ccb87b6f124df19dc1b85642a78",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkContourTriangulator_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkContourTriangulator_export_gen.cpp",
+      "managedContentHash": "9dc6560e9d8d987cb8c76167d7f1a30625ac43d7802c74882e8496815360c579",
+      "nativeContentHash": "fa0133f78528f91ba0ed9dbd2e4240deb17a9044b57b0652d2817d88e1899676"
+    },
+    {
       "className": "vtkTableToPolyData",
       "header": "vtkTableToPolyData.h",
       "baseClassName": "vtkPolyDataAlgorithm",

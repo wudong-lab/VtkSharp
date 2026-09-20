@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=../../../../../generator/schemas/vtksharp.whitelist-candidate.schema.json
+
+status: proposed
+source:
+  kind: vtk-example
+  name: ContourTriangulator
+  original: "https://examples.vtk.org/site/Cxx/Modelling/ContourTriangulator/"
+
+requirements:
+  - module: vtkFiltersCore
+    class: vtkMarchingSquares
+    header: vtkMarchingSquares.h
+    functions:
+      - name: SetValue
+        cppSignature: "void SetValue(int i, double value)"
+        return: { type: void }
+        parameters:
+          - { type: int, name: i }
+          - { type: double, name: value }
+
+  - module: vtkFiltersGeneral
+    class: vtkContourTriangulator
+    header: vtkContourTriangulator.h
+    functions: []
+
+  - module: vtkIOImage
+    class: vtkImageReader2
+    header: vtkImageReader2.h
+    functions:
+      - name: SetFileName
+        cppSignature: "void SetFileName(char const * _arg1)"
+        return: { type: void }
+        parameters:
+          - { type: "const char*", name: _arg1 }
+
+  - module: vtkIOImage
+    class: vtkPNGReader
+    header: vtkPNGReader.h
+    functions:
+      - name: CanReadFile
+        cppSignature: "int CanReadFile(char const * fname)"
+        return: { type: int }
+        parameters:
+          - { type: "const char*", name: fname }
+
+  - module: vtkRenderingCore
+    class: vtkDataSetMapper
+    header: vtkDataSetMapper.h
+    functions: []
