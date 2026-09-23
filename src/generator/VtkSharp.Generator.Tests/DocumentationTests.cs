@@ -6,13 +6,14 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class DocumentationTests : IDisposable
 {
     private readonly string _directory = Directory.CreateTempSubdirectory("VtkSharp.Documentation.").FullName;
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
+    [TestMethod]
+    [DataRow(false)]
+    [DataRow(true)]
     public void Inspect_PreservesClassMethodsGroupsMacrosAndLocalOverrideComments(bool bom)
     {
         var source = """
@@ -74,19 +75,19 @@ public sealed class DocumentationTests : IDisposable
         var raw = inspector.InspectFile(this._directory, "vtkThing.h")["vtkThing"];
         var inspected = inspector.InspectHeader(this._directory, "vtkThing.h", "vtkThing");
 
-        Assert.Equal(new ApiDocumentation("A thing & its geometry.", "Longer description <with> details.\n\nAnother paragraph."), inspected.Documentation);
-        Assert.Equal(raw.Documentation, inspected.Documentation);
-        Assert.Equal("Creates a thing.", inspected.NewDocumentation?.Summary);
+        Assert.AreEqual(new ApiDocumentation("A thing & its geometry.", "Longer description <with> details.\n\nAnother paragraph."), inspected.Documentation);
+        Assert.AreEqual(raw.Documentation, inspected.Documentation);
+        Assert.AreEqual("Creates a thing.", inspected.NewDocumentation?.Summary);
         foreach (var name in new[] { "SetEnabled", "GetEnabled", "EnabledOn", "EnabledOff" })
         {
             var documentation = inspected.Functions.Single(f => f.Name == name).Documentation;
-            Assert.Equal(new ApiDocumentation("Enable or disable the feature.", "Enabled by default."), documentation);
+            Assert.AreEqual(new ApiDocumentation("Enable or disable the feature.", "Enabled by default."), documentation);
         }
-        Assert.Equal(2, inspected.Functions.Count(f => f.Name == "SetPosition"));
-        Assert.All(inspected.Functions.Where(f => f.Name == "SetPosition"), f => Assert.Equal("Set vector coordinates.", f.Documentation?.Summary));
-        Assert.Null(inspected.Functions.Single(f => f.Name == "Update").Documentation);
-        Assert.Null(inspected.Functions.Single(f => f.Name == "Undocumented").Documentation);
-        Assert.Equal("Local render.", inspected.Functions.Single(f => f.Name == "Render").Documentation?.Summary);
+        Assert.AreEqual(2, inspected.Functions.Count(f => f.Name == "SetPosition"));
+        foreach (var f in inspected.Functions.Where(f => f.Name == "SetPosition")) Assert.AreEqual("Set vector coordinates.", f.Documentation?.Summary);
+        Assert.IsNull(inspected.Functions.Single(f => f.Name == "Update").Documentation);
+        Assert.IsNull(inspected.Functions.Single(f => f.Name == "Undocumented").Documentation);
+        Assert.AreEqual("Local render.", inspected.Functions.Single(f => f.Name == "Render").Documentation?.Summary);
 
         var functions = new[] { "double", "int" }.Select(type => new WhitelistFunction
         {
@@ -104,10 +105,10 @@ public sealed class DocumentationTests : IDisposable
         Assert.DoesNotContain("///@", generated);
         var xml = XDocument.Parse("<doc>" + string.Join('\n', generated.Split('\n')
             .Where(line => line.TrimStart().StartsWith("///", StringComparison.Ordinal)).Select(line => line.TrimStart()[3..])) + "</doc>");
-        Assert.Contains(xml.Descendants("summary"), element => element.Value.Contains("A thing & its geometry.", StringComparison.Ordinal));
+        Assert.Contains(element => element.Value.Contains("A thing & its geometry.", StringComparison.Ordinal), xml.Descendants("summary"));
     }
 
-    [Fact]
+    [TestMethod]
     public void Inspect_MapsStructuredMacroAndOverloadCommentsToManagedParameters()
     {
         File.WriteAllText(Path.Combine(this._directory, "vtkThing.h"), """
@@ -144,20 +145,20 @@ public sealed class DocumentationTests : IDisposable
             var doc = BindingDocumentation.ForMethod(function, source);
             if (function.Name == "GetValue")
             {
-                Assert.Null(doc.Parameters);
-                Assert.Equal("The current value.", doc.Returns);
+                Assert.IsNull(doc.Parameters);
+                Assert.AreEqual("The current value.", doc.Returns);
             }
             else
             {
-                Assert.Null(doc.Returns);
-                Assert.Equal("renamed", Assert.Single(doc.Parameters!).Name);
+                Assert.IsNull(doc.Returns);
+                Assert.AreEqual("renamed", Enumerable.Single(doc.Parameters!).Name);
                 if (function.Name == "SetVector") Assert.Contains("3 elements", doc.Parameters![0].Text);
                 else Assert.Contains(function.Parameters[0].Type == "int" ? "Integer coordinate." : "The scalar value.", doc.Parameters![0].Text);
             }
         }
     }
 
-    [Fact]
+    [TestMethod]
     public void Extract_DoesNotLeakAcrossDeclarationsOrLexicalBoundaries()
     {
         const string source = """"
@@ -181,17 +182,17 @@ public sealed class DocumentationTests : IDisposable
             """";
         var extractor = VtkDocumentationExtractor.Parse(source);
         ApiDocumentation? Find(string declaration) => extractor.GetDeclarationDocumentation(Encoding.UTF8.GetByteCount(source.AsSpan(0, source.IndexOf(declaration, StringComparison.Ordinal))));
-        Assert.Null(Find("void Empty"));
-        Assert.Equal("First.", Find("void First")?.Summary);
-        Assert.Null(Find("void Second"));
-        Assert.Null(Find("void Third"));
-        Assert.Null(Find("void Fourth"));
-        Assert.Equal(new ApiDocumentation("Outer.", "More details."), Find("void Fifth"));
-        Assert.Equal("Sixth.", Find("void Sixth")?.Summary);
-        Assert.Null(extractor.GetClassDocumentation("vtkFake", 0));
+        Assert.IsNull(Find("void Empty"));
+        Assert.AreEqual("First.", Find("void First")?.Summary);
+        Assert.IsNull(Find("void Second"));
+        Assert.IsNull(Find("void Third"));
+        Assert.IsNull(Find("void Fourth"));
+        Assert.AreEqual(new ApiDocumentation("Outer.", "More details."), Find("void Fifth"));
+        Assert.AreEqual("Sixth.", Find("void Sixth")?.Summary);
+        Assert.IsNull(extractor.GetClassDocumentation("vtkFake", 0));
     }
 
-    [Fact]
+    [TestMethod]
     public void Extract_NestedGroupsRestoreOuterDocumentation()
     {
         const string source = """
@@ -211,14 +212,14 @@ public sealed class DocumentationTests : IDisposable
             """;
         var extractor = VtkDocumentationExtractor.Parse(source);
         ApiDocumentation? Find(string declaration) => extractor.GetDeclarationDocumentation(source.IndexOf(declaration, StringComparison.Ordinal));
-        Assert.Equal("Outer.", Find("void First")?.Summary);
-        Assert.Equal("Inner.", Find("void Second")?.Summary);
-        Assert.Equal("Outer.", Find("void Third")?.Summary);
-        Assert.Null(Find("void Fourth"));
-        Assert.Null(Find("void Fifth"));
+        Assert.AreEqual("Outer.", Find("void First")?.Summary);
+        Assert.AreEqual("Inner.", Find("void Second")?.Summary);
+        Assert.AreEqual("Outer.", Find("void Third")?.Summary);
+        Assert.IsNull(Find("void Fourth"));
+        Assert.IsNull(Find("void Fifth"));
     }
 
-    [Fact]
+    [TestMethod]
     public void Extract_LineGroupsAndPreprocessorBranchesDoNotShareStaleComments()
     {
         const string source = """
@@ -242,13 +243,13 @@ public sealed class DocumentationTests : IDisposable
             """;
         var extractor = VtkDocumentationExtractor.Parse(source);
         ApiDocumentation? Find(string declaration) => extractor.GetDeclarationDocumentation(source.IndexOf(declaration, StringComparison.Ordinal));
-        Assert.Equal("Shared.", Find("void First")?.Summary);
-        Assert.Equal("Separate.", Find("void Second")?.Summary);
-        Assert.Null(Find("void Third"));
-        Assert.Equal("Fourth.", Find("void Fourth")?.Summary);
+        Assert.AreEqual("Shared.", Find("void First")?.Summary);
+        Assert.AreEqual("Separate.", Find("void Second")?.Summary);
+        Assert.IsNull(Find("void Third"));
+        Assert.AreEqual("Fourth.", Find("void Fourth")?.Summary);
     }
 
-    [Fact]
+    [TestMethod]
     public void Extract_AlternativeDeclarationsCannotLeakIntoLaterMethods()
     {
         const string source = """
@@ -262,11 +263,11 @@ public sealed class DocumentationTests : IDisposable
             void Second();
             """;
         var extractor = VtkDocumentationExtractor.Parse(source);
-        Assert.Equal("First.", extractor.GetDeclarationDocumentation(source.IndexOf("void First", StringComparison.Ordinal))?.Summary);
-        Assert.Null(extractor.GetDeclarationDocumentation(source.IndexOf("void Second", StringComparison.Ordinal)));
+        Assert.AreEqual("First.", extractor.GetDeclarationDocumentation(source.IndexOf("void First", StringComparison.Ordinal))?.Summary);
+        Assert.IsNull(extractor.GetDeclarationDocumentation(source.IndexOf("void Second", StringComparison.Ordinal)));
     }
 
-    [Fact]
+    [TestMethod]
     public void Generate_FullAndIncrementalAgreeAndCommentOnlyChangesInvalidateCache()
     {
         var config = Path.Combine(this._directory, "config.yml");
@@ -303,23 +304,23 @@ public sealed class DocumentationTests : IDisposable
         var generator = new BindingGenerationService();
         var output = new StringWriter();
         var error = new StringWriter();
-        Assert.Equal(0, generator.Generate(config, full, false, false, false, output, error));
-        Assert.Equal(0, generator.Generate(config, incremental, false, true, false, output, error));
+        Assert.AreEqual(0, generator.Generate(config, full, false, false, false, output, error));
+        Assert.AreEqual(0, generator.Generate(config, incremental, false, true, false, output, error));
         const string relative = "bindings/VtkSharp/vtkCommonCore/vtkThing_gen.cs";
-        Assert.Equal(File.ReadAllText(Path.Combine(full, relative)), File.ReadAllText(Path.Combine(incremental, relative)));
+        Assert.AreEqual(File.ReadAllText(Path.Combine(full, relative)), File.ReadAllText(Path.Combine(incremental, relative)));
         Assert.Contains("/// Original.", File.ReadAllText(Path.Combine(full, relative)));
         Assert.Contains("<param name=\"renamed\">", File.ReadAllText(Path.Combine(full, relative)));
         Assert.Contains("<returns>", File.ReadAllText(Path.Combine(full, relative)));
         output.GetStringBuilder().Clear();
-        Assert.Equal(0, generator.Generate(config, incremental, false, true, false, output, error));
+        Assert.AreEqual(0, generator.Generate(config, incremental, false, true, false, output, error));
         Assert.Contains("generated 0 class(es), reused 1 class(es)", output.ToString());
         File.WriteAllText(header, "class vtkThing { public: /** Original.\n@param value Revised.\n@return Result.\n*/ int Update(int value); };");
-        Assert.Equal(0, generator.Generate(config, incremental, false, true, false, output, error));
+        Assert.AreEqual(0, generator.Generate(config, incremental, false, true, false, output, error));
         Assert.Contains("/// Revised.", File.ReadAllText(Path.Combine(incremental, relative)));
-        Assert.Equal("", error.ToString());
+        Assert.AreEqual("", error.ToString());
     }
 
-    [Fact]
+    [TestMethod]
     public void CheckGeneratedOutputIncremental_ReusesValidEntriesAndDetectsEditedOrUnexpectedFiles()
     {
         var config = Path.Combine(this._directory, "incremental-check.yml");
@@ -353,36 +354,36 @@ public sealed class DocumentationTests : IDisposable
         var generator = new BindingGenerationService();
         var output = new StringWriter();
         var error = new StringWriter();
-        Assert.Equal(0, generator.Generate(config, outputRoot, false, true, false, output, error));
+        Assert.AreEqual(0, generator.Generate(config, outputRoot, false, true, false, output, error));
 
         output.GetStringBuilder().Clear();
-        Assert.Equal(0, generator.CheckGeneratedOutputIncremental(config, output, error));
+        Assert.AreEqual(0, generator.CheckGeneratedOutputIncremental(config, output, error));
         Assert.Contains("reused 1 class(es) and inspected 0 class(es)", output.ToString());
 
         var managedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", "vtkCommonCore", "vtkThing_gen.cs");
         File.AppendAllText(managedPath, "// manual edit");
         error.GetStringBuilder().Clear();
-        Assert.Equal(1, generator.CheckGeneratedOutputIncremental(config, output, error));
+        Assert.AreEqual(1, generator.CheckGeneratedOutputIncremental(config, output, error));
         Assert.Contains("vtkThing_gen.cs: Content differs.", error.ToString());
 
-        Assert.Equal(0, generator.Generate(config, outputRoot, false, true, false, output, error));
+        Assert.AreEqual(0, generator.Generate(config, outputRoot, false, true, false, output, error));
         var unexpectedPath = Path.Combine(outputRoot, "bindings", "VtkSharp", "vtkCommonCore", "vtkUnexpected_gen.cs");
         File.WriteAllText(unexpectedPath, "// unexpected");
         error.GetStringBuilder().Clear();
-        Assert.Equal(1, generator.CheckGeneratedOutputIncremental(config, output, error));
+        Assert.AreEqual(1, generator.CheckGeneratedOutputIncremental(config, output, error));
         Assert.Contains("vtkUnexpected_gen.cs: Only exists in current output.", error.ToString());
     }
 
-    [Fact]
+    [TestMethod]
     public void XmlEmitter_EscapesMarkupAndPreservesUnimplementedCommandsAsText()
     {
         var output = new StringBuilder();
         XmlDocumentationEmitter.Emit(output, new ApiDocumentation("a < b && b > c", "@param x <value>\n@return &result;\n\n@code\n<tag>\n@endcode"));
         var xml = XElement.Parse("<doc>" + string.Join('\n', output.ToString().Split('\n')
             .Where(line => line.StartsWith("///", StringComparison.Ordinal)).Select(line => line[3..])) + "</doc>");
-        Assert.Equal("\n a < b && b > c\n ", xml.Element("summary")!.Value);
-        Assert.Empty(xml.Descendants("param"));
-        Assert.Equal(2, xml.Descendants("para").Count());
+        Assert.AreEqual("\n a < b && b > c\n ", xml.Element("summary")!.Value);
+        Assert.IsEmpty(xml.Descendants("param"));
+        Assert.AreEqual(2, xml.Descendants("para").Count());
         Assert.Contains("@param x <value>", xml.Element("remarks")!.Value);
     }
 

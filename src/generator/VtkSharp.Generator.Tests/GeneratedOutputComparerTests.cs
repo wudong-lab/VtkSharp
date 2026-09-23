@@ -3,9 +3,10 @@ using VtkSharp.Generator.Core.Generation;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class GeneratedOutputComparerTests
 {
-    [Fact]
+    [TestMethod]
     public void CompareDirectories_TreatsUtf8BomOnlyDifferenceAsEqual()
     {
         var expected = CreateDirectory();
@@ -23,10 +24,10 @@ public sealed class GeneratedOutputComparerTests
 
         var differences = new GeneratedOutputComparer().CompareDirectories(expected, actual, "*_gen.cs");
 
-        Assert.Empty(differences);
+        Assert.IsEmpty(differences);
     }
 
-    [Fact]
+    [TestMethod]
     public void CompareFiles_TreatsLineEndingOnlyDifferenceAsEqual()
     {
         var expected = Path.Combine(CreateDirectory(), "CMakeLists.txt");
@@ -36,7 +37,7 @@ public sealed class GeneratedOutputComparerTests
 
         var differences = new GeneratedOutputComparer().CompareFiles(expected, actual, "native/CMakeLists.txt");
 
-        Assert.Empty(differences);
+        Assert.IsEmpty(differences);
     }
 
     private static string CreateDirectory()

@@ -117,6 +117,8 @@ AI 新增封装能力时，优先同时补充一个小示例。示例应尽量�
 
 完成修改后应尽量执行相关验证：
 
+项目单元测试使用 MSTest 4.4.1，测试 SDK 使用 Microsoft.NET.Test.Sdk 18.10.1。新增或迁移测试时使用 `[TestClass]`、`[TestMethod]` 和 `[DataRow]`。
+
 ```powershell
 dotnet build src/examples/ExampleBrowser/ExampleBrowser.csproj --configuration Release
 dotnet test src/bindings/VtkSharp.slnx --configuration Release

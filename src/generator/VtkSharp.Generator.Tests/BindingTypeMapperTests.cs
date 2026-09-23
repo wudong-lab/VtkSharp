@@ -2,80 +2,81 @@ using VtkSharp.Generator.Core.Generation;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class BindingTypeMapperTests
 {
-    [Theory]
-    [InlineData("void", "void", "void", "void")]
-    [InlineData("char", "char", "char", "char")]
-    [InlineData("unsigned char", "byte", "byte", "unsigned char")]
-    [InlineData("unsigned int", "uint", "uint", "unsigned int")]
-    [InlineData("unsigned long", "ulong", "ulong", "std::uint64_t")]
-    [InlineData("long long", "long", "long", "long long")]
-    [InlineData("vtkTypeBool", "bool", "int", "vtkTypeBool")]
-    [InlineData("vtkIdType", "long", "long", "vtkIdType")]
-    [InlineData("const char*", "string", "nint", "const char*")]
-    [InlineData("void*", "nint", "nint", "void*")]
-    [InlineData("HWND", "nint", "nint", "void*")]
+    [TestMethod]
+    [DataRow("void", "void", "void", "void")]
+    [DataRow("char", "char", "char", "char")]
+    [DataRow("unsigned char", "byte", "byte", "unsigned char")]
+    [DataRow("unsigned int", "uint", "uint", "unsigned int")]
+    [DataRow("unsigned long", "ulong", "ulong", "std::uint64_t")]
+    [DataRow("long long", "long", "long", "long long")]
+    [DataRow("vtkTypeBool", "bool", "int", "vtkTypeBool")]
+    [DataRow("vtkIdType", "long", "long", "vtkIdType")]
+    [DataRow("const char*", "string", "nint", "const char*")]
+    [DataRow("void*", "nint", "nint", "void*")]
+    [DataRow("HWND", "nint", "nint", "void*")]
     public void MapsScalarTypes(string type, string csharpPublic, string csharpInterop, string cppExport)
     {
-        Assert.True(BindingTypeMapper.IsSupportedType(type));
-        Assert.Equal(csharpPublic, BindingTypeMapper.ToCSharpPublicType(type));
-        Assert.Equal(csharpInterop, BindingTypeMapper.ToCSharpInteropType(type));
-        Assert.Equal(cppExport, BindingTypeMapper.ToCppExportType(type));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType(type));
+        Assert.AreEqual(csharpPublic, BindingTypeMapper.ToCSharpPublicType(type));
+        Assert.AreEqual(csharpInterop, BindingTypeMapper.ToCSharpInteropType(type));
+        Assert.AreEqual(cppExport, BindingTypeMapper.ToCppExportType(type));
     }
 
-    [Fact]
+    [TestMethod]
     public void MapsVtkClassPointer()
     {
-        Assert.True(BindingTypeMapper.IsSupportedType("vtkActor*"));
-        Assert.Equal("vtkActor", BindingTypeMapper.ToCSharpPublicType("vtkActor*"));
-        Assert.Equal("nint", BindingTypeMapper.ToCSharpInteropType("vtkActor*"));
-        Assert.Equal("vtkActor*", BindingTypeMapper.ToCppExportType("vtkActor*"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("vtkActor*"));
+        Assert.AreEqual("vtkActor", BindingTypeMapper.ToCSharpPublicType("vtkActor*"));
+        Assert.AreEqual("nint", BindingTypeMapper.ToCSharpInteropType("vtkActor*"));
+        Assert.AreEqual("vtkActor*", BindingTypeMapper.ToCppExportType("vtkActor*"));
     }
 
-    [Fact]
+    [TestMethod]
     public void MapsVtkColor3ubValueStruct()
     {
-        Assert.True(BindingTypeMapper.IsSupportedType("vtkColor3ub"));
-        Assert.Equal("VtkColor3ub", BindingTypeMapper.ToCSharpPublicType("vtkColor3ub"));
-        Assert.Equal("void", BindingTypeMapper.ToCSharpInteropType("vtkColor3ub"));
-        Assert.Equal("unsigned char", TypeClassifier.GetValueStructCppElementType("vtkColor3ub"));
-        Assert.Equal("byte", TypeClassifier.GetValueStructCSharpElementType("vtkColor3ub"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("vtkColor3ub"));
+        Assert.AreEqual("VtkColor3ub", BindingTypeMapper.ToCSharpPublicType("vtkColor3ub"));
+        Assert.AreEqual("void", BindingTypeMapper.ToCSharpInteropType("vtkColor3ub"));
+        Assert.AreEqual("unsigned char", TypeClassifier.GetValueStructCppElementType("vtkColor3ub"));
+        Assert.AreEqual("byte", TypeClassifier.GetValueStructCSharpElementType("vtkColor3ub"));
     }
 
-    [Fact]
+    [TestMethod]
     public void MapsVtkStdStringReturn()
     {
-        Assert.True(BindingTypeMapper.IsSupportedType("vtkStdString"));
-        Assert.Equal("string", BindingTypeMapper.ToCSharpPublicType("vtkStdString"));
-        Assert.Equal("void", BindingTypeMapper.ToCSharpInteropType("vtkStdString"));
-        Assert.Equal("void", BindingTypeMapper.ToCppExportType("vtkStdString"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("vtkStdString"));
+        Assert.AreEqual("string", BindingTypeMapper.ToCSharpPublicType("vtkStdString"));
+        Assert.AreEqual("void", BindingTypeMapper.ToCSharpInteropType("vtkStdString"));
+        Assert.AreEqual("void", BindingTypeMapper.ToCppExportType("vtkStdString"));
     }
 
-    [Fact]
+    [TestMethod]
     public void MapsPrimitivePointersAndFixedArrays()
     {
-        Assert.True(BindingTypeMapper.IsSupportedType("double*"));
-        Assert.True(BindingTypeMapper.IsSupportedType("const double[3]"));
-        Assert.Equal("double*", BindingTypeMapper.ToCSharpPublicType("double*"));
-        Assert.Equal("ReadOnlySpan<double>", BindingTypeMapper.ToCSharpPublicType("const double[3]"));
-        Assert.Equal("double*", BindingTypeMapper.ToCSharpInteropType("const double[3]"));
-        Assert.Equal("const double*", BindingTypeMapper.ToCppExportType("const double[3]"));
-        Assert.Equal("double", BindingTypeMapper.GetArrayElementType("const double[3]"));
-        Assert.True(BindingTypeMapper.IsSupportedType("unsigned char*"));
-        Assert.True(BindingTypeMapper.IsSupportedType("const unsigned char[4]"));
-        Assert.Equal("byte*", BindingTypeMapper.ToCSharpPublicType("unsigned char*"));
-        Assert.Equal("ReadOnlySpan<byte>", BindingTypeMapper.ToCSharpPublicType("const unsigned char[4]"));
-        Assert.Equal("const unsigned char*", BindingTypeMapper.ToCppExportType("const unsigned char[4]"));
-        Assert.True(BindingTypeMapper.IsSupportedType("unsigned char const[4]"));
-        Assert.Equal("ReadOnlySpan<byte>", BindingTypeMapper.ToCSharpPublicType("unsigned char const[4]"));
-        Assert.Equal("const unsigned char*", BindingTypeMapper.ToCppExportType("unsigned char const[4]"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("double*"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("const double[3]"));
+        Assert.AreEqual("double*", BindingTypeMapper.ToCSharpPublicType("double*"));
+        Assert.AreEqual("ReadOnlySpan<double>", BindingTypeMapper.ToCSharpPublicType("const double[3]"));
+        Assert.AreEqual("double*", BindingTypeMapper.ToCSharpInteropType("const double[3]"));
+        Assert.AreEqual("const double*", BindingTypeMapper.ToCppExportType("const double[3]"));
+        Assert.AreEqual("double", BindingTypeMapper.GetArrayElementType("const double[3]"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("unsigned char*"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("const unsigned char[4]"));
+        Assert.AreEqual("byte*", BindingTypeMapper.ToCSharpPublicType("unsigned char*"));
+        Assert.AreEqual("ReadOnlySpan<byte>", BindingTypeMapper.ToCSharpPublicType("const unsigned char[4]"));
+        Assert.AreEqual("const unsigned char*", BindingTypeMapper.ToCppExportType("const unsigned char[4]"));
+        Assert.IsTrue(BindingTypeMapper.IsSupportedType("unsigned char const[4]"));
+        Assert.AreEqual("ReadOnlySpan<byte>", BindingTypeMapper.ToCSharpPublicType("unsigned char const[4]"));
+        Assert.AreEqual("const unsigned char*", BindingTypeMapper.ToCppExportType("unsigned char const[4]"));
     }
 
-    [Fact]
+    [TestMethod]
     public void RejectsUnsupportedTypes()
     {
-        Assert.False(BindingTypeMapper.IsSupportedType("std::ostream&"));
-        Assert.False(BindingTypeMapper.IsSupportedType("const vtkVector3d&"));
+        Assert.IsFalse(BindingTypeMapper.IsSupportedType("std::ostream&"));
+        Assert.IsFalse(BindingTypeMapper.IsSupportedType("const vtkVector3d&"));
     }
 }

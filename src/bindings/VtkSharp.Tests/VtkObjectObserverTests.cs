@@ -1,8 +1,9 @@
-﻿namespace VtkSharp.Tests;
+namespace VtkSharp.Tests;
 
+[TestClass]
 public sealed class VtkObjectObserverTests
 {
-    [Fact]
+    [TestMethod]
     public void AddObserver_InvokesManagedCallbackWhenEventFires()
     {
         using var points = vtkPoints.New();
@@ -19,13 +20,13 @@ public sealed class VtkObjectObserverTests
 
         points.Modified();
 
-        Assert.Equal(1, callbackCount);
-        Assert.Same(points, observedCaller);
-        Assert.Equal(vtkCommand.ModifiedEvent, observedEventId);
-        Assert.True(observer.Tag > 0);
+        Assert.AreEqual(1, callbackCount);
+        Assert.AreSame(points, observedCaller);
+        Assert.AreEqual(vtkCommand.ModifiedEvent, observedEventId);
+        Assert.IsTrue(observer.Tag > 0);
     }
 
-    [Fact]
+    [TestMethod]
     public unsafe void AddObserver_PassesClientDataAndCallDataToManagedCallback()
     {
         using var points = vtkPoints.New();
@@ -45,12 +46,12 @@ public sealed class VtkObjectObserverTests
 
         points.InvokeEvent(vtkCommand.UserEvent, (nint)(&callDataValue));
 
-        Assert.Same(expectedClientData, observedClientData);
-        Assert.Equal((nint)(&callDataValue), observedCallData);
-        Assert.Equal(42, *(int*)observedCallData);
+        Assert.AreSame(expectedClientData, observedClientData);
+        Assert.AreEqual((nint)(&callDataValue), observedCallData);
+        Assert.AreEqual(42, *(int*)observedCallData);
     }
 
-    [Fact]
+    [TestMethod]
     public void ObserverDispose_RemovesObserver()
     {
         using var points = vtkPoints.New();
@@ -61,10 +62,10 @@ public sealed class VtkObjectObserverTests
 
         points.Modified();
 
-        Assert.Equal(0, callbackCount);
+        Assert.AreEqual(0, callbackCount);
     }
 
-    [Fact]
+    [TestMethod]
     public void OwnerDispose_ReleasesObserverHandle()
     {
         var points = vtkPoints.New();
@@ -73,7 +74,7 @@ public sealed class VtkObjectObserverTests
         points.Dispose();
         observer.Dispose();
 
-        Assert.Equal(0, points.NativePointer);
+        Assert.AreEqual(0, points.NativePointer);
     }
 
     private sealed record ObserverClientData(string Name);

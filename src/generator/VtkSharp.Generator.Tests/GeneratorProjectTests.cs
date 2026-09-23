@@ -1,10 +1,11 @@
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class GeneratorProjectTests
 {
-    [Fact]
+    [TestMethod]
     public void TestProjectLoads()
     {
-        Assert.True(true);
+        Assert.IsTrue(true);
     }
 }

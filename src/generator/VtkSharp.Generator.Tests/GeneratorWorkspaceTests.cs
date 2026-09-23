@@ -2,9 +2,10 @@ using VtkSharp.Generator.Core.Configuration;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class GeneratorWorkspaceTests
 {
-    [Fact]
+    [TestMethod]
     public void Load_ResolvesWhitelistAndVtkDirectoriesFromConfig()
     {
         var root = Path.Combine(Path.GetTempPath(), "VtkSharp.Generator.Tests", Guid.NewGuid().ToString("N"));
@@ -40,8 +41,8 @@ public sealed class GeneratorWorkspaceTests
 
         var workspace = GeneratorWorkspace.Load(configPath);
 
-        Assert.Equal(Path.GetFullPath(whitelistDirectory), workspace.WhitelistDirectory);
-        Assert.Equal(Path.GetFullPath(includeDirectory), workspace.IncludeDirectory);
-        Assert.Equal(Path.GetFullPath(hierarchyDirectory), workspace.HierarchyDirectory);
+        Assert.AreEqual(Path.GetFullPath(whitelistDirectory), workspace.WhitelistDirectory);
+        Assert.AreEqual(Path.GetFullPath(includeDirectory), workspace.IncludeDirectory);
+        Assert.AreEqual(Path.GetFullPath(hierarchyDirectory), workspace.HierarchyDirectory);
     }
 }

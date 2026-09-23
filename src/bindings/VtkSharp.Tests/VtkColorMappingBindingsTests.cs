@@ -2,9 +2,10 @@ using System;
 
 namespace VtkSharp.Tests;
 
+[TestClass]
 public sealed class VtkColorMappingBindingsTests
 {
-    [Fact]
+    [TestMethod]
     public void ColorTransferFunction_InterpolatesRgbControlPoints()
     {
         using var transferFunction = vtkColorTransferFunction.New();
@@ -15,13 +16,13 @@ public sealed class VtkColorMappingBindingsTests
         Span<double> rgb = stackalloc double[3];
         transferFunction.GetColor(0.5, rgb);
 
-        Assert.Equal(2, transferFunction.GetSize());
-        Assert.Equal(0.5, rgb[0], 12);
-        Assert.Equal(0.0, rgb[1], 12);
-        Assert.Equal(0.5, rgb[2], 12);
+        Assert.AreEqual(2, transferFunction.GetSize());
+        Assert.AreEqual(0.5, rgb[0], 12);
+        Assert.AreEqual(0.0, rgb[1], 12);
+        Assert.AreEqual(0.5, rgb[2], 12);
     }
 
-    [Fact]
+    [TestMethod]
     public void DiscretizableColorTransferFunction_BuildsRequestedNumberOfColors()
     {
         using var transferFunction = vtkDiscretizableColorTransferFunction.New();
@@ -31,23 +32,23 @@ public sealed class VtkColorMappingBindingsTests
         transferFunction.SetNumberOfValues(4);
         transferFunction.Build();
 
-        Assert.True(transferFunction.GetDiscretize());
-        Assert.Equal(4, transferFunction.GetNumberOfValues());
-        Assert.Equal(4, transferFunction.GetNumberOfAvailableColors());
+        Assert.IsTrue(transferFunction.GetDiscretize());
+        Assert.AreEqual(4, transferFunction.GetNumberOfValues());
+        Assert.AreEqual(4, transferFunction.GetNumberOfAvailableColors());
     }
 
-    [Fact]
+    [TestMethod]
     public void ColorSeries_CreatesOwnedOrdinalLookupTable()
     {
         using var colorSeries = vtkColorSeries.New();
         using var lookupTable = colorSeries.CreateLookupTable(0);
 
-        Assert.True(lookupTable.OwnsReference);
-        Assert.Equal(1, lookupTable.ReferenceCount);
-        Assert.Equal(colorSeries.GetNumberOfColors(), lookupTable.GetNumberOfTableValues());
+        Assert.IsTrue(lookupTable.OwnsReference);
+        Assert.AreEqual(1, lookupTable.ReferenceCount);
+        Assert.AreEqual(colorSeries.GetNumberOfColors(), lookupTable.GetNumberOfTableValues());
     }
 
-    [Fact]
+    [TestMethod]
     public void ColorSeries_ReturnsUnsignedByteColors()
     {
         using var colorSeries = vtkColorSeries.New();
@@ -55,12 +56,12 @@ public sealed class VtkColorMappingBindingsTests
         var first = colorSeries.GetColor(0);
         var repeated = colorSeries.GetColorRepeating(colorSeries.GetNumberOfColors());
 
-        Assert.Equal(first.R, repeated.R);
-        Assert.Equal(first.G, repeated.G);
-        Assert.Equal(first.B, repeated.B);
+        Assert.AreEqual(first.R, repeated.R);
+        Assert.AreEqual(first.G, repeated.G);
+        Assert.AreEqual(first.B, repeated.B);
     }
 
-    [Fact]
+    [TestMethod]
     public void ColorSeries_AcceptsUnsignedByteColors()
     {
         using var colorSeries = vtkColorSeries.New();
@@ -75,22 +76,22 @@ public sealed class VtkColorMappingBindingsTests
         AssertColor(colorSeries.GetColor(2), 40, 50, 60);
     }
 
-    [Theory]
-    [InlineData("Custom scheme")]
-    [InlineData("自定义配色 🎨")]
+    [TestMethod]
+    [DataRow("Custom scheme")]
+    [DataRow("自定义配色 🎨")]
     public void ColorSeries_RoundTripsColorSchemeName(string name)
     {
         using var colorSeries = vtkColorSeries.New();
 
         colorSeries.SetColorSchemeName(name);
 
-        Assert.Equal(name, colorSeries.GetColorSchemeName());
+        Assert.AreEqual(name, colorSeries.GetColorSchemeName());
     }
 
     private static void AssertColor(VtkColor3ub color, byte r, byte g, byte b)
     {
-        Assert.Equal(r, color.R);
-        Assert.Equal(g, color.G);
-        Assert.Equal(b, color.B);
+        Assert.AreEqual(r, color.R);
+        Assert.AreEqual(g, color.G);
+        Assert.AreEqual(b, color.B);
     }
 }

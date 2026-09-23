@@ -5,9 +5,10 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class WhitelistValidatorTests
 {
-    [Fact]
+    [TestMethod]
     public void Validate_SucceedsWhenFunctionSignatureMatches()
     {
         var document = CreateDocument("void", "vtkAlgorithmOutput*");
@@ -28,11 +29,11 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.True(result.Success);
-        Assert.Empty(result.Diagnostics);
+        Assert.IsTrue(result.Success);
+        Assert.IsEmpty(result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ReportsDiagnosticWhenFunctionSignatureDoesNotMatch()
     {
         var document = CreateDocument("void", "vtkAlgorithmOutput*");
@@ -53,11 +54,11 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.False(result.Success);
-        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Message == "Function 'vtkAlgorithm.SetInputConnection' was not found.");
+        Assert.IsFalse(result.Success);
+        Assert.Contains(diagnostic => diagnostic.Message == "Function 'vtkAlgorithm.SetInputConnection' was not found.", result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_RejectsInheritedFunctionOnDerivedClass()
     {
         var document = new WhitelistDocument
@@ -90,8 +91,8 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.False(result.Success);
-        Assert.Contains(result.Diagnostics, diagnostic => diagnostic.Message == "Function 'vtkDerived.Update' was not found.");
+        Assert.IsFalse(result.Success);
+        Assert.Contains(diagnostic => diagnostic.Message == "Function 'vtkDerived.Update' was not found.", result.Diagnostics);
     }
 
     private static WhitelistDocument CreateDocument(string returnType, string parameterType)
@@ -118,28 +119,28 @@ public sealed class WhitelistValidatorTests
             ],
         };
 
-    [Theory]
-    [InlineData("void")]
-    [InlineData("char")]
-    [InlineData("int")]
-    [InlineData("unsigned int")]
-    [InlineData("unsigned long")]
-    [InlineData("long long")]
-    [InlineData("unsigned long long")]
-    [InlineData("double")]
-    [InlineData("float")]
-    [InlineData("bool")]
-    [InlineData("vtkTypeBool")]
-    [InlineData("vtkTypeUInt32")]
-    [InlineData("vtkIdType")]
-    [InlineData("const char*")]
-    [InlineData("char*")]
-    [InlineData("void*")]
-    [InlineData("vtkMapper*")]
-    [InlineData("const vtkMapper*")]
-    [InlineData("HWND")]
-    [InlineData("HDC")]
-    [InlineData("HGLRC")]
+    [TestMethod]
+    [DataRow("void")]
+    [DataRow("char")]
+    [DataRow("int")]
+    [DataRow("unsigned int")]
+    [DataRow("unsigned long")]
+    [DataRow("long long")]
+    [DataRow("unsigned long long")]
+    [DataRow("double")]
+    [DataRow("float")]
+    [DataRow("bool")]
+    [DataRow("vtkTypeBool")]
+    [DataRow("vtkTypeUInt32")]
+    [DataRow("vtkIdType")]
+    [DataRow("const char*")]
+    [DataRow("char*")]
+    [DataRow("void*")]
+    [DataRow("vtkMapper*")]
+    [DataRow("const vtkMapper*")]
+    [DataRow("HWND")]
+    [DataRow("HDC")]
+    [DataRow("HGLRC")]
     public void Validate_AcceptsKnownScalarAndPointerTypes(string type)
     {
         var document = CreateDocument("void", type);
@@ -153,10 +154,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("unsupported type"));
+        Assert.DoesNotContain(d => d.Message.Contains("unsupported type"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_AcceptsFixedArray()
     {
         var type = "const double[3]";
@@ -171,10 +172,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("unsupported"));
+        Assert.DoesNotContain(d => d.Message.Contains("unsupported"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ReportsUnsupportedFixedArrayElementType()
     {
         var type = "const long long[3]";
@@ -189,10 +190,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("unsupported") && d.Message.Contains(type));
+        Assert.Contains(d => d.Message.Contains("unsupported") && d.Message.Contains(type), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ReportsUnsupportedType()
     {
         var type = "unsigned short";
@@ -207,10 +208,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("unsupported type"));
+        Assert.Contains(d => d.Message.Contains("unsupported type"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ReportsNonPointerVtkClassName()
     {
         var type = "vtkMapper";
@@ -225,10 +226,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("without pointer"));
+        Assert.Contains(d => d.Message.Contains("without pointer"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ReportsPrimitivePointerWithoutMetadata()
     {
         var type = "double*";
@@ -243,10 +244,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("direction") && d.Message.Contains("length"));
+        Assert.Contains(d => d.Message.Contains("direction") && d.Message.Contains("length"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_AcceptsPrimitivePointerWithMetadata()
     {
         var type = "double*";
@@ -282,10 +283,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("direction") || d.Message.Contains("unsupported"));
+        Assert.DoesNotContain(d => d.Message.Contains("direction") || d.Message.Contains("unsupported"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_AcceptsConstVtkIdTypePointerWithMetadata()
     {
         var type = "const vtkIdType*";
@@ -325,10 +326,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("direction") || d.Message.Contains("unsupported"));
+        Assert.DoesNotContain(d => d.Message.Contains("direction") || d.Message.Contains("unsupported"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ChecksReturnType()
     {
         var type = "unsigned long";
@@ -364,11 +365,11 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("Function 'vtkAlgorithm.SetInputConnection' was not found."));
-        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("return") && d.Message.Contains(type));
+        Assert.Contains(d => d.Message.Contains("Function 'vtkAlgorithm.SetInputConnection' was not found."), result.Diagnostics);
+        Assert.DoesNotContain(d => d.Message.Contains("return") && d.Message.Contains(type), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ReportsModuleMismatch()
     {
         var document = new WhitelistDocument
@@ -397,10 +398,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses, resolver);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("belongs to module 'vtkRenderingCore'"));
+        Assert.Contains(d => d.Message.Contains("belongs to module 'vtkRenderingCore'"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_ReportsHeaderMismatch()
     {
         var document = new WhitelistDocument
@@ -429,10 +430,10 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses, resolver);
 
-        Assert.Contains(result.Diagnostics, d => d.Message.Contains("header") && d.Message.Contains("vtkFooBar.h"));
+        Assert.Contains(d => d.Message.Contains("header") && d.Message.Contains("vtkFooBar.h"), result.Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void Validate_NoModuleDiagnosticsWithoutResolver()
     {
         // When no hierarchy resolver is passed, module/header checks are skipped.
@@ -468,6 +469,6 @@ public sealed class WhitelistValidatorTests
 
         var result = validator.Validate(document, inspectedClasses);
 
-        Assert.DoesNotContain(result.Diagnostics, d => d.Message.Contains("module") || d.Message.Contains("header"));
+        Assert.DoesNotContain(d => d.Message.Contains("module") || d.Message.Contains("header"), result.Diagnostics);
     }
 }

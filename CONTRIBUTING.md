@@ -27,6 +27,8 @@ Bug 报告请提供最小复现、期望与实际行为、VTK/.NET/VS/CMake 版�
 
 从仓库根目录按改动范围运行检查，并在 PR 描述中写明执行结果及未验证项：
 
+单元测试统一使用 MSTest 4.4.1，测试宿主使用 Microsoft.NET.Test.Sdk 18.10.1；以下命令仍是标准的 `dotnet test` 入口。
+
 ```powershell
 # Script environment-variable contract (no VTK installation required)
 pwsh -NoProfile -File tools/test-build-environment.ps1

@@ -4,9 +4,10 @@ using VtkSharp.Generator.Core.Vtk;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class ExportInventoryServiceTests
 {
-    [Fact]
+    [TestMethod]
     public void BuildTypeInventory_ExcludesExportedBaseFunctionsFromAvailableList()
     {
         var chain = new[] { "vtkActor", "vtkProp3D", "vtkObject" };
@@ -19,13 +20,13 @@ public sealed class ExportInventoryServiceTests
             CreateHierarchyEntries(),
             [propBoundsId]);
 
-        Assert.Contains(inventory.AlreadyExported.Single(group => group.DeclaringTypeName == "vtkProp3D").Functions,
-            function => function.FunctionName == "GetBounds");
-        Assert.DoesNotContain(inventory.AvailableToAdd.SelectMany(group => group.Functions),
-            function => function.Id == propBoundsId);
+        Assert.Contains(function => function.FunctionName == "GetBounds",
+            inventory.AlreadyExported.Single(group => group.DeclaringTypeName == "vtkProp3D").Functions);
+        Assert.DoesNotContain(function => function.Id == propBoundsId,
+            inventory.AvailableToAdd.SelectMany(group => group.Functions));
     }
 
-    [Fact]
+    [TestMethod]
     public void BuildTypeInventory_GroupsFunctionsFromSelectedTypeToBaseTypes()
     {
         var chain = new[] { "vtkActor", "vtkProp3D", "vtkObject" };
@@ -37,10 +38,10 @@ public sealed class ExportInventoryServiceTests
             CreateHierarchyEntries(),
             exportedIds: []);
 
-        Assert.Equal(["vtkActor", "vtkProp3D"], inventory.AvailableToAdd.Select(group => group.DeclaringTypeName));
+        Assert.AreSequenceEqual(["vtkActor", "vtkProp3D"], inventory.AvailableToAdd.Select(group => group.DeclaringTypeName));
     }
 
-    [Fact]
+    [TestMethod]
     public void BuildTypeInventory_DoesNotAllowManualBindingClassFunctionsAsAvailable()
     {
         var chain = new[] { "vtkActor", "vtkObject" };
@@ -53,13 +54,13 @@ public sealed class ExportInventoryServiceTests
             exportedIds: [],
             hiddenTypeNames: ["vtkObject"]);
 
-        Assert.DoesNotContain(inventory.AvailableToAdd.SelectMany(group => group.Functions),
-            function => function.DeclaringTypeName == "vtkObject");
-        Assert.Contains(inventory.Unsupported.Single(group => group.DeclaringTypeName == "vtkObject").Functions,
-            function => function.Reason == "'vtkObject' is a manual binding class.");
+        Assert.DoesNotContain(function => function.DeclaringTypeName == "vtkObject",
+            inventory.AvailableToAdd.SelectMany(group => group.Functions));
+        Assert.Contains(function => function.Reason == "'vtkObject' is a manual binding class.",
+            inventory.Unsupported.Single(group => group.DeclaringTypeName == "vtkObject").Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void BuildTypeInventory_DoesNotAllowPrimitivePointerParametersWithoutMetadata()
     {
         var chain = new[] { "vtkActor" };
@@ -78,9 +79,9 @@ public sealed class ExportInventoryServiceTests
             CreateHierarchyEntries(),
             exportedIds: []);
 
-        Assert.Empty(inventory.AvailableToAdd);
-        Assert.Contains(inventory.Unsupported.Single().Functions,
-            function => function.Reason == "Parameter 'data' (double*) requires direction and length metadata.");
+        Assert.IsEmpty(inventory.AvailableToAdd);
+        Assert.Contains(function => function.Reason == "Parameter 'data' (double*) requires direction and length metadata.",
+            inventory.Unsupported.Single().Functions);
     }
 
     private static IReadOnlyDictionary<string, InspectedClass> CreateInspectedClasses()

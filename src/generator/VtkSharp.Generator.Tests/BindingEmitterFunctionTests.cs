@@ -3,18 +3,19 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class BindingEmitterFunctionTests
 {
-    [Fact]
+    [TestMethod]
     public void CppEmitter_DoesNotAddBlankLineAfterEmptyAbstractClassIncludes()
     {
         var text = new CppExportEmitter().Emit("vtkThing", [], hasStaticNew: false, []);
 
-        Assert.EndsWith("#include <vtkThing.h>" + Environment.NewLine, text, StringComparison.Ordinal);
-        Assert.False(text.EndsWith(Environment.NewLine + Environment.NewLine, StringComparison.Ordinal));
+        Assert.IsTrue(text.EndsWith("#include <vtkThing.h>" + Environment.NewLine, StringComparison.Ordinal));
+        Assert.IsFalse(text.EndsWith(Environment.NewLine + Environment.NewLine, StringComparison.Ordinal));
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsVoidMethodWithVtkObjectParameter()
     {
         var emitter = new CSharpBindingEmitter();
@@ -40,7 +41,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("#region Interop", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsVtkObjectReturnMethod()
     {
         var emitter = new CSharpBindingEmitter();
@@ -61,7 +62,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("private static extern nint vtkAlgorithm_GetOutputPort(nint self);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsUnsignedByteValueStructReturn()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkColorSeries", "vtkObject", hasStaticNew: true,
@@ -82,7 +83,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("private static extern void vtkColorSeries_GetColor(nint self, int index, byte* __outGetColor);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsUnsignedByteValueStructReturn()
     {
         var text = new CppExportEmitter().Emit("vtkColorSeries", [], hasStaticNew: true,
@@ -102,7 +103,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("__outGetColor[2] = c[2];", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsOwnedUtf8StringReturn()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkColorSeries", "vtkObject", hasStaticNew: true,
@@ -123,7 +124,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("private static extern void vtkColorSeries_GetColorSchemeName(nint self, out NativeUtf8String __outGetColorSchemeName);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsOwnedUtf8StringReturn()
     {
         var text = new CppExportEmitter().Emit("vtkColorSeries", [], hasStaticNew: true,
@@ -143,7 +144,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VtkSharpUtf8String_CopyFrom(__outGetColorSchemeName, value.data(), value.size());", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_ExpandsUnsignedByteValueStructParameter()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkColorSeries", "vtkObject", hasStaticNew: true,
@@ -166,7 +167,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("private static extern void vtkColorSeries_SetColor(nint self, int index, byte colorR, byte colorG, byte colorB);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_ExpandsAndReconstructsUnsignedByteValueStructParameter()
     {
         var text = new CppExportEmitter().Emit("vtkColorSeries", [], hasStaticNew: true,
@@ -185,7 +186,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("self->AddColor(vtkColor3ub(colorR, colorG, colorB));", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsIntParameters()
     {
         var emitter = new CSharpBindingEmitter();
@@ -212,7 +213,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("private static extern void vtkWindow_SetSize(nint self, int width, int height);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsFunctionExports()
     {
         var emitter = new CppExportEmitter();
@@ -241,7 +242,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("return self->GetOutputPort();", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_SkipsNewWhenClassHasNoStaticNew()
     {
         var emitter = new CppExportEmitter();
@@ -261,7 +262,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VTKSHARP_API void vtkWindow_Render(vtkWindow* self)", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsDistinctIncludes()
     {
         var emitter = new CppExportEmitter();
@@ -277,10 +278,10 @@ public sealed class BindingEmitterFunctionTests
             },
         ]);
 
-        Assert.Equal(1, CountOccurrences(text, "#include <vtkAlgorithmOutput.h>"));
+        Assert.AreEqual(1, CountOccurrences(text, "#include <vtkAlgorithmOutput.h>"));
     }
 
-    [Fact]
+    [TestMethod]
     public void Emitters_UseExportNameGeneratorForOverloads()
     {
         var functions = new[]
@@ -315,7 +316,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VTKSHARP_API void vtkActor_SetPosition_doubleConstArray3(vtkActor* self, const double* position)", cpp);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsExpandedScalarStringPointerAndArrayMappings()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkThing", "vtkObject", hasStaticNew: false,
@@ -430,7 +431,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("fixed (double* originPtr = origin)", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsExpandedScalarPointerAndArrayMappings()
     {
         var text = new CppExportEmitter().Emit("vtkThing", [], hasStaticNew: false,
@@ -482,7 +483,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("self->CreateRepeatingTimer(static_cast<unsigned long>(duration));", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsVtkTypeUInt32Mapping()
     {
         var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,
@@ -499,7 +500,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VTKSHARP_API vtkTypeUInt32 vtkFoo_GetSeed(vtkFoo* self)", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsReadOnlySpanForPointerWithInDirectionAndFixedLength()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
@@ -528,7 +529,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("private static extern void vtkFoo_SetPosition(nint self, double* position);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsSpanForPointerWithOutDirection()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
@@ -555,7 +556,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("fixed (double* boundsPtr = bounds)", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsReadOnlySpanForPointerWithParameterLength()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
@@ -584,7 +585,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("vtkFoo_SetArray(this.NativePointer, valuesPtr, count);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_EmitsReadOnlySpanForConstVtkIdTypePointerWithParameterLength()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkCellArray", "vtkAbstractCellArray", hasStaticNew: false,
@@ -616,7 +617,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.DoesNotContain("pts.NativePointer", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_KeepsRawPointerForPointerWithoutMetadata()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
@@ -633,7 +634,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("internal new double* GetData_Internal()", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsPrimitivePointerType()
     {
         var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,
@@ -660,7 +661,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("self->SetPosition(position);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CppEmitter_EmitsPrimitivePointerWithOtherParameters()
     {
         var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,
@@ -687,7 +688,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("VTKSHARP_API void vtkFoo_SetArray(vtkFoo* self, double* values, vtkIdType count)", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void ExportNameGenerator_UsesDoublePtrSuffixForOverload()
     {
         var functions = new[]
@@ -728,10 +729,10 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("vtkActor_SetPosition_doublePtr(this.NativePointer, positionPtr);", csharp);
     }
 
-    [Theory]
-    [InlineData("HWND")]
-    [InlineData("HDC")]
-    [InlineData("HGLRC")]
+    [TestMethod]
+    [DataRow("HWND")]
+    [DataRow("HDC")]
+    [DataRow("HGLRC")]
     public void CSharpEmitter_MapsWin32HandlesToNint(string type)
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFoo", "vtkObject", hasStaticNew: false,
@@ -749,7 +750,7 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains($"private static extern void vtkFoo_SetHandle(nint self, nint h);", text);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpEmitter_TransfersOwnedVtkObjectReturnToManagedWrapper()
     {
         var text = new CSharpBindingEmitter().Emit("VtkSharp", "vtkFactory", "vtkObject", hasStaticNew: false,
@@ -768,10 +769,10 @@ public sealed class BindingEmitterFunctionTests
             text);
     }
 
-    [Theory]
-    [InlineData("HWND")]
-    [InlineData("HDC")]
-    [InlineData("HGLRC")]
+    [TestMethod]
+    [DataRow("HWND")]
+    [DataRow("HDC")]
+    [DataRow("HGLRC")]
     public void CppEmitter_MapsWin32HandlesToVoidPointer(string type)
     {
         var text = new CppExportEmitter().Emit("vtkFoo", [], hasStaticNew: false,

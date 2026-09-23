@@ -8,6 +8,8 @@
 `VTK_DIR`。脚本默认读取环境变量 `VTK_DIR`，也可用 `-VtkDir` 覆盖，目录必须包含
 `VTKConfig.cmake` 或 `vtk-config.cmake`。未提供路径时在创建报告目录前报错。
 
+两个测试项目统一使用 MSTest 4.4.1 与 Microsoft.NET.Test.Sdk 18.10.1；验证脚本中的 `dotnet test` 调用无需额外切换测试运行器。
+
 ```powershell
 .\tools\verify-workflow.ps1 -Example GeometricObjects/Cone
 

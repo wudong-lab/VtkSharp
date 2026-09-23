@@ -3,33 +3,34 @@ using VtkSharp.Generator.Core.Types;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class ExportNameGeneratorTests
 {
-    [Fact]
+    [TestMethod]
     public void Create_WithoutOverloads_UsesClassAndMethod()
     {
         var generator = new ExportNameGenerator();
         var name = generator.Create("vtkActor", "SetMapper", [new("vtkMapper*")], hasOverloads: false);
-        Assert.Equal("vtkActor_SetMapper", name);
+        Assert.AreEqual("vtkActor_SetMapper", name);
     }
 
-    [Fact]
+    [TestMethod]
     public void Create_WithOverloads_UsesParameterSuffix()
     {
         var generator = new ExportNameGenerator();
         var name = generator.Create("vtkActor", "SetPosition", [new("double"), new("double"), new("double")], hasOverloads: true);
-        Assert.Equal("vtkActor_SetPosition_double_double_double", name);
+        Assert.AreEqual("vtkActor_SetPosition_double_double_double", name);
     }
 
-    [Fact]
+    [TestMethod]
     public void Create_WithArrayOverload_UsesArraySuffix()
     {
         var generator = new ExportNameGenerator();
         var name = generator.Create("vtkTransform", "SetMatrix", [new("const double[16]")], hasOverloads: true);
-        Assert.Equal("vtkTransform_SetMatrix_doubleConstArray16", name);
+        Assert.AreEqual("vtkTransform_SetMatrix_doubleConstArray16", name);
     }
 
-    [Fact]
+    [TestMethod]
     public void Create_WithPostfixConstUnsignedCharArray_UsesValidSuffix()
     {
         var generator = new ExportNameGenerator();
@@ -39,10 +40,10 @@ public sealed class ExportNameGeneratorTests
             [new("unsigned char const[4]")],
             hasOverloads: true);
 
-        Assert.Equal("vtkImageMapToColors_SetNaNColor_unsignedcharConstArray4", name);
+        Assert.AreEqual("vtkImageMapToColors_SetNaNColor_unsignedcharConstArray4", name);
     }
 
-    [Fact]
+    [TestMethod]
     public void CreateAll_SingleFunction_UsesSimpleName()
     {
         var generator = new ExportNameGenerator();
@@ -51,10 +52,10 @@ public sealed class ExportNameGeneratorTests
             ("f0", "SetMapper", (IReadOnlyList<CanonicalType>)[new("vtkMapper*")]),
         ]);
 
-        Assert.Equal("vtkActor_SetMapper", result["f0"]);
+        Assert.AreEqual("vtkActor_SetMapper", result["f0"]);
     }
 
-    [Fact]
+    [TestMethod]
     public void CreateAll_Overloads_UsesSuffixes()
     {
         var generator = new ExportNameGenerator();
@@ -64,11 +65,11 @@ public sealed class ExportNameGeneratorTests
             ("array", "SetPosition", [new("const double[3]")]),
         ]);
 
-        Assert.Equal("vtkActor_SetPosition_double_double_double", result["scalar"]);
-        Assert.Equal("vtkActor_SetPosition_doubleConstArray3", result["array"]);
+        Assert.AreEqual("vtkActor_SetPosition_double_double_double", result["scalar"]);
+        Assert.AreEqual("vtkActor_SetPosition_doubleConstArray3", result["array"]);
     }
 
-    [Fact]
+    [TestMethod]
     public void CreateAll_CollisionFallbackToHash()
     {
         var generator = new ExportNameGenerator();
@@ -84,9 +85,9 @@ public sealed class ExportNameGeneratorTests
             ("b", "Bar", [new("unsigned int")]),
         ]);
 
-        Assert.NotNull(result["a"]);
-        Assert.NotNull(result["b"]);
-        Assert.StartsWith("vtkFoo_Bar", result["a"]);
-        Assert.StartsWith("vtkFoo_Bar", result["b"]);
+        Assert.IsNotNull(result["a"]);
+        Assert.IsNotNull(result["b"]);
+        Assert.IsTrue(result["a"].StartsWith("vtkFoo_Bar", StringComparison.Ordinal));
+        Assert.IsTrue(result["b"].StartsWith("vtkFoo_Bar", StringComparison.Ordinal));
     }
 }

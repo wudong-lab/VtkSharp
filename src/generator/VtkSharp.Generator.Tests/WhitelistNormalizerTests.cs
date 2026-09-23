@@ -3,9 +3,10 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class WhitelistNormalizerTests
 {
-    [Fact]
+    [TestMethod]
     public void Normalize_AddsDependencyClassesAndBaseClassChain()
     {
         var document = new WhitelistDocument
@@ -40,18 +41,18 @@ public sealed class WhitelistNormalizerTests
 
         var normalized = new WhitelistNormalizer().Normalize([document], hierarchy, manualBindingClasses: ["vtkObject"]);
 
-        var renderingCore = Assert.Single(normalized);
-        Assert.Equal(["vtkActor", "vtkMapper", "vtkProp", "vtkProp3D"], renderingCore.Classes.Select(item => item.Name));
+        var renderingCore = Enumerable.Single(normalized);
+        Assert.AreSequenceEqual(["vtkActor", "vtkMapper", "vtkProp", "vtkProp3D"], renderingCore.Classes.Select(item => item.Name));
         var actor = renderingCore.Classes.Single(item => item.Name == "vtkActor");
-        Assert.Equal("vtkMapper*", actor.Functions[0].Parameters[0].Type);
-        Assert.Equal([], renderingCore.Classes.Single(item => item.Name == "vtkMapper").Functions);
+        Assert.AreEqual("vtkMapper*", actor.Functions[0].Parameters[0].Type);
+        Assert.AreSequenceEqual([], renderingCore.Classes.Single(item => item.Name == "vtkMapper").Functions);
     }
 
-    [Theory]
-    [InlineData("vtkTypeBool")]
-    [InlineData("vtkTypeUInt32")]
-    [InlineData("vtkIdType")]
-    [InlineData("vtkMTimeType")]
+    [TestMethod]
+    [DataRow("vtkTypeBool")]
+    [DataRow("vtkTypeUInt32")]
+    [DataRow("vtkIdType")]
+    [DataRow("vtkMTimeType")]
     public void Normalize_ExcludesVtkScalarTypesFromDependencyClasses(string scalarType)
     {
         var document = new WhitelistDocument
@@ -83,7 +84,7 @@ public sealed class WhitelistNormalizerTests
 
         var normalized = new WhitelistNormalizer().Normalize([document], hierarchy, manualBindingClasses: ["vtkObject"]);
 
-        var commonCore = Assert.Single(normalized);
-        Assert.DoesNotContain(commonCore.Classes, c => c.Name == scalarType);
+        var commonCore = Enumerable.Single(normalized);
+        Assert.DoesNotContain(c => c.Name == scalarType, commonCore.Classes);
     }
 }

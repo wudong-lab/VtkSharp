@@ -3,9 +3,10 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class GeneratedManifestCacheTests
 {
-    [Fact]
+    [TestMethod]
     public void TryGetReusableEntry_ReturnsTrue_WhenInputAndOutputHashesMatch()
     {
         var directory = CreateDirectory();
@@ -17,11 +18,11 @@ public sealed class GeneratedManifestCacheTests
 
         var reusable = GeneratedManifestCache.TryGetReusableEntry(manifest, "vtkFoo", "input", managedPath, nativePath, out var entry);
 
-        Assert.True(reusable);
-        Assert.Equal("vtkFoo", entry?.ClassName);
+        Assert.IsTrue(reusable);
+        Assert.AreEqual("vtkFoo", entry?.ClassName);
     }
 
-    [Fact]
+    [TestMethod]
     public void TryGetReusableEntry_ReturnsFalse_WhenInputHashDiffers()
     {
         var directory = CreateDirectory();
@@ -33,10 +34,10 @@ public sealed class GeneratedManifestCacheTests
 
         var reusable = GeneratedManifestCache.TryGetReusableEntry(manifest, "vtkFoo", "new", managedPath, nativePath, out _);
 
-        Assert.False(reusable);
+        Assert.IsFalse(reusable);
     }
 
-    [Fact]
+    [TestMethod]
     public void TryGetReusableEntry_ReturnsFalse_WhenGeneratedFileWasEdited()
     {
         var directory = CreateDirectory();
@@ -49,10 +50,10 @@ public sealed class GeneratedManifestCacheTests
 
         var reusable = GeneratedManifestCache.TryGetReusableEntry(manifest, "vtkFoo", "input", managedPath, nativePath, out _);
 
-        Assert.False(reusable);
+        Assert.IsFalse(reusable);
     }
 
-    [Fact]
+    [TestMethod]
     public void ComputeFingerprint_Changes_WhenWhitelistFunctionChanges()
     {
         var first = GenerationInputFingerprint.Compute(
@@ -78,10 +79,10 @@ public sealed class GeneratedManifestCacheTests
             "header",
             [CreateFunction("SetValue", "double")]);
 
-        Assert.NotEqual(first, second);
+        Assert.AreNotEqual(first, second);
     }
 
-    [Fact]
+    [TestMethod]
     public void Load_ReturnsEmptyManifest_WhenSchemaVersionDiffers()
     {
         var directory = CreateDirectory();
@@ -99,7 +100,7 @@ public sealed class GeneratedManifestCacheTests
 
         var manifest = new GeneratedManifestStore().Load(path, "vtkCommonCore", "v1");
 
-        Assert.Empty(manifest.Classes);
+        Assert.IsEmpty(manifest.Classes);
     }
 
     private static GeneratedManifest CreateManifest(string inputHash, string managedPath, string nativePath)

@@ -1,8 +1,9 @@
 namespace VtkSharp.Tests;
 
+[TestClass]
 public sealed class VtkScalarBarBindingsTests
 {
-    [Fact]
+    [TestMethod]
     public void ScalarBarActor_UsesConfiguredLookupTableAndLabels()
     {
         using var lookupTable = vtkLookupTable.New();
@@ -20,14 +21,14 @@ public sealed class VtkScalarBarBindingsTests
         actor.SetTitle("U, Magnitude");
         actor.SetLabelFormat("%.1f");
 
-        Assert.Equal(lookupTable.NativePointer, actor.GetLookupTable().NativePointer);
-        Assert.Equal(3, actor.GetMaximumNumberOfColors());
-        Assert.Equal(4, actor.GetNumberOfLabels());
-        Assert.Equal("U, Magnitude", actor.GetTitle());
-        Assert.Equal("%.1f", actor.GetLabelFormat());
+        Assert.AreEqual(lookupTable.NativePointer, actor.GetLookupTable().NativePointer);
+        Assert.AreEqual(3, actor.GetMaximumNumberOfColors());
+        Assert.AreEqual(4, actor.GetNumberOfLabels());
+        Assert.AreEqual("U, Magnitude", actor.GetTitle());
+        Assert.AreEqual("%.1f", actor.GetLabelFormat());
     }
 
-    [Fact]
+    [TestMethod]
     public void ScalarBarWidget_AcceptsScalarBarActorAndInteractionOptions()
     {
         using var actor = vtkScalarBarActor.New();
@@ -43,9 +44,9 @@ public sealed class VtkScalarBarBindingsTests
         widget.ResizableOff();
         widget.RepositionableOn();
 
-        Assert.Equal(actor.NativePointer, widget.GetScalarBarActor().NativePointer);
-        Assert.True(widget.GetSelectable());
-        Assert.False(widget.GetResizable());
-        Assert.True(widget.GetRepositionable());
+        Assert.AreEqual(actor.NativePointer, widget.GetScalarBarActor().NativePointer);
+        Assert.IsTrue(widget.GetSelectable());
+        Assert.IsFalse(widget.GetResizable());
+        Assert.IsTrue(widget.GetRepositionable());
     }
 }

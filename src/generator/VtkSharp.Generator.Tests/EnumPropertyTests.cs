@@ -7,6 +7,7 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class EnumPropertyTests
 {
     internal static InspectedClass Inspect(string body, string name = "vtkThing")
@@ -21,7 +22,7 @@ public sealed class EnumPropertyTests
         finally { Directory.Delete(directory, true); }
     }
 
-    [Fact]
+    [TestMethod]
     public void IntForwarders_ResolveMacroExpressionsAndKeepNativeSignatures()
     {
         var result = Inspect("""
@@ -35,16 +36,16 @@ public sealed class EnumPropertyTests
                 void SetModeToB() { this->SetMode(MODE_B); }
             };
             """);
-        Assert.Empty(result.EnumDiagnostics!);
-        Assert.True(result.EnumProperties?.Count > 0, System.Text.Json.JsonSerializer.Serialize(result));
-        var property = Assert.Single(result.EnumProperties!);
-        Assert.Equal("Mode", property.Name);
-        Assert.Equal(new[] { -3, 7 }, property.Values.Select(v => v.Value));
-        Assert.Equal("MODE_A", property.Values[0].NativeExpression);
-        Assert.Equal("int", result.Functions.Single(f => f.Name == "GetMode").ReturnType);
+        Assert.IsEmpty(result.EnumDiagnostics!);
+        Assert.IsTrue(result.EnumProperties?.Count > 0, System.Text.Json.JsonSerializer.Serialize(result));
+        var property = Enumerable.Single(result.EnumProperties!);
+        Assert.AreEqual("Mode", property.Name);
+        Assert.AreSequenceEqual(new[] { -3, 7 }, property.Values.Select(v => v.Value));
+        Assert.AreEqual("MODE_A", property.Values[0].NativeExpression);
+        Assert.AreEqual("int", result.Functions.Single(f => f.Name == "GetMode").ReturnType);
     }
 
-    [Fact]
+    [TestMethod]
     public void NativeEnum_WithIntUnderlyingType_IsSupported()
     {
         var result = Inspect("""
@@ -55,25 +56,25 @@ public sealed class EnumPropertyTests
                 Choice GetMode();
             };
             """);
-        Assert.True(result.EnumProperties?.Count > 0, System.Text.Json.JsonSerializer.Serialize(result));
-        var property = Assert.Single(result.EnumProperties!);
-        Assert.Equal(3, property.Values.Count);
-        Assert.All(result.Functions, f => Assert.Equal("ready", FunctionEligibility.Evaluate(f).Status));
+        Assert.IsTrue(result.EnumProperties?.Count > 0, System.Text.Json.JsonSerializer.Serialize(result));
+        var property = Enumerable.Single(result.EnumProperties!);
+        Assert.AreEqual(3, property.Values.Count);
+        foreach (var f in result.Functions) Assert.AreEqual("ready", FunctionEligibility.Evaluate(f).Status);
     }
 
-    [Theory]
-    [InlineData("void SetModeToA() { SetMode(1); Update(); }", "")]
-    [InlineData("void SetModeToA() { SetMode(1); }", "void SetMode(double value);")]
-    [InlineData("void SetModeToA() { SetMode(0xFFFFFFFFu); }", "")]
+    [TestMethod]
+    [DataRow("void SetModeToA() { SetMode(1); Update(); }", "")]
+    [DataRow("void SetModeToA() { SetMode(1); }", "void SetMode(double value);")]
+    [DataRow("void SetModeToA() { SetMode(0xFFFFFFFFu); }", "")]
     public void UnsupportedGroup_DoesNotDisableOrdinaryFunctions(string helper, string extra)
     {
         var result = Inspect("class vtkThing { public: void Update(); void SetMode(int v); int GetMode(); void SetModeToB() { SetMode(2); } " + helper + extra + " };");
-        Assert.Empty(result.EnumProperties!);
-        Assert.NotEmpty(result.EnumDiagnostics!);
-        Assert.All(result.Functions, f => Assert.Equal("ready", FunctionEligibility.Evaluate(f).Status));
+        Assert.IsEmpty(result.EnumProperties!);
+        Assert.IsNotEmpty(result.EnumDiagnostics!);
+        foreach (var f in result.Functions) Assert.AreEqual("ready", FunctionEligibility.Evaluate(f).Status);
     }
 
-    [Fact]
+    [TestMethod]
     public void OverrideAndExtension_AreNotAutomaticallyConverted()
     {
         var result = Inspect("""
@@ -85,9 +86,9 @@ public sealed class EnumPropertyTests
                 void SetModeToB() { SetMode(2); }
             };
             """);
-        Assert.Empty(result.EnumProperties!);
-        Assert.Contains(result.EnumDiagnostics!, d => d.Contains("inherited"));
-        Assert.All(result.Functions, f => Assert.Equal("ready", FunctionEligibility.Evaluate(f).Status));
+        Assert.IsEmpty(result.EnumProperties!);
+        Assert.Contains(d => d.Contains("inherited"), result.EnumDiagnostics!);
+        foreach (var f in result.Functions) Assert.AreEqual("ready", FunctionEligibility.Evaluate(f).Status);
     }
 
     private const string IntHeader = """
@@ -107,7 +108,7 @@ public sealed class EnumPropertyTests
         ["vtkThing"] = new("vtkThing", "", "vtkThing.h", "vtkTest"),
     };
 
-    [Fact]
+    [TestMethod]
     public void PlanningAlreadyExportedHelper_AddsWholeGroupAndEnumContract()
     {
         var inspected = Inspect(IntHeader);
@@ -115,22 +116,22 @@ public sealed class EnumPropertyTests
         List<WhitelistDocument> formal = [new() { Module = "vtkTest", Classes = [new() { Name = "vtkThing", Header = "vtkThing.h", Functions = [helper] }] }];
         var plan = BindingRequestPlanner.Build(new() { Requests = [new() { Class = "vtkThing", Methods = [helper.Name] }] },
             formal, Hierarchy, [], _ => inspected);
-        Assert.False(plan.HasUnresolved);
-        var requirement = Assert.Single(plan.Candidate.Requirements);
-        Assert.Equal(4, requirement.Functions.Count);
-        Assert.Single(requirement.EnumProperties!);
+        Assert.IsFalse(plan.HasUnresolved);
+        var requirement = Enumerable.Single(plan.Candidate.Requirements);
+        Assert.AreEqual(4, requirement.Functions.Count);
+        Enumerable.Single(requirement.EnumProperties!);
         var merge = CandidateMergePlan.Build(formal, plan.Candidate, Hierarchy, []);
-        Assert.Empty(merge.Conflicts);
-        Assert.Equal(3, merge.Added.Count);
-        Assert.Equal("vtkThing.Mode", Assert.Single(merge.AddedEnums));
-        Assert.Null(formal[0].Classes[0].EnumProperties);
-        Assert.Single(formal[0].Classes[0].Functions);
+        Assert.IsEmpty(merge.Conflicts);
+        Assert.AreEqual(3, merge.Added.Count);
+        Assert.AreEqual("vtkThing.Mode", Enumerable.Single(merge.AddedEnums));
+        Assert.IsNull(formal[0].Classes[0].EnumProperties);
+        Enumerable.Single(formal[0].Classes[0].Functions);
         var again = CandidateMergePlan.Build(merge.Documents, plan.Candidate, Hierarchy, []);
-        Assert.Empty(again.AddedEnums);
-        Assert.Empty(again.Added);
+        Assert.IsEmpty(again.AddedEnums);
+        Assert.IsEmpty(again.Added);
     }
 
-    [Fact]
+    [TestMethod]
     public void ContractChangeOrIncompleteGroup_IsRejected()
     {
         var inspected = Inspect(IntHeader);
@@ -139,22 +140,22 @@ public sealed class EnumPropertyTests
         var whitelistClass = new WhitelistClass { Name = "vtkThing", Header = "vtkThing.h", Functions = requirement.Functions, EnumProperties = requirement.EnumProperties };
         var document = new WhitelistDocument { Module = "vtkTest", Classes = [whitelistClass] };
         var validator = new WhitelistValidator();
-        Assert.Empty(validator.Validate(document, new Dictionary<string, InspectedClass> { ["vtkThing"] = inspected }).Diagnostics);
+        Assert.IsEmpty(validator.Validate(document, new Dictionary<string, InspectedClass> { ["vtkThing"] = inspected }).Diagnostics);
         var changed = inspected with { EnumProperties = [] };
-        Assert.Contains(validator.Validate(document, new Dictionary<string, InspectedClass> { ["vtkThing"] = changed }).Diagnostics,
-            d => d.Message.Contains("refusing to fall back"));
+        Assert.Contains(d => d.Message.Contains("refusing to fall back"),
+            validator.Validate(document, new Dictionary<string, InspectedClass> { ["vtkThing"] = changed }).Diagnostics);
         var original = requirement.EnumProperties![0];
         var candidate = new CandidateDocument { Requirements = [requirement with
         {
             EnumProperties = [original with { Values = original.Values.Select(v => v with { Value = v.Value + 1 }).ToList() }],
         }] };
-        Assert.NotEmpty(CandidateMergePlan.Build([document], candidate, Hierarchy, []).Conflicts);
+        Assert.IsNotEmpty(CandidateMergePlan.Build([document], candidate, Hierarchy, []).Conflicts);
         whitelistClass.Functions.RemoveAt(0);
-        Assert.Contains(validator.Validate(document, new Dictionary<string, InspectedClass> { ["vtkThing"] = inspected }).Diagnostics,
-            d => d.Message.Contains("requires exactly one"));
+        Assert.Contains(d => d.Message.Contains("requires exactly one"),
+            validator.Validate(document, new Dictionary<string, InspectedClass> { ["vtkThing"] = inspected }).Diagnostics);
     }
 
-    [Fact]
+    [TestMethod]
     public void EmitIntEnum_PreservesNativeExportsAndUsesTypedPublicMethods()
     {
         var inspected = Inspect(IntHeader);
@@ -168,10 +169,10 @@ public sealed class EnumPropertyTests
         Assert.Contains("Native: FIRST", managed);
         Assert.DoesNotContain("public new void SetMode(int", managed);
         var emitter = new CppExportEmitter();
-        Assert.Equal(emitter.Emit("vtkThing", [], false, functions), emitter.Emit("vtkThing", [], false, functions, inspected.EnumProperties));
+        Assert.AreEqual(emitter.Emit("vtkThing", [], false, functions), emitter.Emit("vtkThing", [], false, functions, inspected.EnumProperties));
     }
 
-    [Fact]
+    [TestMethod]
     public void EmitNativeEnum_UsesIntAbiAndExplicitNativeCasts()
     {
         var inspected = Inspect("class vtkThing { public: enum class Choice : int { A=-1, B=2 }; Choice GetMode(); void SetMode(Choice value); };");
@@ -184,55 +185,55 @@ public sealed class EnumPropertyTests
         Assert.Contains("static_cast<int>(self->GetMode())", native);
     }
 
-    [Fact]
+    [TestMethod]
     public void GuiSelection_ExpandsAssociatedFunctions()
     {
         var inspected = Inspect(IntHeader);
-        var property = Assert.Single(inspected.EnumProperties!);
+        var property = Enumerable.Single(inspected.EnumProperties!);
         var selected = new ExportFunctionCandidate("vtkThing::void SetModeToFirst()", "vtkThing", "vtkThing", "vtkTest", "vtkThing.h",
             "vtkThing::void SetModeToFirst()", "SetModeToFirst", "void", [], ExportStatus.AvailableToAdd, true, null, property, inspected.Functions);
         var plan = new ExportInventoryService().CreatePlan([selected]);
-        Assert.Equal(4, plan.Functions.Count);
-        Assert.Contains(plan.Diagnostics, d => d.Contains("Enum group"));
+        Assert.AreEqual(4, plan.Functions.Count);
+        Assert.Contains(d => d.Contains("Enum group"), plan.Diagnostics);
     }
 
-    [Theory]
-    [InlineData("#define SECOND 4294967295u")]
-    [InlineData("#define SECOND runtimeValue()\nint runtimeValue();")]
+    [TestMethod]
+    [DataRow("#define SECOND 4294967295u")]
+    [DataRow("#define SECOND runtimeValue()\nint runtimeValue();")]
     public void UnresolvableOrOutOfRangeConstant_FallsBackWithoutChangingSignatures(string definition)
     {
         var result = Inspect(IntHeader.Replace("#define SECOND (FIRST + 4)", definition));
-        Assert.Empty(result.EnumProperties!);
-        Assert.NotEmpty(result.EnumDiagnostics!);
-        Assert.All(result.Functions, f => Assert.Equal("ready", FunctionEligibility.Evaluate(f).Status));
+        Assert.IsEmpty(result.EnumProperties!);
+        Assert.IsNotEmpty(result.EnumDiagnostics!);
+        foreach (var f in result.Functions) Assert.AreEqual("ready", FunctionEligibility.Evaluate(f).Status);
     }
 
-    [Fact]
+    [TestMethod]
     public void SingleDefaultSetter_DoesNotEstablishEnumSemantics()
     {
         var result = Inspect("class vtkThing { public: int GetCount(); void SetCount(int); void SetCountToDefault() { SetCount(1); } };");
-        Assert.Empty(result.EnumProperties!);
-        Assert.Contains(result.EnumDiagnostics!, d => d.Contains("lone reset/default"));
+        Assert.IsEmpty(result.EnumProperties!);
+        Assert.Contains(d => d.Contains("lone reset/default"), result.EnumDiagnostics!);
     }
 
-    [Theory]
-    [InlineData("Mode", "2D", "3D")]
-    [InlineData("2DMode", "First", "Second")]
+    [TestMethod]
+    [DataRow("Mode", "2D", "3D")]
+    [DataRow("2DMode", "First", "Second")]
     public void InvalidManagedIdentifier_LeavesOrdinaryFunctionsExportable(string property, string first, string second)
     {
         var inspected = Inspect($"class vtkThing {{ public: int Get{property}(); void Set{property}(int); " +
             $"void Set{property}To{first}() {{ Set{property}(1); }} void Set{property}To{second}() {{ Set{property}(2); }} }};");
-        Assert.Empty(inspected.EnumProperties!);
-        Assert.Contains(inspected.EnumDiagnostics!, d => d.Contains("identifier"));
-        Assert.All(inspected.Functions, f => Assert.Equal("ready", FunctionEligibility.Evaluate(f).Status));
+        Assert.IsEmpty(inspected.EnumProperties!);
+        Assert.Contains(d => d.Contains("identifier"), inspected.EnumDiagnostics!);
+        foreach (var f in inspected.Functions) Assert.AreEqual("ready", FunctionEligibility.Evaluate(f).Status);
     }
 
-    [Fact]
+    [TestMethod]
     public void CSharpKeywords_AreEscapedWithoutRenaming()
     {
         var inspected = Inspect("class vtkThing { public: int Getevent(); void Setevent(int); " +
             "void SeteventTostring() { Setevent(1); } void SeteventToobject() { Setevent(2); } };");
-        Assert.Single(inspected.EnumProperties!);
+        Enumerable.Single(inspected.EnumProperties!);
         var managed = new CSharpBindingEmitter().Emit("VtkSharp", "vtkThing", "vtkObject", false,
             inspected.Functions.Select(CandidateWhitelistService.ToWhitelistFunction).ToList(), inspected, enumProperties: inspected.EnumProperties);
         Assert.Contains("public enum @event", managed);
@@ -240,7 +241,7 @@ public sealed class EnumPropertyTests
         Assert.Contains("@object = 2", managed);
     }
 
-    [Fact]
+    [TestMethod]
     public void EnumContract_RoundTripsThroughYamlAndAffectsFingerprint()
     {
         var inspected = Inspect(IntHeader);
@@ -257,24 +258,24 @@ public sealed class EnumPropertyTests
             var path = Path.Combine(directory, "vtkTest.yml");
             new WhitelistWriter().WriteFile(path, document);
             var restored = new WhitelistLoader().LoadFile(path);
-            Assert.True(requirement.EnumProperties![0].SameContract(restored.Classes[0].EnumProperties![0]));
+            Assert.IsTrue(requirement.EnumProperties![0].SameContract(restored.Classes[0].EnumProperties![0]));
             var candidatePath = Path.Combine(directory, "candidate.yml");
             CandidateWhitelistService.WriteCandidate(candidatePath, new() { Requirements = [requirement] });
             var restoredCandidate = CandidateWhitelistService.LoadCandidateFile(candidatePath);
-            Assert.True(requirement.EnumProperties[0].SameContract(restoredCandidate.Requirements[0].EnumProperties![0]));
+            Assert.IsTrue(requirement.EnumProperties[0].SameContract(restoredCandidate.Requirements[0].EnumProperties![0]));
             var ordinary = GenerationInputFingerprint.Compute("v1", "9.7", "VtkSharp", "native", "vtkTest", "vtkThing", "vtkThing.h", "vtkObject", "hash", requirement.Functions);
             var typed = GenerationInputFingerprint.Compute("v1", "9.7", "VtkSharp", "native", "vtkTest", "vtkThing", "vtkThing.h", "vtkObject", "hash", requirement.Functions, requirement.EnumProperties);
-            Assert.NotEqual(ordinary, typed);
+            Assert.AreNotEqual(ordinary, typed);
         }
         finally { Directory.Delete(directory, true); }
     }
 
-    [Fact]
+    [TestMethod]
     public void ConstantEvaluation_UsesMacroStateAtTheMethodNotAtEndOfHeader()
     {
         var inspected = Inspect(IntHeader + "\n#undef FIRST\n#define FIRST 999\n");
-        var property = Assert.Single(inspected.EnumProperties!);
-        Assert.Equal(-1, property.Values.Single(v => v.Name == "First").Value);
-        Assert.Equal(3, property.Values.Single(v => v.Name == "Second").Value);
+        var property = Enumerable.Single(inspected.EnumProperties!);
+        Assert.AreEqual(-1, property.Values.Single(v => v.Name == "First").Value);
+        Assert.AreEqual(3, property.Values.Single(v => v.Name == "Second").Value);
     }
 }

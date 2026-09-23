@@ -1,18 +1,19 @@
-﻿namespace VtkSharp.Tests;
+namespace VtkSharp.Tests;
 
+[TestClass]
 public sealed class VtkCommandTests
 {
-    [Fact]
+    [TestMethod]
     public void EventIds_MatchVtkCommandEventOrder()
     {
-        Assert.Equal(0u, vtkCommand.NoEvent);
-        Assert.Equal(1u, vtkCommand.AnyEvent);
-        Assert.Equal(8u, vtkCommand.StartPickEvent);
-        Assert.Equal(33u, vtkCommand.ModifiedEvent);
-        Assert.Equal(57u, vtkCommand.StartAnimationCueEvent);
-        Assert.Equal(84u, vtkCommand.ComputeVisiblePropBoundsEvent);
-        Assert.Equal(124u, vtkCommand.LeftButtonDoubleClickEvent);
-        Assert.Equal(136u, vtkCommand.Elevation3DEvent);
-        Assert.Equal(1000u, vtkCommand.UserEvent);
+        Assert.AreEqual(0u, vtkCommand.NoEvent);
+        Assert.AreEqual(1u, vtkCommand.AnyEvent);
+        Assert.AreEqual(8u, vtkCommand.StartPickEvent);
+        Assert.AreEqual(33u, vtkCommand.ModifiedEvent);
+        Assert.AreEqual(57u, vtkCommand.StartAnimationCueEvent);
+        Assert.AreEqual(84u, vtkCommand.ComputeVisiblePropBoundsEvent);
+        Assert.AreEqual(124u, vtkCommand.LeftButtonDoubleClickEvent);
+        Assert.AreEqual(136u, vtkCommand.Elevation3DEvent);
+        Assert.AreEqual(1000u, vtkCommand.UserEvent);
     }
 }

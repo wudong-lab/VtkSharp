@@ -2,9 +2,10 @@ using VtkSharp.Generator.Core.Inspection;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class VtkClassInspectorTests
 {
-    [Fact]
+    [TestMethod]
     public void InspectHeader_DetectsStaticNew()
     {
         var directory = CreateHeader("""
@@ -19,11 +20,11 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkThing.h", "vtkThing");
 
-        Assert.True(inspected.HasStaticNew);
-        Assert.Contains(inspected.Functions, function => function.Name == "Update");
+        Assert.IsTrue(inspected.HasStaticNew);
+        Assert.Contains(function => function.Name == "Update", inspected.Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_DoesNotReportStaticNewWhenMissing()
     {
         var directory = CreateHeader("""
@@ -37,10 +38,10 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkBase.h", "vtkBase");
 
-        Assert.False(inspected.HasStaticNew);
+        Assert.IsFalse(inspected.HasStaticNew);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_ProvidesVectorForVtkHeadersThatUseItTransitively()
     {
         var directory = CreateHeader("""
@@ -54,10 +55,10 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkThing.h", "vtkThing");
 
-        Assert.Contains(inspected.Functions, function => function.Name == "SetValues");
+        Assert.Contains(function => function.Name == "SetValues", inspected.Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_DoesNotIncludeInheritedBaseClassFunctions()
     {
         var directory = CreateHeader("""
@@ -79,12 +80,12 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkDerived.h", "vtkDerived");
 
-        Assert.Contains(inspected.Functions, function => function.Name == "Render");
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "Update");
-        Assert.Equal("vtkBase", inspected.BaseClassName);
+        Assert.Contains(function => function.Name == "Render", inspected.Functions);
+        Assert.DoesNotContain(function => function.Name == "Update", inspected.Functions);
+        Assert.AreEqual("vtkBase", inspected.BaseClassName);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_OnlyReportsDirectPublicOverloads()
     {
         var directory = CreateHeader("""
@@ -110,16 +111,16 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkDerived.h", "vtkDerived");
 
-        Assert.Contains(inspected.Functions, function =>
+        Assert.Contains(function =>
             function.Name == "AddInputData" &&
-            function.Parameters.SequenceEqual([new InspectedParameter("vtkPolyData*", "_arg1")]));
-        Assert.DoesNotContain(inspected.Functions, function =>
+            function.Parameters.SequenceEqual([new InspectedParameter("vtkPolyData*", "_arg1")]), inspected.Functions);
+        Assert.DoesNotContain(function =>
             function.Name == "AddInputData" &&
-            function.Parameters.Any(parameter => parameter.Type == "vtkDataObject*"));
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "Update");
+            function.Parameters.Any(parameter => parameter.Type == "vtkDataObject*"), inspected.Functions);
+        Assert.DoesNotContain(function => function.Name == "Update", inspected.Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_PrivateDeclarationIsNotReported()
     {
         var directory = CreateHeader("""
@@ -145,13 +146,13 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkDerived.h", "vtkDerived");
 
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "AddInputData");
+        Assert.DoesNotContain(function => function.Name == "AddInputData", inspected.Functions);
         Assert.Contains("AddInputData", inspected.DeclaredMemberNames!);
-        Assert.Contains(inspected.Functions, function => function.Name == "Render");
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "Update");
+        Assert.Contains(function => function.Name == "Render", inspected.Functions);
+        Assert.DoesNotContain(function => function.Name == "Update", inspected.Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_OnlyTreatsStaticNewAsSupportedStaticFunction()
     {
         var directory = CreateHeader("""
@@ -167,14 +168,14 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkThing.h", "vtkThing");
 
-        Assert.True(inspected.HasStaticNew);
-        Assert.Contains(inspected.Functions, function => function.Name == "Update");
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "New");
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "SetGlobalFlag");
+        Assert.IsTrue(inspected.HasStaticNew);
+        Assert.Contains(function => function.Name == "Update", inspected.Functions);
+        Assert.DoesNotContain(function => function.Name == "New", inspected.Functions);
+        Assert.DoesNotContain(function => function.Name == "SetGlobalFlag", inspected.Functions);
         Assert.Contains("SetGlobalFlag", inspected.DeclaredMemberNames!);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_DoesNotReportConstructorsOrDestructors()
     {
         var directory = CreateHeader("""
@@ -190,12 +191,12 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkThing.h", "vtkThing");
 
-        Assert.Contains(inspected.Functions, function => function.Name == "Update");
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "vtkThing");
-        Assert.DoesNotContain(inspected.Functions, function => function.Name == "~vtkThing");
+        Assert.Contains(function => function.Name == "Update", inspected.Functions);
+        Assert.DoesNotContain(function => function.Name == "vtkThing", inspected.Functions);
+        Assert.DoesNotContain(function => function.Name == "~vtkThing", inspected.Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_ReportsCanonicalSignaturesAndDependencyTypes()
     {
         var directory = CreateHeader("""
@@ -212,18 +213,18 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkActor.h", "vtkActor");
 
-        Assert.Equal(["vtkMapper", "vtkProperty"], inspected.Dependencies);
-        Assert.Contains(inspected.Functions, function =>
+        Assert.AreSequenceEqual(["vtkMapper", "vtkProperty"], inspected.Dependencies);
+        Assert.Contains(function =>
             function.Name == "SetMapper" &&
             function.CanonicalSignature == "void SetMapper(vtkMapper* mapper)" &&
-            function.DependencyTypes!.SequenceEqual(["vtkMapper"]));
-        Assert.Contains(inspected.Functions, function =>
+            function.DependencyTypes!.SequenceEqual(["vtkMapper"]), inspected.Functions);
+        Assert.Contains(function =>
             function.Name == "GetProperty" &&
             function.CanonicalSignature == "vtkProperty* GetProperty()" &&
-            function.DependencyTypes!.SequenceEqual(["vtkProperty"]));
+            function.DependencyTypes!.SequenceEqual(["vtkProperty"]), inspected.Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_ReportsTypeSupportUsingBindingTypeMapper()
     {
         var directory = CreateHeader("""
@@ -244,14 +245,14 @@ public sealed class VtkClassInspectorTests
 
         var inspected = inspector.InspectHeader(directory, "vtkThing.h", "vtkThing");
 
-        Assert.True(inspected.Functions.Single(function => function.Name == "SetName").IsSupported);
-        Assert.True(inspected.Functions.Single(function => function.Name == "SetValue").IsSupported);
-        Assert.True(inspected.Functions.Single(function => function.Name == "GetColor").IsSupported);
-        Assert.True(inspected.Functions.Single(function => function.Name == "GetName").IsSupported);
-        Assert.False(inspected.Functions.Single(function => function.Name == "GetUnsupportedColor").IsSupported);
+        Assert.IsTrue(Enumerable.Single(inspected.Functions, function => function.Name == "SetName").IsSupported);
+        Assert.IsTrue(Enumerable.Single(inspected.Functions, function => function.Name == "SetValue").IsSupported);
+        Assert.IsTrue(Enumerable.Single(inspected.Functions, function => function.Name == "GetColor").IsSupported);
+        Assert.IsTrue(Enumerable.Single(inspected.Functions, function => function.Name == "GetName").IsSupported);
+        Assert.IsFalse(Enumerable.Single(inspected.Functions, function => function.Name == "GetUnsupportedColor").IsSupported);
     }
 
-    [Fact]
+    [TestMethod]
     public void InspectHeader_ReturnsFinalClassAfterInspectFileCachedRawClass()
     {
         var directory = CreateHeader("""
@@ -268,9 +269,9 @@ public sealed class VtkClassInspectorTests
         inspector.InspectFile(directory, "vtkActor.h");
         var inspected = inspector.InspectHeader(directory, "vtkActor.h", "vtkActor");
 
-        Assert.Equal("vtkBase", inspected.BaseClassName);
-        Assert.Equal(["vtkMapper"], inspected.Dependencies);
-        Assert.Null(inspected.BaseClassNames);
+        Assert.AreEqual("vtkBase", inspected.BaseClassName);
+        Assert.AreSequenceEqual(["vtkMapper"], inspected.Dependencies);
+        Assert.IsNull(inspected.BaseClassNames);
     }
 
     private static string CreateHeader(string text, string fileName = "vtkThing.h")

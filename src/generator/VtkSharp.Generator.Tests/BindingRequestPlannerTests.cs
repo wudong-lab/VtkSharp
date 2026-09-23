@@ -4,9 +4,10 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class BindingRequestPlannerTests
 {
-    [Fact]
+    [TestMethod]
     public void Build_HeaderFailureDoesNotDiscardOtherRequests()
     {
         var plan = BindingRequestPlanner.Build(new BindingRequestDocument
@@ -14,11 +15,11 @@ public sealed class BindingRequestPlannerTests
             Requests = [new() { Class = "vtkBase", ClassOnly = true }, new() { Class = "vtkDerived", ClassOnly = true }],
         }, [], Hierarchy(), [], name => name == "vtkBase"
             ? throw new InvalidOperationException("Malformed header") : new InspectedClass(name, []));
-        Assert.Equal(["inspection-failed", "ready"], plan.Diagnostics.Select(item => item.Status));
-        Assert.Equal("vtkDerived", Assert.Single(plan.Candidate.Requirements).Class);
+        Assert.AreSequenceEqual(["inspection-failed", "ready"], plan.Diagnostics.Select(item => item.Status));
+        Assert.AreEqual("vtkDerived", Enumerable.Single(plan.Candidate.Requirements).Class);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_AlreadyExportedOverloadSetDoesNotRequireSelection()
     {
         var functions = new[] { Function("Set", "int"), Function("Set", "double") };
@@ -27,57 +28,57 @@ public sealed class BindingRequestPlannerTests
             Module = "vtkTest", Classes = [new() { Name = "vtkBase", Header = "vtkBase.h", Functions = functions.Select(CandidateWhitelistService.ToWhitelistFunction).ToList() }],
         };
         var plan = Plan(new BindingRequest { Class = "vtkBase", Methods = ["Set"] }, functions, formal: [formal]);
-        Assert.False(plan.HasUnresolved);
-        Assert.All(plan.Diagnostics, item => Assert.Equal("already-exported", item.Status));
-        Assert.Empty(plan.Candidate.Requirements);
+        Assert.IsFalse(plan.HasUnresolved);
+        foreach (var item in plan.Diagnostics) Assert.AreEqual("already-exported", item.Status);
+        Assert.IsEmpty(plan.Candidate.Requirements);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_ResolvesBaseAndKeepsRequestedReceiverWithoutExportingOtherMethods()
     {
         var plan = Plan(new BindingRequest { Class = "vtkDerived", Methods = ["Update"] });
-        Assert.False(plan.HasUnresolved);
-        Assert.Equal("vtkBase", Assert.Single(plan.Diagnostics).DeclaringClass);
-        Assert.Empty(plan.Candidate.Requirements.Single(item => item.Class == "vtkDerived").Functions);
-        Assert.Equal("Update", Assert.Single(plan.Candidate.Requirements.Single(item => item.Class == "vtkBase").Functions).Name);
+        Assert.IsFalse(plan.HasUnresolved);
+        Assert.AreEqual("vtkBase", Enumerable.Single(plan.Diagnostics).DeclaringClass);
+        Assert.IsEmpty(plan.Candidate.Requirements.Single(item => item.Class == "vtkDerived").Functions);
+        Assert.AreEqual("Update", Enumerable.Single(plan.Candidate.Requirements.Single(item => item.Class == "vtkBase").Functions).Name);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_AmbiguousNameRequiresExplicitSignature()
     {
         var functions = new[] { Function("Set", "int"), Function("Set", "double") };
         var ambiguous = Plan(new BindingRequest { Class = "vtkBase", Methods = ["Set"] }, functions);
-        var diagnostic = Assert.Single(ambiguous.Diagnostics);
-        Assert.Equal("ambiguous", diagnostic.Status);
-        Assert.Empty(ambiguous.Candidate.Requirements);
+        var diagnostic = Enumerable.Single(ambiguous.Diagnostics);
+        Assert.AreEqual("ambiguous", diagnostic.Status);
+        Assert.IsEmpty(ambiguous.Candidate.Requirements);
         var exact = Plan(new BindingRequest { Class = "vtkBase", Signatures = [diagnostic.Signatures![1]] }, functions);
-        Assert.False(exact.HasUnresolved);
-        Assert.Equal("double", Assert.Single(Assert.Single(exact.Candidate.Requirements).Functions).Parameters[0].Type);
+        Assert.IsFalse(exact.HasUnresolved);
+        Assert.AreEqual("double", Enumerable.Single(Enumerable.Single(exact.Candidate.Requirements).Functions).Parameters[0].Type);
     }
 
-    [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
+    [TestMethod]
+    [DataRow(true)]
+    [DataRow(false)]
     public void Build_DoesNotSelectHiddenBaseOverload(bool publicDeclaration)
     {
         var derived = publicDeclaration ? new[] { Function("Set", "int") } : [];
         var plan = Plan(new BindingRequest { Class = "vtkDerived", Signatures = ["vtkBase::void Set(double)"] },
             [Function("Set", "double")], derived, ["Set"]);
-        Assert.True(plan.HasUnresolved);
-        Assert.Equal("unsupported", Assert.Single(plan.Diagnostics).Status);
-        Assert.Empty(plan.Candidate.Requirements);
+        Assert.IsTrue(plan.HasUnresolved);
+        Assert.AreEqual("unsupported", Enumerable.Single(plan.Diagnostics).Status);
+        Assert.IsEmpty(plan.Candidate.Requirements);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_ReportsMetadataAndUnsupportedSeparatelyFromMissing()
     {
         var plan = Plan(new BindingRequest { Class = "vtkBase", Methods = ["Pointer", "Reference", "Missing"] },
             [Function("Pointer", "double*"), Function("Reference", "int&")]);
-        Assert.Equal(["needs-metadata", "unsupported", "not-found"], plan.Diagnostics.Select(item => item.Status));
-        Assert.Empty(plan.Candidate.Requirements);
+        Assert.AreSequenceEqual(["needs-metadata", "unsupported", "not-found"], plan.Diagnostics.Select(item => item.Status));
+        Assert.IsEmpty(plan.Candidate.Requirements);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_AlreadyExportedPointerDoesNotNeedMetadataAgain()
     {
         var function = CandidateWhitelistService.ToWhitelistFunction(Function("Pointer", "double*"));
@@ -86,11 +87,11 @@ public sealed class BindingRequestPlannerTests
             Module = "vtkTest", Classes = [new WhitelistClass { Name = "vtkBase", Header = "vtkBase.h", Functions = [function] }],
         };
         var plan = Plan(new BindingRequest { Class = "vtkDerived", Methods = ["Pointer"] }, [Function("Pointer", "double*")], formal: [formal]);
-        Assert.Equal("already-exported", Assert.Single(plan.Diagnostics).Status);
-        Assert.Equal("vtkDerived", Assert.Single(plan.Candidate.Requirements).Class);
+        Assert.AreEqual("already-exported", Enumerable.Single(plan.Diagnostics).Status);
+        Assert.AreEqual("vtkDerived", Enumerable.Single(plan.Candidate.Requirements).Class);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_DeduplicatesAndCachesInspectionWithinBatch()
     {
         var count = 0;
@@ -100,28 +101,28 @@ public sealed class BindingRequestPlannerTests
             count++;
             return new InspectedClass("vtkBase", [Function("Update")]);
         });
-        Assert.Equal(1, count);
-        Assert.Single(Assert.Single(plan.Candidate.Requirements).Functions);
+        Assert.AreEqual(1, count);
+        Enumerable.Single(Enumerable.Single(plan.Candidate.Requirements).Functions);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_ClassOnlyDoesNotExportFunctions()
     {
         var plan = Plan(new BindingRequest { Class = "vtkBase", ClassOnly = true });
-        Assert.Empty(Assert.Single(plan.Candidate.Requirements).Functions);
+        Assert.IsEmpty(Enumerable.Single(plan.Candidate.Requirements).Functions);
         var invalid = Plan(new BindingRequest { Class = "vtkBase" });
-        Assert.Equal("invalid-request", Assert.Single(invalid.Diagnostics).Status);
-        Assert.Empty(invalid.Candidate.Requirements);
+        Assert.AreEqual("invalid-request", Enumerable.Single(invalid.Diagnostics).Status);
+        Assert.IsEmpty(invalid.Candidate.Requirements);
     }
 
-    [Fact]
+    [TestMethod]
     public void Build_MultipleInheritanceDoesNotGuessBase()
     {
         var plan = BindingRequestPlanner.Build(new BindingRequestDocument
         {
             Requests = [new BindingRequest { Class = "vtkDerived", Methods = ["Update"] }],
         }, [], Hierarchy(), [], name => new InspectedClass(name, [], HasMultipleBaseClasses: true));
-        Assert.Equal("ambiguous", Assert.Single(plan.Diagnostics).Status);
+        Assert.AreEqual("ambiguous", Enumerable.Single(plan.Diagnostics).Status);
     }
 
     private static BindingRequestPlan Plan(BindingRequest request, IReadOnlyList<InspectedFunction>? baseFunctions = null,

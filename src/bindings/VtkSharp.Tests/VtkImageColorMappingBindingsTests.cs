@@ -3,9 +3,10 @@ using System.Runtime.InteropServices;
 
 namespace VtkSharp.Tests;
 
+[TestClass]
 public sealed class VtkImageColorMappingBindingsTests
 {
-    [Fact]
+    [TestMethod]
     public unsafe void FloatArray_GetPointer_ReturnsBorrowedValueBuffer()
     {
         using var values = vtkFloatArray.New();
@@ -14,11 +15,11 @@ public sealed class VtkImageColorMappingBindingsTests
 
         var pointer = values.GetPointer(0);
 
-        Assert.Equal(1.25f, pointer[0]);
-        Assert.Equal(-2.5f, pointer[1]);
+        Assert.AreEqual(1.25f, pointer[0]);
+        Assert.AreEqual(-2.5f, pointer[1]);
     }
 
-    [Fact]
+    [TestMethod]
     public void ImageData_RoundTripsOriginAndSpacing()
     {
         using var image = vtkImageData.New();
@@ -26,22 +27,22 @@ public sealed class VtkImageColorMappingBindingsTests
 
         image.SetOrigin(1.25, -2.5, 3.75);
         image.GetOrigin(actual);
-        Assert.Equal([1.25, -2.5, 3.75], actual.ToArray());
+        Assert.AreSequenceEqual([1.25, -2.5, 3.75], actual.ToArray());
 
         image.SetOrigin(new double[] { 4, 5, 6 });
         image.GetOrigin(actual);
-        Assert.Equal([4, 5, 6], actual.ToArray());
+        Assert.AreSequenceEqual([4, 5, 6], actual.ToArray());
 
         image.SetSpacing(0.1, 0.2, 0.3);
         image.GetSpacing(actual);
-        Assert.Equal([0.1, 0.2, 0.3], actual.ToArray());
+        Assert.AreSequenceEqual([0.1, 0.2, 0.3], actual.ToArray());
 
         image.SetSpacing(new double[] { 0.4, 0.5, 0.6 });
         image.GetSpacing(actual);
-        Assert.Equal([0.4, 0.5, 0.6], actual.ToArray());
+        Assert.AreSequenceEqual([0.4, 0.5, 0.6], actual.ToArray());
     }
 
-    [Fact]
+    [TestMethod]
     public void ImageMapToColors_MapsFloatScalarsToRgbaAndPreservesTransparentNan()
     {
         using var scalars = vtkFloatArray.New();
@@ -71,18 +72,18 @@ public sealed class VtkImageColorMappingBindingsTests
 
         Span<byte> nanColor = stackalloc byte[4];
         mapToColors.GetNaNColor(nanColor);
-        Assert.Equal([7, 8, 9, 10], nanColor.ToArray());
-        Assert.Equal(0, mapToColors.GetActiveComponent());
-        Assert.False(mapToColors.GetPassAlphaToOutput());
-        Assert.False(mapToColors.GetLookupTable().OwnsReference);
+        Assert.AreSequenceEqual(new byte[] { 7, 8, 9, 10 }, nanColor.ToArray());
+        Assert.AreEqual(0, mapToColors.GetActiveComponent());
+        Assert.IsFalse(mapToColors.GetPassAlphaToOutput());
+        Assert.IsFalse(mapToColors.GetLookupTable().OwnsReference);
 
         mapToColors.Update();
         using var output = vtkImageData.Register(mapToColors.GetOutput());
         var pointer = output.GetScalarPointer();
 
-        Assert.Equal(4, output.GetNumberOfScalarComponents());
-        Assert.Equal([0, 0, 0, 0], ReadRgba(pointer, pixelIndex: 0));
-        Assert.Equal([255, 0, 0, 255], ReadRgba(pointer, pixelIndex: 1));
+        Assert.AreEqual(4, output.GetNumberOfScalarComponents());
+        Assert.AreSequenceEqual(new byte[] { 0, 0, 0, 0 }, ReadRgba(pointer, pixelIndex: 0));
+        Assert.AreSequenceEqual(new byte[] { 255, 0, 0, 255 }, ReadRgba(pointer, pixelIndex: 1));
     }
 
     private static byte[] ReadRgba(nint pointer, int pixelIndex)

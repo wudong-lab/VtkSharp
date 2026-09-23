@@ -2,9 +2,10 @@ using VtkSharp.Generator.Core.Generation;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class NativeProjectEmitterTests
 {
-    [Fact]
+    [TestMethod]
     public void EmitCMakeLists_UsesGeneratedModuleVariables()
     {
         var emitter = new NativeProjectEmitter();
@@ -19,10 +20,10 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("${VTKSHARP_ALL_VTK_TARGETS}", text);
         Assert.Contains("${VTKSHARP_EXTRA_NATIVE_LIBRARIES}", text);
         Assert.Contains("vtk_module_autoinit(", text);
-        Assert.EndsWith("\n", text);
+        Assert.IsTrue(text.EndsWith("\n", StringComparison.Ordinal));
     }
 
-    [Fact]
+    [TestMethod]
     public void CMakeModulesEmitter_EmitsSortedDistinctComponentsAndTargets()
     {
         var emitter = new CMakeModulesEmitter();
@@ -40,11 +41,11 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("  RenderingOpenGL2", text);
         Assert.Contains("  VTK::RenderingOpenGL2", text);
         var lines = text.Split(["\r\n", "\n"], StringSplitOptions.None);
-        Assert.Equal(1, lines.Count(line => line == "  RenderingCore"));
-        Assert.Equal(1, lines.Count(line => line == "  VTK::RenderingCore"));
+        Assert.AreEqual(1, lines.Count(line => line == "  RenderingCore"));
+        Assert.AreEqual(1, lines.Count(line => line == "  VTK::RenderingCore"));
     }
 
-    [Fact]
+    [TestMethod]
     public void EmitCMakePresets_ProvidesVisualStudioPresets()
     {
         var emitter = new NativeProjectEmitter();
@@ -58,10 +59,10 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("\"Visual Studio 17 2022\"", text);
         Assert.Contains("\"win-x64-vs2026-debug\"", text);
         Assert.Contains("\"win-x64-vs2022-debug\"", text);
-        Assert.EndsWith("\n", text);
+        Assert.IsTrue(text.EndsWith("\n", StringComparison.Ordinal));
     }
 
-    [Fact]
+    [TestMethod]
     public void EmitApiHeader_ExportsCAbiMacro()
     {
         var emitter = new NativeProjectEmitter();

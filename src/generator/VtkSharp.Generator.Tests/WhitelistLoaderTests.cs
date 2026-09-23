@@ -2,9 +2,10 @@ using VtkSharp.Generator.Core.Whitelist;
 
 namespace VtkSharp.Generator.Tests;
 
+[TestClass]
 public sealed class WhitelistLoaderTests
 {
-    [Fact]
+    [TestMethod]
     public void LoadFile_ReadsWhitelistDocument()
     {
         var path = Path.Combine(AppContext.BaseDirectory, "TestData", "whitelist", "vtkRenderingCore.yml");
@@ -12,12 +13,12 @@ public sealed class WhitelistLoaderTests
 
         var document = loader.LoadFile(path);
 
-        Assert.Equal("vtkRenderingCore", document.Module);
-        var actor = Assert.Single(document.Classes);
-        Assert.Equal("vtkActor", actor.Name);
-        var function = Assert.Single(actor.Functions);
-        Assert.Equal("SetMapper", function.Name);
-        Assert.Equal("void", function.Return.Type);
-        Assert.Equal("vtkMapper*", function.Parameters[0].Type);
+        Assert.AreEqual("vtkRenderingCore", document.Module);
+        var actor = Enumerable.Single(document.Classes);
+        Assert.AreEqual("vtkActor", actor.Name);
+        var function = Enumerable.Single(actor.Functions);
+        Assert.AreEqual("SetMapper", function.Name);
+        Assert.AreEqual("void", function.Return.Type);
+        Assert.AreEqual("vtkMapper*", function.Parameters[0].Type);
     }
 }
