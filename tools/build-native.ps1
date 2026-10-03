@@ -31,7 +31,7 @@ if ($Linkage -eq "Dynamic") {
     $vtkInstallDirectory = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
     $vtkBuildInfoPath = Join-Path $vtkInstallDirectory "vtk-build-info.json"
     if (-not (Test-Path -LiteralPath $vtkBuildInfoPath -PathType Leaf)) {
-        throw "Dynamic VTK build record is missing: $vtkBuildInfoPath. Reinstall VTK with tools/build-vtk-for-vtksharp.ps1."
+        throw "The selected VTK_DIR '$VtkDir' resolves to '$vtkInstallDirectory', which has no dynamic VTK build record. Set VTK_DIR to the Shared VTK CMake package for $Configuration (commonly install\$Configuration\lib\cmake\vtk-9.7), or build and install VTK with -Linkage Shared."
     }
     $vtkBuildInfo = Get-Content -LiteralPath $vtkBuildInfoPath -Raw | ConvertFrom-Json
     if (-not $vtkBuildInfo.buildSharedLibs -or $vtkBuildInfo.linkage -ne "Shared") {
