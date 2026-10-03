@@ -146,6 +146,14 @@ public unsafe partial class vtkProp3D : vtkProp
     }
 
     /// <summary>
+    /// The UserMatrix can be used in place of UserTransform.
+    /// </summary>
+    public new void SetUserMatrix(vtkMatrix4x4 matrix)
+    {
+        vtkProp3D_SetUserMatrix(this.NativePointer, matrix.NativePointer);
+    }
+
+    /// <summary>
     /// In addition to the instance variables such as position and orientation,
     /// you can add an additional transformation for your own use.  This
     /// transformation is concatenated with the actor's internal transformation,
@@ -180,6 +188,9 @@ public unsafe partial class vtkProp3D : vtkProp
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_RotateZ(nint self, double _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkProp3D_SetUserMatrix(nint self, nint matrix);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_SetUserTransform(nint self, nint transform);

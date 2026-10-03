@@ -140,11 +140,11 @@
       "header": "vtkTubeFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "949bf3e666729f0a8a51633d0d18e9639db45deff3d0f9ff14e41c8edf33f341",
+      "inputHash": "7046d7707e55711c27f5262a24450ad671c50060918dc82f0244335e7041338b",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkTubeFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkTubeFilter_export_gen.cpp",
-      "managedContentHash": "da17588921d4e77ce0024a40f86a6ad6363d5c03f817bc5ad462952113693b32",
-      "nativeContentHash": "8e5a380ddad735ff0b1f0590266248eae9cd23bcd68e7fe0ed6f961394206aca"
+      "managedContentHash": "e5dbc279e270b765690e16dc3f042acf7ee2d39c632146607db1d5b5f9b36e81",
+      "nativeContentHash": "051cb6ede5e83f348bac20368220ccc01cf8eeb983745acdf6d396103ad8d956"
     }
   ]
 }

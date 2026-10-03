@@ -100,6 +100,33 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
         return target;
     }
 
+    /// <summary>Named values for SetLabelMode/GetLabelMode. Unnamed native values are preserved.</summary>
+    public enum LabelMode : int
+    {
+        /// <summary>Native: VTK_LABEL_FIELD_DATA.</summary>
+        LabelFieldData = 6,
+        /// <summary>Native: VTK_LABEL_IDS.</summary>
+        LabelIds = 0,
+        /// <summary>Native: VTK_LABEL_NORMALS.</summary>
+        LabelNormals = 3,
+        /// <summary>Native: VTK_LABEL_SCALARS.</summary>
+        LabelScalars = 1,
+        /// <summary>Native: VTK_LABEL_TCOORDS.</summary>
+        LabelTCoords = 4,
+        /// <summary>Native: VTK_LABEL_TENSORS.</summary>
+        LabelTensors = 5,
+        /// <summary>Native: VTK_LABEL_VECTORS.</summary>
+        LabelVectors = 2,
+    }
+
+    /// <summary>
+    /// Specify which data to plot: IDs, scalars, vectors, normals, texture coords,
+    /// tensors, or field data. If the data has more than one component, use
+    /// the method SetLabeledComponent to control which components to plot.
+    /// The default is VTK_LABEL_IDS.
+    /// </summary>
+    public new LabelMode GetLabelMode() => (LabelMode)vtkLabeledDataMapper_GetLabelMode(this.NativePointer);
+
     /// <summary>
     /// Set/Get the text property.
     /// If an integer argument is provided, you may provide different text
@@ -170,6 +197,14 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
         vtkLabeledDataMapper_SetLabelFormat(this.NativePointer, VtkString.ToNullTerminatedUtf8(_arg));
         #endif
     }
+
+    /// <summary>
+    /// Specify which data to plot: IDs, scalars, vectors, normals, texture coords,
+    /// tensors, or field data. If the data has more than one component, use
+    /// the method SetLabeledComponent to control which components to plot.
+    /// The default is VTK_LABEL_IDS.
+    /// </summary>
+    public new void SetLabelMode(LabelMode _arg) => vtkLabeledDataMapper_SetLabelMode(this.NativePointer, (int)_arg);
 
     /// <summary>
     /// Specify which data to plot: IDs, scalars, vectors, normals, texture coords,
@@ -253,6 +288,9 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     private static extern nint vtkLabeledDataMapper_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkLabeledDataMapper_GetLabelMode(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLabeledDataMapper_GetLabelTextProperty_(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
@@ -276,6 +314,9 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLabeledDataMapper_SetLabelFormat(nint self, byte[] _arg);
 #endif
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkLabeledDataMapper_SetLabelMode(nint self, int _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelFieldData(nint self);

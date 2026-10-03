@@ -5,6 +5,11 @@ classes:
   - name: vtkLabeledDataMapper
     header: vtkLabeledDataMapper.h
     functions:
+      - name: GetLabelMode
+        cppSignature: int GetLabelMode()
+        return:
+          type: int
+        parameters: []
       - name: GetLabelTextProperty
         cppSignature: vtkTextProperty * GetLabelTextProperty()
         return:
@@ -37,6 +42,13 @@ classes:
           type: void
         parameters:
           - type: const char*
+            name: _arg
+      - name: SetLabelMode
+        cppSignature: void SetLabelMode(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
             name: _arg
       - name: SetLabelModeToLabelFieldData
         cppSignature: void SetLabelModeToLabelFieldData()
@@ -73,3 +85,38 @@ classes:
         return:
           type: void
         parameters: []
+    enumProperties:
+      - name: LabelMode
+        nativeType: int
+        getter: GetLabelMode
+        setter: SetLabelMode
+        values:
+          - name: LabelFieldData
+            nativeExpression: VTK_LABEL_FIELD_DATA
+            value: 6
+          - name: LabelIds
+            nativeExpression: VTK_LABEL_IDS
+            value: 0
+          - name: LabelNormals
+            nativeExpression: VTK_LABEL_NORMALS
+            value: 3
+          - name: LabelScalars
+            nativeExpression: VTK_LABEL_SCALARS
+            value: 1
+          - name: LabelTCoords
+            nativeExpression: VTK_LABEL_TCOORDS
+            value: 4
+          - name: LabelTensors
+            nativeExpression: VTK_LABEL_TENSORS
+            value: 5
+          - name: LabelVectors
+            nativeExpression: VTK_LABEL_VECTORS
+            value: 2
+        convenienceMethods:
+          - SetLabelModeToLabelFieldData
+          - SetLabelModeToLabelIds
+          - SetLabelModeToLabelNormals
+          - SetLabelModeToLabelScalars
+          - SetLabelModeToLabelTCoords
+          - SetLabelModeToLabelTensors
+          - SetLabelModeToLabelVectors

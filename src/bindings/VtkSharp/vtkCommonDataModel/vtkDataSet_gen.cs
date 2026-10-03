@@ -111,6 +111,18 @@ public unsafe partial class vtkDataSet : vtkDataObject
     }
 
     /// <summary>
+    /// Return a pointer to this dataset's cell data.
+    /// THIS METHOD IS THREAD SAFE
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkCellData GetCellData()
+    {
+        return vtkCellData.FromBorrowedPointer(vtkDataSet_GetCellData(this.NativePointer));
+    }
+
+    /// <summary>
     /// Return a pointer to this dataset's point data.
     /// THIS METHOD IS THREAD SAFE
     /// </summary>
@@ -163,6 +175,9 @@ public unsafe partial class vtkDataSet : vtkDataObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataSet_GetBounds_doubleArray6(nint self, double* bounds);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkDataSet_GetCellData(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataSet_GetPointData(nint self);

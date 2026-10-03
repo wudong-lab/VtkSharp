@@ -9,6 +9,8 @@ VTKSHARP_API void vtkMapper_ScalarVisibilityOff(vtkMapper* self) { self->ScalarV
 
 VTKSHARP_API void vtkMapper_ScalarVisibilityOn(vtkMapper* self) { self->ScalarVisibilityOn(); }
 
+VTKSHARP_API void vtkMapper_SelectColorArray(vtkMapper* self, const char* arrayName) { self->SelectColorArray(arrayName); }
+
 VTKSHARP_API void vtkMapper_SetLookupTable(vtkMapper* self, vtkScalarsToColors* lut) { self->SetLookupTable(lut); }
 
 VTKSHARP_API void vtkMapper_SetScalarMode(vtkMapper* self, int _arg) { self->SetScalarMode(_arg); }

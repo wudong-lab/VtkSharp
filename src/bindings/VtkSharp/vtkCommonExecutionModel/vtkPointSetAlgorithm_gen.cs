@@ -83,8 +83,35 @@ public unsafe partial class vtkPointSetAlgorithm : vtkAlgorithm
         return target;
     }
 
+    /// <summary>
+    /// Get the output as vtkPolyData.
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkPolyData GetPolyDataOutput()
+    {
+        return vtkPolyData.FromBorrowedPointer(vtkPointSetAlgorithm_GetPolyDataOutput(this.NativePointer));
+    }
+
+    /// <summary>
+    /// Assign a data object as input. Note that this method does not
+    /// establish a pipeline connection. Use SetInputConnection() to
+    /// setup a pipeline connection.
+    /// </summary>
+    public new void SetInputData(vtkPointSet _arg1)
+    {
+        vtkPointSetAlgorithm_SetInputData(this.NativePointer, _arg1.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointSetAlgorithm_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkPointSetAlgorithm_GetPolyDataOutput(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkPointSetAlgorithm_SetInputData(nint self, nint _arg1);
     #endregion
 }

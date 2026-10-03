@@ -115,6 +115,8 @@ VTKSHARP_API void vtkRenderer_TwoSidedLightingOff(vtkRenderer* self) { self->Two
 
 VTKSHARP_API void vtkRenderer_TwoSidedLightingOn(vtkRenderer* self) { self->TwoSidedLightingOn(); }
 
+VTKSHARP_API void vtkRenderer_UseHiddenLineRemovalOn(vtkRenderer* self) { self->UseHiddenLineRemovalOn(); }
+
 VTKSHARP_API void vtkRenderer_UseImageBasedLightingOff(vtkRenderer* self) { self->UseImageBasedLightingOff(); }
 
 VTKSHARP_API void vtkRenderer_UseImageBasedLightingOn(vtkRenderer* self) { self->UseImageBasedLightingOn(); }

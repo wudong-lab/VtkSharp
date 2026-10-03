@@ -16,6 +16,13 @@ VTKSHARP_API void vtkNamedColors_GetColor3d(vtkNamedColors* self, const char* na
     __outGetColor3d[2] = c[2];
 }
 
+VTKSHARP_API void vtkNamedColors_GetColor3ub(vtkNamedColors* self, const char* name, unsigned char* __outGetColor3ub) {
+    auto c = self->GetColor3ub(name);
+    __outGetColor3ub[0] = c[0];
+    __outGetColor3ub[1] = c[1];
+    __outGetColor3ub[2] = c[2];
+}
+
 VTKSHARP_API void vtkNamedColors_GetColorRGB(vtkNamedColors* self, const char* name, double* rgb) { self->GetColorRGB(name, rgb); }
 
 VTKSHARP_API int vtkNamedColors_GetNumberOfColors(vtkNamedColors* self) { return self->GetNumberOfColors(); }

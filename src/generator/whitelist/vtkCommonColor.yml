@@ -154,6 +154,13 @@ classes:
         parameters:
           - type: const char*
             name: name
+      - name: GetColor3ub
+        cppSignature: vtkColor3ub GetColor3ub(vtkStdString const& name)
+        return:
+          type: vtkColor3ub
+        parameters:
+          - type: const char*
+            name: name
       - name: GetColorRGB
         cppSignature: void GetColorRGB(const char* name, double rgb[3])
         return:

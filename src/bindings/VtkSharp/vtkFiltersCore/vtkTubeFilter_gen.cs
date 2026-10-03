@@ -104,6 +104,26 @@ public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
         return target;
     }
 
+    /// <summary>Named values for SetVaryRadius/GetVaryRadius. Unnamed native values are preserved.</summary>
+    public enum VaryRadius : int
+    {
+        /// <summary>Native: VTK_VARY_RADIUS_BY_ABSOLUTE_SCALAR.</summary>
+        VaryRadiusByAbsoluteScalar = 3,
+        /// <summary>Native: VTK_VARY_RADIUS_BY_SCALAR.</summary>
+        VaryRadiusByScalar = 1,
+        /// <summary>Native: VTK_VARY_RADIUS_BY_VECTOR.</summary>
+        VaryRadiusByVector = 2,
+        /// <summary>Native: VTK_VARY_RADIUS_BY_VECTOR_NORM.</summary>
+        VaryRadiusByVectorNorm = 4,
+        /// <summary>Native: VTK_VARY_RADIUS_OFF.</summary>
+        VaryRadiusOff = 0,
+    }
+
+    /// <summary>
+    /// Turn on/off the variation of tube radius with scalar value.
+    /// </summary>
+    public new VaryRadius GetVaryRadius() => (VaryRadius)vtkTubeFilter_GetVaryRadius(this.NativePointer);
+
     /// <summary>
     /// Set the number of sides for the tube. At a minimum, number of sides is 3.
     /// </summary>
@@ -120,14 +140,80 @@ public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
         vtkTubeFilter_SetRadius(this.NativePointer, _arg);
     }
 
+    /// <summary>
+    /// Turn on/off the variation of tube radius with scalar value.
+    /// </summary>
+    public new void SetVaryRadius(VaryRadius _arg) => vtkTubeFilter_SetVaryRadius(this.NativePointer, (int)_arg);
+
+    /// <summary>
+    /// Turn on/off the variation of tube radius with scalar value.
+    /// </summary>
+    public new void SetVaryRadiusToVaryRadiusByAbsoluteScalar()
+    {
+        vtkTubeFilter_SetVaryRadiusToVaryRadiusByAbsoluteScalar(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Turn on/off the variation of tube radius with scalar value.
+    /// </summary>
+    public new void SetVaryRadiusToVaryRadiusByScalar()
+    {
+        vtkTubeFilter_SetVaryRadiusToVaryRadiusByScalar(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Turn on/off the variation of tube radius with scalar value.
+    /// </summary>
+    public new void SetVaryRadiusToVaryRadiusByVector()
+    {
+        vtkTubeFilter_SetVaryRadiusToVaryRadiusByVector(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Turn on/off the variation of tube radius with scalar value.
+    /// </summary>
+    public new void SetVaryRadiusToVaryRadiusByVectorNorm()
+    {
+        vtkTubeFilter_SetVaryRadiusToVaryRadiusByVectorNorm(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Turn on/off the variation of tube radius with scalar value.
+    /// </summary>
+    public new void SetVaryRadiusToVaryRadiusOff()
+    {
+        vtkTubeFilter_SetVaryRadiusToVaryRadiusOff(this.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTubeFilter_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkTubeFilter_GetVaryRadius(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTubeFilter_SetNumberOfSides(nint self, int _arg);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTubeFilter_SetRadius(nint self, double _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTubeFilter_SetVaryRadius(nint self, int _arg);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByAbsoluteScalar(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByScalar(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByVector(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByVectorNorm(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusOff(nint self);
     #endregion
 }

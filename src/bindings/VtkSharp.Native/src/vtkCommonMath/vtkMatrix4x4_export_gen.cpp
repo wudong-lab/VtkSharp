@@ -8,6 +8,8 @@ VTKSHARP_API double* vtkMatrix4x4_GetData(vtkMatrix4x4* self) { return self->Get
 
 VTKSHARP_API double vtkMatrix4x4_GetElement(vtkMatrix4x4* self, int i, int j) { return self->GetElement(i, j); }
 
+VTKSHARP_API void vtkMatrix4x4_Identity(vtkMatrix4x4* self) { self->Identity(); }
+
 VTKSHARP_API void vtkMatrix4x4_Invert(vtkMatrix4x4* self) { self->Invert(); }
 
 VTKSHARP_API double* vtkMatrix4x4_MultiplyPoint_doubleConstArray4(vtkMatrix4x4* self, const double* in) { return self->MultiplyPoint(in); }

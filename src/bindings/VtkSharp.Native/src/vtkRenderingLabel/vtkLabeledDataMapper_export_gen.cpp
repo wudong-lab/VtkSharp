@@ -6,6 +6,8 @@
 
 VTKSHARP_API vtkLabeledDataMapper* vtkLabeledDataMapper_New() { return vtkLabeledDataMapper::New(); }
 
+VTKSHARP_API int vtkLabeledDataMapper_GetLabelMode(vtkLabeledDataMapper* self) { return self->GetLabelMode(); }
+
 VTKSHARP_API vtkTextProperty* vtkLabeledDataMapper_GetLabelTextProperty_(vtkLabeledDataMapper* self) { return self->GetLabelTextProperty(); }
 
 VTKSHARP_API vtkTextProperty* vtkLabeledDataMapper_GetLabelTextProperty_int(vtkLabeledDataMapper* self, int type) { return self->GetLabelTextProperty(type); }
@@ -15,6 +17,8 @@ VTKSHARP_API void vtkLabeledDataMapper_SetFieldDataName(vtkLabeledDataMapper* se
 VTKSHARP_API void vtkLabeledDataMapper_SetInputData(vtkLabeledDataMapper* self, vtkDataObject* _arg1) { self->SetInputData(_arg1); }
 
 VTKSHARP_API void vtkLabeledDataMapper_SetLabelFormat(vtkLabeledDataMapper* self, const char* _arg) { self->SetLabelFormat(_arg); }
+
+VTKSHARP_API void vtkLabeledDataMapper_SetLabelMode(vtkLabeledDataMapper* self, int _arg) { self->SetLabelMode(_arg); }
 
 VTKSHARP_API void vtkLabeledDataMapper_SetLabelModeToLabelFieldData(vtkLabeledDataMapper* self) { self->SetLabelModeToLabelFieldData(); }
 

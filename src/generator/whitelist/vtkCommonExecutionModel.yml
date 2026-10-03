@@ -110,7 +110,19 @@ classes:
     functions: []
   - name: vtkPointSetAlgorithm
     header: vtkPointSetAlgorithm.h
-    functions: []
+    functions:
+      - name: GetPolyDataOutput
+        cppSignature: vtkPolyData * GetPolyDataOutput()
+        return:
+          type: vtkPolyData*
+        parameters: []
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkPointSet * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkPointSet*
+            name: _arg1
   - name: vtkPolyDataAlgorithm
     header: vtkPolyDataAlgorithm.h
     functions:

@@ -63,11 +63,11 @@
       "header": "vtkPointSetAlgorithm.h",
       "baseClassName": "vtkAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "2241b6c6b8f450dba3017ef72610ef90c21f6f4c7fe5e68a2d62a9cd88fd1609",
+      "inputHash": "184a1454ee18a5831389ddb7bf0a1d3e3c5206d3cf79c60a15d4cbcf6c13fb21",
       "managedPath": "bindings\\VtkSharp\\vtkCommonExecutionModel\\vtkPointSetAlgorithm_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonExecutionModel\\vtkPointSetAlgorithm_export_gen.cpp",
-      "managedContentHash": "8e9bdd64bd569c8ef8fe55ddd66e85818fc7b6de7a5196f6905fbcd4718ffca5",
-      "nativeContentHash": "666c7983f89b61fa8f4ad138b5e6d93f907a29eb92618be0103a8eccc1a955a6"
+      "managedContentHash": "a168d493c7ec2a3ddbc7632a018c7af136185644034cc12f743ff17ef87c1bcb",
+      "nativeContentHash": "a8b6cf847efdd64f689f2ad15fa8927e1d85c13ca6d237d5dc310ebe5d06a8fd"
     },
     {
       "className": "vtkPolyDataAlgorithm",

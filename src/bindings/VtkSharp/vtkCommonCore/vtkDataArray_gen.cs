@@ -165,6 +165,26 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
         vtkDataArray_InsertNextTuple9(this.NativePointer, val0, val1, val2, val3, val4, val5, val6, val7, val8);
     }
 
+    /// <summary>
+    /// These methods are included as convenience for the wrappers.
+    /// GetTuple() and SetTuple() which return/take arrays can not be
+    /// used from wrapped languages. These methods can be used instead.
+    /// </summary>
+    public new void SetTuple1(long tupleIdx, double value)
+    {
+        vtkDataArray_SetTuple1(this.NativePointer, tupleIdx, value);
+    }
+
+    /// <summary>
+    /// These methods are included as convenience for the wrappers.
+    /// GetTuple() and SetTuple() which return/take arrays can not be
+    /// used from wrapped languages. These methods can be used instead.
+    /// </summary>
+    public new void SetTuple3(long tupleIdx, double val0, double val1, double val2)
+    {
+        vtkDataArray_SetTuple3(this.NativePointer, tupleIdx, val0, val1, val2);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_GetRange(nint self, double* range);
@@ -189,5 +209,11 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple9(nint self, double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_SetTuple1(nint self, long tupleIdx, double value);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_SetTuple3(nint self, long tupleIdx, double val0, double val1, double val2);
     #endregion
 }

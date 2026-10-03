@@ -184,6 +184,27 @@ public unsafe partial class vtkNamedColors : vtkObject
     /// <summary>
     /// Get the color by name.
     /// The name is treated as being case-insensitive.
+    /// The color is returned as a vtkColor3ub class.
+    /// The color black is returned if the color is not found.
+    /// </summary>
+    /// <remarks>
+    /// The result is copied to a C# value type. The caller does not release native memory for this return value.
+    /// </remarks>
+    public new VtkColor3ub GetColor3ub(string name)
+    {
+        byte* __outGetColor3ub = stackalloc byte[3];
+        #if NET8_0_OR_GREATER
+        vtkNamedColors_GetColor3ub(this.NativePointer, name, __outGetColor3ub);
+        return new VtkColor3ub(__outGetColor3ub[0], __outGetColor3ub[1], __outGetColor3ub[2]);
+        #else
+        vtkNamedColors_GetColor3ub(this.NativePointer, VtkString.ToNullTerminatedUtf8(name), __outGetColor3ub);
+        return new VtkColor3ub(__outGetColor3ub[0], __outGetColor3ub[1], __outGetColor3ub[2]);
+        #endif
+    }
+
+    /// <summary>
+    /// Get the color by name.
+    /// The name is treated as being case-insensitive.
     /// The color is returned as a double array:
     /// [red, green, blue]. The range of each element is 0...1.
     /// The color black is returned if the color is not found.
@@ -288,6 +309,14 @@ public unsafe partial class vtkNamedColors : vtkObject
 #else
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_GetColor3d(nint self, byte[] name, double* __outGetColor3d);
+#endif
+
+#if NET8_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkNamedColors_GetColor3ub(nint self, string name, byte* __outGetColor3ub);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkNamedColors_GetColor3ub(nint self, byte[] name, byte* __outGetColor3ub);
 #endif
 
 #if NET8_0_OR_GREATER

@@ -98,11 +98,24 @@ public unsafe partial class vtkParametricFunctionSource : vtkPolyDataAlgorithm
         vtkParametricFunctionSource_SetParametricFunction(this.NativePointer, _arg1.NativePointer);
     }
 
+    /// <summary>
+    /// Set/Get the number of subdivisions / tessellations in the u parametric
+    /// direction. Note that the number of tessellant points in the u
+    /// direction is the UResolution + 1.
+    /// </summary>
+    public new void SetUResolution(int _arg)
+    {
+        vtkParametricFunctionSource_SetUResolution(this.NativePointer, _arg);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkParametricFunctionSource_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkParametricFunctionSource_SetParametricFunction(nint self, nint _arg1);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkParametricFunctionSource_SetUResolution(nint self, int _arg);
     #endregion
 }

@@ -199,6 +199,11 @@ classes:
   - name: vtkTubeFilter
     header: vtkTubeFilter.h
     functions:
+      - name: GetVaryRadius
+        cppSignature: int GetVaryRadius()
+        return:
+          type: int
+        parameters: []
       - name: SetNumberOfSides
         cppSignature: void SetNumberOfSides(int _arg)
         return:
@@ -213,3 +218,62 @@ classes:
         parameters:
           - type: double
             name: _arg
+      - name: SetVaryRadius
+        cppSignature: void SetVaryRadius(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetVaryRadiusToVaryRadiusByAbsoluteScalar
+        cppSignature: void SetVaryRadiusToVaryRadiusByAbsoluteScalar()
+        return:
+          type: void
+        parameters: []
+      - name: SetVaryRadiusToVaryRadiusByScalar
+        cppSignature: void SetVaryRadiusToVaryRadiusByScalar()
+        return:
+          type: void
+        parameters: []
+      - name: SetVaryRadiusToVaryRadiusByVector
+        cppSignature: void SetVaryRadiusToVaryRadiusByVector()
+        return:
+          type: void
+        parameters: []
+      - name: SetVaryRadiusToVaryRadiusByVectorNorm
+        cppSignature: void SetVaryRadiusToVaryRadiusByVectorNorm()
+        return:
+          type: void
+        parameters: []
+      - name: SetVaryRadiusToVaryRadiusOff
+        cppSignature: void SetVaryRadiusToVaryRadiusOff()
+        return:
+          type: void
+        parameters: []
+    enumProperties:
+      - name: VaryRadius
+        nativeType: int
+        getter: GetVaryRadius
+        setter: SetVaryRadius
+        values:
+          - name: VaryRadiusByAbsoluteScalar
+            nativeExpression: VTK_VARY_RADIUS_BY_ABSOLUTE_SCALAR
+            value: 3
+          - name: VaryRadiusByScalar
+            nativeExpression: VTK_VARY_RADIUS_BY_SCALAR
+            value: 1
+          - name: VaryRadiusByVector
+            nativeExpression: VTK_VARY_RADIUS_BY_VECTOR
+            value: 2
+          - name: VaryRadiusByVectorNorm
+            nativeExpression: VTK_VARY_RADIUS_BY_VECTOR_NORM
+            value: 4
+          - name: VaryRadiusOff
+            nativeExpression: VTK_VARY_RADIUS_OFF
+            value: 0
+        convenienceMethods:
+          - SetVaryRadiusToVaryRadiusByAbsoluteScalar
+          - SetVaryRadiusToVaryRadiusByScalar
+          - SetVaryRadiusToVaryRadiusByVector
+          - SetVaryRadiusToVaryRadiusByVectorNorm
+          - SetVaryRadiusToVaryRadiusOff

@@ -94,6 +94,14 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
         return vtkMatrix4x4_GetElement(this.NativePointer, i, j);
     }
 
+    /// <summary>
+    /// Set equal to Identity matrix
+    /// </summary>
+    public new void Identity()
+    {
+        vtkMatrix4x4_Identity(this.NativePointer);
+    }
+
     public new void Invert()
     {
         vtkMatrix4x4_Invert(this.NativePointer);
@@ -206,6 +214,9 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkMatrix4x4_GetElement(nint self, int i, int j);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMatrix4x4_Identity(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMatrix4x4_Invert(nint self);

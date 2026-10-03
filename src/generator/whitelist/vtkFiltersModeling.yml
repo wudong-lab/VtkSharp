@@ -127,3 +127,13 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+  - name: vtkRibbonFilter
+    header: vtkRibbonFilter.h
+    functions:
+      - name: SetWidth
+        cppSignature: void SetWidth(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg

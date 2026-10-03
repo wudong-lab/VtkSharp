@@ -1100,6 +1100,76 @@ classes:
         return:
           type: vtkTypeBool
         parameters: []
+  - name: vtkGlyph3DMapper
+    header: vtkGlyph3DMapper.h
+    functions:
+      - name: GetScaleMode
+        cppSignature: int GetScaleMode()
+        return:
+          type: int
+        parameters: []
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataObject * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: _arg1
+      - name: SetScaleArray
+        cppSignature: void SetScaleArray(char const * scalarsarrayname)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: scalarsarrayname
+      - name: SetScaleMode
+        cppSignature: void SetScaleMode(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetScaleModeToNoDataScaling
+        cppSignature: void SetScaleModeToNoDataScaling()
+        return:
+          type: void
+        parameters: []
+      - name: SetScaleModeToScaleByMagnitude
+        cppSignature: void SetScaleModeToScaleByMagnitude()
+        return:
+          type: void
+        parameters: []
+      - name: SetScaleModeToScaleByVectorComponents
+        cppSignature: void SetScaleModeToScaleByVectorComponents()
+        return:
+          type: void
+        parameters: []
+      - name: SetSourceConnection
+        cppSignature: void SetSourceConnection(vtkAlgorithmOutput * algOutput)
+        return:
+          type: void
+        parameters:
+          - type: vtkAlgorithmOutput*
+            name: algOutput
+    enumProperties:
+      - name: ScaleMode
+        nativeType: int
+        getter: GetScaleMode
+        setter: SetScaleMode
+        values:
+          - name: NoDataScaling
+            nativeExpression: NO_DATA_SCALING
+            value: 0
+          - name: ScaleByMagnitude
+            nativeExpression: SCALE_BY_MAGNITUDE
+            value: 1
+          - name: ScaleByVectorComponents
+            nativeExpression: SCALE_BY_COMPONENTS
+            value: 2
+        convenienceMethods:
+          - SetScaleModeToNoDataScaling
+          - SetScaleModeToScaleByMagnitude
+          - SetScaleModeToScaleByVectorComponents
   - name: vtkImageActor
     header: vtkImageActor.h
     functions:
@@ -1165,6 +1235,13 @@ classes:
         return:
           type: void
         parameters: []
+      - name: SelectColorArray
+        cppSignature: void SelectColorArray(char const * arrayName)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: arrayName
       - name: SetLookupTable
         cppSignature: void SetLookupTable(vtkScalarsToColors * lut)
         return:
@@ -1405,6 +1482,13 @@ classes:
         parameters:
           - type: double
             name: _arg1
+      - name: SetUserMatrix
+        cppSignature: void SetUserMatrix(vtkMatrix4x4 * matrix)
+        return:
+          type: void
+        parameters:
+          - type: vtkMatrix4x4*
+            name: matrix
       - name: SetUserTransform
         cppSignature: void SetUserTransform(vtkLinearTransform * transform)
         return:
@@ -2540,6 +2624,11 @@ classes:
         parameters: []
       - name: TwoSidedLightingOn
         cppSignature: void TwoSidedLightingOn()
+        return:
+          type: void
+        parameters: []
+      - name: UseHiddenLineRemovalOn
+        cppSignature: void UseHiddenLineRemovalOn()
         return:
           type: void
         parameters: []

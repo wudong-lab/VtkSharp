@@ -6,3 +6,5 @@
 VTKSHARP_API vtkParametricFunctionSource* vtkParametricFunctionSource_New() { return vtkParametricFunctionSource::New(); }
 
 VTKSHARP_API void vtkParametricFunctionSource_SetParametricFunction(vtkParametricFunctionSource* self, vtkParametricFunction* _arg1) { self->SetParametricFunction(_arg1); }
+
+VTKSHARP_API void vtkParametricFunctionSource_SetUResolution(vtkParametricFunctionSource* self, int _arg) { self->SetUResolution(_arg); }

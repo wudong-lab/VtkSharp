@@ -4,6 +4,20 @@
 
 VTKSHARP_API vtkTubeFilter* vtkTubeFilter_New() { return vtkTubeFilter::New(); }
 
+VTKSHARP_API int vtkTubeFilter_GetVaryRadius(vtkTubeFilter* self) { return self->GetVaryRadius(); }
+
 VTKSHARP_API void vtkTubeFilter_SetNumberOfSides(vtkTubeFilter* self, int _arg) { self->SetNumberOfSides(_arg); }
 
 VTKSHARP_API void vtkTubeFilter_SetRadius(vtkTubeFilter* self, double _arg) { self->SetRadius(_arg); }
+
+VTKSHARP_API void vtkTubeFilter_SetVaryRadius(vtkTubeFilter* self, int _arg) { self->SetVaryRadius(_arg); }
+
+VTKSHARP_API void vtkTubeFilter_SetVaryRadiusToVaryRadiusByAbsoluteScalar(vtkTubeFilter* self) { self->SetVaryRadiusToVaryRadiusByAbsoluteScalar(); }
+
+VTKSHARP_API void vtkTubeFilter_SetVaryRadiusToVaryRadiusByScalar(vtkTubeFilter* self) { self->SetVaryRadiusToVaryRadiusByScalar(); }
+
+VTKSHARP_API void vtkTubeFilter_SetVaryRadiusToVaryRadiusByVector(vtkTubeFilter* self) { self->SetVaryRadiusToVaryRadiusByVector(); }
+
+VTKSHARP_API void vtkTubeFilter_SetVaryRadiusToVaryRadiusByVectorNorm(vtkTubeFilter* self) { self->SetVaryRadiusToVaryRadiusByVectorNorm(); }
+
+VTKSHARP_API void vtkTubeFilter_SetVaryRadiusToVaryRadiusOff(vtkTubeFilter* self) { self->SetVaryRadiusToVaryRadiusOff(); }

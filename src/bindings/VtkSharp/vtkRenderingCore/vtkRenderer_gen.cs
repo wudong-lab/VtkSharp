@@ -649,6 +649,15 @@ public unsafe partial class vtkRenderer : vtkViewport
     }
 
     /// <summary>
+    /// If this flag is true and the rendering engine supports it, wireframe
+    /// geometry will be drawn using hidden line removal.
+    /// </summary>
+    public new void UseHiddenLineRemovalOn()
+    {
+        vtkRenderer_UseHiddenLineRemovalOn(this.NativePointer);
+    }
+
+    /// <summary>
     /// If this flag is true and the rendering engine supports it, image based
     /// lighting is enabled and surface rendering displays environment reflections.
     /// Image Based Lighting rely on the environment texture to compute lighting
@@ -877,6 +886,9 @@ public unsafe partial class vtkRenderer : vtkViewport
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_TwoSidedLightingOn(nint self);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkRenderer_UseHiddenLineRemovalOn(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderer_UseImageBasedLightingOff(nint self);

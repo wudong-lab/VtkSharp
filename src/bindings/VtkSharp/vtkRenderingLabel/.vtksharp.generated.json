@@ -8,11 +8,11 @@
       "header": "vtkLabeledDataMapper.h",
       "baseClassName": "vtkMapper2D",
       "hasStaticNew": true,
-      "inputHash": "19ee688559c3319d767bca1798093214be2ae61f278f957fba1f95f272775eca",
+      "inputHash": "0c3f07871d50134df63e86e7f73c00c1bab102579c287505f67dd0b0ea58122f",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkLabeledDataMapper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkLabeledDataMapper_export_gen.cpp",
-      "managedContentHash": "7f6cadba11c439aa9790506f2ebfa962fef852db556a6a6edd291e85f75e3ba9",
-      "nativeContentHash": "1f12ebebdc51583cb935486722c83931e9d1828d225380226cab7a589aac7ca6"
+      "managedContentHash": "1d94cba919bdd8a47fd02c784e6310e96879ef7fee85a7f65f39fcc84e78fdb2",
+      "nativeContentHash": "7cd5e61a6308dd3a00465f39aebf90401a79a535db3f804ed94e3d266910ba2d"
     }
   ]
 }

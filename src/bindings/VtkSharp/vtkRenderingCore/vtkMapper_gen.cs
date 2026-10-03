@@ -126,6 +126,20 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
     }
 
     /// <summary>
+    /// When ScalarMode is set to UsePointFieldData or UseCellFieldData,
+    /// you can specify which array to use for coloring using these methods.
+    /// The lookup table will decide how to convert vectors to colors.
+    /// </summary>
+    public new void SelectColorArray(string arrayName)
+    {
+        #if NET8_0_OR_GREATER
+        vtkMapper_SelectColorArray(this.NativePointer, arrayName);
+        #else
+        vtkMapper_SelectColorArray(this.NativePointer, VtkString.ToNullTerminatedUtf8(arrayName));
+        #endif
+    }
+
+    /// <summary>
     /// Specify a lookup table for the mapper to use.
     /// </summary>
     public new void SetLookupTable(vtkScalarsToColors lut)
@@ -200,6 +214,14 @@ public unsafe partial class vtkMapper : vtkAbstractMapper3D
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMapper_ScalarVisibilityOn(nint self);
+
+#if NET8_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkMapper_SelectColorArray(nint self, string arrayName);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkMapper_SelectColorArray(nint self, byte[] arrayName);
+#endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMapper_SetLookupTable(nint self, nint lut);

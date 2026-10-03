@@ -9,4 +9,6 @@ VTKSHARP_API vtkDataArray* vtkDataSetAttributes_GetScalars(vtkDataSetAttributes*
 
 VTKSHARP_API int vtkDataSetAttributes_SetActiveScalars(vtkDataSetAttributes* self, const char* name) { return self->SetActiveScalars(name); }
 
+VTKSHARP_API int vtkDataSetAttributes_SetActiveVectors(vtkDataSetAttributes* self, const char* name) { return self->SetActiveVectors(name); }
+
 VTKSHARP_API int vtkDataSetAttributes_SetScalars(vtkDataSetAttributes* self, vtkDataArray* da) { return self->SetScalars(da); }

@@ -19,6 +19,11 @@ classes:
             name: i
           - type: int
             name: j
+      - name: Identity
+        cppSignature: void Identity()
+        return:
+          type: void
+        parameters: []
       - name: Invert
         cppSignature: void Invert()
         return:

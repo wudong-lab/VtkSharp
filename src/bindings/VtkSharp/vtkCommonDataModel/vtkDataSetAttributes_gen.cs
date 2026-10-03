@@ -133,6 +133,18 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
     }
 
     /// <summary>
+    /// Set/Get the vector data.
+    /// </summary>
+    public new int SetActiveVectors(string name)
+    {
+        #if NET8_0_OR_GREATER
+        return vtkDataSetAttributes_SetActiveVectors(this.NativePointer, name);
+        #else
+        return vtkDataSetAttributes_SetActiveVectors(this.NativePointer, VtkString.ToNullTerminatedUtf8(name));
+        #endif
+    }
+
+    /// <summary>
     /// Set/Get the scalar data.
     /// </summary>
     public new int SetScalars(vtkDataArray da)
@@ -153,6 +165,14 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
 #else
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkDataSetAttributes_SetActiveScalars(nint self, byte[] name);
+#endif
+
+#if NET8_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial int vtkDataSetAttributes_SetActiveVectors(nint self, string name);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkDataSetAttributes_SetActiveVectors(nint self, byte[] name);
 #endif
 
     [DllImport(InteropInfo.NativeLibraryName)]

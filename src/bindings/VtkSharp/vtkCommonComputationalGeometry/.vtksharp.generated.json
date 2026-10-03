@@ -24,6 +24,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricFunction_export_gen.cpp",
       "managedContentHash": "095a2fec59f5a75904e26f2e2d285d018d8e8ff8850776eabd26b2b3fd0ba3be",
       "nativeContentHash": "83b45ddfd6607ed5cddf18aea6a5005c7c280b96e2bce693a9f70c22db74e525"
+    },
+    {
+      "className": "vtkParametricSpline",
+      "header": "vtkParametricSpline.h",
+      "baseClassName": "vtkParametricFunction",
+      "hasStaticNew": true,
+      "inputHash": "a8d65fb0ea58537ac463394aca404617b5dd10f0397ffe35ec24f9bf97254a7c",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricSpline_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricSpline_export_gen.cpp",
+      "managedContentHash": "6cc1fae7a978e208fb7a5ac88f0d4c3d3ea2d3d8fd6691f289a5e4e501bc1a01",
+      "nativeContentHash": "c5d61fe8f97cfb6eaaa59e4c953089788010d3f3a88b33f3f5f0d18aff265368"
     }
   ]
 }

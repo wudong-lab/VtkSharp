@@ -75,3 +75,13 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkWarpVector
+    header: vtkWarpVector.h
+    functions:
+      - name: SetScaleFactor
+        cppSignature: void SetScaleFactor(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg

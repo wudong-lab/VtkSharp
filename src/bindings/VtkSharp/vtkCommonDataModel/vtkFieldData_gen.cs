@@ -88,8 +88,22 @@ public unsafe partial class vtkFieldData : vtkObject
         return target;
     }
 
+    /// <summary>
+    /// Add an array to the array list. If an array with the same name
+    /// already exists - then the added array will replace it.
+    /// Return the index of the added array. If the given array is nullptr,
+    /// does nothing and returns -1.
+    /// </summary>
+    public new int AddArray(vtkAbstractArray array)
+    {
+        return vtkFieldData_AddArray(this.NativePointer, array.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkFieldData_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern int vtkFieldData_AddArray(nint self, nint array);
     #endregion
 }

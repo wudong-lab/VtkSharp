@@ -8,3 +8,13 @@ classes:
   - name: vtkParametricFunction
     header: vtkParametricFunction.h
     functions: []
+  - name: vtkParametricSpline
+    header: vtkParametricSpline.h
+    functions:
+      - name: SetPoints
+        cppSignature: void SetPoints(vtkPoints * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkPoints*
+            name: _arg1

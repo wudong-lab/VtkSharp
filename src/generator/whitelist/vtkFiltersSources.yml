@@ -359,6 +359,13 @@ classes:
         parameters:
           - type: vtkParametricFunction*
             name: _arg1
+      - name: SetUResolution
+        cppSignature: void SetUResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
   - name: vtkPlaneSource
     header: vtkPlaneSource.h
     functions:

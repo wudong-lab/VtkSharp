@@ -74,11 +74,11 @@
       "header": "vtkParametricFunctionSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "402b94911f4f76b22cb406dbd5b645c2c28e3db7a979b6a4c9ab1a3d50ba370a",
+      "inputHash": "7dbf52a0afe81cbeb359a7abe661a00c5a9b592a4bb99eb71977b909c36df7a2",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkParametricFunctionSource_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkParametricFunctionSource_export_gen.cpp",
-      "managedContentHash": "b5e59a29a86366b7f803ab643959448b3dbb441acd1afd5a2d9a9bb28b541352",
-      "nativeContentHash": "5e741e5effd49f0614e761575cdf3dd1cca07c5e87cb9d18269c5d22b3fd91f2"
+      "managedContentHash": "2b0ce55b3496e64456122cc378332ad61cf5a3b1b4c283330eb4709d9dc604b0",
+      "nativeContentHash": "c1860d7c2183b39774652feacb6e2b66ea3fc154618526e9cdd1acafbdadb046"
     },
     {
       "className": "vtkPlaneSource",

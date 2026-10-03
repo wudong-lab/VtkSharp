@@ -131,6 +131,28 @@ classes:
             name: val7
           - type: double
             name: val8
+      - name: SetTuple1
+        cppSignature: void SetTuple1(vtkIdType tupleIdx, double value)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: tupleIdx
+          - type: double
+            name: value
+      - name: SetTuple3
+        cppSignature: void SetTuple3(vtkIdType tupleIdx, double val0, double val1, double val2)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: tupleIdx
+          - type: double
+            name: val0
+          - type: double
+            name: val1
+          - type: double
+            name: val2
   - name: vtkDoubleArray
     header: vtkDoubleArray.h
     functions: []

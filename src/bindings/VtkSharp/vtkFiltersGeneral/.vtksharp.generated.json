@@ -57,6 +57,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkWarpScalar_export_gen.cpp",
       "managedContentHash": "8ec84b7035888ed4f4d920f07b880a31e7fbf346884ff537f00454fad4589177",
       "nativeContentHash": "2469867f8a060cb12252e52eac55b9aece3c20a9a20238ba5eab2809d76c1277"
+    },
+    {
+      "className": "vtkWarpVector",
+      "header": "vtkWarpVector.h",
+      "baseClassName": "vtkPointSetAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "1ba311c2bce14e197288b5d9ace5681aee0177384b4bdc65a67b7b88e8fb1bb5",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkWarpVector_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkWarpVector_export_gen.cpp",
+      "managedContentHash": "8ee375d1887fc6dc00a6f1adaf30a37dc05a92b10a4499ae0de0bfcbca4a6a0e",
+      "nativeContentHash": "6bae4e1556dc4801cad1dd7df3cf7ab52f072be48d4dd9a338ced70b979fb28b"
     }
   ]
 }

@@ -140,6 +140,9 @@ classes:
         return:
           type: bool
         parameters: []
+  - name: vtkCellData
+    header: vtkCellData.h
+    functions: []
   - name: vtkDataObject
     header: vtkDataObject.h
     functions:
@@ -165,6 +168,11 @@ classes:
         parameters:
           - type: double[6]
             name: bounds
+      - name: GetCellData
+        cppSignature: vtkCellData * GetCellData()
+        return:
+          type: vtkCellData*
+        parameters: []
       - name: GetPointData
         cppSignature: vtkPointData * GetPointData()
         return:
@@ -198,6 +206,13 @@ classes:
         parameters:
           - type: const char*
             name: name
+      - name: SetActiveVectors
+        cppSignature: int SetActiveVectors(char const * name)
+        return:
+          type: int
+        parameters:
+          - type: const char*
+            name: name
       - name: SetScalars
         cppSignature: int SetScalars(vtkDataArray * da)
         return:
@@ -207,7 +222,14 @@ classes:
             name: da
   - name: vtkFieldData
     header: vtkFieldData.h
-    functions: []
+    functions:
+      - name: AddArray
+        cppSignature: int AddArray(vtkAbstractArray * array)
+        return:
+          type: int
+        parameters:
+          - type: vtkAbstractArray*
+            name: array
   - name: vtkImageData
     header: vtkImageData.h
     functions:

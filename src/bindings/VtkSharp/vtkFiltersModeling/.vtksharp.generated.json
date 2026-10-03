@@ -24,6 +24,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkLinearExtrusionFilter_export_gen.cpp",
       "managedContentHash": "4c01ff437ccc381c4133ed3514bb766b3507785bb558dbf511ddeffa4ee0f7f2",
       "nativeContentHash": "bc069cafbb91f61389d65ea930e68ab4e55b74f7e3142c3a18c0a00681c6d900"
+    },
+    {
+      "className": "vtkRibbonFilter",
+      "header": "vtkRibbonFilter.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "525ae23723f62b372b5de36d4b6d777022679007960bbf493d7c62eab9887761",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkRibbonFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkRibbonFilter_export_gen.cpp",
+      "managedContentHash": "1516d7c0f288c681c17608bb1b2b55f81731e2d744c1ff96e2b8e860660c532a",
+      "nativeContentHash": "4718bda9e23a50ecbe52629bfacd2b1dad55c02af7be8627cc248818ced4e7d7"
     }
   ]
 }
