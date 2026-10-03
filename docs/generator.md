@@ -5,7 +5,7 @@
 生成器与其测试需要 .NET 10 SDK，当前运行目标为 Windows x64。普通绑定库构建使用仓库中已有的
 生成文件，不需要先运行生成器。
 
-先按 [README](../README.md#2-设置-vtk-环境变量) 设置 `VTK_ROOT`，指向安装根目录；
+先按 [README](../README.md#2-设置-vtk-环境变量) 设置 `VTK_ROOT`，指向与当前构建配置匹配的 VTK 安装根目录（Shared 构建通常为 `install/Release` 或 `install/Debug`）；
 生成器不会把 `VTK_DIR` 或构建脚本的 `-VtkDir` 当作安装根目录。
 安装中必须有 `include/vtk-9.7` 头文件及 `lib/vtk-9.7/hierarchy/VTK` 类型信息。
 

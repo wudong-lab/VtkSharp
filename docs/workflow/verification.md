@@ -4,8 +4,8 @@
 
 ## 常用入口
 
-在仓库根目录运行；先按 [README](../../README.md#2-设置-vtk-环境变量) 设置 `VTK_ROOT` 和
-`VTK_DIR`。脚本默认读取环境变量 `VTK_DIR`，也可用 `-VtkDir` 覆盖，目录必须包含
+在仓库根目录运行；传入或设置与所选构建配置匹配的 `VTK_DIR`。脚本默认读取环境变量
+`VTK_DIR`，也可用 `-VtkDir` 覆盖，目录必须包含
 `VTKConfig.cmake` 或 `vtk-config.cmake`。未提供路径时在创建报告目录前报错。
 
 两个测试项目统一使用 MSTest 4.4.1 与 Microsoft.NET.Test.Sdk 18.10.1；验证脚本中的 `dotnet test` 调用无需额外切换测试运行器。
@@ -29,7 +29,7 @@
 - `Final`：默认模式，运行全部测试，并使用增量生成检查，适合本地最终交付。
 - `CI`：运行全部测试，并在临时目录完整生成所有绑定后比较，适合 CI、生成器实现变更、增量缓存协议变更和 VTK 升级。增量检查依赖 manifest 和逐类输入指纹，不能替代这些场景的全量检查。
 
-可通过 `-Configuration`、`-GeneratorConfig`、`-VtkBinDirectory` 指定配置；默认 VTK DLL 目录是 CMake 包目录的 `../../../bin`，只加入子进程 PATH。生成器使用 `VTK_ROOT` 或本地配置中的安装，脚本不会根据 `-VtkDir` 自动推导并覆盖它；调用者应确保两者是同一版本和安装。
+可通过 `-Configuration`、`-GeneratorConfig`、`-VtkBinDirectory` 指定配置；默认 VTK DLL 目录是 CMake 包目录的 `../../../bin`，只加入开发阶段子进程的 `PATH`。开发阶段子进程的 `VTK_ROOT` 和 `VTK_DIR` 由所选 `-VtkDir` 设置；隔离部署阶段会清空这两个变量并移除 VTK 开发目录，避免从开发安装补齐依赖。直接运行生成器时，需自行设置匹配配置的 `VTK_ROOT` 或本地生成器配置。
 
 每次运行创建新的 `artifacts/verification/<timestamp-id>/`，也可用 `-OutputDirectory` 指定不存在的目录。保留完整 stdout/stderr、每阶段命令、退出码、耗时、警告摘要及 `verification.json`。报告记录提交和工作区状态，但不是源码快照；源码或配置变化后应重新验证。
 

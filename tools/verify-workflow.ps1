@@ -8,9 +8,17 @@ param(
     [ValidateSet("Fast", "Final", "CI")]
     [string]$Mode = "Final",
 
+    [ValidateSet("Static", "Dynamic")]
+    [string]$Linkage = "Dynamic",
+
+    [ValidateSet("Development", "Isolated")]
+    [string]$RuntimeMode = "Development",
+
     [string]$VtkBinDirectory,
     [string]$GeneratorConfig,
     [string]$Example,
+    [string]$IsolatedExecutable,
+    [string[]]$IsolatedArguments = @(),
     [switch]$Regenerate,
     [string]$OutputDirectory,
 
@@ -24,6 +32,9 @@ param(
 $ErrorActionPreference = "Stop"
 if ([string]::IsNullOrWhiteSpace($VtkDir)) {
     throw "Set VTK_DIR to the installed VTK CMake package directory, or pass -VtkDir. See README.md."
+}
+if ($RuntimeMode -eq "Isolated" -and $Linkage -ne "Dynamic") {
+    throw "Isolated deployment verification requires -Linkage Dynamic."
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
@@ -41,7 +52,9 @@ $report = [ordered]@{
     startedAt = [DateTimeOffset]::Now.ToString("o")
     repository = $repoRoot
     configuration = $Configuration
+    linkage = $Linkage
     mode = $Mode
+    runtimeMode = $RuntimeMode
     vtkDir = $VtkDir
     vtkBinDirectory = $VtkBinDirectory
     generatorConfig = $GeneratorConfig
@@ -56,11 +69,11 @@ function Save-Report {
     $report | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $reportPath -Encoding utf8
 }
 
-function Add-Stage([string]$Name, [string]$Executable, [string[]]$Arguments, [bool]$Selected = $true, [int]$Timeout = $StageTimeoutSeconds) {
+function Add-Stage([string]$Name, [string]$Executable, [string[]]$Arguments, [bool]$Selected = $true, [int]$Timeout = $StageTimeoutSeconds, [string]$WorkingDirectory = $repoRoot) {
     $report.stages.Add([ordered]@{
         name = $Name; status = "not-run"; selected = $Selected
         reason = $(if ($Selected) { "pending" } else { "not-selected" })
-        executable = $Executable; arguments = $Arguments; timeoutSeconds = $Timeout
+        executable = $Executable; arguments = $Arguments; timeoutSeconds = $Timeout; workingDirectory = $WorkingDirectory
         exitCode = $null; durationSeconds = 0
         stdout = Join-Path $OutputDirectory "$Name.stdout.log"
         stderr = Join-Path $OutputDirectory "$Name.stderr.log"
@@ -79,12 +92,26 @@ function Invoke-Stage($Stage) {
     $stderr = $null
     try {
         $process.StartInfo = [Diagnostics.ProcessStartInfo]@{
-            FileName = $Stage.executable; WorkingDirectory = $repoRoot
+            FileName = $Stage.executable; WorkingDirectory = $Stage.workingDirectory
             UseShellExecute = $false; CreateNoWindow = $true
             RedirectStandardOutput = $true; RedirectStandardError = $true
         }
         foreach ($argument in $Stage.arguments) { $process.StartInfo.ArgumentList.Add($argument) }
-        $process.StartInfo.Environment["PATH"] = "$VtkBinDirectory$([IO.Path]::PathSeparator)$env:PATH"
+        if ($Stage.name -ne "isolated-deployment") {
+            $process.StartInfo.Environment["PATH"] = "$VtkBinDirectory$([IO.Path]::PathSeparator)$env:PATH"
+            $process.StartInfo.Environment["VTK_ROOT"] = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
+            $process.StartInfo.Environment["VTK_DIR"] = $VtkDir
+        }
+        else {
+            $vtkRoots = @($VtkDir, $env:VTK_DIR) | Where-Object { $_ } | ForEach-Object { [IO.Path]::GetFullPath((Join-Path $_ "../../..")) } | Select-Object -Unique
+            if ($env:VTK_ROOT) { $vtkRoots += [IO.Path]::GetFullPath($env:VTK_ROOT) }
+            $blockedBins = @($VtkBinDirectory) + @($vtkRoots | ForEach-Object { Join-Path $_ "bin" })
+            $allowedPath = $env:PATH -split [regex]::Escape([string][IO.Path]::PathSeparator) |
+                Where-Object { $entry = [IO.Path]::GetFullPath($_); $blockedBins -notcontains $entry }
+            $process.StartInfo.Environment["PATH"] = $allowedPath -join [IO.Path]::PathSeparator
+            $process.StartInfo.Environment["VTK_ROOT"] = ""
+            $process.StartInfo.Environment["VTK_DIR"] = ""
+        }
         $process.StartInfo.Environment["NO_COLOR"] = "1"
         $stdout = [IO.File]::Create($Stage.stdout)
         $stderr = [IO.File]::Create($Stage.stderr)
@@ -153,21 +180,45 @@ try {
     Add-Stage "generator-build" "dotnet" @("build", $cliProject, "--configuration", $Configuration, "--nologo")
     Add-Stage "generator-tests" "dotnet" @("test", "src/generator/VtkSharp.Generator.Tests", "--configuration", $Configuration, "--nologo") ($Mode -ne "Fast")
     Add-Stage "generate" "dotnet" ($cli + @("generate-bindings", "--output-root", "src", "--incremental") + $configArgs) ([bool]$Regenerate)
-    Add-Stage "native-build" "pwsh" @("-NoProfile", "-File", "$PSScriptRoot/build-native.ps1", "-Configuration", $Configuration, "-VtkDir", $VtkDir)
+    Add-Stage "native-build" "pwsh" @("-NoProfile", "-File", "$PSScriptRoot/build-native.ps1", "-Configuration", $Configuration, "-Linkage", $Linkage, "-VtkDir", $VtkDir)
     Add-Stage "managed-tests" "dotnet" @("test", "src/bindings/VtkSharp.slnx", "--configuration", $Configuration, "--nologo")
-    Add-Stage "example-build" "dotnet" @("build", "src/examples/ExampleBrowser/ExampleBrowser.csproj", "--configuration", $Configuration, "--nologo")
+    Add-Stage "example-build" "dotnet" @("build", "src/examples/ExampleBrowser/ExampleBrowser.csproj", "--configuration", $Configuration, "--nologo") ($RuntimeMode -eq "Development")
     $exampleExe = Join-Path $repoRoot "src/examples/ExampleBrowser/bin/$Configuration/net8.0-windows/ExampleBrowser.exe"
-    Add-Stage "example-smoke" $exampleExe @("--smoke", $Example, "--output", (Join-Path $OutputDirectory "example")) ([bool]$Example) $ExampleTimeoutSeconds
+    Add-Stage "example-smoke" $exampleExe @("--smoke", $Example, "--output", (Join-Path $OutputDirectory "example")) ([bool]$Example -and $RuntimeMode -eq "Development") $ExampleTimeoutSeconds
+    $deploymentDirectory = Join-Path $OutputDirectory "deployment"
+    Add-Stage "example-publish" "dotnet" @("publish", "src/examples/ExampleBrowser/ExampleBrowser.csproj", "--configuration", $Configuration, "--runtime", "win-x64", "--self-contained", "false", "--output", $deploymentDirectory, "--nologo") ($RuntimeMode -eq "Isolated") $StageTimeoutSeconds
+    $isolatedPath = if ($IsolatedExecutable) { [IO.Path]::GetFullPath($IsolatedExecutable, $repoRoot) } else { Join-Path $deploymentDirectory "ExampleBrowser.exe" }
+    $isolatedArguments = if ($IsolatedExecutable) { $IsolatedArguments } else { @("--smoke", $(if ($Example) { $Example } else { "GeometricObjects/Cone" }), "--output", (Join-Path $OutputDirectory "isolated-example")) }
+    Add-Stage "isolated-deployment" $isolatedPath $isolatedArguments ($RuntimeMode -eq "Isolated") $ExampleTimeoutSeconds (Split-Path -Parent $isolatedPath)
     $generatedCheckArgs = @("generate-bindings", "--check")
     if ($Mode -ne "CI") { $generatedCheckArgs += "--incremental" }
     Add-Stage "generated-check" "dotnet" ($cli + $generatedCheckArgs + $configArgs)
+
+    $nativeBuildRoot = Join-Path $repoRoot "src/bindings/VtkSharp.Native/out/build"
+    $nativeBuildPresets = if ($Linkage -eq "Dynamic") { @("dynamic/win-x64-vs2026", "dynamic/win-x64-vs2022") } else { @("win-x64-vs2026", "win-x64-vs2022") }
+    $nativeRuntimeArguments = @()
 
     $failed = $false
     foreach ($stage in $report.stages) {
         if (-not $stage.selected) { continue }
         if ($failed) { $stage.reason = "earlier-stage-failed"; continue }
+        if ($stage.name -in @("managed-tests", "example-build", "example-publish")) {
+            $stage.arguments += "-p:VtkSharpNativeLinkage=$Linkage"
+            $stage.arguments += $nativeRuntimeArguments
+        }
         Invoke-Stage $stage
         $failed = $stage.status -eq "failed"
+        if ($stage.name -eq "native-build" -and -not $failed -and $Linkage -eq "Dynamic") {
+            $nativeManifestCandidates = @()
+            foreach ($preset in $nativeBuildPresets) {
+                $candidate = Join-Path $nativeBuildRoot "$preset/$Configuration"
+                $candidateManifest = Join-Path $candidate "native-dependencies.json"
+                if (Test-Path -LiteralPath $candidateManifest -PathType Leaf) { $nativeManifestCandidates += Get-Item -LiteralPath $candidateManifest }
+            }
+            $nativeRuntimeDirectory = if ($nativeManifestCandidates.Count -gt 0) { Split-Path -Parent (($nativeManifestCandidates | Sort-Object LastWriteTimeUtc -Descending | Select-Object -First 1).FullName) } else { $null }
+            if (-not $nativeRuntimeDirectory) { throw "Dynamic native runtime output was not found after the native build." }
+            $nativeRuntimeArguments = @("-p:VtkSharpNativeRuntimeDirectory=$nativeRuntimeDirectory")
+        }
     }
     $report.status = if ($failed) { "failed" } else { "passed" }
 }

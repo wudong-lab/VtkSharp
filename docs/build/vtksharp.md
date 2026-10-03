@@ -1,86 +1,49 @@
 # 构建与打包 VtkSharp
 
-VtkSharp 包括托管 `VtkSharp.dll` 与链接静态 VTK 的 `VtkSharp.Native.dll`。
-当前构建和 NuGet native 资产面向 Windows x64，不承诺其他平台可用。
+VtkSharp 由 managed `VtkSharp.dll`、公开 C ABI `VtkSharp.Native.dll` 和运行时依赖组成。当前默认使用 Windows x64、VTK 9.7.0 Shared、Release `/MD`；静态构建仍可显式选择作为基线或回退路径。
 
-## 前置条件与路径
+## 环境和构建
 
-先按 [VTK 构建说明](vtk.md) 安装 VTK 9.7.0，再按 [README](../../README.md#2-设置-vtk-环境变量)
-设置 `VTK_ROOT`（生成器）与 `VTK_DIR`（CMake package）。二者应指向同一安装。
+先按 [VTK 构建说明](vtk.md) 在独立目录构建、安装 VTK。动态 Debug/Release 分别安装至 `install/Debug` 和 `install/Release`；不得复用静态缓存或把不同配置 DLL 混放。
 
-`build-native.ps1`、`build-all.ps1`、`package-nuget.ps1`、`verify-workflow.ps1`
-默认读取 `VTK_DIR`，显式 `-VtkDir` 参数优先；构建 native 时会将其写入 CMake 配置。
-未设置时会提示配置路径，不依赖另一台机器的目录或隐式 CMake cache。
-
-native 脚本优先使用 VS 2026，仅在对应 generator/实例不可用时尝试 VS 2022。
-此回退不保证已有 VTK 安装与另一套工具链兼容，也不适用于 VTK 构建脚本。
-推荐使用同一工具链构建 VTK 与 native DLL。
-
-## 配置与 CRT 匹配
-
-| 仓库构建配置 | Native 配置 | VTK 静态库配置 | Native MSVC CRT |
-| --- | --- | --- | --- |
-| `Debug` | `Debug` | `Debug` | `/MDd` |
-| `Release` | `Release` | `Release` | `/MD` |
-
-CRT 匹配是 native DLL 与 VTK 静态库之间的要求。托管程序集本身不使用 MSVC CRT；
-上述托管配置一致是本仓库按 `$(Configuration)` 选取、复制 native DLL 的约定，
-不是 P/Invoke 禁止托管 Debug 调用 Release DLL。不要混用 ABI 或版本不匹配的产物。
-
-## 构建与运行
-
-在仓库根目录执行：
+`VTK_DIR` 指向对应配置下的 `lib/cmake/vtk-9.7`；`VTK_ROOT` 是同一安装根目录。native CMake、头文件和运行时必须来自匹配的 VTK build。构建优先使用 VS 2026，必要时可回退 VS 2022，但需保证和 VTK 工具链兼容。
 
 ```powershell
-.\tools\build-all.ps1 -Configuration Release
-dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj --configuration Release
+$vtkDir = "D:\Code\VTK\VtkGitBuild-shared\install\Release\lib\cmake\vtk-9.7"
+
+# Build the public native wrapper and its exact dependency closure.
+.\tools\build-native.ps1 -Configuration Release -VtkDir $vtkDir
+
+# Build managed libraries and examples with the full runtime set.
+.\tools\build-all.ps1 -Configuration Release -VtkDir $vtkDir
 ```
 
-`build-all.ps1` 和 `build-native.ps1` 保留默认 Debug 配置；文档始终显式选择 Release。
-一键脚本只构建绑定库及 native 项目，不运行生成器、测试或示例。
-每次运行重新创建 `artifacts/bin`，收集 `netstandard2.0`、`net8.0` 的
-`VtkSharp.dll`、PDB、XML API 文档及 native DLL。该目录是构建产物，不应存放手工文件。
+一键构建会保留本机原有 artifacts 内容，只按旧清单和哈希清理由构建工具管理的过期 DLL。native 依赖扫描普通导入、延迟导入和显式运行模块，递归生成 `native-dependencies.json`；缺失文件、同名异内容冲突和失效哈希会阻止构建。Windows 系统 DLL 与 MSVC CRT 要求单独记录，不从系统目录复制。
 
-也可以分步构建：
+## 本地 NuGet 包
 
 ```powershell
-.\tools\build-native.ps1 -Configuration Release
-dotnet build src/bindings/VtkSharp.slnx --configuration Release
+$newVersion = "27.1004.1" # Choose a version not present in the local package source.
+.\tools\package-nuget.ps1 -Configuration Release `
+    -Version $newVersion `
+    -VtkDir D:\Code\VTK\VtkGitBuild-shared\install\Release\lib\cmake\vtk-9.7
 ```
 
-Debug 时先安装 Debug VTK，再将所有仓库构建/示例命令改为 Debug。
-`-SkipNativeBuild` 仅用于已有匹配 native DLL 的情况，不会生成缺失 DLL。
-`dotnet build` 不会自动编译 C++；native DLL 缺失时托管编译仍可能通过，但运行会失败。
+打包只接受 Release、Dynamic；可用 `-Version` 显式指定未使用的 `x.y.z` 版本，不传时根据本地时间生成版本。已存在同版本包会失败，不覆盖包。包把 managed assemblies 放入相应 TFM，将完整可分发 DLL 闭包放在 `runtimes/win-x64/native/`，并携带依赖清单、VTK 版权声明和第三方许可文件。为避免 NuGet 对无扩展名 `LICENSE` 项生成过长路径，打包时将其重命名为 `.txt`，映射记录在 `licenses/VTK/license-file-renames.json`。脚本只生成本地 NuGet 包，不发布到 NuGet.org。
 
-## 本地 NuGet 打包
+消费项目通过固定版本 `PackageReference` 使用本地源。Windows x64 项目应设置 `win-x64` runtime identifier，尤其是 .NET Framework 4.8，以便 NuGet 选择 native 资产；已验证 .NET 8 与 .NET Framework 4.8 输出目录包含完整 DLL 闭包。Release 机器需要兼容的 x64 Visual C++ 运行库。
+
+## 验证与部署隔离
 
 ```powershell
-.\tools\package-nuget.ps1 -Configuration Release
+.\tools\verify-workflow.ps1 -Configuration Release `
+    -Linkage Dynamic -RuntimeMode Isolated `
+    -VtkDir D:\Code\VTK\VtkGitBuild-shared\install\Release\lib\cmake\vtk-9.7 `
+    -Example GeometricObjects/Cone
 ```
 
-脚本先构建 native，再打包到 `artifacts/nuget/<version>`，包含两个 TFM 的托管库、XML 文档、
-`runtimes/win-x64/native/VtkSharp.Native.dll`、包 README 和 VTK 许可文件。
-版本号按本地构建时间生成，规则见 `src/bindings/Directory.Build.props`，不是语义化版本兼容性承诺。
-打包会检查 native DLL 存在，避免生成缺失 native 资产却看似可安装的包。
+隔离验证在新进程中运行发布产物，不添加 VTK 开发目录到 `PATH`，并清空 `VTK_ROOT`、`VTK_DIR`。实际加载的 VTK DLL 应全部来自部署目录。图形示例还需要 .NET 8 Desktop Runtime 和可用图形设备。
 
-脚本只创建本地包，不发布到 NuGet.org；可将输出目录添加为自己的 NuGet 源。
-消费应用必须运行于 x64，且托管库与 native DLL 来自配套构建。
-不同 .NET 宿主的 native 资产探测方式可能不同，尤其是 .NET Framework 应用，应检查输出目录。
+目前验证通过：VTK 9.7.0 Shared Release/Debug、公开 native 与隔离 Cone smoke、每配置 40 个公开 managed 测试、Release NuGet 打包，以及 .NET 8/.NET Framework 4.8 固定版本包消费。私有 standalone Release/Debug 构建及每配置 36 个测试通过。私有 .NET 8 Debug WPF smoke 有已记录的 `coreclr.dll` 访问冲突；私有 .NET Framework 4.8 Debug 与两框架 Release smoke 通过。迁移报告在 `artifacts/verification/dynamic-vtk-migration/`。
 
-## 部署与常见问题
-
-- `DllNotFoundException`：检查 `VtkSharp.Native.dll` 是否复制到应用可搜索的位置，以及其依赖能否加载。
-- `BadImageFormatException`：先检查应用是否以 x86 运行，或混用了不同架构的 native DLL。
-- Release native DLL 使用动态 MSVC CRT；目标机器需要匹配的 x64 Visual C++ 运行库。静态链接 VTK 不代表完全没有系统/native 依赖。
-- Debug 使用开发工具链中的调试 CRT，不作为普通用户的分发配置。
-- `artifacts/bin` 是库产物集合，不是自动生成的应用安装包。分发前检查实际 native 依赖和相关第三方许可声明。
-- 示例需要 .NET 8 Desktop Runtime 和可用图形环境；无显示设备运行、跨 GPU 图像一致性不在当前保证范围内。
-
-## 验证
-
-```powershell
-.\tools\verify-workflow.ps1 -Example GeometricObjects/Cone
-```
-
-需要 .NET 10 SDK、.NET 8 SDK/运行时和完整工具链。仅在白名单变化需要更新生成文件时加
-`-Regenerate`。报告与人工验收边界见 [统一验证入口](../workflow/verification.md)。
+静态 fallback 可使用 `-Linkage Static`，但不用于 NuGet 包；NuGet 发布脚本只接受 Release Dynamic。动态构建汇总输出位于 `artifacts/bin/dynamic/<Configuration>/<TFM>`，静态 fallback 输出位于 `artifacts/bin/<TFM>`。这些目录是库文件集合，不是应用安装包，分发前应核对目标 RID、运行库和许可声明。

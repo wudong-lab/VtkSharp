@@ -17,6 +17,7 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("set(VTKSHARP_EXTRA_VTK_COMPONENTS", text);
         Assert.Contains("find_package(VTK CONFIG REQUIRED COMPONENTS ${VTKSHARP_ALL_VTK_COMPONENTS})", text);
         Assert.Contains("target_link_libraries(${VTKSHARP_NATIVE_TARGET}", text);
+        Assert.Contains("MSVC_RUNTIME_LIBRARY", text);
         Assert.Contains("${VTKSHARP_ALL_VTK_TARGETS}", text);
         Assert.Contains("${VTKSHARP_EXTRA_NATIVE_LIBRARIES}", text);
         Assert.Contains("vtk_module_autoinit(", text);
@@ -56,9 +57,12 @@ public sealed class NativeProjectEmitterTests
         Assert.Contains("\"win-x64-vs2026\"", text);
         Assert.Contains("\"Visual Studio 18 2026\"", text);
         Assert.Contains("\"win-x64-vs2022\"", text);
+        Assert.Contains("\"win-x64-vs2026-dynamic\"", text);
+        Assert.Contains("out/build/dynamic/win-x64-vs2026", text);
         Assert.Contains("\"Visual Studio 17 2022\"", text);
         Assert.Contains("\"win-x64-vs2026-debug\"", text);
         Assert.Contains("\"win-x64-vs2022-debug\"", text);
+        Assert.Contains("\"win-x64-vs2026-dynamic-release\"", text);
         Assert.IsTrue(text.EndsWith("\n", StringComparison.Ordinal));
     }
 

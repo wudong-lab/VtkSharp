@@ -64,6 +64,12 @@ public sealed class NativeProjectEmitter
              ${VTKSHARP_EXTRA_NATIVE_HEADERS}
            )
 
+           if(MSVC)
+             set_property(TARGET ${VTKSHARP_NATIVE_TARGET}
+               PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+             )
+           endif()
+
            if(VTKSHARP_EXTRA_NATIVE_SOURCES OR VTKSHARP_EXTRA_NATIVE_HEADERS)
              source_group("extensions" FILES
                ${VTKSHARP_EXTRA_NATIVE_SOURCES}
@@ -110,6 +116,20 @@ public sealed class NativeProjectEmitter
                  "generator": "Visual Studio 17 2022",
                  "architecture": "x64",
                  "binaryDir": "${sourceDir}/out/build/win-x64-vs2022"
+               },
+               {
+                 "name": "win-x64-vs2026-dynamic",
+                 "displayName": "Windows x64 dynamic VTK (Visual Studio 2026)",
+                 "generator": "Visual Studio 18 2026",
+                 "architecture": "x64",
+                 "binaryDir": "${sourceDir}/out/build/dynamic/win-x64-vs2026"
+               },
+               {
+                 "name": "win-x64-vs2022-dynamic",
+                 "displayName": "Windows x64 dynamic VTK (Visual Studio 2022)",
+                 "generator": "Visual Studio 17 2022",
+                 "architecture": "x64",
+                 "binaryDir": "${sourceDir}/out/build/dynamic/win-x64-vs2022"
                }
              ],
              "buildPresets": [
@@ -131,6 +151,26 @@ public sealed class NativeProjectEmitter
                {
                  "name": "win-x64-vs2022-release",
                  "configurePreset": "win-x64-vs2022",
+                 "configuration": "Release"
+               },
+               {
+                 "name": "win-x64-vs2026-dynamic-debug",
+                 "configurePreset": "win-x64-vs2026-dynamic",
+                 "configuration": "Debug"
+               },
+               {
+                 "name": "win-x64-vs2026-dynamic-release",
+                 "configurePreset": "win-x64-vs2026-dynamic",
+                 "configuration": "Release"
+               },
+               {
+                 "name": "win-x64-vs2022-dynamic-debug",
+                 "configurePreset": "win-x64-vs2022-dynamic",
+                 "configuration": "Debug"
+               },
+               {
+                 "name": "win-x64-vs2022-dynamic-release",
+                 "configurePreset": "win-x64-vs2022-dynamic",
                  "configuration": "Release"
                }
              ]

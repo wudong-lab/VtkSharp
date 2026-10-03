@@ -19,7 +19,7 @@
 | 组件 | 当前目标 / 要求 |
 | --- | --- |
 | 托管绑定库 | `netstandard2.0`、`net8.0` |
-| Native 构建与打包 | Windows x64，VTK 9.7.0 静态库 |
+| Native 构建与打包 | Windows x64，VTK 9.7.0 Shared，MSVC 动态 CRT |
 | 示例浏览器 | WPF，`net8.0-windows`，.NET 8 Desktop Runtime |
 | 绑定生成器与生成器测试 | .NET 10 SDK，Windows x64 |
 | 从源码构建 | Git、PowerShell 7、.NET 8 SDK（完整开发另需 .NET 10 SDK） |
@@ -52,7 +52,7 @@ git clone --branch v9.7.0 --depth 1 https://gitlab.kitware.com/vtk/vtk.git $vtkS
     -SourceDirectory $vtkSource -BuildDirectory $vtkBuild
 ```
 
-默认安装到 `$vtkBuild/install`。已有同版本、同配置且包含所需模块的 VTK 安装时，可跳过此步。
+Shared VTK 按配置安装到 `$vtkBuild/install/Release` 或 `$vtkBuild/install/Debug`。已有同版本、同配置且包含所需模块的 VTK 安装时，可跳过此步。
 源码版本、Debug/Both、仅配置和模块开关见 [VTK 构建说明](docs/build/vtk.md)。
 
 ### 2. 设置 VTK 环境变量
@@ -60,8 +60,8 @@ git clone --branch v9.7.0 --depth 1 https://gitlab.kitware.com/vtk/vtk.git $vtkS
 VTK 安装完成后，在 PowerShell 中设置以下环境变量，并将示例路径替换为自己的安装路径：
 
 ```powershell
-# VTK installation root, used by the binding generator
-$env:VTK_ROOT = "D:\Dependencies\VTK\build\install"
+# Matching configuration's VTK installation root, used by the binding generator
+$env:VTK_ROOT = "D:\Dependencies\VTK\build\install\Release"
 
 # VTK CMake package directory, used by native builds
 $env:VTK_DIR = Join-Path $env:VTK_ROOT "lib\cmake\vtk-9.7"
@@ -69,7 +69,7 @@ $env:VTK_DIR = Join-Path $env:VTK_ROOT "lib\cmake\vtk-9.7"
 
 两个目录的含义：
 
-- `VTK_ROOT` 是 **VTK 安装根目录**，即安装步骤将头文件、编译好的库和配套配置文件汇集到的目录。
+- `VTK_ROOT` 是 **当前配置的 VTK 安装根目录**，即安装步骤将头文件、编译好的库和配套配置文件汇集到的目录（例如 `install/Release`）。
   它不是下载的源码目录，也不是存放 Visual Studio 工程和中间文件的构建目录。VtkSharp 生成器
   从这里查找 C++ 头文件（用于解析 API 声明）和 hierarchy 文件（用于查询类型、继承关系与模块归属）。
   此环境变量优先于生成器配置文件中的 `vtk.rootDirectory`。
@@ -81,7 +81,7 @@ $env:VTK_DIR = Join-Path $env:VTK_ROOT "lib\cmake\vtk-9.7"
 按本项目脚本安装 VTK 9.7 后，关键目录关系如下（省略其他文件）：
 
 ```text
-install/                               ← VTK_ROOT
+install/Release/                       ← VTK_ROOT for Release
 ├── include/
 │   └── vtk-9.7/
 │       └── vtkObject.h                 # C++ 头文件
@@ -96,7 +96,7 @@ install/                               ← VTK_ROOT
                 └── vtkCommonCore-hierarchy.txt
 ```
 
-因此，这里的 `VTK_DIR` 是 `VTK_ROOT` 下的 `lib/cmake/vtk-9.7` 子目录。两者必须对应同一份
+因此，这里的 `VTK_DIR` 是对应配置的 `VTK_ROOT` 下的 `lib/cmake/vtk-9.7` 子目录。两者必须对应同一份
 VTK 安装，不能互换；VTK 构建脚本完成安装时也会输出 `VTK_DIR`。仅构建但未执行安装时，
 上述安装目录可能尚未生成。
 
@@ -125,7 +125,7 @@ dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj --configu
 其他示例包括网格、图像、交互、背景渐变，以及 WPF 承载和事件回调，见 [示例说明](src/examples/README.md)。
 
 `build-all.ps1` 只构建绑定库和 native 项目，不构建生成器、测试或示例；它将产物收集到
-`artifacts/bin/<TFM>`，每次运行会重新创建 `artifacts/bin`。示例命令使用相同的 Release 配置，
+动态产物收集到 `artifacts/bin/dynamic/<Configuration>/<TFM>`，静态 fallback 保留在 `artifacts/bin/<TFM>`。脚本不会清空整个 `artifacts/bin`；依赖清单只管理目标目录内的 native 文件。示例命令使用相同的 Release 配置，
 以便项目自动复制对应的 `VtkSharp.Native.dll`。仅运行 `dotnet build` 不会编译 native 层。
 
 仓库已包含生成的绑定，普通构建无需先运行生成器。本页采用源码构建流程；本地 NuGet 打包、

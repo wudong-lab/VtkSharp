@@ -2,6 +2,9 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Debug",
 
+    [ValidateSet("Static", "Dynamic")]
+    [string]$Linkage = "Dynamic",
+
     [string]$VtkDir = $env:VTK_DIR
 )
 
@@ -22,9 +25,28 @@ if ($VtkDir) {
     }
 }
 
+$vtkInstallDirectory = $null
+$vtkBuildInfo = $null
+if ($Linkage -eq "Dynamic") {
+    $vtkInstallDirectory = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
+    $vtkBuildInfoPath = Join-Path $vtkInstallDirectory "vtk-build-info.json"
+    if (-not (Test-Path -LiteralPath $vtkBuildInfoPath -PathType Leaf)) {
+        throw "Dynamic VTK build record is missing: $vtkBuildInfoPath. Reinstall VTK with tools/build-vtk-for-vtksharp.ps1."
+    }
+    $vtkBuildInfo = Get-Content -LiteralPath $vtkBuildInfoPath -Raw | ConvertFrom-Json
+    if (-not $vtkBuildInfo.buildSharedLibs -or $vtkBuildInfo.linkage -ne "Shared") {
+        throw "VTK_DIR does not reference a shared VTK installation: $VtkDir"
+    }
+    if ($vtkBuildInfo.configuration -ne $Configuration -or $vtkBuildInfo.architecture -ne "x64") {
+        throw "VTK configuration/architecture does not match native build: requested $Configuration x64; found $($vtkBuildInfo.configuration) $($vtkBuildInfo.architecture)."
+    }
+}
+
+$suffix = if ($Linkage -eq "Dynamic") { "-dynamic" } else { "" }
+$configurationSuffix = $Configuration.ToLowerInvariant()
 $candidates = @(
-    @{ Name = "Visual Studio 2026"; ConfigurePreset = "win-x64-vs2026"; BuildPreset = if ($Configuration -eq "Debug") { "win-x64-vs2026-debug" } else { "win-x64-vs2026-release" } },
-    @{ Name = "Visual Studio 2022"; ConfigurePreset = "win-x64-vs2022"; BuildPreset = if ($Configuration -eq "Debug") { "win-x64-vs2022-debug" } else { "win-x64-vs2022-release" } }
+    @{ Name = "Visual Studio 2026"; ConfigurePreset = "win-x64-vs2026$suffix"; BuildPreset = "win-x64-vs2026$suffix-$configurationSuffix"; BinaryDirectory = $(if ($Linkage -eq "Dynamic") { "dynamic\win-x64-vs2026" } else { "win-x64-vs2026" }) },
+    @{ Name = "Visual Studio 2022"; ConfigurePreset = "win-x64-vs2022$suffix"; BuildPreset = "win-x64-vs2022$suffix-$configurationSuffix"; BinaryDirectory = $(if ($Linkage -eq "Dynamic") { "dynamic\win-x64-vs2022" } else { "win-x64-vs2022" }) }
 )
 
 function Invoke-CMakeConfigure {
@@ -76,6 +98,22 @@ try {
         & cmake --build --preset $candidate.BuildPreset
         if ($LASTEXITCODE -ne 0) {
             throw "Native build failed with $($candidate.Name)."
+        }
+
+        if ($Linkage -eq "Dynamic") {
+            $entryDll = Join-Path $nativeDir "out\build\$($candidate.BinaryDirectory)\$Configuration\VtkSharp.Native.dll"
+            & "$PSScriptRoot/collect-native-dependencies.ps1" `
+                -InputDll $entryDll `
+                -VtkInstallDirectory $vtkInstallDirectory `
+                -Configuration $Configuration `
+                -VtkVersion $vtkBuildInfo.vtkVersion `
+                -VtkBuildId $vtkBuildInfo.buildId `
+                -ExplicitRuntimeModule @("vtkRenderingOpenGL2-9.7.dll")
+            $vtkBinDirectory = Join-Path $vtkInstallDirectory "bin"
+            & "$PSScriptRoot/copy-native-dependencies.ps1" `
+                -ManifestPath (Join-Path (Split-Path -Parent $entryDll) "native-dependencies.json") `
+                -SourceRoot @("entrypoint=$(Split-Path -Parent $entryDll)", "vtk=$vtkBinDirectory") `
+                -DestinationDirectory (Split-Path -Parent $entryDll)
         }
 
         exit 0

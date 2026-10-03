@@ -3,7 +3,7 @@
 为 VtkSharp 配置、构建并安装 VTK 9.7.0。
 
 .DESCRIPTION
-使用 Visual Studio 2026、x64、静态 VTK 库和动态 MSVC CRT。默认执行 Release
+使用 Visual Studio 2026、x64、静态或动态 VTK 库和动态 MSVC CRT。默认执行 Release
 配置、构建和安装；VTK 安装目录同时供 VtkSharp 生成器和 native CMake package 使用。
 
 .EXAMPLE
@@ -23,9 +23,12 @@ param(
     [ValidateSet("Debug", "Release", "Both")]
     [string]$Configuration = "Release",
 
+    [ValidateSet("Static", "Shared")]
+    [string]$Linkage = "Shared",
+
     [string]$SourceDirectory = (Join-Path $PSScriptRoot "..\..\..\VTK\VtkGitSource"),
 
-    [string]$BuildDirectory = (Join-Path $PSScriptRoot "..\..\..\VTK\VtkGitBuild"),
+    [string]$BuildDirectory,
 
     [string]$InstallDirectory,
 
@@ -43,6 +46,10 @@ $generator = "Visual Studio 18 2026"
 $architecture = "x64"
 
 $SourceDirectory = [IO.Path]::GetFullPath($SourceDirectory)
+if ([string]::IsNullOrWhiteSpace($BuildDirectory)) {
+    $buildName = if ($Linkage -eq "Shared") { "VtkGitBuild-shared" } else { "VtkGitBuild" }
+    $BuildDirectory = Join-Path $PSScriptRoot "..\..\..\VTK\$buildName"
+}
 $BuildDirectory = [IO.Path]::GetFullPath($BuildDirectory)
 if ([string]::IsNullOrWhiteSpace($InstallDirectory)) {
     $InstallDirectory = Join-Path $BuildDirectory "install"
@@ -134,7 +141,7 @@ $configureArguments = @(
     "-A", $architecture,
     "-DCMAKE_INSTALL_PREFIX:PATH=$($InstallDirectory.Replace('\', '/'))",
     '-DCMAKE_MSVC_RUNTIME_LIBRARY:STRING=MultiThreaded$<$<CONFIG:Debug>:Debug>DLL',
-    "-DBUILD_SHARED_LIBS:BOOL=OFF",
+    "-DBUILD_SHARED_LIBS:BOOL=$(if ($Linkage -eq 'Shared') { 'ON' } else { 'OFF' })",
     "-DVTK_BUILD_ALL_MODULES:BOOL=OFF",
     "-DVTK_GROUP_ENABLE_StandAlone:STRING=WANT",
     "-DVTK_GROUP_ENABLE_Rendering:STRING=WANT",
@@ -175,6 +182,13 @@ if ((Test-Path -LiteralPath $cacheFile -PathType Leaf) -and -not $Fresh) {
     if ($cachedGenerator -and $cachedGenerator.Split("=", 2)[1] -ne $generator) {
         throw "The build directory uses another CMake generator. Re-run with -Fresh or use a new -BuildDirectory: $BuildDirectory"
     }
+    $expectedShared = if ($Linkage -eq "Shared") { "ON" } else { "OFF" }
+    $cachedShared = Get-Content -LiteralPath $cacheFile |
+        Where-Object { $_ -like "BUILD_SHARED_LIBS:BOOL=*" } |
+        Select-Object -First 1
+    if ($cachedShared -and $cachedShared.Split("=", 2)[1] -ne $expectedShared) {
+        throw "The build directory uses BUILD_SHARED_LIBS=$($cachedShared.Split('=', 2)[1]), but -Linkage $Linkage requires $expectedShared. Use a separate directory or -Fresh: $BuildDirectory"
+    }
 }
 
 if ($Fresh) {
@@ -206,23 +220,82 @@ if ($Action -in @("Build", "All")) {
 
 if ($Action -in @("Install", "All")) {
     foreach ($item in $configurations) {
-        Write-Host "Installing VTK ($item) to $InstallDirectory..." -ForegroundColor Cyan
+        $configurationInstallDirectory = if ($Linkage -eq "Shared") { Join-Path $InstallDirectory $item } else { $InstallDirectory }
+        Write-Host "Installing VTK ($item) to $configurationInstallDirectory..." -ForegroundColor Cyan
         Invoke-CheckedCommand -Command "cmake" -Arguments @(
             "--install", $BuildDirectory,
-            "--config", $item
+            "--config", $item,
+            "--prefix", $configurationInstallDirectory
         )
-    }
 
-    $vtkPackageDirectory = Join-Path $InstallDirectory "lib\cmake\vtk-9.7"
-    $hierarchyDirectory = Join-Path $InstallDirectory "lib\vtk-9.7\hierarchy\VTK"
-    if (-not (Test-Path -LiteralPath (Join-Path $vtkPackageDirectory "vtk-config.cmake") -PathType Leaf)) {
-        throw "VTK CMake package was not installed: $vtkPackageDirectory"
-    }
-    if (-not (Test-Path -LiteralPath (Join-Path $hierarchyDirectory "vtkCommonCore-hierarchy.txt") -PathType Leaf)) {
-        throw "VTK hierarchy files required by VtkSharp.Generator were not installed: $hierarchyDirectory"
+        $vtkPackageDirectory = Join-Path $configurationInstallDirectory "lib\cmake\vtk-9.7"
+        $hierarchyDirectory = Join-Path $configurationInstallDirectory "lib\vtk-9.7\hierarchy\VTK"
+        if (-not (Test-Path -LiteralPath (Join-Path $vtkPackageDirectory "vtk-config.cmake") -PathType Leaf)) {
+            throw "VTK CMake package was not installed: $vtkPackageDirectory"
+        }
+        if (-not (Test-Path -LiteralPath (Join-Path $hierarchyDirectory "vtkCommonCore-hierarchy.txt") -PathType Leaf)) {
+            throw "VTK hierarchy files required by VtkSharp.Generator were not installed: $hierarchyDirectory"
+        }
+
+        $licenseDirectory = Join-Path $configurationInstallDirectory "share\vtk-9.7\licenses"
+        New-Item -ItemType Directory -Path $licenseDirectory -Force | Out-Null
+        Copy-Item -LiteralPath (Join-Path $SourceDirectory "Copyright.txt") -Destination (Join-Path $licenseDirectory "VTK-Copyright.txt") -Force
+        $thirdPartyLicenseFiles = @(Get-ChildItem -LiteralPath (Join-Path $SourceDirectory "ThirdParty") -File -Recurse |
+            Where-Object { $_.Name -match '^(LICENSE|COPYING|COPYRIGHT|NOTICE)(\..*)?$' })
+        foreach ($license in $thirdPartyLicenseFiles) {
+            $relativeLicensePath = [IO.Path]::GetRelativePath((Join-Path $SourceDirectory "ThirdParty"), $license.FullName)
+            $destination = Join-Path $licenseDirectory (Join-Path "ThirdParty" $relativeLicensePath)
+            New-Item -ItemType Directory -Path (Split-Path -Parent $destination) -Force | Out-Null
+            Copy-Item -LiteralPath $license.FullName -Destination $destination -Force
+        }
+
+        $sourceCommit = (& git -C $SourceDirectory rev-parse HEAD 2>$null)
+        if ($LASTEXITCODE -ne 0) { $sourceCommit = "unknown" }
+        $compilerInfoFile = Get-ChildItem -LiteralPath (Join-Path $BuildDirectory "CMakeFiles") -Filter "CMakeCXXCompiler.cmake" -Recurse | Select-Object -First 1
+        $compilerMatch = if ($compilerInfoFile) { [regex]::Match((Get-Content -LiteralPath $compilerInfoFile.FullName -Raw), 'set\(CMAKE_CXX_COMPILER_VERSION\s+"([^"]+)"\)') } else { $null }
+        $compilerVersion = if ($compilerMatch -and $compilerMatch.Success) { $compilerMatch.Groups[1].Value } else { "unknown" }
+        $buildInfo = [ordered]@{
+            schemaVersion = 1
+            vtkVersion = $actualVtkVersion
+            vtkSourceCommit = $sourceCommit.Trim()
+            linkage = $Linkage
+            buildSharedLibs = ($Linkage -eq "Shared")
+            architecture = $architecture
+            generator = $generator
+            compiler = "MSVC $compilerVersion"
+            msvcRuntimeLibrary = "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL"
+            configuration = $item
+            licenseFileCount = $thirdPartyLicenseFiles.Count + 1
+            thirdPartyLicenseFiles = @($thirdPartyLicenseFiles | ForEach-Object { [IO.Path]::GetRelativePath((Join-Path $SourceDirectory "ThirdParty"), $_.FullName).Replace('\', '/') } | Sort-Object)
+            buildOptions = [ordered]@{
+                sharedLibraries = ($Linkage -eq "Shared")
+                vtkBuildAllModules = $false
+                enabledModules = @($requiredModules)
+                moduleGroups = @{ StandAlone = "WANT"; Rendering = "WANT"; Imaging = "WANT"; Views = "WANT"; Qt = "NO"; MPI = "NO"; Web = "NO"; Tk = "NO" }
+                wrapping = $true
+                kits = $false
+                smpImplementation = "STDThread"
+            }
+        }
+        $identityText = @($buildInfo.vtkVersion, $buildInfo.vtkSourceCommit, $buildInfo.linkage, $item, $architecture, $generator, $compilerVersion, $buildInfo.msvcRuntimeLibrary, ($requiredModules -join ',')) -join "|"
+        $buildInfo.buildId = [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData([Text.Encoding]::UTF8.GetBytes($identityText))).ToLowerInvariant()
+        $buildInfoPath = Join-Path $configurationInstallDirectory "vtk-build-info.json"
+        $buildInfo | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $buildInfoPath -Encoding utf8
+        Write-Host "VTK build record: $buildInfoPath"
     }
 }
 
 Write-Host "VTK action '$Action' completed." -ForegroundColor Green
-Write-Host "VTK_ROOT=$($InstallDirectory.Replace('\', '/'))"
-Write-Host "VTK_DIR=$($InstallDirectory.Replace('\', '/'))/lib/cmake/vtk-9.7"
+if ($Linkage -eq "Shared" -and $Configuration -eq "Both") {
+    Write-Host "VTK_INSTALL_DIRECTORY=$($InstallDirectory.Replace('\', '/'))"
+    Write-Host "VTK_ROOT_RELEASE=$($InstallDirectory.Replace('\', '/'))/Release"
+    Write-Host "VTK_ROOT_DEBUG=$($InstallDirectory.Replace('\', '/'))/Debug"
+    Write-Host "VTK_DIR_RELEASE=$($InstallDirectory.Replace('\', '/'))/Release/lib/cmake/vtk-9.7"
+    Write-Host "VTK_DIR_DEBUG=$($InstallDirectory.Replace('\', '/'))/Debug/lib/cmake/vtk-9.7"
+}
+else {
+    $configurationPath = if ($Linkage -eq "Shared") { "/$Configuration" } else { "" }
+    Write-Host "VTK_ROOT=$($InstallDirectory.Replace('\', '/'))$configurationPath"
+    Write-Host "VTK_DIR=$($InstallDirectory.Replace('\', '/'))$configurationPath/lib/cmake/vtk-9.7"
+}
+Write-Host "BUILD_SHARED_LIBS=$(if ($Linkage -eq 'Shared') { 'ON' } else { 'OFF' })"
