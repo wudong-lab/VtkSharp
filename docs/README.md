@@ -13,6 +13,7 @@
 - [示例浏览器](../src/examples/README.md)：运行方式、分类和新增示例约定。
 - [地形示例移植清单](examples/terrain-porting-checklist.md)：官方地形建模与处理示例、移植难度和推荐实施顺序。
 - [模型着色与图例示例移植清单](examples/coloring-legend-porting-checklist.md)：顶点与单元着色、色标、分类图例、移植难度和推荐实施顺序。
+- [鼠标、键盘、选择与高亮示例移植清单](examples/interaction-picking-porting-checklist.md)：输入交互、图元拾取与框选、高亮、拖动编辑、移植难度和推荐实施顺序。
 - [AI 辅助开发](workflow/ai-assisted-development.md)：项目协作与验证约定。
 - `learning/`：C#、P/Invoke 和 native 互操作专题资料。
 
