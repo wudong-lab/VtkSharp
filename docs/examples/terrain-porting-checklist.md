@@ -1,0 +1,97 @@
+# 地形建模与处理示例移植清单
+
+本文整理 VTK 官方示例中与地形建模、地形处理相关的示例，并基于当前 VtkSharp 绑定和 ExampleBrowser 评估移植难度。
+
+- 评估日期：2026-10-03。
+- 官方入口：[C++ 示例目录](https://examples.vtk.org/site/Cxx/)、[Python 示例目录](https://examples.vtk.org/site/Python/)。相同示例的多语言版本不重复列入清单。
+- 移植目标：当前 C# ExampleBrowser，包括必要的绑定补充、数据准备和验证。
+- 评估依据：官方页面源码、当前生成绑定和已有示例实现；本次未重新构建或运行示例，也未对所有待移植调用执行绑定规划。
+- 本文是筛选和实施参考，不是完整 GIS 功能清单。后续移植前应重新检查当前代码、官方源码 revision 和数据来源。
+
+## 难度与状态说明
+
+| 标记 | 含义 |
+| --- | --- |
+| 低 | 主要是 C# 翻译，现有绑定基本可复用。 |
+| 中 | 需要补充少量类型/API，或处理数据文件、算法边界及互操作参数。 |
+| 高 | 涉及多组 Widget 类型、回调、交互生命周期，人工验证成本较大。 |
+| 已有 | 仓库已有对应实现；不表示已经接入工程地形数据或完成全部边界验证。 |
+
+难度包含最小可运行示例的实现和验证，不包含完整工程功能开发。表中的绑定缺口为静态检查发现的主要缺口，不是最终候选白名单。
+
+## 直接面向地形建模与处理
+
+| 官方示例 | 内容与工程用途 | 难度/当前状态 | 移植重点 |
+| --- | --- | --- | --- |
+| [TriangulateTerrainMap](https://examples.vtk.org/site/Cxx/Filtering/TriangulateTerrainMap/) | 生成规则 XY 点格及随机高程，构建地形三角网。 | 低，待移植 | `vtkDelaunay2D` 等关键类型已有，无外部数据。 |
+| [Delaunay2D](https://examples.vtk.org/site/Cxx/Filtering/Delaunay2D/) | 将带 Z 高程的点集按 XY 投影三角化。 | 低，待移植 | 与上一项内容重叠，可选择一个作为入门示例。 |
+| [ConstrainedDelaunay2D](https://examples.vtk.org/site/Cxx/Filtering/ConstrainedDelaunay2D/) | 带边界、孔洞约束的三角化，可作为地形边界和断裂线处理基础。 | 已有；地形化改造低到中 | 当前示例是规则点格及孔洞；实际断裂线需保证点索引一致、投影约束不相交。 |
+| [DEMReader](https://examples.vtk.org/site/Cxx/IO/DEMReader/) | 读取 DEM，用颜色显示高程栅格。 | 低，待移植 | Reader、颜色映射和 ImageActor 已有；可复用仓库中的 `SainteHelens.dem`。官方 mapper 调用可能需补绑定或改用 `SetInputData`。 |
+| [FitToHeightMap](https://examples.vtk.org/site/Cxx/Meshes/FitToHeightMap/) | 将平面网格贴合 DEM，对比点贴合和单元贴合。 | 已有 | 当前包含三个视口、共享相机及 DEM 数据，是现阶段较完整的地形示例。 |
+| [GreedyTerrainDecimation](https://examples.vtk.org/site/Cxx/PolyData/GreedyTerrainDecimation/) | 从高程栅格生成地形三角网，使用地形专用简化算法。 | 中，待移植 | 缺 `vtkGreedyTerrainDecimation`，需接入 `FiltersHybrid` 模块；原例只有 3×3 栅格，工程评估应追加真实 DEM。 |
+| [InterpolateTerrain](https://examples.vtk.org/site/Cxx/PolyData/InterpolateTerrain/) | 对比栅格高程插值与三角网垂直射线求交。 | 中，待移植 | `vtkProbeFilter` 已有；缺 `vtkCellLocator`，求交接口含多个输出参数，需核对方向、长度等元数据。原例没有渲染界面，适配浏览器时需增加结果展示。 |
+| [InterpolateMeshOnGrid](https://examples.vtk.org/site/Cxx/PolyData/InterpolateMeshOnGrid/) | 将散点生成的三角网高程重采样到规则点格。 | 低到中，待移植 | Delaunay、Probe、Warp 已有；`SetSourceConnection` 尚未封装，可补充或在更新源数据后采用 `SetSourceData`。 |
+| [ResampleAppendedPolyData](https://examples.vtk.org/site/Cxx/PolyData/ResampleAppendedPolyData/) | 对包含多个物体的平面地形进行垂直射线重采样。 | 中，待移植 | 需补 `vtkCellLocator`、`vtkTransformFilter` 等；重采样为单值高度场后不能保留悬挑、洞穴等多层结构。 |
+| [SmoothMeshGrid](https://examples.vtk.org/site/Python/PolyData/SmoothMeshGrid/)（Python） | 构建网格地形，对比 Loop 与 Butterfly 曲面细分。 | 中，待移植 | 缺清理及细分过滤器；NumPy 数组可改为 C# 数组。细分会增加网格规模。 |
+| [LineOnMesh](https://examples.vtk.org/site/Python/DataManipulation/LineOnMesh/)（Python） | 垂直投影采样地形，再以样条连接，生成贴地线。 | 中，待移植 | 依赖 CellLocator 和细分过滤器；采样点之间的样条不保证始终贴合地形。 |
+| [Hawaii](https://examples.vtk.org/site/Cxx/Visualization/Hawaii/) | 对真实夏威夷地形进行高程着色。 | 中，待移植 | 依赖 `honolulu.vtk`；缺 `vtkPolyDataReader`、`vtkElevationFilter`。 |
+| [DecimateHawaii](https://examples.vtk.org/site/Cxx/VisualizationAlgorithms/DecimateHawaii/) | 使用 `vtkDecimatePro` 简化真实地形，对比简化效果。 | 中，待移植 | 需准备 `honolulu.vtk` 并补 Reader、DecimatePro；检索时官方代码的两个 mapper 均连接简化结果，移植时应核查并修正对比管线。 |
+| [InteractorStyleTerrain](https://examples.vtk.org/site/Cxx/Interaction/InteractorStyleTerrain/) | 使用地形相机交互方式浏览场景。 | 已有 | 原例显示球体，演示相机操作；可直接用于地形场景。 |
+
+## 可复用于地形的通用处理
+
+部分原始输入是球面或普通网格，接入地形数据还需要调整。已有通用示例与完成地形功能应分别记录。
+
+| 官方示例 | 地形应用 | 难度/当前状态 | 移植重点 |
+| --- | --- | --- | --- |
+| [ColoredElevationMap](https://examples.vtk.org/site/Cxx/Meshes/ColoredElevationMap/) | 按顶点 Z 高程着色。 | 低，待移植 | 核心类型已有，适合作为 TIN 建模的后续示例。 |
+| [ElevationFilter](https://examples.vtk.org/site/Cxx/Meshes/ElevationFilter/) | 沿指定方向生成高程标量并着色。 | 低到中，待移植 | 需补 `vtkElevationFilter`；应明确输出标量是否归一化。 |
+| [ContoursFromPolyData](https://examples.vtk.org/site/Cxx/Filtering/ContoursFromPolyData/) | 从地形高程标量提取等高线。 | 低到中，待移植 | `vtkContourFilter` 已有；文件输入需补 Reader，或使用自生成地形。 |
+| [LabelContours](https://examples.vtk.org/site/Cxx/Visualization/LabelContours/) | 等高线及高程标签。 | 已有；接入地形低 | 核查标签值、高程间隔及显示遮挡。 |
+| [FilledContours](https://examples.vtk.org/site/Cxx/VisualizationAlgorithms/FilledContours/) | 分层设色、填充高程区间。 | 中，待移植 | 需补 `vtkClipPolyData` 等；涉及多级裁剪、单元标量和区间边界。 |
+| [Cutter](https://examples.vtk.org/site/Cxx/VisualizationAlgorithms/Cutter/) | 以竖直平面截取地形剖面。 | 已有；接入地形低 | 截线可能包含多段，输出工程断面还需排序和累计里程。 |
+| [QuadricDecimation](https://examples.vtk.org/site/Cxx/Meshes/QuadricDecimation/) | 减少地形三角形数量。 | 已有；接入地形低 | 当前使用球面；地形应用需检查高程误差及边界保持。 |
+| [WindowedSincPolyDataFilter](https://examples.vtk.org/site/Cxx/Meshes/WindowedSincPolyDataFilter/) | 地形曲面平滑。 | 已有；接入地形低 | 平滑会改变测量高程，需要限制边界、特征及允许误差。 |
+| [PointInterpolator](https://examples.vtk.org/site/Cxx/Meshes/PointInterpolator/) | 将散点标量插值到网格，可用于高程或工程属性场。 | 已有；高程建模改造中 | 当前是属性插值到 STL；生成地形需使用平面目标网格，再将高程标量转为 Z。 |
+| [DijkstraGraphGeodesicPath](https://examples.vtk.org/site/Cxx/PolyData/DijkstraGraphGeodesicPath/) | 沿地形网格边寻找最短路径。 | 中，待移植 | 缺对应过滤器；路径受网格边方向影响，不能直接代表连续曲面最短路径。 |
+| [PolygonalSurfacePointPlacer](https://examples.vtk.org/site/Cxx/PolyData/PolygonalSurfacePointPlacer/) | 在地形表面交互放置控制点。 | 高，待移植 | 缺 PointPlacer、ContourWidget、Representation 等类型；涉及事件和对象保活。 |
+| [PolygonalSurfaceContourLineInterpolator](https://examples.vtk.org/site/Cxx/PolyData/PolygonalSurfaceContourLineInterpolator/) | 在地形表面交互绘制、编辑曲线。 | 高，待移植 | 需补整组表面约束与 Widget 绑定，并人工验证拖拽、拾取和窗口销毁。 |
+
+## 研究参考
+
+| 官方示例 | 难度 | 适用范围与限制 |
+| --- | --- | --- |
+| [ShepardInterpolation](https://examples.vtk.org/site/Cxx/Visualization/ShepardInterpolation/) | 中 | 反距离加权标量插值。需补 `vtkShepardMethod` 等；原例采样三维体网格，用于二维高程场需要调整采样域，避免不必要的体网格开销。 |
+| [ContoursToSurface](https://examples.vtk.org/site/Cxx/PolyData/ContoursToSurface/) | 中 | 原例从多层闭合圆轮廓重建封闭曲面。需补 `vtkVoxelContoursToSurfaceFilter` 等；不宜直接用于测量等高线生成开放地形，其输入假设与工程地形不同。 |
+
+## 已有实现与资源
+
+以下路径相对于仓库根目录，可作为后续移植的复用入口：
+
+- `src/examples/ExampleBrowser/Examples/Meshes/FitToHeightMap/`：DEM 读取、曲面生成、贴合及多视口显示。
+- `src/examples/ExampleBrowser/Examples/Meshes/FitToHeightMap/Data/SainteHelens.dem`：已有地形数据；来源与验证记录见同目录的 `porting-notes.md`。
+- `src/examples/ExampleBrowser/Examples/Filtering/ConstrainedDelaunay2D/`：边界和孔洞约束三角化。
+- `src/examples/ExampleBrowser/Examples/Interaction/InteractorStyleTerrain/`：地形相机交互。
+- `src/examples/ExampleBrowser/Examples/Meshes/PointInterpolator/`：稀疏采样值向表面插值。
+- `src/examples/ExampleBrowser/Examples/Visualization/LabelContours/`：等值线及标注。
+- `src/examples/ExampleBrowser/Examples/VisualizationAlgorithms/Cutter/`：平面截线。
+- `src/examples/ExampleBrowser/Examples/Meshes/QuadricDecimation/`、`WindowedSincPolyDataFilter/`：网格简化和平滑。
+
+## 推荐实施顺序
+
+1. **TIN 建模与显示**：优先移植 `TriangulateTerrainMap` 和 `ColoredElevationMap`。`Delaunay2D` 与前者重叠，可按学习需要补充。
+2. **高程查询与重采样**：移植 `InterpolateMeshOnGrid` 和 `InterpolateTerrain`，优先解决 CellLocator 及射线求交绑定。
+3. **地形简化**：移植 `GreedyTerrainDecimation` 和 `DecimateHawaii`，对比栅格专用简化与通用网格简化，同时统计高程误差。
+4. **等高线与剖面**：复用已有 `LabelContours`、`Cutter`，串联 DEM 或 TIN 管线；按需补充 `FilledContours`。
+5. **贴地线与交互编辑**：先移植 `LineOnMesh`，再补充表面 PointPlacer 和 ContourLineInterpolator，分别验证计算结果与交互行为。
+
+## 工程验证重点
+
+- **地形表达**：上述 TIN 和 DEM 管线主要面向单值高度场 `z = f(x, y)`。同一 XY 对应多个高程、悬挑或洞穴时，应保留三维曲面表达，不能直接压缩为高度场。
+- **坐标与单位**：明确水平坐标系、高程基准、水平与高程单位；大坐标场景检查精度，必要时采用局部坐标。
+- **建模输入**：检查空数据、单点、共线点、重复或近重复 XY、退化三角形、边界和断裂线约束。
+- **采样与缺测**：检查 NoData、孔洞、边界外查询和射线未命中；不要把无效样本当作零高程。栅格与 TIN 的插值结果可能不同，应按应用语义选用。
+- **简化与平滑**：除三角形数量外，还应统计高程误差，检查边界、山脊、沟谷和断裂线；细分不等于增加测量精度。
+- **贴地线**：检查采样密度、跨孔洞和样条插值后的离地误差；必要时对曲线重新采样并投影。
+- **互操作与交互**：核对射线求交的数组长度、输出参数和对象所有权；Widget 验证事件委托保活、拖拽、拾取及重复创建/销毁。
+- **数据与验收**：固定官方源码 revision，逐文件记录数据来源；`honolulu.vtk` 尚未在本次评估中准备。移植后按[统一验证流程](../workflow/verification.md)检查生成一致性、构建及目标示例截图，并人工检查交互。

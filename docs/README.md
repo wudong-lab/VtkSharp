@@ -11,6 +11,7 @@
 - [统一验证与示例验收](workflow/verification.md)：构建、测试、生成检查和截图验收。
 - [互操作依据记录](workflow/interop-evidence.md)：方向、长度和所有权判断的依据。
 - [示例浏览器](../src/examples/README.md)：运行方式、分类和新增示例约定。
+- [地形示例移植清单](examples/terrain-porting-checklist.md)：官方地形建模与处理示例、移植难度和推荐实施顺序。
 - [模型着色与图例示例移植清单](examples/coloring-legend-porting-checklist.md)：顶点与单元着色、色标、分类图例、移植难度和推荐实施顺序。
 - [AI 辅助开发](workflow/ai-assisted-development.md)：项目协作与验证约定。
 - `learning/`：C#、P/Invoke 和 native 互操作专题资料。
