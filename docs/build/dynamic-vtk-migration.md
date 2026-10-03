@@ -1,6 +1,6 @@
 # 动态 VTK 迁移结果与约束
 
-决策日期：2026-10-04。状态：Release 迁移已完成，Debug 构建及测试已完成；私有 .NET 8 Debug WPF smoke 有一项未解决的访问冲突，见“验证结果”。
+决策日期：2026-10-04。状态：Release/Debug 迁移已完成；私有 .NET 8 Debug WPF smoke 的访问冲突已定位并修复，见“验证结果”。
 
 本文从迁移计划整理为当前实现说明。公开构建细节见 [VTK 构建](vtk.md) 和 [VtkSharp 构建](vtksharp.md)；私有构建与 WPF 约束见私有仓库 `README.md`、`docs/architecture.md` 和 `docs/wpf.md`。
 
@@ -68,13 +68,15 @@ pwsh tools/build-all.ps1 -Configuration Release -Linkage Dynamic -VtkDir <Releas
 | 私有独立 Release/Debug 构建 | 通过；两个入口合并后分别为 74 个运行文件 |
 | 私有测试 | Release 36 项、Debug 36 项通过 |
 | 私有 WPF Release smoke | .NET 8 与 .NET Framework 4.8 均通过 |
-| 私有 WPF Debug smoke | .NET Framework 4.8 通过；.NET 8 进程在 `coreclr.dll` 返回 `0xC0000005`，复测仍现，根因未确定 |
+| 私有 WPF Debug smoke | .NET 8 与 .NET Framework 4.8 均通过；修复后每框架连续运行 3 次，检查实际加载的 74 个 native 模块 |
 
 VTK 上游 Debug 编译有大量弃用和数值转换警告，但完整构建、安装及两套 native 链接通过。公开回调测试现有 MSTest 分析器警告（MSTEST0032）；本次迁移未改动这些断言。
 
-私有 .NET 8 Debug WPF smoke 是当前唯一未通过的矩阵项。Windows 应用错误事件将故障模块标为 `coreclr.dll`；同版本 Release、同配置 .NET Framework 4.8 WPF smoke 和私有 Debug 单元测试均通过。该证据不足以把问题归因到 VTK、渲染主机或运行时；后续应在调试器下定位。不要将此项描述为完整 Debug WPF 验收通过。
+私有 .NET 8 Debug WPF smoke 的 `coreclr.dll / 0xC0000005` 根因是 native 配置混用。Crash dump 显示首次 `AttachCursorObserver → vtkObject.AddObserverCore → vtkObject_AddObserverCallback` 调用时崩溃：私有入口从应用根目录加载 Debug VTK，公开入口却由 `.deps.json` 指向 NuGet 的 `runtimes/win-x64/native/VtkSharp.Native.dll`，并加载 Release VTK。仅把 Debug DLL 复制到应用根目录不能覆盖 .NET 的 NuGet native 解析路径，跨配置传递 VTK 对象违反 ABI 约束。
 
-未进行另一台干净机器或虚拟机复验，也未完成对实际用户环境的手动旋转/缩放验收。自动 Cone smoke 验证了渲染输出及隔离启动；截图和进程加载清单保存在 `artifacts/verification/dynamic-vtk-migration/`。
+修复在私有项目的两个 `VtkSharp` PackageReference 上设置 `ExcludeAssets="native"`，由匹配配置的合并 runtime 提供两个 native 入口与全部依赖。普通构建默认选择私有 native 输出目录，也必须存在完整清单和两个入口。未修改 CLR、VTK、回调或 WPF 渲染实现。复验 Debug/Release × .NET 8/.NET Framework 4.8，每项连续 3 次 smoke 通过；每次检查 74 个 native 模块均来自应用根目录，文件 SHA-256 匹配清单。Debug/Release 私有测试各 36 项通过。复验工具为私有仓库 `tools/verify-wpf-smoke.ps1`；dump 分析、加载清单和 TRX 位于 `artifacts/verification/wpf-debug-fix/`。原迁移目录保留修复前结果，供追溯。
+
+私有 .NET 8 Debug 另在新建的 `dotnet publish` 目录复验通过；启动时清空 `VTK_DIR`、`VTK_ROOT`，`PATH` 仅保留 Windows 目录，74 个 native 模块的实际路径和哈希仍匹配部署清单。未进行另一台干净机器或虚拟机复验，也未完成对实际用户环境的手动旋转/缩放验收。自动 Cone smoke 验证了渲染输出及隔离启动；截图和进程加载清单保存在 `artifacts/verification/dynamic-vtk-migration/`。
 
 ## ABI 与部署约束
 
