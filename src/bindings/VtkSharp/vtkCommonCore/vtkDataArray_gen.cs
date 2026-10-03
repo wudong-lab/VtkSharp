@@ -166,6 +166,18 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
     }
 
     /// <summary>
+    /// Set the data component at the location specified by tupleIdx and compIdx
+    /// to value.
+    /// Note that i is less than NumberOfTuples and j is less than
+    /// NumberOfComponents. Make sure enough memory has been allocated
+    /// (use SetNumberOfTuples() and SetNumberOfComponents()).
+    /// </summary>
+    public new void SetComponent(long tupleIdx, int compIdx, double value)
+    {
+        vtkDataArray_SetComponent(this.NativePointer, tupleIdx, compIdx, value);
+    }
+
+    /// <summary>
     /// These methods are included as convenience for the wrappers.
     /// GetTuple() and SetTuple() which return/take arrays can not be
     /// used from wrapped languages. These methods can be used instead.
@@ -209,6 +221,9 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple9(nint self, double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataArray_SetComponent(nint self, long tupleIdx, int compIdx, double value);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_SetTuple1(nint self, long tupleIdx, double value);

@@ -114,6 +114,17 @@
       "nativeContentHash": "d624efe990537e5fb61ef47a2fa38bf1d02e32f3ff39291abcd45f56b8567bf1"
     },
     {
+      "className": "vtkCellPicker",
+      "header": "vtkCellPicker.h",
+      "baseClassName": "vtkPicker",
+      "hasStaticNew": true,
+      "inputHash": "e364f1dac641325af1b98ba1069fec5be206ad8f7f5fe8a728952b5e1d37c92f",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkCellPicker_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkCellPicker_export_gen.cpp",
+      "managedContentHash": "6d91886ac0d50f0ab39f10d3bcd762f5a14d1d895fa4098b5a3170dcea11e8e5",
+      "nativeContentHash": "dd3e6c83ad95be88970214656a0a2586f570cb4dbd98120e7c7e055dece41239"
+    },
+    {
       "className": "vtkColorTransferFunction",
       "header": "vtkColorTransferFunction.h",
       "baseClassName": "vtkScalarsToColors",
@@ -151,11 +162,11 @@
       "header": "vtkDataSetMapper.h",
       "baseClassName": "vtkMapper",
       "hasStaticNew": true,
-      "inputHash": "6e02e7d73f7b8d38aea2fb7b40dc8544174ac74754742d8ab10817fbc8cc4e96",
+      "inputHash": "20182768d1e5d9ed5a11ba32e5e9d7bd000892f1f635d2375f9c6995161c9870",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkDataSetMapper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkDataSetMapper_export_gen.cpp",
-      "managedContentHash": "6e9882809eac5260e8e345f7358fd3c17f31e89f23af85a89ade58d5a2d938b6",
-      "nativeContentHash": "b3b04cbac1eb217b13c2b9e75d8b63d3ac0316db1df840041e018e86eb77e673"
+      "managedContentHash": "e62b097c532c2dacc82703cb1e39faece625e72f753a82eee6d634d73e80a5eb",
+      "nativeContentHash": "569d1dacacceb48a17b8889a4adfa9b9d3764c0fb1c22227f35f4325699490ec"
     },
     {
       "className": "vtkDiscretizableColorTransferFunction",
@@ -266,6 +277,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkMapper2D_export_gen.cpp",
       "managedContentHash": "524e87db647a099cff9b6a3924083e09d0baabbbbacc169928c75a7221a24a7c",
       "nativeContentHash": "1fbfebd52e46e74b3cb876d79255dc09321641a2a66c389bdf32326d04a07311"
+    },
+    {
+      "className": "vtkPicker",
+      "header": "vtkPicker.h",
+      "baseClassName": "vtkAbstractPropPicker",
+      "hasStaticNew": true,
+      "inputHash": "f699424d66d65c2d0a3c3998c068ed2fd46e66d925cc4658cb7f86946c2da847",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPicker_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPicker_export_gen.cpp",
+      "managedContentHash": "451299222aa00a1a931bf78b5c1f516110bb82552764fae2e04267ef977693e5",
+      "nativeContentHash": "bf2a9017c1fe5ae9db9b377aecd6bdebfbcad9fd748ca05b0bd08869dc359879"
     },
     {
       "className": "vtkPointGaussianMapper",

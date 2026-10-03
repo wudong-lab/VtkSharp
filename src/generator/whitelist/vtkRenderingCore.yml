@@ -361,6 +361,27 @@ classes:
         parameters:
           - type: double
             name: factor
+  - name: vtkCellPicker
+    header: vtkCellPicker.h
+    functions:
+      - name: GetCellId
+        cppSignature: vtkIdType GetCellId()
+        return:
+          type: vtkIdType
+        parameters: []
+      - name: Pick
+        cppSignature: int Pick(double selectionX, double selectionY, double selectionZ, vtkRenderer * renderer)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: selectionX
+          - type: double
+            name: selectionY
+          - type: double
+            name: selectionZ
+          - type: vtkRenderer*
+            name: renderer
   - name: vtkColorTransferFunction
     header: vtkColorTransferFunction.h
     functions:
@@ -933,7 +954,14 @@ classes:
     functions: []
   - name: vtkDataSetMapper
     header: vtkDataSetMapper.h
-    functions: []
+    functions:
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataSet * input)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataSet*
+            name: input
   - name: vtkDiscretizableColorTransferFunction
     header: vtkDiscretizableColorTransferFunction.h
     functions:
@@ -1336,6 +1364,16 @@ classes:
   - name: vtkMapper2D
     header: vtkMapper2D.h
     functions: []
+  - name: vtkPicker
+    header: vtkPicker.h
+    functions:
+      - name: SetTolerance
+        cppSignature: void SetTolerance(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
   - name: vtkPointGaussianMapper
     header: vtkPointGaussianMapper.h
     functions:

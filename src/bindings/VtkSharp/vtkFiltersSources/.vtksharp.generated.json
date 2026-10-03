@@ -92,6 +92,17 @@
       "nativeContentHash": "0cc595f9429b913d8b5b732f88bf1fb5c6b5315001b22a1faa5c51016b6e1b4c"
     },
     {
+      "className": "vtkPointSource",
+      "header": "vtkPointSource.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "56f68418f8423f8140e8773bf2cd3f6cc0d54a5b58f2dd71c66f3fd33b558795",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkPointSource_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkPointSource_export_gen.cpp",
+      "managedContentHash": "6566bb22745ef53191f0a2a522c0381e0322b169c8122ae1369a81a36f17584c",
+      "nativeContentHash": "c0febdcb9bd87d40f794be880be0afcab1f3fe0e5eed5a109bf152f88d72b116"
+    },
+    {
       "className": "vtkRegularPolygonSource",
       "header": "vtkRegularPolygonSource.h",
       "baseClassName": "vtkPolyDataAlgorithm",
@@ -101,6 +112,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkRegularPolygonSource_export_gen.cpp",
       "managedContentHash": "a9ca66c8cf852e3b1e0d09bd7540ba441890c71d511e86ef6050b90dad21a59c",
       "nativeContentHash": "04205cf1ebd5926cde96e03be0fb2883b5a77144dbecc7cb95733836b2d9f9e4"
+    },
+    {
+      "className": "vtkSelectionSource",
+      "header": "vtkSelectionSource.h",
+      "baseClassName": "vtkSelectionAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "f50882e8201d77e64d3d44716c2070be2b4b832c7f0a6a6d5b9e52b1d3693031",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersSources\\vtkSelectionSource_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersSources\\vtkSelectionSource_export_gen.cpp",
+      "managedContentHash": "b4cc2b67559129843bd75aed69974593f3677b10e73fb287132de3161ec78f5f",
+      "nativeContentHash": "63616cb0a14da1c609c3a764141585523cba93a19cae72c54dd6a95e9a1719ca"
     },
     {
       "className": "vtkSphereSource",

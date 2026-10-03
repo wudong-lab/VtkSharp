@@ -30,11 +30,11 @@
       "header": "vtkDataArray.h",
       "baseClassName": "vtkAbstractArray",
       "hasStaticNew": false,
-      "inputHash": "d848308325c03b23ac4a9c87c0b2f0f47d78de1a2bec46cb8afd70b07adda4f6",
+      "inputHash": "f20a062cb0af3648d743b9363437504b9f8b25885175dfea06d7c12cdb00c906",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkDataArray_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkDataArray_export_gen.cpp",
-      "managedContentHash": "63f8093498671f9d065a3cfead183fbc7ba1e0f753f1caf93ede3e8c6f900813",
-      "nativeContentHash": "727cd8b0b03945d627429662b149b637d2bebfcef93248bca466a7850a63bb7f"
+      "managedContentHash": "0b6a24e6599d2905462bd3f06aedb6495f8b2f781453ccb7b45e9e06e182f41d",
+      "nativeContentHash": "8e727f1072870941c2b0db66bbc4ba3f7d83ddac88f5815bc4d70f3c6235c337"
     },
     {
       "className": "vtkDoubleArray",
@@ -101,6 +101,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkInformationVector_export_gen.cpp",
       "managedContentHash": "4402deba3f3ef6d0804f791e5eedf8468296b0317cd204339e972e27fb49dfa5",
       "nativeContentHash": "eb14134a9ed2d8e4f73bdc348a0ccfd8e28a4ccc79c435cb14d54589b8c6c747"
+    },
+    {
+      "className": "vtkIntArray",
+      "header": "vtkIntArray.h",
+      "baseClassName": "vtkDataArray",
+      "hasStaticNew": true,
+      "inputHash": "9f277f97a3b2d050523b57092e25e8da920a357330712143aa143ef5692eff99",
+      "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkIntArray_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkIntArray_export_gen.cpp",
+      "managedContentHash": "5dcda479ddd4d47606bd967b529718891e409d5224e2419afdd69138e38106d1",
+      "nativeContentHash": "d4e3e62984bae22b49f2b879d0d4d31175dfb8cad7564be9c5cfdf35e0e5d690"
     },
     {
       "className": "vtkLookupTable",

@@ -5,6 +5,13 @@ classes:
   - name: vtkAlgorithm
     header: vtkAlgorithm.h
     functions:
+      - name: GetOutputDataObject
+        cppSignature: vtkDataObject * GetOutputDataObject(int port)
+        return:
+          type: vtkDataObject*
+        parameters:
+          - type: int
+            name: port
       - name: GetOutputPort
         cppSignature: vtkAlgorithmOutput * GetOutputPort(int index)
         return:
@@ -17,6 +24,21 @@ classes:
         return:
           type: vtkAlgorithmOutput*
         parameters: []
+      - name: SetInputArrayToProcess
+        cppSignature: void SetInputArrayToProcess(int idx, int port, int connection, int fieldAssociation, char const * name)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: idx
+          - type: int
+            name: port
+          - type: int
+            name: connection
+          - type: int
+            name: fieldAssociation
+          - type: const char*
+            name: name
       - name: SetInputConnection
         cppSignature: void SetInputConnection(int port, vtkAlgorithmOutput * input)
         return:
@@ -33,6 +55,15 @@ classes:
         parameters:
           - type: vtkAlgorithmOutput*
             name: input
+      - name: SetInputDataObject
+        cppSignature: void SetInputDataObject(int port, vtkDataObject * data)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: port
+          - type: vtkDataObject*
+            name: data
       - name: Update
         cppSignature: bool Update()
         return:
@@ -63,6 +94,9 @@ classes:
             name: requests
   - name: vtkAlgorithmOutput
     header: vtkAlgorithmOutput.h
+    functions: []
+  - name: vtkDataObjectAlgorithm
+    header: vtkDataObjectAlgorithm.h
     functions: []
   - name: vtkDataSetAlgorithm
     header: vtkDataSetAlgorithm.h
@@ -154,9 +188,15 @@ classes:
         parameters:
           - type: vtkDataObject*
             name: _arg1
+  - name: vtkSelectionAlgorithm
+    header: vtkSelectionAlgorithm.h
+    functions: []
   - name: vtkTableAlgorithm
     header: vtkTableAlgorithm.h
     functions: []
   - name: vtkThreadedImageAlgorithm
     header: vtkThreadedImageAlgorithm.h
+    functions: []
+  - name: vtkUnstructuredGridAlgorithm
+    header: vtkUnstructuredGridAlgorithm.h
     functions: []

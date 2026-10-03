@@ -2,6 +2,9 @@
 
 module: vtkFiltersGeometry
 classes:
+  - name: vtkDataSetSurfaceFilter
+    header: vtkDataSetSurfaceFilter.h
+    functions: []
   - name: vtkImageDataGeometryFilter
     header: vtkImageDataGeometryFilter.h
     functions:

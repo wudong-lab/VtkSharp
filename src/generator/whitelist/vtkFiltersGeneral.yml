@@ -5,6 +5,21 @@ classes:
   - name: vtkContourTriangulator
     header: vtkContourTriangulator.h
     functions: []
+  - name: vtkTableBasedClipDataSet
+    header: vtkTableBasedClipDataSet.h
+    functions:
+      - name: GenerateClippedOutputOn
+        cppSignature: void GenerateClippedOutputOn()
+        return:
+          type: void
+        parameters: []
+      - name: SetClipFunction
+        cppSignature: void SetClipFunction(vtkImplicitFunction * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkImplicitFunction*
+            name: _arg1
   - name: vtkTableToPolyData
     header: vtkTableToPolyData.h
     functions:
@@ -29,6 +44,9 @@ classes:
         parameters:
           - type: const char*
             name: _arg
+  - name: vtkTessellatorFilter
+    header: vtkTessellatorFilter.h
+    functions: []
   - name: vtkTransformPolyDataFilter
     header: vtkTransformPolyDataFilter.h
     functions:

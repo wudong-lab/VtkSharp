@@ -5,6 +5,8 @@
 
 VTKSHARP_API vtkGlyph3D* vtkGlyph3D_New() { return vtkGlyph3D::New(); }
 
+VTKSHARP_API void vtkGlyph3D_ScalingOff(vtkGlyph3D* self) { self->ScalingOff(); }
+
 VTKSHARP_API void vtkGlyph3D_SetSourceConnection_int_vtkAlgorithmOutputPtr(vtkGlyph3D* self, int id, vtkAlgorithmOutput* algOutput) { self->SetSourceConnection(id, algOutput); }
 
 VTKSHARP_API void vtkGlyph3D_SetSourceConnection_vtkAlgorithmOutputPtr(vtkGlyph3D* self, vtkAlgorithmOutput* algOutput) { self->SetSourceConnection(algOutput); }

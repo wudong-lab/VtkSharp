@@ -99,11 +99,43 @@ public unsafe partial class vtkFieldData : vtkObject
         return vtkFieldData_AddArray(this.NativePointer, array.NativePointer);
     }
 
+    /// <summary>
+    /// Not recommended for use. Use GetAbstractArray(const char *arrayName)
+    /// instead.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Return the array with the name given. Returns nullptr if array not found.
+    /// A nullptr is also returned if the array with the given name is not a
+    /// vtkDataArray. To access vtkStringArray, or
+    /// vtkVariantArray, use GetAbstractArray(const char *arrayName).
+    /// </para>
+    /// <para>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </para>
+    /// </remarks>
+    public new vtkDataArray GetArray(string arrayName)
+    {
+        #if NET8_0_OR_GREATER
+        return vtkDataArray.FromBorrowedPointer(vtkFieldData_GetArray(this.NativePointer, arrayName));
+        #else
+        return vtkDataArray.FromBorrowedPointer(vtkFieldData_GetArray(this.NativePointer, VtkString.ToNullTerminatedUtf8(arrayName)));
+        #endif
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkFieldData_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkFieldData_AddArray(nint self, nint array);
+
+#if NET8_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial nint vtkFieldData_GetArray(nint self, string arrayName);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkFieldData_GetArray(nint self, byte[] arrayName);
+#endif
     #endregion
 }

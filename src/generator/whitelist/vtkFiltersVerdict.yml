@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkFiltersVerdict
+classes:
+  - name: vtkMeshQuality
+    header: vtkMeshQuality.h
+    functions:
+      - name: SetTriangleQualityMeasureToArea
+        cppSignature: void SetTriangleQualityMeasureToArea()
+        return:
+          type: void
+        parameters: []

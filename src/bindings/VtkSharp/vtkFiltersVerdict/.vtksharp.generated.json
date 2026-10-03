@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "module": "vtkFiltersVerdict",
+  "classes": [
+    {
+      "className": "vtkMeshQuality",
+      "header": "vtkMeshQuality.h",
+      "baseClassName": "vtkDataSetAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "d91ea73545c4cbb9ce73957754733188aadd610952bfde63124b40a77c9e2e46",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersVerdict\\vtkMeshQuality_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersVerdict\\vtkMeshQuality_export_gen.cpp",
+      "managedContentHash": "b68de79e8f2f3dceb78745a41ade77ef18cf23bd620e603fe93328fe6eae1727",
+      "nativeContentHash": "4c933a6fbfeb4324323b0c8b816be2efbf1fa8f5ce7003afb6cfd360c0a1c7a4"
+    }
+  ]
+}

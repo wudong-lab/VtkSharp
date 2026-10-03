@@ -131,6 +131,17 @@ classes:
             name: val7
           - type: double
             name: val8
+      - name: SetComponent
+        cppSignature: void SetComponent(vtkIdType tupleIdx, int compIdx, double value)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: tupleIdx
+          - type: int
+            name: compIdx
+          - type: double
+            name: value
       - name: SetTuple1
         cppSignature: void SetTuple1(vtkIdType tupleIdx, double value)
         return:
@@ -198,6 +209,9 @@ classes:
     functions: []
   - name: vtkInformationVector
     header: vtkInformationVector.h
+    functions: []
+  - name: vtkIntArray
+    header: vtkIntArray.h
     functions: []
   - name: vtkLookupTable
     header: vtkLookupTable.h

@@ -139,6 +139,14 @@ public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
     }
 
     /// <summary>
+    /// Turn on/off scaling of source geometry.
+    /// </summary>
+    public new void ScalingOff()
+    {
+        vtkGlyph3D_ScalingOff(this.NativePointer);
+    }
+
+    /// <summary>
     /// Specify a source object at a specified table location. New style.
     /// Source connection is stored in port 1. This method is equivalent
     /// to SetInputConnection(1, id, outputPort).
@@ -161,6 +169,9 @@ public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkGlyph3D_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkGlyph3D_ScalingOff(nint self);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGlyph3D_SetSourceConnection_int_vtkAlgorithmOutputPtr(nint self, int id, nint algOutput);

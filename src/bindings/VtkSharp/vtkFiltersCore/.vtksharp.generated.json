@@ -37,15 +37,37 @@
       "nativeContentHash": "cdb8be5b15f6356efb50ddb3d0d10ba49dde59b6249c4f2b4da715b3f12eac62"
     },
     {
+      "className": "vtkCutter",
+      "header": "vtkCutter.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "f9067fe83da74d81cb92618122d1cabd854f1583018db51df3c8203359d21d95",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkCutter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkCutter_export_gen.cpp",
+      "managedContentHash": "5bf7ab87ec3b15dc640c0bf35735b7f966c4e304e1ec6ddf3ed2fe1de6569d60",
+      "nativeContentHash": "a042d1ac14a08b50bcbbc4e1f671e7f52af3d88e341f7003d6c249b4a64edd2e"
+    },
+    {
       "className": "vtkDelaunay2D",
       "header": "vtkDelaunay2D.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "614ceea1be0e29fe8d1b7465f2c62a4a41903faec3daaae4f2e35ae9624b5b97",
+      "inputHash": "1578348fb30c7af67de6d93ec06915c0aff94019ede0e66d12eeab1278d9eaad",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkDelaunay2D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkDelaunay2D_export_gen.cpp",
-      "managedContentHash": "e63a068f67955e4c86d2fdd431de219fd76530763e916893668497b6a4942141",
-      "nativeContentHash": "3ec16fd8bc8c27a4c87e6d3e4aa5cc01d990d42fac2eddc4a1a7929e352a96c1"
+      "managedContentHash": "ac78b63a82b98f48aa6fb5425cec1ae8002126a77cf16eecf5ed3b674d8a773d",
+      "nativeContentHash": "4c1af1b657329869152e405aadf368a716c02b3ea6cb0625b22f44f2914cd95b"
+    },
+    {
+      "className": "vtkDelaunay3D",
+      "header": "vtkDelaunay3D.h",
+      "baseClassName": "vtkUnstructuredGridAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "694dd15e2cd233baf181bf327e4a248b97ab24f60e1cae8a0fec7c3398145335",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkDelaunay3D_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkDelaunay3D_export_gen.cpp",
+      "managedContentHash": "c850da50428fd2f837d18a7045b28d91aa7a35c9032a384ffbe42f07a73a3b91",
+      "nativeContentHash": "4d10765501e37a1142f610259775bfc395d30504792f3ca97657b2efc9442bfc"
     },
     {
       "className": "vtkExtractEdges",
@@ -85,11 +107,11 @@
       "header": "vtkGlyph3D.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "097c863bbca022dd9516a9b7b90bf3649d84617e74ddea2e281a21449a510cdc",
+      "inputHash": "e86499b560f8e93620ed5e16186da1f6757d43c0ecb4ba987251c380dc9accf7",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkGlyph3D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkGlyph3D_export_gen.cpp",
-      "managedContentHash": "b160e7718c32b057b4844d37f2cde95ff77806a7b614a3fed06d61176d6bf560",
-      "nativeContentHash": "580fc8be1ce8fe979af6218b36dbd61c914073b3ad92e70922be453d1fd5e72a"
+      "managedContentHash": "849ec78eb223ed81f75352f5e224101f4869c47e2ba05212eba70524b1fb4b5a",
+      "nativeContentHash": "4f4939c4f2f3cd264c4c188661ea79feac7c0365457db1c89d1589857176747f"
     },
     {
       "className": "vtkMarchingSquares",
@@ -103,6 +125,17 @@
       "nativeContentHash": "e17363e6ab7b18c8b09b30d83831b5d54dfe745c38877d4a5f07fbd489dd4904"
     },
     {
+      "className": "vtkPolyDataConnectivityFilter",
+      "header": "vtkPolyDataConnectivityFilter.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "defd62a46acc5c235dc88d223081a1a37d63727c7fb25f1ac0a328375be0a45c",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkPolyDataConnectivityFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkPolyDataConnectivityFilter_export_gen.cpp",
+      "managedContentHash": "eb076445662ac9fb402b80ae71ad5e930fe9633be69c2b78c6448c3958d05bb5",
+      "nativeContentHash": "1ca915f1d55bfb8888d252780e996ab412d86266898467d95cbc55e1d6d27c63"
+    },
+    {
       "className": "vtkProbeFilter",
       "header": "vtkProbeFilter.h",
       "baseClassName": "vtkDataSetAlgorithm",
@@ -114,6 +147,17 @@
       "nativeContentHash": "6ff8ea914b5b095ec01ed4e4f3c6109d929c2988581826a020e6f8b869c98af2"
     },
     {
+      "className": "vtkQuadricDecimation",
+      "header": "vtkQuadricDecimation.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "ea564a520ff79f319b9d5030112e70a9d119fcc53ea560e76c2fab14c338d0a8",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkQuadricDecimation_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkQuadricDecimation_export_gen.cpp",
+      "managedContentHash": "85cd1417ed51c82c3e7b174022d77426ffeebb23149c370d46fbb2ab05e18c8a",
+      "nativeContentHash": "360ffedf47bb74e90a86315cffce729751a7809d7fd7a424fe850c0ee9652a2e"
+    },
+    {
       "className": "vtkStripper",
       "header": "vtkStripper.h",
       "baseClassName": "vtkPolyDataAlgorithm",
@@ -123,6 +167,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkStripper_export_gen.cpp",
       "managedContentHash": "f7f76ac27fedcf57166f822834a0125d596ed83b7812556f60471abc276b4b2a",
       "nativeContentHash": "d6df406899f827b8aa046e19d71c9d30abf8859d99fbc9e6a3a9eee0821456c4"
+    },
+    {
+      "className": "vtkThreshold",
+      "header": "vtkThreshold.h",
+      "baseClassName": "vtkUnstructuredGridAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "343cd1ff2cdae58729eab5c2bfad7032ffafb2de7341de89a0c3275249d790c6",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkThreshold_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkThreshold_export_gen.cpp",
+      "managedContentHash": "b8e63cade204d1671e3ade83c5bd9a785e8fe195b54d55fcf657713d79250fd6",
+      "nativeContentHash": "e905d503deb9f4ea9aaa4d527c3ad81a36e86bce69538bc9d4caa09766d17fad"
     },
     {
       "className": "vtkTriangleFilter",
@@ -145,6 +200,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkTubeFilter_export_gen.cpp",
       "managedContentHash": "e5dbc279e270b765690e16dc3f042acf7ee2d39c632146607db1d5b5f9b36e81",
       "nativeContentHash": "051cb6ede5e83f348bac20368220ccc01cf8eeb983745acdf6d396103ad8d956"
+    },
+    {
+      "className": "vtkWindowedSincPolyDataFilter",
+      "header": "vtkWindowedSincPolyDataFilter.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "079cd20bee0c3649d8f01b516df8480c3be81da183864d2dc3814f2d81ca1a78",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersCore\\vtkWindowedSincPolyDataFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersCore\\vtkWindowedSincPolyDataFilter_export_gen.cpp",
+      "managedContentHash": "3819bd85a846cba521d1d2077d06b61643bb30c3987e7f740afb24525bd6c426",
+      "nativeContentHash": "64fb53ad98881c16ef012c5d4a1ef76f5349c2d50e261b5c8856be2811639d13"
     }
   ]
 }

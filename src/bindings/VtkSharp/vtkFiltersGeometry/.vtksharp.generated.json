@@ -4,6 +4,17 @@
   "module": "vtkFiltersGeometry",
   "classes": [
     {
+      "className": "vtkDataSetSurfaceFilter",
+      "header": "vtkDataSetSurfaceFilter.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "4bead251e5252af3c56770d0975823e83ecb5fbadbf7b13915e4ddeb0c151bad",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersGeometry\\vtkDataSetSurfaceFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeometry\\vtkDataSetSurfaceFilter_export_gen.cpp",
+      "managedContentHash": "47044081e00f93922be3f85efe4f67ddd63c62094e1757a5b9610a3957c74915",
+      "nativeContentHash": "ffda91dff01ddf040c47e52f04582f4f034ea3171948978b847425d2309821ef"
+    },
+    {
       "className": "vtkImageDataGeometryFilter",
       "header": "vtkImageDataGeometryFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",

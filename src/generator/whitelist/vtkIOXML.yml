@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkIOXML
+classes:
+  - name: vtkXMLDataReader
+    header: vtkXMLDataReader.h
+    functions: []
+  - name: vtkXMLReader
+    header: vtkXMLReader.h
+    functions:
+      - name: SetFileName
+        cppSignature: void SetFileName(char const * _arg)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: _arg
+  - name: vtkXMLUnstructuredDataReader
+    header: vtkXMLUnstructuredDataReader.h
+    functions: []
+  - name: vtkXMLUnstructuredGridReader
+    header: vtkXMLUnstructuredGridReader.h
+    functions: []

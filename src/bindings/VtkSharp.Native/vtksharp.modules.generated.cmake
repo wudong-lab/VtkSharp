@@ -8,15 +8,18 @@ set(VTKSHARP_VTK_COMPONENTS
   CommonMath
   CommonTransforms
   FiltersCore
+  FiltersExtraction
   FiltersGeneral
   FiltersGeometry
   FiltersModeling
   FiltersPoints
   FiltersSources
+  FiltersVerdict
   IOCore
   IOGeometry
   IOImage
   IOInfovis
+  IOXML
   ImagingCore
   ImagingMath
   InteractionImage
@@ -38,15 +41,18 @@ set(VTKSHARP_VTK_TARGETS
   VTK::CommonMath
   VTK::CommonTransforms
   VTK::FiltersCore
+  VTK::FiltersExtraction
   VTK::FiltersGeneral
   VTK::FiltersGeometry
   VTK::FiltersModeling
   VTK::FiltersPoints
   VTK::FiltersSources
+  VTK::FiltersVerdict
   VTK::IOCore
   VTK::IOGeometry
   VTK::IOImage
   VTK::IOInfovis
+  VTK::IOXML
   VTK::ImagingCore
   VTK::ImagingMath
   VTK::InteractionImage

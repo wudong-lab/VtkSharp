@@ -37,6 +37,9 @@
     <Content Include="Examples\Modelling\ContourTriangulator\Data\fullhead15.png"
              Link="Data\fullhead15.png"
              CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Examples\IO\ReadUnstructuredGrid\Data\hexahedron.vtu"
+             Link="Data\hexahedron.vtu"
+             CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

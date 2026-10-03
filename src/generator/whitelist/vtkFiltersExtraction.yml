@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../schemas/vtksharp.whitelist.schema.json
+
+module: vtkFiltersExtraction
+classes:
+  - name: vtkExtractSelection
+    header: vtkExtractSelection.h
+    functions: []

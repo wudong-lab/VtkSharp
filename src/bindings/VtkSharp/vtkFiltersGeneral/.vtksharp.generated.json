@@ -15,6 +15,17 @@
       "nativeContentHash": "fa0133f78528f91ba0ed9dbd2e4240deb17a9044b57b0652d2817d88e1899676"
     },
     {
+      "className": "vtkTableBasedClipDataSet",
+      "header": "vtkTableBasedClipDataSet.h",
+      "baseClassName": "vtkUnstructuredGridAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "b9fa1313e65e6003ea71581151aacd7d8ac6e097f5971e40813e81fe1c92d074",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTableBasedClipDataSet_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTableBasedClipDataSet_export_gen.cpp",
+      "managedContentHash": "89039f30afc4cedb672ce077190108a6953b4571cbcfc4d72854923f7559c9fc",
+      "nativeContentHash": "e223eb8b35bfccce549612189d814ad25ed652b75566002a6ddd51e302434b26"
+    },
+    {
       "className": "vtkTableToPolyData",
       "header": "vtkTableToPolyData.h",
       "baseClassName": "vtkPolyDataAlgorithm",
@@ -24,6 +35,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTableToPolyData_export_gen.cpp",
       "managedContentHash": "c5d97cf94186ce17d44aaad4e638d00652ce0bbd896158bb8bc9cc7d53a1ca5c",
       "nativeContentHash": "e1826c0cc7f078639d1d18150dc61e17d4db10ae6989b9a00c54a7c5a18caace"
+    },
+    {
+      "className": "vtkTessellatorFilter",
+      "header": "vtkTessellatorFilter.h",
+      "baseClassName": "vtkUnstructuredGridAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "3fef171d20bbea580268ce28c5834632344e9ca55a7c28d2e73f705a64e2958b",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTessellatorFilter_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTessellatorFilter_export_gen.cpp",
+      "managedContentHash": "1d6ce1adf0936454d6d0a29f174f4409ab913fd09db1a2316f6d501f17bdec07",
+      "nativeContentHash": "21ea366d46901c26b901c48f3cc305bafb33b8d5d53c159f92b1c768253c9dc0"
     },
     {
       "className": "vtkTransformPolyDataFilter",

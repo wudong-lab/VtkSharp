@@ -504,6 +504,23 @@ classes:
             name: xR
           - type: int
             name: yR
+  - name: vtkPointSource
+    header: vtkPointSource.h
+    functions:
+      - name: SetNumberOfPoints
+        cppSignature: void SetNumberOfPoints(vtkIdType _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: _arg
+      - name: SetRadius
+        cppSignature: void SetRadius(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
   - name: vtkRegularPolygonSource
     header: vtkRegularPolygonSource.h
     functions:
@@ -543,6 +560,34 @@ classes:
           type: void
         parameters:
           - type: double
+            name: _arg
+  - name: vtkSelectionSource
+    header: vtkSelectionSource.h
+    functions:
+      - name: AddID
+        cppSignature: void AddID(unsigned int nodeId, vtkIdType piece, vtkIdType id)
+        return:
+          type: void
+        parameters:
+          - type: unsigned int
+            name: nodeId
+          - type: vtkIdType
+            name: piece
+          - type: vtkIdType
+            name: id
+      - name: SetContentType
+        cppSignature: void SetContentType(int contentType)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: contentType
+      - name: SetFieldType
+        cppSignature: void SetFieldType(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
             name: _arg
   - name: vtkSphereSource
     header: vtkSphereSource.h

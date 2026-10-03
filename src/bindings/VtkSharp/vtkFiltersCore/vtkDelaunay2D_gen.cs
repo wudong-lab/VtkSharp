@@ -186,6 +186,20 @@ public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
     }
 
     /// <summary>
+    /// Specify the source object used to specify constrained edges and loops.
+    /// (This is optional.) If set, and lines/polygons are defined, a constrained
+    /// triangulation is created. The lines/polygons are assumed to reference
+    /// points in the input point set (i.e. point ids are identical in the
+    /// input and source).
+    /// Note that this method does not connect the pipeline. See SetSourceConnection
+    /// for connecting the pipeline.
+    /// </summary>
+    public new void SetSourceData(vtkPolyData _arg1)
+    {
+        vtkDelaunay2D_SetSourceData(this.NativePointer, _arg1.NativePointer);
+    }
+
+    /// <summary>
     /// Specify a tolerance to control discarding of closely spaced points.
     /// This tolerance is specified as a fraction of the diagonal length of
     /// the bounding box of the points.
@@ -198,6 +212,9 @@ public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDelaunay2D_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDelaunay2D_SetSourceData(nint self, nint _arg1);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDelaunay2D_SetTolerance(nint self, double _arg);

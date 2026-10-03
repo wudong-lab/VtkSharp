@@ -18,6 +18,8 @@ VTKSHARP_API void vtkDataArray_InsertNextTuple6(vtkDataArray* self, double val0,
 
 VTKSHARP_API void vtkDataArray_InsertNextTuple9(vtkDataArray* self, double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8) { self->InsertNextTuple9(val0, val1, val2, val3, val4, val5, val6, val7, val8); }
 
+VTKSHARP_API void vtkDataArray_SetComponent(vtkDataArray* self, vtkIdType tupleIdx, int compIdx, double value) { self->SetComponent(tupleIdx, compIdx, value); }
+
 VTKSHARP_API void vtkDataArray_SetTuple1(vtkDataArray* self, vtkIdType tupleIdx, double value) { self->SetTuple1(tupleIdx, value); }
 
 VTKSHARP_API void vtkDataArray_SetTuple3(vtkDataArray* self, vtkIdType tupleIdx, double val0, double val1, double val2) { self->SetTuple3(tupleIdx, val0, val1, val2); }

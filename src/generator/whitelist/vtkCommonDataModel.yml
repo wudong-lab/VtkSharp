@@ -61,6 +61,9 @@ classes:
         return:
           type: vtkIdList*
         parameters: []
+  - name: vtkCell3D
+    header: vtkCell3D.h
+    functions: []
   - name: vtkCellArray
     header: vtkCellArray.h
     functions:
@@ -230,6 +233,16 @@ classes:
         parameters:
           - type: vtkAbstractArray*
             name: array
+      - name: GetArray
+        cppSignature: vtkDataArray * GetArray(char const * arrayName)
+        return:
+          type: vtkDataArray*
+        parameters:
+          - type: const char*
+            name: arrayName
+  - name: vtkHexahedron
+    header: vtkHexahedron.h
+    functions: []
   - name: vtkImageData
     header: vtkImageData.h
     functions:
@@ -371,9 +384,40 @@ classes:
             name: j
           - type: double
             name: k
+  - name: vtkImplicitFunction
+    header: vtkImplicitFunction.h
+    functions: []
   - name: vtkLine
     header: vtkLine.h
     functions: []
+  - name: vtkNonLinearCell
+    header: vtkNonLinearCell.h
+    functions: []
+  - name: vtkPlane
+    header: vtkPlane.h
+    functions:
+      - name: SetNormal
+        cppSignature: void SetNormal(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
+      - name: SetOrigin
+        cppSignature: void SetOrigin(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
   - name: vtkPointData
     header: vtkPointData.h
     functions: []
@@ -435,6 +479,27 @@ classes:
   - name: vtkQuad
     header: vtkQuad.h
     functions: []
+  - name: vtkQuadraticTetra
+    header: vtkQuadraticTetra.h
+    functions: []
+  - name: vtkTetra
+    header: vtkTetra.h
+    functions: []
   - name: vtkTriangle
     header: vtkTriangle.h
     functions: []
+  - name: vtkUnstructuredGrid
+    header: vtkUnstructuredGrid.h
+    functions: []
+  - name: vtkUnstructuredGridBase
+    header: vtkUnstructuredGridBase.h
+    functions:
+      - name: InsertNextCell
+        cppSignature: vtkIdType InsertNextCell(int type, vtkIdList * ptIds)
+        return:
+          type: vtkIdType
+        parameters:
+          - type: int
+            name: type
+          - type: vtkIdList*
+            name: ptIds

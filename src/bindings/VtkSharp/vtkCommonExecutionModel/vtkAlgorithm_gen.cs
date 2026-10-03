@@ -79,6 +79,18 @@ public unsafe partial class vtkAlgorithm : vtkObject
     }
 
     /// <summary>
+    /// Get the data object that will contain the algorithm output for
+    /// the given port.
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkDataObject GetOutputDataObject(int port)
+    {
+        return vtkDataObject.FromBorrowedPointer(vtkAlgorithm_GetOutputDataObject(this.NativePointer, port));
+    }
+
+    /// <summary>
     /// Get a proxy object corresponding to the given output port of this
     /// algorithm.  The proxy object can be passed to another algorithm's
     /// SetInputConnection(), AddInputConnection(), and
@@ -98,6 +110,40 @@ public unsafe partial class vtkAlgorithm : vtkObject
     public new vtkAlgorithmOutput GetOutputPort()
     {
         return vtkAlgorithmOutput.FromBorrowedPointer(vtkAlgorithm_GetOutputPort_(this.NativePointer));
+    }
+
+    /// <summary>
+    /// Set the input data arrays that this algorithm will process.
+    /// </summary>
+    /// <remarks>
+    /// The array is expected to be in the input data object specified by
+    /// (port, connection), and is stored under the given
+    /// </remarks>
+    /// <param name="idx">
+    /// the intern index of the array, in vtkAlgorithm scope.
+    /// Useful for algorithm expecting different arrays to work.
+    /// </param>
+    /// <param name="port">
+    /// the algorithm input port of the data object where to look for the requested array.
+    /// </param>
+    /// <param name="connection">
+    /// the algorithm input connection of the data object where to look for the
+    /// requested array.
+    /// </param>
+    /// <param name="fieldAssociation">
+    /// the field in the data object where the array is stored.
+    /// See vtkDataObject::FieldAssociations for detail.
+    /// </param>
+    /// <param name="name">
+    /// the name of the array to process
+    /// </param>
+    public new void SetInputArrayToProcess(int idx, int port, int connection, int fieldAssociation, string name)
+    {
+        #if NET8_0_OR_GREATER
+        vtkAlgorithm_SetInputArrayToProcess(this.NativePointer, idx, port, connection, fieldAssociation, name);
+        #else
+        vtkAlgorithm_SetInputArrayToProcess(this.NativePointer, idx, port, connection, fieldAssociation, VtkString.ToNullTerminatedUtf8(name));
+        #endif
     }
 
     /// <summary>
@@ -142,6 +188,19 @@ public unsafe partial class vtkAlgorithm : vtkObject
     public new void SetInputConnection(vtkAlgorithmOutput input)
     {
         vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(this.NativePointer, input.NativePointer);
+    }
+
+    /// <summary>
+    /// Sets the data-object as an input on the given port index. Setting the input with
+    /// this method removes all other connections from the port. Internally, this
+    /// method creates a vtkTrivialProducer instance and sets that as the
+    /// input-connection for the given port. It is safe to call this method repeatedly
+    /// with the same input data object. The MTime of the vtkAlgorithm will not
+    /// change unless the data object changed.
+    /// </summary>
+    public new void SetInputDataObject(int port, vtkDataObject data)
+    {
+        vtkAlgorithm_SetInputDataObject(this.NativePointer, port, data.NativePointer);
     }
 
     /// <summary>
@@ -192,16 +251,30 @@ public unsafe partial class vtkAlgorithm : vtkObject
     private static extern nint vtkAlgorithm_New();
 
     [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern nint vtkAlgorithm_GetOutputDataObject(nint self, int port);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAlgorithm_GetOutputPort_int(nint self, int index);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAlgorithm_GetOutputPort_(nint self);
+
+#if NET8_0_OR_GREATER
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    private static partial void vtkAlgorithm_SetInputArrayToProcess(nint self, int idx, int port, int connection, int fieldAssociation, string name);
+#else
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAlgorithm_SetInputArrayToProcess(nint self, int idx, int port, int connection, int fieldAssociation, byte[] name);
+#endif
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAlgorithm_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int port, nint input);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkAlgorithm_SetInputDataObject(nint self, int port, nint data);
 
     [DllImport(InteropInfo.NativeLibraryName)]
     [return: MarshalAs(UnmanagedType.U1)]

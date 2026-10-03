@@ -75,11 +75,38 @@ classes:
             name: rangeStart
           - type: double
             name: rangeEnd
+  - name: vtkCutter
+    header: vtkCutter.h
+    functions:
+      - name: SetCutFunction
+        cppSignature: void SetCutFunction(vtkImplicitFunction * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkImplicitFunction*
+            name: _arg1
   - name: vtkDelaunay2D
     header: vtkDelaunay2D.h
     functions:
+      - name: SetSourceData
+        cppSignature: void SetSourceData(vtkPolyData * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkPolyData*
+            name: _arg1
       - name: SetTolerance
         cppSignature: void SetTolerance(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+  - name: vtkDelaunay3D
+    header: vtkDelaunay3D.h
+    functions:
+      - name: SetAlpha
+        cppSignature: void SetAlpha(double _arg)
         return:
           type: void
         parameters:
@@ -152,6 +179,11 @@ classes:
   - name: vtkGlyph3D
     header: vtkGlyph3D.h
     functions:
+      - name: ScalingOff
+        cppSignature: void ScalingOff()
+        return:
+          type: void
+        parameters: []
       - name: SetSourceConnection
         cppSignature: void SetSourceConnection(int id, vtkAlgorithmOutput * algOutput)
         return:
@@ -180,6 +212,87 @@ classes:
             name: i
           - type: double
             name: value
+  - name: vtkPolyDataConnectivityFilter
+    header: vtkPolyDataConnectivityFilter.h
+    functions:
+      - name: ColorRegionsOn
+        cppSignature: void ColorRegionsOn()
+        return:
+          type: void
+        parameters: []
+      - name: GetExtractionMode
+        cppSignature: int GetExtractionMode()
+        return:
+          type: int
+        parameters: []
+      - name: SetExtractionMode
+        cppSignature: void SetExtractionMode(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetExtractionModeToAllRegions
+        cppSignature: void SetExtractionModeToAllRegions()
+        return:
+          type: void
+        parameters: []
+      - name: SetExtractionModeToCellSeededRegions
+        cppSignature: void SetExtractionModeToCellSeededRegions()
+        return:
+          type: void
+        parameters: []
+      - name: SetExtractionModeToClosestPointRegion
+        cppSignature: void SetExtractionModeToClosestPointRegion()
+        return:
+          type: void
+        parameters: []
+      - name: SetExtractionModeToLargestRegion
+        cppSignature: void SetExtractionModeToLargestRegion()
+        return:
+          type: void
+        parameters: []
+      - name: SetExtractionModeToPointSeededRegions
+        cppSignature: void SetExtractionModeToPointSeededRegions()
+        return:
+          type: void
+        parameters: []
+      - name: SetExtractionModeToSpecifiedRegions
+        cppSignature: void SetExtractionModeToSpecifiedRegions()
+        return:
+          type: void
+        parameters: []
+    enumProperties:
+      - name: ExtractionMode
+        nativeType: int
+        getter: GetExtractionMode
+        setter: SetExtractionMode
+        values:
+          - name: AllRegions
+            nativeExpression: VTK_EXTRACT_ALL_REGIONS
+            value: 5
+          - name: CellSeededRegions
+            nativeExpression: VTK_EXTRACT_CELL_SEEDED_REGIONS
+            value: 2
+          - name: ClosestPointRegion
+            nativeExpression: VTK_EXTRACT_CLOSEST_POINT_REGION
+            value: 6
+          - name: LargestRegion
+            nativeExpression: VTK_EXTRACT_LARGEST_REGION
+            value: 4
+          - name: PointSeededRegions
+            nativeExpression: VTK_EXTRACT_POINT_SEEDED_REGIONS
+            value: 1
+          - name: SpecifiedRegions
+            nativeExpression: VTK_EXTRACT_SPECIFIED_REGIONS
+            value: 3
+        convenienceMethods:
+          - SetExtractionModeToAllRegions
+          - SetExtractionModeToCellSeededRegions
+          - SetExtractionModeToClosestPointRegion
+          - SetExtractionModeToLargestRegion
+          - SetExtractionModeToPointSeededRegions
+          - SetExtractionModeToSpecifiedRegions
   - name: vtkProbeFilter
     header: vtkProbeFilter.h
     functions:
@@ -190,9 +303,36 @@ classes:
         parameters:
           - type: vtkDataObject*
             name: source
+  - name: vtkQuadricDecimation
+    header: vtkQuadricDecimation.h
+    functions:
+      - name: SetTargetReduction
+        cppSignature: void SetTargetReduction(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
   - name: vtkStripper
     header: vtkStripper.h
     functions: []
+  - name: vtkThreshold
+    header: vtkThreshold.h
+    functions:
+      - name: SetLowerThreshold
+        cppSignature: void SetLowerThreshold(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetThresholdFunction
+        cppSignature: void SetThresholdFunction(int function)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: function
   - name: vtkTriangleFilter
     header: vtkTriangleFilter.h
     functions: []
@@ -277,3 +417,18 @@ classes:
           - SetVaryRadiusToVaryRadiusByVector
           - SetVaryRadiusToVaryRadiusByVectorNorm
           - SetVaryRadiusToVaryRadiusOff
+  - name: vtkWindowedSincPolyDataFilter
+    header: vtkWindowedSincPolyDataFilter.h
+    functions:
+      - name: BoundarySmoothingOff
+        cppSignature: void BoundarySmoothingOff()
+        return:
+          type: void
+        parameters: []
+      - name: SetNumberOfIterations
+        cppSignature: void SetNumberOfIterations(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg

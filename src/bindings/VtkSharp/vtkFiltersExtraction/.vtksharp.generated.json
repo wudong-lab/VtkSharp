@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "module": "vtkFiltersExtraction",
+  "classes": [
+    {
+      "className": "vtkExtractSelection",
+      "header": "vtkExtractSelection.h",
+      "baseClassName": "vtkDataObjectAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "5f31db11e5560668d5a1d2a0fd94de54274ad31b16e35e743adeb9a65d64f7ee",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersExtraction\\vtkExtractSelection_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersExtraction\\vtkExtractSelection_export_gen.cpp",
+      "managedContentHash": "fcf753e45dcdfc80cd425707eff2d0bdf4ef391d787641305c0ff8193c68d305",
+      "nativeContentHash": "32e2a0c72982a4569289dd9f34f66aee2b52cddc440389a5dc67089527ddc250"
+    }
+  ]
+}

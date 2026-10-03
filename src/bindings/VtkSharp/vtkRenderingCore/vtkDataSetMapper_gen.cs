@@ -70,8 +70,19 @@ public unsafe partial class vtkDataSetMapper : vtkMapper
         return target;
     }
 
+    /// <summary>
+    /// Set the Input of this mapper.
+    /// </summary>
+    public new void SetInputData(vtkDataSet input)
+    {
+        vtkDataSetMapper_SetInputData(this.NativePointer, input.NativePointer);
+    }
+
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDataSetMapper_New();
+
+    [DllImport(InteropInfo.NativeLibraryName)]
+    private static extern void vtkDataSetMapper_SetInputData(nint self, nint input);
     #endregion
 }
