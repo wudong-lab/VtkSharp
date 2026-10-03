@@ -1,5 +1,7 @@
 # VtkSharp 项目架构
 
+本文描述当前静态链接实现。已确认的动态链接目标及分阶段迁移计划见 [动态 VTK 迁移决策与步骤](build/dynamic-vtk-migration.md)，尚未实施。
+
 ## 项目边界
 
 `VtkSharp` 是 VTK 官方 C++ API 的非官方 .NET 封装，项目包含：
