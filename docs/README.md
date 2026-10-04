@@ -7,7 +7,8 @@
 - [绑定生成器](generator.md)：配置、白名单、导出规则和常用命令。
 - [VTK 构建](build/vtk.md)：Windows 静态 VTK 的配置、编译和安装。
 - [VtkSharp 构建](build/vtksharp.md)：native/managed 构建、CRT 匹配和产物收集。
-- [动态 VTK 迁移决策与步骤](build/dynamic-vtk-migration.md)：已确认但尚未实施的动态链接、依赖收集、本地 NuGet 和私有 native 独立方案。
+- [动态 VTK 迁移结果与约束](build/dynamic-vtk-migration.md)：当前动态链接、依赖收集、本地 NuGet 和私有 native 独立架构及验证结果。
+- [模块化 native 导出层与按需加载设计](build/modular-native-loading.md)：已确认决策、分组依据、子目录部署和公开/私有仓库实施步骤，尚未实施。
 - [贡献指南](../CONTRIBUTING.md)：问题反馈、API 补充与 Pull Request 要求。
 - [统一验证与示例验收](workflow/verification.md)：构建、测试、生成检查和截图验收。
 - [互操作依据记录](workflow/interop-evidence.md)：方向、长度和所有权判断的依据。
