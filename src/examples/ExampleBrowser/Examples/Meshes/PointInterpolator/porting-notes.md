@@ -32,8 +32,6 @@
 - `vtkPointGaussianMapper`。
 - `vtkDataSetAttributes.SetActiveScalars`、`vtkDataArray.GetRange(double[2])`。
 
-候选与规划报告：`artifacts/point-interpolator/candidate.yml`、
-`artifacts/point-interpolator/report.json`。
 
 ## 验证
 
@@ -41,6 +39,5 @@
 - `diff-whitelist --summary`：新增 10 个类型、17 个函数；随后补充 `vtkDataArray.GetRange`。
 - `generate-bindings --output-root src --incremental`：通过。
 - `pwsh tools/verify-workflow.ps1 -VtkDir D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7 -Regenerate -Example Meshes/PointInterpolator`：全部选定检查通过。
-- 验证报告：`artifacts/verification/20260919-223152-8bc57613/verification.json`。
-- Smoke 截图：`artifacts/verification/20260919-223152-8bc57613/example/screenshot.png`；已确认插值表面、采样点和颜色标量均正常显示。
+- Smoke 截图：`；已确认插值表面、采样点和颜色标量均正常显示。
 - 尚未自动验证：长时间交互操作及重复创建/销毁窗口。

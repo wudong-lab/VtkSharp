@@ -19,7 +19,7 @@ if ((-not $SkipNativeBuild -or $Linkage -eq "Dynamic") -and [string]::IsNullOrWh
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $artifactsDir = Join-Path $repoRoot "artifacts\bin"
 if ($Linkage -eq "Dynamic") {
-    $artifactsDir = Join-Path $artifactsDir "dynamic\$Configuration"
+    $artifactsDir = Join-Path $artifactsDir $Configuration
 }
 
 if (-not $SkipNativeBuild) {

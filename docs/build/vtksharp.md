@@ -44,6 +44,6 @@ $newVersion = "27.1004.1" # Choose a version not present in the local package so
 
 隔离验证在新进程中运行发布产物，不添加 VTK 开发目录到 `PATH`，并清空 `VTK_ROOT`、`VTK_DIR`。实际加载的 VTK DLL 应全部来自部署目录。图形示例还需要 .NET 8 Desktop Runtime 和可用图形设备。
 
-目前验证通过：VTK 9.7.0 Shared Release/Debug、公开 native 与隔离 Cone smoke、每配置 40 个公开 managed 测试、Release NuGet 打包，以及 .NET 8/.NET Framework 4.8 固定版本包消费。私有 standalone Release/Debug 构建及每配置 36 个测试通过。私有 .NET 8 Debug WPF 的访问冲突已修复：排除公开 NuGet 的 native 资产，避免与本地 Debug VTK 混用。两配置、两框架 WPF smoke 均连续 3 次通过。原迁移报告在 `artifacts/verification/dynamic-vtk-migration/`，修复复验在 `artifacts/verification/wpf-debug-fix/`。
+目前验证通过：VTK 9.7.0 Shared Release/Debug、公开 native 与隔离 Cone smoke、每配置 40 个公开 managed 测试、Release NuGet 打包，以及 .NET 8/.NET Framework 4.8 固定版本包消费。私有 standalone Release/Debug 构建及每配置 36 个测试通过。私有 .NET 8 Debug WPF 的访问冲突已修复：排除公开 NuGet 的 native 资产，避免与本地 Debug VTK 混用。两配置、两框架 WPF smoke 均连续 3 次通过。
 
-静态 fallback 可使用 `-Linkage Static`，但不用于 NuGet 包；NuGet 发布脚本只接受 Release Dynamic。动态构建汇总输出位于 `artifacts/bin/dynamic/<Configuration>/<TFM>`，静态 fallback 输出位于 `artifacts/bin/<TFM>`。这些目录是库文件集合，不是应用安装包，分发前应核对目标 RID、运行库和许可声明。
+静态 fallback 可使用 `-Linkage Static`，但不用于 NuGet 包；NuGet 发布脚本只接受 Release Dynamic。动态构建汇总输出位于 `artifacts/bin/<Configuration>/<TFM>`，静态 fallback 输出位于 `artifacts/bin/<TFM>`。这些目录是库文件集合，不是应用安装包，分发前应核对目标 RID、运行库和许可声明。

@@ -68,9 +68,8 @@
 
 ## Verification
 
-- 统一验证报告：`artifacts/verification/20260920-140315-37760263/verification.json`
   - generator-build / generator-tests / generate / native-build / managed-tests /
     example-build / example-smoke / generated-check 全部 passed。
-- 首帧截图：`artifacts/verification/20260920-140315-37760263/example/screenshot.png`
+- 首帧截图：`
   - 300×300，深灰背景上可见灰色三角化头部轮廓与紫色等值线，与官方示例预期一致。
 - 仍需人工确认：交互（鼠标旋转/缩放/关闭）、重复创建-释放，未自动化。

@@ -11,7 +11,7 @@
 
 ## 新增绑定
 
-候选与规划报告：`artifacts/boundary-edges/candidate.yml`、`artifacts/boundary-edges/report.json`。
+
 
 - 新类型：`vtkDiskSource`（`vtkFiltersSources`，仅类型）、`vtkFeatureEdges`（`vtkFiltersCore`）。
 - 既有类型补充：
@@ -35,8 +35,7 @@
   `merge-candidate` 通过。
 - 统一验证脚本 `tools/verify-workflow.ps1 -VtkDir <vtk-cmake-directory> -Regenerate -Example Meshes/BoundaryEdges`
   全部阶段通过（generator 构建/测试、生成、native 构建、managed 测试、示例构建、
-  示例 smoke、生成一致性检查）。报告：
-  `artifacts/verification/20260919-205150-8d4af5ac/verification.json`。
+  示例 smoke、生成一致性检查）。
 - 示例 smoke 输出 300×300 PNG，解码及退出成功。人工查看截图：灰色圆环表面，
   内、外两条边界边为红色，背景 DimGray，与官方预期一致。
 

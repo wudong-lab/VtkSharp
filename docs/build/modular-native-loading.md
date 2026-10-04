@@ -75,7 +75,7 @@ VTK 的 `vtk.module` 提供公开依赖 `DEPENDS`、内部依赖 `PRIVATE_DEPEND
 
 这支持将选定的渲染实现统一管理初始化，但最终组成员还应检查其他提供者、私有 WPF 后端及实际源码需求。不能照搬当前全入口 autoinit 到所有新入口。
 
-对 `artifacts/package-runtime/26.1004.238/native-dependencies.json` 按 `ordinary-import` 和 `application-file` 边计算闭包，得到：
+按 Release 模块运行时依赖清单中的 `ordinary-import` 和 `application-file` 边计算闭包，得到：
 
 | 底层入口 | 闭包文件数，包含入口 | 闭包中的 IO 模块 |
 | --- | ---: | --- |
@@ -248,7 +248,7 @@ NuGet 包内路径和最终安装路径分别设计。SDK 会扁平化 `runtimes
 
 ### 阶段二：最小加载原型（2026-10-04）
 
-- 原型源码和运行脚本位于 `tools/module-loading-prototype/`；构建、依赖清单、逐进程日志保存在 `artifacts/module-loading-prototype/`。
+- 原型源码和运行脚本位于 `tools/module-loading-prototype/`。
 - 原型使用匹配的 VTK 9.7.0 Shared Release x64 build id `54f2e9a1722a89e1a792448fb8e8585ded55a2c5c8137ec48f784e3b1a9d98f2`，包含 CommonCore、FiltersSources、Rendering 和现有私有 `BRDI.VtkSharp.Native.dll` 四个入口，合并依赖清单共 54 个文件。
 - .NET 8 assembly resolver 在首次 P/Invoke 时使用绝对路径调用 `LoadLibraryExW`，设置 `LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_SYSTEM32` 并缓存句柄；.NET Framework 4.8 在 P/Invoke 前按绝对路径预加载对应 DLL，CLR 随后绑定已加载模块。两者均不修改 PATH，也不卸载模块。
 - 每个场景独立启动进程，且运行期间清空 VTK 环境变量并将 PATH 限定为 Windows 系统目录。所有检查到的 native 模块均从原型 runtime 目录加载。
@@ -275,7 +275,7 @@ NuGet 包内路径和最终安装路径分别设计。SDK 会扁平化 `runtimes
 - 生成本地验证包 `VtkSharp.26.1004.905`，使用独立 `PackageReference` 消费项目分别验证 .NET 8 和 .NET Framework 4.8。两个项目 build 与 publish 输出根目录均无 VtkSharp native DLL，子目录含 26 个入口 DLL 和同一份 runtime；算法运行及释放均成功，Cone 输出 7 个点。
 - 两个 publish 输出的运行测试清除了 `VTK*` 环境变量，并将 PATH 限定到 Windows 系统目录；两种框架均从应用 `native/VtkSharp/win-x64/` 目录加载，没有依赖开发安装或 PATH。
 
-阶段四完成时，公开包消费路径已验证；私有 runtime 合并与冲突诊断在阶段五、六补充验证。验证包保存在本地 ignored `artifacts/`，尚未发布。
+阶段四完成时，公开包消费路径已验证；私有 runtime 合并与冲突诊断在阶段五、六补充验证。验证时使用的包曾保存在本地 ignored `artifacts/` 中，尚未发布。
 
 ### 阶段五：私有扩展与 WPF 迁移（2026-10-04）
 
@@ -294,6 +294,6 @@ NuGet 包内路径和最终安装路径分别设计。SDK 会扁平化 `runtimes
 - 两种框架的 publish 目录复制到新位置后，在清除 `VTK*` 环境变量、将 PATH 限定为 Windows System32 的进程中再次运行 XML 场景成功；实际加载路径随目录搬迁改变到新应用目录，无 NuGet 缓存或开发安装依赖。
 - 构建验证用临时 fixture 覆盖两个失败诊断：缺少入口依赖时报告 `Unresolved application dependency`；同名不同哈希的 `vtkCommonCore` 被报告冲突，未复制或覆盖。
 - 性能抽样比较公开旧包 `26.1004.238`（73 个 runtime 文件、单 C ABI 入口）和新包 `26.1004.905`（98 个 runtime 文件、26 个入口），均使用同一 VTK Release build id。在 .NET 8 新进程中测量 Cone 首次 `New/Update`，各舍弃 1 次预热并保留 10 次，运行时清空 `VTK*` 并将 PATH 限定为 System32。中位首次使用时间由 16.44 ms 降至 11.15 ms，调用后工作集由 38,203,392 降至 30,502,912 字节；进程 native 模块由 73 个降至 27 个。该结果仅适用于该机器、.NET 8 Release 和 Cone 场景，包含首次 JIT 影响，不能代表所有模块或 CAD 宿主启动收益。
-- 验收文档已同步公开生成器、私有构建脚本、架构说明及 WPF runtime 布局。公开验证包与消费应用只存放在本地 ignored `artifacts/`，未发布。
+- 验收文档已同步公开生成器、私有构建脚本、架构说明及 WPF runtime 布局。验收时公开验证包与消费应用只存放在本地 ignored `artifacts/`，未发布。
 
 阶段六完成了当前公开 NuGet + 私有工程集成的自动验收。真实 CAD 宿主中的同名异内容 DLL 冲突、实际 D3D device lost 恢复和独立私有 NuGet 包的包级最终 manifest 与部署规则留待具备目标环境/交付形态后验证。

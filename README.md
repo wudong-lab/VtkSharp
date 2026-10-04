@@ -125,7 +125,7 @@ dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj --configu
 其他示例包括网格、图像、交互、背景渐变，以及 WPF 承载和事件回调，见 [示例说明](src/examples/README.md)。
 
 `build-all.ps1` 只构建绑定库和 native 项目，不构建生成器、测试或示例；它将产物收集到
-动态产物收集到 `artifacts/bin/dynamic/<Configuration>/<TFM>`，静态 fallback 保留在 `artifacts/bin/<TFM>`。脚本不会清空整个 `artifacts/bin`；依赖清单只管理目标目录内的 native 文件。示例命令使用相同的 Release 配置，
+动态产物收集到 `artifacts/bin/<Configuration>/<TFM>`，静态 fallback 保留在 `artifacts/bin/<TFM>`。脚本不会清空整个 `artifacts/bin`；依赖清单只管理目标目录内的 native 文件。示例命令使用相同的 Release 配置，
 以便项目自动复制对应的 `VtkSharp.Native.dll`。仅运行 `dotnet build` 不会编译 native 层。
 
 仓库已包含生成的绑定，普通构建无需先运行生成器。本页采用源码构建流程；本地 NuGet 打包、

@@ -13,7 +13,7 @@
 
 ## 绑定与验证
 
-- 候选与规划报告：`artifacts/triangulate/candidate.yml`、`artifacts/triangulate/report.json`。
+
 - 新增绑定：`vtkTriangleFilter`；同时合并 `vtkProperty.Representation` 的枚举契约。
 - 统一验证报告待执行 `tools/verify-workflow.ps1 -VtkDir <vtk-cmake-directory> -Regenerate -Example Meshes/Triangulate` 后补充。
 

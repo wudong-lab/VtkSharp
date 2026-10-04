@@ -14,7 +14,6 @@
 
 ## 绑定规划
 
-需求、规划及审核候选位于忽略目录 `artifacts/label-contours/`：`requests.json`、`plan.json`、`candidate.yml`。
 审核 `diff-whitelist --summary` 后通过 `merge-candidate` 合并：3 个新增类型、19 个新增方法、0 冲突。`vtkStripper` 仅请求类型；现有基类提供管线方法。未修改生成器或手工编辑生成代码。
 
 ## 互操作依据
@@ -58,7 +57,7 @@ $env:VTK_ROOT = 'D:/Code/VTK/VtkGitBuild/install'
 .\tools\verify-workflow.ps1 -VtkDir "$env:VTK_ROOT/lib/cmake/vtk-9.7" -Regenerate -Example Visualization/LabelContours
 ```
 
-2026-08-31 的统一报告位于 `artifacts/label-contours/verification/verification.json`：
+2026-08-31 的验证结果：
 
 - 生成器测试 233/233、托管测试 39/39 通过；Release native 与 ExampleBrowser 构建通过，各阶段未报告警告。
 - `Visualization/LabelContours` 截图验收通过，PNG 为 600×600；检查确认彩色标量面、黑色折线和金色两位小数标签正常。随机标签局部重叠，沿用原例行为。
@@ -66,4 +65,4 @@ $env:VTK_ROOT = 'D:/Code/VTK/VtkGitBuild/install'
 - 全量生成还刷新了旧版本增量缓存，已撤回无关模块的缓存变更；保留新增接口所属模块的生成清单。
 - 尝试桌面验收时，Computer Use 窗口捕获两次报 `SetIsBorderRequired: No such interface supported (0x80004002)`，故未验证旋转、缩放和手动关闭。已清理此次启动的浏览器进程。长期重复创建/释放和内存泄漏未验证。
 
-生成一致性复查通过（退出码 0，`Generated output is up to date.`），日志为 `artifacts/label-contours/generated-recheck.stdout.log` 和 `generated-recheck.stderr.log`。原统一报告保留首次失败记录，未改写历史结果。`git diff --check` 通过。
+生成一致性复查通过（退出码 0，`Generated output is up to date.`）。`git diff --check` 通过。

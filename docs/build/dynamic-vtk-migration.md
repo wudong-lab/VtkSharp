@@ -19,7 +19,7 @@ BRDI.VtkSharp.dll / BRDI.VtkSharp.Wpf.dll                 |
 - VtkSharp 默认动态链接；NuGet `26.1004.236` 只交付 Release runtime。私有项目用该包提供托管 API，以匹配所选 VTK 安装构建私有 native。
 - 依赖收集器递归检查普通导入与延迟导入，并显式包含 OpenGL2 渲染模块。输出 `native-dependencies.json`，记录入口、来源、散列、配置、VTK build id、依赖边及系统/CRT 依赖。复制前验证散列；缺失依赖或同名不同内容文件会使构建失败。
 - 运行文件平铺复制到应用输出目录；Windows 系统文件和 MSVC CRT 不由 VTK 依赖复制器携带。许可文件随公开 NuGet 和私有聚合输出提供。
-- 清单与 DLL 按配置隔离：native 输出包含配置名，公开动态汇总输出位于 `artifacts/bin/dynamic/<Configuration>/<TFM>`，私有独立输出位于 `artifacts/bin/standalone-dynamic/<Configuration>/<TFM>`。禁止 Release 和 Debug 文件互相覆盖。
+- 清单与 DLL 按配置隔离：native 输出包含配置名，公开动态汇总输出位于 `artifacts/bin/<Configuration>/<TFM>`，私有独立输出位于 `artifacts/bin/standalone-dynamic/<Configuration>/<TFM>`。禁止 Release 和 Debug 文件互相覆盖。
 - 首阶段私有聚合 Release 构建曾验证通过；最终架构已将私有 native 拆分为 `BRDI.VtkSharp.Native.dll`，正式构建不再要求公开源码 submodule。
 
 ## 构建入口
@@ -55,7 +55,7 @@ pwsh tools/build-all.ps1 -Configuration Release -Linkage Dynamic -VtkDir <Releas
 
 ## 验证结果
 
-验证环境为 Windows x64、Visual Studio 2026/MSVC、VTK 9.7.0。静态安装与基线产物保留未覆盖。原始工作区提交与构建证据见 `artifacts/verification/dynamic-vtk-migration/`。
+验证环境为 Windows x64、Visual Studio 2026/MSVC、VTK 9.7.0。静态安装与基线产物保留未覆盖。
 
 | 检查 | 结果 |
 | --- | --- |
@@ -74,9 +74,9 @@ VTK 上游 Debug 编译有大量弃用和数值转换警告，但完整构建、
 
 私有 .NET 8 Debug WPF smoke 的 `coreclr.dll / 0xC0000005` 根因是 native 配置混用。Crash dump 显示首次 `AttachCursorObserver → vtkObject.AddObserverCore → vtkObject_AddObserverCallback` 调用时崩溃：私有入口从应用根目录加载 Debug VTK，公开入口却由 `.deps.json` 指向 NuGet 的 `runtimes/win-x64/native/VtkSharp.Native.dll`，并加载 Release VTK。仅把 Debug DLL 复制到应用根目录不能覆盖 .NET 的 NuGet native 解析路径，跨配置传递 VTK 对象违反 ABI 约束。
 
-修复在私有项目的两个 `VtkSharp` PackageReference 上设置 `ExcludeAssets="native"`，由匹配配置的合并 runtime 提供两个 native 入口与全部依赖。普通构建默认选择私有 native 输出目录，也必须存在完整清单和两个入口。未修改 CLR、VTK、回调或 WPF 渲染实现。复验 Debug/Release × .NET 8/.NET Framework 4.8，每项连续 3 次 smoke 通过；每次检查 74 个 native 模块均来自应用根目录，文件 SHA-256 匹配清单。Debug/Release 私有测试各 36 项通过。复验工具为私有仓库 `tools/verify-wpf-smoke.ps1`；dump 分析、加载清单和 TRX 位于 `artifacts/verification/wpf-debug-fix/`。原迁移目录保留修复前结果，供追溯。
+修复在私有项目的两个 `VtkSharp` PackageReference 上设置 `ExcludeAssets="native"`，由匹配配置的合并 runtime 提供两个 native 入口与全部依赖。普通构建默认选择私有 native 输出目录，也必须存在完整清单和两个入口。未修改 CLR、VTK、回调或 WPF 渲染实现。复验 Debug/Release × .NET 8/.NET Framework 4.8，每项连续 3 次 smoke 通过；每次检查 74 个 native 模块均来自应用根目录，文件 SHA-256 匹配清单。Debug/Release 私有测试各 36 项通过。复验工具为私有仓库 `tools/verify-wpf-smoke.ps1`。
 
-私有 .NET 8 Debug 另在新建的 `dotnet publish` 目录复验通过；启动时清空 `VTK_DIR`、`VTK_ROOT`，`PATH` 仅保留 Windows 目录，74 个 native 模块的实际路径和哈希仍匹配部署清单。未进行另一台干净机器或虚拟机复验，也未完成对实际用户环境的手动旋转/缩放验收。自动 Cone smoke 验证了渲染输出及隔离启动；截图和进程加载清单保存在 `artifacts/verification/dynamic-vtk-migration/`。
+私有 .NET 8 Debug 另在新建的 `dotnet publish` 目录复验通过；启动时清空 `VTK_DIR`、`VTK_ROOT`，`PATH` 仅保留 Windows 目录，74 个 native 模块的实际路径和哈希仍匹配部署清单。未进行另一台干净机器或虚拟机复验，也未完成对实际用户环境的手动旋转/缩放验收。自动 Cone smoke 验证了渲染输出及隔离启动。
 
 ## ABI 与部署约束
 
