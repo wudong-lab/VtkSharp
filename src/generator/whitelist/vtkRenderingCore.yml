@@ -218,6 +218,17 @@ classes:
         return:
           type: double
         parameters: []
+      - name: GetCompositeProjectionTransformMatrix
+        cppSignature: vtkMatrix4x4 * GetCompositeProjectionTransformMatrix(double aspect, double nearz, double farz)
+        return:
+          type: vtkMatrix4x4*
+        parameters:
+          - type: double
+            name: aspect
+          - type: double
+            name: nearz
+          - type: double
+            name: farz
       - name: GetFocalPoint
         cppSignature: double * GetFocalPoint()
         return:
@@ -3119,6 +3130,23 @@ classes:
         parameters:
           - type: double[3]
             name: _arg
+      - name: GetTiledSize
+        cppSignature: void GetTiledSize(int * width, int * height)
+        return:
+          type: void
+        parameters:
+          - type: int*
+            name: width
+            direction: out
+            length:
+              kind: fixed
+              value: 1
+          - type: int*
+            name: height
+            direction: out
+            length:
+              kind: fixed
+              value: 1
       - name: GetViewProps
         cppSignature: vtkPropCollection * GetViewProps()
         return:

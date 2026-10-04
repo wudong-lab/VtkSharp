@@ -3,3 +3,7 @@
 #include <vtkBatchedLabeledDataMapper.h>
 
 VTKSHARP_API vtkBatchedLabeledDataMapper* vtkBatchedLabeledDataMapper_New() { return vtkBatchedLabeledDataMapper::New(); }
+
+VTKSHARP_API int vtkBatchedLabeledDataMapper_GetTextAnchor(vtkBatchedLabeledDataMapper* self) { return self->GetTextAnchor(); }
+
+VTKSHARP_API void vtkBatchedLabeledDataMapper_SetTextAnchor(vtkBatchedLabeledDataMapper* self, int _arg) { self->SetTextAnchor(_arg); }

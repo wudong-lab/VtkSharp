@@ -136,6 +136,29 @@ public unsafe partial class vtkCamera : vtkObject
     }
 
     /// <summary>
+    /// Return the concatenation of the ViewTransform and the
+    /// ProjectionTransform. This transform will convert world
+    /// coordinates to viewport coordinates. The 'aspect' is the
+    /// width/height for the viewport, and the nearz and farz are the
+    /// Z-buffer values that map to the near and far clipping planes.
+    /// The viewport coordinates of a point located inside the frustum are in the
+    /// range ([-1,+1],[-1,+1],[nearz,farz]).
+    /// aspect is ignored if UseExplicitAspectRatio is true.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// See also: ExplicitProjectionTransformMatrix
+    /// </para>
+    /// <para>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </para>
+    /// </remarks>
+    public new vtkMatrix4x4 GetCompositeProjectionTransformMatrix(double aspect, double nearz, double farz)
+    {
+        return vtkMatrix4x4.FromBorrowedPointer(vtkCamera_GetCompositeProjectionTransformMatrix(this.NativePointer, aspect, nearz, farz));
+    }
+
+    /// <summary>
     /// Set/Get the focal of the camera in world coordinates.
     /// The default focal point is the origin.
     /// </summary>
@@ -522,6 +545,9 @@ public unsafe partial class vtkCamera : vtkObject
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern double vtkCamera_GetFocalDistance(nint self);
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern nint vtkCamera_GetCompositeProjectionTransformMatrix(nint self, double aspect, double nearz, double farz);
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern double* vtkCamera_GetFocalPoint_(nint self);

@@ -4,7 +4,19 @@ module: vtkRenderingLabel
 classes:
   - name: vtkBatchedLabeledDataMapper
     header: vtkBatchedLabeledDataMapper.h
-    functions: []
+    functions:
+      - name: GetTextAnchor
+        cppSignature: int GetTextAnchor()
+        return:
+          type: int
+        parameters: []
+      - name: SetTextAnchor
+        cppSignature: void SetTextAnchor(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
   - name: vtkLabelHierarchyAlgorithm
     header: vtkLabelHierarchyAlgorithm.h
     functions: []

@@ -162,6 +162,38 @@ public unsafe partial class vtkViewport : vtkObject
     }
 
     /// <summary>
+    /// Get the size and origin of the viewport in display coordinates. Note:
+    /// if the window has not yet been realized, GetSize() and GetOrigin()
+    /// return (0,0).
+    /// </summary>
+    /// <param name="width">
+    /// <para>
+    /// Output parameter.
+    /// </para>
+    /// <para>
+    /// Buffer length: 1 elements.
+    /// </para>
+    /// </param>
+    /// <param name="height">
+    /// <para>
+    /// Output parameter.
+    /// </para>
+    /// <para>
+    /// Buffer length: 1 elements.
+    /// </para>
+    /// </param>
+    public new void GetTiledSize(Span<int> width, Span<int> height)
+    {
+        fixed (int* widthPtr = width)
+        {
+            fixed (int* heightPtr = height)
+            {
+                vtkViewport_GetTiledSize(this.NativePointer, widthPtr, heightPtr);
+            }
+        }
+    }
+
+    /// <summary>
     /// Return any props in this viewport.
     /// </summary>
     /// <remarks>
@@ -369,6 +401,9 @@ public unsafe partial class vtkViewport : vtkObject
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkViewport_GetBackground2_doubleArray3(nint self, double* _arg);
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern void vtkViewport_GetTiledSize(nint self, int* width, int* height);
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkViewport_GetViewProps(nint self);

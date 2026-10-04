@@ -21,6 +21,8 @@ VTKSHARP_API double* vtkViewport_GetBackground2_(vtkViewport* self) { return sel
 
 VTKSHARP_API void vtkViewport_GetBackground2_doubleArray3(vtkViewport* self, double* _arg) { self->GetBackground2(_arg); }
 
+VTKSHARP_API void vtkViewport_GetTiledSize(vtkViewport* self, int* width, int* height) { self->GetTiledSize(width, height); }
+
 VTKSHARP_API vtkPropCollection* vtkViewport_GetViewProps(vtkViewport* self) { return self->GetViewProps(); }
 
 VTKSHARP_API void vtkViewport_GradientBackgroundOff(vtkViewport* self) { self->GradientBackgroundOff(); }

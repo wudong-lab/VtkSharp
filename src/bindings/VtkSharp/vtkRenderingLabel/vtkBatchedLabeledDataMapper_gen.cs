@@ -81,8 +81,36 @@ public unsafe partial class vtkBatchedLabeledDataMapper : vtkLabeledDataMapper
         return target;
     }
 
+    /// <summary>
+    /// Set/Get the anchor point for label placement.
+    /// </summary>
+    /// <remarks>
+    /// See also: TextAnchor
+    /// </remarks>
+    public new int GetTextAnchor()
+    {
+        return vtkBatchedLabeledDataMapper_GetTextAnchor(this.NativePointer);
+    }
+
+    /// <summary>
+    /// Set/Get the anchor point for label placement.
+    /// </summary>
+    /// <remarks>
+    /// See also: TextAnchor
+    /// </remarks>
+    public new void SetTextAnchor(int _arg)
+    {
+        vtkBatchedLabeledDataMapper_SetTextAnchor(this.NativePointer, _arg);
+    }
+
     #region Interop
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkBatchedLabeledDataMapper_New();
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern int vtkBatchedLabeledDataMapper_GetTextAnchor(nint self);
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern void vtkBatchedLabeledDataMapper_SetTextAnchor(nint self, int _arg);
     #endregion
 }

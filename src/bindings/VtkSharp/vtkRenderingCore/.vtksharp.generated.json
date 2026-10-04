@@ -118,11 +118,11 @@
       "header": "vtkCamera.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "08740dd3906e01c728b9c9a96d5ea76d2c1cd74eaf5315c7a53a4b7028cffba4",
+      "inputHash": "4a152e5511016df91a6ea2f092ac6330771e3ed216d2e45037ea56038d333d6b",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkCamera_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkCamera_export_gen.cpp",
-      "managedContentHash": "48d2a7bebb23435d38ef4641ddbe6ffa1e514d5737890f7bd918a8c277c79bac",
-      "nativeContentHash": "d624efe990537e5fb61ef47a2fa38bf1d02e32f3ff39291abcd45f56b8567bf1"
+      "managedContentHash": "850e67dcb36ed80e2dda06aae84e8163025362100c153abb2b61bf5d3b01f96c",
+      "nativeContentHash": "50027c001a1534af308ed668096aef2bb18af582a043170bc20979de60dfafdf"
     },
     {
       "className": "vtkCellPicker",
@@ -547,11 +547,11 @@
       "header": "vtkViewport.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": false,
-      "inputHash": "327fa496189494c8982bf2e28eabc0fdbaa1fb9f9dc1bef0514c72622385c050",
+      "inputHash": "877ac9b8aab481e4b5f7e71b036c28268c42bf4b9d64082dd228a9b09dd4b3f8",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkViewport_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkViewport_export_gen.cpp",
-      "managedContentHash": "2db9d17dc478cf3d241b41b745994ffd15b9d03fcc50d5b62f40166027218af0",
-      "nativeContentHash": "bc7700d652bea590ff96f9e821f75237f6dee42e8590e1c698c40a54c2a0c2ca"
+      "managedContentHash": "0dda77d4178b9734bc323221b5dbd568b2752632976fa70dcd36988ab5c1b1f3",
+      "nativeContentHash": "3fe8989b5e3994eed17c31e0d511827566bb9a173b3b3b5dc79cf3fc31b35b5b"
     },
     {
       "className": "vtkWindowToImageFilter",

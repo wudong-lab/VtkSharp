@@ -8,11 +8,11 @@
       "header": "vtkBatchedLabeledDataMapper.h",
       "baseClassName": "vtkLabeledDataMapper",
       "hasStaticNew": true,
-      "inputHash": "5dc8295056ed7fd729d95fd7827878a3a6b251ab22aa617ebf8a062f6c08bb3e",
+      "inputHash": "f0321fdc76102d6089203b96c37912084efc68b8009573acdb35436f9bf6dc99",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkBatchedLabeledDataMapper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkBatchedLabeledDataMapper_export_gen.cpp",
-      "managedContentHash": "2453d9bb1d07e639fd7ed235f99dd394da3b494ea278ccb484d958426f577fd8",
-      "nativeContentHash": "f70323c017611af09d8331ce71665339239416ace9a2a92ae9816413a2d4174b"
+      "managedContentHash": "d2aa4430f0d3d4cf919bcacbf9852bad5aba0273986933d013f2658a41d198cd",
+      "nativeContentHash": "088803788976b80e79248073bac0b386f52eb312e24f891164530aa33015cad2"
     },
     {
       "className": "vtkLabelHierarchyAlgorithm",
