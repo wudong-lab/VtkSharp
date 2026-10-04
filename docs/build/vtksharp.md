@@ -1,6 +1,6 @@
 # 构建与打包 VtkSharp
 
-VtkSharp 由 managed `VtkSharp.dll`、公开 C ABI `VtkSharp.Native.dll` 和运行时依赖组成。当前默认使用 Windows x64、VTK 9.7.0 Shared、Release `/MD`；静态构建仍可显式选择作为基线或回退路径。
+VtkSharp 由 managed `VtkSharp.dll`、模块化公开 C ABI `VtkSharp.Native.<Group>.dll` 和运行时依赖组成。当前默认使用 Windows x64、VTK 9.7.0 Shared、Release `/MD`；静态构建仍可显式选择作为基线或回退路径。
 
 ## 环境和构建
 
@@ -14,7 +14,7 @@ $vtkDir = "D:\Code\VTK\VtkGitBuild-shared\install\Release\lib\cmake\vtk-9.7"
 # Build the public native wrapper and its exact dependency closure.
 .\tools\build-native.ps1 -Configuration Release -VtkDir $vtkDir
 
-# Build managed libraries and examples with the full runtime set.
+# Build managed libraries and collect the full runtime set.
 .\tools\build-all.ps1 -Configuration Release -VtkDir $vtkDir
 ```
 
@@ -29,9 +29,9 @@ $newVersion = "27.1004.1" # Choose a version not present in the local package so
     -VtkDir D:\Code\VTK\VtkGitBuild-shared\install\Release\lib\cmake\vtk-9.7
 ```
 
-打包只接受 Release、Dynamic；可用 `-Version` 显式指定未使用的 `x.y.z` 版本，不传时根据本地时间生成版本。已存在同版本包会失败，不覆盖包。包把 managed assemblies 放入相应 TFM，将完整可分发 DLL 闭包放在 `runtimes/win-x64/native/`，并携带依赖清单、VTK 版权声明和第三方许可文件。为避免 NuGet 对无扩展名 `LICENSE` 项生成过长路径，打包时将其重命名为 `.txt`，映射记录在 `licenses/VTK/license-file-renames.json`。脚本只生成本地 NuGet 包，不发布到 NuGet.org。
+打包只接受 Release、Dynamic；可用 `-Version` 显式指定未使用的 `x.y.z` 版本，不传时根据本地时间生成版本。已存在同版本包会失败，不覆盖包。包把 managed assemblies 放入相应 TFM，将完整可分发 DLL 闭包放在 `native/VtkSharp/win-x64/`，并携带依赖清单、VTK 版权声明和第三方许可文件。为避免 NuGet 对无扩展名 `LICENSE` 项生成过长路径，打包时将其重命名为 `.txt`，映射记录在 `licenses/VTK/license-file-renames.json`。脚本只生成本地 NuGet 包，不发布到 NuGet.org。
 
-消费项目通过固定版本 `PackageReference` 使用本地源。Windows x64 项目应设置 `win-x64` runtime identifier，尤其是 .NET Framework 4.8，以便 NuGet 选择 native 资产；已验证 .NET 8 与 .NET Framework 4.8 输出目录包含完整 DLL 闭包。Release 机器需要兼容的 x64 Visual C++ 运行库。
+消费项目通过固定版本 `PackageReference` 使用本地源，并确保消费进程为 Windows x64。包内 `buildTransitive/VtkSharp.targets` 将 native 资产复制到 build 和 publish 输出的 `native/VtkSharp/win-x64/` 子目录，加载器默认从这里按需加载入口及依赖；首次调用前可通过 `VtkSharpRuntime.ConfigureNativeRuntimeDirectory` 指定其他 runtime 目录。Release 机器需要兼容的 x64 Visual C++ 运行库。
 
 ## 验证与部署隔离
 
