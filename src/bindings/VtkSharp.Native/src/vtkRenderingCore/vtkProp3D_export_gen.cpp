@@ -16,6 +16,8 @@ VTKSHARP_API void vtkProp3D_RotateY(vtkProp3D* self, double _arg1) { self->Rotat
 
 VTKSHARP_API void vtkProp3D_RotateZ(vtkProp3D* self, double _arg1) { self->RotateZ(_arg1); }
 
+VTKSHARP_API void vtkProp3D_SetPosition(vtkProp3D* self, double x, double y, double z) { self->SetPosition(x, y, z); }
+
 VTKSHARP_API void vtkProp3D_SetUserMatrix(vtkProp3D* self, vtkMatrix4x4* matrix) { self->SetUserMatrix(matrix); }
 
 VTKSHARP_API void vtkProp3D_SetUserTransform(vtkProp3D* self, vtkLinearTransform* transform) { self->SetUserTransform(transform); }

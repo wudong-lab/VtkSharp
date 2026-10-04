@@ -105,6 +105,15 @@ public unsafe partial class vtkCutter : vtkPolyDataAlgorithm
     }
 
     /// <summary>
+    /// Generate numContours equally spaced contour values between specified
+    /// range. Contour values will include min/max range values.
+    /// </summary>
+    public new void GenerateValues(int numContours, double rangeStart, double rangeEnd)
+    {
+        vtkCutter_GenerateValues(this.NativePointer, numContours, rangeStart, rangeEnd);
+    }
+
+    /// <summary>
     /// Specify the implicit function to perform the cutting.
     /// </summary>
     public new void SetCutFunction(vtkImplicitFunction _arg1)
@@ -115,6 +124,9 @@ public unsafe partial class vtkCutter : vtkPolyDataAlgorithm
     #region Interop
     [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkCutter_New();
+
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    private static extern void vtkCutter_GenerateValues(nint self, int numContours, double rangeStart, double rangeEnd);
 
     [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkCutter_SetCutFunction(nint self, nint _arg1);

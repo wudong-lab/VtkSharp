@@ -11,6 +11,7 @@ set(VTKSHARP_VTK_COMPONENTS
   FiltersExtraction
   FiltersGeneral
   FiltersGeometry
+  FiltersHybrid
   FiltersModeling
   FiltersPoints
   FiltersSources
@@ -44,6 +45,7 @@ set(VTKSHARP_NATIVE_TARGETS
   VtkSharp.Native.FiltersExtraction
   VtkSharp.Native.FiltersGeneral
   VtkSharp.Native.FiltersGeometry
+  VtkSharp.Native.FiltersHybrid
   VtkSharp.Native.FiltersModeling
   VtkSharp.Native.FiltersPoints
   VtkSharp.Native.FiltersSources
@@ -132,20 +134,24 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonDataModel_AUTOINIT_MODULES
 
 set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonDataModel_SOURCES
   src/vtkCommonDataModel/vtkAbstractCellArray_export_gen.cpp
+  src/vtkCommonDataModel/vtkAbstractCellLocator_export_gen.cpp
   src/vtkCommonDataModel/vtkCartesianGrid_export_gen.cpp
   src/vtkCommonDataModel/vtkCell3D_export_gen.cpp
   src/vtkCommonDataModel/vtkCellArrayIterator_export_gen.cpp
   src/vtkCommonDataModel/vtkCellArray_export_gen.cpp
   src/vtkCommonDataModel/vtkCellData_export_gen.cpp
+  src/vtkCommonDataModel/vtkCellLocator_export_gen.cpp
   src/vtkCommonDataModel/vtkCell_export_gen.cpp
   src/vtkCommonDataModel/vtkDataObject_export_gen.cpp
   src/vtkCommonDataModel/vtkDataSetAttributes_export_gen.cpp
   src/vtkCommonDataModel/vtkDataSet_export_gen.cpp
   src/vtkCommonDataModel/vtkFieldData_export_gen.cpp
+  src/vtkCommonDataModel/vtkGenericCell_export_gen.cpp
   src/vtkCommonDataModel/vtkHexahedron_export_gen.cpp
   src/vtkCommonDataModel/vtkImageData_export_gen.cpp
   src/vtkCommonDataModel/vtkImplicitFunction_export_gen.cpp
   src/vtkCommonDataModel/vtkLine_export_gen.cpp
+  src/vtkCommonDataModel/vtkLocator_export_gen.cpp
   src/vtkCommonDataModel/vtkNonLinearCell_export_gen.cpp
   src/vtkCommonDataModel/vtkPlane_export_gen.cpp
   src/vtkCommonDataModel/vtkPointData_export_gen.cpp
@@ -222,10 +228,12 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersCore_AUTOINIT_MODULES
 set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersCore_SOURCES
   src/vtkFiltersCore/vtkAppendPolyData_export_gen.cpp
   src/vtkFiltersCore/vtkCellCenters_export_gen.cpp
+  src/vtkFiltersCore/vtkCleanPolyData_export_gen.cpp
   src/vtkFiltersCore/vtkContourFilter_export_gen.cpp
   src/vtkFiltersCore/vtkCutter_export_gen.cpp
   src/vtkFiltersCore/vtkDelaunay2D_export_gen.cpp
   src/vtkFiltersCore/vtkDelaunay3D_export_gen.cpp
+  src/vtkFiltersCore/vtkElevationFilter_export_gen.cpp
   src/vtkFiltersCore/vtkExtractEdges_export_gen.cpp
   src/vtkFiltersCore/vtkFeatureEdges_export_gen.cpp
   src/vtkFiltersCore/vtkGenerateIds_export_gen.cpp
@@ -234,6 +242,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersCore_SOURCES
   src/vtkFiltersCore/vtkPolyDataConnectivityFilter_export_gen.cpp
   src/vtkFiltersCore/vtkProbeFilter_export_gen.cpp
   src/vtkFiltersCore/vtkQuadricDecimation_export_gen.cpp
+  src/vtkFiltersCore/vtkSimpleElevationFilter_export_gen.cpp
   src/vtkFiltersCore/vtkStripper_export_gen.cpp
   src/vtkFiltersCore/vtkThreshold_export_gen.cpp
   src/vtkFiltersCore/vtkTriangleFilter_export_gen.cpp
@@ -262,10 +271,14 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeneral_AUTOINIT_MODULES
 )
 
 set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeneral_SOURCES
+  src/vtkFiltersGeneral/vtkApproximatingSubdivisionFilter_export_gen.cpp
   src/vtkFiltersGeneral/vtkContourTriangulator_export_gen.cpp
+  src/vtkFiltersGeneral/vtkInterpolatingSubdivisionFilter_export_gen.cpp
+  src/vtkFiltersGeneral/vtkSubdivisionFilter_export_gen.cpp
   src/vtkFiltersGeneral/vtkTableBasedClipDataSet_export_gen.cpp
   src/vtkFiltersGeneral/vtkTableToPolyData_export_gen.cpp
   src/vtkFiltersGeneral/vtkTessellatorFilter_export_gen.cpp
+  src/vtkFiltersGeneral/vtkTransformFilter_export_gen.cpp
   src/vtkFiltersGeneral/vtkTransformPolyDataFilter_export_gen.cpp
   src/vtkFiltersGeneral/vtkVertexGlyphFilter_export_gen.cpp
   src/vtkFiltersGeneral/vtkWarpScalar_export_gen.cpp
@@ -285,6 +298,18 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeometry_SOURCES
   src/vtkFiltersGeometry/vtkImageDataGeometryFilter_export_gen.cpp
 )
 
+set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersHybrid_MODULES
+  FiltersHybrid
+)
+
+set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersHybrid_AUTOINIT_MODULES
+  FiltersHybrid
+)
+
+set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersHybrid_SOURCES
+  src/vtkFiltersHybrid/vtkGreedyTerrainDecimation_export_gen.cpp
+)
+
 set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersModeling_MODULES
   FiltersModeling
 )
@@ -294,8 +319,14 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersModeling_AUTOINIT_MODULES
 )
 
 set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersModeling_SOURCES
+  src/vtkFiltersModeling/vtkBandedPolyDataContourFilter_export_gen.cpp
+  src/vtkFiltersModeling/vtkButterflySubdivisionFilter_export_gen.cpp
+  src/vtkFiltersModeling/vtkDijkstraGraphGeodesicPath_export_gen.cpp
   src/vtkFiltersModeling/vtkFitToHeightMapFilter_export_gen.cpp
+  src/vtkFiltersModeling/vtkGeodesicPath_export_gen.cpp
+  src/vtkFiltersModeling/vtkGraphGeodesicPath_export_gen.cpp
   src/vtkFiltersModeling/vtkLinearExtrusionFilter_export_gen.cpp
+  src/vtkFiltersModeling/vtkLoopSubdivisionFilter_export_gen.cpp
   src/vtkFiltersModeling/vtkRibbonFilter_export_gen.cpp
 )
 
@@ -331,6 +362,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersSources_SOURCES
   src/vtkFiltersSources/vtkLineSource_export_gen.cpp
   src/vtkFiltersSources/vtkParametricFunctionSource_export_gen.cpp
   src/vtkFiltersSources/vtkPlaneSource_export_gen.cpp
+  src/vtkFiltersSources/vtkPlatonicSolidSource_export_gen.cpp
   src/vtkFiltersSources/vtkPointSource_export_gen.cpp
   src/vtkFiltersSources/vtkRegularPolygonSource_export_gen.cpp
   src/vtkFiltersSources/vtkSelectionSource_export_gen.cpp
@@ -514,6 +546,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkRenderingCore/vtkDiscretizableColorTransferFunction_export_gen.cpp
   src/vtkRenderingCore/vtkGlyph3DMapper_export_gen.cpp
   src/vtkRenderingCore/vtkImageActor_export_gen.cpp
+  src/vtkRenderingCore/vtkImageMapper3D_export_gen.cpp
   src/vtkRenderingCore/vtkImageSlice_export_gen.cpp
   src/vtkRenderingCore/vtkInteractorObserver_export_gen.cpp
   src/vtkRenderingCore/vtkInteractorStyleSwitchBase_export_gen.cpp
@@ -567,6 +600,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_RenderingAnnotation_SOURCES
   src/vtkRenderingAnnotation/vtkAxesActor_export_gen.cpp
   src/vtkRenderingAnnotation/vtkAxisActor2D_export_gen.cpp
   src/vtkRenderingAnnotation/vtkCaptionActor2D_export_gen.cpp
+  src/vtkRenderingAnnotation/vtkLegendBoxActor_export_gen.cpp
   src/vtkRenderingAnnotation/vtkLegendScaleActor_export_gen.cpp
   src/vtkRenderingAnnotation/vtkScalarBarActor_export_gen.cpp
 )

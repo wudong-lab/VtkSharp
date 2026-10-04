@@ -2,9 +2,25 @@
 
 module: vtkFiltersGeneral
 classes:
+  - name: vtkApproximatingSubdivisionFilter
+    header: vtkApproximatingSubdivisionFilter.h
+    functions: []
   - name: vtkContourTriangulator
     header: vtkContourTriangulator.h
     functions: []
+  - name: vtkInterpolatingSubdivisionFilter
+    header: vtkInterpolatingSubdivisionFilter.h
+    functions: []
+  - name: vtkSubdivisionFilter
+    header: vtkSubdivisionFilter.h
+    functions:
+      - name: SetNumberOfSubdivisions
+        cppSignature: void SetNumberOfSubdivisions(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
   - name: vtkTableBasedClipDataSet
     header: vtkTableBasedClipDataSet.h
     functions:
@@ -47,6 +63,16 @@ classes:
   - name: vtkTessellatorFilter
     header: vtkTessellatorFilter.h
     functions: []
+  - name: vtkTransformFilter
+    header: vtkTransformFilter.h
+    functions:
+      - name: SetTransform
+        cppSignature: void SetTransform(vtkAbstractTransform * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkAbstractTransform*
+            name: _arg1
   - name: vtkTransformPolyDataFilter
     header: vtkTransformPolyDataFilter.h
     functions:

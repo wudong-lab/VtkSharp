@@ -37,3 +37,7 @@ VTKSHARP_API void vtkPlaneSource_SetPoint2_double_double_double(vtkPlaneSource* 
 VTKSHARP_API void vtkPlaneSource_SetPoint2_doubleArray3(vtkPlaneSource* self, double* pnt) { self->SetPoint2(pnt); }
 
 VTKSHARP_API void vtkPlaneSource_SetResolution(vtkPlaneSource* self, int xR, int yR) { self->SetResolution(xR, yR); }
+
+VTKSHARP_API void vtkPlaneSource_SetXResolution(vtkPlaneSource* self, int _arg) { self->SetXResolution(_arg); }
+
+VTKSHARP_API void vtkPlaneSource_SetYResolution(vtkPlaneSource* self, int _arg) { self->SetYResolution(_arg); }

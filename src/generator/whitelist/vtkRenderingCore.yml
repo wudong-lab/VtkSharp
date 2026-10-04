@@ -1213,9 +1213,17 @@ classes:
         parameters:
           - type: vtkImageData*
             name: _arg1
+  - name: vtkImageMapper3D
+    header: vtkImageMapper3D.h
+    functions: []
   - name: vtkImageSlice
     header: vtkImageSlice.h
-    functions: []
+    functions:
+      - name: GetMapper
+        cppSignature: vtkImageMapper3D * GetMapper()
+        return:
+          type: vtkImageMapper3D*
+        parameters: []
   - name: vtkInteractorObserver
     header: vtkInteractorObserver.h
     functions:
@@ -1520,6 +1528,17 @@ classes:
         parameters:
           - type: double
             name: _arg1
+      - name: SetPosition
+        cppSignature: void SetPosition(double x, double y, double z)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: x
+          - type: double
+            name: y
+          - type: double
+            name: z
       - name: SetUserMatrix
         cppSignature: void SetUserMatrix(vtkMatrix4x4 * matrix)
         return:

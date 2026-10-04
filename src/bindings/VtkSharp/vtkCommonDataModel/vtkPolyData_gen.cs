@@ -115,6 +115,14 @@ public unsafe partial class vtkPolyData : vtkPointSet
     }
 
     /// <summary>
+    /// Shallow and Deep copy.
+    /// </summary>
+    public new void DeepCopy(vtkDataObject src)
+    {
+        vtkPolyData_DeepCopy(this.NativePointer, src.NativePointer);
+    }
+
+    /// <summary>
     /// Get the cell array defining lines. If there are no lines, an
     /// empty array will be returned (convenience to simplify traversal).
     /// </summary>
@@ -153,6 +161,9 @@ public unsafe partial class vtkPolyData : vtkPointSet
     #region Interop
     [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkPolyData_New();
+
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    private static extern void vtkPolyData_DeepCopy(nint self, nint src);
 
     [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkPolyData_GetLines(nint self);

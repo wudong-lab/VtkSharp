@@ -80,13 +80,34 @@ public unsafe partial class vtkDataSetAlgorithm : vtkAlgorithm
     }
 
     /// <summary>
+    /// Get the output data object for a port on this algorithm.
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkDataSet GetOutput()
+    {
+        return vtkDataSet.FromBorrowedPointer(vtkDataSetAlgorithm_GetOutput(this.NativePointer));
+    }
+
+    /// <summary>
+    /// Assign a data object as input. Note that this method does not
+    /// establish a pipeline connection. Use SetInputConnection() to
+    /// setup a pipeline connection.
+    /// </summary>
+    public new void SetInputData(vtkDataObject _arg1)
+    {
+        vtkDataSetAlgorithm_SetInputData_vtkDataObjectPtr(this.NativePointer, _arg1.NativePointer);
+    }
+
+    /// <summary>
     /// Assign a data object as input. Note that this method does not
     /// establish a pipeline connection. Use SetInputConnection() to
     /// setup a pipeline connection.
     /// </summary>
     public new void SetInputData(vtkDataSet _arg1)
     {
-        vtkDataSetAlgorithm_SetInputData(this.NativePointer, _arg1.NativePointer);
+        vtkDataSetAlgorithm_SetInputData_vtkDataSetPtr(this.NativePointer, _arg1.NativePointer);
     }
 
     #region Interop
@@ -94,6 +115,12 @@ public unsafe partial class vtkDataSetAlgorithm : vtkAlgorithm
     private static extern nint vtkDataSetAlgorithm_New();
 
     [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
-    private static extern void vtkDataSetAlgorithm_SetInputData(nint self, nint _arg1);
+    private static extern nint vtkDataSetAlgorithm_GetOutput(nint self);
+
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    private static extern void vtkDataSetAlgorithm_SetInputData_vtkDataObjectPtr(nint self, nint _arg1);
+
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    private static extern void vtkDataSetAlgorithm_SetInputData_vtkDataSetPtr(nint self, nint _arg1);
     #endregion
 }

@@ -217,6 +217,29 @@ classes:
         return:
           type: vtkTextActor*
         parameters: []
+  - name: vtkLegendBoxActor
+    header: vtkLegendBoxActor.h
+    functions:
+      - name: SetEntry
+        cppSignature: void SetEntry(int i, vtkPolyData * symbol, char const * string, double[3] color)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: i
+          - type: vtkPolyData*
+            name: symbol
+          - type: const char*
+            name: string
+          - type: double[3]
+            name: color
+      - name: SetNumberOfEntries
+        cppSignature: void SetNumberOfEntries(int num)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: num
   - name: vtkLegendScaleActor
     header: vtkLegendScaleActor.h
     functions:

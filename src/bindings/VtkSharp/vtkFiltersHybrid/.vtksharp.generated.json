@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "generatorVersion": "2026-10-04.native-module-layout-v1",
+  "module": "vtkFiltersHybrid",
+  "classes": [
+    {
+      "className": "vtkGreedyTerrainDecimation",
+      "header": "vtkGreedyTerrainDecimation.h",
+      "baseClassName": "vtkPolyDataAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "e80d40b24816cd36a1fb9d4e48bba2ca6a8348afaa5bbaa2f863f2a380ef7d55",
+      "managedPath": "bindings\\VtkSharp\\vtkFiltersHybrid\\vtkGreedyTerrainDecimation_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersHybrid\\vtkGreedyTerrainDecimation_export_gen.cpp",
+      "managedContentHash": "6214546bcfbb41a5a51db1490dbb8f1ebe90aaa5430fe63a249b71d279489300",
+      "nativeContentHash": "864d00f9dac4ff91e2f34ee9d2bbad92c696170f711e7b08263d7347540bbe94"
+    }
+  ]
+}

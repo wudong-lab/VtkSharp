@@ -85,8 +85,22 @@ public unsafe partial class vtkImageSlice : vtkProp3D
         return target;
     }
 
+    /// <summary>
+    /// Set/Get the mapper.
+    /// </summary>
+    /// <remarks>
+    /// The C# wrapper borrows the native object without adding a reference. Dispose() does not release the borrowed reference. Use the wrapper only while the native object remains alive.
+    /// </remarks>
+    public new vtkImageMapper3D GetMapper()
+    {
+        return vtkImageMapper3D.FromBorrowedPointer(vtkImageSlice_GetMapper(this.NativePointer));
+    }
+
     #region Interop
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkImageSlice_New();
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern nint vtkImageSlice_GetMapper(nint self);
     #endregion
 }

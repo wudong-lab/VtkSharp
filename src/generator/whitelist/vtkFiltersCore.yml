@@ -61,6 +61,9 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkCleanPolyData
+    header: vtkCleanPolyData.h
+    functions: []
   - name: vtkContourFilter
     header: vtkContourFilter.h
     functions:
@@ -78,6 +81,17 @@ classes:
   - name: vtkCutter
     header: vtkCutter.h
     functions:
+      - name: GenerateValues
+        cppSignature: void GenerateValues(int numContours, double rangeStart, double rangeEnd)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: numContours
+          - type: double
+            name: rangeStart
+          - type: double
+            name: rangeEnd
       - name: SetCutFunction
         cppSignature: void SetCutFunction(vtkImplicitFunction * _arg1)
         return:
@@ -112,6 +126,40 @@ classes:
         parameters:
           - type: double
             name: _arg
+  - name: vtkElevationFilter
+    header: vtkElevationFilter.h
+    functions:
+      - name: SetHighPoint
+        cppSignature: void SetHighPoint(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetLowPoint
+        cppSignature: void SetLowPoint(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
+      - name: SetScalarRange
+        cppSignature: void SetScalarRange(double _arg1, double _arg2)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
   - name: vtkExtractEdges
     header: vtkExtractEdges.h
     functions: []
@@ -313,6 +361,20 @@ classes:
         parameters:
           - type: double
             name: _arg
+  - name: vtkSimpleElevationFilter
+    header: vtkSimpleElevationFilter.h
+    functions:
+      - name: SetVector
+        cppSignature: void SetVector(double _arg1, double _arg2, double _arg3)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg1
+          - type: double
+            name: _arg2
+          - type: double
+            name: _arg3
   - name: vtkStripper
     header: vtkStripper.h
     functions: []

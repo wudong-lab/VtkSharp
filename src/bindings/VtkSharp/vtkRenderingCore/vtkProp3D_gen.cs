@@ -148,6 +148,14 @@ public unsafe partial class vtkProp3D : vtkProp
     }
 
     /// <summary>
+    /// Set/Get/Add the position of the Prop3D in world coordinates.
+    /// </summary>
+    public new void SetPosition(double x, double y, double z)
+    {
+        vtkProp3D_SetPosition(this.NativePointer, x, y, z);
+    }
+
+    /// <summary>
     /// The UserMatrix can be used in place of UserTransform.
     /// </summary>
     public new void SetUserMatrix(vtkMatrix4x4 matrix)
@@ -190,6 +198,9 @@ public unsafe partial class vtkProp3D : vtkProp
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkProp3D_RotateZ(nint self, double _arg1);
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern void vtkProp3D_SetPosition(nint self, double x, double y, double z);
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkProp3D_SetUserMatrix(nint self, nint matrix);

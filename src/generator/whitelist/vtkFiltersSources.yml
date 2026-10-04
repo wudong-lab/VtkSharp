@@ -504,6 +504,87 @@ classes:
             name: xR
           - type: int
             name: yR
+      - name: SetXResolution
+        cppSignature: void SetXResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetYResolution
+        cppSignature: void SetYResolution(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+  - name: vtkPlatonicSolidSource
+    header: vtkPlatonicSolidSource.h
+    functions:
+      - name: GetSolidType
+        cppSignature: int GetSolidType()
+        return:
+          type: int
+        parameters: []
+      - name: SetSolidType
+        cppSignature: void SetSolidType(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetSolidTypeToCube
+        cppSignature: void SetSolidTypeToCube()
+        return:
+          type: void
+        parameters: []
+      - name: SetSolidTypeToDodecahedron
+        cppSignature: void SetSolidTypeToDodecahedron()
+        return:
+          type: void
+        parameters: []
+      - name: SetSolidTypeToIcosahedron
+        cppSignature: void SetSolidTypeToIcosahedron()
+        return:
+          type: void
+        parameters: []
+      - name: SetSolidTypeToOctahedron
+        cppSignature: void SetSolidTypeToOctahedron()
+        return:
+          type: void
+        parameters: []
+      - name: SetSolidTypeToTetrahedron
+        cppSignature: void SetSolidTypeToTetrahedron()
+        return:
+          type: void
+        parameters: []
+    enumProperties:
+      - name: SolidType
+        nativeType: int
+        getter: GetSolidType
+        setter: SetSolidType
+        values:
+          - name: Cube
+            nativeExpression: VTK_SOLID_CUBE
+            value: 1
+          - name: Dodecahedron
+            nativeExpression: VTK_SOLID_DODECAHEDRON
+            value: 4
+          - name: Icosahedron
+            nativeExpression: VTK_SOLID_ICOSAHEDRON
+            value: 3
+          - name: Octahedron
+            nativeExpression: VTK_SOLID_OCTAHEDRON
+            value: 2
+          - name: Tetrahedron
+            nativeExpression: VTK_SOLID_TETRAHEDRON
+            value: 0
+        convenienceMethods:
+          - SetSolidTypeToCube
+          - SetSolidTypeToDodecahedron
+          - SetSolidTypeToIcosahedron
+          - SetSolidTypeToOctahedron
+          - SetSolidTypeToTetrahedron
   - name: vtkPointSource
     header: vtkPointSource.h
     functions:

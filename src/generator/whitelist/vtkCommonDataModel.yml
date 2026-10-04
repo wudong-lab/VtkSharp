@@ -5,6 +5,9 @@ classes:
   - name: vtkAbstractCellArray
     header: vtkAbstractCellArray.h
     functions: []
+  - name: vtkAbstractCellLocator
+    header: vtkAbstractCellLocator.h
+    functions: []
   - name: vtkCartesianGrid
     header: vtkCartesianGrid.h
     functions:
@@ -146,6 +149,31 @@ classes:
   - name: vtkCellData
     header: vtkCellData.h
     functions: []
+  - name: vtkCellLocator
+    header: vtkCellLocator.h
+    functions:
+      - name: BuildLocator
+        cppSignature: void BuildLocator()
+        return:
+          type: void
+        parameters: []
+      - name: IntersectWithLine
+        cppSignature: int IntersectWithLine(double const[3] p1, double const[3] p2, double tol, vtkPoints * points, vtkIdList * cellIds, vtkGenericCell * cell)
+        return:
+          type: int
+        parameters:
+          - type: const double[3]
+            name: p1
+          - type: const double[3]
+            name: p2
+          - type: double
+            name: tol
+          - type: vtkPoints*
+            name: points
+          - type: vtkIdList*
+            name: cellIds
+          - type: vtkGenericCell*
+            name: cell
   - name: vtkDataObject
     header: vtkDataObject.h
     functions:
@@ -240,6 +268,9 @@ classes:
         parameters:
           - type: const char*
             name: arrayName
+  - name: vtkGenericCell
+    header: vtkGenericCell.h
+    functions: []
   - name: vtkHexahedron
     header: vtkHexahedron.h
     functions: []
@@ -390,6 +421,16 @@ classes:
   - name: vtkLine
     header: vtkLine.h
     functions: []
+  - name: vtkLocator
+    header: vtkLocator.h
+    functions:
+      - name: SetDataSet
+        cppSignature: void SetDataSet(vtkDataSet * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataSet*
+            name: _arg1
   - name: vtkNonLinearCell
     header: vtkNonLinearCell.h
     functions: []
@@ -445,6 +486,13 @@ classes:
   - name: vtkPolyData
     header: vtkPolyData.h
     functions:
+      - name: DeepCopy
+        cppSignature: void DeepCopy(vtkDataObject * src)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: src
       - name: GetLines
         cppSignature: vtkCellArray * GetLines()
         return:

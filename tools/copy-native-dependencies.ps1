@@ -25,10 +25,12 @@ foreach ($item in $SourceRoot) {
 $destination = [IO.Path]::GetFullPath($DestinationDirectory)
 New-Item -ItemType Directory -Path $destination -Force | Out-Null
 $newNames = @($manifest.files | ForEach-Object { $_.name })
+$previousHashes = @{}
 $previousManifestPath = Join-Path $destination 'native-dependencies.json'
 if (Test-Path -LiteralPath $previousManifestPath -PathType Leaf) {
     $previous = Get-Content -LiteralPath $previousManifestPath -Raw | ConvertFrom-Json
     foreach ($oldFile in $previous.files) {
+        $previousHashes[$oldFile.name] = ([string]$oldFile.sha256).ToLowerInvariant()
         if ($newNames -contains $oldFile.name) { continue }
         $oldPath = Join-Path $destination $oldFile.name
         if (Test-Path -LiteralPath $oldPath -PathType Leaf) {
@@ -49,7 +51,10 @@ foreach ($file in $manifest.files) {
     $target = Join-Path $destination $file.name
     if (Test-Path -LiteralPath $target -PathType Leaf) {
         $targetHash = (Get-FileHash -LiteralPath $target -Algorithm SHA256).Hash.ToLowerInvariant()
-        if ($targetHash -ne $file.sha256) { throw "Refusing to overwrite a different file with the same name: $target" }
+        $previousHash = $previousHashes[$file.name]
+        if ($targetHash -ne $file.sha256 -and ($null -eq $previousHash -or $targetHash -ne $previousHash)) {
+            throw "Refusing to overwrite a different file with the same name: $target"
+        }
     }
     if ($source -ne [IO.Path]::GetFullPath($target)) {
         Copy-Item -LiteralPath $source -Destination $target -Force

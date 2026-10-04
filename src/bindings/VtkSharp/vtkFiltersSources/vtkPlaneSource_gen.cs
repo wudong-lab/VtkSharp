@@ -302,6 +302,22 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
         vtkPlaneSource_SetResolution(this.NativePointer, xR, yR);
     }
 
+    /// <summary>
+    /// Specify the resolution of the plane along the first axes.
+    /// </summary>
+    public new void SetXResolution(int _arg)
+    {
+        vtkPlaneSource_SetXResolution(this.NativePointer, _arg);
+    }
+
+    /// <summary>
+    /// Specify the resolution of the plane along the second axes.
+    /// </summary>
+    public new void SetYResolution(int _arg)
+    {
+        vtkPlaneSource_SetYResolution(this.NativePointer, _arg);
+    }
+
     #region Interop
     [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern nint vtkPlaneSource_New();
@@ -356,5 +372,11 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
 
     [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetResolution(nint self, int xR, int yR);
+
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    private static extern void vtkPlaneSource_SetXResolution(nint self, int _arg);
+
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    private static extern void vtkPlaneSource_SetYResolution(nint self, int _arg);
     #endregion
 }

@@ -8,7 +8,7 @@
       "header": "vtkAbstractPolyDataReader.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": false,
-      "inputHash": "dc3aac623af1a89cfdb32517d45915929b0c6e192463045e885e1609d84c7e00",
+      "inputHash": "0ae88e167500e5b28d9467ef2bcfe370202dd8ea6331226c0e1f3325a8d6a064",
       "managedPath": "bindings\\VtkSharp\\vtkIOCore\\vtkAbstractPolyDataReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOCore\\vtkAbstractPolyDataReader_export_gen.cpp",
       "managedContentHash": "851729a8433fd48c5808afcbf07c722e1061a3b1cc3caf6ee301d5e624461c5a",

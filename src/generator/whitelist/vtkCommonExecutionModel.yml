@@ -101,6 +101,18 @@ classes:
   - name: vtkDataSetAlgorithm
     header: vtkDataSetAlgorithm.h
     functions:
+      - name: GetOutput
+        cppSignature: vtkDataSet * GetOutput()
+        return:
+          type: vtkDataSet*
+        parameters: []
+      - name: SetInputData
+        cppSignature: void SetInputData(vtkDataObject * _arg1)
+        return:
+          type: void
+        parameters:
+          - type: vtkDataObject*
+            name: _arg1
       - name: SetInputData
         cppSignature: void SetInputData(vtkDataSet * _arg1)
         return:

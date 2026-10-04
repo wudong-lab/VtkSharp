@@ -2,6 +2,26 @@
 
 module: vtkFiltersModeling
 classes:
+  - name: vtkBandedPolyDataContourFilter
+    header: vtkBandedPolyDataContourFilter.h
+    functions:
+      - name: GenerateValues
+        cppSignature: void GenerateValues(int numContours, double rangeStart, double rangeEnd)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: numContours
+          - type: double
+            name: rangeStart
+          - type: double
+            name: rangeEnd
+  - name: vtkButterflySubdivisionFilter
+    header: vtkButterflySubdivisionFilter.h
+    functions: []
+  - name: vtkDijkstraGraphGeodesicPath
+    header: vtkDijkstraGraphGeodesicPath.h
+    functions: []
   - name: vtkFitToHeightMapFilter
     header: vtkFitToHeightMapFilter.h
     functions:
@@ -27,6 +47,26 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkGeodesicPath
+    header: vtkGeodesicPath.h
+    functions: []
+  - name: vtkGraphGeodesicPath
+    header: vtkGraphGeodesicPath.h
+    functions:
+      - name: SetEndVertex
+        cppSignature: void SetEndVertex(vtkIdType _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: _arg
+      - name: SetStartVertex
+        cppSignature: void SetStartVertex(vtkIdType _arg)
+        return:
+          type: void
+        parameters:
+          - type: vtkIdType
+            name: _arg
   - name: vtkLinearExtrusionFilter
     header: vtkLinearExtrusionFilter.h
     functions:
@@ -127,6 +167,9 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+  - name: vtkLoopSubdivisionFilter
+    header: vtkLoopSubdivisionFilter.h
+    functions: []
   - name: vtkRibbonFilter
     header: vtkRibbonFilter.h
     functions:

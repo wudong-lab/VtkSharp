@@ -5,4 +5,6 @@
 
 VTKSHARP_API vtkCutter* vtkCutter_New() { return vtkCutter::New(); }
 
+VTKSHARP_API void vtkCutter_GenerateValues(vtkCutter* self, int numContours, double rangeStart, double rangeEnd) { self->GenerateValues(numContours, rangeStart, rangeEnd); }
+
 VTKSHARP_API void vtkCutter_SetCutFunction(vtkCutter* self, vtkImplicitFunction* _arg1) { self->SetCutFunction(_arg1); }
