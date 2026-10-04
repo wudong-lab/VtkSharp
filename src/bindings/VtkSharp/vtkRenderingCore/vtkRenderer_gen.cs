@@ -416,6 +416,15 @@ public unsafe partial class vtkRenderer : vtkViewport
     }
 
     /// <summary>
+    /// By default, the depth buffer is reset for each renderer. If this flag is
+    /// true, this renderer will use the existing depth buffer for its rendering.
+    /// </summary>
+    public new void PreserveDepthBufferOff()
+    {
+        vtkRenderer_PreserveDepthBufferOff(this.NativePointer);
+    }
+
+    /// <summary>
     /// Add/Remove different types of props to the renderer.
     /// These methods are all synonyms to AddViewProp and RemoveViewProp.
     /// They are here for convenience and backwards compatibility.
@@ -593,6 +602,23 @@ public unsafe partial class vtkRenderer : vtkViewport
         {
             vtkRenderer_SetAmbient_doubleConstArray3(this.NativePointer, _argPtr);
         }
+    }
+
+    /// <summary>
+    /// Set/Get the layer that this renderer belongs to.  This is only used if
+    /// there are layered renderers.
+    /// </summary>
+    /// <remarks>
+    /// Note: Changing the layer will update the PreserveColorBuffer setting. If
+    /// the layer is 0, PreserveColorBuffer will be set to false, making the
+    /// bottom renderer opaque. If the layer is non-zero, PreserveColorBuffer will
+    /// be set to true, giving the renderer a transparent background. If other
+    /// PreserveColorBuffer configurations are desired, they must be adjusted after
+    /// the layer is set.
+    /// </remarks>
+    public new void SetLayer(int layer)
+    {
+        vtkRenderer_SetLayer(this.NativePointer, layer);
     }
 
     public new void SetPass(vtkRenderPass p)
@@ -820,6 +846,9 @@ public unsafe partial class vtkRenderer : vtkViewport
     private static extern nint vtkRenderer_PickProp_double_double_double_double(nint self, double selectionX1, double selectionY1, double selectionX2, double selectionY2);
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern void vtkRenderer_PreserveDepthBufferOff(nint self);
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderer_RemoveActor(nint self, nint p);
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
@@ -870,6 +899,9 @@ public unsafe partial class vtkRenderer : vtkViewport
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderer_SetAmbient_doubleConstArray3(nint self, double* _arg);
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern void vtkRenderer_SetLayer(nint self, int layer);
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderer_SetPass(nint self, nint p);

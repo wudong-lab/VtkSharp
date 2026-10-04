@@ -2,6 +2,9 @@
 
 module: vtkRenderingLabel
 classes:
+  - name: vtkBatchedLabeledDataMapper
+    header: vtkBatchedLabeledDataMapper.h
+    functions: []
   - name: vtkLabeledDataMapper
     header: vtkLabeledDataMapper.h
     functions:

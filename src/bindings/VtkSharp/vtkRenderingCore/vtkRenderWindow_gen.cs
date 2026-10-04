@@ -175,6 +175,17 @@ public unsafe partial class vtkRenderWindow : vtkWindow
         vtkRenderWindow_SetMultiSamples(this.NativePointer, _arg1);
     }
 
+    /// <summary>
+    /// Get the number of layers for renderers.  Each renderer should have
+    /// its layer set individually.  Some algorithms iterate through all layers,
+    /// so it is not wise to set the number of layers to be exorbitantly large
+    /// (say bigger than 100).
+    /// </summary>
+    public new void SetNumberOfLayers(int _arg)
+    {
+        vtkRenderWindow_SetNumberOfLayers(this.NativePointer, _arg);
+    }
+
     #region Interop
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkRenderWindow_New();
@@ -205,5 +216,8 @@ public unsafe partial class vtkRenderWindow : vtkWindow
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindow_SetMultiSamples(nint self, int _arg1);
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern void vtkRenderWindow_SetNumberOfLayers(nint self, int _arg);
     #endregion
 }

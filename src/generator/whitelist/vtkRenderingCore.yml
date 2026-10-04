@@ -2130,6 +2130,13 @@ classes:
         parameters:
           - type: int
             name: _arg1
+      - name: SetNumberOfLayers
+        cppSignature: void SetNumberOfLayers(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
   - name: vtkRenderWindowInteractor
     header: vtkRenderWindowInteractor.h
     functions:
@@ -2573,6 +2580,11 @@ classes:
             name: selectionX2
           - type: double
             name: selectionY2
+      - name: PreserveDepthBufferOff
+        cppSignature: void PreserveDepthBufferOff()
+        return:
+          type: void
+        parameters: []
       - name: RemoveActor
         cppSignature: void RemoveActor(vtkProp * p)
         return:
@@ -2704,6 +2716,13 @@ classes:
         parameters:
           - type: const double[3]
             name: _arg
+      - name: SetLayer
+        cppSignature: void SetLayer(int layer)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: layer
       - name: SetPass
         cppSignature: void SetPass(vtkRenderPass * p)
         return:

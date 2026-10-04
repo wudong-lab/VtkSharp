@@ -15,6 +15,17 @@
       "nativeContentHash": "f4e60715cb5cc188dc1c07109710494006ecd34b5565a0bbfd672f02b439e119"
     },
     {
+      "className": "vtkOpenGLBatchedLabeledDataMapper",
+      "header": "vtkOpenGLBatchedLabeledDataMapper.h",
+      "baseClassName": "vtkBatchedLabeledDataMapper",
+      "hasStaticNew": true,
+      "inputHash": "04eb85ff8f6b3bc0c9577df108b80eb34611b62ea3ac0996a1651b7b705c6b58",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingOpenGL2\\vtkOpenGLBatchedLabeledDataMapper_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingOpenGL2\\vtkOpenGLBatchedLabeledDataMapper_export_gen.cpp",
+      "managedContentHash": "1d32e833b005219dbee7db30c0171aeea516b49e9d91ceda8e8031411a487e47",
+      "nativeContentHash": "cedc382ff4a867c810bcd995f61f8add38b7572eb522bd6c5be66cd593e867d5"
+    },
+    {
       "className": "vtkOpenGLRenderPass",
       "header": "vtkOpenGLRenderPass.h",
       "baseClassName": "vtkRenderPass",

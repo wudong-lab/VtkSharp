@@ -583,8 +583,10 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkRenderingCore/vtkViewport_export_gen.cpp
   src/vtkRenderingCore/vtkWindowToImageFilter_export_gen.cpp
   src/vtkRenderingCore/vtkWorldPointPicker_export_gen.cpp
+  src/vtkRenderingLabel/vtkBatchedLabeledDataMapper_export_gen.cpp
   src/vtkRenderingLabel/vtkLabeledDataMapper_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkCameraPass_export_gen.cpp
+  src/vtkRenderingOpenGL2/vtkOpenGLBatchedLabeledDataMapper_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkOpenGLRenderPass_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkOpenGLRenderWindow_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkRenderPassCollection_export_gen.cpp

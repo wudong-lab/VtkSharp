@@ -12,6 +12,9 @@ classes:
         parameters:
           - type: vtkRenderPass*
             name: delegatePass
+  - name: vtkOpenGLBatchedLabeledDataMapper
+    header: vtkOpenGLBatchedLabeledDataMapper.h
+    functions: []
   - name: vtkOpenGLRenderPass
     header: vtkOpenGLRenderPass.h
     functions: []

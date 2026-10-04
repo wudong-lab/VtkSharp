@@ -4,6 +4,17 @@
   "module": "vtkRenderingLabel",
   "classes": [
     {
+      "className": "vtkBatchedLabeledDataMapper",
+      "header": "vtkBatchedLabeledDataMapper.h",
+      "baseClassName": "vtkLabeledDataMapper",
+      "hasStaticNew": true,
+      "inputHash": "5dc8295056ed7fd729d95fd7827878a3a6b251ab22aa617ebf8a062f6c08bb3e",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkBatchedLabeledDataMapper_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkBatchedLabeledDataMapper_export_gen.cpp",
+      "managedContentHash": "2453d9bb1d07e639fd7ed235f99dd394da3b494ea278ccb484d958426f577fd8",
+      "nativeContentHash": "f70323c017611af09d8331ce71665339239416ace9a2a92ae9816413a2d4174b"
+    },
+    {
       "className": "vtkLabeledDataMapper",
       "header": "vtkLabeledDataMapper.h",
       "baseClassName": "vtkMapper2D",

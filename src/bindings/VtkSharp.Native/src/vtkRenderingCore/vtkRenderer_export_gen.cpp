@@ -69,6 +69,8 @@ VTKSHARP_API vtkAssemblyPath* vtkRenderer_PickProp_double_double(vtkRenderer* se
 
 VTKSHARP_API vtkAssemblyPath* vtkRenderer_PickProp_double_double_double_double(vtkRenderer* self, double selectionX1, double selectionY1, double selectionX2, double selectionY2) { return self->PickProp(selectionX1, selectionY1, selectionX2, selectionY2); }
 
+VTKSHARP_API void vtkRenderer_PreserveDepthBufferOff(vtkRenderer* self) { self->PreserveDepthBufferOff(); }
+
 VTKSHARP_API void vtkRenderer_RemoveActor(vtkRenderer* self, vtkProp* p) { self->RemoveActor(p); }
 
 VTKSHARP_API void vtkRenderer_RemoveAllLights(vtkRenderer* self) { self->RemoveAllLights(); }
@@ -102,6 +104,8 @@ VTKSHARP_API void vtkRenderer_SetActiveCamera(vtkRenderer* self, vtkCamera* _arg
 VTKSHARP_API void vtkRenderer_SetAmbient_double_double_double(vtkRenderer* self, double _arg1, double _arg2, double _arg3) { self->SetAmbient(_arg1, _arg2, _arg3); }
 
 VTKSHARP_API void vtkRenderer_SetAmbient_doubleConstArray3(vtkRenderer* self, const double* _arg) { self->SetAmbient(_arg); }
+
+VTKSHARP_API void vtkRenderer_SetLayer(vtkRenderer* self, int layer) { self->SetLayer(layer); }
 
 VTKSHARP_API void vtkRenderer_SetPass(vtkRenderer* self, vtkRenderPass* p) { self->SetPass(p); }
 
