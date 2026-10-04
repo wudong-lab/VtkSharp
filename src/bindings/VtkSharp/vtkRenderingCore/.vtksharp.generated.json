@@ -30,11 +30,11 @@
       "header": "vtkAbstractPicker.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": false,
-      "inputHash": "52d849e047401375ab68e5c7956422db4510df1a9be9d420dcbb70fe304f31cb",
+      "inputHash": "c6718781babd9dd77b8734f0c3eb5e35f4fd7f7432078ec03545c7e6501459b5",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAbstractPicker_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAbstractPicker_export_gen.cpp",
-      "managedContentHash": "58e4e318fa07b959d40a29df8ca9ba8fd55aca93f83fe7a900ec4940d1234903",
-      "nativeContentHash": "9b74700b5b063d9402fd3b43b098c053a5fcccc1ae5da7fb10f4e40098de1e23"
+      "managedContentHash": "806c3b038d8e2586772dc0b08dc8e981f3e50107d6a15a092357c05fd4c5f2a0",
+      "nativeContentHash": "71e8202a24c68fe32eb59251388cfa5cf79e049fdc89efe77a21acbc0df8d443"
     },
     {
       "className": "vtkAbstractPropPicker",
@@ -90,6 +90,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkActorCollection_export_gen.cpp",
       "managedContentHash": "efaf2805f8eab707bb0c95c264a9c0bc50b8ef00cc153fbaed27dffc339be98a",
       "nativeContentHash": "228e1d3c49f2df02fcdb125e53a1bd8a1e4838e666c4b4cbc7028024c7a6638c"
+    },
+    {
+      "className": "vtkAreaPicker",
+      "header": "vtkAreaPicker.h",
+      "baseClassName": "vtkAbstractPropPicker",
+      "hasStaticNew": true,
+      "inputHash": "8f5765594056259f6fc1a9690eb6b673de741eb03c7d7010725e8bb15375c2b5",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkAreaPicker_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkAreaPicker_export_gen.cpp",
+      "managedContentHash": "0a25a7bc0bf8167a035955ab6f572a349e936931f024c8520310f2a2893ed8cc",
+      "nativeContentHash": "3f04a587ef4611dde3c5636840027618cc474a04b878712729e8cf3e1d3e0f48"
     },
     {
       "className": "vtkAssemblyPath",
@@ -294,11 +305,11 @@
       "header": "vtkPicker.h",
       "baseClassName": "vtkAbstractPropPicker",
       "hasStaticNew": true,
-      "inputHash": "166d1c2bc78fbd8c70f56753c7e957e4052b7daa56c6eefeaaa7ee205c10300d",
+      "inputHash": "2a64a25b39c8273fd8275d174ff02e52b4722992522b2bffc6c97a41c512790d",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPicker_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPicker_export_gen.cpp",
-      "managedContentHash": "0fa3ca4bf97e49e2949723178df65e03173dbebc9fec660cf4d72bffd432cd65",
-      "nativeContentHash": "bf2a9017c1fe5ae9db9b377aecd6bdebfbcad9fd748ca05b0bd08869dc359879"
+      "managedContentHash": "ec0720b16a8f17b63bfdd6a965a2e0953589945b5e4fa8525c38a4985beb3d3b",
+      "nativeContentHash": "d2abe326690d0650e6dbbcb83f9665e914896033ed0d0a02d8e38904a6593858"
     },
     {
       "className": "vtkPointGaussianMapper",
@@ -310,6 +321,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPointGaussianMapper_export_gen.cpp",
       "managedContentHash": "fb888bde99ba67dd59f02f22f1c466ffca531d45b7ac92cecee04e4f8940bd1f",
       "nativeContentHash": "7d9430b09f11e40e229cc9c9f730971426c799d0548bb48a3b4c9223c58dedb7"
+    },
+    {
+      "className": "vtkPointPicker",
+      "header": "vtkPointPicker.h",
+      "baseClassName": "vtkPicker",
+      "hasStaticNew": true,
+      "inputHash": "0e43bb53666090b4154ebcb783d80942f405a617cd7a0107e1ee5c8e5b4eb6a9",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkPointPicker_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkPointPicker_export_gen.cpp",
+      "managedContentHash": "89ab0a7b0b9fcbcf70d6a735543bbb3392e0da405429af95aa90d40c5e1648ac",
+      "nativeContentHash": "743bcbd48def99ff0eb29900b0a2f52675da10a7b2f0e2e24f2aae916b44760e"
     },
     {
       "className": "vtkPolyDataMapper",
@@ -354,6 +376,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkProp3D_export_gen.cpp",
       "managedContentHash": "de4fad6d28d08b78a6641b68cf1dfc6d125e1310e302cf377af022f687947fdf",
       "nativeContentHash": "d2a8cb11636b1063ff377ba360cee9a7759441b65fe339428e77f486fb46fa89"
+    },
+    {
+      "className": "vtkProp3DCollection",
+      "header": "vtkProp3DCollection.h",
+      "baseClassName": "vtkPropCollection",
+      "hasStaticNew": true,
+      "inputHash": "40191082ca79f0a4ea72da131418c97afc8c30231050f3d5a2df60e24cd533dc",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkProp3DCollection_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkProp3DCollection_export_gen.cpp",
+      "managedContentHash": "caddb1a499ee08113a6d6a3a91a21ab3e7a60a1b0d249f7d70c59802d4c1fdc6",
+      "nativeContentHash": "7f0c5c6ba14252bc8d0932abd5b92f41179a39d01f8e732e545bc3c7d8d19f53"
     },
     {
       "className": "vtkPropCollection",
@@ -530,6 +563,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkWindowToImageFilter_export_gen.cpp",
       "managedContentHash": "14c7a7f1705ff21377f5e32702cfb2c29dd7fb67a57543ba928a7f5982327efe",
       "nativeContentHash": "1d0f48e55e0f4b1b162747d35c9f25061fe2a3f9af3de485a0e8c115bb6e3f04"
+    },
+    {
+      "className": "vtkWorldPointPicker",
+      "header": "vtkWorldPointPicker.h",
+      "baseClassName": "vtkAbstractPicker",
+      "hasStaticNew": true,
+      "inputHash": "eaa85661873f4d74eb9a85052b2da88b12ecfb3d257c706b50b6cad03b54bd3d",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingCore\\vtkWorldPointPicker_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingCore\\vtkWorldPointPicker_export_gen.cpp",
+      "managedContentHash": "146980db44d5bd10503797155e2b2ee10968e49124572fee564c626927c519a5",
+      "nativeContentHash": "3a642ca974a8493003c5cd051bb17f4b3476d7ee644485a5922813d696cbeed9"
     }
   ]
 }

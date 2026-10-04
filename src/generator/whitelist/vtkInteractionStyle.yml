@@ -57,6 +57,9 @@ classes:
   - name: vtkInteractorStyleRubberBand2D
     header: vtkInteractorStyleRubberBand2D.h
     functions: []
+  - name: vtkInteractorStyleRubberBand3D
+    header: vtkInteractorStyleRubberBand3D.h
+    functions: []
   - name: vtkInteractorStyleRubberBandPick
     header: vtkInteractorStyleRubberBandPick.h
     functions: []
@@ -165,6 +168,12 @@ classes:
         parameters:
           - type: vtkTypeBool
             name: _arg
+  - name: vtkInteractorStyleTrackballActor
+    header: vtkInteractorStyleTrackballActor.h
+    functions: []
   - name: vtkInteractorStyleTrackballCamera
     header: vtkInteractorStyleTrackballCamera.h
+    functions: []
+  - name: vtkInteractorStyleUser
+    header: vtkInteractorStyleUser.h
     functions: []

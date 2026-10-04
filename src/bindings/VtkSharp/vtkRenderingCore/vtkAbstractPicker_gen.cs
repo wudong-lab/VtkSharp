@@ -105,6 +105,22 @@ public unsafe partial class vtkAbstractPicker : vtkObject
         return target;
     }
 
+    /// <summary>
+    /// Return position in global coordinates of pick point.
+    /// </summary>
+    /// <param name="data">
+    /// Buffer length: 3 elements.
+    /// </param>
+    public new void GetPickPosition(Span<double> data)
+    {
+        fixed (double* dataPtr = data)
+        {
+            vtkAbstractPicker_GetPickPosition(this.NativePointer, dataPtr);
+        }
+    }
+
     #region Interop
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern void vtkAbstractPicker_GetPickPosition(nint self, double* data);
     #endregion
 }

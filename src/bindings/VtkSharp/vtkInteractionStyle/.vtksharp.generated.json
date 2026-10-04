@@ -37,6 +37,17 @@
       "nativeContentHash": "c59bbed630cf9851b9088c8926e24ce83ffda9bd3b79641d41654d851391a906"
     },
     {
+      "className": "vtkInteractorStyleRubberBand3D",
+      "header": "vtkInteractorStyleRubberBand3D.h",
+      "baseClassName": "vtkInteractorStyleTrackballCamera",
+      "hasStaticNew": true,
+      "inputHash": "1f947da5ed08512cfaa146eab6021cef29886556e684c2066c2f7ded1d6daafb",
+      "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleRubberBand3D_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleRubberBand3D_export_gen.cpp",
+      "managedContentHash": "d283046d78c9d027679f055dabf17a072f088acb7bb67662e6d4dbf405ee38ae",
+      "nativeContentHash": "ec0958a154055933c2507aea675f8879690230a4296be152a89d891363baa8aa"
+    },
+    {
       "className": "vtkInteractorStyleRubberBandPick",
       "header": "vtkInteractorStyleRubberBandPick.h",
       "baseClassName": "vtkInteractorStyleTrackballCamera",
@@ -81,6 +92,17 @@
       "nativeContentHash": "f1fc770af4f4ee9aab28b087810c2ea4cc374ff68838058e234dd8d8ffde1537"
     },
     {
+      "className": "vtkInteractorStyleTrackballActor",
+      "header": "vtkInteractorStyleTrackballActor.h",
+      "baseClassName": "vtkInteractorStyle",
+      "hasStaticNew": true,
+      "inputHash": "ac7f2219471568aa78fd6aa25fb0eab586f8c62e72e825dd979989119d16f5ff",
+      "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleTrackballActor_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleTrackballActor_export_gen.cpp",
+      "managedContentHash": "6bb1e9953b453e08ec102821d0ba325b1e454d78b28cfdf433204c250413b267",
+      "nativeContentHash": "b1fb930c5dcddfedb95a4f643083f11eb3b031a87f426c5dd268458a7283275c"
+    },
+    {
       "className": "vtkInteractorStyleTrackballCamera",
       "header": "vtkInteractorStyleTrackballCamera.h",
       "baseClassName": "vtkInteractorStyle",
@@ -90,6 +112,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleTrackballCamera_export_gen.cpp",
       "managedContentHash": "a544516d237198675c8efb12a4564b515e2d11b8534206f2abaee60a31c5c0bc",
       "nativeContentHash": "0b1a977a2b6a7785141d0c6bafe5b222f2f11f3626a47aaa97947dd24624f74d"
+    },
+    {
+      "className": "vtkInteractorStyleUser",
+      "header": "vtkInteractorStyleUser.h",
+      "baseClassName": "vtkInteractorStyle",
+      "hasStaticNew": true,
+      "inputHash": "aa935d71614814e47eca794177858d738103fcf9f9e0b203b528ea74f3239116",
+      "managedPath": "bindings\\VtkSharp\\vtkInteractionStyle\\vtkInteractorStyleUser_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionStyle\\vtkInteractorStyleUser_export_gen.cpp",
+      "managedContentHash": "de86be09dee639cfb66bcc87db2eb8cd0b46b8de80adc4c35c1ffcd50542430c",
+      "nativeContentHash": "5a3c395e9fe8a9316dfa81cd6ee4e4a6097789fb4174d18919e8d6eb5416fa89"
     }
   ]
 }

@@ -523,11 +523,14 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkInteractionStyle/vtkInteractorStyleImage_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleJoystickCamera_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleRubberBand2D_export_gen.cpp
+  src/vtkInteractionStyle/vtkInteractorStyleRubberBand3D_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleRubberBandPick_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleRubberBandZoom_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleSwitch_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleTerrain_export_gen.cpp
+  src/vtkInteractionStyle/vtkInteractorStyleTrackballActor_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleTrackballCamera_export_gen.cpp
+  src/vtkInteractionStyle/vtkInteractorStyleUser_export_gen.cpp
   src/vtkRenderingCore/vtkAbstractMapper3D_export_gen.cpp
   src/vtkRenderingCore/vtkAbstractMapper_export_gen.cpp
   src/vtkRenderingCore/vtkAbstractPicker_export_gen.cpp
@@ -536,6 +539,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkRenderingCore/vtkActor2D_export_gen.cpp
   src/vtkRenderingCore/vtkActorCollection_export_gen.cpp
   src/vtkRenderingCore/vtkActor_export_gen.cpp
+  src/vtkRenderingCore/vtkAreaPicker_export_gen.cpp
   src/vtkRenderingCore/vtkAssemblyPath_export_gen.cpp
   src/vtkRenderingCore/vtkCamera_export_gen.cpp
   src/vtkRenderingCore/vtkCellPicker_export_gen.cpp
@@ -556,8 +560,10 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkRenderingCore/vtkMapper_export_gen.cpp
   src/vtkRenderingCore/vtkPicker_export_gen.cpp
   src/vtkRenderingCore/vtkPointGaussianMapper_export_gen.cpp
+  src/vtkRenderingCore/vtkPointPicker_export_gen.cpp
   src/vtkRenderingCore/vtkPolyDataMapper2D_export_gen.cpp
   src/vtkRenderingCore/vtkPolyDataMapper_export_gen.cpp
+  src/vtkRenderingCore/vtkProp3DCollection_export_gen.cpp
   src/vtkRenderingCore/vtkProp3D_export_gen.cpp
   src/vtkRenderingCore/vtkPropCollection_export_gen.cpp
   src/vtkRenderingCore/vtkPropPicker_export_gen.cpp
@@ -576,6 +582,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkRenderingCore/vtkTexturedActor2D_export_gen.cpp
   src/vtkRenderingCore/vtkViewport_export_gen.cpp
   src/vtkRenderingCore/vtkWindowToImageFilter_export_gen.cpp
+  src/vtkRenderingCore/vtkWorldPointPicker_export_gen.cpp
   src/vtkRenderingLabel/vtkLabeledDataMapper_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkCameraPass_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkOpenGLRenderPass_export_gen.cpp

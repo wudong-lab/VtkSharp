@@ -81,8 +81,19 @@ public unsafe partial class vtkCollection : vtkObject
         return target;
     }
 
+    /// <summary>
+    /// Return the number of items in the collection.
+    /// </summary>
+    public new int GetNumberOfItems()
+    {
+        return vtkCollection_GetNumberOfItems(this.NativePointer);
+    }
+
     #region Interop
     [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern nint vtkCollection_New();
+
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    private static extern int vtkCollection_GetNumberOfItems(nint self);
     #endregion
 }

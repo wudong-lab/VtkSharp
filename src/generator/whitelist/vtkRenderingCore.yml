@@ -10,7 +10,14 @@ classes:
     functions: []
   - name: vtkAbstractPicker
     header: vtkAbstractPicker.h
-    functions: []
+    functions:
+      - name: GetPickPosition
+        cppSignature: void GetPickPosition(double[3] data)
+        return:
+          type: void
+        parameters:
+          - type: double[3]
+            name: data
   - name: vtkAbstractPropPicker
     header: vtkAbstractPropPicker.h
     functions:
@@ -153,6 +160,29 @@ classes:
   - name: vtkActorCollection
     header: vtkActorCollection.h
     functions: []
+  - name: vtkAreaPicker
+    header: vtkAreaPicker.h
+    functions:
+      - name: AreaPick
+        cppSignature: int AreaPick(double x0, double y0, double x1, double y1, vtkRenderer * renderer)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: x0
+          - type: double
+            name: y0
+          - type: double
+            name: x1
+          - type: double
+            name: y1
+          - type: vtkRenderer*
+            name: renderer
+      - name: GetProp3Ds
+        cppSignature: vtkProp3DCollection * GetProp3Ds()
+        return:
+          type: vtkProp3DCollection*
+        parameters: []
   - name: vtkAssemblyPath
     header: vtkAssemblyPath.h
     functions: []
@@ -1375,6 +1405,19 @@ classes:
   - name: vtkPicker
     header: vtkPicker.h
     functions:
+      - name: Pick
+        cppSignature: int Pick(double selectionX, double selectionY, double selectionZ, vtkRenderer * renderer)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: selectionX
+          - type: double
+            name: selectionY
+          - type: double
+            name: selectionZ
+          - type: vtkRenderer*
+            name: renderer
       - name: SetTolerance
         cppSignature: void SetTolerance(double _arg)
         return:
@@ -1404,6 +1447,14 @@ classes:
         parameters:
           - type: const char*
             name: _arg
+  - name: vtkPointPicker
+    header: vtkPointPicker.h
+    functions:
+      - name: GetPointId
+        cppSignature: vtkIdType GetPointId()
+        return:
+          type: vtkIdType
+        parameters: []
   - name: vtkPolyDataMapper
     header: vtkPolyDataMapper.h
     functions:
@@ -1553,6 +1604,9 @@ classes:
         parameters:
           - type: vtkLinearTransform*
             name: transform
+  - name: vtkProp3DCollection
+    header: vtkProp3DCollection.h
+    functions: []
   - name: vtkPropCollection
     header: vtkPropCollection.h
     functions: []
@@ -3285,3 +3339,19 @@ classes:
         return:
           type: void
         parameters: []
+  - name: vtkWorldPointPicker
+    header: vtkWorldPointPicker.h
+    functions:
+      - name: Pick
+        cppSignature: int Pick(double selectionX, double selectionY, double selectionZ, vtkRenderer * renderer)
+        return:
+          type: int
+        parameters:
+          - type: double
+            name: selectionX
+          - type: double
+            name: selectionY
+          - type: double
+            name: selectionZ
+          - type: vtkRenderer*
+            name: renderer

@@ -19,11 +19,11 @@
       "header": "vtkCollection.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "fb18ab5f7bc785cea7dee63cfbb6b3daa8449478815a516affa8d0b0c0c4fd59",
+      "inputHash": "055c84fa2796fa026de9e418c08ed3a609066f8e1bf4f70379036797cb77b8f2",
       "managedPath": "bindings\\VtkSharp\\vtkCommonCore\\vtkCollection_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonCore\\vtkCollection_export_gen.cpp",
-      "managedContentHash": "eec0737ade057c6a97db852f07a928e2686ed25fb63e02aab2ae7a00efb215fb",
-      "nativeContentHash": "9c76daa06cef212f720babdf69b7e043f0820ed9bb7d532a387f8e6351435ff9"
+      "managedContentHash": "c4e2f05596f04703615cabcf23618bf6d5f80f02063de04754d158be0e363fa8",
+      "nativeContentHash": "2e367dab285e93289985ba24e1ee70b9c5429313389bd31557045788cde95367"
     },
     {
       "className": "vtkDataArray",

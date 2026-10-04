@@ -3,3 +3,5 @@
 #include <vtkCollection.h>
 
 VTKSHARP_API vtkCollection* vtkCollection_New() { return vtkCollection::New(); }
+
+VTKSHARP_API int vtkCollection_GetNumberOfItems(vtkCollection* self) { return self->GetNumberOfItems(); }

@@ -33,7 +33,12 @@ classes:
             name: numTuples
   - name: vtkCollection
     header: vtkCollection.h
-    functions: []
+    functions:
+      - name: GetNumberOfItems
+        cppSignature: int GetNumberOfItems()
+        return:
+          type: int
+        parameters: []
   - name: vtkDataArray
     header: vtkDataArray.h
     functions:

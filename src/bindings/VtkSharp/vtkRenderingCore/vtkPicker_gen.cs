@@ -90,6 +90,17 @@ public unsafe partial class vtkPicker : vtkAbstractPropPicker
     }
 
     /// <summary>
+    /// Perform pick operation with selection point provided. Normally the
+    /// first two values for the selection point are x-y pixel coordinate, and
+    /// the third value is =0. Return non-zero if something was successfully
+    /// picked.
+    /// </summary>
+    public new int Pick(double selectionX, double selectionY, double selectionZ, vtkRenderer renderer)
+    {
+        return vtkPicker_Pick(this.NativePointer, selectionX, selectionY, selectionZ, renderer.NativePointer);
+    }
+
+    /// <summary>
     /// Specify tolerance for performing pick operation. Tolerance is specified
     /// as fraction of rendering window size. (Rendering window size is measured
     /// across diagonal.)
@@ -102,6 +113,9 @@ public unsafe partial class vtkPicker : vtkAbstractPropPicker
     #region Interop
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkPicker_New();
+
+    [DllImport("VtkSharp.Native.Rendering.dll")]
+    private static extern int vtkPicker_Pick(nint self, double selectionX, double selectionY, double selectionZ, nint renderer);
 
     [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkPicker_SetTolerance(nint self, double _arg);
