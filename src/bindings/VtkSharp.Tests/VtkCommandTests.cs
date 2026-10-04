@@ -1,8 +1,10 @@
-namespace VtkSharp.Tests;
+﻿namespace VtkSharp.Tests;
 
 [TestClass]
 public sealed class VtkCommandTests
 {
+#pragma warning disable MSTEST0032
+
     [TestMethod]
     public void EventIds_MatchVtkCommandEventOrder()
     {
@@ -16,4 +18,6 @@ public sealed class VtkCommandTests
         Assert.AreEqual(136u, vtkCommand.Elevation3DEvent);
         Assert.AreEqual(1000u, vtkCommand.UserEvent);
     }
+
+#pragma warning restore MSTEST0032
 }
