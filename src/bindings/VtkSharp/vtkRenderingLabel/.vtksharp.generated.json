@@ -15,6 +15,28 @@
       "nativeContentHash": "f70323c017611af09d8331ce71665339239416ace9a2a92ae9816413a2d4174b"
     },
     {
+      "className": "vtkLabelHierarchyAlgorithm",
+      "header": "vtkLabelHierarchyAlgorithm.h",
+      "baseClassName": "vtkAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "8b5468db6f8ece27270657f85ee5333ae0e6881a274bfbabf9546e559039a27a",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkLabelHierarchyAlgorithm_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkLabelHierarchyAlgorithm_export_gen.cpp",
+      "managedContentHash": "eb719853177cab398190be3f3958f6e67e45d09b6411b2cec1091385a4693775",
+      "nativeContentHash": "e90ab0f8c5979f3a0f4f76561a42f6d45b2a42ef04e479270be851a38364c753"
+    },
+    {
+      "className": "vtkLabelPlacementMapper",
+      "header": "vtkLabelPlacementMapper.h",
+      "baseClassName": "vtkMapper2D",
+      "hasStaticNew": true,
+      "inputHash": "32651492d901977cd9d1d812602b6f2b693fa0285249fc7775532e730395829e",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkLabelPlacementMapper_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkLabelPlacementMapper_export_gen.cpp",
+      "managedContentHash": "ea1d048d017f6cacdc305ff57a20ed2580316c6bc82e92f103cbf4ba12e3592b",
+      "nativeContentHash": "dcedc047fb97f38d3b0b3c1da65e37f0af7ea0ead49a9ff5069f691d7654cd0e"
+    },
+    {
       "className": "vtkLabeledDataMapper",
       "header": "vtkLabeledDataMapper.h",
       "baseClassName": "vtkMapper2D",
@@ -24,6 +46,17 @@
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkLabeledDataMapper_export_gen.cpp",
       "managedContentHash": "bf91f0f5a7eefa6243146b8b36e3d4b6bc2db353c07e1a7941a83b723bf97b2c",
       "nativeContentHash": "7cd5e61a6308dd3a00465f39aebf90401a79a535db3f804ed94e3d266910ba2d"
+    },
+    {
+      "className": "vtkPointSetToLabelHierarchy",
+      "header": "vtkPointSetToLabelHierarchy.h",
+      "baseClassName": "vtkLabelHierarchyAlgorithm",
+      "hasStaticNew": true,
+      "inputHash": "827845b3d0312e5ea2d12e3d7544aa0952a58be6a8bb8de7a4b1aa2eb592fb11",
+      "managedPath": "bindings\\VtkSharp\\vtkRenderingLabel\\vtkPointSetToLabelHierarchy_gen.cs",
+      "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingLabel\\vtkPointSetToLabelHierarchy_export_gen.cpp",
+      "managedContentHash": "06871efee8233323d6dd5b384f9b0334b9769d731eb3fc3893707f1d64e6d93c",
+      "nativeContentHash": "6aee50d484ad35596e432c6944fe9d8296e37f45605aac50436754de8f78b93a"
     }
   ]
 }

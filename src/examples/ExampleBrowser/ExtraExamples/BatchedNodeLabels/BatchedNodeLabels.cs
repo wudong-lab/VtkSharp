@@ -3,12 +3,12 @@ using VtkSharp;
 namespace VtkSharp.ExampleBrowser.Examples;
 
 [Example("BatchedNodeLabels", "ExtraExamples",
-    Description = "Renders batched node labels and hides them while the camera is being manipulated.",
+    Description = "Places non-overlapping node labels by camera depth and hides them during interaction.",
     SourceFiles = new[] { "ExtraExamples/BatchedNodeLabels/BatchedNodeLabels.cs" })]
 internal sealed class BatchedNodeLabels : ISmokeExample
 {
-    private const int Columns = 24;
-    private const int Rows = 8;
+    private const int Columns = 64;
+    private const int Rows = 12;
 
     public void Run() => Render(null);
 
@@ -58,6 +58,11 @@ internal sealed class BatchedNodeLabels : ISmokeExample
         mesh.SetLines(lines);
         mesh.GetPointData().SetScalars(nodeIds);
 
+        using var priorities = vtkDoubleArray.New();
+        priorities.SetName("ViewPriority");
+        priorities.SetNumberOfTuples(Columns * Rows);
+        mesh.GetPointData().AddArray(priorities);
+
         using var meshMapper = vtkPolyDataMapper.New();
         meshMapper.SetInputData(mesh);
         using var meshActor = vtkActor.New();
@@ -65,14 +70,17 @@ internal sealed class BatchedNodeLabels : ISmokeExample
         meshActor.GetProperty().SetColor(0.75, 0.8, 0.85);
         meshActor.GetProperty().SetLineWidth(2);
 
-        using var labelMapper = vtkOpenGLBatchedLabeledDataMapper.New();
-        labelMapper.SetInputData(mesh);
-        labelMapper.SetLabelModeToLabelScalars();
-        labelMapper.SetLabelFormat("{:.0f}");
-        labelMapper.GetLabelTextProperty().SetColor(1, 0.85, 0.2);
-        labelMapper.GetLabelTextProperty().SetFontSize(12);
+        using var labelTextProperty = vtkTextProperty.New();
+        labelTextProperty.SetColor(1, 0.85, 0.2);
+        labelTextProperty.SetFontSize(12);
+
+        using var hierarchy = vtkPointSetToLabelHierarchy.New();
+        hierarchy.SetInputDataObject(0, mesh);
+        hierarchy.SetLabelArrayName("NodeId");
+        hierarchy.SetPriorityArrayName("ViewPriority");
+        hierarchy.SetTextProperty(labelTextProperty);
+
         using var labels = vtkActor2D.New();
-        labels.SetMapper(labelMapper);
 
         using var renderer = vtkRenderer.New();
         renderer.AddActor(meshActor);
@@ -100,13 +108,90 @@ internal sealed class BatchedNodeLabels : ISmokeExample
         using var style = vtkInteractorStyleTrackballCamera.New();
         interactor.SetInteractorStyle(style);
 
+        UpdatePriorities(points, priorities, camera);
+        hierarchy.Update();
+        using var initialLabelMapper = CreateLabelMapper(hierarchy);
+        labels.SetMapper(initialLabelMapper);
+
+        var pendingTimerId = 0;
+
         using var startObserver = interactor.AddObserver(
             vtkCommand.StartInteractionEvent,
-            (_, _, _, _) => labels.VisibilityOff());
+            (_, _, _, _) =>
+            {
+                labels.VisibilityOff();
+                if (pendingTimerId != 0)
+                {
+                    interactor.DestroyTimer(pendingTimerId);
+                    pendingTimerId = 0;
+                }
+            });
         using var endObserver = interactor.AddObserver(
             vtkCommand.EndInteractionEvent,
-            (_, _, _, _) => labels.VisibilityOn());
+            (_, _, _, _) =>
+            {
+                if (pendingTimerId != 0)
+                    interactor.DestroyTimer(pendingTimerId);
+                pendingTimerId = interactor.CreateOneShotTimer(200);
+            });
+        using var timerObserver = interactor.AddTimerEventObserver(args =>
+        {
+            if (args.TimerId != pendingTimerId)
+                return;
 
+            pendingTimerId = 0;
+            UpdatePriorities(points, priorities, camera);
+            hierarchy.Update();
+
+            // Recreate the mapper so its temporal label cache cannot retain labels
+            // that were nearest from the previous camera orientation.
+            using var settledLabelMapper = CreateLabelMapper(hierarchy);
+            labels.SetMapper(settledLabelMapper);
+            labels.VisibilityOn();
+            window.Render();
+        });
+
+        // Initialize the render window before the label placement mapper's first pass.
+        window.Render();
         ExampleRenderSupport.Finish(window, interactor, "BatchedNodeLabels", screenshotPath);
+    }
+
+    private static vtkLabelPlacementMapper CreateLabelMapper(vtkPointSetToLabelHierarchy hierarchy)
+    {
+        var mapper = vtkLabelPlacementMapper.New();
+        mapper.SetInputConnection(hierarchy.GetOutputPort());
+        mapper.SetIteratorType(0); // vtkLabelHierarchy::FULL_SORT
+        mapper.SetMaximumLabelFraction(1.0);
+        mapper.UseDepthBufferOff();
+        return mapper;
+    }
+
+    private static void UpdatePriorities(
+        vtkPoints points, vtkDoubleArray priorities, vtkCamera camera)
+    {
+        var position = new double[3];
+        var focalPoint = new double[3];
+        camera.GetPosition(position);
+        camera.GetFocalPoint(focalPoint);
+
+        var directionX = focalPoint[0] - position[0];
+        var directionY = focalPoint[1] - position[1];
+        var directionZ = focalPoint[2] - position[2];
+        var directionLength = Math.Sqrt(
+            directionX * directionX + directionY * directionY + directionZ * directionZ);
+        directionX /= directionLength;
+        directionY /= directionLength;
+        directionZ /= directionLength;
+
+        var point = new double[3];
+        for (var pointId = 0L; pointId < points.GetNumberOfPoints(); pointId++)
+        {
+            points.GetPoint(pointId, point);
+            var depth = (point[0] - position[0]) * directionX
+                + (point[1] - position[1]) * directionY
+                + (point[2] - position[2]) * directionZ;
+            priorities.SetTuple1(pointId, -depth);
+        }
+        priorities.Modified();
     }
 }

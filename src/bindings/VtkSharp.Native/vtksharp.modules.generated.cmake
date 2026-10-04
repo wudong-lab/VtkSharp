@@ -584,7 +584,10 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkRenderingCore/vtkWindowToImageFilter_export_gen.cpp
   src/vtkRenderingCore/vtkWorldPointPicker_export_gen.cpp
   src/vtkRenderingLabel/vtkBatchedLabeledDataMapper_export_gen.cpp
+  src/vtkRenderingLabel/vtkLabelHierarchyAlgorithm_export_gen.cpp
+  src/vtkRenderingLabel/vtkLabelPlacementMapper_export_gen.cpp
   src/vtkRenderingLabel/vtkLabeledDataMapper_export_gen.cpp
+  src/vtkRenderingLabel/vtkPointSetToLabelHierarchy_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkCameraPass_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkOpenGLBatchedLabeledDataMapper_export_gen.cpp
   src/vtkRenderingOpenGL2/vtkOpenGLRenderPass_export_gen.cpp

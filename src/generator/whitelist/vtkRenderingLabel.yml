@@ -5,6 +5,38 @@ classes:
   - name: vtkBatchedLabeledDataMapper
     header: vtkBatchedLabeledDataMapper.h
     functions: []
+  - name: vtkLabelHierarchyAlgorithm
+    header: vtkLabelHierarchyAlgorithm.h
+    functions: []
+  - name: vtkLabelPlacementMapper
+    header: vtkLabelPlacementMapper.h
+    functions:
+      - name: SetIteratorType
+        cppSignature: void SetIteratorType(int _arg)
+        return:
+          type: void
+        parameters:
+          - type: int
+            name: _arg
+      - name: SetMaximumLabelFraction
+        cppSignature: void SetMaximumLabelFraction(double _arg)
+        return:
+          type: void
+        parameters:
+          - type: double
+            name: _arg
+      - name: SetUseDepthBuffer
+        cppSignature: void SetUseDepthBuffer(bool _arg)
+        return:
+          type: void
+        parameters:
+          - type: bool
+            name: _arg
+      - name: UseDepthBufferOff
+        cppSignature: void UseDepthBufferOff()
+        return:
+          type: void
+        parameters: []
   - name: vtkLabeledDataMapper
     header: vtkLabeledDataMapper.h
     functions:
@@ -123,3 +155,27 @@ classes:
           - SetLabelModeToLabelTCoords
           - SetLabelModeToLabelTensors
           - SetLabelModeToLabelVectors
+  - name: vtkPointSetToLabelHierarchy
+    header: vtkPointSetToLabelHierarchy.h
+    functions:
+      - name: SetLabelArrayName
+        cppSignature: void SetLabelArrayName(char const * name)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: name
+      - name: SetPriorityArrayName
+        cppSignature: void SetPriorityArrayName(char const * name)
+        return:
+          type: void
+        parameters:
+          - type: const char*
+            name: name
+      - name: SetTextProperty
+        cppSignature: void SetTextProperty(vtkTextProperty * tprop)
+        return:
+          type: void
+        parameters:
+          - type: vtkTextProperty*
+            name: tprop
