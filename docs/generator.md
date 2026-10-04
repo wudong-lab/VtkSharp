@@ -47,22 +47,22 @@ src/bindings/VtkSharp.Native/     # CMake 与 module 集合
 
 ```powershell
 # 查询
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-class vtkActor
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground --resolve
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- list-modules
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- list-classes --module vtkFiltersSources
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- inspect-class vtkActor
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground --resolve
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- list-modules
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- list-classes --module vtkFiltersSources
 
 # 白名单
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx -o candidate.yml --supported-only --source-kind manual --methods Method1 Method2
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist candidate.yml
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate candidate.yml
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- validate-whitelist
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- normalize-whitelist
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- create-candidate vtkXxx -o candidate.yml --supported-only --source-kind manual --methods Method1 Method2
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist candidate.yml
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- merge-candidate candidate.yml
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- validate-whitelist
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- normalize-whitelist
 
 # 生成与一致性检查
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src --incremental
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check --incremental
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src --incremental
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --check --incremental
 ```
 
 `--check --incremental` 使用现有 manifest、输入指纹和生成文件内容哈希复用未变化类型，并检查缺失、被编辑或多余的生成文件；日常本地验证优先使用该模式。单独 `--check` 会在临时目录完整生成并比较全部输出，生成器实现、缓存协议或 VTK 版本变化后应使用全量模式。
@@ -75,7 +75,7 @@ VTK 版本或安装构建变化后，先从该安装重新导出 target 元数�
 cmake -S tools/vtk-module-metadata -B artifacts/vtk-module-metadata `
   -DVTK_DIR=<matching-vtk-install>/lib/cmake/vtk-9.7 `
   -DVTKSHARP_CONFIGURATION=Release
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src --incremental
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src --incremental
 ```
 
 快照纳入增量指纹；版本、平台、配置或 target 关系不匹配时，生成器会拒绝继续。
@@ -187,11 +187,11 @@ YamlDotNet 直接反序列化的 DTO 集合应使用 `List<T>`、`Dictionary<TKe
 ```
 
 ```powershell
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
     --requests artifacts/requests.json --output artifacts/candidate.yml --report artifacts/report.json
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist artifacts/candidate.yml --summary
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- diff-whitelist artifacts/candidate.yml --summary
 # 审核报告和完整变化后合并
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate artifacts/candidate.yml
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- merge-candidate artifacts/candidate.yml
 ```
 
 - `methods` 按 C++ 大小写精确匹配。多重载返回 `ambiguous` 和签名 ID；从报告复制需要的 ID 到 `signatures`，或明确设置 `allOverloads: true` 选择该方法名的全部可直接生成重载。不会按参数个数或类型转换猜测调用。
@@ -207,8 +207,8 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- merge-candidate art
 单个方法的声明类定位无需写需求文件：
 
 ```powershell
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground --resolve --format json
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate vtkInteractorStyleTerrain `
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- inspect-function vtkRenderer SetBackground --resolve --format json
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- create-candidate vtkInteractorStyleTerrain `
     --class-only --supported-only --source-kind manual -o artifacts/type-only.yml
 ```
 
@@ -217,7 +217,7 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- create-candidate vt
 参考导出继续使用技能附带的扫描脚本，无需重写解析器。其结果可以直接交给批量规划：
 
 ```powershell
-dotnet run --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
+dotnet run --configuration Release --project src/generator/VtkSharp.Generator.Cli -- plan-bindings `
     --reference-scan --requests artifacts/reference-scan.json `
     --output artifacts/candidate.yml --report artifacts/report.json
 ```

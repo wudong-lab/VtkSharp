@@ -175,9 +175,10 @@ try {
     $report.workingTree = @(& git -C $repoRoot status --short)
 
     $cliProject = "src/generator/VtkSharp.Generator.Cli"
-    $cli = @("run", "--no-build", "--project", $cliProject, "--configuration", $Configuration, "--")
+    $generatorConfiguration = "Release"
+    $cli = @("run", "--no-build", "--project", $cliProject, "--configuration", $generatorConfiguration, "--")
     $configArgs = if ($GeneratorConfig) { @("--config", $GeneratorConfig) } else { @() }
-    Add-Stage "generator-build" "dotnet" @("build", $cliProject, "--configuration", $Configuration, "--nologo")
+    Add-Stage "generator-build" "dotnet" @("build", $cliProject, "--configuration", $generatorConfiguration, "--nologo")
     Add-Stage "generator-tests" "dotnet" @("test", "src/generator/VtkSharp.Generator.Tests", "--configuration", $Configuration, "--nologo") ($Mode -ne "Fast")
     Add-Stage "generate" "dotnet" ($cli + @("generate-bindings", "--output-root", "src", "--incremental") + $configArgs) ([bool]$Regenerate)
     Add-Stage "native-build" "pwsh" @("-NoProfile", "-File", "$PSScriptRoot/build-native.ps1", "-Configuration", $Configuration, "-Linkage", $Linkage, "-VtkDir", $VtkDir)
