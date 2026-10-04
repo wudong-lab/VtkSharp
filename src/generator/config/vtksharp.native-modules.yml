@@ -24,6 +24,12 @@ groups:
       factory providers with the rendering modules whose autoinit they satisfy.
 
 manualSourceOwnership:
+  - source: vtkCommonCore/vtkFloatArray_export.cpp
+    target: VtkSharp.Native.CommonCore
+    rationale: Manual GetPointer export used by the managed float-array helper.
+  - source: vtkCommonCore/vtkUnsignedCharArray_export.cpp
+    target: VtkSharp.Native.CommonCore
+    rationale: Manual SetUnsignedCharTuple export used by the managed color-array helper.
   - source: vtkCommonCore/vtkObjectBase_export.cpp
     target: VtkSharp.Native.CommonCore
     rationale: Manual base-object reference-count and deletion exports used by every wrapper.

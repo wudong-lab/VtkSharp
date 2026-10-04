@@ -102,6 +102,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonCore_SOURCES
   src/vtkCommonCore/vtkDataArray_export_gen.cpp
   src/vtkCommonCore/vtkDoubleArray_export_gen.cpp
   src/vtkCommonCore/vtkEventData_export_gen.cpp
+  src/vtkCommonCore/vtkFloatArray_export.cpp
   src/vtkCommonCore/vtkFloatArray_export_gen.cpp
   src/vtkCommonCore/vtkIdList_export_gen.cpp
   src/vtkCommonCore/vtkInformationVector_export_gen.cpp
@@ -115,6 +116,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonCore_SOURCES
   src/vtkCommonCore/vtkRandomSequence_export_gen.cpp
   src/vtkCommonCore/vtkScalarsToColors_export_gen.cpp
   src/vtkCommonCore/vtkStringArray_export_gen.cpp
+  src/vtkCommonCore/vtkUnsignedCharArray_export.cpp
   src/vtkCommonCore/vtkUnsignedCharArray_export_gen.cpp
   src/vtkCommonCore/vtkWindow_export_gen.cpp
   src/vtksharp_string.cpp

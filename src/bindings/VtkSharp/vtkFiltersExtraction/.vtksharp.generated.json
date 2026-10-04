@@ -8,7 +8,7 @@
       "header": "vtkExtractSelection.h",
       "baseClassName": "vtkDataObjectAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "386a31b8c868f00d3647e535d19d4cf542dcdb8403a21f05c941fdf9336639dd",
+      "inputHash": "af086649dc0be5b72fdc9cc6a75f50913e6e18710ee6044ea80dbcac08733745",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersExtraction\\vtkExtractSelection_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersExtraction\\vtkExtractSelection_export_gen.cpp",
       "managedContentHash": "849cf52633168df9bef1071f6107cf1361d3063f5a6da7ca7ed29e73aa203cc4",

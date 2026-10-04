@@ -23,6 +23,6 @@ public unsafe partial class vtkUnsignedCharArray
 
     #region Interop
     [DllImport(InteropInfo.NativeLibraryName)]
-    private static extern nint vtkUnsignedCharArray_SetUnsignedCharTuple(nint self, long tupleIdx, byte* tuple);
+    private static extern void vtkUnsignedCharArray_SetUnsignedCharTuple(nint self, long tupleIdx, byte* tuple);
     #endregion
 }

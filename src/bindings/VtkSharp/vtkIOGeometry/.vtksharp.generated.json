@@ -8,7 +8,7 @@
       "header": "vtkSTLReader.h",
       "baseClassName": "vtkAbstractPolyDataReader",
       "hasStaticNew": true,
-      "inputHash": "f4a90480396a823b0f545265dd4c39d1970a1753491a35f55ac879ec50bab4a7",
+      "inputHash": "919623fba2a3609a3eaa72741f0dc8f928e4a143a163d5126daa0d8698f1d260",
       "managedPath": "bindings\\VtkSharp\\vtkIOGeometry\\vtkSTLReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOGeometry\\vtkSTLReader_export_gen.cpp",
       "managedContentHash": "7d8a218a25063bc412f69c565e33326c3494118ecf1fd10aeda439e176c5aabc",
