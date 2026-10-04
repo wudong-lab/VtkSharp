@@ -106,7 +106,7 @@ foreach ($target in $targets) {
         }
         $licenseDestination = Join-Path $outputDirectory "licenses\VTK"
         New-Item -ItemType Directory -Path $licenseDestination -Force | Out-Null
-        Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $licenseDestination -Recurse -Force
+        Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $licenseDestination -Recurse -Force | Out-Null
 
         & "$PSScriptRoot/copy-native-dependencies.ps1" `
             -ManifestPath (Join-Path $nativeOutputDirectory "native-dependencies.json") `
@@ -119,4 +119,4 @@ foreach ($target in $targets) {
     }
 }
 
-Get-ChildItem -Recurse -File $artifactsDir | Sort-Object FullName
+Write-Host "Build artifacts collected in: $artifactsDir"
