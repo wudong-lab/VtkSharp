@@ -69,6 +69,23 @@ public sealed class GeneratorWorkspace
     public string GetNativeModulesFile()
         => Path.GetFullPath(Path.Combine(this.ConfigDirectory, this.Config.Paths.NativeModulesFile));
 
+    public NativeModuleStrategyConfig LoadNativeModuleStrategy()
+        => new GeneratorConfigLoader().LoadNativeModuleStrategy(
+            Path.GetFullPath(Path.Combine(this.ConfigDirectory, this.Config.Paths.NativeModuleStrategyFile)));
+
+    public NativeModuleMetadataSnapshot LoadNativeModuleMetadata()
+        => new GeneratorConfigLoader().LoadNativeModuleMetadata(
+            Path.GetFullPath(Path.Combine(this.ConfigDirectory, this.Config.Paths.NativeModuleMetadataFile)));
+
+    public NativeModuleLayout LoadNativeModuleLayout(IEnumerable<string> wrappedModules)
+        => NativeModuleLayout.Create(
+            this.LoadNativeModuleStrategy(),
+            wrappedModules,
+            this.Config.Binding.NativeLibraryName,
+            this.Config.Vtk.Version,
+            this.GetNativeOutputDirectory(),
+            this.LoadNativeModuleMetadata());
+
     private static string? ResolveIncludeDirectory(GeneratorConfig config)
     {
         var candidates = new[]

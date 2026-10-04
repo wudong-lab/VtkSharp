@@ -76,6 +76,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDataSetSurfaceFilter : vtkPolyDataAlgorithm
 {
+    static vtkDataSetSurfaceFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeometry.dll");
+
     protected vtkDataSetSurfaceFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Statndard methods for object instantiation, type information, and printing.
@@ -131,7 +133,7 @@ public unsafe partial class vtkDataSetSurfaceFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeometry.dll")]
     private static extern nint vtkDataSetSurfaceFilter_New();
     #endregion
 }

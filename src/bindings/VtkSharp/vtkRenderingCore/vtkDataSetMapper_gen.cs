@@ -19,6 +19,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDataSetMapper : vtkMapper
 {
+    static vtkDataSetMapper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkDataSetMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -79,10 +81,10 @@ public unsafe partial class vtkDataSetMapper : vtkMapper
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkDataSetMapper_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDataSetMapper_SetInputData(nint self, nint input);
     #endregion
 }

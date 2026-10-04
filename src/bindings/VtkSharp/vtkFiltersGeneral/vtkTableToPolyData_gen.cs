@@ -16,6 +16,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTableToPolyData : vtkPolyDataAlgorithm
 {
+    static vtkTableToPolyData() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
+
     protected vtkTableToPolyData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -106,30 +108,30 @@ public unsafe partial class vtkTableToPolyData : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern nint vtkTableToPolyData_New();
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.FiltersGeneral.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkTableToPolyData_SetXColumn(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern void vtkTableToPolyData_SetXColumn(nint self, byte[] _arg);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.FiltersGeneral.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkTableToPolyData_SetYColumn(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern void vtkTableToPolyData_SetYColumn(nint self, byte[] _arg);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.FiltersGeneral.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkTableToPolyData_SetZColumn(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern void vtkTableToPolyData_SetZColumn(nint self, byte[] _arg);
 #endif
     #endregion

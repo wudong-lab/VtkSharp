@@ -45,6 +45,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
 {
+    static vtkPlaneSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
+
     protected vtkPlaneSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct plane perpendicular to z-axis, resolution 1x1, width
@@ -301,58 +303,58 @@ public unsafe partial class vtkPlaneSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern nint vtkPlaneSource_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern double* vtkPlaneSource_GetCenter_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_GetCenter_doubleArray3(nint self, double* data);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern double* vtkPlaneSource_GetNormal_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_GetNormal_doubleArray3(nint self, double* data);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern double* vtkPlaneSource_GetOrigin_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_GetOrigin_doubleArray3(nint self, double* data);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetCenter_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetCenter_doubleArray3(nint self, double* center);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetNormal_double_double_double(nint self, double nx, double ny, double nz);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetNormal_doubleArray3(nint self, double* n);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetOrigin_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetOrigin_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetPoint1_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetPoint1_doubleArray3(nint self, double* pnt);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetPoint2_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetPoint2_doubleArray3(nint self, double* pnt);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPlaneSource_SetResolution(nint self, int xR, int yR);
     #endregion
 }

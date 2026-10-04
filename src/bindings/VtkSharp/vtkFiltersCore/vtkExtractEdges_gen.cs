@@ -36,6 +36,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkExtractEdges : vtkPolyDataAlgorithm
 {
+    static vtkExtractEdges() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkExtractEdges(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, obtaining type information, and
@@ -93,7 +95,7 @@ public unsafe partial class vtkExtractEdges : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkExtractEdges_New();
     #endregion
 }

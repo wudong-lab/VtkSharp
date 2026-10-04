@@ -39,6 +39,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSelectionSource : vtkSelectionAlgorithm
 {
+    static vtkSelectionSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
+
     protected vtkSelectionSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -127,16 +129,16 @@ public unsafe partial class vtkSelectionSource : vtkSelectionAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern nint vtkSelectionSource_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkSelectionSource_AddID(nint self, uint nodeId, long piece, long id);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkSelectionSource_SetContentType(nint self, int contentType);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkSelectionSource_SetFieldType(nint self, int _arg);
     #endregion
 }

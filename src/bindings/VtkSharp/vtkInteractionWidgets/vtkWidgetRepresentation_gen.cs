@@ -56,6 +56,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWidgetRepresentation : vtkProp
 {
+    static vtkWidgetRepresentation() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.InteractionWidgets.dll");
+
     protected vtkWidgetRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.
@@ -278,37 +280,37 @@ public unsafe partial class vtkWidgetRepresentation : vtkProp
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkWidgetRepresentation_BuildRepresentation(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern int vtkWidgetRepresentation_GetInteractionState(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern int vtkWidgetRepresentation_GetNeedToRender(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern double vtkWidgetRepresentation_GetPlaceFactor(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern nint vtkWidgetRepresentation_GetRenderer(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkWidgetRepresentation_NeedToRenderOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkWidgetRepresentation_NeedToRenderOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkWidgetRepresentation_PlaceWidget(nint self, double* _arg1);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkWidgetRepresentation_SetNeedToRender(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkWidgetRepresentation_SetPlaceFactor(nint self, double _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkWidgetRepresentation_SetRenderer(nint self, nint ren);
     #endregion
 }

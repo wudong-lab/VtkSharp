@@ -20,6 +20,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkUnstructuredGrid : vtkUnstructuredGridBase
 {
+    static vtkUnstructuredGrid() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkUnstructuredGrid(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard instantiation method.
@@ -75,7 +77,7 @@ public unsafe partial class vtkUnstructuredGrid : vtkUnstructuredGridBase
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkUnstructuredGrid_New();
     #endregion
 }

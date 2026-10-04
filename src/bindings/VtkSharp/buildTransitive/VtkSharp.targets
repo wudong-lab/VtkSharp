@@ -1,0 +1,10 @@
+<Project>
+  <ItemGroup Condition="'$(VtkSharpSkipNativeRuntimeCopy)' != 'true'">
+    <Content Include="$(MSBuildThisFileDirectory)..\native\VtkSharp\win-x64\**\*"
+             Pack="false"
+             Link="native\VtkSharp\win-x64\%(RecursiveDir)%(Filename)%(Extension)"
+             TargetPath="native\VtkSharp\win-x64\%(RecursiveDir)%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest"
+             CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

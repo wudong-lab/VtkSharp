@@ -119,6 +119,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCellArray : vtkAbstractCellArray
 {
+    static vtkCellArray() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkCellArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, type information, and
@@ -246,25 +248,25 @@ public unsafe partial class vtkCellArray : vtkAbstractCellArray
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkCellArray_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkCellArray_InsertCellPoint(nint self, long id);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern long vtkCellArray_InsertNextCell_int(nint self, int npts);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern long vtkCellArray_InsertNextCell_vtkCellPtr(nint self, nint cell);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern long vtkCellArray_InsertNextCell_vtkIdListPtr(nint self, nint pts);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern long vtkCellArray_InsertNextCell_vtkIdType_vtkIdTypeConstPtr(nint self, long npts, long* pts);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkCellArray_NewIterator(nint self);
     #endregion
 }

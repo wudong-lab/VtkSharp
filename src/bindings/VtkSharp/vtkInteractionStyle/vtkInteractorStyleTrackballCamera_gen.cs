@@ -29,6 +29,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleTrackballCamera : vtkInteractorStyle
 {
+    static vtkInteractorStyleTrackballCamera() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkInteractorStyleTrackballCamera(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -81,7 +83,7 @@ public unsafe partial class vtkInteractorStyleTrackballCamera : vtkInteractorSty
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkInteractorStyleTrackballCamera_New();
     #endregion
 }

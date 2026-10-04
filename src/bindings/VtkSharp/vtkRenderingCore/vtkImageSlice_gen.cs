@@ -27,6 +27,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageSlice : vtkProp3D
 {
+    static vtkImageSlice() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkImageSlice(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Creates an Image with the following defaults: origin(0,0,0)
@@ -84,7 +86,7 @@ public unsafe partial class vtkImageSlice : vtkProp3D
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkImageSlice_New();
     #endregion
 }

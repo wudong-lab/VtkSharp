@@ -26,6 +26,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTDxInteractorStyle : vtkObject
 {
+    static vtkTDxInteractorStyle() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkTDxInteractorStyle(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

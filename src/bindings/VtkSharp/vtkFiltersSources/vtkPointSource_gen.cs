@@ -36,6 +36,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPointSource : vtkPolyDataAlgorithm
 {
+    static vtkPointSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
+
     protected vtkPointSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, type information, and printing.
@@ -109,13 +111,13 @@ public unsafe partial class vtkPointSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern nint vtkPointSource_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPointSource_SetNumberOfPoints(nint self, long _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkPointSource_SetRadius(nint self, double _arg);
     #endregion
 }

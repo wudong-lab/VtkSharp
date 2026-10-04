@@ -41,6 +41,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkRenderWindowInteractor : vtkObject
 {
+    static vtkRenderWindowInteractor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkRenderWindowInteractor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -635,151 +637,151 @@ public unsafe partial class vtkRenderWindowInteractor : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkRenderWindowInteractor_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_CharEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_CreateOneShotTimer(nint self, ulong duration);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_CreateRepeatingTimer(nint self, ulong duration);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_DestroyTimer(nint self, int timerId);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_EnableRenderOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_EnableRenderOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_EnterEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetAltKey(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetControlKey(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int* vtkRenderWindowInteractor_GetEventPosition(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetInitialized(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern byte vtkRenderWindowInteractor_GetKeyCode(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkRenderWindowInteractor_GetKeySym(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int* vtkRenderWindowInteractor_GetLastEventPosition(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetRepeatCount(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetShiftKey(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetTimerEventDuration(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetTimerEventId(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetTimerEventPlatformId(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkRenderWindowInteractor_GetTimerEventType(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_Initialize(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_KeyPressEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_KeyReleaseEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_LeaveEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_LeftButtonPressEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_LeftButtonReleaseEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_MiddleButtonPressEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_MiddleButtonReleaseEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_MouseMoveEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_MouseWheelBackwardEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_MouseWheelForwardEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_RightButtonPressEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_RightButtonReleaseEvent(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetAltKey(nint self, int _arg);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkRenderWindowInteractor_SetEventInformation(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetEventInformation(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, byte[] keysym);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkRenderWindowInteractor_SetEventInformationFlipY(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetEventInformationFlipY(nint self, int x, int y, int ctrl, int shift, byte keycode, int repeatcount, byte[] keysym);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetInteractorStyle(nint self, nint _arg1);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkRenderWindowInteractor_SetKeyEventInformation(nint self, int ctrl, int shift, byte keycode, int repeatcount, string keysym);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetKeyEventInformation(nint self, int ctrl, int shift, byte keycode, int repeatcount, byte[] keysym);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetRenderWindow(nint self, nint aren);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetTimerEventId(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_SetTimerEventPlatformId(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_Start(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkRenderWindowInteractor_UpdateSize(nint self, int x, int y);
     #endregion
 }

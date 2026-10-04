@@ -49,6 +49,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
 {
+    static vtkTubeFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkTubeFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct object with radius 0.5, radius variation turned off, the
@@ -186,34 +188,34 @@ public unsafe partial class vtkTubeFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkTubeFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern int vtkTubeFilter_GetVaryRadius(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetNumberOfSides(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetRadius(nint self, double _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetVaryRadius(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByAbsoluteScalar(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByScalar(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByVector(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusByVectorNorm(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkTubeFilter_SetVaryRadiusToVaryRadiusOff(nint self);
     #endregion
 }

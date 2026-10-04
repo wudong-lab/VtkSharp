@@ -38,6 +38,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAxesActor : vtkProp3D
 {
+    static vtkAxesActor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.RenderingAnnotation.dll");
+
     protected vtkAxesActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -392,111 +394,111 @@ public unsafe partial class vtkAxesActor : vtkProp3D
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetXAxisCaptionActor2D(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetXAxisShaftProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetXAxisTipProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetYAxisCaptionActor2D(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetYAxisShaftProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetYAxisTipProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetZAxisCaptionActor2D(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetZAxisShaftProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxesActor_GetZAxisTipProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetAxisLabels(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetConeRadius(nint self, double _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetCylinderRadius(nint self, double _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetNormalizedLabelPosition_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetNormalizedLabelPosition_doubleArray3(nint self, double* v);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetNormalizedShaftLength_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetNormalizedShaftLength_doubleArray3(nint self, double* v);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetNormalizedTipLength_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetNormalizedTipLength_doubleArray3(nint self, double* v);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetShaftTypeToCylinder(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetShaftTypeToLine(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetShaftTypeToUserDefined(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetSphereRadius(nint self, double _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetTipTypeToCone(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetTipTypeToSphere(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetTipTypeToUserDefined(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetTotalLength_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetTotalLength_doubleArray3(nint self, double* v);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.RenderingAnnotation.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAxesActor_SetXAxisLabelText(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetXAxisLabelText(nint self, byte[] _arg);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.RenderingAnnotation.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAxesActor_SetYAxisLabelText(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetYAxisLabelText(nint self, byte[] _arg);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.RenderingAnnotation.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAxesActor_SetZAxisLabelText(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkAxesActor_SetZAxisLabelText(nint self, byte[] _arg);
 #endif
     #endregion

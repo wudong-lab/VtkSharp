@@ -33,6 +33,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLegendScaleActor : vtkProp
 {
+    static vtkLegendScaleActor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.RenderingAnnotation.dll");
+
     protected vtkLegendScaleActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Instantiate the class.
@@ -152,22 +154,22 @@ public unsafe partial class vtkLegendScaleActor : vtkProp
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkLegendScaleActor_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkLegendScaleActor_GetAxesProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkLegendScaleActor_GetBottomAxis(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkLegendScaleActor_GetLeftAxis(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkLegendScaleActor_GetRightAxis(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkLegendScaleActor_GetTopAxis(nint self);
     #endregion
 }

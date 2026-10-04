@@ -33,6 +33,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
 {
+    static vtkMinimalStandardRandomSequence() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
+
     protected vtkMinimalStandardRandomSequence(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, type information, and printing.
@@ -146,22 +148,22 @@ public unsafe partial class vtkMinimalStandardRandomSequence : vtkRandomSequence
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern nint vtkMinimalStandardRandomSequence_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern double vtkMinimalStandardRandomSequence_GetRangeValue(nint self, double rangeMin, double rangeMax);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern double vtkMinimalStandardRandomSequence_GetValue(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkMinimalStandardRandomSequence_Initialize(nint self, uint seed);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkMinimalStandardRandomSequence_Next(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkMinimalStandardRandomSequence_SetSeed(nint self, int value);
     #endregion
 }

@@ -63,6 +63,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkOrientationMarkerWidget : vtkInteractorObserver
 {
+    static vtkOrientationMarkerWidget() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.InteractionWidgets.dll");
+
     protected vtkOrientationMarkerWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -185,22 +187,22 @@ public unsafe partial class vtkOrientationMarkerWidget : vtkInteractorObserver
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern nint vtkOrientationMarkerWidget_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkOrientationMarkerWidget_InteractiveOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkOrientationMarkerWidget_InteractiveOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkOrientationMarkerWidget_SetOrientationMarker(nint self, nint prop);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkOrientationMarkerWidget_SetViewport_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkOrientationMarkerWidget_SetViewport_doubleConstArray4(nint self, double* _arg);
     #endregion
 }

@@ -21,6 +21,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWin32RenderWindowInteractor : vtkRenderWindowInteractor
 {
+    static vtkWin32RenderWindowInteractor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkWin32RenderWindowInteractor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct object so that light follows camera motion.
@@ -106,16 +108,16 @@ public unsafe partial class vtkWin32RenderWindowInteractor : vtkRenderWindowInte
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkWin32RenderWindowInteractor_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWin32RenderWindowInteractor_Initialize(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWin32RenderWindowInteractor_InstallMessageProcOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWin32RenderWindowInteractor_InstallMessageProcOn(nint self);
     #endregion
 }

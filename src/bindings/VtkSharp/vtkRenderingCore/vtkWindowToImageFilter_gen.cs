@@ -56,6 +56,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
 {
+    static vtkWindowToImageFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkWindowToImageFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -298,61 +300,61 @@ public unsafe partial class vtkWindowToImageFilter : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkWindowToImageFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_FixBoundaryOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_FixBoundaryOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkWindowToImageFilter_GetOutput(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int* vtkWindowToImageFilter_GetScale_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_GetScale_intArray2(nint self, int* _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_ReadFrontBufferOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_ReadFrontBufferOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetInput(nint self, nint input);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetInputBufferTypeToRGB(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetInputBufferTypeToRGBA(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetInputBufferTypeToZBuffer(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetScale_int_int(nint self, int _arg1, int _arg2);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetScale_intConstArray2(nint self, int* _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetScale_int(nint self, int scale);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetViewport_doublePtr(nint self, double* _arg1);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_SetViewport_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_ShouldRerenderOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkWindowToImageFilter_ShouldRerenderOn(nint self);
     #endregion
 }

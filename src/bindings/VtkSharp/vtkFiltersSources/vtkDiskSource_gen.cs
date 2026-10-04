@@ -24,6 +24,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDiskSource : vtkPolyDataAlgorithm
 {
+    static vtkDiskSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
+
     protected vtkDiskSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods to  instantiate the class, obtain type information,
@@ -80,7 +82,7 @@ public unsafe partial class vtkDiskSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern nint vtkDiskSource_New();
     #endregion
 }

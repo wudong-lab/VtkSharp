@@ -31,6 +31,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkRibbonFilter : vtkPolyDataAlgorithm
 {
+    static vtkRibbonFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
+
     protected vtkRibbonFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct ribbon so that width is 0.1, the width does
@@ -96,10 +98,10 @@ public unsafe partial class vtkRibbonFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
     private static extern nint vtkRibbonFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
     private static extern void vtkRibbonFilter_SetWidth(nint self, double _arg);
     #endregion
 }

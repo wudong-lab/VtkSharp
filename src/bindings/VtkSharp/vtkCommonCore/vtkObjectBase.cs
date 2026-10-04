@@ -6,6 +6,8 @@ namespace VtkSharp;
 
 public class vtkObjectBase : IDisposable
 {
+    static vtkObjectBase() => NativeModuleLoader.EnsureLoaded(InteropInfo.NativeLibraryName);
+
     protected vtkObjectBase(nint nativePointer, bool ownsReference)
     {
         Debug.Assert(nativePointer != IntPtr.Zero);

@@ -26,6 +26,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSequencePass : vtkRenderPass
 {
+    static vtkSequencePass() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkSequencePass(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -89,10 +91,10 @@ public unsafe partial class vtkSequencePass : vtkRenderPass
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkSequencePass_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkSequencePass_SetPasses(nint self, nint passes);
     #endregion
 }

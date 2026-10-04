@@ -36,6 +36,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDataSet : vtkDataObject
 {
+    static vtkDataSet() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkDataSet(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.
@@ -170,22 +172,22 @@ public unsafe partial class vtkDataSet : vtkDataObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern double* vtkDataSet_GetBounds_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkDataSet_GetBounds_doubleArray6(nint self, double* bounds);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkDataSet_GetCellData(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkDataSet_GetPointData(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern double* vtkDataSet_GetScalarRange_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkDataSet_GetScalarRange_doubleArray2(nint self, double* range);
     #endregion
 }

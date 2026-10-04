@@ -22,6 +22,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkRegularPolygonSource : vtkPolyDataAlgorithm
 {
+    static vtkRegularPolygonSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
+
     protected vtkRegularPolygonSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, obtaining type and printing instance values.
@@ -126,22 +128,22 @@ public unsafe partial class vtkRegularPolygonSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern nint vtkRegularPolygonSource_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkRegularPolygonSource_GeneratePolygonOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkRegularPolygonSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkRegularPolygonSource_SetCenter_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkRegularPolygonSource_SetNumberOfSides(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkRegularPolygonSource_SetRadius(nint self, double _arg);
     #endregion
 }

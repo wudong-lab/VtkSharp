@@ -41,6 +41,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkExtractSelection : vtkDataObjectAlgorithm
 {
+    static vtkExtractSelection() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersExtraction.dll");
+
     protected vtkExtractSelection(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -93,7 +95,7 @@ public unsafe partial class vtkExtractSelection : vtkDataObjectAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersExtraction.dll")]
     private static extern nint vtkExtractSelection_New();
     #endregion
 }

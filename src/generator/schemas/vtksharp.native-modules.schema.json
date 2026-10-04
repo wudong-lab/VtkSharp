@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VtkSharp native module strategy",
+  "type": "object",
+  "required": ["schemaVersion", "strategyVersion", "vtkVersion", "platform", "groups"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "strategyVersion": { "type": "integer", "minimum": 1 },
+    "vtkVersion": { "type": "string", "minLength": 1 },
+    "platform": { "const": "windows-x64" },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "target", "modules", "initializationProviders", "rationale"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "modules": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+          "initializationProviders": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+          "rationale": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "manualSourceOwnership": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "target", "rationale"],
+        "properties": {
+          "source": { "type": "string", "minLength": 1 },
+          "target": { "type": "string", "minLength": 1 },
+          "rationale": { "type": "string", "minLength": 1 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

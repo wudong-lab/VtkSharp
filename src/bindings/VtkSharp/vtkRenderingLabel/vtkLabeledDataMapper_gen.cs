@@ -45,6 +45,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
 {
+    static vtkLabeledDataMapper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkLabeledDataMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Instantiate object with {:&lt;#6.3g} label format. By default, point ids
@@ -284,59 +286,59 @@ public unsafe partial class vtkLabeledDataMapper : vtkMapper2D
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkLabeledDataMapper_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkLabeledDataMapper_GetLabelMode(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkLabeledDataMapper_GetLabelTextProperty_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkLabeledDataMapper_GetLabelTextProperty_int(nint self, int type);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkLabeledDataMapper_SetFieldDataName(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetFieldDataName(nint self, byte[] _arg);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetInputData(nint self, nint _arg1);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkLabeledDataMapper_SetLabelFormat(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelFormat(nint self, byte[] _arg);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelMode(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelFieldData(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelIds(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelNormals(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelScalars(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelTCoords(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelTensors(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkLabeledDataMapper_SetLabelModeToLabelVectors(nint self);
     #endregion
 }

@@ -17,6 +17,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTriangleFilter : vtkPolyDataAlgorithm
 {
+    static vtkTriangleFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkTriangleFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -69,7 +71,7 @@ public unsafe partial class vtkTriangleFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkTriangleFilter_New();
     #endregion
 }

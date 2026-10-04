@@ -17,6 +17,8 @@
 生成器位于 `src/generator`，其主要输入为：
 
 - `config/vtksharp.generator.yml`：VTK 版本、输出目录和生成行为。
+- `config/vtksharp.native-modules.yml`：native 目标分组、显式 autoinit 提供者及手写源码归属。
+- `config/vtksharp.native-metadata.json`：从匹配的 VTK CMake imported target 属性导出的依赖与工厂关系快照。
 - `whitelist/`：按 VTK module 划分的正式 API 白名单。
 - `schemas/`：配置、白名单和候选文件的 JSON Schema。
 - VTK 安装目录中的 headers 与 hierarchy 文件。
@@ -66,6 +68,17 @@ dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings -
 `--check --incremental` 使用现有 manifest、输入指纹和生成文件内容哈希复用未变化类型，并检查缺失、被编辑或多余的生成文件；日常本地验证优先使用该模式。单独 `--check` 会在临时目录完整生成并比较全部输出，生成器实现、缓存协议或 VTK 版本变化后应使用全量模式。
 
 日常生成使用 `--incremental`，本地交付前使用 `--check --incremental`。生成器实现、缓存协议或 VTK 版本变化后，以及 CI 中，使用 `--check` 全量生成到临时目录并与当前输出比较。
+
+VTK 版本或安装构建变化后，先从该安装重新导出 target 元数据，再运行增量生成。导出工具读取已生成的 native 模块组件集合和 VTK CMake target properties，不扫描 VTK 源码文本：
+
+```powershell
+cmake -S tools/vtk-module-metadata -B artifacts/vtk-module-metadata `
+  -DVTK_DIR=<matching-vtk-install>/lib/cmake/vtk-9.7 `
+  -DVTKSHARP_CONFIGURATION=Release
+dotnet run --project src/generator/VtkSharp.Generator.Cli -- generate-bindings --output-root src --incremental
+```
+
+快照纳入增量指纹；版本、平台、配置或 target 关系不匹配时，生成器会拒绝继续。
 
 查询类命令支持 `--format json`，适合脚本和 AI 读取结构化结果。`create-candidate` 的常用参数：
 

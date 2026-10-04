@@ -7,7 +7,7 @@ namespace VtkSharp.Generator.Core.Generation;
 
 public sealed class BindingGenerationService
 {
-    public const string IncrementalCacheVersion = "2026-08-30.enum-properties-v1";
+    public const string IncrementalCacheVersion = "2026-10-04.native-module-layout-v1";
 
     public int Generate(string configPath, string outputRoot, bool continueOnError, bool incremental, bool force, TextWriter output, TextWriter error)
         => incremental
@@ -21,15 +21,18 @@ public sealed class BindingGenerationService
         var currentNativeDirectory = workspace.GetNativeOutputDirectory();
         var currentNativeProjectFile = workspace.GetNativeProjectFile();
         var currentModulesFile = workspace.GetNativeModulesFile();
+        var documents = workspace.LoadWhitelist();
+        var nativeLayout = CreateNativeLayout(workspace, documents, error);
+        if (nativeLayout is null)
+            return 1;
         var generatedManagedDirectory = Path.Combine(outputRoot, "bindings", "VtkSharp");
         var generatedNativeDirectory = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "src");
-        var generatedNativeProjectFile = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "CMakeLists.txt");
         var generatedModulesFile = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "vtksharp.modules.generated.cmake");
 
         var comparer = new GeneratedOutputComparer();
         var differences = comparer.CompareDirectories(currentManagedDirectory, generatedManagedDirectory, "*_gen.cs")
             .Concat(comparer.CompareDirectories(currentNativeDirectory, generatedNativeDirectory, "*_export_gen.cpp"))
-            .Concat(comparer.CompareFiles(currentNativeProjectFile, generatedNativeProjectFile, "bindings/VtkSharp.Native/CMakeLists.txt"))
+            .Concat(comparer.CompareFiles(currentNativeProjectFile, Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "CMakeLists.txt"), "bindings/VtkSharp.Native/CMakeLists.txt"))
             .Concat(comparer.CompareFiles(currentModulesFile, generatedModulesFile, "bindings/VtkSharp.Native/vtksharp.modules.generated.cmake"))
             .ToList();
 
@@ -59,6 +62,9 @@ public sealed class BindingGenerationService
         }
 
         var documents = workspace.LoadWhitelist();
+        var nativeLayout = CreateNativeLayout(workspace, documents, error);
+        if (nativeLayout is null)
+            return 1;
         var hierarchyResolver = workspace.LoadHierarchyResolver();
         var inspector = new VtkClassInspector(documents.SelectMany(d => d.Classes)
             .Where(c => c.EnumProperties is { Count: > 0 }).Select(c => c.Header));
@@ -99,14 +105,15 @@ public sealed class BindingGenerationService
                     IncrementalCacheVersion,
                     config.Vtk.Version,
                     config.Binding.Namespace,
-                    config.Binding.NativeLibraryName,
+                    nativeLayout.GetNativeLibraryName(document.Module),
                     document.Module,
                     whitelistClass.Name,
                     whitelistClass.Header,
                     baseClassName,
                     GenerationInputFingerprint.HashFileText(headerPath),
                     whitelistClass.Functions,
-                    whitelistClass.EnumProperties);
+                    whitelistClass.EnumProperties,
+                    nativeLayout.StrategyFingerprint);
 
                 if (whitelistClass.EnumProperties is not { Count: > 0 } &&
                     GeneratedManifestCache.TryGetReusableEntry(
@@ -152,7 +159,7 @@ public sealed class BindingGenerationService
                     managedPath,
                     csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName,
                         inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error,
-                        whitelistClass.EnumProperties),
+                        whitelistClass.EnumProperties, nativeLayout.GetNativeLibraryName(document.Module)),
                     Path.GetRelativePath(managedDirectory, managedPath),
                     differences);
                 CompareGeneratedText(
@@ -168,14 +175,9 @@ public sealed class BindingGenerationService
         AddUnexpectedGeneratedFiles(managedDirectory, "*_gen.cs", expectedManagedFiles, differences);
         AddUnexpectedGeneratedFiles(nativeDirectory, "*_export_gen.cpp", expectedNativeFiles, differences);
 
-        var vtkModules = documents
-            .Select(document => document.Module)
-            .Concat(config.Vtk.RuntimeModules)
-            .Distinct(StringComparer.Ordinal)
-            .ToList();
         CompareGeneratedText(
             workspace.GetNativeModulesFile(),
-            new CMakeModulesEmitter().Emit(vtkModules),
+            new CMakeModulesEmitter().Emit(nativeLayout, documents, config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal)),
             "bindings/VtkSharp.Native/vtksharp.modules.generated.cmake",
             differences);
         CompareGeneratedText(
@@ -211,6 +213,9 @@ public sealed class BindingGenerationService
         var csharpEmitter = new CSharpBindingEmitter();
         var cppEmitter = new CppExportEmitter();
         var config = context.Workspace.Config;
+        var nativeLayout = CreateNativeLayout(context.Workspace, context.Documents, error);
+        if (nativeLayout is null)
+            return 1;
         var manualClasses = config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal);
         var skippedCount = 0;
 
@@ -241,12 +246,14 @@ public sealed class BindingGenerationService
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
 
-                WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties));
+                WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName,
+                    inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties,
+                    nativeLayout.GetNativeLibraryName(document.Module)));
                 WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions, whitelistClass.EnumProperties));
             }
         }
 
-        WriteNativeProjectFiles(outputRoot, config, context.Documents);
+        WriteNativeProjectFiles(outputRoot, config, context.Documents, nativeLayout);
 
         if (continueOnError && skippedCount > 0)
         {
@@ -270,6 +277,9 @@ public sealed class BindingGenerationService
 
         var config = workspace.Config;
         var documents = workspace.LoadWhitelist();
+        var nativeLayout = CreateNativeLayout(workspace, documents, error);
+        if (nativeLayout is null)
+            return 1;
         var hierarchyResolver = workspace.LoadHierarchyResolver();
         var inspector = new VtkClassInspector(documents.SelectMany(d => d.Classes).Where(c => c.EnumProperties is { Count: > 0 }).Select(c => c.Header));
         var validator = new WhitelistValidator();
@@ -305,13 +315,14 @@ public sealed class BindingGenerationService
                     IncrementalCacheVersion,
                     config.Vtk.Version,
                     config.Binding.Namespace,
-                    config.Binding.NativeLibraryName,
+                    nativeLayout.GetNativeLibraryName(document.Module),
                     document.Module,
                     whitelistClass.Name,
                     whitelistClass.Header,
                     baseClassName,
                     GenerationInputFingerprint.HashFileText(headerPath),
-                    whitelistClass.Functions, whitelistClass.EnumProperties);
+                    whitelistClass.Functions, whitelistClass.EnumProperties,
+                    nativeLayout.StrategyFingerprint);
 
                 // 枚举常量可能定义于传递 include；首版始终重新验证枚举类，避免漏掉跨头文件契约变化。
                 if (!force && whitelistClass.EnumProperties is not { Count: > 0 } && GeneratedManifestCache.TryGetReusableEntry(manifest, whitelistClass.Name, inputHash, managedPath, nativePath, out _))
@@ -357,7 +368,9 @@ public sealed class BindingGenerationService
                     .Where(name => name != whitelistClass.Name)
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
-                var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName, inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties);
+                var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName,
+                    inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties,
+                    nativeLayout.GetNativeLibraryName(document.Module));
                 var nativeContent = cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions, whitelistClass.EnumProperties);
 
                 WriteText(managedPath, managedContent);
@@ -381,7 +394,7 @@ public sealed class BindingGenerationService
             }
         }
 
-        WriteNativeProjectFiles(outputRoot, config, documents);
+        WriteNativeProjectFiles(outputRoot, config, documents, nativeLayout);
 
         foreach (var (module, manifest) in manifests)
         {
@@ -398,17 +411,16 @@ public sealed class BindingGenerationService
         return 0;
     }
 
-    private static void WriteNativeProjectFiles(string outputRoot, GeneratorConfig config, IReadOnlyList<WhitelistDocument> documents)
+    private static void WriteNativeProjectFiles(
+        string outputRoot,
+        GeneratorConfig config,
+        IReadOnlyList<WhitelistDocument> documents,
+        NativeModuleLayout nativeLayout)
     {
         var cmakeEmitter = new CMakeModulesEmitter();
         var nativeProjectEmitter = new NativeProjectEmitter();
         var modulesPath = Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "vtksharp.modules.generated.cmake");
-        var vtkModules = documents
-            .Select(document => document.Module)
-            .Concat(config.Vtk.RuntimeModules)
-            .Distinct(StringComparer.Ordinal)
-            .ToList();
-        WriteText(modulesPath, cmakeEmitter.Emit(vtkModules));
+        WriteText(modulesPath, cmakeEmitter.Emit(nativeLayout, documents, config.Binding.ManualBindingClasses.ToHashSet(StringComparer.Ordinal)));
         WriteText(Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "CMakeLists.txt"), nativeProjectEmitter.EmitCMakeLists(config.Binding.NativeLibraryName));
         WriteText(Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "CMakePresets.json"), nativeProjectEmitter.EmitCMakePresets());
         WriteText(Path.Combine(outputRoot, "bindings", "VtkSharp.Native", "include", "vtksharp_api.h"), nativeProjectEmitter.EmitApiHeader());
@@ -419,6 +431,22 @@ public sealed class BindingGenerationService
 
     private static void WriteText(string path, string content)
         => GeneratedFileWriter.WriteIfChanged(path, content);
+
+    private static NativeModuleLayout? CreateNativeLayout(
+        GeneratorWorkspace workspace,
+        IReadOnlyList<WhitelistDocument> documents,
+        TextWriter error)
+    {
+        try
+        {
+            return workspace.LoadNativeModuleLayout(documents.Select(document => document.Module));
+        }
+        catch (InvalidDataException exception)
+        {
+            error.WriteLine($"Native module strategy is invalid: {exception.Message}");
+            return null;
+        }
+    }
 
     private static IEnumerable<string> GetIncludeClassNames(WhitelistClass whitelistClass)
     {

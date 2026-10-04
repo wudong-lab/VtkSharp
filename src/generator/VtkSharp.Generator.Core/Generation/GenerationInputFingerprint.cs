@@ -17,7 +17,8 @@ public static class GenerationInputFingerprint
         string baseClassName,
         string headerContentHash,
         IReadOnlyList<WhitelistFunction> functions,
-        IReadOnlyList<EnumProperty>? enumProperties = null)
+        IReadOnlyList<EnumProperty>? enumProperties = null,
+        string nativeModuleStrategyFingerprint = "")
     {
         var sb = new StringBuilder();
         Append(sb, "generatorVersion", generatorVersion);
@@ -29,6 +30,7 @@ public static class GenerationInputFingerprint
         Append(sb, "header", header);
         Append(sb, "baseClassName", baseClassName);
         Append(sb, "headerContentHash", headerContentHash);
+        Append(sb, "nativeModuleStrategyFingerprint", nativeModuleStrategyFingerprint);
         if (enumProperties is { Count: > 0 })
             Append(sb, "enumProperties", System.Text.Json.JsonSerializer.Serialize(enumProperties));
 

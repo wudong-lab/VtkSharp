@@ -21,6 +21,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWarpVector : vtkPointSetAlgorithm
 {
+    static vtkWarpVector() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
+
     protected vtkWarpVector(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, obtaining type information,
@@ -85,10 +87,10 @@ public unsafe partial class vtkWarpVector : vtkPointSetAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern nint vtkWarpVector_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern void vtkWarpVector_SetScaleFactor(nint self, double _arg);
     #endregion
 }

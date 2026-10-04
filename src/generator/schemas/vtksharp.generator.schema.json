@@ -14,12 +14,7 @@
         "modulePrefix": { "type": "string" },
         "rootDirectory": { "type": "string" },
         "includeDirectory": { "type": "string" },
-        "hierarchyDirectory": { "type": "string" },
-        "runtimeModules": {
-          "type": "array",
-          "items": { "type": "string" },
-          "uniqueItems": true
-        }
+        "hierarchyDirectory": { "type": "string" }
       }
     },
     "binding": {
@@ -38,13 +33,15 @@
     "paths": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["whitelistDirectory", "managedOutputDirectory", "nativeOutputDirectory", "nativeProjectFile", "nativeModulesFile"],
+      "required": ["whitelistDirectory", "managedOutputDirectory", "nativeOutputDirectory", "nativeProjectFile", "nativeModulesFile", "nativeModuleStrategyFile", "nativeModuleMetadataFile"],
       "properties": {
         "whitelistDirectory": { "type": "string" },
         "managedOutputDirectory": { "type": "string" },
         "nativeOutputDirectory": { "type": "string" },
         "nativeProjectFile": { "type": "string" },
-        "nativeModulesFile": { "type": "string" }
+        "nativeModulesFile": { "type": "string" },
+        "nativeModuleStrategyFile": { "type": "string" },
+        "nativeModuleMetadataFile": { "type": "string" }
       }
     },
     "generation": {

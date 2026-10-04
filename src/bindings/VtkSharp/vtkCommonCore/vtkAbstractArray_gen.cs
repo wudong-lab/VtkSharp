@@ -68,6 +68,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractArray : vtkObject
 {
+    static vtkAbstractArray() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
+
     protected vtkAbstractArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.
@@ -158,21 +160,21 @@ public unsafe partial class vtkAbstractArray : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern nint vtkAbstractArray_GetName(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.CommonCore.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAbstractArray_SetName(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkAbstractArray_SetName(nint self, byte[] _arg);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkAbstractArray_SetNumberOfComponents(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkAbstractArray_SetNumberOfTuples(nint self, long numTuples);
     #endregion
 }

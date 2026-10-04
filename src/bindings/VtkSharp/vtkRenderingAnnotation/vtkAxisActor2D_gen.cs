@@ -81,6 +81,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAxisActor2D : vtkActor2D
 {
+    static vtkAxisActor2D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.RenderingAnnotation.dll");
+
     protected vtkAxisActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Instantiate object.
@@ -136,7 +138,7 @@ public unsafe partial class vtkAxisActor2D : vtkActor2D
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkAxisActor2D_New();
     #endregion
 }

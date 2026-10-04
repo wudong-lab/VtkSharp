@@ -101,19 +101,27 @@ try {
         }
 
         if ($Linkage -eq "Dynamic") {
-            $entryDll = Join-Path $nativeDir "out\build\$($candidate.BinaryDirectory)\$Configuration\VtkSharp.Native.dll"
+            $entryDirectory = Join-Path $nativeDir "out\build\$($candidate.BinaryDirectory)\$Configuration"
+            $entryDlls = @(Get-ChildItem -LiteralPath $entryDirectory -Filter "VtkSharp.Native.*.dll" -File |
+                Sort-Object Name | ForEach-Object FullName)
+            if ($entryDlls.Count -eq 0) {
+                throw "No modular VtkSharp native entry DLLs were produced in: $entryDirectory"
+            }
+            $entrypointRoots = for ($index = 0; $index -lt $entryDlls.Count; $index++) {
+                $rootName = if ($index -eq 0) { "entrypoint" } else { "entrypoint$index" }
+                "$rootName=$entryDirectory"
+            }
             & "$PSScriptRoot/collect-native-dependencies.ps1" `
-                -InputDll $entryDll `
+                -InputDll $entryDlls `
                 -VtkInstallDirectory $vtkInstallDirectory `
                 -Configuration $Configuration `
                 -VtkVersion $vtkBuildInfo.vtkVersion `
-                -VtkBuildId $vtkBuildInfo.buildId `
-                -ExplicitRuntimeModule @("vtkRenderingOpenGL2-9.7.dll")
+                -VtkBuildId $vtkBuildInfo.buildId
             $vtkBinDirectory = Join-Path $vtkInstallDirectory "bin"
             & "$PSScriptRoot/copy-native-dependencies.ps1" `
-                -ManifestPath (Join-Path (Split-Path -Parent $entryDll) "native-dependencies.json") `
-                -SourceRoot @("entrypoint=$(Split-Path -Parent $entryDll)", "vtk=$vtkBinDirectory") `
-                -DestinationDirectory (Split-Path -Parent $entryDll)
+                -ManifestPath (Join-Path $entryDirectory "native-dependencies.json") `
+                -SourceRoot (@($entrypointRoots) + "vtk=$vtkBinDirectory") `
+                -DestinationDirectory $entryDirectory
         }
 
         exit 0

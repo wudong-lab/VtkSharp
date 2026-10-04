@@ -23,6 +23,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
 {
+    static vtkPolyDataAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
+
     protected vtkPolyDataAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -117,19 +119,19 @@ public unsafe partial class vtkPolyDataAlgorithm : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkPolyDataAlgorithm_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkPolyDataAlgorithm_GetOutput_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkPolyDataAlgorithm_GetOutput_int(nint self, int _arg1);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern void vtkPolyDataAlgorithm_SetInputData_int_vtkDataObjectPtr(nint self, int _arg1, nint _arg2);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern void vtkPolyDataAlgorithm_SetInputData_vtkDataObjectPtr(nint self, nint _arg1);
     #endregion
 }

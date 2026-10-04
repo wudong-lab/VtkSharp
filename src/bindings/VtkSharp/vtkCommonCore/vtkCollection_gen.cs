@@ -25,6 +25,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCollection : vtkObject
 {
+    static vtkCollection() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
+
     protected vtkCollection(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct an empty collection.
@@ -80,7 +82,7 @@ public unsafe partial class vtkCollection : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern nint vtkCollection_New();
     #endregion
 }

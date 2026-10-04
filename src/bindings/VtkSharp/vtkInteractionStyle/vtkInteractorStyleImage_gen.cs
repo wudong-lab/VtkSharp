@@ -57,6 +57,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleImage : vtkInteractorStyleTrackballCamera
 {
+    static vtkInteractorStyleImage() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkInteractorStyleImage(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -169,22 +171,22 @@ public unsafe partial class vtkInteractorStyleImage : vtkInteractorStyleTrackbal
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkInteractorStyleImage_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkInteractorStyleImage_GetInteractionMode(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkInteractorStyleImage_SetInteractionMode(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkInteractorStyleImage_SetInteractionModeToImage2D(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkInteractorStyleImage_SetInteractionModeToImage3D(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkInteractorStyleImage_SetInteractionModeToImageSlicing(nint self);
     #endregion
 }

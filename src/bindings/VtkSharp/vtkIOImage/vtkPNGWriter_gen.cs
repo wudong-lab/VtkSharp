@@ -20,6 +20,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPNGWriter : vtkImageWriter
 {
+    static vtkPNGWriter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOImage.dll");
+
     protected vtkPNGWriter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -144,28 +146,28 @@ public unsafe partial class vtkPNGWriter : vtkImageWriter
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern nint vtkPNGWriter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern int vtkPNGWriter_GetCompressionLevel(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern int vtkPNGWriter_GetCompressionLevelMaxValue(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern int vtkPNGWriter_GetCompressionLevelMinValue(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern void vtkPNGWriter_SetCompressionLevel(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern void vtkPNGWriter_Write(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern void vtkPNGWriter_WriteToMemoryOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.IOImage.dll")]
     private static extern void vtkPNGWriter_WriteToMemoryOn(nint self);
     #endregion
 }

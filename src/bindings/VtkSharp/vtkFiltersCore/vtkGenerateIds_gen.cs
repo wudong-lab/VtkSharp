@@ -29,6 +29,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
 {
+    static vtkGenerateIds() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkGenerateIds(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct object with PointIds and CellIds on; and ids being generated
@@ -153,25 +155,25 @@ public unsafe partial class vtkGenerateIds : vtkPassInputTypeAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkGenerateIds_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkGenerateIds_CellIdsOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkGenerateIds_CellIdsOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkGenerateIds_FieldDataOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkGenerateIds_FieldDataOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkGenerateIds_PointIdsOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkGenerateIds_PointIdsOn(nint self);
     #endregion
 }

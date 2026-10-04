@@ -38,6 +38,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkValuePass : vtkOpenGLRenderPass
 {
+    static vtkValuePass() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkValuePass(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -131,27 +133,27 @@ public unsafe partial class vtkValuePass : vtkOpenGLRenderPass
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkValuePass_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkValuePass_GetFloatImageDataArray(nint self, nint ren);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkValuePass_ReleaseGraphicsResources(nint self, nint win);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkValuePass_SetInputArrayToProcess_int_constCharPtr(nint self, int fieldAssociation, string name);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkValuePass_SetInputArrayToProcess_int_constCharPtr(nint self, int fieldAssociation, byte[] name);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkValuePass_SetInputArrayToProcess_int_int(nint self, int fieldAssociation, int fieldId);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkValuePass_SetInputComponentToProcess(nint self, int component);
     #endregion
 }

@@ -19,6 +19,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPolygon : vtkCell
 {
+    static vtkPolygon() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkPolygon(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -71,7 +73,7 @@ public unsafe partial class vtkPolygon : vtkCell
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkPolygon_New();
     #endregion
 }

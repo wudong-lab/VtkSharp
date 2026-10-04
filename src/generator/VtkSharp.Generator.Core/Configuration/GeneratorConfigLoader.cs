@@ -1,6 +1,7 @@
 ﻿using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
+using System.Text.Json;
 namespace VtkSharp.Generator.Core.Configuration;
 
 public sealed class GeneratorConfigLoader
@@ -30,6 +31,18 @@ public sealed class GeneratorConfigLoader
         };
 
         return config with { Vtk = vtk };
+    }
+
+    public NativeModuleStrategyConfig LoadNativeModuleStrategy(string path)
+        => this.ReadRequired<NativeModuleStrategyConfig>(path);
+
+    public NativeModuleMetadataSnapshot LoadNativeModuleMetadata(string path)
+    {
+        using var stream = File.OpenRead(path);
+        return JsonSerializer.Deserialize<NativeModuleMetadataSnapshot>(stream, new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+        }) ?? throw new InvalidDataException($"Native module metadata snapshot is empty: '{path}'.");
     }
 
     private T ReadRequired<T>(string path)

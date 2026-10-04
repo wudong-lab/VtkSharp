@@ -28,6 +28,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLinearTransform : vtkHomogeneousTransform
 {
+    static vtkLinearTransform() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonTransforms.dll");
+
     protected vtkLinearTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

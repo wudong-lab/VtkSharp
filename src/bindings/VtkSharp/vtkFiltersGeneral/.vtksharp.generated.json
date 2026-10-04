@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "generatorVersion": "2026-10-04.native-module-layout-v1",
   "module": "vtkFiltersGeneral",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkContourTriangulator.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "2c043366f52df1484230ac51de040ab8b11f0ccb87b6f124df19dc1b85642a78",
+      "inputHash": "467c75642188907234315bbb5093bac7142e3b0993e3a46659a35539082a4f1c",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkContourTriangulator_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkContourTriangulator_export_gen.cpp",
-      "managedContentHash": "9dc6560e9d8d987cb8c76167d7f1a30625ac43d7802c74882e8496815360c579",
+      "managedContentHash": "b379bf909445ad122e513c426344e720cadb0b23325bd6b17a0ffec9576b5a91",
       "nativeContentHash": "fa0133f78528f91ba0ed9dbd2e4240deb17a9044b57b0652d2817d88e1899676"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkTableBasedClipDataSet.h",
       "baseClassName": "vtkUnstructuredGridAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "b9fa1313e65e6003ea71581151aacd7d8ac6e097f5971e40813e81fe1c92d074",
+      "inputHash": "bd0e5b3bce816a3adc80a29cb48dffd3b8c40d0eb23aab8bdbf999c4a8168a5c",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTableBasedClipDataSet_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTableBasedClipDataSet_export_gen.cpp",
-      "managedContentHash": "89039f30afc4cedb672ce077190108a6953b4571cbcfc4d72854923f7559c9fc",
+      "managedContentHash": "a2789d21edb8304682e52406aab398f4a0c7d14af789caa88d94ba7a7bf0df5c",
       "nativeContentHash": "e223eb8b35bfccce549612189d814ad25ed652b75566002a6ddd51e302434b26"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkTableToPolyData.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "34c7179bdd26aba38d290b8d1de5a6ccf85761383c3aa253abba3854af086123",
+      "inputHash": "619a745422e3d8efda5b721b916fec401a1437653874f0c89685d8f2a834b0c1",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTableToPolyData_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTableToPolyData_export_gen.cpp",
-      "managedContentHash": "c5d97cf94186ce17d44aaad4e638d00652ce0bbd896158bb8bc9cc7d53a1ca5c",
+      "managedContentHash": "58d9f8330475ab08955c4153c7530074237b9b10da525083b1668ed33bc9f46b",
       "nativeContentHash": "e1826c0cc7f078639d1d18150dc61e17d4db10ae6989b9a00c54a7c5a18caace"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkTessellatorFilter.h",
       "baseClassName": "vtkUnstructuredGridAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "3fef171d20bbea580268ce28c5834632344e9ca55a7c28d2e73f705a64e2958b",
+      "inputHash": "ddc70a12a8a4171b5dc4835a47427057dac16755faab69bf0d93e6980a12d1cf",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTessellatorFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTessellatorFilter_export_gen.cpp",
-      "managedContentHash": "1d6ce1adf0936454d6d0a29f174f4409ab913fd09db1a2316f6d501f17bdec07",
+      "managedContentHash": "d1dd669c9182407f0eeef47de306c71d42c877ffec48c6a5e07f36686ccd6d8e",
       "nativeContentHash": "21ea366d46901c26b901c48f3cc305bafb33b8d5d53c159f92b1c768253c9dc0"
     },
     {
@@ -52,10 +52,10 @@
       "header": "vtkTransformPolyDataFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "4db7e4b83b3578529c4862dca9d397cff6f227806c9bbd806a0f6bd93265374b",
+      "inputHash": "ee87a1888d3251baa6568304772ca2b7a3ff24d14d164e522685a22cdaecabdc",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkTransformPolyDataFilter_export_gen.cpp",
-      "managedContentHash": "164a91217d1ef0d9326870ef42f157082d79c8771d604de91fbbced62ee90458",
+      "managedContentHash": "e0eb3ff9d5a00b81536cd0e12f8d389960cac0849925b6eaf089a53385f51bfb",
       "nativeContentHash": "6a6be96e6eae5db799f836519695b74bfa709633e3043b5035519489d4642fa4"
     },
     {
@@ -63,10 +63,10 @@
       "header": "vtkVertexGlyphFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "d78ab9efaa2228cdcc535a1bc0f9ddeb187bd0556a6f2966b7f19a78b1c29833",
+      "inputHash": "7fb3cdabadd55ad1259fee533814db7a8583c8cd0538f290d8a3b1ea645ea3df",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkVertexGlyphFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkVertexGlyphFilter_export_gen.cpp",
-      "managedContentHash": "7e69e625aba9ecde362abd0fae8902d588c111ff5e796c28657b204576f68ee8",
+      "managedContentHash": "7581523638cd1819cdb4e413d02214b5ffd607ec0fad58f3433db547fa8dc86c",
       "nativeContentHash": "becd2ed5c4a7e64c383dcba6882ea7b0d36fe6a6219b0477e37f5fbdb2ef33eb"
     },
     {
@@ -74,10 +74,10 @@
       "header": "vtkWarpScalar.h",
       "baseClassName": "vtkPointSetAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "15c5d55a36993ba745057a16cde66fb46be88e3aa1a5f8f9bc6441ce183e22fd",
+      "inputHash": "cd5b2060dd23b1b311da732ec89e0715559058e034c0331739b0ad7e6e25a767",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkWarpScalar_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkWarpScalar_export_gen.cpp",
-      "managedContentHash": "8ec84b7035888ed4f4d920f07b880a31e7fbf346884ff537f00454fad4589177",
+      "managedContentHash": "f7484046589173f7191e3ce0945a3504feea5b6ddff248b6418ed2600c81a94b",
       "nativeContentHash": "2469867f8a060cb12252e52eac55b9aece3c20a9a20238ba5eab2809d76c1277"
     },
     {
@@ -85,10 +85,10 @@
       "header": "vtkWarpVector.h",
       "baseClassName": "vtkPointSetAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "1ba311c2bce14e197288b5d9ace5681aee0177384b4bdc65a67b7b88e8fb1bb5",
+      "inputHash": "20808e5ad712411fb437d56fe887e0d46895d2cf221e00be3b4f57965b12e250",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeneral\\vtkWarpVector_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeneral\\vtkWarpVector_export_gen.cpp",
-      "managedContentHash": "8ee375d1887fc6dc00a6f1adaf30a37dc05a92b10a4499ae0de0bfcbca4a6a0e",
+      "managedContentHash": "ea521a5c77e0665a0aa214f5245b57b8a4c90a2871c3e2745416803feda7f4da",
       "nativeContentHash": "6bae4e1556dc4801cad1dd7df3cf7ab52f072be48d4dd9a338ced70b979fb28b"
     }
   ]

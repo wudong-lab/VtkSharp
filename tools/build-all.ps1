@@ -94,7 +94,8 @@ foreach ($target in $targets) {
     if ($Linkage -eq "Dynamic") {
         if (-not $nativeOutputDirectory) { throw "Native output directory for $Linkage VTK was not found." }
         $vtkInstallDirectory = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
-        $sourceRoots = @("entrypoint=$nativeOutputDirectory", "vtk=$(Join-Path $vtkInstallDirectory 'bin')")
+        $entrypointRoots = @($manifest.inputSources | ForEach-Object { "$($_.id)=$nativeOutputDirectory" })
+        $sourceRoots = $entrypointRoots + "vtk=$(Join-Path $vtkInstallDirectory 'bin')"
         & "$PSScriptRoot/copy-native-dependencies.ps1" `
             -ManifestPath (Join-Path $nativeOutputDirectory "native-dependencies.json") `
             -SourceRoot $sourceRoots `

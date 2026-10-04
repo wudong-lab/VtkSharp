@@ -36,6 +36,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkParametricFunctionSource : vtkPolyDataAlgorithm
 {
+    static vtkParametricFunctionSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
+
     protected vtkParametricFunctionSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Create a new instance with (50,50,50) points in the (u-v-w) directions.
@@ -109,13 +111,13 @@ public unsafe partial class vtkParametricFunctionSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern nint vtkParametricFunctionSource_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkParametricFunctionSource_SetParametricFunction(nint self, nint _arg1);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersSources.dll")]
     private static extern void vtkParametricFunctionSource_SetUResolution(nint self, int _arg);
     #endregion
 }

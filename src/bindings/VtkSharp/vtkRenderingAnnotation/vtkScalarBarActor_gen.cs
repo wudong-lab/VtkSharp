@@ -54,6 +54,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkScalarBarActor : vtkActor2D
 {
+    static vtkScalarBarActor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.RenderingAnnotation.dll");
+
     protected vtkScalarBarActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Instantiate object with 64 maximum colors; 5 labels; {:&lt;#6.3g} label
@@ -882,257 +884,257 @@ public unsafe partial class vtkScalarBarActor : vtkActor2D
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawAboveRangeSwatchOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawAboveRangeSwatchOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawBackgroundOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawBackgroundOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawBelowRangeSwatchOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawBelowRangeSwatchOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawColorBarOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawColorBarOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawFrameOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawFrameOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawTickLabelsOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_DrawTickLabelsOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetAnnotationTextProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetBackgroundProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern double vtkScalarBarActor_GetBarRatio(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetComponentTitle(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetCustomLabels(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkScalarBarActor_GetDrawAboveRangeSwatch(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetDrawBackground(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkScalarBarActor_GetDrawBelowRangeSwatch(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetDrawColorBar(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetDrawFrame(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetDrawTickLabels(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetFrameProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetLabelFormat(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetLabelTextProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetLookupTable(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetMaximumHeightInPixels(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetMaximumNumberOfColors(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetMaximumWidthInPixels(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetNumberOfLabels(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetOrientation(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_GetScalarBarRect(nint self, int* rect, nint viewport);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetTextPad(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetTextPosition(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetTitle(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern double vtkScalarBarActor_GetTitleRatio(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern nint vtkScalarBarActor_GetTitleTextProperty(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkScalarBarActor_GetUnconstrainedFontSize(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkScalarBarActor_GetUseCustomLabels(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern int vtkScalarBarActor_GetVerticalTitleSeparation(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetAnnotationTextProperty(nint self, nint p);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetBackgroundProperty(nint self, nint p);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetBarRatio(nint self, double _arg);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.RenderingAnnotation.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkScalarBarActor_SetComponentTitle(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetComponentTitle(nint self, byte[] _arg);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetCustomLabels(nint self, nint labels);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetDrawAboveRangeSwatch(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetDrawBackground(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetDrawBelowRangeSwatch(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetDrawColorBar(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetDrawFrame(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetDrawTickLabels(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetFrameProperty(nint self, nint p);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.RenderingAnnotation.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkScalarBarActor_SetLabelFormat(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetLabelFormat(nint self, byte[] _arg);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetLabelTextProperty(nint self, nint p);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetLookupTable(nint self, nint _arg1);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetMaximumHeightInPixels(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetMaximumNumberOfColors(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetMaximumWidthInPixels(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetNumberOfLabels(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetOrientation(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetOrientationToHorizontal(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetOrientationToVertical(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetTextPad(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetTextPosition(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetTextPositionToPrecedeScalarBar(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetTextPositionToSucceedScalarBar(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.RenderingAnnotation.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkScalarBarActor_SetTitle(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetTitle(nint self, byte[] _arg);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetTitleRatio(nint self, double _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetTitleTextProperty(nint self, nint p);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetUnconstrainedFontSize(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetUseCustomLabels(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_SetVerticalTitleSeparation(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_UnconstrainedFontSizeOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_UnconstrainedFontSizeOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_UseCustomLabelsOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
     private static extern void vtkScalarBarActor_UseCustomLabelsOn(nint self);
     #endregion
 }

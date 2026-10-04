@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "generatorVersion": "2026-10-04.native-module-layout-v1",
   "module": "vtkIOImage",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkDEMReader.h",
       "baseClassName": "vtkImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "7ceff270e0d50fd07cbc225aba5e6dc8d3d74a70d405ba458382fbef410faeda",
+      "inputHash": "84c2edd01277260ff87d2e0a7ef49e96007cac60854b09a9a38af8ba4295d397",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkDEMReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkDEMReader_export_gen.cpp",
-      "managedContentHash": "355070b1bf8f136e13d77c11eaf18d811ef375004567341c48ff18350bf2a4b7",
+      "managedContentHash": "18499a4e032f0e0b7e50dcf4c94f7142d24f575ec4eb3585df3805ec6a9f5209",
       "nativeContentHash": "656bd9686b22f7450a4f4726f003c12f30e980b8fef452b6eadb5c9d86fefc4c"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkImageReader2.h",
       "baseClassName": "vtkImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "eaafc95b17376ce5f025ec71abae05fd204ebd8ea6bd3e7942e3eeaeca09c27e",
+      "inputHash": "d3e4ff250382bfeb28a8bbc176854c796486c84bb36f563268a29d459327d188",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkImageReader2_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkImageReader2_export_gen.cpp",
-      "managedContentHash": "56ac3f99d31971042933f93cddf61f6fe24030b64a0caac7f2226cf441b304d0",
+      "managedContentHash": "19f2eb76b8ec540c946ec384822c909ef3caa7520b00c4dca2701cf57cd53c08",
       "nativeContentHash": "b7a52a03798b25251541d75cf82173a73fb9fef714d525dfa171590d12e3f4f0"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkImageWriter.h",
       "baseClassName": "vtkImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "9a7a37d801078ec4c2449018205dae2397f5847791957180500836e010b401ad",
+      "inputHash": "50d583d6ee85e692247cef403060ad26c20155680ed5479b7bbf26a87282be4a",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkImageWriter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkImageWriter_export_gen.cpp",
-      "managedContentHash": "2a5157fcf42d7843fb98d146a202bf39eaeefb87d569ee8d2a84dfab4b42ef40",
+      "managedContentHash": "1dff69f95b1746c0a3ed489716be788bc206c2f948750a60636caa6aa74014e8",
       "nativeContentHash": "4f35a1dd88e36707ae2eb0e39f38fe21cca0923b85d361b5e990f5f9f04cfc6e"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkJPEGWriter.h",
       "baseClassName": "vtkImageWriter",
       "hasStaticNew": true,
-      "inputHash": "803ee3cfb2f2d81af55713c9ca56c2f7ee6db2f686f3fbe7e85bf5269e5140f1",
+      "inputHash": "b87f3293d93c2ca3813870a5e904730f5063dac891676069681910c3ddf087a1",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkJPEGWriter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkJPEGWriter_export_gen.cpp",
-      "managedContentHash": "62c667f9a5880d9cb542a81dfb96f2bb8fa310048349fefa199599187adb051d",
+      "managedContentHash": "edd4677c7eebdffd0a0565a17a929e6431ecdb194c938073b7475cc4f0611585",
       "nativeContentHash": "deaf9ca57805ba5ce1286a73f77f80f7883e940121a4ee5dcb817e933b025513"
     },
     {
@@ -52,10 +52,10 @@
       "header": "vtkPNGReader.h",
       "baseClassName": "vtkImageReader2",
       "hasStaticNew": true,
-      "inputHash": "e8ac887b31dca5def979a1ea1521b42b9f6b748eb2bc7b11a5bb22ed0cda376d",
+      "inputHash": "1fa3fe23a900b798008decfc1c0c8289131dafb1e17d7214d3f75fd8e3b0c64f",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkPNGReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkPNGReader_export_gen.cpp",
-      "managedContentHash": "572e249ecfc597a5264f07b47dc0f1e580601b1e0d5b3478b49d94a3a93f6a70",
+      "managedContentHash": "f10184da129054fd4bf8fa9c3be827dd283fc9b35d97bcc4a43d08a7e9b5efb1",
       "nativeContentHash": "4ed8f5278ee3a44699720e5e2a2f0f81fad8f126cc7398b10359ec81db3bf166"
     },
     {
@@ -63,10 +63,10 @@
       "header": "vtkPNGWriter.h",
       "baseClassName": "vtkImageWriter",
       "hasStaticNew": true,
-      "inputHash": "257567d9c274acbb13a2fd032e466c27cd41d4540f4cad8ce53c919349550711",
+      "inputHash": "343edc8cdfa49016e9e8a4b25b3f4d11ddc0a68ae840bf079372550e88afa97c",
       "managedPath": "bindings\\VtkSharp\\vtkIOImage\\vtkPNGWriter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOImage\\vtkPNGWriter_export_gen.cpp",
-      "managedContentHash": "b116d91efcf5b3839c595120aa9d7d5b640130f08b2e36f170a69968f2fa44bb",
+      "managedContentHash": "2b73f86a1fccdef605e50a6e0ccc15d06f39ede3570ae8679366757f6bc5ec96",
       "nativeContentHash": "70d9a0e3d85058121ab972b3877aac172c8d590b67655161f61d40733d04083d"
     }
   ]

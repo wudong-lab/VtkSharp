@@ -94,7 +94,8 @@ if ($Linkage -eq "Dynamic") {
     }
     $runtimeDirectory = Join-Path $repoRoot "artifacts\package-runtime\$version"
     if (Test-Path -LiteralPath $runtimeDirectory) { throw "Package runtime staging directory already exists: $runtimeDirectory" }
-    $sourceRoots = @("entrypoint=$nativeOutputDirectory", "vtk=$(Join-Path $vtkInstallDirectory 'bin')")
+    $entrypointRoots = @($manifest.inputSources | ForEach-Object { "$($_.id)=$nativeOutputDirectory" })
+    $sourceRoots = $entrypointRoots + "vtk=$(Join-Path $vtkInstallDirectory 'bin')"
     & "$PSScriptRoot/copy-native-dependencies.ps1" -ManifestPath $manifestPath -SourceRoot $sourceRoots -DestinationDirectory $runtimeDirectory
     $licenseDestination = Join-Path $runtimeDirectory "licenses"
     New-Item -ItemType Directory -Path $licenseDestination -Force | Out-Null

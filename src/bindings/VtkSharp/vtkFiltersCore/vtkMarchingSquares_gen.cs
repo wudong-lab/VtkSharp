@@ -36,6 +36,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkMarchingSquares : vtkPolyDataAlgorithm
 {
+    static vtkMarchingSquares() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkMarchingSquares(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -96,10 +98,10 @@ public unsafe partial class vtkMarchingSquares : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkMarchingSquares_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkMarchingSquares_SetValue(nint self, int i, double value);
     #endregion
 }

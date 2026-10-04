@@ -24,6 +24,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCellData : vtkDataSetAttributes
 {
+    static vtkCellData() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkCellData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -76,7 +78,7 @@ public unsafe partial class vtkCellData : vtkDataSetAttributes
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkCellData_New();
     #endregion
 }

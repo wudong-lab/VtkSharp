@@ -27,6 +27,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAlgorithm : vtkObject
 {
+    static vtkAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
+
     protected vtkAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -247,47 +249,47 @@ public unsafe partial class vtkAlgorithm : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkAlgorithm_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkAlgorithm_GetOutputDataObject(nint self, int port);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkAlgorithm_GetOutputPort_int(nint self, int index);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkAlgorithm_GetOutputPort_(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.CommonExecutionModel.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAlgorithm_SetInputArrayToProcess(nint self, int idx, int port, int connection, int fieldAssociation, string name);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern void vtkAlgorithm_SetInputArrayToProcess(nint self, int idx, int port, int connection, int fieldAssociation, byte[] name);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern void vtkAlgorithm_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int port, nint input);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern void vtkAlgorithm_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern void vtkAlgorithm_SetInputDataObject(nint self, int port, nint data);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkAlgorithm_Update_(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkAlgorithm_Update_int(nint self, int port);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern int vtkAlgorithm_Update_int_vtkInformationVectorPtr(nint self, int port, nint requests);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern int vtkAlgorithm_Update_vtkInformationPtr(nint self, nint requests);
     #endregion
 }

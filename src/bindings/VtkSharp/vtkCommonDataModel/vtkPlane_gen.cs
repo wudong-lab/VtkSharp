@@ -17,6 +17,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPlane : vtkImplicitFunction
 {
+    static vtkPlane() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkPlane(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct plane passing through origin and normal to z-axis.
@@ -89,13 +91,13 @@ public unsafe partial class vtkPlane : vtkImplicitFunction
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkPlane_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkPlane_SetNormal(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkPlane_SetOrigin(nint self, double x, double y, double z);
     #endregion
 }

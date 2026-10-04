@@ -24,6 +24,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAssemblyPath : vtkCollection
 {
+    static vtkAssemblyPath() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkAssemblyPath(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Instantiate empty path with identify matrix.
@@ -79,7 +81,7 @@ public unsafe partial class vtkAssemblyPath : vtkCollection
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkAssemblyPath_New();
     #endregion
 }

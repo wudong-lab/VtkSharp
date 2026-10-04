@@ -32,6 +32,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGaussianKernel : vtkGeneralizedKernel
 {
+    static vtkGaussianKernel() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersPoints.dll");
+
     protected vtkGaussianKernel(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, obtaining type information, and printing.
@@ -97,10 +99,10 @@ public unsafe partial class vtkGaussianKernel : vtkGeneralizedKernel
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersPoints.dll")]
     private static extern nint vtkGaussianKernel_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersPoints.dll")]
     private static extern void vtkGaussianKernel_SetSharpness(nint self, double _arg);
     #endregion
 }

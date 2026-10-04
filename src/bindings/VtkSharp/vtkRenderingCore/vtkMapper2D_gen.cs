@@ -20,6 +20,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkMapper2D : vtkAbstractMapper
 {
+    static vtkMapper2D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkMapper2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

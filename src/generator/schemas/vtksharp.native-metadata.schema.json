@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "VtkSharp VTK module metadata snapshot",
+  "type": "object",
+  "required": ["schemaVersion", "vtkVersion", "platform", "configuration", "modules"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "vtkVersion": { "type": "string", "minLength": 1 },
+    "platform": { "const": "windows-x64" },
+    "configuration": { "enum": ["Debug", "Release"] },
+    "modules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["module", "depends", "privateDepends", "optionalDepends", "implements", "implementable", "libraryName", "needsAutoinit"],
+        "properties": {
+          "module": { "type": "string", "minLength": 1 },
+          "depends": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "privateDepends": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "optionalDepends": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "implements": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "implementable": { "type": "boolean" },
+          "libraryName": { "type": "string", "minLength": 1 },
+          "needsAutoinit": { "type": "boolean" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

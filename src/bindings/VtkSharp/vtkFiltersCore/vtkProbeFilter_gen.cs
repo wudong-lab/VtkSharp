@@ -60,6 +60,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkProbeFilter : vtkDataSetAlgorithm
 {
+    static vtkProbeFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkProbeFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -123,10 +125,10 @@ public unsafe partial class vtkProbeFilter : vtkDataSetAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkProbeFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkProbeFilter_SetSourceData(nint self, nint source);
     #endregion
 }

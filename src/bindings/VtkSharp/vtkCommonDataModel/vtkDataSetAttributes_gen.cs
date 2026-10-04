@@ -55,6 +55,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDataSetAttributes : vtkFieldData
 {
+    static vtkDataSetAttributes() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkDataSetAttributes(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct object with copying turned on for all data.
@@ -153,29 +155,29 @@ public unsafe partial class vtkDataSetAttributes : vtkFieldData
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkDataSetAttributes_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkDataSetAttributes_GetScalars(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.CommonDataModel.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial int vtkDataSetAttributes_SetActiveScalars(nint self, string name);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern int vtkDataSetAttributes_SetActiveScalars(nint self, byte[] name);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.CommonDataModel.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial int vtkDataSetAttributes_SetActiveVectors(nint self, string name);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern int vtkDataSetAttributes_SetActiveVectors(nint self, byte[] name);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern int vtkDataSetAttributes_SetScalars(nint self, nint da);
     #endregion
 }

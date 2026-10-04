@@ -17,6 +17,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkOpenGLRenderWindow : vtkRenderWindow
 {
+    static vtkOpenGLRenderWindow() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkOpenGLRenderWindow(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -85,13 +87,13 @@ public unsafe partial class vtkOpenGLRenderWindow : vtkRenderWindow
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkOpenGLRenderWindow_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkOpenGLRenderWindow_GetRGBAPixelData(nint self, int x, int y, int x2, int y2, int front, nint data, int right);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkOpenGLRenderWindow_Render(nint self);
     #endregion
 }

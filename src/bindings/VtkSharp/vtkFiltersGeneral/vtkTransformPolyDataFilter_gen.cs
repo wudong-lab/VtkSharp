@@ -14,6 +14,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTransformPolyDataFilter : vtkPolyDataAlgorithm
 {
+    static vtkTransformPolyDataFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
+
     protected vtkTransformPolyDataFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, obtaining type information, and
@@ -78,10 +80,10 @@ public unsafe partial class vtkTransformPolyDataFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern nint vtkTransformPolyDataFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern void vtkTransformPolyDataFilter_SetTransform(nint self, nint _arg1);
     #endregion
 }

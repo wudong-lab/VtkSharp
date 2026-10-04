@@ -25,6 +25,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSelectionAlgorithm : vtkAlgorithm
 {
+    static vtkSelectionAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
+
     protected vtkSelectionAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -77,7 +79,7 @@ public unsafe partial class vtkSelectionAlgorithm : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
     private static extern nint vtkSelectionAlgorithm_New();
     #endregion
 }

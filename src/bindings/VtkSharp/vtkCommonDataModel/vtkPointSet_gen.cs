@@ -48,6 +48,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPointSet : vtkDataSet
 {
+    static vtkPointSet() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkPointSet(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard instantiation method.
@@ -130,16 +132,16 @@ public unsafe partial class vtkPointSet : vtkDataSet
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkPointSet_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern long vtkPointSet_GetNumberOfPoints(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkPointSet_GetPoints(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkPointSet_SetPoints(nint self, nint _arg1);
     #endregion
 }

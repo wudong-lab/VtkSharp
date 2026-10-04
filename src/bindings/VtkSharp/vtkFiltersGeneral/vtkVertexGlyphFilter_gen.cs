@@ -19,6 +19,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkVertexGlyphFilter : vtkPolyDataAlgorithm
 {
+    static vtkVertexGlyphFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
+
     protected vtkVertexGlyphFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -71,7 +73,7 @@ public unsafe partial class vtkVertexGlyphFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
     private static extern nint vtkVertexGlyphFilter_New();
     #endregion
 }

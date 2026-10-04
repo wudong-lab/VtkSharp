@@ -23,6 +23,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkParametricEnneper : vtkParametricFunction
 {
+    static vtkParametricEnneper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonComputationalGeometry.dll");
+
     protected vtkParametricEnneper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct Enneper's surface with the following parameters:
@@ -84,7 +86,7 @@ public unsafe partial class vtkParametricEnneper : vtkParametricFunction
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonComputationalGeometry.dll")]
     private static extern nint vtkParametricEnneper_New();
     #endregion
 }

@@ -44,6 +44,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkContourFilter : vtkPolyDataAlgorithm
 {
+    static vtkContourFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkContourFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct object with initial range (0,1) and single contour value
@@ -108,10 +110,10 @@ public unsafe partial class vtkContourFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkContourFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkContourFilter_GenerateValues(nint self, int numContours, double rangeStart, double rangeEnd);
     #endregion
 }

@@ -47,6 +47,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImplicitFunction : vtkObject
 {
+    static vtkImplicitFunction() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkImplicitFunction(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

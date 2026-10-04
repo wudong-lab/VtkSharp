@@ -15,6 +15,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPoints : vtkObject
 {
+    static vtkPoints() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
+
     protected vtkPoints(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -295,85 +297,85 @@ public unsafe partial class vtkPoints : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern nint vtkPoints_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern long vtkPoints_GetNumberOfPoints(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_GetPoint(nint self, long id, double* x);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_Initialize(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern long vtkPoints_InsertNextPoint_doubleConstArray3(nint self, double* x);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern long vtkPoints_InsertNextPoint_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern long vtkPoints_InsertNextPoint_floatConstArray3(nint self, float* x);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_InsertPoint_vtkIdType_doubleConstArray3(nint self, long id, double* x);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_InsertPoint_vtkIdType_double_double_double(nint self, long id, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_InsertPoint_vtkIdType_floatConstArray3(nint self, long id, float* x);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_Modified(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern int vtkPoints_Resize(nint self, long numPoints);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToBit(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToChar(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToDouble(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToFloat(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToInt(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToLong(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToShort(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToUnsignedChar(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToUnsignedInt(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToUnsignedLong(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetDataTypeToUnsignedShort(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetNumberOfPoints(nint self, long numPoints);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetPoint_vtkIdType_doubleConstArray3(nint self, long id, double* x);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetPoint_vtkIdType_double_double_double(nint self, long id, double x, double y, double z);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkPoints_SetPoint_vtkIdType_floatConstArray3(nint self, long id, float* x);
     #endregion
 }

@@ -29,6 +29,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTextActor : vtkTexturedActor2D
 {
+    static vtkTextActor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkTextActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Instantiate object with a rectangle in normaled view coordinates
@@ -153,27 +155,27 @@ public unsafe partial class vtkTextActor : vtkTexturedActor2D
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkTextActor_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkTextActor_GetTextProperty(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkTextActor_SetInput(nint self, string inputString);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkTextActor_SetInput(nint self, byte[] inputString);
 #endif
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkTextActor_SetTextScaleModeToNone(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkTextActor_SetTextScaleModeToProp(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkTextActor_SetTextScaleModeToViewport(nint self);
     #endregion
 }

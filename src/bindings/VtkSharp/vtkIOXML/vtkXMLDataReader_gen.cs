@@ -21,6 +21,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkXMLDataReader : vtkXMLReader
 {
+    static vtkXMLDataReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOXML.dll");
+
     protected vtkXMLDataReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

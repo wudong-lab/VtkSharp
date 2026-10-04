@@ -282,7 +282,11 @@ public sealed class DocumentationTests : IDisposable
               nativeLibraryName: VtkSharp.Native
             paths:
               whitelistDirectory: whitelist
+              nativeModuleStrategyFile: strategy.yml
+              nativeModuleMetadataFile: metadata.json
             """);
+        File.WriteAllText(Path.Combine(this._directory, "strategy.yml"), MinimalNativeModuleStrategy);
+        File.WriteAllText(Path.Combine(this._directory, "metadata.json"), MinimalNativeModuleMetadata);
         File.WriteAllText(Path.Combine(whitelist, "vtkCommonCore.yml"), """
             module: vtkCommonCore
             classes:
@@ -340,7 +344,11 @@ public sealed class DocumentationTests : IDisposable
               nativeOutputDirectory: incremental-check-output/bindings/VtkSharp.Native/src
               nativeProjectFile: incremental-check-output/bindings/VtkSharp.Native/CMakeLists.txt
               nativeModulesFile: incremental-check-output/bindings/VtkSharp.Native/vtksharp.modules.generated.cmake
+              nativeModuleStrategyFile: strategy.yml
+              nativeModuleMetadataFile: metadata.json
             """);
+        File.WriteAllText(Path.Combine(this._directory, "strategy.yml"), MinimalNativeModuleStrategy);
+        File.WriteAllText(Path.Combine(this._directory, "metadata.json"), MinimalNativeModuleMetadata);
         File.WriteAllText(Path.Combine(whitelist, "vtkCommonCore.yml"), """
             module: vtkCommonCore
             classes:
@@ -388,4 +396,34 @@ public sealed class DocumentationTests : IDisposable
     }
 
     public void Dispose() => Directory.Delete(this._directory, recursive: true);
+
+    private const string MinimalNativeModuleStrategy = """
+        schemaVersion: 1
+        strategyVersion: 1
+        vtkVersion: 9.7.0
+        platform: windows-x64
+        groups: []
+        manualSourceOwnership: []
+        """;
+
+    private const string MinimalNativeModuleMetadata = """
+        {
+          "schemaVersion": 1,
+          "vtkVersion": "9.7.0",
+          "platform": "windows-x64",
+          "configuration": "Release",
+          "modules": [
+            {
+              "module": "vtkCommonCore",
+              "depends": [],
+              "privateDepends": [],
+              "optionalDepends": [],
+              "implements": [],
+              "implementable": false,
+              "libraryName": "vtkCommonCore",
+              "needsAutoinit": false
+            }
+          ]
+        }
+        """;
 }

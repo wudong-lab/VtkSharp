@@ -41,6 +41,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorObserver : vtkObject
 {
+    static vtkInteractorObserver() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkInteractorObserver(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.
@@ -112,13 +114,13 @@ public unsafe partial class vtkInteractorObserver : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkInteractorObserver_EnabledOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkInteractorObserver_EnabledOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkInteractorObserver_SetInteractor(nint self, nint iren);
     #endregion
 }

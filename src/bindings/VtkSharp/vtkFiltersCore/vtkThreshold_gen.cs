@@ -46,6 +46,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkThreshold : vtkUnstructuredGridAlgorithm
 {
+    static vtkThreshold() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkThreshold(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -116,13 +118,13 @@ public unsafe partial class vtkThreshold : vtkUnstructuredGridAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkThreshold_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkThreshold_SetLowerThreshold(nint self, double _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkThreshold_SetThresholdFunction(nint self, int function);
     #endregion
 }

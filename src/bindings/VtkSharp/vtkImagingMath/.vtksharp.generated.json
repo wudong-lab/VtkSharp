@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "generatorVersion": "2026-10-04.native-module-layout-v1",
   "module": "vtkImagingMath",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkImageMathematics.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "39bda4e91a2c60135c6c276431b344281730e0a05e3a576b254c7f51d801db01",
+      "inputHash": "5aed43b3997c2a38ac4fed7e489c74d7efd4b19178e4e8784573b94716b35d1e",
       "managedPath": "bindings\\VtkSharp\\vtkImagingMath\\vtkImageMathematics_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingMath\\vtkImageMathematics_export_gen.cpp",
-      "managedContentHash": "ca917853cb462056af70b98bfe9d42678d0ea81855b786a89dabf5de7cee2a76",
+      "managedContentHash": "c825e19866920d1d36cffbe893de54f61cdbc106f90f022c3d4b2c014801d9b9",
       "nativeContentHash": "26ec7108ebd980b2386e02e48ebead4582399aaed68a70974b3a499ce184b78b"
     }
   ]

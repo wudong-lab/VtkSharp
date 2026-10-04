@@ -32,6 +32,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkBorderWidget : vtkAbstractWidget
 {
+    static vtkBorderWidget() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.InteractionWidgets.dll");
+
     protected vtkBorderWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Method to instantiate class.
@@ -200,40 +202,40 @@ public unsafe partial class vtkBorderWidget : vtkAbstractWidget
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern nint vtkBorderWidget_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_CreateDefaultRepresentation(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern nint vtkBorderWidget_GetBorderRepresentation(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern int vtkBorderWidget_GetResizable(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern int vtkBorderWidget_GetSelectable(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_ResizableOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_ResizableOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_SelectableOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_SelectableOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_SetRepresentation(nint self, nint r);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_SetResizable(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
     private static extern void vtkBorderWidget_SetSelectable(nint self, int _arg);
     #endregion
 }

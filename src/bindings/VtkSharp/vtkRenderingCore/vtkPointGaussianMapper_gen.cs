@@ -19,6 +19,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPointGaussianMapper : vtkPolyDataMapper
 {
+    static vtkPointGaussianMapper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkPointGaussianMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -110,20 +112,20 @@ public unsafe partial class vtkPointGaussianMapper : vtkPolyDataMapper
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkPointGaussianMapper_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkPointGaussianMapper_EmissiveOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkPointGaussianMapper_SetScaleFactor(nint self, double _arg);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkPointGaussianMapper_SetSplatShaderCode(nint self, string _arg);
 #else
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkPointGaussianMapper_SetSplatShaderCode(nint self, byte[] _arg);
 #endif
     #endregion

@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=../schemas/vtksharp.native-modules.schema.json
+# Groups below represent C ABI targets. Modules not listed in a group keep
+# their own target; VTK dependency edges do not merge C ABI targets.
+schemaVersion: 1
+strategyVersion: 1
+vtkVersion: 9.7.0
+platform: windows-x64
+
+groups:
+  - name: Rendering
+    target: VtkSharp.Native.Rendering
+    modules:
+      - vtkInteractionStyle
+      - vtkRenderingCore
+      - vtkRenderingLabel
+      - vtkRenderingOpenGL2
+      - vtkRenderingUI
+    initializationProviders:
+      - vtkInteractionStyle
+      - vtkRenderingOpenGL2
+      - vtkRenderingUI
+    rationale: >-
+      Keep current OpenGL2 backend and co-locate the explicitly selected VTK
+      factory providers with the rendering modules whose autoinit they satisfy.
+
+manualSourceOwnership:
+  - source: vtkCommonCore/vtkObjectBase_export.cpp
+    target: VtkSharp.Native.CommonCore
+    rationale: Manual base-object reference-count and deletion exports used by every wrapper.
+  - source: vtkCommonCore/vtkObject_export.cpp
+    target: VtkSharp.Native.CommonCore
+    rationale: Manual vtkObject event and observer exports.
+  - source: vtksharp_string.cpp
+    target: VtkSharp.Native.CommonCore
+    rationale: Shared UTF-8/string interop helpers used by generated exports.
+
+# Unlisted wrapped modules are independent targets named
+# VtkSharp.Native.<VTK module without the leading "vtk">.

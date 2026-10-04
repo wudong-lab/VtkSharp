@@ -22,6 +22,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCuller : vtkObject
 {
+    static vtkCuller() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkCuller(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

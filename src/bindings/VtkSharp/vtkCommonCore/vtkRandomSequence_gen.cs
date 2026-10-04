@@ -28,6 +28,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkRandomSequence : vtkObject
 {
+    static vtkRandomSequence() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
+
     protected vtkRandomSequence(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

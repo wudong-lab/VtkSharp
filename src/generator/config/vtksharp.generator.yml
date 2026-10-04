@@ -3,11 +3,6 @@
 vtk:
   version: "9.7"
   modulePrefix: vtk
-  runtimeModules:
-    - vtkCommonDataModel
-    - vtkRenderingOpenGL2
-    - vtkInteractionStyle
-    - vtkRenderingUI
 
 binding:
   namespace: VtkSharp
@@ -22,6 +17,8 @@ paths:
   nativeOutputDirectory: ../../bindings/VtkSharp.Native/src
   nativeProjectFile: ../../bindings/VtkSharp.Native/CMakeLists.txt
   nativeModulesFile: ../../bindings/VtkSharp.Native/vtksharp.modules.generated.cmake
+  nativeModuleStrategyFile: vtksharp.native-modules.yml
+  nativeModuleMetadataFile: vtksharp.native-metadata.json
 
 generation:
   createManualExtensionFiles: false

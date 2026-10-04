@@ -18,6 +18,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTransferFunction
 {
+    static vtkDiscretizableColorTransferFunction() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkDiscretizableColorTransferFunction(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -332,76 +334,76 @@ public unsafe partial class vtkDiscretizableColorTransferFunction : vtkColorTran
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkDiscretizableColorTransferFunction_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_Build(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_DiscretizeOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_DiscretizeOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_GetColor(nint self, double v, double* rgb);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkDiscretizableColorTransferFunction_GetDiscretize(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_GetIndexedColor(nint self, long i, double* rgba);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern long vtkDiscretizableColorTransferFunction_GetNumberOfAvailableColors(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern uint vtkDiscretizableColorTransferFunction_GetNumberOfIndexedColors(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern long vtkDiscretizableColorTransferFunction_GetNumberOfValues(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern double vtkDiscretizableColorTransferFunction_GetOpacity(nint self, double v);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkDiscretizableColorTransferFunction_GetUseLogScale(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetAlpha(nint self, double alpha);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetDiscretize(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetIndexedColor(nint self, uint index, double r, double g, double b, double a);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetIndexedColorRGB(nint self, uint index, double* rgb);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetIndexedColorRGBA(nint self, uint index, double* rgba);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetNanColor_doubleConstArray3(nint self, double* rgb);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetNanColor_double_double_double(nint self, double r, double g, double b);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetNanOpacity(nint self, double a);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetNumberOfIndexedColors(nint self, uint count);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetNumberOfValues(nint self, long _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern void vtkDiscretizableColorTransferFunction_SetUseLogScale(nint self, int useLogScale);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern int vtkDiscretizableColorTransferFunction_UsingLogScale(nint self);
     #endregion
 }

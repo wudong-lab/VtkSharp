@@ -130,6 +130,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
 {
+    static vtkDelaunay2D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkDelaunay2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct object with Alpha = 0.0; Tolerance = 0.001; Offset = 1.25;
@@ -210,13 +212,13 @@ public unsafe partial class vtkDelaunay2D : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkDelaunay2D_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkDelaunay2D_SetSourceData(nint self, nint _arg1);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkDelaunay2D_SetTolerance(nint self, double _arg);
     #endregion
 }

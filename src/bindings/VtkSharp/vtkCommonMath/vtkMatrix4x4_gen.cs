@@ -24,6 +24,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkMatrix4x4 : vtkObject
 {
+    static vtkMatrix4x4() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonMath.dll");
+
     protected vtkMatrix4x4(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct a 4x4 identity matrix.
@@ -206,43 +208,43 @@ public unsafe partial class vtkMatrix4x4 : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern nint vtkMatrix4x4_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern double* vtkMatrix4x4_GetData(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern double vtkMatrix4x4_GetElement(nint self, int i, int j);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_Identity(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_Invert(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern double* vtkMatrix4x4_MultiplyPoint_doubleConstArray4(nint self, double* @in);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern float* vtkMatrix4x4_MultiplyPoint_floatConstArray4(nint self, float* @in);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_MultiplyPoint_doubleConstArray4_doubleArray4(nint self, double* @in, double* @out);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_MultiplyPoint_floatConstArray4_floatArray4(nint self, float* @in, float* @out);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_SetData(nint self, double* data);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_SetElement(nint self, int i, int j, double value);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_Transpose(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonMath.dll")]
     private static extern void vtkMatrix4x4_Zero(nint self);
     #endregion
 }

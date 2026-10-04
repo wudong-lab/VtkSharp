@@ -7,4 +7,6 @@ public sealed record PathConfig
     public string NativeOutputDirectory { get; init; } = "";
     public string NativeProjectFile { get; init; } = "";
     public string NativeModulesFile { get; init; } = "";
+    public string NativeModuleStrategyFile { get; init; } = "";
+    public string NativeModuleMetadataFile { get; init; } = "";
 }

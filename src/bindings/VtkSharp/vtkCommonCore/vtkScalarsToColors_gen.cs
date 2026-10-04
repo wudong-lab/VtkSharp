@@ -31,6 +31,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkScalarsToColors : vtkObject
 {
+    static vtkScalarsToColors() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
+
     protected vtkScalarsToColors(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -252,52 +254,52 @@ public unsafe partial class vtkScalarsToColors : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern nint vtkScalarsToColors_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_Build(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern double vtkScalarsToColors_GetAlpha(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern double* vtkScalarsToColors_GetColor_double(nint self, double v);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_GetColor_double_doubleArray3(nint self, double v, double* rgb);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern int vtkScalarsToColors_GetIndexedLookup(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern long vtkScalarsToColors_GetNumberOfAvailableColors(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern double vtkScalarsToColors_GetOpacity(nint self, double v);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern double* vtkScalarsToColors_GetRange(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_IndexedLookupOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_IndexedLookupOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_SetAlpha(nint self, double alpha);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_SetIndexedLookup(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_SetRange_doubleConstArray2(nint self, double* rng);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern void vtkScalarsToColors_SetRange_double_double(nint self, double min, double max);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonCore.dll")]
     private static extern int vtkScalarsToColors_UsingLogScale(nint self);
     #endregion
 }

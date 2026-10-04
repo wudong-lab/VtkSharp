@@ -22,6 +22,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkUnstructuredGridBase : vtkPointSet
 {
+    static vtkUnstructuredGridBase() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkUnstructuredGridBase(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.
@@ -84,7 +86,7 @@ public unsafe partial class vtkUnstructuredGridBase : vtkPointSet
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern long vtkUnstructuredGridBase_InsertNextCell(nint self, int type, nint ptIds);
     #endregion
 }

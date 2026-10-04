@@ -83,6 +83,19 @@ public sealed class GeneratedManifestCacheTests
     }
 
     [TestMethod]
+    public void ComputeFingerprint_Changes_WhenNativeModuleStrategyChanges()
+    {
+        var first = GenerationInputFingerprint.Compute(
+            "v1", "9.7", "VtkSharp", "VtkSharp.Native.CommonCore.dll", "vtkCommonCore", "vtkFoo", "vtkFoo.h", "vtkObject", "header",
+            [CreateFunction("SetValue", "int")], nativeModuleStrategyFingerprint: "independent-v1");
+        var second = GenerationInputFingerprint.Compute(
+            "v1", "9.7", "VtkSharp", "VtkSharp.Native.Rendering.dll", "vtkCommonCore", "vtkFoo", "vtkFoo.h", "vtkObject", "header",
+            [CreateFunction("SetValue", "int")], nativeModuleStrategyFingerprint: "rendering-v1");
+
+        Assert.AreNotEqual(first, second);
+    }
+
+    [TestMethod]
     public void Load_ReturnsEmptyManifest_WhenSchemaVersionDiffers()
     {
         var directory = CreateDirectory();

@@ -164,6 +164,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWindowedSincPolyDataFilter : vtkPolyDataAlgorithm
 {
+    static vtkWindowedSincPolyDataFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkWindowedSincPolyDataFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct object with number of iterations 20; passband .1; feature edge
@@ -241,13 +243,13 @@ public unsafe partial class vtkWindowedSincPolyDataFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkWindowedSincPolyDataFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkWindowedSincPolyDataFilter_BoundarySmoothingOff(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkWindowedSincPolyDataFilter_SetNumberOfIterations(nint self, int _arg);
     #endregion
 }

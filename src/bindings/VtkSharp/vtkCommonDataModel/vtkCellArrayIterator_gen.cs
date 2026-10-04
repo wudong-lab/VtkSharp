@@ -27,6 +27,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCellArrayIterator : vtkObject
 {
+    static vtkCellArrayIterator() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkCellArrayIterator(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Standard methods for instantiation, type information, and printing.
@@ -131,22 +133,22 @@ public unsafe partial class vtkCellArrayIterator : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkCellArrayIterator_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkCellArrayIterator_GetCurrentCell(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern long vtkCellArrayIterator_GetCurrentCellId(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkCellArrayIterator_GoToFirstCell(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern void vtkCellArrayIterator_GoToNextCell(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkCellArrayIterator_IsDoneWithTraversal(nint self);
     #endregion

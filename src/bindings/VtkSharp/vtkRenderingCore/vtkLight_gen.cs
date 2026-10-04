@@ -37,6 +37,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLight : vtkObject
 {
+    static vtkLight() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkLight(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Create a light with the focal point at the origin and its position
@@ -97,7 +99,7 @@ public unsafe partial class vtkLight : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.Rendering.dll")]
     private static extern nint vtkLight_New();
     #endregion
 }

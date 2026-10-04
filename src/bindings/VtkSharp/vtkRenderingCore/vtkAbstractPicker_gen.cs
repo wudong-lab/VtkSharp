@@ -56,6 +56,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractPicker : vtkObject
 {
+    static vtkAbstractPicker() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
+
     protected vtkAbstractPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.

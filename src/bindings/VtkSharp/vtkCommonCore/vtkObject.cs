@@ -7,6 +7,8 @@ namespace VtkSharp;
 
 public class vtkObject : vtkObjectBase
 {
+    static vtkObject() => NativeModuleLoader.EnsureLoaded(InteropInfo.NativeLibraryName);
+
     private static readonly VtkObserverNativeCallback ObserverCallback = OnObserverCallback;
     private static readonly nint ObserverCallbackPointer = Marshal.GetFunctionPointerForDelegate(ObserverCallback);
 

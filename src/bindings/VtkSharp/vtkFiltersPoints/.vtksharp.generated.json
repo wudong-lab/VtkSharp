@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "generatorVersion": "2026-10-04.native-module-layout-v1",
   "module": "vtkFiltersPoints",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkGaussianKernel.h",
       "baseClassName": "vtkGeneralizedKernel",
       "hasStaticNew": true,
-      "inputHash": "66eb614e8b5a225b8b12e07cfbc1ce340c6ee8bcc4ce386af2504d168d5bd7bf",
+      "inputHash": "462af37f4c63b3aca070fd1402a3f8df7e9af1749d64406a9a60a7c7d6a5c364",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersPoints\\vtkGaussianKernel_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersPoints\\vtkGaussianKernel_export_gen.cpp",
-      "managedContentHash": "f984d3335eeca4e0846e20716eece5dae8aa49ecf6891aefc0148c8c2190e58f",
+      "managedContentHash": "bc13d6d2a01512fd75da6b94e0575c155cdde1681f71fec2d079c8f7b80fe5ba",
       "nativeContentHash": "a1b7c621888cb7f0d3ec328f2284b621455ae66e829b2c50151e67ffccef6710"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkGeneralizedKernel.h",
       "baseClassName": "vtkInterpolationKernel",
       "hasStaticNew": false,
-      "inputHash": "578be84efc7c6f02e0e8e6682ce682f85bb4b933f17900e68ac7db09b052953b",
+      "inputHash": "38c77cd30c24028f46126c2d3f94e15c85755b4c7fa690926ed0950b0a3acfad",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersPoints\\vtkGeneralizedKernel_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersPoints\\vtkGeneralizedKernel_export_gen.cpp",
-      "managedContentHash": "29721c85a97b937c437b1648397a0c1ec8fd4e8c4143cd11db80beb073b8bdc8",
+      "managedContentHash": "e6395a809ff5f6d4982a89b543eff3e6e29f322c9b8ad2f55f3ba3deaa0d371b",
       "nativeContentHash": "f9e54822932d376b53f4c4e888c8ed3ae3fd2cd499fb7e283f4fdb8d2afd5189"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkInterpolationKernel.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": false,
-      "inputHash": "0383e1ac154b2ef67cbe9bf73dc07451e53f7b7efec0a397977770b9d8544791",
+      "inputHash": "d4875739a48d9593bcf5465a3efab6c17ad11fe77c88ddd1447454663677a68e",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersPoints\\vtkInterpolationKernel_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersPoints\\vtkInterpolationKernel_export_gen.cpp",
-      "managedContentHash": "881454ba46110661292808a57b5ddb199aa43184946afada1b65ec740d1d4d62",
+      "managedContentHash": "eee0bd8d34ef0c82770007f6977346995528b171b625717f696880751caaf877",
       "nativeContentHash": "154ecfd6b6d9101d027187d0b36d46f9aa494198d2c59240e10c35442c92fb6d"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkPointInterpolator.h",
       "baseClassName": "vtkDataSetAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "85a319f063b4479a017191c67442d1c34f790dd6e623fa33f0e27e3c23432e44",
+      "inputHash": "caac9689e8d18c58223be07ec8c8c0595b4cd4a7c123c069003a888f50a81faa",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersPoints\\vtkPointInterpolator_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersPoints\\vtkPointInterpolator_export_gen.cpp",
-      "managedContentHash": "18ebff1140636fe369efeb10a08ff78bbe206272ef39d59760ebc3249a005178",
+      "managedContentHash": "948a465a36467073a10d78582ea5222c958130b19be755db70b04a675fe132c9",
       "nativeContentHash": "680c556a8ea7b617c163286408439967beac002e5b948c066ff0e3a2a4de11b0"
     }
   ]

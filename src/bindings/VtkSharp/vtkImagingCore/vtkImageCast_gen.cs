@@ -28,6 +28,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageCast : vtkThreadedImageAlgorithm
 {
+    static vtkImageCast() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.ImagingCore.dll");
+
     protected vtkImageCast(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
     /// The C# wrapper owns a native reference. Call Dispose() when finished to release that reference.
@@ -88,10 +90,10 @@ public unsafe partial class vtkImageCast : vtkThreadedImageAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.ImagingCore.dll")]
     private static extern nint vtkImageCast_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.ImagingCore.dll")]
     private static extern void vtkImageCast_SetOutputScalarTypeToUnsignedChar(nint self);
     #endregion
 }

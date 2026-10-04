@@ -61,6 +61,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGeneralizedKernel : vtkInterpolationKernel
 {
+    static vtkGeneralizedKernel() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersPoints.dll");
+
     protected vtkGeneralizedKernel(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.
@@ -118,7 +120,7 @@ public unsafe partial class vtkGeneralizedKernel : vtkInterpolationKernel
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersPoints.dll")]
     private static extern void vtkGeneralizedKernel_SetRadius(nint self, double _arg);
     #endregion
 }

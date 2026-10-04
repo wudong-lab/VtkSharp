@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "generatorVersion": "2026-10-04.native-module-layout-v1",
   "module": "vtkFiltersModeling",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkFitToHeightMapFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "c7a10750a84355c9ca6c93bd89fc9d81ba4ecfd292a13b8d1c1a657eece686ea",
+      "inputHash": "cf9c33183915c62d192b77f276af024444fa495e366f50f531e7df53bebc02ae",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkFitToHeightMapFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkFitToHeightMapFilter_export_gen.cpp",
-      "managedContentHash": "ff6fa01ec23155bcb013dad956c1b175134db013c39363918ff2e60c04252c8d",
+      "managedContentHash": "6501f2d8e6d16736cb7872ad3f4fa8bf51c9b4e7229918d171c6e970f003abd6",
       "nativeContentHash": "aad7e5578911388014157a6851eebcf7a6ed7c0cd9a1a87171077488d25ef1b7"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkLinearExtrusionFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "962b7d52b8e77e60b68e66f9a5e4c8917a0ff1bc7144e50c908a6df1c3110852",
+      "inputHash": "ad3910809b4affe414d20e5a9c549717160df0f1490c721d536f7c6aa0329a4a",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkLinearExtrusionFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkLinearExtrusionFilter_export_gen.cpp",
-      "managedContentHash": "4c01ff437ccc381c4133ed3514bb766b3507785bb558dbf511ddeffa4ee0f7f2",
+      "managedContentHash": "7d47dbe858d05354fc08ecbeb44ff5902f4f67fe3b251e3668d8baad9aacc268",
       "nativeContentHash": "bc069cafbb91f61389d65ea930e68ab4e55b74f7e3142c3a18c0a00681c6d900"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkRibbonFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "525ae23723f62b372b5de36d4b6d777022679007960bbf493d7c62eab9887761",
+      "inputHash": "f7d65f7479f850969b01934893098f294cbe002fb97da9a511f0f392aa0c193e",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersModeling\\vtkRibbonFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersModeling\\vtkRibbonFilter_export_gen.cpp",
-      "managedContentHash": "1516d7c0f288c681c17608bb1b2b55f81731e2d744c1ff96e2b8e860660c532a",
+      "managedContentHash": "0fd118b65b19693863134a7485abe5886e4945a7fa230b7e09320f7ef157f24f",
       "nativeContentHash": "4718bda9e23a50ecbe52629bfacd2b1dad55c02af7be8627cc248818ced4e7d7"
     }
   ]

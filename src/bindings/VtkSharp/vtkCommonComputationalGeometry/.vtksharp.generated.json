@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatorVersion": "2026-08-30.enum-properties-v1",
+  "generatorVersion": "2026-10-04.native-module-layout-v1",
   "module": "vtkCommonComputationalGeometry",
   "classes": [
     {
@@ -8,10 +8,10 @@
       "header": "vtkParametricEnneper.h",
       "baseClassName": "vtkParametricFunction",
       "hasStaticNew": true,
-      "inputHash": "35cd1eaa92437f9fdcc2b5badb5bc067da00fed10e4ec85195b8766d5fdb7ea3",
+      "inputHash": "0d9909f34728c82cb4e25bf6330ea7b38f992bb02bd87bc2d1f4642cc36e76cc",
       "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricEnneper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricEnneper_export_gen.cpp",
-      "managedContentHash": "b46c2f13eb273762413f508551e1fca9d814062db17a1183a8d8aa5f988d02cf",
+      "managedContentHash": "8c4dfb5b7ae7f202987940df0570dab0952989d43b5c62d2a1f79751f6b84622",
       "nativeContentHash": "658e3f1f416e75c70d90bd369b6e5ae9e90717040f34a59c7147d1eafec95252"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkParametricFunction.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": false,
-      "inputHash": "cff12cc13a40ec56bd36d84ee5e35495934cc9efea92c52cb655bb9bb395baaf",
+      "inputHash": "24456cf7a82b9d5954b0567db979914a28fef4594a313b352d2b1e049b5464c4",
       "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricFunction_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricFunction_export_gen.cpp",
-      "managedContentHash": "095a2fec59f5a75904e26f2e2d285d018d8e8ff8850776eabd26b2b3fd0ba3be",
+      "managedContentHash": "133b21cae8bdd96af7d06394e09addc064c0a362c0e23fa03e00f10bfc972e3d",
       "nativeContentHash": "83b45ddfd6607ed5cddf18aea6a5005c7c280b96e2bce693a9f70c22db74e525"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkParametricSpline.h",
       "baseClassName": "vtkParametricFunction",
       "hasStaticNew": true,
-      "inputHash": "a8d65fb0ea58537ac463394aca404617b5dd10f0397ffe35ec24f9bf97254a7c",
+      "inputHash": "364632bbb1507860815e27d3f499c25c25a4d851051b7e1c56faa2008cc286b1",
       "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricSpline_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricSpline_export_gen.cpp",
-      "managedContentHash": "6cc1fae7a978e208fb7a5ac88f0d4c3d3ea2d3d8fd6691f289a5e4e501bc1a01",
+      "managedContentHash": "e8a8f7f47244ca9c232399fdcdcf01dc6e901fb2637d0e33061a12fad35984d4",
       "nativeContentHash": "c5d61fe8f97cfb6eaaa59e4c953089788010d3f3a88b33f3f5f0d18aff265368"
     }
   ]

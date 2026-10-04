@@ -10,7 +10,8 @@ public sealed class CSharpBindingEmitter
     private readonly ExportNameGenerator _exportNameGenerator = new();
 
     public string Emit(string namespaceName, string className, string baseClassName, bool hasStaticNew, IReadOnlyList<WhitelistFunction> functions,
-        InspectedClass? inspectedClass = null, TextWriter? documentationWarnings = null, IReadOnlyList<EnumProperty>? enumProperties = null)
+        InspectedClass? inspectedClass = null, TextWriter? documentationWarnings = null, IReadOnlyList<EnumProperty>? enumProperties = null,
+        string nativeLibraryName = "VtkSharp.Native.dll")
     {
         var sb = new StringBuilder();
         var exportNames = this.CreateExportNames(className, functions);
@@ -26,6 +27,8 @@ public sealed class CSharpBindingEmitter
         XmlDocumentationEmitter.Emit(sb, inspectedClass?.Documentation);
         sb.AppendLine($"public unsafe partial class {className} : {baseClassName}");
         sb.AppendLine("{");
+        sb.AppendLine($"    static {className}() => NativeModuleLoader.EnsureLoaded(\"{nativeLibraryName}\");");
+        sb.AppendLine();
         sb.AppendLine($"    protected {className}(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) {{ }}");
         if (hasStaticNew)
         {
@@ -86,7 +89,7 @@ public sealed class CSharpBindingEmitter
         sb.AppendLine("    #region Interop");
         if (hasStaticNew)
         {
-            sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
+            sb.AppendLine($"    [DllImport(\"{nativeLibraryName}\")]");
             sb.AppendLine($"    private static extern nint {className}_New();");
         }
         foreach (var function in functions)
@@ -94,7 +97,7 @@ public sealed class CSharpBindingEmitter
             if (hasStaticNew || function != functions[0])
                 sb.AppendLine();
             var enumProperty = enumProperties?.FirstOrDefault(p => p.Getter == function.Name || p.Setter == function.Name);
-            EmitInteropMethod(sb, className, enumProperty?.ToAbiFunction(function) ?? function, exportNames[function]);
+            EmitInteropMethod(sb, className, enumProperty?.ToAbiFunction(function) ?? function, exportNames[function], nativeLibraryName);
         }
         sb.AppendLine("    #endregion");
         sb.AppendLine("}");
@@ -260,7 +263,7 @@ public sealed class CSharpBindingEmitter
         }
     }
 
-    private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName)
+    private static void EmitInteropMethod(StringBuilder sb, string className, WhitelistFunction function, string exportName, string nativeLibraryName)
     {
         var isValueStructReturn = TypeClassifier.IsVtkValueStruct(function.Return.Type);
         var isVtkStringReturn = BindingTypeMapper.IsVtkStringValue(function.Return.Type);
@@ -283,7 +286,7 @@ public sealed class CSharpBindingEmitter
         if (hasStringParameter)
         {
             sb.AppendLine("#if NET8_0_OR_GREATER");
-            sb.AppendLine($"    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]");
+            sb.AppendLine($"    [LibraryImport(\"{nativeLibraryName}\", StringMarshalling = StringMarshalling.Utf8)]");
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
             var net8Params = string.Join(", ", new[] { "nint self" }.Concat(
@@ -292,7 +295,7 @@ public sealed class CSharpBindingEmitter
                     : ToInteropParameters(p)))) + extraParam;
             sb.AppendLine($"    private static partial {interopReturnType} {exportName}({net8Params});");
             sb.AppendLine("#else");
-            sb.AppendLine($"    [DllImport(InteropInfo.NativeLibraryName)]");
+            sb.AppendLine($"    [DllImport(\"{nativeLibraryName}\")]");
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
             var ns20Params = string.Join(", ", new[] { "nint self" }.Concat(
@@ -304,7 +307,7 @@ public sealed class CSharpBindingEmitter
         }
         else
         {
-            sb.AppendLine("    [DllImport(InteropInfo.NativeLibraryName)]");
+            sb.AppendLine($"    [DllImport(\"{nativeLibraryName}\")]");
             if (returnMarshal is not null)
                 sb.AppendLine($"    {returnMarshal}");
             var parameters = string.Join(", ", new[] { "nint self" }.Concat(function.Parameters.SelectMany(ToInteropParameters))) + extraParam;

@@ -32,6 +32,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCell : vtkObject
 {
+    static vtkCell() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
+
     protected vtkCell(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Wraps a live native object without adding a reference or taking ownership.
@@ -91,7 +93,7 @@ public unsafe partial class vtkCell : vtkObject
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
     private static extern nint vtkCell_GetPointIds(nint self);
     #endregion
 }

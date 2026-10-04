@@ -47,6 +47,8 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPolyDataConnectivityFilter : vtkPolyDataAlgorithm
 {
+    static vtkPolyDataConnectivityFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
+
     protected vtkPolyDataConnectivityFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
     /// Construct with default extraction mode to extract largest regions.
@@ -185,34 +187,34 @@ public unsafe partial class vtkPolyDataConnectivityFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern nint vtkPolyDataConnectivityFilter_New();
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_ColorRegionsOn(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern int vtkPolyDataConnectivityFilter_GetExtractionMode(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_SetExtractionMode(nint self, int _arg);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_SetExtractionModeToAllRegions(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_SetExtractionModeToCellSeededRegions(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_SetExtractionModeToClosestPointRegion(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_SetExtractionModeToLargestRegion(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_SetExtractionModeToPointSeededRegions(nint self);
 
-    [DllImport(InteropInfo.NativeLibraryName)]
+    [DllImport("VtkSharp.Native.FiltersCore.dll")]
     private static extern void vtkPolyDataConnectivityFilter_SetExtractionModeToSpecifiedRegions(nint self);
     #endregion
 }
