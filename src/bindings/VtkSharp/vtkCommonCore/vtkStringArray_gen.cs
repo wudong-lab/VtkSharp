@@ -16,7 +16,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkStringArray : vtkAbstractArray
 {
-    static vtkStringArray() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkStringArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -70,7 +69,7 @@ public unsafe partial class vtkStringArray : vtkAbstractArray
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkStringArray_New();
     #endregion
 }

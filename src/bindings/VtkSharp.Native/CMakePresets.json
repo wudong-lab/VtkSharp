@@ -1,4 +1,4 @@
-﻿{
+{
   "version": 6,
   "configurePresets": [
     {
@@ -20,14 +20,16 @@
       "displayName": "Windows x64 dynamic VTK (Visual Studio 2026)",
       "generator": "Visual Studio 18 2026",
       "architecture": "x64",
-      "binaryDir": "${sourceDir}/out/build/dynamic/win-x64-vs2026"
+      "binaryDir": "${sourceDir}/out/build/dynamic/win-x64-vs2026",
+      "cacheVariables": { "VTKSHARP_VTK_LINKAGE": "Dynamic" }
     },
     {
       "name": "win-x64-vs2022-dynamic",
       "displayName": "Windows x64 dynamic VTK (Visual Studio 2022)",
       "generator": "Visual Studio 17 2022",
       "architecture": "x64",
-      "binaryDir": "${sourceDir}/out/build/dynamic/win-x64-vs2022"
+      "binaryDir": "${sourceDir}/out/build/dynamic/win-x64-vs2022",
+      "cacheVariables": { "VTKSHARP_VTK_LINKAGE": "Dynamic" }
     }
   ],
   "buildPresets": [

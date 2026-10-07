@@ -25,7 +25,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLabelPlacementMapper : vtkMapper2D
 {
-    static vtkLabelPlacementMapper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkLabelPlacementMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -115,19 +114,19 @@ public unsafe partial class vtkLabelPlacementMapper : vtkMapper2D
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLabelPlacementMapper_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLabelPlacementMapper_SetIteratorType(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLabelPlacementMapper_SetMaximumLabelFraction(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLabelPlacementMapper_SetUseDepthBuffer(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLabelPlacementMapper_UseDepthBufferOff(nint self);
     #endregion
 }

@@ -3,7 +3,7 @@ param(
     [string]$Configuration = "Debug",
 
     [ValidateSet("Static", "Dynamic")]
-    [string]$Linkage = "Dynamic",
+    [string]$Linkage = "Static",
 
     [string]$VtkDir = $env:VTK_DIR,
 
@@ -18,9 +18,7 @@ if ((-not $SkipNativeBuild -or $Linkage -eq "Dynamic") -and [string]::IsNullOrWh
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $artifactsDir = Join-Path $repoRoot "artifacts\bin"
-if ($Linkage -eq "Dynamic") {
-    $artifactsDir = Join-Path $artifactsDir $Configuration
-}
+$artifactsDir = Join-Path $artifactsDir $Configuration
 
 if (-not $SkipNativeBuild) {
     $buildNativeArgs = @{ Configuration = $Configuration; Linkage = $Linkage }
@@ -116,6 +114,16 @@ foreach ($target in $targets) {
     else {
         & "$PSScriptRoot/remove-native-dependencies.ps1" -Directory $outputDirectory
         & "$PSScriptRoot/remove-native-dependencies.ps1" -Directory $managedDirectory
+        & "$PSScriptRoot/remove-native-dependencies.ps1" -Directory (Join-Path $outputDirectory "native\VtkSharp\win-x64")
+        & "$PSScriptRoot/remove-native-dependencies.ps1" -Directory (Join-Path $managedDirectory "native\VtkSharp\win-x64")
+        if ($VtkDir) {
+            $vtkInstallDirectory = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
+            $licenseSource = Join-Path $vtkInstallDirectory "share\vtk-9.7\licenses"
+            if (-not (Test-Path -LiteralPath (Join-Path $licenseSource "VTK-Copyright.txt"))) { throw "VTK license bundle is missing: $licenseSource" }
+            $licenseDestination = Join-Path $outputDirectory "licenses\VTK"
+            New-Item -ItemType Directory -Path $licenseDestination -Force | Out-Null
+            Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $licenseDestination -Recurse -Force
+        }
     }
 }
 

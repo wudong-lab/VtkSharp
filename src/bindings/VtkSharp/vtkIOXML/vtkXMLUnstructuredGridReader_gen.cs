@@ -23,7 +23,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkXMLUnstructuredGridReader : vtkXMLUnstructuredDataReader
 {
-    static vtkXMLUnstructuredGridReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOXML.dll");
 
     protected vtkXMLUnstructuredGridReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -77,7 +76,7 @@ public unsafe partial class vtkXMLUnstructuredGridReader : vtkXMLUnstructuredDat
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.IOXML.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkXMLUnstructuredGridReader_New();
     #endregion
 }

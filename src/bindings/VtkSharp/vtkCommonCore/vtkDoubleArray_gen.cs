@@ -16,7 +16,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDoubleArray : vtkDataArray
 {
-    static vtkDoubleArray() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkDoubleArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -70,7 +69,7 @@ public unsafe partial class vtkDoubleArray : vtkDataArray
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDoubleArray_New();
     #endregion
 }

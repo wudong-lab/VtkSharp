@@ -26,7 +26,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPointPicker : vtkPicker
 {
-    static vtkPointPicker() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkPointPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -91,10 +90,10 @@ public unsafe partial class vtkPointPicker : vtkPicker
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointPicker_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkPointPicker_GetPointId(nint self);
     #endregion
 }

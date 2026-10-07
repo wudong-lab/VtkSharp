@@ -37,7 +37,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLight : vtkObject
 {
-    static vtkLight() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkLight(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -99,7 +98,7 @@ public unsafe partial class vtkLight : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLight_New();
     #endregion
 }

@@ -17,7 +17,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPolyDataMapper : vtkMapper
 {
-    static vtkPolyDataMapper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkPolyDataMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -79,10 +78,10 @@ public unsafe partial class vtkPolyDataMapper : vtkMapper
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyDataMapper_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyDataMapper_SetInputData(nint self, nint @in);
     #endregion
 }

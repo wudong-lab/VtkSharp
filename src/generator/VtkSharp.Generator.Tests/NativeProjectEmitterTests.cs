@@ -13,10 +13,10 @@ public sealed class NativeProjectEmitterTests
         var text = emitter.EmitCMakeLists("VtkSharp.Native");
 
         Assert.Contains("include(${CMAKE_CURRENT_SOURCE_DIR}/vtksharp.modules.generated.cmake)", text);
-        Assert.Contains("find_package(VTK CONFIG REQUIRED COMPONENTS ${VTKSHARP_VTK_COMPONENTS})", text);
+        Assert.Contains("find_package(VTK CONFIG REQUIRED COMPONENTS ${VTKSHARP_ALL_VTK_COMPONENTS})", text);
         Assert.Contains("foreach(VTKSHARP_NATIVE_TARGET IN LISTS VTKSHARP_NATIVE_TARGETS)", text);
         Assert.Contains("add_library(${VTKSHARP_NATIVE_TARGET} SHARED", text);
-        Assert.Contains("target_link_libraries(${VTKSHARP_NATIVE_TARGET} PRIVATE ${VTKSHARP_MODULE_TARGETS})", text);
+        Assert.Contains("target_link_libraries(${VTKSHARP_NATIVE_TARGET} PRIVATE ${VTKSHARP_MODULE_TARGETS} ${VTKSHARP_EXTRA_NATIVE_LIBRARIES})", text);
         Assert.Contains("MSVC_RUNTIME_LIBRARY", text);
         Assert.Contains("vtk_module_autoinit(", text);
         Assert.IsTrue(text.EndsWith("\n", StringComparison.Ordinal));

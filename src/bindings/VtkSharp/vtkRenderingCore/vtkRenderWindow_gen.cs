@@ -36,7 +36,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkRenderWindow : vtkWindow
 {
-    static vtkRenderWindow() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkRenderWindow(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -187,37 +186,37 @@ public unsafe partial class vtkRenderWindow : vtkWindow
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRenderWindow_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_AddRenderer(nint self, nint renderer);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_LineSmoothingOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_LineSmoothingOn(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_PointSmoothingOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_PointSmoothingOn(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_PolygonSmoothingOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_PolygonSmoothingOn(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_Render(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_SetMultiSamples(nint self, int _arg1);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRenderWindow_SetNumberOfLayers(nint self, int _arg);
     #endregion
 }

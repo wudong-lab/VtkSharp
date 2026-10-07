@@ -23,7 +23,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkUnstructuredGridAlgorithm : vtkAlgorithm
 {
-    static vtkUnstructuredGridAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
 
     protected vtkUnstructuredGridAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -77,7 +76,7 @@ public unsafe partial class vtkUnstructuredGridAlgorithm : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkUnstructuredGridAlgorithm_New();
     #endregion
 }

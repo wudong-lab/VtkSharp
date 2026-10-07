@@ -28,7 +28,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkRandomSequence : vtkObject
 {
-    static vtkRandomSequence() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkRandomSequence(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

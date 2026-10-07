@@ -1,6 +1,6 @@
 # VtkSharp 项目架构
 
-本文描述当前模块化 native 导出层与动态 VTK 架构。分组、加载及部署约定见 [模块化 native 导出层与按需加载设计](build/modular-native-loading.md)。
+当前默认采用单一 native 导出层与静态 VTK，构建和部署见 [构建说明](build/vtksharp.md)。
 
 ## 项目边界
 
@@ -18,14 +18,12 @@
     ↓
 VtkSharp.dll                 # C# wrapper，namespace VtkSharp
     ↓ P/Invoke
-VtkSharp.Native.<Group>.dll  # 按模块或显式分组生成的 C ABI shim
-    ↓ dynamic link
-VTK DLLs                    # 同一构建、同一配置的 Shared VTK runtime
+VtkSharp.Native.dll         # 统一 C ABI shim，内部静态链接 VTK
 ```
 
-各 native 入口分别链接自身需要的 VTK 模块，并在首次调用时加载。普通模块默认独立，渲染初始化相关模块由显式策略合并；VTK 自身的导入依赖仍会随入口加载。
+全部公开导出归属同一 native target。私有产品通过源码聚合接口把公开、私有及 WPF native 实现共同链接到该目标，进程内只使用这一份 VTK 实现。
 
-NuGet 的 native 资产通过 `buildTransitive/VtkSharp.targets` 复制到应用的 `native/VtkSharp/win-x64/` 子目录。加载器默认以 `AppContext.BaseDirectory` 定位，也可在首次调用前通过 `VtkSharpRuntime.ConfigureNativeRuntimeDirectory` 指定目录。公开与私有入口共享 runtime 时必须匹配 VTK build id、配置、架构和 CRT。
+NuGet native 资产通过 `buildTransitive/VtkSharp.targets` 复制到应用输出目录，与 `VtkSharp.dll` 同级。P/Invoke 按 .NET/Windows 常规规则从应用目录解析 native DLL，不使用自定义加载器或运行目录配置。静态 VTK 与 wrapper 使用兼容工具链和 `/MD`（Debug `/MDd`）。
 
 ## 源码布局
 

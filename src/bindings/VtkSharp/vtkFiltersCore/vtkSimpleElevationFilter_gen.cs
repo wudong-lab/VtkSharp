@@ -36,7 +36,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSimpleElevationFilter : vtkDataSetAlgorithm
 {
-    static vtkSimpleElevationFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkSimpleElevationFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -101,10 +100,10 @@ public unsafe partial class vtkSimpleElevationFilter : vtkDataSetAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkSimpleElevationFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSimpleElevationFilter_SetVector(nint self, double _arg1, double _arg2, double _arg3);
     #endregion
 }

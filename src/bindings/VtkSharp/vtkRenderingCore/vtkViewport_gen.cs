@@ -26,7 +26,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkViewport : vtkObject
 {
-    static vtkViewport() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkViewport(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -378,85 +377,85 @@ public unsafe partial class vtkViewport : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_AddViewProp(nint self, nint _arg1);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_DisplayToView(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_DisplayToWorld(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkViewport_GetActors2D(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkViewport_GetBackground_(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_GetBackground_doubleArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkViewport_GetBackground2_(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_GetBackground2_doubleArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_GetTiledSize(nint self, int* width, int* height);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkViewport_GetViewProps(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_GradientBackgroundOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_GradientBackgroundOn(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_GradientEnvironmentalBGOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_GradientEnvironmentalBGOn(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkViewport_HasViewProp(nint self, nint _arg1);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_RemoveAllViewProps(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_RemoveViewProp(nint self, nint _arg1);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_SetBackground_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_SetBackground_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_SetBackground2_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_SetBackground2_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_SetViewport_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_SetViewport_doubleConstArray4(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_ViewToDisplay(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_ViewToWorld(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_WorldToDisplay(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkViewport_WorldToView(nint self);
     #endregion
 }

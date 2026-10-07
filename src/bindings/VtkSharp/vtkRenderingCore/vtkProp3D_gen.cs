@@ -27,7 +27,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkProp3D : vtkProp
 {
-    static vtkProp3D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkProp3D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -181,31 +180,31 @@ public unsafe partial class vtkProp3D : vtkProp
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkProp3D_GetScale_(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_GetScale_doubleArray3(nint self, double* data);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_RotateWXYZ(nint self, double w, double x, double y, double z);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_RotateX(nint self, double _arg1);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_RotateY(nint self, double _arg1);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_RotateZ(nint self, double _arg1);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_SetPosition(nint self, double x, double y, double z);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_SetUserMatrix(nint self, nint matrix);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProp3D_SetUserTransform(nint self, nint transform);
     #endregion
 }

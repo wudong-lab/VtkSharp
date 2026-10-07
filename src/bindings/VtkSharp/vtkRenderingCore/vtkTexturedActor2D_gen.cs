@@ -21,7 +21,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTexturedActor2D : vtkActor2D
 {
-    static vtkTexturedActor2D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkTexturedActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -75,7 +74,7 @@ public unsafe partial class vtkTexturedActor2D : vtkActor2D
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTexturedActor2D_New();
     #endregion
 }

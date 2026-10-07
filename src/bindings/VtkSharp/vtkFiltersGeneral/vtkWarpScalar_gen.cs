@@ -35,7 +35,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWarpScalar : vtkPointSetAlgorithm
 {
-    static vtkWarpScalar() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
 
     protected vtkWarpScalar(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -134,19 +133,19 @@ public unsafe partial class vtkWarpScalar : vtkPointSetAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWarpScalar_New();
 
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWarpScalar_SetNormal_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWarpScalar_SetNormal_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWarpScalar_SetScaleFactor(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWarpScalar_UseNormalOn(nint self);
     #endregion
 }

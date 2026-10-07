@@ -2,8 +2,8 @@ param(
     [ValidateSet("Debug", "Release")]
     [string]$Configuration = "Release",
 
-    [ValidateSet("Dynamic")]
-    [string]$Linkage = "Dynamic",
+    [ValidateSet("Static", "Dynamic")]
+    [string]$Linkage = "Static",
 
     [ValidatePattern('^\d+\.\d+\.\d+(-[0-9A-Za-z.-]+)?$')]
     [string]$Version,
@@ -110,6 +110,27 @@ if ($Linkage -eq "Dynamic") {
     if ($licenseRenames.Count -gt 0) {
         $licenseRenames | ConvertTo-Json -Depth 3 | Set-Content -LiteralPath (Join-Path $licenseDestination "license-file-renames.json") -Encoding utf8
     }
+}
+
+if ($Linkage -eq "Static") {
+    if ([string]::IsNullOrWhiteSpace($VtkDir)) { throw "Static packaging requires -VtkDir for license notices." }
+    $vtkInstallDirectory = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
+    $licenseSource = Join-Path $vtkInstallDirectory "share\vtk-9.7\licenses"
+    if (-not (Test-Path -LiteralPath (Join-Path $licenseSource "VTK-Copyright.txt"))) { throw "VTK license bundle is missing: $licenseSource" }
+    $runtimeDirectory = Join-Path $repoRoot "artifacts\package-runtime\$version"
+    if (Test-Path -LiteralPath $runtimeDirectory) { throw "Package staging directory already exists: $runtimeDirectory" }
+    $nativeBuildRoot = Join-Path $bindingsDir "VtkSharp.Native\out\build"
+    $nativeDll = @("win-x64-vs2026", "win-x64-vs2022") |
+        ForEach-Object { Join-Path $nativeBuildRoot "$_\Release\VtkSharp.Native.dll" } |
+        Where-Object { Test-Path -LiteralPath $_ } |
+        Sort-Object { (Get-Item -LiteralPath $_).LastWriteTimeUtc } -Descending | Select-Object -First 1
+    if (-not $nativeDll) { throw "Static Release native output was not found." }
+    New-Item -ItemType Directory -Path "$runtimeDirectory\licenses" -Force | Out-Null
+    Copy-Item -LiteralPath $nativeDll -Destination $runtimeDirectory
+    Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination "$runtimeDirectory\licenses" -Recurse -Force
+    Get-ChildItem -LiteralPath "$runtimeDirectory\licenses" -File -Recurse |
+        Where-Object { $_.Name -match '^(LICENSE|COPYING|COPYRIGHT|NOTICE)$' } |
+        ForEach-Object { Move-Item -LiteralPath $_.FullName -Destination "$($_.FullName).txt" }
 }
 
 # 2. Pack VtkSharp (core bindings)

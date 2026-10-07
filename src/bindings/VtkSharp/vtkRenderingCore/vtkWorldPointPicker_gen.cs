@@ -27,7 +27,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWorldPointPicker : vtkAbstractPicker
 {
-    static vtkWorldPointPicker() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkWorldPointPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -89,10 +88,10 @@ public unsafe partial class vtkWorldPointPicker : vtkAbstractPicker
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWorldPointPicker_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkWorldPointPicker_Pick(nint self, double selectionX, double selectionY, double selectionZ, nint renderer);
     #endregion
 }

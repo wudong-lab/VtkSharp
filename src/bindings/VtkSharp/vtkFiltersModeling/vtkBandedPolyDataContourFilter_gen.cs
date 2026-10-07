@@ -35,7 +35,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkBandedPolyDataContourFilter : vtkPolyDataAlgorithm
 {
-    static vtkBandedPolyDataContourFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
 
     protected vtkBandedPolyDataContourFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -103,10 +102,10 @@ public unsafe partial class vtkBandedPolyDataContourFilter : vtkPolyDataAlgorith
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkBandedPolyDataContourFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkBandedPolyDataContourFilter_GenerateValues(nint self, int numContours, double rangeStart, double rangeEnd);
     #endregion
 }

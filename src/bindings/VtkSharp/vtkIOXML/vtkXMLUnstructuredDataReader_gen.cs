@@ -20,7 +20,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkXMLUnstructuredDataReader : vtkXMLDataReader
 {
-    static vtkXMLUnstructuredDataReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOXML.dll");
 
     protected vtkXMLUnstructuredDataReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

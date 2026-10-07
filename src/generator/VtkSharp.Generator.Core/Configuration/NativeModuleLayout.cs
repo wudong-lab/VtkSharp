@@ -188,6 +188,13 @@ public sealed class NativeModuleLayout
         if (metadataByModule.Count == 0)
             return;
 
+        var optionalModules = DistinctOrThrow(group.OptionalInitializationModules, $"group '{group.Name}'", "optional initialization module");
+        foreach (var module in optionalModules)
+        {
+            if (!groupModules.Contains(module, StringComparer.Ordinal) || !metadataByModule[module].Implementable)
+                throw new InvalidDataException($"Optional initialization module '{module}' is not an implementable member of group '{group.Name}'.");
+        }
+
         var groupedTargets = groupModules.Select(ToVtkTarget).ToHashSet(StringComparer.Ordinal);
         foreach (var provider in group.InitializationProviders)
         {
@@ -205,6 +212,9 @@ public sealed class NativeModuleLayout
                 continue;
 
             var vtkTarget = ToVtkTarget(module);
+            if (group.OptionalInitializationModules.Contains(module, StringComparer.Ordinal))
+                continue;
+
             var covered = group.InitializationProviders.Any(provider =>
                 metadataByModule.TryGetValue(provider, out var providerMetadata) &&
                 providerMetadata.Implements.Contains(vtkTarget, StringComparer.Ordinal));

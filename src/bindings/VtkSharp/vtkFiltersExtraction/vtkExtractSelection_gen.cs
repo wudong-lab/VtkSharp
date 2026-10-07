@@ -41,7 +41,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkExtractSelection : vtkDataObjectAlgorithm
 {
-    static vtkExtractSelection() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersExtraction.dll");
 
     protected vtkExtractSelection(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -95,7 +94,7 @@ public unsafe partial class vtkExtractSelection : vtkDataObjectAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersExtraction.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkExtractSelection_New();
     #endregion
 }

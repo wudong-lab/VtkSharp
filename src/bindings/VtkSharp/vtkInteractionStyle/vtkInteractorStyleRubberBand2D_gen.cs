@@ -27,7 +27,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleRubberBand2D : vtkInteractorStyle
 {
-    static vtkInteractorStyleRubberBand2D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkInteractorStyleRubberBand2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -81,7 +80,7 @@ public unsafe partial class vtkInteractorStyleRubberBand2D : vtkInteractorStyle
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleRubberBand2D_New();
     #endregion
 }

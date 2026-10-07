@@ -57,7 +57,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageViewer2 : vtkObject
 {
-    static vtkImageViewer2() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.InteractionImage.dll");
 
     protected vtkImageViewer2(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -180,28 +179,28 @@ public unsafe partial class vtkImageViewer2 : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageViewer2_New();
 
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageViewer2_GetImageActor(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageViewer2_GetRenderWindow(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageViewer2_GetRenderer(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageViewer2_Render(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageViewer2_SetInputData(nint self, nint @in);
 
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageViewer2_SetSlice(nint self, int s);
 
-    [DllImport("VtkSharp.Native.InteractionImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageViewer2_SetupInteractor(nint self, nint _arg1);
     #endregion
 }

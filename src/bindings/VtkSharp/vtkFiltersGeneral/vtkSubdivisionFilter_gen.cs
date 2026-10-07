@@ -15,7 +15,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSubdivisionFilter : vtkPolyDataAlgorithm
 {
-    static vtkSubdivisionFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
 
     protected vtkSubdivisionFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -74,7 +73,7 @@ public unsafe partial class vtkSubdivisionFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSubdivisionFilter_SetNumberOfSubdivisions(nint self, int _arg);
     #endregion
 }

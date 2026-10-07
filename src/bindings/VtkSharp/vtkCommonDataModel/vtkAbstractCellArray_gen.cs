@@ -20,7 +20,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractCellArray : vtkObject
 {
-    static vtkAbstractCellArray() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkAbstractCellArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

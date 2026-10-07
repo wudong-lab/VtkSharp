@@ -27,7 +27,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractMapper3D : vtkAbstractMapper
 {
-    static vtkAbstractMapper3D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkAbstractMapper3D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

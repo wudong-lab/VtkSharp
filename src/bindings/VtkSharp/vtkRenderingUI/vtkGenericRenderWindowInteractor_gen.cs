@@ -18,7 +18,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGenericRenderWindowInteractor : vtkRenderWindowInteractor
 {
-    static vtkGenericRenderWindowInteractor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkGenericRenderWindowInteractor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -99,13 +98,13 @@ public unsafe partial class vtkGenericRenderWindowInteractor : vtkRenderWindowIn
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkGenericRenderWindowInteractor_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGenericRenderWindowInteractor_TimerEvent(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGenericRenderWindowInteractor_TimerEventResetsTimerOff(nint self);
     #endregion
 }

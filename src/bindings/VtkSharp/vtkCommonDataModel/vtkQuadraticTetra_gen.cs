@@ -32,7 +32,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkQuadraticTetra : vtkNonLinearCell
 {
-    static vtkQuadraticTetra() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkQuadraticTetra(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -86,7 +85,7 @@ public unsafe partial class vtkQuadraticTetra : vtkNonLinearCell
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkQuadraticTetra_New();
     #endregion
 }

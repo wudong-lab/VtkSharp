@@ -25,7 +25,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkHexahedron : vtkCell3D
 {
-    static vtkHexahedron() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkHexahedron(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -79,7 +78,7 @@ public unsafe partial class vtkHexahedron : vtkCell3D
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkHexahedron_New();
     #endregion
 }

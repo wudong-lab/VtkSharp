@@ -51,7 +51,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLookupTable : vtkScalarsToColors
 {
-    static vtkLookupTable() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkLookupTable(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -866,193 +865,193 @@ public unsafe partial class vtkLookupTable : vtkScalarsToColors
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLookupTable_New();
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_Build(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_ForceBuild(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetAboveRangeColor_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetAboveRangeColor_doubleArray4(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetAlphaRange_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetAlphaRange_doubleArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetBelowRangeColor_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetBelowRangeColor_doubleArray4(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetHueRange_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetHueRange_doubleArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetNanColor_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetNanColor_doubleArray4(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkLookupTable_GetNumberOfAvailableColors(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkLookupTable_GetNumberOfTableValues(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkLookupTable_GetRamp(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetRange(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetSaturationRange_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetSaturationRange_doubleArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkLookupTable_GetScale(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetTableRange_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetTableRange_doubleArray2(nint self, double* data);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetTableValue_vtkIdType(nint self, long indx);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetTableValue_vtkIdType_doubleArray4(nint self, long indx, double* rgba);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkLookupTable_GetUseAboveRangeColor(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkLookupTable_GetUseBelowRangeColor(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLookupTable_GetValueRange_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_GetValueRange_doubleArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetAboveRangeColor_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetAboveRangeColor_doubleConstArray4(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetAlphaRange_double_double(nint self, double _arg1, double _arg2);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetAlphaRange_doubleConstArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetBelowRangeColor_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetBelowRangeColor_doubleConstArray4(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetHueRange_double_double(nint self, double _arg1, double _arg2);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetHueRange_doubleConstArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetNanColor_double_double_double_double(nint self, double _arg1, double _arg2, double _arg3, double _arg4);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetNanColor_doubleConstArray4(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetNumberOfTableValues(nint self, long number);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetRamp(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetRampToLinear(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetRampToSCurve(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetRampToSQRT(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetRange_doubleConstArray2(nint self, double* rng);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetRange_double_double(nint self, double min, double max);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetSaturationRange_double_double(nint self, double _arg1, double _arg2);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetSaturationRange_doubleConstArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetScale(nint self, int scale);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetScaleToLinear(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetScaleToLog10(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetTableRange_doubleConstArray2(nint self, double* r);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetTableRange_double_double(nint self, double min, double max);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetTableValue_vtkIdType_doubleConstArray4(nint self, long indx, double* rgba);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetTableValue_vtkIdType_double_double_double_double(nint self, long indx, double r, double g, double b, double a);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetUseAboveRangeColor(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetUseBelowRangeColor(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetValueRange_double_double(nint self, double _arg1, double _arg2);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_SetValueRange_doubleConstArray2(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_UseAboveRangeColorOff(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_UseAboveRangeColorOn(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_UseBelowRangeColorOff(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLookupTable_UseBelowRangeColorOn(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkLookupTable_UsingLogScale(nint self);
     #endregion
 }

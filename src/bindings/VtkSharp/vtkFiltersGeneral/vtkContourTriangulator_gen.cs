@@ -33,7 +33,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkContourTriangulator : vtkPolyDataAlgorithm
 {
-    static vtkContourTriangulator() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
 
     protected vtkContourTriangulator(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -90,7 +89,7 @@ public unsafe partial class vtkContourTriangulator : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkContourTriangulator_New();
     #endregion
 }

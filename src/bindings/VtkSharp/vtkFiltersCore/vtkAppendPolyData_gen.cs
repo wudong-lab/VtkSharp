@@ -31,7 +31,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAppendPolyData : vtkPolyDataAlgorithm
 {
-    static vtkAppendPolyData() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkAppendPolyData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -108,16 +107,16 @@ public unsafe partial class vtkAppendPolyData : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAppendPolyData_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAppendPolyData_AddInputData(nint self, nint _arg1);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAppendPolyData_SetInputDataByNumber(nint self, int num, nint ds);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAppendPolyData_SetNumberOfInputs(nint self, int num);
     #endregion
 }

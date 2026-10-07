@@ -49,7 +49,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkQuadricDecimation : vtkPolyDataAlgorithm
 {
-    static vtkQuadricDecimation() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkQuadricDecimation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -116,10 +115,10 @@ public unsafe partial class vtkQuadricDecimation : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkQuadricDecimation_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkQuadricDecimation_SetTargetReduction(nint self, double _arg);
     #endregion
 }

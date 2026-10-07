@@ -20,7 +20,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkArrowSource : vtkPolyDataAlgorithm
 {
-    static vtkArrowSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
 
     protected vtkArrowSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -159,37 +158,37 @@ public unsafe partial class vtkArrowSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkArrowSource_New();
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkArrowSource_GetArrowOrigin(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetArrowOrigin(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetArrowOriginToCenter(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetArrowOriginToDefault(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetInvert(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetShaftRadius(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetShaftResolution(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetTipLength(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetTipRadius(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkArrowSource_SetTipResolution(nint self, int _arg);
     #endregion
 }

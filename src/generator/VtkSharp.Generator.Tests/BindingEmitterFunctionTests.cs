@@ -413,9 +413,9 @@ public sealed class BindingEmitterFunctionTests
         Assert.Contains("public new int CreateRepeatingTimer(ulong duration)", text);
         Assert.Contains("private static extern int vtkThing_CreateRepeatingTimer(nint self, ulong duration);", text);
         Assert.Contains("public new void SetName(string name)", text);
-        Assert.Contains("[LibraryImport(\"VtkSharp.Native.dll\", StringMarshalling = StringMarshalling.Utf8)]", text);
+        Assert.Contains("[LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]", text);
         Assert.Contains("private static partial void vtkThing_SetName(nint self, string name)", text);
-        Assert.Contains("[DllImport(\"VtkSharp.Native.dll\")]", text);
+        Assert.Contains("[DllImport(InteropInfo.NativeLibraryName)]", text);
         Assert.Contains("private static extern void vtkThing_SetName(nint self, byte[] name)", text);
         Assert.Contains("VtkString.ToNullTerminatedUtf8(name)", text);
         Assert.Contains("public new string GetName()", text);

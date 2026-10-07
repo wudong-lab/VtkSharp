@@ -95,7 +95,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDelaunay3D : vtkUnstructuredGridAlgorithm
 {
-    static vtkDelaunay3D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkDelaunay3D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -167,10 +166,10 @@ public unsafe partial class vtkDelaunay3D : vtkUnstructuredGridAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDelaunay3D_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDelaunay3D_SetAlpha(nint self, double _arg);
     #endregion
 }

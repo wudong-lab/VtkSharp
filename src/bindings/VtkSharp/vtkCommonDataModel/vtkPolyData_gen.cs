@@ -61,7 +61,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPolyData : vtkPointSet
 {
-    static vtkPolyData() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkPolyData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -159,22 +158,22 @@ public unsafe partial class vtkPolyData : vtkPointSet
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyData_New();
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyData_DeepCopy(nint self, nint src);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyData_GetLines(nint self);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkPolyData_GetNumberOfLines(nint self);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyData_SetLines(nint self, nint l);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPolyData_SetPolys(nint self, nint p);
     #endregion
 }

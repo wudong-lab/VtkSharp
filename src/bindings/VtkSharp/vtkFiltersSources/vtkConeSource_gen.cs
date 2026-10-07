@@ -22,7 +22,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
 {
-    static vtkConeSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
 
     protected vtkConeSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -132,22 +131,22 @@ public unsafe partial class vtkConeSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkConeSource_New();
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkConeSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkConeSource_SetCenter_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkConeSource_SetHeight(nint self, double height);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkConeSource_SetRadius(nint self, double radius);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkConeSource_SetResolution(nint self, int resolution);
     #endregion
 }

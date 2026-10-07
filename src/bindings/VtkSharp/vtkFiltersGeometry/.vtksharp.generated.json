@@ -8,10 +8,10 @@
       "header": "vtkDataSetSurfaceFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "70b5aae0c4a08d43e3a785b80e69ef6d38f659853c9d7539e95a0bea8466eedb",
+      "inputHash": "faeca7e0c44fc2ea1c9394240903e19d8cbe5244ac1cc7739d1998cba5c2fdad",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeometry\\vtkDataSetSurfaceFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeometry\\vtkDataSetSurfaceFilter_export_gen.cpp",
-      "managedContentHash": "68e1fe369004038bf373d5a4e83c922b69162662b0e2be4fc5486ce630b85793",
+      "managedContentHash": "a15045db0c1025089a344cfc54892fa56b4cebd12306904483a1bd6c1aaae9c0",
       "nativeContentHash": "ffda91dff01ddf040c47e52f04582f4f034ea3171948978b847425d2309821ef"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkImageDataGeometryFilter.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "e255f8b793812bf8bfcc0f91fe480141ce98c826d587b09c47558c60e3e0e728",
+      "inputHash": "ead1ec26bab6b8e3ff7e0317a9797e820489ac9b9e0268b8439d733a763541d1",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersGeometry\\vtkImageDataGeometryFilter_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersGeometry\\vtkImageDataGeometryFilter_export_gen.cpp",
-      "managedContentHash": "0bd88175f47a93b6616f632b784ea43b66c0cbd4f187697fcce382ca034413cc",
+      "managedContentHash": "a5bd3129ccf1fc8ce0b955d7295226cd6ec546b9ea7d23b0ea9ba571215329e7",
       "nativeContentHash": "763ff4448b26cdd2430ee96c7651b675b415d3f29195f3664de29ec3b431802b"
     }
   ]

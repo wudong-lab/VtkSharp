@@ -24,7 +24,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractPolyDataReader : vtkPolyDataAlgorithm
 {
-    static vtkAbstractPolyDataReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOCore.dll");
 
     protected vtkAbstractPolyDataReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -87,10 +86,10 @@ public unsafe partial class vtkAbstractPolyDataReader : vtkPolyDataAlgorithm
 
     #region Interop
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOCore.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkAbstractPolyDataReader_SetFileName(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.IOCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractPolyDataReader_SetFileName(nint self, byte[] _arg);
 #endif
     #endregion

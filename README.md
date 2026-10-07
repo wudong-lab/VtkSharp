@@ -19,7 +19,7 @@
 | 组件 | 当前目标 / 要求 |
 | --- | --- |
 | 托管绑定库 | `netstandard2.0`、`net8.0` |
-| Native 构建与打包 | Windows x64，VTK 9.7.0 Shared，MSVC 动态 CRT |
+| Native 构建与打包 | Windows x64，VTK 9.7.0 Static，MSVC 动态 CRT |
 | 示例浏览器 | WPF，`net8.0-windows`，.NET 8 Desktop Runtime |
 | 绑定生成器与生成器测试 | .NET 10 SDK，Windows x64 |
 | 从源码构建 | Git、PowerShell 7、.NET 8 SDK（完整开发另需 .NET 10 SDK） |
@@ -52,7 +52,7 @@ git clone --branch v9.7.0 --depth 1 https://gitlab.kitware.com/vtk/vtk.git $vtkS
     -SourceDirectory $vtkSource -BuildDirectory $vtkBuild
 ```
 
-Shared VTK 按配置安装到 `$vtkBuild/install/Release` 或 `$vtkBuild/install/Debug`。已有同版本、同配置且包含所需模块的 VTK 安装时，可跳过此步。
+Static VTK 安装到 `$vtkBuild/install`，Debug/Release 库由 CMake 配置选择。已有同版本、同配置且包含所需模块的 VTK 安装时，可跳过此步。
 源码版本、Debug/Both、仅配置和模块开关见 [VTK 构建说明](docs/build/vtk.md)。
 
 ### 2. 设置 VTK 环境变量
@@ -61,7 +61,7 @@ VTK 安装完成后，在 PowerShell 中设置以下环境变量，并将示例�
 
 ```powershell
 # Matching configuration's VTK installation root, used by the binding generator
-$env:VTK_ROOT = "D:\Dependencies\VTK\build\install\Release"
+$env:VTK_ROOT = "D:\Dependencies\VTK\build\install"
 
 # VTK CMake package directory, used by native builds
 $env:VTK_DIR = Join-Path $env:VTK_ROOT "lib\cmake\vtk-9.7"
@@ -69,7 +69,7 @@ $env:VTK_DIR = Join-Path $env:VTK_ROOT "lib\cmake\vtk-9.7"
 
 两个目录的含义：
 
-- `VTK_ROOT` 是 **当前配置的 VTK 安装根目录**，即安装步骤将头文件、编译好的库和配套配置文件汇集到的目录（例如 `install/Release`）。
+- `VTK_ROOT` 是 **当前配置的 VTK 安装根目录**，即安装步骤将头文件、编译好的库和配套配置文件汇集到的目录（例如 `install`）。
   它不是下载的源码目录，也不是存放 Visual Studio 工程和中间文件的构建目录。VtkSharp 生成器
   从这里查找 C++ 头文件（用于解析 API 声明）和 hierarchy 文件（用于查询类型、继承关系与模块归属）。
   此环境变量优先于生成器配置文件中的 `vtk.rootDirectory`。
@@ -81,7 +81,7 @@ $env:VTK_DIR = Join-Path $env:VTK_ROOT "lib\cmake\vtk-9.7"
 按本项目脚本安装 VTK 9.7 后，关键目录关系如下（省略其他文件）：
 
 ```text
-install/Release/                       ← VTK_ROOT for Release
+install/                       ← VTK_ROOT for Release
 ├── include/
 │   └── vtk-9.7/
 │       └── vtkObject.h                 # C++ 头文件
@@ -124,9 +124,9 @@ dotnet run --project src/examples/ExampleBrowser/ExampleBrowser.csproj --configu
 在浏览器中选择 `GeometricObjects / Cone` 并运行，应看到品红色三维圆锥和 VtkSharp 说明文字。
 其他示例包括网格、图像、交互、背景渐变，以及 WPF 承载和事件回调，见 [示例说明](src/examples/README.md)。
 
-`build-all.ps1` 只构建绑定库和 native 项目，不构建生成器、测试或示例；动态产物收集到
-`artifacts/bin/<Configuration>/<TFM>`，静态 fallback 保留在 `artifacts/bin/<TFM>`。脚本不会清空整个 `artifacts/bin`；依赖清单只管理目标目录内的 native 文件。示例命令使用相同的 Release 配置，
-以便项目自动复制对应的模块化 native DLL 和运行时依赖。仅运行 `dotnet build` 不会编译 native 层。
+`build-all.ps1` 只构建绑定库和 native 项目，不构建生成器、测试或示例；产物收集到
+`artifacts/bin/<Configuration>/<TFM>`。脚本不会清空整个 `artifacts/bin`；依赖清单只管理目标目录内的 native 文件。示例命令使用相同的 Release 配置，
+以便项目自动复制对应的统一 `VtkSharp.Native.dll`。仅运行 `dotnet build` 不会编译 native 层。
 
 仓库已包含生成的绑定，普通构建无需先运行生成器。本页采用源码构建流程；本地 NuGet 打包、
 部署依赖及 Debug 配置见 [VtkSharp 构建说明](docs/build/vtksharp.md)。

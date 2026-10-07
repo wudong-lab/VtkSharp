@@ -27,7 +27,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleRubberBandPick : vtkInteractorStyleTrackballCamera
 {
-    static vtkInteractorStyleRubberBandPick() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkInteractorStyleRubberBandPick(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -81,7 +80,7 @@ public unsafe partial class vtkInteractorStyleRubberBandPick : vtkInteractorStyl
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleRubberBandPick_New();
     #endregion
 }

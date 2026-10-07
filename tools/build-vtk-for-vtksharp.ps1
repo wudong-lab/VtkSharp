@@ -3,7 +3,7 @@
 为 VtkSharp 配置、构建并安装 VTK 9.7.0。
 
 .DESCRIPTION
-使用 Visual Studio 2026、x64、静态或动态 VTK 库和动态 MSVC CRT。默认执行 Release
+使用 Visual Studio 2026、x64、静态或动态 VTK 库和动态 MSVC CRT。默认使用静态 VTK，执行 Release
 配置、构建和安装；VTK 安装目录同时供 VtkSharp 生成器和 native CMake package 使用。
 
 .EXAMPLE
@@ -24,7 +24,7 @@ param(
     [string]$Configuration = "Release",
 
     [ValidateSet("Static", "Shared")]
-    [string]$Linkage = "Shared",
+    [string]$Linkage = "Static",
 
     [string]$SourceDirectory = (Join-Path $PSScriptRoot "..\..\..\VTK\VtkGitSource"),
 

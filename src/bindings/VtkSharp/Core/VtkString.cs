@@ -6,8 +6,6 @@ namespace VtkSharp;
 
 internal static class VtkString
 {
-    static VtkString() => NativeModuleLoader.EnsureLoaded(InteropInfo.NativeLibraryName);
-
     public static unsafe string FromOwnedUtf8(ref NativeUtf8String value)
     {
         try

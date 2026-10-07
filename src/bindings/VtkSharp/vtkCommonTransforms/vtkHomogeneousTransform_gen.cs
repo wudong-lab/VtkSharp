@@ -21,7 +21,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkHomogeneousTransform : vtkAbstractTransform
 {
-    static vtkHomogeneousTransform() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonTransforms.dll");
 
     protected vtkHomogeneousTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

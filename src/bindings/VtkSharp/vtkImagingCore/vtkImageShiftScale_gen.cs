@@ -17,7 +17,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageShiftScale : vtkThreadedImageAlgorithm
 {
-    static vtkImageShiftScale() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.ImagingCore.dll");
 
     protected vtkImageShiftScale(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -170,40 +169,40 @@ public unsafe partial class vtkImageShiftScale : vtkThreadedImageAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageShiftScale_New();
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarType(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToChar(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToDouble(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToFloat(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToInt(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToLong(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToShort(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToUnsignedChar(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToUnsignedInt(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToUnsignedLong(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageShiftScale_SetOutputScalarTypeToUnsignedShort(nint self);
     #endregion
 }

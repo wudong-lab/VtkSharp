@@ -25,7 +25,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkScalarBarRepresentation : vtkBorderRepresentation
 {
-    static vtkScalarBarRepresentation() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.InteractionWidgets.dll");
 
     protected vtkScalarBarRepresentation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -158,35 +157,35 @@ public unsafe partial class vtkScalarBarRepresentation : vtkBorderRepresentation
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkScalarBarRepresentation_New();
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkScalarBarRepresentation_BuildRepresentation(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkScalarBarRepresentation_GetAutoOrient(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkScalarBarRepresentation_GetOrientation(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkScalarBarRepresentation_GetScalarBarActor(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkScalarBarRepresentation_GetVisibility(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkScalarBarRepresentation_SetAutoOrient(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkScalarBarRepresentation_SetOrientation(nint self, int orient);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkScalarBarRepresentation_SetScalarBarActor(nint self, nint _arg1);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkScalarBarRepresentation_SetVisibility(nint self, int _arg1);
     #endregion
 }

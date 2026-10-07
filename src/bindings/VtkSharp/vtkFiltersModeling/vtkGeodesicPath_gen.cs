@@ -15,7 +15,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGeodesicPath : vtkPolyDataAlgorithm
 {
-    static vtkGeodesicPath() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
 
     protected vtkGeodesicPath(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

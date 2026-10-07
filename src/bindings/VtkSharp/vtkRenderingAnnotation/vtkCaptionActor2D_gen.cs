@@ -51,7 +51,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCaptionActor2D : vtkActor2D
 {
-    static vtkCaptionActor2D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.RenderingAnnotation.dll");
 
     protected vtkCaptionActor2D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -128,13 +127,13 @@ public unsafe partial class vtkCaptionActor2D : vtkActor2D
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCaptionActor2D_New();
 
-    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCaptionActor2D_GetCaptionTextProperty(nint self);
 
-    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCaptionActor2D_GetTextActor(nint self);
     #endregion
 }

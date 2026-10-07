@@ -23,7 +23,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPNGReader : vtkImageReader2
 {
-    static vtkPNGReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOImage.dll");
 
     protected vtkPNGReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -92,14 +91,14 @@ public unsafe partial class vtkPNGReader : vtkImageReader2
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPNGReader_New();
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOImage.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial int vtkPNGReader_CanReadFile(nint self, string fname);
 #else
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkPNGReader_CanReadFile(nint self, byte[] fname);
 #endif
     #endregion

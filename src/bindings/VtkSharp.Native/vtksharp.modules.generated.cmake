@@ -34,71 +34,83 @@ set(VTKSHARP_VTK_COMPONENTS
 )
 
 set(VTKSHARP_NATIVE_TARGETS
-  VtkSharp.Native.CommonColor
-  VtkSharp.Native.CommonComputationalGeometry
-  VtkSharp.Native.CommonCore
-  VtkSharp.Native.CommonDataModel
-  VtkSharp.Native.CommonExecutionModel
-  VtkSharp.Native.CommonMath
-  VtkSharp.Native.CommonTransforms
-  VtkSharp.Native.FiltersCore
-  VtkSharp.Native.FiltersExtraction
-  VtkSharp.Native.FiltersGeneral
-  VtkSharp.Native.FiltersGeometry
-  VtkSharp.Native.FiltersHybrid
-  VtkSharp.Native.FiltersModeling
-  VtkSharp.Native.FiltersPoints
-  VtkSharp.Native.FiltersSources
-  VtkSharp.Native.FiltersVerdict
-  VtkSharp.Native.IOCore
-  VtkSharp.Native.IOGeometry
-  VtkSharp.Native.IOImage
-  VtkSharp.Native.IOInfovis
-  VtkSharp.Native.IOXML
-  VtkSharp.Native.ImagingCore
-  VtkSharp.Native.ImagingMath
-  VtkSharp.Native.InteractionImage
-  VtkSharp.Native.InteractionWidgets
-  VtkSharp.Native.Rendering
-  VtkSharp.Native.RenderingAnnotation
+  VtkSharp.Native
 )
 
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonColor_MODULES
+set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_MODULES
   CommonColor
+  CommonComputationalGeometry
+  CommonCore
+  CommonDataModel
+  CommonExecutionModel
+  CommonMath
+  CommonTransforms
+  FiltersCore
+  FiltersExtraction
+  FiltersGeneral
+  FiltersGeometry
+  FiltersHybrid
+  FiltersModeling
+  FiltersPoints
+  FiltersSources
+  FiltersVerdict
+  IOCore
+  IOGeometry
+  IOImage
+  IOInfovis
+  IOXML
+  ImagingCore
+  ImagingMath
+  InteractionImage
+  InteractionStyle
+  InteractionWidgets
+  RenderingAnnotation
+  RenderingCore
+  RenderingLabel
+  RenderingOpenGL2
+  RenderingUI
 )
 
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonColor_AUTOINIT_MODULES
+set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_AUTOINIT_MODULES
   CommonColor
+  CommonComputationalGeometry
+  CommonCore
+  CommonDataModel
+  CommonExecutionModel
+  CommonMath
+  CommonTransforms
+  FiltersCore
+  FiltersExtraction
+  FiltersGeneral
+  FiltersGeometry
+  FiltersHybrid
+  FiltersModeling
+  FiltersPoints
+  FiltersSources
+  FiltersVerdict
+  IOCore
+  IOGeometry
+  IOImage
+  IOInfovis
+  IOXML
+  ImagingCore
+  ImagingMath
+  InteractionImage
+  InteractionStyle
+  InteractionWidgets
+  RenderingAnnotation
+  RenderingCore
+  RenderingLabel
+  RenderingOpenGL2
+  RenderingUI
 )
 
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonColor_SOURCES
+set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_SOURCES
   src/vtkCommonColor/vtkColorSeries_export_gen.cpp
   src/vtkCommonColor/vtkNamedColors_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonComputationalGeometry_MODULES
-  CommonComputationalGeometry
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonComputationalGeometry_AUTOINIT_MODULES
-  CommonComputationalGeometry
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonComputationalGeometry_SOURCES
   src/vtkCommonComputationalGeometry/vtkParametricEnneper_export_gen.cpp
   src/vtkCommonComputationalGeometry/vtkParametricFunction_export_gen.cpp
   src/vtkCommonComputationalGeometry/vtkParametricSpline_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonCore_MODULES
-  CommonCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonCore_AUTOINIT_MODULES
-  CommonCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonCore_SOURCES
   src/vtkCommonCore/vtkAbstractArray_export_gen.cpp
   src/vtkCommonCore/vtkCollection_export_gen.cpp
   src/vtkCommonCore/vtkDataArray_export_gen.cpp
@@ -121,18 +133,6 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonCore_SOURCES
   src/vtkCommonCore/vtkUnsignedCharArray_export.cpp
   src/vtkCommonCore/vtkUnsignedCharArray_export_gen.cpp
   src/vtkCommonCore/vtkWindow_export_gen.cpp
-  src/vtksharp_string.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonDataModel_MODULES
-  CommonDataModel
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonDataModel_AUTOINIT_MODULES
-  CommonDataModel
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonDataModel_SOURCES
   src/vtkCommonDataModel/vtkAbstractCellArray_export_gen.cpp
   src/vtkCommonDataModel/vtkAbstractCellLocator_export_gen.cpp
   src/vtkCommonDataModel/vtkCartesianGrid_export_gen.cpp
@@ -165,17 +165,6 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonDataModel_SOURCES
   src/vtkCommonDataModel/vtkTriangle_export_gen.cpp
   src/vtkCommonDataModel/vtkUnstructuredGridBase_export_gen.cpp
   src/vtkCommonDataModel/vtkUnstructuredGrid_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonExecutionModel_MODULES
-  CommonExecutionModel
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonExecutionModel_AUTOINIT_MODULES
-  CommonExecutionModel
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonExecutionModel_SOURCES
   src/vtkCommonExecutionModel/vtkAlgorithmOutput_export_gen.cpp
   src/vtkCommonExecutionModel/vtkAlgorithm_export_gen.cpp
   src/vtkCommonExecutionModel/vtkDataObjectAlgorithm_export_gen.cpp
@@ -188,44 +177,11 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonExecutionModel_SOURCES
   src/vtkCommonExecutionModel/vtkTableAlgorithm_export_gen.cpp
   src/vtkCommonExecutionModel/vtkThreadedImageAlgorithm_export_gen.cpp
   src/vtkCommonExecutionModel/vtkUnstructuredGridAlgorithm_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonMath_MODULES
-  CommonMath
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonMath_AUTOINIT_MODULES
-  CommonMath
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonMath_SOURCES
   src/vtkCommonMath/vtkMatrix4x4_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonTransforms_MODULES
-  CommonTransforms
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonTransforms_AUTOINIT_MODULES
-  CommonTransforms
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_CommonTransforms_SOURCES
   src/vtkCommonTransforms/vtkAbstractTransform_export_gen.cpp
   src/vtkCommonTransforms/vtkHomogeneousTransform_export_gen.cpp
   src/vtkCommonTransforms/vtkLinearTransform_export_gen.cpp
   src/vtkCommonTransforms/vtkTransform_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersCore_MODULES
-  FiltersCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersCore_AUTOINIT_MODULES
-  FiltersCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersCore_SOURCES
   src/vtkFiltersCore/vtkAppendPolyData_export_gen.cpp
   src/vtkFiltersCore/vtkCellCenters_export_gen.cpp
   src/vtkFiltersCore/vtkCleanPolyData_export_gen.cpp
@@ -248,29 +204,7 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersCore_SOURCES
   src/vtkFiltersCore/vtkTriangleFilter_export_gen.cpp
   src/vtkFiltersCore/vtkTubeFilter_export_gen.cpp
   src/vtkFiltersCore/vtkWindowedSincPolyDataFilter_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersExtraction_MODULES
-  FiltersExtraction
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersExtraction_AUTOINIT_MODULES
-  FiltersExtraction
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersExtraction_SOURCES
   src/vtkFiltersExtraction/vtkExtractSelection_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeneral_MODULES
-  FiltersGeneral
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeneral_AUTOINIT_MODULES
-  FiltersGeneral
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeneral_SOURCES
   src/vtkFiltersGeneral/vtkApproximatingSubdivisionFilter_export_gen.cpp
   src/vtkFiltersGeneral/vtkContourTriangulator_export_gen.cpp
   src/vtkFiltersGeneral/vtkInterpolatingSubdivisionFilter_export_gen.cpp
@@ -283,42 +217,9 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeneral_SOURCES
   src/vtkFiltersGeneral/vtkVertexGlyphFilter_export_gen.cpp
   src/vtkFiltersGeneral/vtkWarpScalar_export_gen.cpp
   src/vtkFiltersGeneral/vtkWarpVector_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeometry_MODULES
-  FiltersGeometry
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeometry_AUTOINIT_MODULES
-  FiltersGeometry
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersGeometry_SOURCES
   src/vtkFiltersGeometry/vtkDataSetSurfaceFilter_export_gen.cpp
   src/vtkFiltersGeometry/vtkImageDataGeometryFilter_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersHybrid_MODULES
-  FiltersHybrid
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersHybrid_AUTOINIT_MODULES
-  FiltersHybrid
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersHybrid_SOURCES
   src/vtkFiltersHybrid/vtkGreedyTerrainDecimation_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersModeling_MODULES
-  FiltersModeling
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersModeling_AUTOINIT_MODULES
-  FiltersModeling
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersModeling_SOURCES
   src/vtkFiltersModeling/vtkBandedPolyDataContourFilter_export_gen.cpp
   src/vtkFiltersModeling/vtkButterflySubdivisionFilter_export_gen.cpp
   src/vtkFiltersModeling/vtkDijkstraGraphGeodesicPath_export_gen.cpp
@@ -328,32 +229,10 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersModeling_SOURCES
   src/vtkFiltersModeling/vtkLinearExtrusionFilter_export_gen.cpp
   src/vtkFiltersModeling/vtkLoopSubdivisionFilter_export_gen.cpp
   src/vtkFiltersModeling/vtkRibbonFilter_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersPoints_MODULES
-  FiltersPoints
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersPoints_AUTOINIT_MODULES
-  FiltersPoints
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersPoints_SOURCES
   src/vtkFiltersPoints/vtkGaussianKernel_export_gen.cpp
   src/vtkFiltersPoints/vtkGeneralizedKernel_export_gen.cpp
   src/vtkFiltersPoints/vtkInterpolationKernel_export_gen.cpp
   src/vtkFiltersPoints/vtkPointInterpolator_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersSources_MODULES
-  FiltersSources
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersSources_AUTOINIT_MODULES
-  FiltersSources
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersSources_SOURCES
   src/vtkFiltersSources/vtkArrowSource_export_gen.cpp
   src/vtkFiltersSources/vtkConeSource_export_gen.cpp
   src/vtkFiltersSources/vtkCubeSource_export_gen.cpp
@@ -367,159 +246,25 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersSources_SOURCES
   src/vtkFiltersSources/vtkRegularPolygonSource_export_gen.cpp
   src/vtkFiltersSources/vtkSelectionSource_export_gen.cpp
   src/vtkFiltersSources/vtkSphereSource_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersVerdict_MODULES
-  FiltersVerdict
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersVerdict_AUTOINIT_MODULES
-  FiltersVerdict
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_FiltersVerdict_SOURCES
   src/vtkFiltersVerdict/vtkMeshQuality_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOCore_MODULES
-  IOCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOCore_AUTOINIT_MODULES
-  IOCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOCore_SOURCES
   src/vtkIOCore/vtkAbstractPolyDataReader_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOGeometry_MODULES
-  IOGeometry
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOGeometry_AUTOINIT_MODULES
-  IOGeometry
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOGeometry_SOURCES
   src/vtkIOGeometry/vtkSTLReader_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOImage_MODULES
-  IOImage
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOImage_AUTOINIT_MODULES
-  IOImage
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOImage_SOURCES
   src/vtkIOImage/vtkDEMReader_export_gen.cpp
   src/vtkIOImage/vtkImageReader2_export_gen.cpp
   src/vtkIOImage/vtkImageWriter_export_gen.cpp
   src/vtkIOImage/vtkJPEGWriter_export_gen.cpp
   src/vtkIOImage/vtkPNGReader_export_gen.cpp
   src/vtkIOImage/vtkPNGWriter_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOInfovis_MODULES
-  IOInfovis
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOInfovis_AUTOINIT_MODULES
-  IOInfovis
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOInfovis_SOURCES
   src/vtkIOInfovis/vtkDelimitedTextReader_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOXML_MODULES
-  IOXML
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOXML_AUTOINIT_MODULES
-  IOXML
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_IOXML_SOURCES
   src/vtkIOXML/vtkXMLDataReader_export_gen.cpp
   src/vtkIOXML/vtkXMLReader_export_gen.cpp
   src/vtkIOXML/vtkXMLUnstructuredDataReader_export_gen.cpp
   src/vtkIOXML/vtkXMLUnstructuredGridReader_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_ImagingCore_MODULES
-  ImagingCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_ImagingCore_AUTOINIT_MODULES
-  ImagingCore
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_ImagingCore_SOURCES
   src/vtkImagingCore/vtkImageCast_export_gen.cpp
   src/vtkImagingCore/vtkImageMapToColors_export_gen.cpp
   src/vtkImagingCore/vtkImageShiftScale_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_ImagingMath_MODULES
-  ImagingMath
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_ImagingMath_AUTOINIT_MODULES
-  ImagingMath
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_ImagingMath_SOURCES
   src/vtkImagingMath/vtkImageMathematics_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_InteractionImage_MODULES
-  InteractionImage
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_InteractionImage_AUTOINIT_MODULES
-  InteractionImage
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_InteractionImage_SOURCES
   src/vtkInteractionImage/vtkImageViewer2_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_InteractionWidgets_MODULES
-  InteractionWidgets
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_InteractionWidgets_AUTOINIT_MODULES
-  InteractionWidgets
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_InteractionWidgets_SOURCES
-  src/vtkInteractionWidgets/vtkAbstractWidget_export_gen.cpp
-  src/vtkInteractionWidgets/vtkBorderRepresentation_export_gen.cpp
-  src/vtkInteractionWidgets/vtkBorderWidget_export_gen.cpp
-  src/vtkInteractionWidgets/vtkOrientationMarkerWidget_export_gen.cpp
-  src/vtkInteractionWidgets/vtkScalarBarRepresentation_export_gen.cpp
-  src/vtkInteractionWidgets/vtkScalarBarWidget_export_gen.cpp
-  src/vtkInteractionWidgets/vtkWidgetRepresentation_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_MODULES
-  InteractionStyle
-  RenderingCore
-  RenderingLabel
-  RenderingOpenGL2
-  RenderingUI
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_AUTOINIT_MODULES
-  InteractionStyle
-  RenderingOpenGL2
-  RenderingUI
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkInteractionStyle/vtkInteractorStyleImage_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleJoystickCamera_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleRubberBand2D_export_gen.cpp
@@ -531,6 +276,19 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkInteractionStyle/vtkInteractorStyleTrackballActor_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleTrackballCamera_export_gen.cpp
   src/vtkInteractionStyle/vtkInteractorStyleUser_export_gen.cpp
+  src/vtkInteractionWidgets/vtkAbstractWidget_export_gen.cpp
+  src/vtkInteractionWidgets/vtkBorderRepresentation_export_gen.cpp
+  src/vtkInteractionWidgets/vtkBorderWidget_export_gen.cpp
+  src/vtkInteractionWidgets/vtkOrientationMarkerWidget_export_gen.cpp
+  src/vtkInteractionWidgets/vtkScalarBarRepresentation_export_gen.cpp
+  src/vtkInteractionWidgets/vtkScalarBarWidget_export_gen.cpp
+  src/vtkInteractionWidgets/vtkWidgetRepresentation_export_gen.cpp
+  src/vtkRenderingAnnotation/vtkAxesActor_export_gen.cpp
+  src/vtkRenderingAnnotation/vtkAxisActor2D_export_gen.cpp
+  src/vtkRenderingAnnotation/vtkCaptionActor2D_export_gen.cpp
+  src/vtkRenderingAnnotation/vtkLegendBoxActor_export_gen.cpp
+  src/vtkRenderingAnnotation/vtkLegendScaleActor_export_gen.cpp
+  src/vtkRenderingAnnotation/vtkScalarBarActor_export_gen.cpp
   src/vtkRenderingCore/vtkAbstractMapper3D_export_gen.cpp
   src/vtkRenderingCore/vtkAbstractMapper_export_gen.cpp
   src/vtkRenderingCore/vtkAbstractPicker_export_gen.cpp
@@ -598,21 +356,5 @@ set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_Rendering_SOURCES
   src/vtkRenderingOpenGL2/vtkWin32OpenGLRenderWindow_export_gen.cpp
   src/vtkRenderingUI/vtkGenericRenderWindowInteractor_export_gen.cpp
   src/vtkRenderingUI/vtkWin32RenderWindowInteractor_export_gen.cpp
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_RenderingAnnotation_MODULES
-  RenderingAnnotation
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_RenderingAnnotation_AUTOINIT_MODULES
-  RenderingAnnotation
-)
-
-set(VTKSHARP_NATIVE_TARGET_VtkSharp_Native_RenderingAnnotation_SOURCES
-  src/vtkRenderingAnnotation/vtkAxesActor_export_gen.cpp
-  src/vtkRenderingAnnotation/vtkAxisActor2D_export_gen.cpp
-  src/vtkRenderingAnnotation/vtkCaptionActor2D_export_gen.cpp
-  src/vtkRenderingAnnotation/vtkLegendBoxActor_export_gen.cpp
-  src/vtkRenderingAnnotation/vtkLegendScaleActor_export_gen.cpp
-  src/vtkRenderingAnnotation/vtkScalarBarActor_export_gen.cpp
+  src/vtksharp_string.cpp
 )

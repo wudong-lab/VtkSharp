@@ -63,7 +63,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPointInterpolator : vtkDataSetAlgorithm
 {
-    static vtkPointInterpolator() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersPoints.dll");
 
     protected vtkPointInterpolator(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -143,13 +142,13 @@ public unsafe partial class vtkPointInterpolator : vtkDataSetAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersPoints.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointInterpolator_New();
 
-    [DllImport("VtkSharp.Native.FiltersPoints.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPointInterpolator_SetKernel(nint self, nint kernel);
 
-    [DllImport("VtkSharp.Native.FiltersPoints.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPointInterpolator_SetSourceData(nint self, nint source);
     #endregion
 }

@@ -30,7 +30,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleJoystickCamera : vtkInteractorStyle
 {
-    static vtkInteractorStyleJoystickCamera() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkInteractorStyleJoystickCamera(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -84,7 +83,7 @@ public unsafe partial class vtkInteractorStyleJoystickCamera : vtkInteractorStyl
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleJoystickCamera_New();
     #endregion
 }

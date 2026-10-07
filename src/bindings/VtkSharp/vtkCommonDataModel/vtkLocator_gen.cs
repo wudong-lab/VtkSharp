@@ -58,7 +58,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLocator : vtkObject
 {
-    static vtkLocator() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkLocator(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -116,7 +115,7 @@ public unsafe partial class vtkLocator : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLocator_SetDataSet(nint self, nint _arg1);
     #endregion
 }

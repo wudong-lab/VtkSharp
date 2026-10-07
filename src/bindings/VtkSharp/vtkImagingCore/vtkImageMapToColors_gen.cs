@@ -23,7 +23,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageMapToColors : vtkThreadedImageAlgorithm
 {
-    static vtkImageMapToColors() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.ImagingCore.dll");
 
     protected vtkImageMapToColors(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -244,61 +243,61 @@ public unsafe partial class vtkImageMapToColors : vtkThreadedImageAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageMapToColors_New();
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageMapToColors_GetActiveComponent(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageMapToColors_GetLookupTable(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern byte* vtkImageMapToColors_GetNaNColor_(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_GetNaNColor_unsignedcharArray4(nint self, byte* _arg);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageMapToColors_GetOutputFormat(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageMapToColors_GetPassAlphaToOutput(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_PassAlphaToOutputOff(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_PassAlphaToOutputOn(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetActiveComponent(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetLookupTable(nint self, nint _arg1);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetNaNColor_unsignedchar_unsignedchar_unsignedchar_unsignedchar(nint self, byte _arg1, byte _arg2, byte _arg3, byte _arg4);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetNaNColor_unsignedcharConstArray4(nint self, byte* _arg);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetOutputFormat(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetOutputFormatToLuminance(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetOutputFormatToLuminanceAlpha(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetOutputFormatToRGB(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetOutputFormatToRGBA(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMapToColors_SetPassAlphaToOutput(nint self, int _arg);
     #endregion
 }

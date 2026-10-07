@@ -8,10 +8,10 @@
       "header": "vtkParametricEnneper.h",
       "baseClassName": "vtkParametricFunction",
       "hasStaticNew": true,
-      "inputHash": "11e65d8b5e102341db9dfd79f655d6be4d2600754ae96baf263cfe72765a719f",
+      "inputHash": "e60cdfa85a8ad61d76006bb950f9c6a3318ce115aee21f9052f55c58d20daa6a",
       "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricEnneper_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricEnneper_export_gen.cpp",
-      "managedContentHash": "8c4dfb5b7ae7f202987940df0570dab0952989d43b5c62d2a1f79751f6b84622",
+      "managedContentHash": "fa52ad80441998ce713ad4699392abd94f38b1c3d43794ec4fd2a816c8a3e055",
       "nativeContentHash": "658e3f1f416e75c70d90bd369b6e5ae9e90717040f34a59c7147d1eafec95252"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkParametricFunction.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": false,
-      "inputHash": "abb7e2b9948066a4669c271d623cdbbc3eb2a77a3786a5c00460d5ee467e9cf5",
+      "inputHash": "e233ce01398fa81edf8e6b1f494db8525b57dde6e88e43205d857d8269b635a9",
       "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricFunction_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricFunction_export_gen.cpp",
-      "managedContentHash": "133b21cae8bdd96af7d06394e09addc064c0a362c0e23fa03e00f10bfc972e3d",
+      "managedContentHash": "23804a08753525d8b7da704f2090475cce9eda26f742950fe819f13a44e446ac",
       "nativeContentHash": "83b45ddfd6607ed5cddf18aea6a5005c7c280b96e2bce693a9f70c22db74e525"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkParametricSpline.h",
       "baseClassName": "vtkParametricFunction",
       "hasStaticNew": true,
-      "inputHash": "fb399aa73d315d1802cce0ce0189beec36726b9c6dac2b3f160b552f49e3efb4",
+      "inputHash": "658c7a7d901584ebd9375e22b1c15304492d21758681a3ddff3d299fbcc0f1ba",
       "managedPath": "bindings\\VtkSharp\\vtkCommonComputationalGeometry\\vtkParametricSpline_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonComputationalGeometry\\vtkParametricSpline_export_gen.cpp",
-      "managedContentHash": "e8a8f7f47244ca9c232399fdcdcf01dc6e901fb2637d0e33061a12fad35984d4",
+      "managedContentHash": "80ba139665f48c24c0184525925c84d5e35e522c46539001f9f2139578b87a75",
       "nativeContentHash": "c5d61fe8f97cfb6eaaa59e4c953089788010d3f3a88b33f3f5f0d18aff265368"
     }
   ]

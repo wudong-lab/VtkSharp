@@ -60,7 +60,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkMeshQuality : vtkDataSetAlgorithm
 {
-    static vtkMeshQuality() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersVerdict.dll");
 
     protected vtkMeshQuality(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -126,10 +125,10 @@ public unsafe partial class vtkMeshQuality : vtkDataSetAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersVerdict.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkMeshQuality_New();
 
-    [DllImport("VtkSharp.Native.FiltersVerdict.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkMeshQuality_SetTriangleQualityMeasureToArea(nint self);
     #endregion
 }

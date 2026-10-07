@@ -7,7 +7,7 @@ namespace VtkSharp.Generator.Core.Generation;
 
 public sealed class BindingGenerationService
 {
-    public const string IncrementalCacheVersion = "2026-10-04.native-module-layout-v1";
+    public const string IncrementalCacheVersion = "2026-10-07.interop-library-name-v1";
 
     public int Generate(string configPath, string outputRoot, bool continueOnError, bool incremental, bool force, TextWriter output, TextWriter error)
         => incremental
@@ -159,7 +159,7 @@ public sealed class BindingGenerationService
                     managedPath,
                     csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName,
                         inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error,
-                        whitelistClass.EnumProperties, nativeLayout.GetNativeLibraryName(document.Module)),
+                        whitelistClass.EnumProperties),
                     Path.GetRelativePath(managedDirectory, managedPath),
                     differences);
                 CompareGeneratedText(
@@ -247,8 +247,7 @@ public sealed class BindingGenerationService
                     .ToList();
 
                 WriteText(managedPath, csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName,
-                    inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties,
-                    nativeLayout.GetNativeLibraryName(document.Module)));
+                    inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties));
                 WriteText(nativePath, cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions, whitelistClass.EnumProperties));
             }
         }
@@ -369,8 +368,7 @@ public sealed class BindingGenerationService
                     .Distinct(StringComparer.Ordinal)
                     .ToList();
                 var managedContent = csharpEmitter.Emit(config.Binding.Namespace, whitelistClass.Name, baseClassName,
-                    inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties,
-                    nativeLayout.GetNativeLibraryName(document.Module));
+                    inspectedClass.HasStaticNew, whitelistClass.Functions, inspectedClass, error, whitelistClass.EnumProperties);
                 var nativeContent = cppEmitter.Emit(whitelistClass.Name, includeClassNames, inspectedClass.HasStaticNew, whitelistClass.Functions, whitelistClass.EnumProperties);
 
                 WriteText(managedPath, managedContent);

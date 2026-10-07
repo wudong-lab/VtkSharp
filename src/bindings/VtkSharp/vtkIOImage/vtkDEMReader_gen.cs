@@ -21,7 +21,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDEMReader : vtkImageAlgorithm
 {
-    static vtkDEMReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOImage.dll");
 
     protected vtkDEMReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -87,14 +86,14 @@ public unsafe partial class vtkDEMReader : vtkImageAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDEMReader_New();
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOImage.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkDEMReader_SetFileName(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDEMReader_SetFileName(nint self, byte[] _arg);
 #endif
     #endregion

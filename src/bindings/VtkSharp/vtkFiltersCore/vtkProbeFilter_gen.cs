@@ -60,7 +60,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkProbeFilter : vtkDataSetAlgorithm
 {
-    static vtkProbeFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkProbeFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -125,10 +124,10 @@ public unsafe partial class vtkProbeFilter : vtkDataSetAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkProbeFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkProbeFilter_SetSourceData(nint self, nint source);
     #endregion
 }

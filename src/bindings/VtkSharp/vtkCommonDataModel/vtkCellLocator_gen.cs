@@ -40,7 +40,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCellLocator : vtkAbstractCellLocator
 {
-    static vtkCellLocator() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkCellLocator(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -137,13 +136,13 @@ public unsafe partial class vtkCellLocator : vtkAbstractCellLocator
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCellLocator_New();
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCellLocator_BuildLocator(nint self);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkCellLocator_IntersectWithLine(nint self, double* p1, double* p2, double tol, nint points, nint cellIds, nint cell);
     #endregion
 }

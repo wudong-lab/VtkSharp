@@ -24,7 +24,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTextMapper : vtkMapper2D
 {
-    static vtkTextMapper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkTextMapper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -104,17 +103,17 @@ public unsafe partial class vtkTextMapper : vtkMapper2D
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTextMapper_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTextMapper_GetTextProperty(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkTextMapper_SetInput(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTextMapper_SetInput(nint self, byte[] _arg);
 #endif
     #endregion

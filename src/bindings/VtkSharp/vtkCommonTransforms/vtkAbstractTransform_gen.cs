@@ -34,7 +34,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractTransform : vtkObject
 {
-    static vtkAbstractTransform() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonTransforms.dll");
 
     protected vtkAbstractTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -146,16 +145,16 @@ public unsafe partial class vtkAbstractTransform : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkAbstractTransform_TransformPoint_doubleConstArray3(nint self, double* point);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkAbstractTransform_TransformPoint_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractTransform_TransformPoint_doubleConstArray3_doubleArray3(nint self, double* @in, double* @out);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractTransform_TransformPoint_floatConstArray3_floatArray3(nint self, float* @in, float* @out);
     #endregion
 }

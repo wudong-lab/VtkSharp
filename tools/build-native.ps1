@@ -3,7 +3,7 @@ param(
     [string]$Configuration = "Debug",
 
     [ValidateSet("Static", "Dynamic")]
-    [string]$Linkage = "Dynamic",
+    [string]$Linkage = "Static",
 
     [string]$VtkDir = $env:VTK_DIR
 )
@@ -55,7 +55,7 @@ function Invoke-CMakeConfigure {
         [bool]$Fresh
     )
 
-    $arguments = @("--preset", $Preset)
+    $arguments = @("--preset", $Preset, "-DVTKSHARP_VTK_LINKAGE=$Linkage")
     if ($Fresh) {
         $arguments += "--fresh"
     }
@@ -102,7 +102,7 @@ try {
 
         if ($Linkage -eq "Dynamic") {
             $entryDirectory = Join-Path $nativeDir "out\build\$($candidate.BinaryDirectory)\$Configuration"
-            $entryDlls = @(Get-ChildItem -LiteralPath $entryDirectory -Filter "VtkSharp.Native.*.dll" -File |
+            $entryDlls = @(Get-ChildItem -LiteralPath $entryDirectory -Filter "VtkSharp.Native.dll" -File |
                 Sort-Object Name | ForEach-Object FullName)
             if ($entryDlls.Count -eq 0) {
                 throw "No modular VtkSharp native entry DLLs were produced in: $entryDirectory"

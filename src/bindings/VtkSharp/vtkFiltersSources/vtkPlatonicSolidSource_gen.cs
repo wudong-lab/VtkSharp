@@ -18,7 +18,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPlatonicSolidSource : vtkPolyDataAlgorithm
 {
-    static vtkPlatonicSolidSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
 
     protected vtkPlatonicSolidSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -137,28 +136,28 @@ public unsafe partial class vtkPlatonicSolidSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPlatonicSolidSource_New();
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkPlatonicSolidSource_GetSolidType(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPlatonicSolidSource_SetSolidType(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPlatonicSolidSource_SetSolidTypeToCube(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPlatonicSolidSource_SetSolidTypeToDodecahedron(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPlatonicSolidSource_SetSolidTypeToIcosahedron(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPlatonicSolidSource_SetSolidTypeToOctahedron(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPlatonicSolidSource_SetSolidTypeToTetrahedron(nint self);
     #endregion
 }

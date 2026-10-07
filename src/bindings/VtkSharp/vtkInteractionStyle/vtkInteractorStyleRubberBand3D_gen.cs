@@ -25,7 +25,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleRubberBand3D : vtkInteractorStyleTrackballCamera
 {
-    static vtkInteractorStyleRubberBand3D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkInteractorStyleRubberBand3D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -79,7 +78,7 @@ public unsafe partial class vtkInteractorStyleRubberBand3D : vtkInteractorStyleT
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleRubberBand3D_New();
     #endregion
 }

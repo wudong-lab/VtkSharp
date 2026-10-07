@@ -8,7 +8,6 @@ namespace VtkSharp;
 
 public unsafe partial class vtkEventData : vtkObjectBase
 {
-    static vtkEventData() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkEventData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

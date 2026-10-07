@@ -1,6 +1,6 @@
-﻿namespace VtkSharp;
+namespace VtkSharp;
 
 internal static class InteropInfo
 {
-    public const string NativeLibraryName = "VtkSharp.Native.CommonCore.dll";
+    public const string NativeLibraryName = "VtkSharp.Native.dll";
 }

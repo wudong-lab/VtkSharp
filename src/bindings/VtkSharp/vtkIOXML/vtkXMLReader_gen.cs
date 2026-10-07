@@ -17,7 +17,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkXMLReader : vtkAlgorithm
 {
-    static vtkXMLReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOXML.dll");
 
     protected vtkXMLReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -80,10 +79,10 @@ public unsafe partial class vtkXMLReader : vtkAlgorithm
 
     #region Interop
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOXML.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkXMLReader_SetFileName(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.IOXML.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkXMLReader_SetFileName(nint self, byte[] _arg);
 #endif
     #endregion

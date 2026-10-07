@@ -8,10 +8,10 @@
       "header": "vtkAbstractWidget.h",
       "baseClassName": "vtkInteractorObserver",
       "hasStaticNew": false,
-      "inputHash": "8eb8374f4199744e950943108d88321f2fd4b4b8169380b08b1fb3eb906a493d",
+      "inputHash": "33d81079a433092fa8670fbbaef9c35657408b5b1ca8ecd34bccf855afba268c",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkAbstractWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkAbstractWidget_export_gen.cpp",
-      "managedContentHash": "befb1bc859a63a4c3f0ed33d8e29b411dc3b58220253ca9c86229b910f792efa",
+      "managedContentHash": "71a4f3c2786535a54eaea0d5fd68dab280b68f9be390d2533df0d9bdde4d9c5e",
       "nativeContentHash": "8636f8aefc53e5bf4dcd75207b2db80b562bee871909865084fc961ddcf1a9cc"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkBorderRepresentation.h",
       "baseClassName": "vtkWidgetRepresentation",
       "hasStaticNew": true,
-      "inputHash": "4a555712c47157e0ef01705e66392e9637e5f40142849120743e15338a1af4e7",
+      "inputHash": "3af1fd2cc670a872c279c90e175bccb7cafcb86f670bdedc25c878669e1e0b95",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkBorderRepresentation_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkBorderRepresentation_export_gen.cpp",
-      "managedContentHash": "5f4b65275b4edbe3c50d2e13c884429c1b942fb285427b660280fcafff7020f2",
+      "managedContentHash": "44b818cc01e58ff91d91e7ee73cd1545a5791689760bd751e021397fd605cb7c",
       "nativeContentHash": "0f7fdd0a1d5bce9ab9f6e2470adfdd1ddea88d28d535b011576b908b2135128e"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkBorderWidget.h",
       "baseClassName": "vtkAbstractWidget",
       "hasStaticNew": true,
-      "inputHash": "6b86ca69241cd6386149dc37cd47b2041951af0d7af4f4f8ed31bfe4a60ed49f",
+      "inputHash": "3675a21801f1e7307f065e49922e8e55f8156473ecf8a6e39395314d895faa5d",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkBorderWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkBorderWidget_export_gen.cpp",
-      "managedContentHash": "2575c1e5faed3be365127e041c702a4c0932168a06f03f7222dc4be3f2c8fef0",
+      "managedContentHash": "f903c54f14f103483b1207f9d1ee7cbd1268bd1f292f7dc10d111e28f37ed977",
       "nativeContentHash": "e94b2dee6b5317edbbcf936ae282504b3402f96af081743a508daba3198f54ad"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkOrientationMarkerWidget.h",
       "baseClassName": "vtkInteractorObserver",
       "hasStaticNew": true,
-      "inputHash": "a7ad14665a7eba2bea7c80dd7b03057f5dcabb8ac59f777034e1e30018fe6571",
+      "inputHash": "b242e7515b407af615295c52f2ad6af28d4a82e911c2de8211fc6bade1d581ef",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkOrientationMarkerWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkOrientationMarkerWidget_export_gen.cpp",
-      "managedContentHash": "82844f10ae4015462f5afbbeacbf1ccb83587b80d4af8d96fde99ae830167948",
+      "managedContentHash": "2f57ec69df5b7565b25373ac38692c037d909cd1411499abf5d241f0df08cdbc",
       "nativeContentHash": "39d7f95a07adeae879cee42a81e72b3ae9a11f95422e2c4768a17b2bef7108d4"
     },
     {
@@ -52,10 +52,10 @@
       "header": "vtkScalarBarRepresentation.h",
       "baseClassName": "vtkBorderRepresentation",
       "hasStaticNew": true,
-      "inputHash": "6839eb53771c84de43659ccd63ab20fa214e0ee6b4808285ed2c4d9fb8d47879",
+      "inputHash": "37d23eba2f9a191d8a7cb3e65e25d6a1eaafe12e2f3303c604b44ca15c4a0c03",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkScalarBarRepresentation_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkScalarBarRepresentation_export_gen.cpp",
-      "managedContentHash": "86a8aec980114d85f648ceea9badb9cf62c7075b86d356f2488b6f33c86547f6",
+      "managedContentHash": "5560d13e7743fb16ee8b4b2454f2e12ca6a5b54497ab0658567b2998e855ba7a",
       "nativeContentHash": "119a68f11e84564024fad76d15d9c8a94bbb093a650f6ebb4924e4d7c1df7b92"
     },
     {
@@ -63,10 +63,10 @@
       "header": "vtkScalarBarWidget.h",
       "baseClassName": "vtkBorderWidget",
       "hasStaticNew": true,
-      "inputHash": "4f860156071a1964b69feee6bfe94d39aa991a3bcbdd4909b5dfe18ca22126b4",
+      "inputHash": "8047548aed0ce70be9d481fe030b7abc8b6b2a7b50122d0faa50eb2e6b357160",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkScalarBarWidget_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkScalarBarWidget_export_gen.cpp",
-      "managedContentHash": "20f30a56f20d4d5d3649ec37b61c6f4abd475bafaba97f9cf9ef093a4ac6d7ad",
+      "managedContentHash": "bf1e58c5bdd3fcb89fffe05c731dcaf7d1879d68cf33987eb000e826f77a6dcd",
       "nativeContentHash": "7edc3c5cfdcdc6be91380db122102b31dd3f08b136150812e5b8d827d86fa29c"
     },
     {
@@ -74,10 +74,10 @@
       "header": "vtkWidgetRepresentation.h",
       "baseClassName": "vtkProp",
       "hasStaticNew": false,
-      "inputHash": "1a9dbf84bce765e1711a21d174d06719341cd8356241b4784cdb992e2a77ccc9",
+      "inputHash": "b897293cbe07bc0b1e1cab7c43bc75d5e97da0a830f6b0eb5adef4f1fb5854e8",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionWidgets\\vtkWidgetRepresentation_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionWidgets\\vtkWidgetRepresentation_export_gen.cpp",
-      "managedContentHash": "952299e81b49f20ede26317e145be0ef0b27326c7619fd0930a482627b690983",
+      "managedContentHash": "3a6c59efc30742addfaf005dcedc8939302ab80607cb13c0ba70a9ec0dfb1e5f",
       "nativeContentHash": "0da5d4e0ee92f11f93a65e2033899cadab91c94809258da406d3edffa9e52633"
     }
   ]

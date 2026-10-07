@@ -31,7 +31,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSTLReader : vtkAbstractPolyDataReader
 {
-    static vtkSTLReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOGeometry.dll");
 
     protected vtkSTLReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -88,7 +87,7 @@ public unsafe partial class vtkSTLReader : vtkAbstractPolyDataReader
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.IOGeometry.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkSTLReader_New();
     #endregion
 }

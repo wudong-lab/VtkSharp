@@ -56,7 +56,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractPicker : vtkObject
 {
-    static vtkAbstractPicker() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkAbstractPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -120,7 +119,7 @@ public unsafe partial class vtkAbstractPicker : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractPicker_GetPickPosition(nint self, double* data);
     #endregion
 }

@@ -81,7 +81,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
 {
-    static vtkGlyph3D() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkGlyph3D(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -169,16 +168,16 @@ public unsafe partial class vtkGlyph3D : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkGlyph3D_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGlyph3D_ScalingOff(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGlyph3D_SetSourceConnection_int_vtkAlgorithmOutputPtr(nint self, int id, nint algOutput);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGlyph3D_SetSourceConnection_vtkAlgorithmOutputPtr(nint self, nint algOutput);
     #endregion
 }

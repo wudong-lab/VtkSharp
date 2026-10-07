@@ -50,7 +50,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
 {
-    static vtkLinearExtrusionFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
 
     protected vtkLinearExtrusionFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -260,52 +259,52 @@ public unsafe partial class vtkLinearExtrusionFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLinearExtrusionFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_CappingOff(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_CappingOn(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLinearExtrusionFilter_GetExtrusionPoint_(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_GetExtrusionPoint_doubleArray3(nint self, double* data);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkLinearExtrusionFilter_GetScaleFactor(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double* vtkLinearExtrusionFilter_GetVector_(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_GetVector_doubleArray3(nint self, double* data);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetExtrusionPoint_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetExtrusionPoint_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetExtrusionTypeToNormalExtrusion(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetExtrusionTypeToPointExtrusion(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetExtrusionTypeToVectorExtrusion(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetScaleFactor(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetVector_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLinearExtrusionFilter_SetVector_doubleConstArray3(nint self, double* _arg);
     #endregion
 }

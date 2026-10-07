@@ -23,11 +23,11 @@
     <PackageReference Include="System.Memory" Version="4.5.5" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
   </ItemGroup>
 
-  <!-- Dynamic VTK modules and dependencies deploy together under the shared runtime directory. -->
+  <!-- Native exports deploy beside the managed assembly. -->
   <PropertyGroup>
-    <VtkSharpNativeLinkage Condition="'$(VtkSharpNativeLinkage)' == ''">Dynamic</VtkSharpNativeLinkage>
+    <VtkSharpNativeLinkage Condition="'$(VtkSharpNativeLinkage)' == ''">Static</VtkSharpNativeLinkage>
     <VtkSharpNativeRuntimeDirectory Condition="'$(VtkSharpNativeRuntimeDirectory)' == ''"></VtkSharpNativeRuntimeDirectory>
-    <VtkSharpNativeDllName>VtkSharp.Native.CommonCore.dll</VtkSharpNativeDllName>
+    <VtkSharpNativeDllName>VtkSharp.Native.dll</VtkSharpNativeDllName>
     <VtkSharpNativeBuildRoot>$(MSBuildThisFileDirectory)..\VtkSharp.Native\out\build</VtkSharpNativeBuildRoot>
     <VtkSharpNativeDefaultDllPath Condition="'$(VtkSharpNativeLinkage)' == 'Static'">$(VtkSharpNativeBuildRoot)\win-x64-vs2026\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeDefaultDllPath>
     <VtkSharpNativeVs2022DllPath Condition="'$(VtkSharpNativeLinkage)' == 'Static'">$(VtkSharpNativeBuildRoot)\win-x64-vs2022\$(Configuration)\$(VtkSharpNativeDllName)</VtkSharpNativeVs2022DllPath>
@@ -47,18 +47,25 @@
 
   <ItemGroup Condition="Exists('$(VtkSharpNativeDllPath)') Or '$(VtkSharpNativeRuntimeDirectory)' != ''">
     <Content Include="$(VtkSharpNativeRuntimeSourceDirectory)\*.dll"
+             Condition="'$(VtkSharpNativeLinkage)' == 'Dynamic'"
              Pack="true"
              PackagePath="native/VtkSharp/win-x64/"
-             Link="native\VtkSharp\win-x64\%(Filename)%(Extension)"
-             TargetPath="native\VtkSharp\win-x64\%(Filename)%(Extension)"
+             Link="%(Filename)%(Extension)"
+             TargetPath="%(Filename)%(Extension)"
              CopyToOutputDirectory="PreserveNewest"
              CopyToPublishDirectory="PreserveNewest" />
+    <Content Include="$(VtkSharpNativeRuntimeSourceDirectory)\VtkSharp.Native.dll"
+             Condition="'$(VtkSharpNativeLinkage)' == 'Static'"
+             Pack="true" PackagePath="native/VtkSharp/win-x64/"
+             Link="VtkSharp.Native.dll"
+             TargetPath="VtkSharp.Native.dll"
+             CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     <Content Include="$(VtkSharpNativeManifestPath)"
-             Condition="Exists('$(VtkSharpNativeManifestPath)')"
+             Condition="'$(VtkSharpNativeLinkage)' == 'Dynamic' And Exists('$(VtkSharpNativeManifestPath)')"
              Pack="true"
              PackagePath="native/VtkSharp/win-x64/VtkSharp.native-dependencies.json"
-             Link="native\VtkSharp\win-x64\VtkSharp.native-dependencies.json"
-             TargetPath="native\VtkSharp\win-x64\VtkSharp.native-dependencies.json"
+             Link="VtkSharp.native-dependencies.json"
+             TargetPath="VtkSharp.native-dependencies.json"
              CopyToOutputDirectory="PreserveNewest"
              CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
@@ -71,7 +78,7 @@
 
   <Target Name="ValidateNativePackageAsset" BeforeTargets="GenerateNuspec">
     <Error Condition="!Exists('$(VtkSharpNativeDllPath)')"
-           Text="VtkSharp.Native.CommonCore.dll is required for packaging. Build native with the matching Configuration or run tools/package-nuget.ps1." />
+           Text="VtkSharp.Native.dll is required for packaging. Build native with the matching Configuration or run tools/package-nuget.ps1." />
     <Error Condition="'$(VtkSharpNativeRuntimeDirectory)' != '' And !Exists('$(VtkSharpNativeRuntimeDirectory)\licenses\VTK-Copyright.txt')"
            Text="VTK and third-party license notices are required in the native runtime staging directory." />
   </Target>

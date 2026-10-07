@@ -29,7 +29,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDataArray : vtkAbstractArray
 {
-    static vtkDataArray() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkDataArray(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -200,37 +199,37 @@ public unsafe partial class vtkDataArray : vtkAbstractArray
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_GetRange(nint self, double* range);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkDataArray_GetTuple1(nint self, long tupleIdx);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple1(nint self, double value);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple2(nint self, double val0, double val1);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple3(nint self, double val0, double val1, double val2);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple4(nint self, double val0, double val1, double val2, double val3);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple6(nint self, double val0, double val1, double val2, double val3, double val4, double val5);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_InsertNextTuple9(nint self, double val0, double val1, double val2, double val3, double val4, double val5, double val6, double val7, double val8);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_SetComponent(nint self, long tupleIdx, int compIdx, double value);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_SetTuple1(nint self, long tupleIdx, double value);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDataArray_SetTuple3(nint self, long tupleIdx, double val0, double val1, double val2);
     #endregion
 }

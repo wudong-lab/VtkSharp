@@ -16,6 +16,7 @@ public sealed record NativeModuleGroupConfig
     public string Target { get; init; } = "";
     public List<string> Modules { get; init; } = [];
     public List<string> InitializationProviders { get; init; } = [];
+    public List<string> OptionalInitializationModules { get; init; } = [];
     public string Rationale { get; init; } = "";
 }
 

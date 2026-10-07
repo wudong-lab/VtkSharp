@@ -39,7 +39,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTessellatorFilter : vtkUnstructuredGridAlgorithm
 {
-    static vtkTessellatorFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
 
     protected vtkTessellatorFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -93,7 +92,7 @@ public unsafe partial class vtkTessellatorFilter : vtkUnstructuredGridAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTessellatorFilter_New();
     #endregion
 }

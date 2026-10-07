@@ -21,7 +21,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkWin32RenderWindowInteractor : vtkRenderWindowInteractor
 {
-    static vtkWin32RenderWindowInteractor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkWin32RenderWindowInteractor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -108,16 +107,16 @@ public unsafe partial class vtkWin32RenderWindowInteractor : vtkRenderWindowInte
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32RenderWindowInteractor_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32RenderWindowInteractor_Initialize(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32RenderWindowInteractor_InstallMessageProcOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32RenderWindowInteractor_InstallMessageProcOn(nint self);
     #endregion
 }

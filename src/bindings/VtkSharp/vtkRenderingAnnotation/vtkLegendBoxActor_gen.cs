@@ -33,7 +33,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLegendBoxActor : vtkActor2D
 {
-    static vtkLegendBoxActor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.RenderingAnnotation.dll");
 
     protected vtkLegendBoxActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -127,18 +126,18 @@ public unsafe partial class vtkLegendBoxActor : vtkActor2D
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLegendBoxActor_New();
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.RenderingAnnotation.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkLegendBoxActor_SetEntry(nint self, int i, nint symbol, string @string, double* color);
 #else
-    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLegendBoxActor_SetEntry(nint self, int i, nint symbol, byte[] @string, double* color);
 #endif
 
-    [DllImport("VtkSharp.Native.RenderingAnnotation.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkLegendBoxActor_SetNumberOfEntries(nint self, int num);
     #endregion
 }

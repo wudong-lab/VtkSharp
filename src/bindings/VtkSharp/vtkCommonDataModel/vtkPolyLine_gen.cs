@@ -15,7 +15,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPolyLine : vtkCell
 {
-    static vtkPolyLine() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkPolyLine(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -69,7 +68,7 @@ public unsafe partial class vtkPolyLine : vtkCell
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolyLine_New();
     #endregion
 }

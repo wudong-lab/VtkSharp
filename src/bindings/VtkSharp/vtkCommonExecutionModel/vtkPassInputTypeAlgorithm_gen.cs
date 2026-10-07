@@ -26,7 +26,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPassInputTypeAlgorithm : vtkAlgorithm
 {
-    static vtkPassInputTypeAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
 
     protected vtkPassInputTypeAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -80,7 +79,7 @@ public unsafe partial class vtkPassInputTypeAlgorithm : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPassInputTypeAlgorithm_New();
     #endregion
 }

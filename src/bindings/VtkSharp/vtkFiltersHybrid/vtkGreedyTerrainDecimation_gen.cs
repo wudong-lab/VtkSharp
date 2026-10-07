@@ -65,7 +65,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGreedyTerrainDecimation : vtkPolyDataAlgorithm
 {
-    static vtkGreedyTerrainDecimation() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersHybrid.dll");
 
     protected vtkGreedyTerrainDecimation(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -122,7 +121,7 @@ public unsafe partial class vtkGreedyTerrainDecimation : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersHybrid.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkGreedyTerrainDecimation_New();
     #endregion
 }

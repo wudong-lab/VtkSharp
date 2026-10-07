@@ -6,6 +6,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 $directoryPath = [IO.Path]::GetFullPath($Directory)
 $manifestPath = Join-Path $directoryPath 'native-dependencies.json'
+if (-not (Test-Path -LiteralPath $manifestPath)) { $manifestPath = Join-Path $directoryPath 'VtkSharp.native-dependencies.json' }
 if (-not (Test-Path -LiteralPath $manifestPath -PathType Leaf)) { return }
 $manifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
 if ($manifest.schemaVersion -ne 1) { throw "Unsupported native dependency manifest schema: $($manifest.schemaVersion)" }

@@ -8,7 +8,6 @@ namespace VtkSharp;
 
 public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
 {
-    static vtkWin32OpenGLRenderWindow() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkWin32OpenGLRenderWindow(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -100,23 +99,23 @@ public unsafe partial class vtkWin32OpenGLRenderWindow : vtkOpenGLRenderWindow
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32OpenGLRenderWindow_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int* vtkWin32OpenGLRenderWindow_GetSize(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkWin32OpenGLRenderWindow_GetWindowId(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32OpenGLRenderWindow_SetParentId(nint self, nint _arg1);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkWin32OpenGLRenderWindow_SetWindowName(nint self, string _arg1);
 #else
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkWin32OpenGLRenderWindow_SetWindowName(nint self, byte[] _arg1);
 #endif
     #endregion

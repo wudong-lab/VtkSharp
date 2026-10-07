@@ -28,7 +28,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
 {
-    static vtkSphereSource() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersSources.dll");
 
     protected vtkSphereSource(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -219,49 +218,49 @@ public unsafe partial class vtkSphereSource : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkSphereSource_New();
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_GenerateNormalsOff(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_GenerateNormalsOn(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkSphereSource_GetRadius(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_LatLongTessellationOff(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_LatLongTessellationOn(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetCenter_double_double_double(nint self, double _arg1, double _arg2, double _arg3);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetCenter_doubleConstArray3(nint self, double* _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetEndPhi(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetEndTheta(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetPhiResolution(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetRadius(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetStartPhi(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetStartTheta(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.FiltersSources.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSphereSource_SetThetaResolution(nint self, int _arg);
     #endregion
 }

@@ -41,7 +41,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkSelectVisiblePoints : vtkPolyDataAlgorithm
 {
-    static vtkSelectVisiblePoints() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkSelectVisiblePoints(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -168,28 +167,28 @@ public unsafe partial class vtkSelectVisiblePoints : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkSelectVisiblePoints_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSelectVisiblePoints_SelectInvisibleOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSelectVisiblePoints_SelectInvisibleOn(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSelectVisiblePoints_SelectionWindowOff(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSelectVisiblePoints_SelectionWindowOn(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSelectVisiblePoints_SetRenderer(nint self, nint ren);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSelectVisiblePoints_SetSelection_int_int_int_int(nint self, int _arg1, int _arg2, int _arg3, int _arg4);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkSelectVisiblePoints_SetSelection_intConstArray4(nint self, int* _arg);
     #endregion
 }

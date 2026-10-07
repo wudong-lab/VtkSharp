@@ -71,7 +71,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkNamedColors : vtkObject
 {
-    static vtkNamedColors() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonColor.dll");
 
     protected vtkNamedColors(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -284,70 +283,70 @@ public unsafe partial class vtkNamedColors : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkNamedColors_New();
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonColor.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     [return: MarshalAs(UnmanagedType.U1)]
     private static partial bool vtkNamedColors_ColorExists(nint self, string name);
 #else
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     [return: MarshalAs(UnmanagedType.U1)]
     private static extern bool vtkNamedColors_ColorExists(nint self, byte[] name);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonColor.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColor(nint self, string name, double* rgba);
 #else
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_GetColor(nint self, byte[] name, double* rgba);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonColor.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColor3d(nint self, string name, double* __outGetColor3d);
 #else
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_GetColor3d(nint self, byte[] name, double* __outGetColor3d);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonColor.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColor3ub(nint self, string name, byte* __outGetColor3ub);
 #else
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_GetColor3ub(nint self, byte[] name, byte* __outGetColor3ub);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonColor.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_GetColorRGB(nint self, string name, double* rgb);
 #else
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_GetColorRGB(nint self, byte[] name, double* rgb);
 #endif
 
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkNamedColors_GetNumberOfColors(nint self);
 
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_ResetColors(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonColor.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_SetColor_constCharPtr_constCharPtr(nint self, string name, string htmlString);
 #else
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_SetColor_constCharPtr_constCharPtr(nint self, byte[] name, byte[] htmlString);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonColor.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkNamedColors_SetColor_constCharPtr_doubleConstArray4(nint self, string name, double* rgba);
 #else
-    [DllImport("VtkSharp.Native.CommonColor.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkNamedColors_SetColor_constCharPtr_doubleConstArray4(nint self, byte[] name, double* rgba);
 #endif
     #endregion

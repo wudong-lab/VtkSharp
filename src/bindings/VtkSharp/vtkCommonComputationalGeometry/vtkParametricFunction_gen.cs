@@ -47,7 +47,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkParametricFunction : vtkObject
 {
-    static vtkParametricFunction() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonComputationalGeometry.dll");
 
     protected vtkParametricFunction(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

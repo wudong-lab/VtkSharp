@@ -62,7 +62,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkFitToHeightMapFilter : vtkPolyDataAlgorithm
 {
-    static vtkFitToHeightMapFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
 
     protected vtkFitToHeightMapFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -172,19 +171,19 @@ public unsafe partial class vtkFitToHeightMapFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkFitToHeightMapFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFitToHeightMapFilter_SetFittingStrategyToCellAverageHeight(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFitToHeightMapFilter_SetFittingStrategyToPointProjection(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFitToHeightMapFilter_SetHeightMapConnection(nint self, nint algOutput);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFitToHeightMapFilter_UseHeightMapOffsetOn(nint self);
     #endregion
 }

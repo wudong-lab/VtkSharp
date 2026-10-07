@@ -31,7 +31,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkRibbonFilter : vtkPolyDataAlgorithm
 {
-    static vtkRibbonFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
 
     protected vtkRibbonFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -98,10 +97,10 @@ public unsafe partial class vtkRibbonFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkRibbonFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkRibbonFilter_SetWidth(nint self, double _arg);
     #endregion
 }

@@ -31,14 +31,13 @@ public sealed class NativeModuleLayoutTests
     }
 
     [TestMethod]
-    public void CSharpEmitter_UsesModuleLibraryNameAndEnsuresNetFrameworkPreload()
+    public void CSharpEmitter_UsesUnifiedInteropLibraryNameConstant()
     {
         var text = new CSharpBindingEmitter().Emit(
-            "VtkSharp", "vtkRenderWindow", "vtkObject", true, [],
-            nativeLibraryName: "VtkSharp.Native.Rendering.dll");
+            "VtkSharp", "vtkRenderWindow", "vtkObject", true, []);
 
-        Assert.Contains("static vtkRenderWindow() => NativeModuleLoader.EnsureLoaded(\"VtkSharp.Native.Rendering.dll\");", text);
-        Assert.Contains("[DllImport(\"VtkSharp.Native.Rendering.dll\")]", text);
+        Assert.DoesNotContain("NativeModuleLoader", text);
+        Assert.Contains("[DllImport(InteropInfo.NativeLibraryName)]", text);
     }
 
     [TestMethod]

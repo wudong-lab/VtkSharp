@@ -8,10 +8,10 @@
       "header": "vtkGreedyTerrainDecimation.h",
       "baseClassName": "vtkPolyDataAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "e80d40b24816cd36a1fb9d4e48bba2ca6a8348afaa5bbaa2f863f2a380ef7d55",
+      "inputHash": "5717f5318de96d5d9eda79e53cf006679ae09d7251e668faf841b4940a62362e",
       "managedPath": "bindings\\VtkSharp\\vtkFiltersHybrid\\vtkGreedyTerrainDecimation_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkFiltersHybrid\\vtkGreedyTerrainDecimation_export_gen.cpp",
-      "managedContentHash": "6214546bcfbb41a5a51db1490dbb8f1ebe90aaa5430fe63a249b71d279489300",
+      "managedContentHash": "8bbdb71dcb9e9530a4527820a4a2a7476c8fc8438cc421c92a4402803bcf66da",
       "nativeContentHash": "864d00f9dac4ff91e2f34ee9d2bbad92c696170f711e7b08263d7347540bbe94"
     }
   ]

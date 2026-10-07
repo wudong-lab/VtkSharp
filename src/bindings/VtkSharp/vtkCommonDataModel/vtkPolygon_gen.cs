@@ -19,7 +19,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPolygon : vtkCell
 {
-    static vtkPolygon() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkPolygon(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -73,7 +72,7 @@ public unsafe partial class vtkPolygon : vtkCell
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPolygon_New();
     #endregion
 }

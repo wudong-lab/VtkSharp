@@ -34,7 +34,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkParametricSpline : vtkParametricFunction
 {
-    static vtkParametricSpline() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonComputationalGeometry.dll");
 
     protected vtkParametricSpline(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -105,10 +104,10 @@ public unsafe partial class vtkParametricSpline : vtkParametricFunction
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonComputationalGeometry.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkParametricSpline_New();
 
-    [DllImport("VtkSharp.Native.CommonComputationalGeometry.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkParametricSpline_SetPoints(nint self, nint _arg1);
     #endregion
 }

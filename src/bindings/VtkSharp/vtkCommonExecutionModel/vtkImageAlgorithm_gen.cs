@@ -23,7 +23,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
 {
-    static vtkImageAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
 
     protected vtkImageAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -115,16 +114,16 @@ public unsafe partial class vtkImageAlgorithm : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageAlgorithm_GetOutput_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageAlgorithm_GetOutput_int(nint self, int _arg1);
 
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageAlgorithm_SetInputData_int_vtkDataObjectPtr(nint self, int _arg1, nint _arg2);
 
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageAlgorithm_SetInputData_vtkDataObjectPtr(nint self, nint _arg1);
     #endregion
 }

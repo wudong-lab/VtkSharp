@@ -58,7 +58,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkStripper : vtkPolyDataAlgorithm
 {
-    static vtkStripper() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkStripper(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -115,7 +114,7 @@ public unsafe partial class vtkStripper : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkStripper_New();
     #endregion
 }

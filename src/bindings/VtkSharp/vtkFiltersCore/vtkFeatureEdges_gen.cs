@@ -34,7 +34,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkFeatureEdges : vtkPolyDataAlgorithm
 {
-    static vtkFeatureEdges() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkFeatureEdges(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -133,22 +132,22 @@ public unsafe partial class vtkFeatureEdges : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkFeatureEdges_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFeatureEdges_BoundaryEdgesOn(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFeatureEdges_ColoringOn(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFeatureEdges_FeatureEdgesOff(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFeatureEdges_ManifoldEdgesOff(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkFeatureEdges_NonManifoldEdgesOff(nint self);
     #endregion
 }

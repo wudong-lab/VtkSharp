@@ -8,10 +8,10 @@
       "header": "vtkColorSeries.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "fed7b6e409dabcd995c6af8a25ff55861523663d88e87f86a66d5ea0a7523af8",
+      "inputHash": "c826b6d00c767ac40b37032fa1cb0a839bac0ffce5867d2cf3deac904575f740",
       "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkColorSeries_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkColorSeries_export_gen.cpp",
-      "managedContentHash": "cbed435354316b757d94d6ab7fd5dc42d41c4d88c19c1d3ca789d84349441de0",
+      "managedContentHash": "7c66e41b1e523154bfc01bef3bd80a1087eddd7386514de9670b7c0625da642b",
       "nativeContentHash": "d9fc3857d1186d36d0f1a82f148356289b99cb5c0e0b1ed4df8a00fc8970e715"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkNamedColors.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "5d697e2d21a4bf8b3ab36f61b43d73895ff34ed94eab7725f80d4808725a38e1",
+      "inputHash": "ac3bec1224d457534d88a34b6c2785058a75ecdda45fb04a8331837756ab5bd6",
       "managedPath": "bindings\\VtkSharp\\vtkCommonColor\\vtkNamedColors_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkCommonColor\\vtkNamedColors_export_gen.cpp",
-      "managedContentHash": "955c4e3694a7e6ee946bdc9ce7a22525ad959cd4da74e1d8c48ba29bfcd92a14",
+      "managedContentHash": "871cb86b3506d958c8859143ecfd11224cfc4d54eca7318182470a0bff5dab85",
       "nativeContentHash": "b67ee66e67274bbb3cd7155b2da4e6eee5edc2c0d19e996abc728a6017ecd96e"
     }
   ]

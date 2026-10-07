@@ -8,10 +8,10 @@
       "header": "vtkXMLDataReader.h",
       "baseClassName": "vtkXMLReader",
       "hasStaticNew": false,
-      "inputHash": "9897ae01cc2b49861dcf941901022d2147328c444bac9fe5f073381674d99290",
+      "inputHash": "8d442d4dc1a448c13f06b2bc25b4d8893d4e951fdc8af51ac3ab04f61746087b",
       "managedPath": "bindings\\VtkSharp\\vtkIOXML\\vtkXMLDataReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOXML\\vtkXMLDataReader_export_gen.cpp",
-      "managedContentHash": "04c784dd51257668cb338ce9ae15ffd2dd584e100ec42abcd7c0d901ce8fc869",
+      "managedContentHash": "c1a86689deeb3f7677f6e911fa53da52372ec9c4115966051d8b62d7cd02468c",
       "nativeContentHash": "ba04cb4b1d36a11683443a53974dcb5dc26c9e2e81cb06f0d2ef064eabcbdf55"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkXMLReader.h",
       "baseClassName": "vtkAlgorithm",
       "hasStaticNew": false,
-      "inputHash": "07a6888cab14d52a003e3d79702dfdab4e3d85dc09c4c1d31a683572f64dfc1a",
+      "inputHash": "4c4042c55970e16229196d74c1dc20a2470a374af60dc07e44eebb39101b65c6",
       "managedPath": "bindings\\VtkSharp\\vtkIOXML\\vtkXMLReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOXML\\vtkXMLReader_export_gen.cpp",
-      "managedContentHash": "79d870b2c0b3ebf15f6fa0c33d441756a64d63fada3e90d83f5e24eda779e20a",
+      "managedContentHash": "2c28b4101d2a2921b9c8ffcc9cb14c438d3c3d8fef32f1d390f3f54ea0070fa4",
       "nativeContentHash": "5bfbc6b2ebd1e10906ec06f16d48f1642bc58f10b5f3f5ba7719622de24f95f3"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkXMLUnstructuredDataReader.h",
       "baseClassName": "vtkXMLDataReader",
       "hasStaticNew": false,
-      "inputHash": "a3164437ac01c347cb12e5e912bb4fbfaae2d410f599c176cf952177b3ee6d5f",
+      "inputHash": "8a1257779ca99bea2288b56ac916d38873c46f96868c2e743540c7ab04b1d131",
       "managedPath": "bindings\\VtkSharp\\vtkIOXML\\vtkXMLUnstructuredDataReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOXML\\vtkXMLUnstructuredDataReader_export_gen.cpp",
-      "managedContentHash": "77be7e18eade2c494253a4509b02018c9ad743d98eafe96185e763d0f69f4333",
+      "managedContentHash": "18ae0d536d1db3b47ab86f2fed4c679b9f1818be55deb72a3b35c4813fa8c144",
       "nativeContentHash": "44cc72fefcbf9b63e815c5e319b976d7ed6d6054b681bd3ceda70a65c0772df2"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkXMLUnstructuredGridReader.h",
       "baseClassName": "vtkXMLUnstructuredDataReader",
       "hasStaticNew": true,
-      "inputHash": "492dc24f49ab285ba83b3355f7dea7ae75fc28d038a663a7f360f4f2cff2de9d",
+      "inputHash": "6decb8f6574e5bfd91322e971a96df0e2f1674a62a66fe2de575a89941847681",
       "managedPath": "bindings\\VtkSharp\\vtkIOXML\\vtkXMLUnstructuredGridReader_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkIOXML\\vtkXMLUnstructuredGridReader_export_gen.cpp",
-      "managedContentHash": "c3c1d32ad582b9947b3bf32d9d540d31ed434a61f73070ccbd312563f8ab2457",
+      "managedContentHash": "723e9bccb553c89ee9dbddb873f487b2a9499a387391a9c97ac8e9a679cd468b",
       "nativeContentHash": "cb8d5f2d4686f905ab7bf1ed687a1db9e9ae13b657c40e8bddfb3e9c1cda030c"
     }
   ]

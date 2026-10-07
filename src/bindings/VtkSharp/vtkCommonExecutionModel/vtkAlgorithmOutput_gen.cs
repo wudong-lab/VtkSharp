@@ -20,7 +20,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAlgorithmOutput : vtkObject
 {
-    static vtkAlgorithmOutput() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
 
     protected vtkAlgorithmOutput(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -74,7 +73,7 @@ public unsafe partial class vtkAlgorithmOutput : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAlgorithmOutput_New();
     #endregion
 }

@@ -16,7 +16,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkGraphGeodesicPath : vtkGeodesicPath
 {
-    static vtkGraphGeodesicPath() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
 
     protected vtkGraphGeodesicPath(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -82,10 +81,10 @@ public unsafe partial class vtkGraphGeodesicPath : vtkGeodesicPath
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGraphGeodesicPath_SetEndVertex(nint self, long _arg);
 
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkGraphGeodesicPath_SetStartVertex(nint self, long _arg);
     #endregion
 }

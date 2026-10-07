@@ -8,10 +8,10 @@
       "header": "vtkImageMathematics.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "e83c6dd489a4305f39c90d2ddbfc21c8542c21cc2c1f1c6e638e976ebf2c01b7",
+      "inputHash": "e878329fa0e37f45e0936ded4568a5ac5322e0f6ff936ac626e49fd9124a0dd4",
       "managedPath": "bindings\\VtkSharp\\vtkImagingMath\\vtkImageMathematics_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingMath\\vtkImageMathematics_export_gen.cpp",
-      "managedContentHash": "c825e19866920d1d36cffbe893de54f61cdbc106f90f022c3d4b2c014801d9b9",
+      "managedContentHash": "bbc34d15427759ecfc232c083130af1f20148958a9dd47508fa53c8f36b1506c",
       "nativeContentHash": "26ec7108ebd980b2386e02e48ebead4582399aaed68a70974b3a499ce184b78b"
     }
   ]

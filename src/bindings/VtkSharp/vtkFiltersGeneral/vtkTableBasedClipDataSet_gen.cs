@@ -76,7 +76,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTableBasedClipDataSet : vtkUnstructuredGridAlgorithm
 {
-    static vtkTableBasedClipDataSet() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
 
     protected vtkTableBasedClipDataSet(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -153,13 +152,13 @@ public unsafe partial class vtkTableBasedClipDataSet : vtkUnstructuredGridAlgori
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTableBasedClipDataSet_New();
 
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTableBasedClipDataSet_GenerateClippedOutputOn(nint self);
 
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTableBasedClipDataSet_SetClipFunction(nint self, nint _arg1);
     #endregion
 }

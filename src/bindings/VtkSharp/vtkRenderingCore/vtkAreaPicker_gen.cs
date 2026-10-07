@@ -41,7 +41,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAreaPicker : vtkAbstractPropPicker
 {
-    static vtkAreaPicker() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkAreaPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -117,13 +116,13 @@ public unsafe partial class vtkAreaPicker : vtkAbstractPropPicker
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAreaPicker_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkAreaPicker_AreaPick(nint self, double x0, double y0, double x1, double y1, nint renderer);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAreaPicker_GetProp3Ds(nint self);
     #endregion
 }

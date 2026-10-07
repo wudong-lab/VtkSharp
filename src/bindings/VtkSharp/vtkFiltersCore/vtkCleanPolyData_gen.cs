@@ -83,7 +83,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCleanPolyData : vtkPolyDataAlgorithm
 {
-    static vtkCleanPolyData() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkCleanPolyData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -137,7 +136,7 @@ public unsafe partial class vtkCleanPolyData : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCleanPolyData_New();
     #endregion
 }

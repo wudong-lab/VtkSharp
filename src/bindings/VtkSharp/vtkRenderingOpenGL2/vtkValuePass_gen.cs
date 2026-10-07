@@ -38,7 +38,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkValuePass : vtkOpenGLRenderPass
 {
-    static vtkValuePass() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkValuePass(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -133,27 +132,27 @@ public unsafe partial class vtkValuePass : vtkOpenGLRenderPass
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkValuePass_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkValuePass_GetFloatImageDataArray(nint self, nint ren);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkValuePass_ReleaseGraphicsResources(nint self, nint win);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkValuePass_SetInputArrayToProcess_int_constCharPtr(nint self, int fieldAssociation, string name);
 #else
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkValuePass_SetInputArrayToProcess_int_constCharPtr(nint self, int fieldAssociation, byte[] name);
 #endif
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkValuePass_SetInputArrayToProcess_int_int(nint self, int fieldAssociation, int fieldId);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkValuePass_SetInputComponentToProcess(nint self, int component);
     #endregion
 }

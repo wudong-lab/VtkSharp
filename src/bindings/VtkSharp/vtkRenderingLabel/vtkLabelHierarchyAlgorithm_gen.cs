@@ -26,7 +26,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLabelHierarchyAlgorithm : vtkAlgorithm
 {
-    static vtkLabelHierarchyAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkLabelHierarchyAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -80,7 +79,7 @@ public unsafe partial class vtkLabelHierarchyAlgorithm : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLabelHierarchyAlgorithm_New();
     #endregion
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -6,7 +6,6 @@ namespace VtkSharp;
 
 public class vtkObjectBase : IDisposable
 {
-    static vtkObjectBase() => NativeModuleLoader.EnsureLoaded(InteropInfo.NativeLibraryName);
 
     protected vtkObjectBase(nint nativePointer, bool ownsReference)
     {

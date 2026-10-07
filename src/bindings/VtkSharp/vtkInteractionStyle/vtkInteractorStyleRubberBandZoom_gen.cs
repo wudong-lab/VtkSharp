@@ -17,7 +17,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleRubberBandZoom : vtkInteractorStyle
 {
-    static vtkInteractorStyleRubberBandZoom() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkInteractorStyleRubberBandZoom(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -71,7 +70,7 @@ public unsafe partial class vtkInteractorStyleRubberBandZoom : vtkInteractorStyl
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleRubberBandZoom_New();
     #endregion
 }

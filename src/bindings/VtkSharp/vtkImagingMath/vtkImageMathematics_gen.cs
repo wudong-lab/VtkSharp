@@ -17,7 +17,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
 {
-    static vtkImageMathematics() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.ImagingMath.dll");
 
     protected vtkImageMathematics(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -399,118 +398,118 @@ public unsafe partial class vtkImageMathematics : vtkThreadedImageAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageMathematics_New();
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_DivideByZeroToCOff(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_DivideByZeroToCOn(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkImageMathematics_GetConstantC(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern double vtkImageMathematics_GetConstantK(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageMathematics_GetInput_(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageMathematics_GetInput_int(nint self, int idx);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageMathematics_GetNumberOfInputs(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_ReplaceNthInputConnection(nint self, int idx, nint input);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetConstantC(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetConstantK(nint self, double _arg);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetInput1Data(nint self, nint @in);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetInput2Data(nint self, nint @in);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetInputConnection_int_vtkAlgorithmOutputPtr(nint self, int idx, nint input);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetInputConnection_vtkAlgorithmOutputPtr(nint self, nint input);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetInputData_int_vtkDataObjectPtr(nint self, int idx, nint input);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetInputData_vtkDataObjectPtr(nint self, nint input);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToATAN(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToATAN2(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToAbsoluteValue(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToAdd(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToAddConstant(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToComplexMultiply(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToConjugate(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToCos(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToDivide(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToExp(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToInvert(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToLog(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToMax(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToMin(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToMultiply(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToMultiplyByK(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToReplaceCByK(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToSin(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToSquare(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToSquareRoot(nint self);
 
-    [DllImport("VtkSharp.Native.ImagingMath.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageMathematics_SetOperationToSubtract(nint self);
     #endregion
 }

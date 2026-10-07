@@ -26,7 +26,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractCellLocator : vtkLocator
 {
-    static vtkAbstractCellLocator() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkAbstractCellLocator(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

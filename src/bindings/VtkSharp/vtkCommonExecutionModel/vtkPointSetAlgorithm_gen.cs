@@ -28,7 +28,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPointSetAlgorithm : vtkAlgorithm
 {
-    static vtkPointSetAlgorithm() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonExecutionModel.dll");
 
     protected vtkPointSetAlgorithm(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -107,13 +106,13 @@ public unsafe partial class vtkPointSetAlgorithm : vtkAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointSetAlgorithm_New();
 
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointSetAlgorithm_GetPolyDataOutput(nint self);
 
-    [DllImport("VtkSharp.Native.CommonExecutionModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPointSetAlgorithm_SetInputData(nint self, nint _arg1);
     #endregion
 }

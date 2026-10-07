@@ -17,9 +17,7 @@ public sealed class CMakeModulesEmitter
             StringComparer.OrdinalIgnoreCase);
         var targetAutoinitModules = layout.Targets.ToDictionary(
             target => target.Name,
-            target => (target.InitializationProviders.Count > 0
-                    ? target.InitializationProviders
-                    : target.Modules)
+            target => target.Modules.Concat(target.InitializationProviders).Distinct(StringComparer.Ordinal)
                 .Select(ToComponent).Order(StringComparer.Ordinal).ToArray(),
             StringComparer.OrdinalIgnoreCase);
         var allComponents = targetModules.Values.SelectMany(static modules => modules)

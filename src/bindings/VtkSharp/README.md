@@ -6,7 +6,7 @@
 ## 支持范围
 
 - 托管目标框架：`netstandard2.0`、`net8.0`。
-- 包内 native 资产：`native/VtkSharp/win-x64/` 下的模块化 C ABI DLL 和 VTK 运行时依赖，面向 Windows x64；构建和发布时复制到应用的同名子目录。
+- 包内 native 资产：`native/VtkSharp/win-x64/` 下的统一 `VtkSharp.Native.dll`，内部静态链接 VTK，面向 Windows x64；构建和发布时复制到应用输出目录，与 `VtkSharp.dll` 同级。
 - API 按白名单逐步补充，并非完整 VTK 封装；不承诺与其他 .NET 绑定源码兼容。
 - `netstandard2.0` 不意味着 native 层支持 Linux/macOS；消费进程必须为 x64。
 - Release native 使用动态 MSVC CRT，目标机器需匹配的 x64 Visual C++ 运行库。

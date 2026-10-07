@@ -9,7 +9,7 @@ param(
     [string]$Mode = "Final",
 
     [ValidateSet("Static", "Dynamic")]
-    [string]$Linkage = "Dynamic",
+    [string]$Linkage = "Static",
 
     [ValidateSet("Development", "Isolated")]
     [string]$RuntimeMode = "Development",
@@ -32,9 +32,6 @@ param(
 $ErrorActionPreference = "Stop"
 if ([string]::IsNullOrWhiteSpace($VtkDir)) {
     throw "Set VTK_DIR to the installed VTK CMake package directory, or pass -VtkDir. See README.md."
-}
-if ($RuntimeMode -eq "Isolated" -and $Linkage -ne "Dynamic") {
-    throw "Isolated deployment verification requires -Linkage Dynamic."
 }
 
 $repoRoot = Split-Path -Parent $PSScriptRoot

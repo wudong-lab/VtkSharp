@@ -22,7 +22,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkNonLinearCell : vtkCell
 {
-    static vtkNonLinearCell() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkNonLinearCell(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

@@ -36,7 +36,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkLoopSubdivisionFilter : vtkApproximatingSubdivisionFilter
 {
-    static vtkLoopSubdivisionFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersModeling.dll");
 
     protected vtkLoopSubdivisionFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -93,7 +92,7 @@ public unsafe partial class vtkLoopSubdivisionFilter : vtkApproximatingSubdivisi
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersModeling.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkLoopSubdivisionFilter_New();
     #endregion
 }

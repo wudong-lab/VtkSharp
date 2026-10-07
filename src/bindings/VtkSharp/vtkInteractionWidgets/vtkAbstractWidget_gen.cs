@@ -48,7 +48,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkAbstractWidget : vtkInteractorObserver
 {
-    static vtkAbstractWidget() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.InteractionWidgets.dll");
 
     protected vtkAbstractWidget(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -248,43 +247,43 @@ public unsafe partial class vtkAbstractWidget : vtkInteractorObserver
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_CreateDefaultRepresentation(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkAbstractWidget_GetManagesCursor(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkAbstractWidget_GetProcessEvents(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkAbstractWidget_GetRepresentation(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_ManagesCursorOff(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_ManagesCursorOn(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_ProcessEventsOff(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_ProcessEventsOn(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_Render(nint self);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_SetEnabled(nint self, int _arg1);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_SetManagesCursor(nint self, int _arg);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_SetPriority(nint self, float _arg1);
 
-    [DllImport("VtkSharp.Native.InteractionWidgets.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkAbstractWidget_SetProcessEvents(nint self, int _arg);
     #endregion
 }

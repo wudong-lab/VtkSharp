@@ -40,7 +40,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTransform : vtkLinearTransform
 {
-    static vtkTransform() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonTransforms.dll");
 
     protected vtkTransform(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -390,79 +389,79 @@ public unsafe partial class vtkTransform : vtkLinearTransform
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTransform_New();
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Concatenate_doubleConstArray16(nint self, double* elements);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Concatenate_vtkLinearTransformPtr(nint self, nint transform);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Concatenate_vtkMatrix4x4Ptr(nint self, nint matrix);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTransform_GetConcatenatedTransform(nint self, int i);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkTransform_GetNumberOfConcatenatedTransforms(nint self);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Pop(nint self);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_PostMultiply(nint self);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_PreMultiply(nint self);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Push(nint self);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_RotateWXYZ_double_doubleConstArray3(nint self, double angle, double* axis);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_RotateWXYZ_double_double_double_double(nint self, double angle, double x, double y, double z);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_RotateWXYZ_double_floatConstArray3(nint self, double angle, float* axis);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_RotateX(nint self, double angle);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_RotateY(nint self, double angle);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_RotateZ(nint self, double angle);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Scale_doubleConstArray3(nint self, double* s);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Scale_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Scale_floatConstArray3(nint self, float* s);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_SetInput(nint self, nint input);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_SetMatrix_doubleConstArray16(nint self, double* elements);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_SetMatrix_vtkMatrix4x4Ptr(nint self, nint matrix);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Translate_doubleConstArray3(nint self, double* x);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Translate_double_double_double(nint self, double x, double y, double z);
 
-    [DllImport("VtkSharp.Native.CommonTransforms.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransform_Translate_floatConstArray3(nint self, float* x);
     #endregion
 }

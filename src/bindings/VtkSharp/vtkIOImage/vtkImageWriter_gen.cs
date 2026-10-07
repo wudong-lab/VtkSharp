@@ -18,7 +18,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageWriter : vtkImageAlgorithm
 {
-    static vtkImageWriter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOImage.dll");
 
     protected vtkImageWriter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -174,48 +173,48 @@ public unsafe partial class vtkImageWriter : vtkImageAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageWriter_New();
 
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageWriter_DeleteFiles(nint self);
 
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkImageWriter_GetFileDimensionality(nint self);
 
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageWriter_GetFileName(nint self);
 
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageWriter_GetFilePattern(nint self);
 
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageWriter_GetFilePrefix(nint self);
 
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageWriter_SetFileDimensionality(nint self, int _arg);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOImage.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkImageWriter_SetFileName(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageWriter_SetFileName(nint self, byte[] _arg);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOImage.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkImageWriter_SetFilePattern(nint self, string _arg1);
 #else
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageWriter_SetFilePattern(nint self, byte[] _arg1);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOImage.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkImageWriter_SetFilePrefix(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.IOImage.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageWriter_SetFilePrefix(nint self, byte[] _arg);
 #endif
     #endregion

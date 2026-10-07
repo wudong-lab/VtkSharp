@@ -35,7 +35,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkImageDataGeometryFilter : vtkPolyDataAlgorithm
 {
-    static vtkImageDataGeometryFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeometry.dll");
 
     protected vtkImageDataGeometryFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -102,10 +101,10 @@ public unsafe partial class vtkImageDataGeometryFilter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersGeometry.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkImageDataGeometryFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersGeometry.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkImageDataGeometryFilter_SetOutputTriangles(nint self, int _arg);
     #endregion
 }

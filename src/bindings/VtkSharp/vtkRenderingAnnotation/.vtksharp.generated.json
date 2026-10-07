@@ -8,10 +8,10 @@
       "header": "vtkAxesActor.h",
       "baseClassName": "vtkProp3D",
       "hasStaticNew": true,
-      "inputHash": "f0b7844f02c1363f94d2a952a516dd124347c1c0433ad7796c97beab9ab675ea",
+      "inputHash": "189fc83137918d959bb210cdbacedec6d904011f8f3ef491a86a1a0c52b3a73f",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkAxesActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkAxesActor_export_gen.cpp",
-      "managedContentHash": "61bcf2530dcd0acf3554f928b667ce21dc2c973e5b436d9479fc559e215b03f7",
+      "managedContentHash": "a394eefc2593a1ca2bd35630351f6a91d81c822516bf3c5bb13614bf0c7dc7f6",
       "nativeContentHash": "8c89d8e44a1a5088694d3e70e6be5e248e08616f09d817f88936344e2e6ab9bd"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkAxisActor2D.h",
       "baseClassName": "vtkActor2D",
       "hasStaticNew": true,
-      "inputHash": "20a1485712f771b592d02b86e67d05f7e80e0fe3210ebb47c3fb55a7e0f2f87e",
+      "inputHash": "4474f3141019d53d02c914099be89a86b8102ab58bb703f42d0c47beedd8f142",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkAxisActor2D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkAxisActor2D_export_gen.cpp",
-      "managedContentHash": "986ca2dbd5a4b454512422dfb1c42f301b57741a1c69bedd03c1db52cc959878",
+      "managedContentHash": "a8025e5e7cdf3acdbbc4a1825aaba6396b3332ec753f9a429af3c6b22b21f139",
       "nativeContentHash": "7c3ec43bc28af2edeee1a02a4ff404b26cdc9a0eb2f96cb0a270d6e3c2fe341d"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkCaptionActor2D.h",
       "baseClassName": "vtkActor2D",
       "hasStaticNew": true,
-      "inputHash": "42903be2c979045e600aacc8d8a8b18be39a843a31d4c9b8821a986fd28317b6",
+      "inputHash": "7969ab92512a1a8f85836e01fd71eb91d1ef2953ed608547de6a8755f692929e",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkCaptionActor2D_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkCaptionActor2D_export_gen.cpp",
-      "managedContentHash": "6d74bfaf41812a4b8973d76f400ebc084ea7feeef8f2541aaa3f1eb0e6ce4ba7",
+      "managedContentHash": "e82600a94369b59e89c1a88b7b222d2d282e1c9f674cedeb464024bacc0fe636",
       "nativeContentHash": "283b293388275ea8d2c67f468917802686109acf6ec76c0516dfe21ea1a7e543"
     },
     {
@@ -41,10 +41,10 @@
       "header": "vtkLegendBoxActor.h",
       "baseClassName": "vtkActor2D",
       "hasStaticNew": true,
-      "inputHash": "7eb33eda6ccb54dc0c2441cccadaec98fd94b50f46b4d2750bf0f82552e2ddc3",
+      "inputHash": "db363b23404fe913b41d05e360d94d639a0a82b60d43774adff088d6a9af02b1",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkLegendBoxActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkLegendBoxActor_export_gen.cpp",
-      "managedContentHash": "9a1cb0fa08d6683ecddea2d6fad8f2137cb77215fc3a0db55c94714ab278cfd0",
+      "managedContentHash": "597321f0c44e2ce765b977cbb39cc34565f694688807bdcccbd7b9f844bbc1c7",
       "nativeContentHash": "ce1ccac36c23c94576443f7c5cd884ae7b7f63727a3daa939ddebb87affe08f1"
     },
     {
@@ -52,10 +52,10 @@
       "header": "vtkLegendScaleActor.h",
       "baseClassName": "vtkProp",
       "hasStaticNew": true,
-      "inputHash": "bee48952b243909284a3cf83ad8c94f80118aefa61f7b27bef24d96aa669a1af",
+      "inputHash": "de5a6939d9cb3b67a7abeb4fdb372e8d7c3fb9a8ddea6846fd50fe1894c5a5a2",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkLegendScaleActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkLegendScaleActor_export_gen.cpp",
-      "managedContentHash": "54925e2c6137714a9c078295af39706ef36c9f806651cbd19231f00b292f5789",
+      "managedContentHash": "c9c5ab43020aac2404a14be3cabc90a18a3da0b1fe8fd4252e481ed42bab43ce",
       "nativeContentHash": "c4dfa5a3275682b25af0105e68a06d093b34f24c520f2e9725633563badb326d"
     },
     {
@@ -63,10 +63,10 @@
       "header": "vtkScalarBarActor.h",
       "baseClassName": "vtkActor2D",
       "hasStaticNew": true,
-      "inputHash": "144f9e40d22ee4e5f600fce2a7070a2d3c185aa9fd27007923ee149d29d35650",
+      "inputHash": "28cc45c4c96983ab4e7acb1f5cf5945317d0557e3e60f485ad092519a5b2a18c",
       "managedPath": "bindings\\VtkSharp\\vtkRenderingAnnotation\\vtkScalarBarActor_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkRenderingAnnotation\\vtkScalarBarActor_export_gen.cpp",
-      "managedContentHash": "76425b0cc2760728df64c95a4f2677c90e9493c51fec4d075c1b5fbbc79a0955",
+      "managedContentHash": "2f6dc25bdeb472d46304d22c2ca244ae6f63772b8e8b94f7175349b5aad621dd",
       "nativeContentHash": "e85dda6373500490a0aa794ebea09f5a997bacfead4d798b301a093fb733dd8f"
     }
   ]

@@ -1,16 +1,41 @@
 # yaml-language-server: $schema=../schemas/vtksharp.native-modules.schema.json
-# Groups below represent C ABI targets. Modules not listed in a group keep
-# their own target; VTK dependency edges do not merge C ABI targets.
+# All public exports share one statically linked VTK runtime.
 schemaVersion: 1
-strategyVersion: 1
+strategyVersion: 2
 vtkVersion: 9.7.0
 platform: windows-x64
 
 groups:
-  - name: Rendering
-    target: VtkSharp.Native.Rendering
+  - name: Unified
+    target: VtkSharp.Native
     modules:
+      - vtkCommonColor
+      - vtkCommonComputationalGeometry
+      - vtkCommonCore
+      - vtkCommonDataModel
+      - vtkCommonExecutionModel
+      - vtkCommonMath
+      - vtkCommonTransforms
+      - vtkFiltersCore
+      - vtkFiltersExtraction
+      - vtkFiltersGeneral
+      - vtkFiltersGeometry
+      - vtkFiltersHybrid
+      - vtkFiltersModeling
+      - vtkFiltersPoints
+      - vtkFiltersSources
+      - vtkFiltersVerdict
+      - vtkIOCore
+      - vtkIOGeometry
+      - vtkIOImage
+      - vtkIOInfovis
+      - vtkIOXML
+      - vtkImagingCore
+      - vtkImagingMath
+      - vtkInteractionImage
       - vtkInteractionStyle
+      - vtkInteractionWidgets
+      - vtkRenderingAnnotation
       - vtkRenderingCore
       - vtkRenderingLabel
       - vtkRenderingOpenGL2
@@ -19,26 +44,26 @@ groups:
       - vtkInteractionStyle
       - vtkRenderingOpenGL2
       - vtkRenderingUI
-    rationale: >-
-      Keep current OpenGL2 backend and co-locate the explicitly selected VTK
-      factory providers with the rendering modules whose autoinit they satisfy.
+    # Use the default implementations; no optional accelerated/IO backend is selected.
+    optionalInitializationModules:
+      - vtkFiltersCore
+      - vtkIOGeometry
+      - vtkIOImage
+    rationale: Keep public and private exports in one DLL with a single VTK implementation.
 
 manualSourceOwnership:
   - source: vtkCommonCore/vtkFloatArray_export.cpp
-    target: VtkSharp.Native.CommonCore
+    target: VtkSharp.Native
     rationale: Manual GetPointer export used by the managed float-array helper.
   - source: vtkCommonCore/vtkUnsignedCharArray_export.cpp
-    target: VtkSharp.Native.CommonCore
+    target: VtkSharp.Native
     rationale: Manual SetUnsignedCharTuple export used by the managed color-array helper.
   - source: vtkCommonCore/vtkObjectBase_export.cpp
-    target: VtkSharp.Native.CommonCore
+    target: VtkSharp.Native
     rationale: Manual base-object reference-count and deletion exports used by every wrapper.
   - source: vtkCommonCore/vtkObject_export.cpp
-    target: VtkSharp.Native.CommonCore
+    target: VtkSharp.Native
     rationale: Manual vtkObject event and observer exports.
   - source: vtksharp_string.cpp
-    target: VtkSharp.Native.CommonCore
+    target: VtkSharp.Native
     rationale: Shared UTF-8/string interop helpers used by generated exports.
-
-# Unlisted wrapped modules are independent targets named
-# VtkSharp.Native.<VTK module without the leading "vtk">.

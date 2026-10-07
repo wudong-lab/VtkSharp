@@ -21,7 +21,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCartesianGrid : vtkDataSet
 {
-    static vtkCartesianGrid() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkCartesianGrid(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -154,25 +153,25 @@ public unsafe partial class vtkCartesianGrid : vtkDataSet
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkCartesianGrid_GetDataDimension(nint self);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int* vtkCartesianGrid_GetDimensions_(nint self);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCartesianGrid_GetDimensions_intArray3(nint self, int* dims);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkCartesianGrid_GetNumberOfScalarComponents(nint self);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkCartesianGrid_GetScalarType(nint self);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCartesianGrid_SetDimensions_intConstArray3(nint self, int* dim);
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCartesianGrid_SetDimensions_int_int_int(nint self, int i, int j, int k);
     #endregion
 }

@@ -16,7 +16,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkIdList : vtkObject
 {
-    static vtkIdList() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkIdList(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -109,19 +108,19 @@ public unsafe partial class vtkIdList : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkIdList_New();
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkIdList_GetId(nint self, long i);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkIdList_GetNumberOfIds(nint self);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkIdList_SetId(nint self, long i, long vtkid);
 
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkIdList_SetNumberOfIds(nint self, long number);
     #endregion
 }

@@ -33,7 +33,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkTransformFilter : vtkPointSetAlgorithm
 {
-    static vtkTransformFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
 
     protected vtkTransformFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -99,10 +98,10 @@ public unsafe partial class vtkTransformFilter : vtkPointSetAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkTransformFilter_New();
 
-    [DllImport("VtkSharp.Native.FiltersGeneral.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkTransformFilter_SetTransform(nint self, nint _arg1);
     #endregion
 }

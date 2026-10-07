@@ -18,7 +18,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInformationVector : vtkObject
 {
-    static vtkInformationVector() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonCore.dll");
 
     protected vtkInformationVector(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -72,7 +71,7 @@ public unsafe partial class vtkInformationVector : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInformationVector_New();
     #endregion
 }

@@ -22,7 +22,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkActor2DCollection : vtkPropCollection
 {
-    static vtkActor2DCollection() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkActor2DCollection(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -80,7 +79,7 @@ public unsafe partial class vtkActor2DCollection : vtkPropCollection
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkActor2DCollection_New();
     #endregion
 }

@@ -47,7 +47,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCutter : vtkPolyDataAlgorithm
 {
-    static vtkCutter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersCore.dll");
 
     protected vtkCutter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>
@@ -122,13 +121,13 @@ public unsafe partial class vtkCutter : vtkPolyDataAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCutter_New();
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCutter_GenerateValues(nint self, int numContours, double rangeStart, double rangeEnd);
 
-    [DllImport("VtkSharp.Native.FiltersCore.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkCutter_SetCutFunction(nint self, nint _arg1);
     #endregion
 }

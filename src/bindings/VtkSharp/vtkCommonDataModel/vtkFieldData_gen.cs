@@ -37,7 +37,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkFieldData : vtkObject
 {
-    static vtkFieldData() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.CommonDataModel.dll");
 
     protected vtkFieldData(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -126,17 +125,17 @@ public unsafe partial class vtkFieldData : vtkObject
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkFieldData_New();
 
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkFieldData_AddArray(nint self, nint array);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.CommonDataModel.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial nint vtkFieldData_GetArray(nint self, string arrayName);
 #else
-    [DllImport("VtkSharp.Native.CommonDataModel.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkFieldData_GetArray(nint self, byte[] arrayName);
 #endif
     #endregion

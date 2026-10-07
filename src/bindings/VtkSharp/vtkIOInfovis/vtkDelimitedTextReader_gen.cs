@@ -50,7 +50,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkDelimitedTextReader : vtkTableAlgorithm
 {
-    static vtkDelimitedTextReader() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.IOInfovis.dll");
 
     protected vtkDelimitedTextReader(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -155,29 +154,29 @@ public unsafe partial class vtkDelimitedTextReader : vtkTableAlgorithm
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.IOInfovis.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkDelimitedTextReader_New();
 
-    [DllImport("VtkSharp.Native.IOInfovis.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDelimitedTextReader_DetectNumericColumnsOn(nint self);
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOInfovis.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkDelimitedTextReader_SetFieldDelimiterCharacters(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.IOInfovis.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDelimitedTextReader_SetFieldDelimiterCharacters(nint self, byte[] _arg);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.IOInfovis.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkDelimitedTextReader_SetFileName(nint self, string _arg);
 #else
-    [DllImport("VtkSharp.Native.IOInfovis.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDelimitedTextReader_SetFileName(nint self, byte[] _arg);
 #endif
 
-    [DllImport("VtkSharp.Native.IOInfovis.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkDelimitedTextReader_SetHaveHeaders(nint self, [MarshalAs(UnmanagedType.U1)] bool _arg);
     #endregion
 }

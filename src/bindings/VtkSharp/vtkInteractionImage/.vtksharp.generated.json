@@ -8,10 +8,10 @@
       "header": "vtkImageViewer2.h",
       "baseClassName": "vtkObject",
       "hasStaticNew": true,
-      "inputHash": "00bf572d15ee28d17b8cc5f80fc63683b4bd60ee71085f4c8a088aed228ed180",
+      "inputHash": "efcca0185d284d6cee06c6ef9560f49e573559e4609e791da1b99bb574995824",
       "managedPath": "bindings\\VtkSharp\\vtkInteractionImage\\vtkImageViewer2_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkInteractionImage\\vtkImageViewer2_export_gen.cpp",
-      "managedContentHash": "a549ed0b995041fb2bb348b71b6ee060483f177960d59d77fcc013239dc00d9b",
+      "managedContentHash": "140e1dbfab4792022cb07accd1e836b4e899798590a015fcbd9b0d9e4af0b318",
       "nativeContentHash": "63d00cba5002a66ff142552a6c1e4e56e1bf4a93556cb8ab221a99cc1eef6bcb"
     }
   ]

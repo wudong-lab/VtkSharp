@@ -8,10 +8,10 @@
       "header": "vtkImageCast.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "3eec6102ef612074e43bd912fb611c327a69e93ce945e9f3e59bf9a6680ecb67",
+      "inputHash": "6601e04bd8bbaaea444e9f684635533b47f4392cef237a8efa4c8a601edcf4fe",
       "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageCast_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageCast_export_gen.cpp",
-      "managedContentHash": "39d760ba0f973685e81eb937b3faadf44f82bcf31a80d069969464ab1eadbefc",
+      "managedContentHash": "b3ae2c04847c48f5a80040c2711a0c30bc379bad26cb4eb5051d7639871edab6",
       "nativeContentHash": "cb07d76ffc55d73236fae20f4bd5cec68260e41b17a86be33e6de3c191d3ae4a"
     },
     {
@@ -19,10 +19,10 @@
       "header": "vtkImageMapToColors.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "4afc44df228046f9795d1a4864c617324d5e02831cc15da074dd51dc940ba2bc",
+      "inputHash": "20a5b0eec75b88b94745642670c1e530847c63e5caf95f43416ac0c3c3079c93",
       "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageMapToColors_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageMapToColors_export_gen.cpp",
-      "managedContentHash": "fdb74323ad8fa62e9ecf7c3e36066d4dd413db2b3436815c4774308811540a0d",
+      "managedContentHash": "0d06e5549d750bb73d533a37de186a3da2e82211ce067da5f8549dc636dcdfbe",
       "nativeContentHash": "99d08ee0da0554331ee4dee44b277025756ebfb7e4d3103b0f741476dee94fb7"
     },
     {
@@ -30,10 +30,10 @@
       "header": "vtkImageShiftScale.h",
       "baseClassName": "vtkThreadedImageAlgorithm",
       "hasStaticNew": true,
-      "inputHash": "40a0a004a18ba339eb0609cec0e32c8214d206f473b23befd219273c2113d4de",
+      "inputHash": "74226e86f7ae32f7d89ce5f1ebbabb9e3bb38f255ad24e4a6852ceb19120b322",
       "managedPath": "bindings\\VtkSharp\\vtkImagingCore\\vtkImageShiftScale_gen.cs",
       "nativePath": "bindings\\VtkSharp.Native\\src\\vtkImagingCore\\vtkImageShiftScale_export_gen.cpp",
-      "managedContentHash": "097d7258acbc54d9fcba9416d80d1969cbd4f23376df0a2150efdcbcf6fafd75",
+      "managedContentHash": "c05a9734614eb296d73241f16e6e0a6b96ed1b5f717be21eb581e3919798f725",
       "nativeContentHash": "9bf234dae703a66d7166d80b0089162a11473a03bec49ffe439bb4a42c5b2ef9"
     }
   ]

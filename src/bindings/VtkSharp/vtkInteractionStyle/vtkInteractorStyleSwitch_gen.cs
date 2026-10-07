@@ -24,7 +24,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleSwitch : vtkInteractorStyleSwitchBase
 {
-    static vtkInteractorStyleSwitch() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkInteractorStyleSwitch(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -78,7 +77,7 @@ public unsafe partial class vtkInteractorStyleSwitch : vtkInteractorStyleSwitchB
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleSwitch_New();
     #endregion
 }

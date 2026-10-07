@@ -18,7 +18,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkPointSetToLabelHierarchy : vtkLabelHierarchyAlgorithm
 {
-    static vtkPointSetToLabelHierarchy() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkPointSetToLabelHierarchy(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -104,26 +103,26 @@ public unsafe partial class vtkPointSetToLabelHierarchy : vtkLabelHierarchyAlgor
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkPointSetToLabelHierarchy_New();
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkPointSetToLabelHierarchy_SetLabelArrayName(nint self, string name);
 #else
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPointSetToLabelHierarchy_SetLabelArrayName(nint self, byte[] name);
 #endif
 
 #if NET8_0_OR_GREATER
-    [LibraryImport("VtkSharp.Native.Rendering.dll", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(InteropInfo.NativeLibraryName, StringMarshalling = StringMarshalling.Utf8)]
     private static partial void vtkPointSetToLabelHierarchy_SetPriorityArrayName(nint self, string name);
 #else
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPointSetToLabelHierarchy_SetPriorityArrayName(nint self, byte[] name);
 #endif
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern void vtkPointSetToLabelHierarchy_SetTextProperty(nint self, nint tprop);
     #endregion
 }

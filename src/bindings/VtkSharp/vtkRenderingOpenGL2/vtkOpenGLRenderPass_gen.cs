@@ -15,7 +15,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkOpenGLRenderPass : vtkRenderPass
 {
-    static vtkOpenGLRenderPass() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkOpenGLRenderPass(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

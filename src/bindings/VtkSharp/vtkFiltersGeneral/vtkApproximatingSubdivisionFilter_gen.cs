@@ -15,7 +15,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkApproximatingSubdivisionFilter : vtkSubdivisionFilter
 {
-    static vtkApproximatingSubdivisionFilter() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.FiltersGeneral.dll");
 
     protected vtkApproximatingSubdivisionFilter(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <summary>

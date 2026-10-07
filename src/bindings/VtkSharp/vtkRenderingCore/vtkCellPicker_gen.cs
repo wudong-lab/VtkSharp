@@ -31,7 +31,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkCellPicker : vtkPicker
 {
-    static vtkCellPicker() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkCellPicker(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -104,13 +103,13 @@ public unsafe partial class vtkCellPicker : vtkPicker
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkCellPicker_New();
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern long vtkCellPicker_GetCellId(nint self);
 
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern int vtkCellPicker_Pick(nint self, double selectionX, double selectionY, double selectionZ, nint renderer);
     #endregion
 }

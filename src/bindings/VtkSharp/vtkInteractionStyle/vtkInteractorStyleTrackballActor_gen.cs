@@ -32,7 +32,6 @@ namespace VtkSharp;
 /// </remarks>
 public unsafe partial class vtkInteractorStyleTrackballActor : vtkInteractorStyle
 {
-    static vtkInteractorStyleTrackballActor() => NativeModuleLoader.EnsureLoaded("VtkSharp.Native.Rendering.dll");
 
     protected vtkInteractorStyleTrackballActor(nint nativePointer, bool ownsReference) : base(nativePointer, ownsReference) { }
     /// <remarks>
@@ -86,7 +85,7 @@ public unsafe partial class vtkInteractorStyleTrackballActor : vtkInteractorStyl
     }
 
     #region Interop
-    [DllImport("VtkSharp.Native.Rendering.dll")]
+    [DllImport(InteropInfo.NativeLibraryName)]
     private static extern nint vtkInteractorStyleTrackballActor_New();
     #endregion
 }
