@@ -11,6 +11,12 @@ $vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7"
 .\tools\build-all.ps1 -Configuration Release -VtkDir $vtkDir
 ```
 
+Debug 构建使用同一静态 VTK 安装中的 Debug 库：
+
+```powershell
+.\tools\build-all.ps1 -Configuration Debug -VtkDir $vtkDir
+```
+
 构建与打包默认 `-Linkage Static`，汇总产物位于 `artifacts/bin/<Configuration>/<TFM>`。仅执行 `dotnet build` 不会编译 native 层。公开构建生成仅包含公开导出的 DLL；私有产品通过 `VTKSHARP_EXTRA_NATIVE_SOURCES` 等聚合接口，把公开和私有 native 源码共同链接为一个同名 DLL。
 
 ## 本地 NuGet 包
@@ -19,8 +25,8 @@ $vtkDir = "D:\Code\VTK\VtkGitBuild\install\lib\cmake\vtk-9.7"
 .\tools\package-nuget.ps1 -Configuration Release -Version 26.1007.5 -VtkDir $vtkDir
 ```
 
-打包只接受 Release，生成本地包而不发布；同版本产物不覆盖。静态包只携带 `VtkSharp.Native.dll` 和 VTK／第三方许可声明。包内 `buildTransitive/VtkSharp.targets` 将 DLL 复制到 build 和 publish 输出目录，与 `VtkSharp.dll` 同级。
+打包只接受 Release，生成本地包而不发布；同版本产物不覆盖。静态包的 native runtime 只包含 `VtkSharp.Native.dll` 和 VTK／第三方许可声明。包内 `buildTransitive/VtkSharp.targets` 将 native 文件复制到 build 和 publish 输出目录，与 `VtkSharp.dll` 同级。
 
 P/Invoke 按 .NET/Windows 常规规则从应用目录解析 `VtkSharp.Native.dll`，不提供自定义运行目录配置。私有产品必须排除公开 NuGet 的 native 和构建复制资产，部署包含两侧导出的统一 DLL；禁止同时部署两份分别静态链接 VTK 的公开、私有入口。公开源码修订与托管包必须配套。
 
-保留显式 `-Linkage Dynamic` 作为可选构建路径，使用独立缓存及 shared VTK；它同样生成单一公开入口，不再按模块生成多个 DLL。
+保留显式 `-Linkage Dynamic` 作为可选构建路径，使用独立缓存及 Shared VTK；它同样生成单一公开入口，不再按模块生成多个 DLL。动态 NuGet 包仅支持匹配的 Release x64 Shared VTK，并包含 native 依赖闭包；静态模式则只部署 `VtkSharp.Native.dll`，不需要 VTK 模块 DLL。两种模式都由包内 targets 将 native 文件复制到应用输出目录。
