@@ -12,6 +12,34 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+function Copy-VtkLicenseBundle {
+    param(
+        [string]$InstallDirectory,
+        [string]$DestinationDirectory
+    )
+
+    $licenseCandidates = @(
+        (Join-Path $InstallDirectory "share\vtk-9.7\licenses"),
+        (Join-Path $InstallDirectory "share\licenses\VTK")
+    )
+    $licenseSource = $licenseCandidates | Where-Object {
+        (Test-Path -LiteralPath (Join-Path $_ "VTK-Copyright.txt") -PathType Leaf) -or
+        (Test-Path -LiteralPath (Join-Path $_ "Copyright.txt") -PathType Leaf)
+    } | Select-Object -First 1
+
+    if (-not $licenseSource) {
+        throw "VTK license bundle is missing from the selected installation. Checked: $($licenseCandidates -join ', ')"
+    }
+
+    New-Item -ItemType Directory -Path $DestinationDirectory -Force | Out-Null
+    Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $DestinationDirectory -Recurse -Force
+    $copyrightSource = Join-Path $DestinationDirectory "Copyright.txt"
+    $copyrightDestination = Join-Path $DestinationDirectory "VTK-Copyright.txt"
+    if ((Test-Path -LiteralPath $copyrightSource -PathType Leaf) -and -not (Test-Path -LiteralPath $copyrightDestination -PathType Leaf)) {
+        Move-Item -LiteralPath $copyrightSource -Destination $copyrightDestination
+    }
+}
+
 if ((-not $SkipNativeBuild -or $Linkage -eq "Dynamic") -and [string]::IsNullOrWhiteSpace($VtkDir)) {
     throw "Set VTK_DIR to the installed VTK CMake package directory, or pass -VtkDir. See README.md."
 }
@@ -98,13 +126,8 @@ foreach ($target in $targets) {
             -ManifestPath (Join-Path $nativeOutputDirectory "native-dependencies.json") `
             -SourceRoot $sourceRoots `
             -DestinationDirectory $outputDirectory
-        $licenseSource = Join-Path $vtkInstallDirectory "share\vtk-9.7\licenses"
-        if (-not (Test-Path -LiteralPath (Join-Path $licenseSource "VTK-Copyright.txt") -PathType Leaf)) {
-            throw "VTK license bundle is missing from the selected installation: $licenseSource"
-        }
         $licenseDestination = Join-Path $outputDirectory "licenses\VTK"
-        New-Item -ItemType Directory -Path $licenseDestination -Force | Out-Null
-        Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $licenseDestination -Recurse -Force | Out-Null
+        Copy-VtkLicenseBundle -InstallDirectory $vtkInstallDirectory -DestinationDirectory $licenseDestination
 
         & "$PSScriptRoot/copy-native-dependencies.ps1" `
             -ManifestPath (Join-Path $nativeOutputDirectory "native-dependencies.json") `
@@ -118,11 +141,8 @@ foreach ($target in $targets) {
         & "$PSScriptRoot/remove-native-dependencies.ps1" -Directory (Join-Path $managedDirectory "native\VtkSharp\win-x64")
         if ($VtkDir) {
             $vtkInstallDirectory = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
-            $licenseSource = Join-Path $vtkInstallDirectory "share\vtk-9.7\licenses"
-            if (-not (Test-Path -LiteralPath (Join-Path $licenseSource "VTK-Copyright.txt"))) { throw "VTK license bundle is missing: $licenseSource" }
             $licenseDestination = Join-Path $outputDirectory "licenses\VTK"
-            New-Item -ItemType Directory -Path $licenseDestination -Force | Out-Null
-            Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $licenseDestination -Recurse -Force
+            Copy-VtkLicenseBundle -InstallDirectory $vtkInstallDirectory -DestinationDirectory $licenseDestination
         }
     }
 }

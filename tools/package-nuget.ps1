@@ -17,6 +17,34 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+function Copy-VtkLicenseBundle {
+    param(
+        [string]$InstallDirectory,
+        [string]$DestinationDirectory
+    )
+
+    $licenseCandidates = @(
+        (Join-Path $InstallDirectory "share\vtk-9.7\licenses"),
+        (Join-Path $InstallDirectory "share\licenses\VTK")
+    )
+    $licenseSource = $licenseCandidates | Where-Object {
+        (Test-Path -LiteralPath (Join-Path $_ "VTK-Copyright.txt") -PathType Leaf) -or
+        (Test-Path -LiteralPath (Join-Path $_ "Copyright.txt") -PathType Leaf)
+    } | Select-Object -First 1
+
+    if (-not $licenseSource) {
+        throw "VTK license bundle is missing from the selected installation. Checked: $($licenseCandidates -join ', ')"
+    }
+
+    New-Item -ItemType Directory -Path $DestinationDirectory -Force | Out-Null
+    Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $DestinationDirectory -Recurse -Force
+    $copyrightSource = Join-Path $DestinationDirectory "Copyright.txt"
+    $copyrightDestination = Join-Path $DestinationDirectory "VTK-Copyright.txt"
+    if ((Test-Path -LiteralPath $copyrightSource -PathType Leaf) -and -not (Test-Path -LiteralPath $copyrightDestination -PathType Leaf)) {
+        Move-Item -LiteralPath $copyrightSource -Destination $copyrightDestination
+    }
+}
+
 if (-not $SkipNativeBuild -and [string]::IsNullOrWhiteSpace($VtkDir)) {
     throw "Set VTK_DIR to the installed VTK CMake package directory, or pass -VtkDir. See README.md."
 }
@@ -88,18 +116,13 @@ if ($Linkage -eq "Dynamic") {
     if ($manifest.configuration -ne "Release" -or $manifest.architecture -ne "x64" -or $manifest.vtk.buildId -ne $vtkBuildInfo.buildId) {
         throw "Selected native output was built against a different VTK build. Rebuild native with the selected -VtkDir."
     }
-    $licenseSource = Join-Path $vtkInstallDirectory "share\vtk-9.7\licenses"
-    if (-not (Test-Path -LiteralPath (Join-Path $licenseSource "VTK-Copyright.txt") -PathType Leaf)) {
-        throw "VTK license bundle is missing from the selected installation. Reinstall with tools/build-vtk-for-vtksharp.ps1."
-    }
     $runtimeDirectory = Join-Path $repoRoot "artifacts\package-runtime\$version"
     if (Test-Path -LiteralPath $runtimeDirectory) { throw "Package runtime staging directory already exists: $runtimeDirectory" }
     $entrypointRoots = @($manifest.inputSources | ForEach-Object { "$($_.id)=$nativeOutputDirectory" })
     $sourceRoots = $entrypointRoots + "vtk=$(Join-Path $vtkInstallDirectory 'bin')"
     & "$PSScriptRoot/copy-native-dependencies.ps1" -ManifestPath $manifestPath -SourceRoot $sourceRoots -DestinationDirectory $runtimeDirectory
     $licenseDestination = Join-Path $runtimeDirectory "licenses"
-    New-Item -ItemType Directory -Path $licenseDestination -Force | Out-Null
-    Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination $licenseDestination -Recurse -Force
+    Copy-VtkLicenseBundle -InstallDirectory $vtkInstallDirectory -DestinationDirectory $licenseDestination
     $licenseRenames = [Collections.Generic.List[object]]::new()
     foreach ($licenseFile in (Get-ChildItem -LiteralPath $licenseDestination -File -Recurse | Where-Object { $_.Name -match '^(LICENSE|COPYING|COPYRIGHT|NOTICE)$' })) {
         $relativePath = [IO.Path]::GetRelativePath($licenseDestination, $licenseFile.FullName).Replace('\', '/')
@@ -115,8 +138,6 @@ if ($Linkage -eq "Dynamic") {
 if ($Linkage -eq "Static") {
     if ([string]::IsNullOrWhiteSpace($VtkDir)) { throw "Static packaging requires -VtkDir for license notices." }
     $vtkInstallDirectory = [IO.Path]::GetFullPath((Join-Path $VtkDir "../../.."))
-    $licenseSource = Join-Path $vtkInstallDirectory "share\vtk-9.7\licenses"
-    if (-not (Test-Path -LiteralPath (Join-Path $licenseSource "VTK-Copyright.txt"))) { throw "VTK license bundle is missing: $licenseSource" }
     $runtimeDirectory = Join-Path $repoRoot "artifacts\package-runtime\$version"
     if (Test-Path -LiteralPath $runtimeDirectory) { throw "Package staging directory already exists: $runtimeDirectory" }
     $nativeBuildRoot = Join-Path $bindingsDir "VtkSharp.Native\out\build"
@@ -127,7 +148,7 @@ if ($Linkage -eq "Static") {
     if (-not $nativeDll) { throw "Static Release native output was not found." }
     New-Item -ItemType Directory -Path "$runtimeDirectory\licenses" -Force | Out-Null
     Copy-Item -LiteralPath $nativeDll -Destination $runtimeDirectory
-    Get-ChildItem -LiteralPath $licenseSource -Force | Copy-Item -Destination "$runtimeDirectory\licenses" -Recurse -Force
+    Copy-VtkLicenseBundle -InstallDirectory $vtkInstallDirectory -DestinationDirectory (Join-Path $runtimeDirectory "licenses")
     Get-ChildItem -LiteralPath "$runtimeDirectory\licenses" -File -Recurse |
         Where-Object { $_.Name -match '^(LICENSE|COPYING|COPYRIGHT|NOTICE)$' } |
         ForEach-Object { Move-Item -LiteralPath $_.FullName -Destination "$($_.FullName).txt" }
